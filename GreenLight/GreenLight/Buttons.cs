@@ -11,26 +11,39 @@ namespace GreenLight
 {
     class Buttons : PictureBox
     {
-        public Buttons(Size Button_size, Point Location, string FilePath, string FilePath_on_hover) 
+        public Buttons(Size Button_size, Point Location, string FilePath) 
         {
             this.Cursor = Cursors.Hand;
             this.Location = Location;
             this.Size = Button_size;
             this.Image = Image.FromFile(FilePath);
             this.SizeMode = PictureBoxSizeMode.Zoom;
-            this.MouseHover += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath_on_hover);};
+            this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length-4)+ "_On_Hover.png");};
             this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath);};
         }
 
-        public Buttons(Size Button_size, Point Location, string FilePath, string FilePath_on_hover, int index)
+        public Buttons(Size Button_size, Point Location, string FilePath, string Text, FontFamily Dosis_font_family, General_form General_form)
         {
             this.Cursor = Cursors.Hand;
             this.Location = Location;
             this.Size = Button_size;
             this.Image = Image.FromFile(FilePath);
             this.SizeMode = PictureBoxSizeMode.StretchImage;
-            this.MouseHover += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath_on_hover); };
+            this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 4) + "_On_Hover.png"); };
             this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
+
+            Label label = new Label();
+            label.Font = new Font(Dosis_font_family, 15, FontStyle.Bold);
+            label.Text = Text;
+            label.BackColor = Color.Transparent;
+            label.ForeColor = Color.FromArgb(142, 140, 144);
+            label.Size = Button_size;
+            label.TextAlign = ContentAlignment.MiddleCenter;
+            label.Parent = this;
+            label.Click += (object o, EventArgs EA) => { General_form.Label_click(Text); };
+            label.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 4) + "_On_Hover.png"); };
+            label.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
+            this.Controls.Add(label);
         }
         public Buttons(General_form General_form)
         {
@@ -47,7 +60,7 @@ namespace GreenLight
             this.Controls.Add(Red);
 
         }
-        public Buttons(string name)
+        public Buttons(string Name)
         {
             this.Size = new Size(250, 5);
             this.SizeMode = PictureBoxSizeMode.StretchImage;

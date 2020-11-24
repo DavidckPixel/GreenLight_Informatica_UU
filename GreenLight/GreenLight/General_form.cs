@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,17 +40,22 @@ namespace GreenLight
             this.Size = new Size(1200, 600);
             this.MinimumSize = new Size(800, 400);
             this.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 50, 50));
+            this.Icon = new Icon("../../User Interface Recources/Logo.ico");
+
+            PrivateFontCollection Font_collection = new PrivateFontCollection();
+            Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");
+            FontFamily Dosis_font_family = Font_collection.Families[0];
 
             this.SizeChanged += (object o, EventArgs EA) => { Size_adjust(); };
 
-            SSM = new Start_sub_menu(this.Width, this.Height, 250, this);
-            SMM = new Start_main_menu(this.Width - 250, this.Height, this);
+            SSM = new Start_sub_menu(250, this, Dosis_font_family);
+            SMM = new Start_main_menu(this.Width - 250, this, Dosis_font_family);
 
-            BSM = new Build_sub_menu(this.Width, this.Height, 250, this);
-            BMM = new Build_main_menu(this.Width - 250, this.Height, this);
+            BSM = new Build_sub_menu(250, this, Dosis_font_family);
+            BMM = new Build_main_menu(this.Width - 250, this, Dosis_font_family);
 
-            SimSM = new Simulation_sub_menu(this.Width, this.Height, 250, this);
-            SimMM = new Simulation_main_menu(this.Width - 250, this.Height, this);
+            SimSM = new Simulation_sub_menu(250, this, Dosis_font_family);
+            SimMM = new Simulation_main_menu(this.Width - 250, this, Dosis_font_family);
 
             this.Controls.Add(SMM);
             this.Controls.Add(SSM);
@@ -59,7 +65,28 @@ namespace GreenLight
             this.Controls.Add(SimSM);
             Hide_all_menus();
             Menu_to_start();
+
         }
+
+        public void Label_click(string Text)
+        {
+            switch (Text)
+            {
+                case "About":
+                    System.Diagnostics.Process.Start("https://github.com/DavidckPixel/GreenLight_Informatica_UU");
+                    break;
+                case "Start simulation":
+                    Menu_to_simulation();
+                    break;
+                case "Home":
+                    Menu_to_start();
+                    break;
+                case "Save":
+                    break;
+            }
+                
+        }
+            
 
         public void Size_adjust()
         {

@@ -53,6 +53,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="RoundButtons.cs">
+    <Compile Include="Move_panel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="User Controls\Build_main_menu.cs">
@@ -104,6 +105,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Fonts\" />
     <Folder Include="src\" />
     <Folder Include="User Interface Recources\" />
   </ItemGroup>

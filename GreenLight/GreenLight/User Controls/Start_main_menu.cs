@@ -12,19 +12,19 @@ namespace GreenLight
 {
     public partial class Start_main_menu : UserControl
     {
-        public Start_main_menu(int Width, int Form_height, General_form General_form)
+        public Start_main_menu(int Width, General_form General_form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(196, 196, 198);
-            this.Size = new Size(Width, Form_height);
+            this.Size = new Size(Width, General_form.Height);
 
             CurvedButtons New_project_button = new CurvedButtons(new Size(200,200), new Point(125,250), "../../User Interface Recources/New_Project_Button.png", "../../User Interface Recources/New_Project_Button_On_Hover.png");
-            Buttons Choose_preset_button = new Buttons(new Size(200, 200), new Point(350, 250), "../../User Interface Recources/New_Project_Button.png", "../../User Interface Recources/New_Project_Button_On_Hover.png");
-            Buttons Browse_directory_button = new Buttons(new Size(200, 200), new Point(575, 250), "../../User Interface Recources/New_Project_Button.png", "../../User Interface Recources/New_Project_Button_On_Hover.png");
+            Buttons Choose_preset_button = new Buttons(new Size(200, 200), new Point(350, 250), "../../User Interface Recources/New_Project_Button.png");
+            Buttons Browse_directory_button = new Buttons(new Size(200, 200), new Point(575, 250), "../../User Interface Recources/New_Project_Button.png");
 
             PictureBox Logo = new PictureBox();
             Logo.Size = new Size(400,160);
             Logo.SizeMode = PictureBoxSizeMode.Zoom;
-            Logo.Location = new Point(Width / 2 - 200, Height / 2 - 250);
+            Logo.Location = new Point(Width / 2 - 200, General_form.Height / 2 - 250);
             Logo.Image = Image.FromFile("../../User Interface Recources/Logo.png");
 
             this.Controls.Add(New_project_button);
