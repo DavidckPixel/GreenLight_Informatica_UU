@@ -57,7 +57,8 @@ namespace GreenLight
             this.Controls.Add(BSM);
             this.Controls.Add(SimMM);
             this.Controls.Add(SimSM);
-
+            Hide_all_menus();
+            Menu_to_start();
         }
 
         public void Size_adjust()
