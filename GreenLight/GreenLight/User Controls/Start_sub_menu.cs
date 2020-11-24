@@ -14,11 +14,11 @@ namespace GreenLight
             this.Location = new Point(General_form.Width-Menu_width, 0);
 
 
-            Buttons Logo = new Buttons(General_form);
+            CurvedButtons Logo = new CurvedButtons(General_form, 1);
             Logo.Location = new Point(40, 20);
             this.Controls.Add(Logo);
 
-            Buttons Divider1 = new Buttons("Divider");
+            CurvedButtons Divider1 = new CurvedButtons();
             Divider1.Location = new Point(0, 100);
             this.Controls.Add(Divider1);
 
@@ -32,12 +32,12 @@ namespace GreenLight
             Project_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
             this.Controls.Add(Project_header);
 
-            Buttons Divider2 = new Buttons("Divider");
+            CurvedButtons Divider2 = new CurvedButtons();
             Divider2.Location = new Point(0, this.Height - 75);
             this.Controls.Add(Divider2);
 
-            Buttons About_button = new Buttons(new Size(160, 38), 
-                new Point(Menu_width/2-80, General_form.Height-55),"../../User Interface Recources/Custom_Button.png", 
+            CurvedButtons About_button = new CurvedButtons(new Size(160, 38), 
+                new Point(Menu_width/2-80, General_form.Height-55), 25,"../../User Interface Recources/Custom_Button.png", 
                 "About" ,Dosis_font_family, General_form);
             this.Controls.Add(About_button);
             

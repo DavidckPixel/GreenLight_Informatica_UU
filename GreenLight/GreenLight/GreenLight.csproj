@@ -60,9 +60,6 @@
     <Compile Include="User Controls\Build_main_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Buttons.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="General_form.cs">
       <SubType>Form</SubType>
     </Compile>

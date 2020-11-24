@@ -17,9 +17,9 @@ namespace GreenLight
             this.BackColor = Color.FromArgb(196, 196, 198);
             this.Size = new Size(Width, General_form.Height);
 
-            CurvedButtons New_project_button = new CurvedButtons(new Size(200,200), new Point(125,250), "../../User Interface Recources/New_Project_Button.png", "../../User Interface Recources/New_Project_Button_On_Hover.png");
-            Buttons Choose_preset_button = new Buttons(new Size(200, 200), new Point(350, 250), "../../User Interface Recources/New_Project_Button.png");
-            Buttons Browse_directory_button = new Buttons(new Size(200, 200), new Point(575, 250), "../../User Interface Recources/New_Project_Button.png");
+            CurvedButtons New_project_button = new CurvedButtons(new Size(200,200), new Point(125,250), 100, "../../User Interface Recources/New_Project_Button.png");
+            CurvedButtons Choose_preset_button = new CurvedButtons(new Size(200, 200), new Point(350, 250), 100, "../../User Interface Recources/New_Project_Button.png");
+            CurvedButtons Browse_directory_button = new CurvedButtons(new Size(200, 200), new Point(575, 250),100, "../../User Interface Recources/New_Project_Button.png");
 
             PictureBox Logo = new PictureBox();
             Logo.Size = new Size(400,160);
