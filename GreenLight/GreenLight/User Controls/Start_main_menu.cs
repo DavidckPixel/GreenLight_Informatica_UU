@@ -16,15 +16,26 @@ namespace GreenLight
         {
             this.BackColor = Color.FromArgb(196, 196, 198);
             this.Size = new Size(Width, General_form.Height);
+            Initialize(General_form, Width);
+        }
 
-            CurvedButtons New_project_button = new CurvedButtons(new Size(200,200), new Point(125,250), 100, "../../User Interface Recources/New_Project_Button.png");
-            CurvedButtons Choose_preset_button = new CurvedButtons(new Size(200, 200), new Point(350, 250), 100, "../../User Interface Recources/New_Project_Button.png");
-            CurvedButtons Browse_directory_button = new CurvedButtons(new Size(200, 200), new Point(575, 250),100, "../../User Interface Recources/New_Project_Button.png");
+        public void Size_adjust(General_form General_form, int Sub_menu_width)
+        {
+            this.Size = new Size(General_form.Width - Sub_menu_width, General_form.Height);
+            this.Controls.Clear();
+            Initialize(General_form, Sub_menu_width);
+        }
+
+        private void Initialize(General_form General_form, int Sub_menu_width) 
+        {
+            CurvedButtons New_project_button = new CurvedButtons(new Size(200, 200), new Point((General_form.Width - Sub_menu_width) / 2 - 200 - (int) (0.1*General_form.Width), (General_form.Height / 3) * 2 - 100), 100, "../../User Interface Recources/New_Project_Button.png");
+            CurvedButtons Choose_preset_button = new CurvedButtons(new Size(200, 200), new Point((General_form.Width-Sub_menu_width)/2 -100, (General_form.Height/3)*2-100), 100, "../../User Interface Recources/Choose_Preset_Button.png");
+            CurvedButtons Browse_directory_button = new CurvedButtons(new Size(200, 200), new Point((General_form.Width - Sub_menu_width) / 2 + (int)(0.1 * General_form.Width), (General_form.Height / 3) * 2 - 100), 100, "../../User Interface Recources/Browse_Directory_Button.png");
 
             PictureBox Logo = new PictureBox();
-            Logo.Size = new Size(400,160);
+            Logo.Size = new Size(400, 160);
             Logo.SizeMode = PictureBoxSizeMode.Zoom;
-            Logo.Location = new Point(Width / 2 - 200, General_form.Height / 2 - 250);
+            Logo.Location = new Point((General_form.Width-Sub_menu_width) / 2 - 200, General_form.Height / 2 - 250);
             Logo.Image = Image.FromFile("../../User Interface Recources/Logo.png");
 
             this.Controls.Add(New_project_button);

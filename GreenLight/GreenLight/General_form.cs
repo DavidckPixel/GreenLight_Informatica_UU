@@ -33,29 +33,32 @@ namespace GreenLight
         Simulation_sub_menu SimSM;
         Simulation_main_menu SimMM;
 
+        int Sub_menu_width = 250;
+        FontFamily Dosis_font_family;
+
         public General_form()
         {
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Size = new Size(1200, 600);
+            Refresh_region(this);
             this.MinimumSize = new Size(800, 400);
-            this.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 50, 50));
             this.Icon = new Icon("../../User Interface Recources/Logo.ico");
 
             PrivateFontCollection Font_collection = new PrivateFontCollection();
             Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");
-            FontFamily Dosis_font_family = Font_collection.Families[0];
+            Dosis_font_family = Font_collection.Families[0];
 
             this.SizeChanged += (object o, EventArgs EA) => { Size_adjust(); };
 
-            SSM = new Start_sub_menu(250, this, Dosis_font_family);
-            SMM = new Start_main_menu(this.Width - 250, this, Dosis_font_family);
+            SSM = new Start_sub_menu(Sub_menu_width, this, Dosis_font_family);
+            SMM = new Start_main_menu(this.Width - Sub_menu_width, this, Dosis_font_family);
 
-            BSM = new Build_sub_menu(250, this, Dosis_font_family);
-            BMM = new Build_main_menu(this.Width - 250, this, Dosis_font_family);
+            BSM = new Build_sub_menu(Sub_menu_width, this, Dosis_font_family);
+            BMM = new Build_main_menu(this.Width - Sub_menu_width, this, Dosis_font_family);
 
-            SimSM = new Simulation_sub_menu(250, this, Dosis_font_family);
-            SimMM = new Simulation_main_menu(this.Width - 250, this, Dosis_font_family);
+            SimSM = new Simulation_sub_menu(Sub_menu_width, this, Dosis_font_family);
+            SimMM = new Simulation_main_menu(this.Width - Sub_menu_width, this, Dosis_font_family);
 
             this.Controls.Add(SMM);
             this.Controls.Add(SSM);
@@ -68,6 +71,12 @@ namespace GreenLight
 
         }
 
+        public void Refresh_region(General_form General_form)
+        {
+            if (this.WindowState == FormWindowState.Normal)
+                General_form.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, this.ClientSize.Width, this.ClientSize.Height, 50, 50));
+            else General_form.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, this.ClientSize.Width, this.ClientSize.Height, 0, 0));
+        }
         public void Label_click(string Text)
         {
             switch (Text)
@@ -90,6 +99,12 @@ namespace GreenLight
 
         public void Size_adjust()
         {
+            SMM.Size_adjust(this, Sub_menu_width);
+            SSM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
+            BMM.Size_adjust(this, Sub_menu_width);
+            BSM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
+            SimMM.Size_adjust(this, Sub_menu_width);
+            SimSM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
         }
 
         public void Menu_to_start()

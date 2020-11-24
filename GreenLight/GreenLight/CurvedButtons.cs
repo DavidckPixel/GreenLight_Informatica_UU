@@ -78,6 +78,7 @@ namespace GreenLight
             label.ForeColor = Color.FromArgb(142, 140, 144);
             label.Size = Button_size;
             label.TextAlign = ContentAlignment.MiddleCenter;
+            label.Location = new Point(label.Location.X+2, label.Location.Y - 2);
             label.Parent = this;
             label.Click += (object o, EventArgs EA) => { General_form.Label_click(Text); };
             label.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 4) + "_On_Hover.png"); };

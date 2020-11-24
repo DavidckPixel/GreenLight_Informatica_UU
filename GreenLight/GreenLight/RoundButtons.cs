@@ -41,20 +41,36 @@ namespace GreenLight
                 case "Green":
                     this.Location = new Point(p.X + 20, p.Y + 3);
                     this.Image = Image.FromFile("../../User Interface Recources/Logo_Minimalize.png");
+                    this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Minimalize_On_Hover.png"); };
+                    this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Minimalize.png"); };
                     this.Click += (object o, EventArgs EA) => { General_form.WindowState = FormWindowState.Minimized; };
                     break;
                 case "Yellow":
                     this.Location = new Point(p.X + 72, p.Y + 3);
                     this.Image = Image.FromFile("../../User Interface Recources/Logo_Maximize.png");
+                    this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Maximize_On_Hover.png"); };
+                    this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Maximize.png"); };
                     this.Click += (object o, EventArgs EA) =>
                     {
-                        if (General_form.WindowState == FormWindowState.Maximized) General_form.WindowState = FormWindowState.Normal;
-                        else General_form.WindowState = FormWindowState.Maximized;
+                        if (General_form.WindowState == FormWindowState.Maximized)
+                        {
+                            General_form.WindowState = FormWindowState.Normal;
+                            General_form.Refresh_region(General_form);
+                            General_form.Refresh();
+                        }
+                        else
+                        {
+                            General_form.WindowState = FormWindowState.Maximized;
+                            General_form.Refresh_region(General_form);
+                            General_form.Refresh();
+                        }
                     };
                     break;
                 case "Red":
                     this.Location = new Point(p.X + 124, p.Y + 3);
                     this.Image = Image.FromFile("../../User Interface Recources/Logo_Exit.png");
+                    this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Exit_On_Hover.png"); };
+                    this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Exit.png"); };
                     this.Click += (object o, EventArgs EA) => { Application.Exit(); };
                     break;
             }
