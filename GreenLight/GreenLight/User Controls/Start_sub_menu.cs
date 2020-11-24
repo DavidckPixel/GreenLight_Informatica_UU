@@ -19,7 +19,7 @@ namespace GreenLight
             this.Size = new Size(250,Form_height);
             this.Location = new Point(Form_width-Menu_width, 0);
 
-            Buttons Logo = new Buttons();
+            Buttons Logo = new Buttons(General_form);
             Logo.Location = new Point(40, 20);
             this.Controls.Add(Logo);
 

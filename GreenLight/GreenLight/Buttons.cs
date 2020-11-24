@@ -32,13 +32,20 @@ namespace GreenLight
             this.MouseHover += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath_on_hover); };
             this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
         }
-        public Buttons()
+        public Buttons(General_form General_form)
         {
-            this.Cursor = Cursors.Hand;
             this.Size = new Size(175, 70);
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Image = Image.FromFile("../../User Interface Recources/Logo.png");
             this.SizeMode = PictureBoxSizeMode.Zoom;
+            Size s = new Size(30, 30);
+            RoundButtons Green = new RoundButtons(s, this.Location, "Green", General_form);
+            this.Controls.Add(Green);
+            RoundButtons Yellow = new RoundButtons(s, this.Location, "Yellow", General_form);
+            this.Controls.Add(Yellow);
+            RoundButtons Red = new RoundButtons(s, this.Location, "Red", General_form);
+            this.Controls.Add(Red);
+
         }
         public Buttons(string name)
         {
@@ -46,5 +53,7 @@ namespace GreenLight
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Image = Image.FromFile("../../User Interface Recources/Sub_Menu_Divider.png");
         }
+
+        
     }
 }

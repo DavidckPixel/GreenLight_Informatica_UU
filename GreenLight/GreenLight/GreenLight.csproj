@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurvedButtons.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RoundButtons.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="User Controls\Build_main_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
