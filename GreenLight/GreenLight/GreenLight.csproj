@@ -53,6 +53,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="RoundButtons.cs">
+    </Compile>
     <Compile Include="Move_panel.cs">
       <SubType>Component</SubType>
     </Compile>
