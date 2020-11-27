@@ -49,10 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Vehicle.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CurvedButtons.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="RoundButtons.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Move_panel.cs">
       <SubType>Component</SubType>
@@ -88,7 +92,11 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Vehicle.resx">
+      <DependentUpon>Vehicle.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -106,6 +114,9 @@
     <Folder Include="Fonts\" />
     <Folder Include="src\" />
     <Folder Include="User Interface Recources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Car.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

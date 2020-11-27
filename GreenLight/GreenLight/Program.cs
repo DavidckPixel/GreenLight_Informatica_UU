@@ -14,9 +14,9 @@ namespace GreenLight
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
+            Application.EnableVisualStyles();   //new Vehicle("Auto", 1353, 4.77, 100, 4223, 0, 0, 0.35, 2.65)
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new General_form());
+            Application.Run(new Vehicle("Auto", 1353, 4.77, 100, 4223, 0, 0, 0.35, 2.65));
         }
     }
 }
