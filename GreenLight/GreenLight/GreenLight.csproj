@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\Logs\Log.cs" />
     <Compile Include="src\Roads\AbstractRoad.cs" />
     <Compile Include="src\Roads\DrivingLane.cs" />
     <Compile Include="src\Roads\Init.cs" />
@@ -87,6 +88,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="src\Logs\LogConfig.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
