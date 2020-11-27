@@ -28,9 +28,9 @@ namespace GreenLight
 
         private void Initialize(General_form General_form, int Sub_menu_width) 
         {
-            CurvedButtons New_project_button = new CurvedButtons(new Size(200, 200), new Point((General_form.Width - Sub_menu_width) / 2 - 200 - (int) (0.1*General_form.Width), (General_form.Height / 3) * 2 - 100), 100, "../../User Interface Recources/New_Project_Button.png");
-            CurvedButtons Choose_preset_button = new CurvedButtons(new Size(200, 200), new Point((General_form.Width-Sub_menu_width)/2 -100, (General_form.Height/3)*2-100), 100, "../../User Interface Recources/Choose_Preset_Button.png");
-            CurvedButtons Browse_directory_button = new CurvedButtons(new Size(200, 200), new Point((General_form.Width - Sub_menu_width) / 2 + (int)(0.1 * General_form.Width), (General_form.Height / 3) * 2 - 100), 100, "../../User Interface Recources/Browse_Directory_Button.png");
+            CurvedButtons New_project_button = new CurvedButtons(new Size(200, 200), new Point((General_form.Width - Sub_menu_width) / 2 - 200 - (int) (0.1*General_form.Width), (General_form.Height / 3) * 2 - 100), 100, "../../User Interface Recources/New_Project_Button.png", this.BackColor);
+            CurvedButtons Choose_preset_button = new CurvedButtons(new Size(200, 200), new Point((General_form.Width-Sub_menu_width)/2 -100, (General_form.Height/3)*2-100), 100, "../../User Interface Recources/Choose_Preset_Button.png", this.BackColor);
+            CurvedButtons Browse_directory_button = new CurvedButtons(new Size(200, 200), new Point((General_form.Width - Sub_menu_width) / 2 + (int)(0.1 * General_form.Width), (General_form.Height / 3) * 2 - 100), 100, "../../User Interface Recources/Browse_Directory_Button.png", this.BackColor);
 
             PictureBox Logo = new PictureBox();
             Logo.Size = new Size(400, 160);
@@ -45,7 +45,15 @@ namespace GreenLight
 
             New_project_button.Click += (object o, EventArgs EA) => { General_form.Menu_to_build(); };
             Choose_preset_button.Click += (object o, EventArgs EA) => { };
-            Browse_directory_button.Click += (object o, EventArgs EA) => { };
+            Browse_directory_button.Click += (object o, EventArgs EA) => {
+                OpenFileDialog open = new OpenFileDialog();
+                open.Filter = "*.txt|*.*";
+                open.Title = "Openen";
+                if (open.ShowDialog() == DialogResult.OK)
+                {
+                    General_form.Open(open.FileName);
+                }
+            };
         }
     }
 }

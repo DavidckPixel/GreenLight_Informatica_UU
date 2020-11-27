@@ -50,7 +50,7 @@ namespace GreenLight
 
             CurvedButtons About_button = new CurvedButtons(new Size(160, 38),
                 new Point(Sub_menu_width / 2 - 80, General_form.Height - 55), 25, "../../User Interface Recources/Custom_Button.png",
-                "About", Dosis_font_family, General_form);
+                "About", Dosis_font_family, General_form, this.BackColor);
             this.Controls.Add(About_button);
         }
     }

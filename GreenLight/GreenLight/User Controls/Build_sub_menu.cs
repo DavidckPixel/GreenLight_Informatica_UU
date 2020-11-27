@@ -41,11 +41,11 @@ namespace GreenLight
             Move_panel Drag_pad = new Move_panel(General_form);
             this.Controls.Add(Drag_pad);
 
-            CurvedButtons Home_button = new CurvedButtons(new Size(80, 40), new Point(Sub_menu_width / 2 - 90, 115), 25, "../../User Interface Recources/Custom_Button_Small.png", "Home", Dosis_font_family, General_form);
+            CurvedButtons Home_button = new CurvedButtons(new Size(80, 40), new Point(Sub_menu_width / 2 - 90, 115), 25, "../../User Interface Recources/Custom_Button_Small.png", "Home", Dosis_font_family, General_form, this.BackColor);
             Home_button.Click += (object o, EventArgs EA) => { General_form.Menu_to_start(); };
             this.Controls.Add(Home_button);
 
-            CurvedButtons Save_button = new CurvedButtons(new Size(80, 40), new Point(Sub_menu_width / 2 + 10, 115), 25, "../../User Interface Recources/Custom_Button_Small.png", "Save", Dosis_font_family, General_form);
+            CurvedButtons Save_button = new CurvedButtons(new Size(80, 40), new Point(Sub_menu_width / 2 + 10, 115), 25, "../../User Interface Recources/Custom_Button_Small.png", "Save", Dosis_font_family, General_form, this.BackColor);
             Save_button.Click += (object o, EventArgs EA) => { };
             this.Controls.Add(Save_button);
 
@@ -58,7 +58,7 @@ namespace GreenLight
             this.Controls.Add(Divider3);
 
             CurvedButtons Start_sim_button = new CurvedButtons(new Size(160, 38), new Point(Sub_menu_width / 2 - 80, General_form.Height - 55), 25,
-                "../../User Interface Recources/Custom_Button.png", "Start simulation", Dosis_font_family, General_form);
+                "../../User Interface Recources/Custom_Button.png", "Start simulation", Dosis_font_family, General_form, this.BackColor);
             Start_sim_button.Click += (object o, EventArgs EA) => { General_form.Menu_to_simulation(); };
             this.Controls.Add(Start_sim_button);
         }

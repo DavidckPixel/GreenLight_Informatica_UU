@@ -12,10 +12,10 @@ namespace GreenLight
     class CurvedButtons : PictureBox
     {
         int curve;
+        Color Backcolor;
         protected override void OnPaint(PaintEventArgs pe)
         {
             GraphicsPath p = new GraphicsPath();
-            pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             Rectangle r = new Rectangle(0, 0, Width, Height);
             int d = curve;
             p.AddArc(r.X, r.Y, d, d, 180, 90);
@@ -24,6 +24,15 @@ namespace GreenLight
             p.AddArc(r.X, r.Y + r.Height - d, d, d, 90, 90);
             this.Region = new Region(p);
             base.OnPaint(pe);
+            if (Backcolor != null)
+            {
+                pe.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                Pen Pen = new Pen(Backcolor, 1);
+                pe.Graphics.DrawArc(Pen, r.X, r.Y, d, d, 180, 90);
+                pe.Graphics.DrawArc(Pen, r.X + r.Width - d, r.Y, d, d, 270, 90);
+                pe.Graphics.DrawArc(Pen, r.X + r.Width - d, r.Y + r.Height - d, d, d, 0, 90);
+                pe.Graphics.DrawArc(Pen, r.X, r.Y + r.Height - d, d, d, 90, 90);
+            }
         }
         // Divider 
         public CurvedButtons()
@@ -33,9 +42,11 @@ namespace GreenLight
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Image = Image.FromFile("../../User Interface Recources/Sub_Menu_Divider.png");
         }
-        public CurvedButtons(Size Button_size, Point Location, int Curve, string FilePath)
+        // Curved Buttons
+        public CurvedButtons(Size Button_size, Point Location, int Curve, string FilePath, Color BackColor)
         {
             curve = Curve;
+            Backcolor = BackColor;
             this.Cursor = Cursors.Hand;
             this.Location = Location;
             this.Size = Button_size;
@@ -44,6 +55,7 @@ namespace GreenLight
             this.MouseHover += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 4) + "_On_Hover.png"); };
             this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
         }
+        // Logo
         public CurvedButtons(General_form General_form, int Curve)
         {
             curve = Curve;
@@ -59,10 +71,11 @@ namespace GreenLight
             RoundButtons Red = new RoundButtons(s, this.Location, "Red", General_form);
             this.Controls.Add(Red);
         }
-
-        public CurvedButtons(Size Button_size, Point Location, int Curve, string FilePath, string Text, FontFamily Dosis_font_family, General_form General_form)
+        // Curved buttons with text
+        public CurvedButtons(Size Button_size, Point Location, int Curve, string FilePath, string Text, FontFamily Dosis_font_family, General_form General_form, Color BackColor)
         {
             curve = Curve;
+            Backcolor = BackColor;
             this.Cursor = Cursors.Hand;
             this.Location = Location;
             this.Size = Button_size;

@@ -80,6 +80,15 @@
     <Compile Include="User Controls\Start_sub_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="User Controls\Simulation_sub_weather_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Simulation_sub_vehicle_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Simulation_sub_driver_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

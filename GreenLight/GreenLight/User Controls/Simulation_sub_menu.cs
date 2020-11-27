@@ -25,7 +25,7 @@ namespace GreenLight
         {
             this.Size = new Size(Sub_menu_width, General_form.Height);
             this.Location = new Point(General_form.Width - Sub_menu_width, 0);
-
+            this.Controls.Clear();
             Initialize(General_form, Sub_menu_width, Dosis_font_family);
         }
 
@@ -35,12 +35,49 @@ namespace GreenLight
             Logo.Location = new Point(40, 20);
             this.Controls.Add(Logo);
 
+            Move_panel Drag_pad = new Move_panel(General_form);
+            this.Controls.Add(Drag_pad);
+
             CurvedButtons Divider1 = new CurvedButtons();
             Divider1.Location = new Point(0, 100);
             this.Controls.Add(Divider1);
 
-            Move_panel Drag_pad = new Move_panel(General_form);
-            this.Controls.Add(Drag_pad);
+            CurvedButtons Weather = new CurvedButtons(new Size(60,60),
+                new Point(20, 150), 30,
+                "../../User Interface Recources/Weather_Setting_Button.png", this.BackColor);
+            this.Controls.Add(Weather);
+            Weather.Click += (object obj, EventArgs args) => { General_form.Menu_to_simulation_weather(); };
+
+            CurvedButtons Vehicle = new CurvedButtons(new Size(60, 60),
+                new Point(95, 150), 30,
+                "../../User Interface Recources/Vehicle_Setting_Button.png", this.BackColor);
+            this.Controls.Add(Vehicle);
+            Vehicle.Click += (object obj, EventArgs args) => { General_form.Menu_to_simulation_vehicle(); };
+
+            CurvedButtons Driver = new CurvedButtons(new Size(60, 60),
+                new Point(170, 150), 30,
+                "../../User Interface Recources/Driver_Setting_Button.png", this.BackColor);
+            this.Controls.Add(Driver);
+            Driver.Click += (object obj, EventArgs args) => {General_form.Menu_to_simulation_driver();};
+
+            CurvedButtons Divider2 = new CurvedButtons();
+            Divider2.Location = new Point(0, this.Height - 125);
+            this.Controls.Add(Divider2);
+
+            CurvedButtons Start = new CurvedButtons(new Size(60, 60),
+                new Point(20, General_form.Height - 80), 35,
+                "../../User Interface Recources/Play_Simulation_Button.png", this.BackColor);
+            this.Controls.Add(Start);
+
+            CurvedButtons Reset = new CurvedButtons(new Size(60, 60),
+                new Point(95, General_form.Height - 80), 35,
+                "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
+            this.Controls.Add(Reset);
+
+            CurvedButtons Stop = new CurvedButtons(new Size(60, 60),
+                new Point(170, General_form.Height - 80), 35,
+                "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
+            this.Controls.Add(Stop);
         }
     }
 }
