@@ -15,7 +15,7 @@ namespace GreenLight
         int Mouse_Y = 0;
         public Move_panel(General_form General_form) 
         {
-            this.Cursor = Cursors.SizeAll;
+            if(General_form.WindowState != FormWindowState.Maximized) this.Cursor = Cursors.SizeAll;
             this.Location = new Point(0, 0);
             this.Size = new Size(250, 100);
             this.BackColor = Color.White;
