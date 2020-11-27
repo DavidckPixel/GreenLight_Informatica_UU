@@ -15,6 +15,14 @@ namespace GreenLight
         public Form1()
         {
             InitializeComponent();
+            Log.Write("Test");
+
+            AbstractRoad test = new StraightRoad(new Point(100, 100), new Point(80, 20), 1, 'N');
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
