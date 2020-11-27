@@ -62,6 +62,11 @@ namespace GreenLight
             }
         }
 
+        public static void Line()
+        {
+            Log.Write("----------------------------------------------------------------------------------", "");
+        }
+
         private static void readConfig()
         {
             basefile = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
