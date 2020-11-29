@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.IO;
+
+namespace GreenLight
+{
+    class GridConfig
+    {
+        public int SpacingWidth;
+        public int SpacingHeight;
+
+        public static void Init(ref GridConfig _temp)
+        {
+            GridConfig.ReadJson(ref _temp);
+        }
+
+        private static void ReadJson(ref GridConfig _temp)
+        {
+            try
+            {
+                string file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Grid\\GridConfig.json";
+
+                using (StreamReader sr = new StreamReader(file))
+                {
+                    string json = sr.ReadToEnd();
+                    _temp = JsonConvert.DeserializeObject<GridConfig>(json);
+                }
+
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+    }
+}

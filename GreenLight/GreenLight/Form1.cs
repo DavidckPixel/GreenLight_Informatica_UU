@@ -15,9 +15,17 @@ namespace GreenLight
         public Form1()
         {
             InitializeComponent();
-            Log.Write("Test");
 
-            AbstractRoad test = new StraightRoad(new Point(100, 100), new Point(80, 20), 1, 'N');
+            GridController test = new GridController();
+            test.CreateGridPoints();
+            foreach(Gridpoint x in test.Gridpoints)
+            {
+                Console.WriteLine(x);
+            }
+
+            this.Paint += test.DrawGridPoints;
+            this.MouseClick += test.OnClick;
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
