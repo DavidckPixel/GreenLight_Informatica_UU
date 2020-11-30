@@ -47,7 +47,5 @@ namespace GreenLight
                 x.Draw(g);
             }
         }
-
-        //CLICK
     }
 }
