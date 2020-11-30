@@ -49,14 +49,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
+    <Compile Include="CurvedButtons.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="RoundButtons.cs">
+    </Compile>
+    <Compile Include="Move_panel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="User Controls\Build_main_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="General_form.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User Controls\Simulation_main_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Start_main_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Simulation_sub_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Build_sub_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Start_sub_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Simulation_sub_weather_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Simulation_sub_vehicle_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Simulation_sub_driver_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -80,7 +112,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Fonts\" />
     <Folder Include="src\" />
+    <Folder Include="User Interface Recources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
