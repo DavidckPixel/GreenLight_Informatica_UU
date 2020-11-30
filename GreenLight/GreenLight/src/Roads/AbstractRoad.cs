@@ -17,6 +17,7 @@ namespace GreenLight
 
         protected int lanes;
         protected List<DrivingLane> drivinglanes;
+        public List<LanePoints> _lanePoints;
 
         //Basic Road Constructor, every road calls this constructor during initialzation
         public AbstractRoad(Point _point1, Point _point2, int _lanes)
@@ -30,10 +31,11 @@ namespace GreenLight
 
         public static int CalculateAngle(Point _point1, Point _point2)
         {
-            //calculateAngel
+            //calculateAngle
             int _deltaX = _point1.X - _point2.X ;
             int _deltaY = _point1.Y - _point2.Y;
 
+            //Console.WriteLine("{0} -- {1}",_deltaX, _deltaY);
             double _raddegree = Math.Atan2(_deltaX , _deltaY);
 
             int _degree = (int)(_raddegree * (180 / Math.PI));

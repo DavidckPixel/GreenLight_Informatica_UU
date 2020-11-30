@@ -22,34 +22,22 @@ namespace GreenLight
 
         protected override void CalculateDrivingLane()
         {
-            List<LanePoints> _lanePoints = new List<LanePoints>();
+            _lanePoints = new List<LanePoints>();
             Point _normpoint1 = point1; Point _normpoint2 = point2;
 
-            if (this.dir == 'N') // SWITCH CASE?
+            if (this.dir == 'N' || this.dir == 'S')
             {
                 _normpoint1 = new Point(this.point1.X - this.roadwidth, this.point1.Y);
                 _normpoint2 = new Point(this.point2.X + this.roadwidth, this.point2.Y);
             }
-            else if (dir == 'E') 
+            else if (dir == 'E' || this.dir == 'W') 
             {
-                //
-                _normpoint1 = new Point(this.point1.X + this.roadwidth, this.point2.Y - this.roadwidth);
+                _normpoint1 = new Point(this.point1.Y - this.roadwidth, this.point1.X);
+                _normpoint2 = new Point(this.point2.Y + this.roadwidth, this.point2.X);
             }
-            else if (dir == 'S')
-            {
-                //
-                _normpoint1 = new Point(this.point1.X + this.roadwidth, this.point2.Y - this.roadwidth);
-            }
-            else if (dir == 'W')
-            {
-                //
-                _normpoint1 = new Point(this.point1.X + this.roadwidth, this.point2.Y - this.roadwidth);
-            }
+           
 
             Tuple<int, int> _dir = GetDirection(_normpoint1, _normpoint2);
-
-            Console.WriteLine("NORM points: {0} -- {1}", _normpoint1, _normpoint2);
-            Console.WriteLine("DIR: {0} -- {1}", _dir.Item1, _dir.Item2);
             Point _prev = _normpoint1;
             int temp = 0;
 
