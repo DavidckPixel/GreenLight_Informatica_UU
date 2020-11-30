@@ -15,22 +15,6 @@ namespace GreenLight
         public Form1()
         {
             InitializeComponent();
-
-            GridController test = new GridController();
-            test.CreateGridPoints();
-            foreach(Gridpoint x in test.Gridpoints)
-            {
-                Console.WriteLine(x);
-            }
-
-            this.Paint += test.DrawGridPoints;
-            this.MouseClick += test.OnClick;
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
