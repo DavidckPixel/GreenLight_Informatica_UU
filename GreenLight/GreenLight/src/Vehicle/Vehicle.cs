@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
 
+
 namespace GreenLight
 {
     class Vehicle : Form        //tijdelijk
@@ -10,7 +11,7 @@ namespace GreenLight
         int weight;
         double length;
         int maxspeed;
-        const int brakepwr = 12000; //In Newton
+        //const int brakepwr = 12000; //In Newton
         int motorpwr;
         public double speed = 0;    //tijdelijke waarde in m/s
         string name;
@@ -19,19 +20,21 @@ namespace GreenLight
         double x, y;
         double cw; // Weerstandscoëfficient, normaal tussen de 0.25 en 0.35
         double surface;
-        double density = 1.293; //in Kg/m3
+        //double density = 1.293; //in Kg/m3
         double airResistance;
         double rollingResistance;
-        double gravity = 9.81; //tijdeljk
+        //double gravity = 9.81; //tijdeljk
         double crw = 0.012; // rolweerstandcoëfficient, 0.15 voor ijs, 0.9 voor beton, 0.67 voor droog asfalt, 0.53 voor nat asfalt
         Bitmap Car;
         int angle;
         bool isAccelerating = false;
         bool isBraking = false;
+        World physics = WorldConfig.physics[0];
 
 
         public Vehicle(string name, int weight, double length, int maxspeed, int motorpwr, int x, int y, double cw, double surface)
         {
+
             this.weight = weight;
             this.length = length;
             this.maxspeed = maxspeed;
@@ -42,7 +45,7 @@ namespace GreenLight
             this.cw = cw;
             this.surface = surface;
             a = this.motorpwr / this.weight;
-            abrake = brakepwr / this.weight;
+            abrake = physics.Brakepwr / this.weight;
             Car = new Bitmap(Properties.Resources.Car);
             this.Paint += tekenAuto;
             Thread beweeg = new Thread(() => move(100800, 980));
@@ -84,8 +87,8 @@ namespace GreenLight
         {
             while (braketime > 0 && speed > 0)
             {
-                airResistance = 0.5 * density * cw * surface * speed * speed;
-                abrake = (brakepwr + airResistance ) / this.weight;
+                airResistance = 0.5 * physics.Density * cw * surface * speed * speed;
+                abrake = (physics.Brakepwr + airResistance ) / this.weight;
                 speed -= abrake / 100;
                 braketime -= 0.01;
                 Thread.Sleep(10);
@@ -101,8 +104,8 @@ namespace GreenLight
             
             while (speed > targetspeed && isBraking)
             {
-                airResistance = 0.5 * density * cw * surface * speed * speed;
-                abrake = (brakepwr + airResistance) / this.weight;
+                airResistance = 0.5 * physics.Density * cw * surface * speed * speed;
+                abrake = (physics.Brakepwr + airResistance) / this.weight;
                 speed -= abrake / 100;
                 Thread.Sleep(10);
             }
@@ -121,6 +124,23 @@ namespace GreenLight
 
         }
 
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // Vehicle
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "Vehicle";
+            this.Load += new System.EventHandler(this.Vehicle_Load);
+            this.ResumeLayout(false);
+
+        }
+
+        private void Vehicle_Load(object sender, EventArgs e)
+        {
+
+        }
 
         void move(int xt, int yt) //xt and yt are the targetcoordinates
         {
@@ -178,8 +198,8 @@ namespace GreenLight
         {
             while (speed < targetspeed && isAccelerating)
             {
-                airResistance = 0.5 * density * cw * surface * speed * speed;
-                rollingResistance = crw * this.weight * gravity;
+                airResistance = 0.5 * physics.Density * cw * surface * speed * speed;
+                rollingResistance = crw * this.weight * physics.Gravity;
                 a = (this.motorpwr - (airResistance + rollingResistance)) / this.weight;
                 speed += a * 0.01;
                 Thread.Sleep(10);

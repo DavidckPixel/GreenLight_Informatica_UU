@@ -36,6 +36,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Vehicle.cs">
+    <Compile Include="src\Vehicle\Vehicle.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CurvedButtons.cs">
@@ -60,6 +63,11 @@
     </Compile>
     <Compile Include="Move_panel.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Vehicle\World.cs" />
+    <Compile Include="src\Vehicle\WorldConfig.cs" />
+    <Compile Include="Startup.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="User Controls\Build_main_menu.cs">
       <SubType>UserControl</SubType>
@@ -103,9 +111,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Vehicle.resx">
+    <EmbeddedResource Include="src\Vehicle\Vehicle.resx">
       <DependentUpon>Vehicle.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -115,13 +124,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="src\Vehicle\Earth.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fonts\" />
-    <Folder Include="src\" />
     <Folder Include="User Interface Recources\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,19 @@
+
+  [
+    { //Program takes this one
+      "Brakepwr": 12000,
+      "Density": 1.293,
+      "Gravity": 9.81
+    },
+    { //this is for testing
+      "Breakpwr": 120,
+      "Density": 1,
+      "Gravity": 1
+    },
+    { // also testing
+      "Breakpwr": 12000,
+      "Density": 1.293,
+      "Gravity": 9.12341
+    }
+  ]
+
