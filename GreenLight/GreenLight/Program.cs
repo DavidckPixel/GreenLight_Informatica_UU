@@ -16,7 +16,8 @@ namespace GreenLight
         {
             Application.EnableVisualStyles();   //new Vehicle("Auto", 1353, 4.77, 100, 4223, 0, 0, 0.35, 2.65)
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Vehicle("Auto", 1353, 4.77, 100, 4223, 0, 0, 0.35, 2.65));
+            Vehicle v = new Vehicle("Auto", 1353, 4.77, 100, 4223, 0, 0, 0.35, 2.65);
+            Application.Run(new Startup());
         }
     }
 }
