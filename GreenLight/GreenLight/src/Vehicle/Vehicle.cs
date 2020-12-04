@@ -9,22 +9,22 @@ namespace GreenLight
     class Vehicle       //tijdelijk
     {
         int weight;
-        double length;
+        float length;
         int maxspeed;
         //const int brakepwr = 12000; //In Newton
         int motorpwr;
-        public double speed = 0;    //tijdelijke waarde in m/s
+        public float speed = 0;    //tijdelijke waarde in m/s
         string name;
-        public double a, abrake; //versnelling & vertraging
+        public float a, abrake; //versnelling & vertraging
         Thread start, stop;
-        double x, y;
-        double cw; // Weerstandscoëfficient, normaal tussen de 0.25 en 0.35
-        double surface;
-        //double density = 1.293; //in Kg/m3
-        double airResistance;
-        double rollingResistance;
-        //double gravity = 9.81; //tijdeljk
-        double crw = 0.012; // rolweerstandcoëfficient, 0.15 voor ijs, 0.9 voor beton, 0.67 voor droog asfalt, 0.53 voor nat asfalt
+        float x, y;
+        float cw; // Weerstandscoëfficient, normaal tussen de 0.25 en 0.35
+        float surface;
+        //float density = 1.293; //in Kg/m3
+        float airResistance;
+        float rollingResistance;
+        //float gravity = 9.81; //tijdeljk
+        float crw = 0.012f; // rolweerstandcoëfficient, 0.15 voor ijs, 0.9 voor beton, 0.67 voor droog asfalt, 0.53 voor nat asfalt
         Bitmap Car;
         int angle;
         public bool isAccelerating = false;
@@ -32,7 +32,7 @@ namespace GreenLight
         World physics = WorldConfig.physics[0];
         Thread beweeg;
 
-        public Vehicle(string name, int weight, double length, int maxspeed, int motorpwr, int x, int y, double cw, double surface)
+        public Vehicle(string name, int weight, float length, int maxspeed, int motorpwr, int x, int y, float cw, float surface)
         {
 
             this.weight = weight;
@@ -51,7 +51,7 @@ namespace GreenLight
             beweeg.Start();
         }
 
-        public double Slipperiness {
+        public float Slipperiness {
             get{ return crw; }
             set { crw = value; }
         }
@@ -61,9 +61,9 @@ namespace GreenLight
         {
             int xtemp = (int) x;
             int ytemp = (int) y;
-            g.DrawImage(RotateImage(Car, angle), xtemp, ytemp, Car.Width/25, Car.Width/25);
-            g.DrawString((speed * 3.6).ToString(), new Font("Calibri", 10), Brushes.Black, 100, 130);
-            g.DrawString(a.ToString(), new Font("Calibri", 10), Brushes.Black, 100, 100);
+            g.DrawImage(RotateImage(Car, angle), xtemp, ytemp, Car.Width, Car.Width);
+            //g.DrawString((speed * 3.6).ToString(), new Font("Calibri", 10), Brushes.Black, 100, 130);
+            //g.DrawString(a.ToString(), new Font("Calibri", 10), Brushes.Black, 100, 100);
         }
 
         public static Bitmap RotateImage(Bitmap b, float angle)
@@ -79,15 +79,15 @@ namespace GreenLight
             return returnBitmap;
         }
 
-        void brakeInTime(double braketime)
+        void brakeInTime(float braketime)
         {
             while (braketime > 0 && speed > 0)
             {
-                airResistance = 0.5 * physics.Density * cw * surface * speed * speed;
+                airResistance = (float) (0.5f * physics.Density * cw * surface * speed * speed);
                 abrake = (physics.Brakepwr + airResistance ) / this.weight;
                 speed -= abrake / 100;
-                braketime -= 0.01;
-                Thread.Sleep(10);
+                braketime -= 0.01f;
+                Thread.Sleep(16);
             }
             if (speed < 0)
             {
@@ -95,15 +95,15 @@ namespace GreenLight
             }
         }
 
-        public void brakeToSpeed(double targetspeed)
+        public void brakeToSpeed(float targetspeed)
         {
             
             while (speed > targetspeed && isBraking)
             {
-                airResistance = 0.5 * physics.Density * cw * surface * speed * speed;
+                airResistance = (float) (0.5f * physics.Density * cw * surface * speed * speed);
                 abrake = (physics.Brakepwr + airResistance) / this.weight;
                 speed -= abrake / 100;
-                Thread.Sleep(10);
+                Thread.Sleep(16);
             }
             if (speed < targetspeed)
             {
@@ -115,8 +115,8 @@ namespace GreenLight
         void calculateAngle(int xt, int yt)
         {
 
-            double xDiff = xt - x;
-            double yDiff = yt - y;
+            float xDiff = xt - x;
+            float yDiff = yt - y;
             angle = (int) (Math.Atan2(yDiff, xDiff) * (180 / Math.PI));
 
         }
@@ -130,29 +130,29 @@ namespace GreenLight
         public void move(int xt, int yt) //xt and yt are the targetcoordinates
         {
             calculateAngle(xt, yt);
-            double xmove = Math.Abs(xt - x) / (Math.Abs(xt - x) + Math.Abs(yt - y));
-            double ymove = 1.0 - xmove;
+            float xmove = Math.Abs(xt - x) / (Math.Abs(xt - x) + Math.Abs(yt - y));
+            float ymove = 1.0f - xmove;
             while (true)
             {
                 while (Math.Abs(x - xt) > 1 && Math.Abs(y - yt) > 1)
                 {
                     if (x < xt)
                     {
-                        x = x + xmove * speed / 10;       //10 pixels per meter
+                        x = x + xmove * speed / 6.25f;       //10 pixels per meter
                     }
                     if (x > xt)
                     {
-                        x = x - xmove * speed / 10;
+                        x = x - xmove * speed / 6.25f;
                     }
                     if (y < yt)
                     {
-                        y = y + ymove * speed / 10;
+                        y = y + ymove * speed / 6.25f;
                     }
                     if (y > yt)
                     {
-                        y = y - ymove * speed / 10;
+                        y = y - ymove * speed / 6.25f;
                     }
-                    Thread.Sleep(10);
+                    Thread.Sleep(16);
                     
                 }
                 speed = 0;
@@ -179,59 +179,66 @@ namespace GreenLight
             }
         }*/
 
-
-        public void tryAccelerate(double targetspeed)
-        {
-            
-            isAccelerating = true;
-            isBraking = false;
-
-            if (start == null)
-            {
-                start = new Thread(() => accelerate(targetspeed));
-                start.Start();
-            }
-            else
-            {
-                start = null;
-            }
-            
-        }
-
-        public void tryBrake(double targetspeed)
+        public void tryBrake(float targetspeed)
         {
 
             isAccelerating = false;
             isBraking = true;
-                      
-            if (stop == null)
+
+            try
             {
-                stop = new Thread(() => brakeToSpeed(targetspeed));
-                stop.Start();
+                if (stop == null)
+                {
+                    stop = new Thread(() => brakeToSpeed(targetspeed));
+                    stop.Start();
+                }
+                else
+                {
+                    stop = null;
+                }
             }
-            else
+            catch (Exception e)
             {
-                stop = null;
+                Console.WriteLine(e);
             }
-            
-            
-            
         }
 
-        public void accelerate(double targetspeed)
+        public void tryAccelerate(float targetspeed)
         {
-            
+
+            isAccelerating = true;
+            isBraking = false;
+
+            try
+            {
+                if (start == null)
+                {
+                    start = new Thread(() => accelerate(targetspeed));
+                    start.Start();
+                }
+                else
+                {
+                    start = null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public void accelerate(float targetspeed)
+        {
             while (speed < targetspeed && isAccelerating)
             {
-                airResistance = 0.5 * physics.Density * cw * surface * speed * speed;
-                rollingResistance = crw * this.weight * physics.Gravity;
+                airResistance = (float) (0.5f * physics.Density * cw * surface * speed * speed);
+                rollingResistance = (float) (crw * this.weight * physics.Gravity);
                 a = (this.motorpwr - (airResistance + rollingResistance)) / this.weight;
                 if (airResistance + rollingResistance < this.motorpwr)
                 {
-                    speed += a * 0.01;
+                    speed += a * 0.016f;
                 }                
-                Thread.Sleep(10);
-                
+                Thread.Sleep(16);
             }            
             if (speed > targetspeed)
             {

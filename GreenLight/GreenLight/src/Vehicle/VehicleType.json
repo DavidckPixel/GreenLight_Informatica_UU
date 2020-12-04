@@ -17,7 +17,7 @@
         "maxspeed": 61,
         "motorpwr": 4223,
         "x": 0,
-        "y": 0,
+        "y": 50,
         "cw": 0.35,
         "surface": 2.65
     },

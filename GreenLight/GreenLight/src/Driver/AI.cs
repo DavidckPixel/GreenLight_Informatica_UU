@@ -8,16 +8,18 @@ namespace GreenLight
 {
     class AI
     {
-        Vehicle v;
-        double reactionSpeed;
-        double followInterval;
-        double speedRelativeToLimit;
-        double ruleBreakingChance;
+        public Vehicle v;
+        int reactionSpeed;
+        float followInterval;
+        float speedRelativeToLimit;
+        float ruleBreakingChance;
         int speedlimit = 10; //tijdelijk
-        Thread run, stop;
-        bool isAccelerating;
+        Thread run;
+        public bool isAccelerating;
+        public int targetspeed;
+
         
-        public AI(Vehicle v, double reactionSpeed, double followInterval, double speedRelativeToLimit, double ruleBreakingChance)
+        public AI(Vehicle v, int reactionSpeed, float followInterval, int speedRelativeToLimit, float ruleBreakingChance)
         {
             this.v = v;
             
@@ -26,40 +28,34 @@ namespace GreenLight
             this.followInterval = followInterval;
             this.speedRelativeToLimit = speedRelativeToLimit;
             this.ruleBreakingChance = ruleBreakingChance;
-            isAccelerating = false;
-            Thread run = new Thread(test);
-            run.Start();  
+            targetspeed = speedlimit + speedRelativeToLimit;
+            isAccelerating = true;
+            run = new Thread(test);
+            run.Start();
 
         }
 
         public void test()
         {
-            
             while (true)
             {
                 if (v.speed < speedlimit && !isAccelerating)
                 {
+                    Thread.Sleep(reactionSpeed);
                     v.tryAccelerate(speedlimit);
-                    isAccelerating = true;
-                }
+                    isAccelerating = true;                }
                 else if (v.speed >= speedlimit && isAccelerating)
                 {
+                    Thread.Sleep(reactionSpeed);
                     v.tryBrake(0);
                 }
                 else if (v.speed == 0 && isAccelerating)
                 {
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1000);
                     isAccelerating = false;
-                    
-                    
-                    
                 }
+                Thread.Sleep(16);
             }
-            
-            
         }
-
-     
-      
     }
 }
