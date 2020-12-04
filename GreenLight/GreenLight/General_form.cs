@@ -39,6 +39,7 @@ namespace GreenLight
 
         int Sub_menu_width = 250;
         FontFamily Dosis_font_family;
+        string[] Recent_projects = new string[3] {"project 1", "project 2", "project 3" };
 
         public General_form()
         {
@@ -55,7 +56,7 @@ namespace GreenLight
 
             this.SizeChanged += (object o, EventArgs EA) => { Size_adjust(); };
 
-            SSM = new Start_sub_menu(Sub_menu_width, this, Dosis_font_family);
+            SSM = new Start_sub_menu(Sub_menu_width, this, Dosis_font_family, Recent_projects);
             SMM = new Start_main_menu(this.Width - Sub_menu_width, this, Dosis_font_family);
 
             BSM = new Build_sub_menu(Sub_menu_width, this, Dosis_font_family);
@@ -101,14 +102,14 @@ namespace GreenLight
                 case "Home":
                     Menu_to_start();
                     break;
-                case "Save": //hoi
+                case "Save":
                     break;
             }
         }
         public void Size_adjust()
         {
             SMM.Size_adjust(this, Sub_menu_width);
-            SSM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
+            SSM.Size_adjust(this, Sub_menu_width, Dosis_font_family, Recent_projects);
             BMM.Size_adjust(this, Sub_menu_width);
             BSM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
             SimMM.Size_adjust(this, Sub_menu_width);
