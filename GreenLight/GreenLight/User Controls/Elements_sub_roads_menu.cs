@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
-    public partial class Simulation_sub_vehicle_menu : UserControl
+    public partial class Elements_sub_roads_menu : UserControl
     {
-        public Simulation_sub_vehicle_menu(int Menu_width, General_form General_form, FontFamily Dosis_font_family)
+        public Elements_sub_roads_menu(int Menu_width, General_form General_form, FontFamily Dosis_font_family)
         {
 
             this.BackColor = Color.FromArgb(255, 255, 255);
@@ -50,13 +50,12 @@ namespace GreenLight
             Slider temp5 = new Slider(new Point(10, 100));
             this.Controls.Add(temp5);
 
-            PictureBox Vehicles_header = new PictureBox();
-            Vehicles_header.Size = new Size(150, 25);
-            Vehicles_header.SizeMode = PictureBoxSizeMode.StretchImage;
-            Vehicles_header.Location = new Point(50, 30);
-            Vehicles_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
-            this.Controls.Add(Vehicles_header);
-
+            PictureBox Driver_header = new PictureBox();
+            Driver_header.Size = new Size(150, 25);
+            Driver_header.SizeMode = PictureBoxSizeMode.StretchImage;
+            Driver_header.Location = new Point(50, 30);
+            Driver_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
+            this.Controls.Add(Driver_header);
         }
     }
 }

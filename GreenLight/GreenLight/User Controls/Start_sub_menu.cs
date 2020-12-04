@@ -43,7 +43,6 @@ namespace GreenLight
             Project_header.Location = new Point(50, 120);
             Project_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
             this.Controls.Add(Project_header);
-
             int i = 0;
 
             foreach(string tekst in Recent_projects)
@@ -57,6 +56,7 @@ namespace GreenLight
             CurvedButtons Divider2 = new CurvedButtons();
             Divider2.Location = new Point(0, this.Height - 75);
             this.Controls.Add(Divider2);
+
 
             CurvedButtons About_button = new CurvedButtons(new Size(160, 38),
                 new Point(Sub_menu_width / 2 - 80, General_form.Height - 55), 25, "../../User Interface Recources/Custom_Button.png",

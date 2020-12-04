@@ -42,7 +42,14 @@ namespace GreenLight
             Divider1.Location = new Point(0, 100);
             this.Controls.Add(Divider1);
 
-            CurvedButtons Weather = new CurvedButtons(new Size(60,60),
+            PictureBox Settings_header = new PictureBox();
+            Settings_header.Size = new Size(150, 25);
+            Settings_header.SizeMode = PictureBoxSizeMode.StretchImage;
+            Settings_header.Location = new Point(50, 120);
+            Settings_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
+            this.Controls.Add(Settings_header);
+
+            CurvedButtons Weather = new CurvedButtons(new Size(60, 60),
                 new Point(20, 150), 30,
                 "../../User Interface Recources/Weather_Setting_Button.png", this.BackColor);
             this.Controls.Add(Weather);
@@ -58,10 +65,10 @@ namespace GreenLight
                 new Point(170, 150), 30,
                 "../../User Interface Recources/Driver_Setting_Button.png", this.BackColor);
             this.Controls.Add(Driver);
-            Driver.Click += (object obj, EventArgs args) => {General_form.Menu_to_simulation_driver();};
+            Driver.Click += (object obj, EventArgs args) => { General_form.Menu_to_simulation_driver(); };
 
             CurvedButtons Divider2 = new CurvedButtons();
-            Divider2.Location = new Point(0, this.Height - 125);
+            Divider2.Location = new Point(0, this.Height - 135);
             this.Controls.Add(Divider2);
 
             CurvedButtons Start = new CurvedButtons(new Size(60, 60),
@@ -78,6 +85,17 @@ namespace GreenLight
                 new Point(170, General_form.Height - 80), 35,
                 "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Stop);
+
+            PictureBox SimulationSpeed_header = new PictureBox();
+            SimulationSpeed_header.Size = new Size(150, 25);
+            SimulationSpeed_header.SizeMode = PictureBoxSizeMode.StretchImage;
+            SimulationSpeed_header.Location = new Point(50, this.Height - 125);
+            SimulationSpeed_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
+            this.Controls.Add(SimulationSpeed_header);
+
+            Slider SimulationSpeed = new Slider(new Point(10, this.Height - 105));
+            this.Controls.Add(SimulationSpeed);
+
         }
     }
 }

@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Slider.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CurvedButtons.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -88,6 +91,18 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="User Controls\Simulation_sub_driver_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Elements_sub_roads_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Elements_sub_signs_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Elements_sub_lights_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Elements_sub_buildings_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
