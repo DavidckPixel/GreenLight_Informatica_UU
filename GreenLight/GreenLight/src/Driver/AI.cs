@@ -45,7 +45,6 @@ namespace GreenLight
                 else if (v.speed >= speedlimit && isAccelerating)
                 {
                     v.tryBrake(0);
-
                 }
                 else if (v.speed == 0 && isAccelerating)
                 {

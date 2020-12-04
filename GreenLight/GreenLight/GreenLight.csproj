@@ -52,7 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AI.cs" />
+    <Compile Include="src\Driver\AI.cs" />
+    <Compile Include="src\Vehicle\VehicleTypeConfig.cs" />
     <Compile Include="src\Vehicle\Vehicle.cs" />
     <Compile Include="CurvedButtons.cs">
       <SubType>Component</SubType>
@@ -124,6 +125,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="src\Vehicle\Earth.json" />
+    <None Include="src\Vehicle\VehicleType.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,0 +1,35 @@
+[
+    {
+        "name": "VW Passat variant 2015",
+        "weight": 1352,
+        "length": 4.77,
+        "maxspeed": 61,
+        "motorpwr": 4223,
+        "x": 0,
+        "y": 0,
+        "cw": 0.35,
+        "surface": 2.65
+    },
+    {
+        "name": "VW Passat variant 2015",
+        "weight": 1352,
+        "length": 4.77,
+        "maxspeed": 61,
+        "motorpwr": 4223,
+        "x": 0,
+        "y": 0,
+        "cw": 0.35,
+        "surface": 2.65
+    },
+    {
+        "name": "VW Passat variant 2015",
+        "weight": 1352,
+        "length": 4.77,
+        "maxspeed": 61,
+        "motorpwr": 4223,
+        "x": 0,
+        "y": 0,
+        "cw": 0.35,
+        "surface": 2.65
+    }
+]

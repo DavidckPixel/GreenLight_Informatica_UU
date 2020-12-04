@@ -10,13 +10,14 @@ namespace GreenLight
 {
     class Startup : Form
     {
-        Vehicle v;
+        //Vehicle v;
         AI driver;
         bool simulate;
+        Vehicle v = VehicleTypeConfig.types[0];
         public Startup()
         {
 
-            v = new Vehicle("Auto", 1353, 4.77, 100, 4223, 0, 0, 0.35, 2.65);
+            //v = new Vehicle("Auto", 1353, 4.77, 100, 4223, 0, 0, 0.35, 2.65);
             driver = new AI(v, 0.25, 2, 0, 0);
             simulate = true;
             this.DoubleBuffered = true;

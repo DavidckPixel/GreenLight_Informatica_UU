@@ -7,7 +7,7 @@
     },
     { //this is for testing
       "Breakpwr": 120,
-      "Density": 1,
+      "Density": 20,
       "Gravity": 1
     },
     { // also testing
