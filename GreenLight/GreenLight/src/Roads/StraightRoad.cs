@@ -9,14 +9,16 @@ namespace GreenLight
 {
     class StraightRoad : AbstractRoad
     {
-        private char dir;
+        private string dir;
+        private int lanes;
 
         private int roadwidth = 10; // HARDCODED WAARDE AANPASSEN
 
-        public StraightRoad(Point _point1, Point _point2, int _lanes, char _dir) : base(_point1, _point2, _lanes)
+        public StraightRoad(Point _point1, Point _point2, int _lanes, string _dir) : base(_point1, _point2, _lanes)
         {
             //CalculateDrivingPath
             this.dir = _dir;
+            this.lanes = _lanes;
             this.CalculateDrivingLane();
         }
 
@@ -25,12 +27,12 @@ namespace GreenLight
             _lanePoints = new List<LanePoints>();
             Point _normpoint1 = point1; Point _normpoint2 = point2;
 
-            if (this.dir == 'N' || this.dir == 'S')
+            if (this.dir == "N" || this.dir == "S")
             {
                 _normpoint1 = new Point(this.point1.X - this.roadwidth, this.point1.Y);
                 _normpoint2 = new Point(this.point2.X + this.roadwidth, this.point2.Y);
             }
-            else if (dir == 'E' || this.dir == 'W') 
+            else if (dir == "E" || this.dir == "W") 
             {
                 _normpoint1 = new Point(this.point1.Y - this.roadwidth, this.point1.X);
                 _normpoint2 = new Point(this.point2.Y + this.roadwidth, this.point2.X);
@@ -63,6 +65,7 @@ namespace GreenLight
                 Log.Write(x.ToString());
             }
 
+              
         }
 
         private Tuple<int,int> GetDirection(Point _point1, Point _point2)

@@ -9,9 +9,9 @@ namespace GreenLight
 {
     class DiagonalRoad : AbstractRoad
     {
-        private char dir;
+        private string dir;
 
-        public DiagonalRoad(Point _point1, Point _point2, int _lanes, char _dir) : base(_point1, _point2, _lanes)
+        public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir) : base(_point1, _point2, _lanes)
         {
             this.dir = _dir;
             this.CalculateDrivingLane();
