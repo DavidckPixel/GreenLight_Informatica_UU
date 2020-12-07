@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace GreenLight
 {
-    class Vehicle       //tijdelijk
+    class Vehicle     
     {
         int weight;
         float length;

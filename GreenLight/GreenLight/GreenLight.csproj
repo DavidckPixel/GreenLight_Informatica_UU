@@ -36,6 +36,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="SliderText.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -64,6 +70,23 @@
     <Compile Include="Move_panel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="src\Bitmap\BitmapController.cs" />
+    <Compile Include="src\Driver\AI.cs" />
+    <Compile Include="src\Grid\GridConfig.cs" />
+    <Compile Include="src\Grid\GridController.cs" />
+    <Compile Include="src\Grid\Gridpoint.cs" />
+    <Compile Include="src\Logs\Log.cs" />
+    <Compile Include="src\Roads\AbstractRoad.cs" />
+    <Compile Include="src\Roads\CurvedRoad.cs" />
+    <Compile Include="src\Roads\DiagonalRoad.cs" />
+    <Compile Include="src\Roads\DrivingLane.cs" />
+    <Compile Include="src\Roads\Init.cs" />
+    <Compile Include="src\Roads\LanePoints.cs" />
+    <Compile Include="src\Roads\StraightRoad.cs" />
+    <Compile Include="src\Vehicle\Vehicle.cs" />
+    <Compile Include="src\Vehicle\VehicleTypeConfig.cs" />
+    <Compile Include="src\Vehicle\World.cs" />
+    <Compile Include="src\Vehicle\WorldConfig.cs" />
     <Compile Include="User Controls\Build_main_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -117,6 +140,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="src\Vehicle\Vehicle.resx">
+      <DependentUpon>Vehicle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\Simulation_main_menu.resx">
+      <DependentUpon>Simulation_main_menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="bin\Debug\GreenLight.exe.config" />
+    <None Include="Logs\26-11-2020_13-33-02" />
+    <None Include="Logs\26-11-2020_13-34-01" />
+    <None Include="Logs\26-11-2020_13-37-28" />
+    <None Include="Logs\26-11-2020_14-50-09" />
+    <None Include="Logs\27-11-2020_11-51-53" />
+    <None Include="obj\Release\GreenLight.csproj.CoreCompileInputs.cache" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -126,14 +163,24 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="src\Grid\GridConfig.json" />
+    <None Include="src\Logs\LogConfig.json" />
+    <None Include="src\Vehicle\Earth.json" />
+    <None Include="src\Vehicle\VehicleType.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\Release\" />
     <Folder Include="Fonts\" />
-    <Folder Include="src\" />
     <Folder Include="User Interface Recources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\GreenLight.exe" />
+    <Content Include="bin\Debug\GreenLight.pdb" />
+    <Content Include="Images\BigCar.png" />
+    <Content Include="Images\Car.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

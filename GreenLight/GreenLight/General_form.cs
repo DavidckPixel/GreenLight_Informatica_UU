@@ -41,14 +41,13 @@ namespace GreenLight
         Elements_sub_roads_menu ElemSRM;
         Elements_sub_signs_menu ElemSSM;
 
-
-
         int Sub_menu_width = 250;
         FontFamily Dosis_font_family;
         string[] Recent_projects = new string[3] {"project 1", "project 2", "project 3" };
 
         public General_form()
         {
+
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Size = new Size(1200, 600);

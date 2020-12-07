@@ -30,6 +30,7 @@ namespace GreenLight
         {
             RoundButtons Info_button = new RoundButtons(new Size(40, 40), new Point(15, General_form.Height - 55), "../../User Interface Recources/Info_Button.png");
             this.Controls.Add(Info_button);
+            BitmapController.bitmapController = new BitmapController();
         }
     }
 }
