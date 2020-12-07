@@ -17,7 +17,7 @@ namespace GreenLight
             this.BackColor = Color.FromArgb(255,255,255);
             this.Size = new Size(250,General_form.Height);
             this.Location = new Point(General_form.Width-Menu_width, General_form.Height);
-
+            this.AutoScroll = true;
             Initialize(General_form, Menu_width, Dosis_font_family);
         }
 
@@ -65,8 +65,12 @@ namespace GreenLight
             Driver.Click += (object obj, EventArgs args) => { General_form.Menu_to_simulation_driver(); };
 
             CurvedButtons Divider2 = new CurvedButtons();
-            Divider2.Location = new Point(0, this.Height - 135);
+            Divider2.Location = new Point(0, 220);
             this.Controls.Add(Divider2);
+
+            CurvedButtons Divider3 = new CurvedButtons();
+            Divider3.Location = new Point(0, this.Height - 135);
+            this.Controls.Add(Divider3);
 
             CurvedButtons Start = new CurvedButtons(new Size(60, 60),
                 new Point(20, General_form.Height - 80), 35,
@@ -88,8 +92,7 @@ namespace GreenLight
                 new Point(50, this.Height - 130), "../../User Interface Recources/Simulation_Speed_Header.png");
             this.Controls.Add(SimulationSpeed_header);
 
-
-            Slider SimulationSpeed = new Slider(new Point(10, this.Height - 105));
+            Slider SimulationSpeed = new Slider(new Point(25, this.Height - 105), 0, 100);
             this.Controls.Add(SimulationSpeed);
 
             

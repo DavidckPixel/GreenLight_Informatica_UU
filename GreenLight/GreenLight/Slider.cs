@@ -11,13 +11,17 @@ namespace GreenLight
 {
     class Slider : TrackBar
     {
-        public Slider(Point location)
+        public Slider(Point location, int min, int max)
         {
             this.Location = location;
             this.TickStyle = TickStyle.None;
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.BackColor = Color.Transparent;
-            this.Width = 230;
+            this.Width = 200;
+            this.Minimum = min;
+            this.Maximum = max;
+            this.Value = (max - min) / 2;
+            
         }
 
 
