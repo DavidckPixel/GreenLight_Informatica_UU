@@ -12,7 +12,7 @@ namespace GreenLight
         List<LanePoints> points;
         int Road;
 
-        DrivingLane(List<LanePoints> _points, int _Road)
+        public DrivingLane(List<LanePoints> _points, int _Road)
         {
             this.points = _points;
             this.Road = _Road;

@@ -10,7 +10,7 @@ namespace GreenLight
 {
     class Gridpoint
     {
-        Point Cords;
+        public Point Cords;
         Rectangle Hitbox;
         Size Size;
 

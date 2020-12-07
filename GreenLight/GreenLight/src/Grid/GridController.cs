@@ -41,20 +41,20 @@ namespace GreenLight
 
         public void OnClick(Object o, MouseEventArgs mea)
         {
-            Gridpoint _firstPoint;
-            Gridpoint _secondPoint;
+            Gridpoint _firstPoint = null;
+            Gridpoint _secondPoint = null;
 
 
             if (firstClick)
             {
                 _firstPoint = Gridpoints.Find(x => x.Collision(mea.Location));
-                if (_firstPoint = !null)
+                if (_firstPoint != null)
                     firstClick = false;
             }
             else
             {
                 _secondPoint = Gridpoints.Find(x => x.Collision(mea.Location));
-                if (_secondPoint = !null && _secondPoint =! _fisrtPoint)
+                if (_secondPoint != null && _secondPoint != _firstPoint)
                 {
                     firstClick = true;
                     if (Selected == "Roads")
@@ -65,7 +65,7 @@ namespace GreenLight
             //Console.WriteLine(_selectedPoint);
         }
 
-        public void CreateRoad(Gridpoint FirstPoint, Gridpoint SecondPoint)
+        public void CreateRoad(Gridpoint _firstPoint, Gridpoint _secondPoint)
         {
             AbstractRoad newRoad;
 
@@ -75,178 +75,174 @@ namespace GreenLight
                     {
                         for (int t = 1; t <= lanes; t++)
                         {
-                            string Direction = Direction(_firstPoint, _secondPoint);
-                            Gridpoint _firstPoint = FirstPoint;
-                            Gridpoints _secondPoint = SecondPoint;
-                            if (Direction == "NE" || Direction == "SW")
+                            string _Direction = Direction(_firstPoint.Cords, _secondPoint.Cords);
+
+                            if (_Direction == "NE" || _Direction == "SW")
                             {
                                 if (lanes % 2 == 0)
                                 {
                                     if (t % 2 == 0)
                                     {
-                                        _firstPoint.Y += t / 2 * drivingLaneDistance / 2; 
-                                        _secondPoint.X -= t / 2 * drivingLaneDistance / 2
+                                        _firstPoint.Cords.Y += t / 2 * drivingLaneDistance / 2;
+                                        _secondPoint.Cords.X -= t / 2 * drivingLaneDistance / 2;
                                     }
                                     else 
                                     {
-                                        _firstPoint.Y -= (t + 1) / 2 * drivingLaneDistance / 2;
-                                        _secondPoint.X += (t + 1) / 2 * drivingLaneDistance / 2;
+                                        _firstPoint.Cords.Y -= (t + 1) / 2 * drivingLaneDistance / 2;
+                                        _secondPoint.Cords.X += (t + 1) / 2 * drivingLaneDistance / 2;
                                     }
                                 }
                                 else // (lanes % 2 == 1)
                                 {
                                     if (t % 2 == 0)
                                     {
-                                        _firstPoint.Y += t / 2 * drivingLaneDistance;
-                                        _secondPoint.Y -= t / 2 * drivingLaneDistance;
+                                        _firstPoint.Cords.Y += t / 2 * drivingLaneDistance;
+                                        _secondPoint.Cords.Y -= t / 2 * drivingLaneDistance;
                                     }
-                                    else if (t % 2 == 1 && t = !1)
+                                    else if (t % 2 == 1 && t != 1)
                                     {
-                                        _firstPoint.Y -= (t - 1) / 2 * drivingLaneDistance;
-                                        _secondPoint.Y += (t - 1) / 2 * drivingLaneDistance;
+                                        _firstPoint.Cords.Y -= (t - 1) / 2 * drivingLaneDistance;
+                                        _secondPoint.Cords.Y += (t - 1) / 2 * drivingLaneDistance;
                                     }
                                 }
                             }
-                            else if (Direction == "SE" || Direction == "NW")
+                            else if (_Direction == "SE" || _Direction == "NW")
                             {
                                 if (lanes % 2 == 0)
                                 {
                                     if (t % 2 == 0)
                                     {
-                                        _firstPoint.Y += t / 2 * drivingLaneDistance / 2;
-                                        _secondPoint.X += t / 2 * drivingLaneDistance / 2
+                                        _firstPoint.Cords.Y += t / 2 * drivingLaneDistance / 2;
+                                        _secondPoint.Cords.X += t / 2 * drivingLaneDistance / 2;
                                     }
                                     else
                                     {
-                                        _firstPoint.Y -= (t + 1) / 2 * drivingLaneDistance / 2;
-                                        _secondPoint.X -= (t + 1) / 2 * drivingLaneDistance / 2;
+                                        _firstPoint.Cords.Y -= (t + 1) / 2 * drivingLaneDistance / 2;
+                                        _secondPoint.Cords.X -= (t + 1) / 2 * drivingLaneDistance / 2;
                                     }
                                 }
                                 else // (lanes % 2 == 1)
                                 {
                                     if (t % 2 == 0)
                                     {
-                                        _firstPoint.Y += t / 2 * drivingLaneDistance;
-                                        _secondPoint.Y += t / 2 * drivingLaneDistance;
+                                        _firstPoint.Cords.Y += t / 2 * drivingLaneDistance;
+                                        _secondPoint.Cords.Y += t / 2 * drivingLaneDistance;
                                     }
-                                    else if (t % 2 == 1 && t = !1)
+                                    else if (t % 2 == 1 && t != 1)
                                     {
-                                        _firstPoint.Y -= (t - 1) / 2 * drivingLaneDistance;
-                                        _secondPoint.Y -= (t - 1) / 2 * drivingLaneDistance;
+                                        _firstPoint.Cords.Y -= (t - 1) / 2 * drivingLaneDistance;
+                                        _secondPoint.Cords.Y -= (t - 1) / 2 * drivingLaneDistance;
                                     }
                                 }
                             }
 
-                            newRoad = new CurvedRoad(_firstPoint, _secondPoint, lanes, Direction);
+                            newRoad = new CurvedRoad(_firstPoint.Cords, _secondPoint.Cords, lanes, _Direction);
                             drivinglanes.Add(new DrivingLane(newRoad._lanePoints, roadAmount+1));
                         }
                         roadAmount++;
                     }
                     break;
+
                 case "DiagonalRoad":
                     for (int t = 1; t <= lanes; t++)
                     {
-                        Gridpoint _firstPoint = FirstPoint;
-                        Gridpoints _secondPoint = SecondPoint;
-
                         if (lanes % 2 == 0)
                         {
                             if (t % 2 == 0)
                             {
-                                _firstPoint.Y -= t / 2 * drivingLaneDistance / 2;
-                                _secondPoint.Y -= t / 2 * drivingLaneDistance / 2;
+                                _firstPoint.Cords.Y -= t / 2 * drivingLaneDistance / 2;
+                                _secondPoint.Cords.Y -= t / 2 * drivingLaneDistance / 2;
                             }
                             else
                             {
-                                _firstPoint.Y += (t + 1) / 2 * drivingLaneDistance / 2;
-                                _secondPoint.Y += (t + 1) / 2 * drivingLaneDistance / 2;
+                                _firstPoint.Cords.Y += (t + 1) / 2 * drivingLaneDistance / 2;
+                                _secondPoint.Cords.Y += (t + 1) / 2 * drivingLaneDistance / 2;
                             }
                         }
                         else // (lanes % 2 == 1)
                         {
                             if (t % 2 == 0)
                             {
-                                _firstPoint.Y -= t / 2 * drivingLaneDistance;
-                                _secondPoint.Y -= t / 2 * drivingLaneDistance;
+                                _firstPoint.Cords.Y -= t / 2 * drivingLaneDistance;
+                                _secondPoint.Cords.Y -= t / 2 * drivingLaneDistance;
                             }
-                            else if (t % 2 == 1 && t = !1)
+                            else if (t % 2 == 1 && t != 1)
                             {
-                                _firstPoint.Y += (t - 1) / 2 * drivingLaneDistance;
-                                _secondPoint.Y += (t - 1) / 2 * drivingLaneDistance;
+                                _firstPoint.Cords.Y += (t - 1) / 2 * drivingLaneDistance;
+                                _secondPoint.Cords.Y += (t - 1) / 2 * drivingLaneDistance;
                             }
                         }
-                        newRoad = new DiagonalRoad(_firstPoint, _secondPoint, lanes, Direction(_firstPoint, _secondPoint);
+                        newRoad = new DiagonalRoad(_firstPoint.Cords, _secondPoint.Cords, lanes, Direction(_firstPoint.Cords, _secondPoint.Cords));
                         drivinglanes.Add(new DrivingLane(newRoad._lanePoints, roadAmount + 1));
                     }
                     roadAmount++;
                     break;
                 case "StraightRoad":
-                    if (_firstPoint.X == _secondPoint.X || _firstPoint.Y == _secondPoint.Y)
+                    if (_firstPoint.Cords.X == _secondPoint.Cords.X || _firstPoint.Cords.Y == _secondPoint.Cords.Y)
                     {
                         for (int t = 1; t <= lanes; t++)
                         {
-                            string Direction = Direction(_firstPoint, _secondPoint, RoadType);
-                            Gridpoint _firstPoint = FirstPoint;
-                            Gridpoints _secondPoint = SecondPoint;
-                            if (Direction == "E" || Direction == "W")
+                            string _Direction = Direction(_firstPoint.Cords, _secondPoint.Cords);
+
+                            if (_Direction == "E" || _Direction == "W")
                             {
                                 if (lanes % 2 == 0)
                                 {
                                     if (t % 2 == 0)
                                     {
-                                        _firstPoint.Y -= t / 2 * drivingLaneDistance / 2;
-                                        _secondPoint.Y -= t / 2 * drivingLaneDistance / 2;
+                                        _firstPoint.Cords.Y -= t / 2 * drivingLaneDistance / 2;
+                                        _secondPoint.Cords.Y -= t / 2 * drivingLaneDistance / 2;
                                     }
                                     else
                                     {
-                                        _firstPoint.Y += (t + 1) / 2 * drivingLaneDistance / 2;
-                                        _secondPoint.Y += (t + 1) / 2 * drivingLaneDistance / 2;
+                                        _firstPoint.Cords.Y += (t + 1) / 2 * drivingLaneDistance / 2;
+                                        _secondPoint.Cords.Y += (t + 1) / 2 * drivingLaneDistance / 2;
                                     }
                                 }
                                 else // (lanes % 2 == 1)
                                 {
                                     if (t % 2 == 0)
                                     {
-                                        _firstPoint.Y -= t / 2 * drivingLaneDistance;
-                                        _secondPoint.Y -= t / 2 * drivingLaneDistance;
+                                        _firstPoint.Cords.Y -= t / 2 * drivingLaneDistance;
+                                        _secondPoint.Cords.Y -= t / 2 * drivingLaneDistance;
                                     }
-                                    else if (t % 2 == 1 && t =! 1)
+                                    else if (t % 2 == 1 && t != 1)
                                     {
-                                        _firstPoint.Y += (t - 1) / 2 * drivingLaneDistance;
-                                        _secondPoint.Y += (t - 1) / 2 * drivingLaneDistance;
+                                        _firstPoint.Cords.Y += (t - 1) / 2 * drivingLaneDistance;
+                                        _secondPoint.Cords.Y += (t - 1) / 2 * drivingLaneDistance;
                                     }
                                 }
                             }
-                            else if (Direction == "N" || Direction == "Z")
+                            else if (_Direction == "N" || _Direction == "Z")
                             {
                                 if (lanes % 2 == 0)
                                 {
                                     if (t % 2 == 0)
                                     {
-                                        _firstPoint.X -= t / 2 * drivingLaneDistance / 2;
-                                        _secondPoint.X -= t / 2 * drivingLaneDistance;
+                                        _firstPoint.Cords.X -= t / 2 * drivingLaneDistance / 2;
+                                        _secondPoint.Cords.X -= t / 2 * drivingLaneDistance;
                                     }
                                     else
                                     {
-                                        _firstPoint.X += (t + 1) / 2 * drivingLaneDistance / 2;
-                                        _secondPoint.X += (t + 1) / 2 * drivingLaneDistance / 2;
+                                        _firstPoint.Cords.X += (t + 1) / 2 * drivingLaneDistance / 2;
+                                        _secondPoint.Cords.X += (t + 1) / 2 * drivingLaneDistance / 2;
                                     }
                                 }
                                 else // (lanes % 2 == 1)
                                 {
                                     if (t % 2 == 0)
                                     {
-                                        _firstPoint.X -= t / 2 * drivingLaneDistance;
-                                        _secondPoint.X -= t / 2 * drivingLaneDistance;
+                                        _firstPoint.Cords.X -= t / 2 * drivingLaneDistance;
+                                        _secondPoint.Cords.X -= t / 2 * drivingLaneDistance;
                                     }
-                                    else if (t % 2 == 1 && t = !1)
+                                    else if (t % 2 == 1 && t != 1)
                                     {
-                                        _firstPoint.X += (t - 1) / 2 * drivingLaneDistance;
-                                        _secondPoint.X += (t - 1) / 2 * drivingLaneDistance;
+                                        _firstPoint.Cords.X += (t - 1) / 2 * drivingLaneDistance;
+                                        _secondPoint.Cords.X += (t - 1) / 2 * drivingLaneDistance;
                                     }
                                 }
                             }
-                            newRoad = new CurvedRoad(_firstPoint, _secondPoint, lanes, Direction, RoadType);
+                            newRoad = new CurvedRoad(_firstPoint.Cords, _secondPoint.Cords, lanes, _Direction);
                             drivinglanes.Add(new DrivingLane(newRoad._lanePoints, roadAmount + 1));
                         }
                         roadAmount++;
@@ -257,7 +253,7 @@ namespace GreenLight
 
         public String Direction(Point _firstPoint, Point _secondPoint)
         {
-            string RoadDirection;
+            string RoadDirection = "";
             switch (RoadType)
             {
                 case "CurvedRoad":
@@ -297,7 +293,7 @@ namespace GreenLight
                     break;
 
             }
-            return RoadDirection
+            return RoadDirection;
         }
 
         

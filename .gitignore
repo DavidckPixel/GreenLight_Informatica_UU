@@ -259,3 +259,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+GreenLight/GreenLight/Form1.Designer.cs
+GreenLight/GreenLight/Startup.cs
+GreenLight/GreenLight/Startup.cs
