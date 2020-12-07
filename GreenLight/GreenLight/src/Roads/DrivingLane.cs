@@ -8,7 +8,14 @@ namespace GreenLight
 {
     class DrivingLane
     {
-        string connection;
+        //string connection;
         List<LanePoints> points;
+        int Road;
+
+        DrivingLane(List<LanePoints> _points, int _Road)
+        {
+            this.points = _points;
+            this.Road = _Road;
+        }
     }
 }

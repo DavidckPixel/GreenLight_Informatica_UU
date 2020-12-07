@@ -16,7 +16,6 @@ namespace GreenLight
         protected Point point2;
 
         protected int lanes;
-        protected List<DrivingLane> drivinglanes;
         public List<LanePoints> _lanePoints;
 
         //Basic Road Constructor, every road calls this constructor during initialzation
