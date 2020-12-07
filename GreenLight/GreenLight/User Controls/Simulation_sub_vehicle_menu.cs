@@ -48,11 +48,8 @@ namespace GreenLight
             this.Controls.Add(temp4);
 
 
-            PictureBox Vehicles_header = new PictureBox();
-            Vehicles_header.Size = new Size(150, 25);
-            Vehicles_header.SizeMode = PictureBoxSizeMode.StretchImage;
-            Vehicles_header.Location = new Point(50, 10);
-            Vehicles_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
+            CurvedButtons Vehicles_header = new CurvedButtons(new Size(150, 30),
+               new Point(50, 5), "../../User Interface Recources/Edit_Vehicle_Header.png");
             this.Controls.Add(Vehicles_header);
 
         }

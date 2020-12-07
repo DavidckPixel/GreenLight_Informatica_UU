@@ -42,6 +42,16 @@ namespace GreenLight
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Image = Image.FromFile("../../User Interface Recources/Sub_Menu_Divider.png");
         }
+        // Header
+        public CurvedButtons(Size Header_size, Point Location, string FilePath)
+        {
+            curve = 1;
+            this.Size = Header_size;
+            this.SizeMode = PictureBoxSizeMode.Zoom;
+            this.Location = Location;
+            this.BringToFront();
+            this.Image = Image.FromFile(FilePath);
+        }
         // Curved Buttons
         public CurvedButtons(Size Button_size, Point Location, int Curve, string FilePath, Color BackColor)
         {
@@ -84,7 +94,7 @@ namespace GreenLight
             this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 4) + "_On_Hover.png"); };
             this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
 
-            Label label = new Label();
+            System.Windows.Forms.Label label = new System.Windows.Forms.Label();
             label.Font = new Font(Dosis_font_family, 15, FontStyle.Bold);
             label.Text = Text;
             label.BackColor = Color.Transparent;

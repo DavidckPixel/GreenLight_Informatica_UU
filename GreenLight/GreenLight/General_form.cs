@@ -136,7 +136,6 @@ namespace GreenLight
             ElemSLM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
             ElemSBM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
             ElemSSM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
-
         }
         public void Open(string File_name)
         {

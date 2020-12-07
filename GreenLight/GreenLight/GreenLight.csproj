@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Selection_box.cs">
+    	</Compile>
+    <Compile Include="SliderText.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Slider.cs">

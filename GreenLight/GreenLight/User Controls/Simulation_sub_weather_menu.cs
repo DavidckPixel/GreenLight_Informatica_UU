@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace GreenLight
 {
@@ -31,24 +32,50 @@ namespace GreenLight
 
         private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
+           
 
-            Slider temp1 = new Slider(new Point(25, 180), 0, 100);
-            this.Controls.Add(temp1);
+            Slider Slippery = new Slider(new Point(25, 180), 0, 100, 10);
+            this.Controls.Add(Slippery);
 
-            Slider temp2 = new Slider(new Point(25, 140), 0, 100);
-            this.Controls.Add(temp2);
+            SliderText Slippery_label = new SliderText(Dosis_font_family, new Point(25, 160), "Slipperiness:");
+            this.Controls.Add(Slippery_label);
 
-            Slider temp3 = new Slider(new Point(25, 100), 0, 100);
-            this.Controls.Add(temp3);
+            SliderText Slippery_Value = new SliderText(Dosis_font_family, new Point(125, 160), Slippery.Value.ToString() + " %");
+            this.Controls.Add(Slippery_Value);
+            Slippery.ValueChanged += (object o, EventArgs EA) => { Slippery_Value.Text = Slippery.Value.ToString() + " %"; };
 
-            Slider temp4 = new Slider(new Point(25, 60), 0, 100);
-            this.Controls.Add(temp4);
+            Slider Sight = new Slider(new Point(25, 140), 0, 100, 10);
+            this.Controls.Add(Sight);
 
-            PictureBox Weather_header = new PictureBox();
-            Weather_header.Size = new Size(150, 25);
-            Weather_header.SizeMode = PictureBoxSizeMode.StretchImage;
-            Weather_header.Location = new Point(50, 10);
-            Weather_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
+            SliderText Sight_label = new SliderText(Dosis_font_family, new Point(25, 120), "Sight:");
+            this.Controls.Add(Sight_label);
+
+            SliderText Sight_Value = new SliderText(Dosis_font_family, new Point(125, 120), Sight.Value.ToString() + " m");
+            this.Controls.Add(Sight_Value);
+            Sight.ValueChanged += (object o, EventArgs EA) => { Sight_Value.Text = Sight.Value.ToString() + " m"; };
+
+            Slider Snow = new Slider(new Point(25, 100), 0, 5, 10);
+            this.Controls.Add(Snow);
+
+            SliderText Snow_label = new SliderText(Dosis_font_family, new Point(25, 80), "Snow:");
+            this.Controls.Add(Snow_label);
+
+            SliderText Snow_Value = new SliderText(Dosis_font_family, new Point(125, 80), Snow.Value.ToString() + " mm");
+            this.Controls.Add(Snow_Value);
+            Snow.ValueChanged += (object o, EventArgs EA) => { Snow_Value.Text = Snow.Value.ToString() + " mm"; };
+
+            Slider Rainfall = new Slider(new Point(25, 60), 0, 10, 10);
+            this.Controls.Add(Rainfall);
+
+            SliderText Rainfall_label = new SliderText(Dosis_font_family, new Point(25, 40), "Rainfall:");
+            this.Controls.Add(Rainfall_label);
+
+            SliderText Rainfall_Value = new SliderText(Dosis_font_family, new Point(125, 40), Rainfall.Value.ToString() + " mm/h");
+            this.Controls.Add(Rainfall_Value);
+            Rainfall.ValueChanged += (object o, EventArgs EA) => { Rainfall_Value.Text = Rainfall.Value.ToString() + " mm/h"; };
+
+            CurvedButtons Weather_header = new CurvedButtons(new Size(150, 30),
+               new Point(50, 5), "../../User Interface Recources/Weather_Header.png");
             this.Controls.Add(Weather_header);
         }
     }

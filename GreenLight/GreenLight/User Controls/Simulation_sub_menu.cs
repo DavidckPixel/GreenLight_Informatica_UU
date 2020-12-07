@@ -42,11 +42,8 @@ namespace GreenLight
             Divider1.Location = new Point(0, 100);
             this.Controls.Add(Divider1);
 
-            PictureBox Settings_header = new PictureBox();
-            Settings_header.Size = new Size(150, 25);
-            Settings_header.SizeMode = PictureBoxSizeMode.StretchImage;
-            Settings_header.Location = new Point(50, 120);
-            Settings_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
+            CurvedButtons Settings_header = new CurvedButtons(new Size(150, 35),
+               new Point(50, 110), "../../User Interface Recources/Settings_Header.png");
             this.Controls.Add(Settings_header);
 
             CurvedButtons Weather = new CurvedButtons(new Size(60, 60),
@@ -89,16 +86,16 @@ namespace GreenLight
                 new Point(170, General_form.Height - 80), 35,
                 "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Stop);
+            Stop.Click += (object obj, EventArgs args) => { General_form.Menu_to_build(); };
 
-            PictureBox SimulationSpeed_header = new PictureBox();
-            SimulationSpeed_header.Size = new Size(150, 25);
-            SimulationSpeed_header.SizeMode = PictureBoxSizeMode.StretchImage;
-            SimulationSpeed_header.Location = new Point(50, this.Height - 125);
-            SimulationSpeed_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
+            CurvedButtons SimulationSpeed_header = new CurvedButtons(new Size(150, 30),
+                new Point(50, this.Height - 130), "../../User Interface Recources/Simulation_Speed_Header.png");
             this.Controls.Add(SimulationSpeed_header);
 
-            Slider SimulationSpeed = new Slider(new Point(25, this.Height - 105), 0, 100);
+            Slider SimulationSpeed = new Slider(new Point(25, this.Height - 105), 0, 100, 10);
             this.Controls.Add(SimulationSpeed);
+
+            
 
         }
     }
