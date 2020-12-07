@@ -92,7 +92,7 @@ namespace GreenLight
                 new Point(50, this.Height - 130), "../../User Interface Recources/Simulation_Speed_Header.png");
             this.Controls.Add(SimulationSpeed_header);
 
-            Slider SimulationSpeed = new Slider(new Point(25, this.Height - 105), 0, 100);
+            Slider SimulationSpeed = new Slider(new Point(25, this.Height - 105), 0, 100, 10);
             this.Controls.Add(SimulationSpeed);
 
             

@@ -94,7 +94,7 @@ namespace GreenLight
             this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 4) + "_On_Hover.png"); };
             this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
 
-            Label label = new Label();
+            System.Windows.Forms.Label label = new System.Windows.Forms.Label();
             label.Font = new Font(Dosis_font_family, 15, FontStyle.Bold);
             label.Text = Text;
             label.BackColor = Color.Transparent;

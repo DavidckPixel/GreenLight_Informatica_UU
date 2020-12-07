@@ -31,23 +31,23 @@ namespace GreenLight
         private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
 
-            Slider temp1 = new Slider(new Point(25, 260), 0, 100);
+            Slider temp1 = new Slider(new Point(25, 260), 0, 100, 10);
             this.Controls.Add(temp1);
 
-            Slider temp2 = new Slider(new Point(25, 220), 0, 100);
+            Slider temp2 = new Slider(new Point(25, 220), 0, 100, 10);
             this.Controls.Add(temp2);
 
-            Slider temp3 = new Slider(new Point(25, 180), 0, 100);
+            Slider temp3 = new Slider(new Point(25, 180), 0, 100, 10);
             this.Controls.Add(temp3);
 
-            Slider temp4 = new Slider(new Point(25, 140), 0, 100);
+            Slider temp4 = new Slider(new Point(25, 140), 0, 100, 10);
             this.Controls.Add(temp4);
 
-            Slider temp5 = new Slider(new Point(25, 100), 0, 100);
+            Slider temp5 = new Slider(new Point(25, 100), 0, 100, 10);
             this.Controls.Add(temp5);
 
             CurvedButtons Edit_Driver_Header = new CurvedButtons(new Size(150, 30),
-               new Point(50, 30), "../../User Interface Recources/Edit_Driver_Header.png");
+               new Point(50, 5), "../../User Interface Recources/Edit_Driver_Header.png");
             this.Controls.Add(Edit_Driver_Header);
         }
     }
