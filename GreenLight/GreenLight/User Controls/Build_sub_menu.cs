@@ -28,7 +28,7 @@ namespace GreenLight
             Initialize(General_form,Sub_menu_width, Dosis_font_family);
         }
 
-        private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family) 
+        private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
             CurvedButtons Logo = new CurvedButtons(General_form, 1);
             Logo.Location = new Point(40, 20);
@@ -84,6 +84,10 @@ namespace GreenLight
                 "../../User Interface Recources/Custom_Button.png", "Start simulation", Dosis_font_family, General_form, this.BackColor);
             Start_sim_button.Click += (object o, EventArgs EA) => { General_form.Menu_to_simulation(); };
             this.Controls.Add(Start_sim_button);
+
+            CurvedButtons Divider3 = new CurvedButtons();
+            Divider3.Location = new Point(0, 280);
+            this.Controls.Add(Divider3);
         }
     }
 }

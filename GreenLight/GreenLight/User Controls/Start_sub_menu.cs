@@ -45,9 +45,9 @@ namespace GreenLight
             this.Controls.Add(Project_header);
             int i = 0;
 
-            foreach(string tekst in Recent_projects)
+            foreach (string tekst in Recent_projects)
             {
-                CurvedButtons Project = new CurvedButtons(new Size(160, 38), new Point(Sub_menu_width / 2 - 80, 160 + i*45), 25, "../../User Interface Recources/Custom_Button.png", tekst,Dosis_font_family, General_form, Color.White);
+                CurvedButtons Project = new CurvedButtons(new Size(160, 38), new Point(Sub_menu_width / 2 - 80, 160 + i * 45), 25, "../../User Interface Recources/Custom_Button.png", tekst, Dosis_font_family, General_form, Color.White);
                 Project.Location = new Point(Sub_menu_width / 2 - 80, 160 + i * 45);
                 this.Controls.Add(Project);
                 i++;

@@ -132,6 +132,11 @@ namespace GreenLight
             SimSWM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
             SimSVM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
             SimSDM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
+            ElemSRM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
+            ElemSLM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
+            ElemSBM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
+            ElemSSM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
+
         }
         public void Open(string File_name)
         {
