@@ -50,11 +50,8 @@ namespace GreenLight
             Slider temp5 = new Slider(new Point(10, 100));
             this.Controls.Add(temp5);
 
-            PictureBox Vehicles_header = new PictureBox();
-            Vehicles_header.Size = new Size(150, 25);
-            Vehicles_header.SizeMode = PictureBoxSizeMode.StretchImage;
-            Vehicles_header.Location = new Point(50, 30);
-            Vehicles_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
+            CurvedButtons Vehicles_header = new CurvedButtons(new Size(150, 30),
+               new Point(50, 30), "../../User Interface Recources/Edit_Vehicle_Header.png");
             this.Controls.Add(Vehicles_header);
 
         }

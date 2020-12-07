@@ -56,7 +56,7 @@ namespace GreenLight
             Save_button.Click += (object o, EventArgs EA) => { };
             this.Controls.Add(Save_button);
 
-            CurvedButtons Road_button = new CurvedButtons(new Size(40, 40), new Point(Sub_menu_width / 2 - 107, 220), 25, "../../User Interface Recources/Custom_Button_Small.png", this.BackColor);
+            CurvedButtons Road_button = new CurvedButtons(new Size(40, 40), new Point(Sub_menu_width / 2 - 107, 220), 25, "../../User Interface Recources/Road_Button.png", this.BackColor);
             Road_button.Click += (object o, EventArgs EA) => { General_form.Menu_to_roads(); };
             this.Controls.Add(Road_button);
 
@@ -68,7 +68,7 @@ namespace GreenLight
             Sign_button.Click += (object o, EventArgs EA) => { General_form.Menu_to_signs(); };
             this.Controls.Add(Sign_button);
 
-            CurvedButtons Building_button = new CurvedButtons(new Size(40, 40), new Point(Sub_menu_width / 2 + 67, 220), 25, "../../User Interface Recources/Custom_Button_Small.png", this.BackColor);
+            CurvedButtons Building_button = new CurvedButtons(new Size(40, 40), new Point(Sub_menu_width / 2 + 67, 220), 25, "../../User Interface Recources/Building_Button.png", this.BackColor);
             Building_button.Click += (object o, EventArgs EA) => { General_form.Menu_to_buildings(); };
             this.Controls.Add(Building_button);
 

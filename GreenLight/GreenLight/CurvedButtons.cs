@@ -42,6 +42,16 @@ namespace GreenLight
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Image = Image.FromFile("../../User Interface Recources/Sub_Menu_Divider.png");
         }
+        // Header
+        public CurvedButtons(Size Header_size, Point Location, string FilePath)
+        {
+            curve = 1;
+            this.Size = Header_size;
+            this.SizeMode = PictureBoxSizeMode.Zoom;
+            this.Location = Location;
+            this.BringToFront();
+            this.Image = Image.FromFile(FilePath);
+        }
         // Curved Buttons
         public CurvedButtons(Size Button_size, Point Location, int Curve, string FilePath, Color BackColor)
         {

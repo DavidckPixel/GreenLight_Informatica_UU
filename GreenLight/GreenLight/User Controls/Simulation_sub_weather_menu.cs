@@ -47,11 +47,8 @@ namespace GreenLight
             Slider temp4 = new Slider(new Point(10, 130));
             this.Controls.Add(temp4);
 
-            PictureBox Weather_header = new PictureBox();
-            Weather_header.Size = new Size(150, 25);
-            Weather_header.SizeMode = PictureBoxSizeMode.StretchImage;
-            Weather_header.Location = new Point(50, 30);
-            Weather_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
+            CurvedButtons Weather_header = new CurvedButtons(new Size(150, 30),
+               new Point(50, 30), "../../User Interface Recources/Weather_Header.png");
             this.Controls.Add(Weather_header);
         }
     }
