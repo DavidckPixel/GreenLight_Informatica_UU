@@ -31,21 +31,22 @@ namespace GreenLight
 
         private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
+            Selection_box Selection_box = new Selection_box(General_form, Dosis_font_family);
+            Selection_box.Location = new Point(3, 35);
+            this.Controls.Add(Selection_box);
 
-            Slider temp1 = new Slider(new Point(25, 260), 0, 100);
+            Slider temp1 = new Slider(new Point(25, 295), 0, 100);
             this.Controls.Add(temp1);
 
-            Slider temp2 = new Slider(new Point(25, 220), 0, 100);
+            Slider temp2 = new Slider(new Point(25, 255), 0, 100);
             this.Controls.Add(temp2);
 
-            Slider temp3 = new Slider(new Point(25, 180), 0, 100);
+            Slider temp3 = new Slider(new Point(25, 215), 0, 100);
             this.Controls.Add(temp3);
 
-            Slider temp4 = new Slider(new Point(25, 140), 0, 100);
+            Slider temp4 = new Slider(new Point(25, 175), 0, 100);
             this.Controls.Add(temp4);
 
-            Slider temp5 = new Slider(new Point(25, 100), 0, 100);
-            this.Controls.Add(temp5);
 
             PictureBox Vehicles_header = new PictureBox();
             Vehicles_header.Size = new Size(150, 25);
