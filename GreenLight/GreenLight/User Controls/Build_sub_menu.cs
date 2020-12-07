@@ -41,11 +41,8 @@ namespace GreenLight
             Move_panel Drag_pad = new Move_panel(General_form);
             this.Controls.Add(Drag_pad);
 
-            PictureBox Elements_header = new PictureBox();
-            Elements_header.Size = new Size(114, 30);
-            Elements_header.SizeMode = PictureBoxSizeMode.StretchImage;
-            Elements_header.Location = new Point(68, 180);
-            Elements_header.Image = Image.FromFile("../../User Interface Recources/Elements_Header.png");
+            CurvedButtons Elements_header = new CurvedButtons(new Size(114, 30),
+               new Point(68, 180), "../../User Interface Recources/Elements_Header.png");
             this.Controls.Add(Elements_header);
 
             CurvedButtons Home_button = new CurvedButtons(new Size(80, 40), new Point(Sub_menu_width / 2 - 90, 115), 25, "../../User Interface Recources/Custom_Button_Small.png", "Home", Dosis_font_family, General_form, this.BackColor);
