@@ -48,7 +48,7 @@ namespace GreenLight
             Browse_directory_button.Click += (object o, EventArgs EA) => {
                 OpenFileDialog open = new OpenFileDialog();
                 open.Filter = "*.txt|*.*";
-                open.Title = "Openen";
+                open.Title = "Open file";
                 if (open.ShowDialog() == DialogResult.OK)
                 {
                     General_form.Open(open.FileName);

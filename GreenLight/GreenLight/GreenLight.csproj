@@ -36,9 +36,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,9 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Driver\AI.cs" />
-    <Compile Include="src\Vehicle\VehicleTypeConfig.cs" />
-    <Compile Include="src\Vehicle\Vehicle.cs" />
+    <Compile Include="SliderText.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Slider.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CurvedButtons.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -63,11 +63,6 @@
     </Compile>
     <Compile Include="Move_panel.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="src\Vehicle\World.cs" />
-    <Compile Include="src\Vehicle\WorldConfig.cs" />
-    <Compile Include="Startup.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="User Controls\Build_main_menu.cs">
       <SubType>UserControl</SubType>
@@ -101,6 +96,18 @@
     <Compile Include="User Controls\Simulation_sub_driver_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="User Controls\Elements_sub_roads_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Elements_sub_signs_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Elements_sub_lights_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Elements_sub_buildings_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -109,12 +116,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="src\Vehicle\Vehicle.resx">
-      <DependentUpon>Vehicle.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -124,18 +126,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="src\Vehicle\Earth.json" />
-    <None Include="src\Vehicle\VehicleType.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fonts\" />
+    <Folder Include="src\" />
     <Folder Include="User Interface Recources\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Car.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

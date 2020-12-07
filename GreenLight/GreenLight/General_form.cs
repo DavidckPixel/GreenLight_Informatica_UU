@@ -36,9 +36,16 @@ namespace GreenLight
         Simulation_sub_weather_menu SimSWM;
         Simulation_sub_vehicle_menu SimSVM;
         Simulation_sub_driver_menu SimSDM;
+        Elements_sub_buildings_menu ElemSBM;
+        Elements_sub_lights_menu ElemSLM;
+        Elements_sub_roads_menu ElemSRM;
+        Elements_sub_signs_menu ElemSSM;
+
+
 
         int Sub_menu_width = 250;
         FontFamily Dosis_font_family;
+        string[] Recent_projects = new string[3] {"project 1", "project 2", "project 3" };
 
         public General_form()
         {
@@ -55,7 +62,7 @@ namespace GreenLight
 
             this.SizeChanged += (object o, EventArgs EA) => { Size_adjust(); };
 
-            SSM = new Start_sub_menu(Sub_menu_width, this, Dosis_font_family);
+            SSM = new Start_sub_menu(Sub_menu_width, this, Dosis_font_family, Recent_projects);
             SMM = new Start_main_menu(this.Width - Sub_menu_width, this, Dosis_font_family);
 
             BSM = new Build_sub_menu(Sub_menu_width, this, Dosis_font_family);
@@ -67,6 +74,10 @@ namespace GreenLight
             SimSVM = new Simulation_sub_vehicle_menu(Sub_menu_width, this, Dosis_font_family);
             SimSDM = new Simulation_sub_driver_menu(Sub_menu_width, this, Dosis_font_family);
 
+            ElemSBM = new Elements_sub_buildings_menu(Sub_menu_width, this, Dosis_font_family);
+            ElemSLM = new Elements_sub_lights_menu(Sub_menu_width, this, Dosis_font_family);
+            ElemSRM = new Elements_sub_roads_menu(Sub_menu_width, this, Dosis_font_family);
+            ElemSSM = new Elements_sub_signs_menu(Sub_menu_width, this, Dosis_font_family);
 
             this.Controls.Add(SMM);
             this.Controls.Add(SSM);
@@ -77,6 +88,10 @@ namespace GreenLight
             this.Controls.Add(SimSWM);
             this.Controls.Add(SimSVM);
             this.Controls.Add(SimSDM);
+            this.Controls.Add(ElemSBM);
+            this.Controls.Add(ElemSLM);
+            this.Controls.Add(ElemSRM);
+            this.Controls.Add(ElemSSM);
 
             Hide_all_menus();
             Menu_to_start();
@@ -101,6 +116,7 @@ namespace GreenLight
                 case "Home":
                     Menu_to_start();
                     break;
+
                 case "Save":
                     break;
             }
@@ -108,7 +124,7 @@ namespace GreenLight
         public void Size_adjust()
         {
             SMM.Size_adjust(this, Sub_menu_width);
-            SSM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
+            SSM.Size_adjust(this, Sub_menu_width, Dosis_font_family, Recent_projects);
             BMM.Size_adjust(this, Sub_menu_width);
             BSM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
             SimMM.Size_adjust(this, Sub_menu_width);
@@ -116,6 +132,10 @@ namespace GreenLight
             SimSWM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
             SimSVM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
             SimSDM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
+            ElemSRM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
+            ElemSLM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
+            ElemSBM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
+            ElemSSM.Size_adjust(this, Sub_menu_width, Dosis_font_family);
         }
         public void Open(string File_name)
         {
@@ -160,6 +180,38 @@ namespace GreenLight
             SimSDM.Show();
             SimSDM.BringToFront();
         }
+        public void Menu_to_roads()
+        {
+            ElemSLM.Hide();
+            ElemSBM.Hide();
+            ElemSSM.Hide();
+            ElemSRM.Show();
+            ElemSRM.BringToFront();
+        }
+        public void Menu_to_signs()
+        {
+            ElemSLM.Hide();
+            ElemSBM.Hide();
+            ElemSRM.Hide();
+            ElemSSM.Show();
+            ElemSSM.BringToFront();
+        }
+        public void Menu_to_lights()
+        { 
+            ElemSBM.Hide();
+            ElemSSM.Hide();
+            ElemSRM.Hide();
+            ElemSLM.Show();
+            ElemSLM.BringToFront();
+        }
+        public void Menu_to_buildings()
+        {
+            ElemSLM.Hide();
+            ElemSSM.Hide();
+            ElemSRM.Hide();
+            ElemSBM.Show();
+            ElemSBM.BringToFront();
+        }
         private void Hide_all_menus()
         {
             SSM.Hide();
@@ -171,6 +223,10 @@ namespace GreenLight
             SimSWM.Hide();
             SimSVM.Hide();
             SimSDM.Hide();
+            ElemSLM.Hide();
+            ElemSSM.Hide();
+            ElemSRM.Hide();
+            ElemSBM.Hide();
         }
     }
 }
