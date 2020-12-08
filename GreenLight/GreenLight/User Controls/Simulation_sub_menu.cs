@@ -12,6 +12,7 @@ namespace GreenLight
 {
     public partial class Simulation_sub_menu : UserControl
     {
+        public bool Simulation_state_playing = false;
         public Simulation_sub_menu(int Menu_width, General_form General_form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255,255,255);
@@ -76,6 +77,20 @@ namespace GreenLight
                 new Point(20, General_form.Height - 80), 35,
                 "../../User Interface Recources/Play_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Start);
+            Start.Click += (object o, EventArgs EA) => 
+            {
+                if (Simulation_state_playing)
+                {
+                    Start.Set_Image("../../User Interface Recources/Play_Simulation_Button.png");
+                    Simulation_state_playing = false;
+                }
+                else
+                {
+                    Start.Set_Image("../../User Interface Recources/Pause_Button.png");
+                    Simulation_state_playing = true;
+                }
+            };
+
 
             CurvedButtons Reset = new CurvedButtons(new Size(60, 60),
                 new Point(95, General_form.Height - 80), 35,

@@ -32,7 +32,9 @@ namespace GreenLight
         private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
             Selection_box Selection_box = new Selection_box(General_form, Dosis_font_family);
-            Selection_box.Location = new Point(3, 35);
+            if (General_form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(13,35);
+            else Selection_box.Location = new Point(3, 35);
+
             this.Controls.Add(Selection_box);
 
             Slider Max_speed = new Slider(new Point(25, 360), 0, 100, 10);
