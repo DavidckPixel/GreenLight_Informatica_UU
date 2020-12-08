@@ -82,8 +82,11 @@
     <Compile Include="src\Roads\DrivingLane.cs" />
     <Compile Include="src\Roads\Init.cs" />
     <Compile Include="src\Roads\LanePoints.cs" />
+    <Compile Include="src\Roads\RoadController.cs" />
     <Compile Include="src\Roads\StraightRoad.cs" />
+    <Compile Include="src\ScreenObject.cs" />
     <Compile Include="src\Vehicle\Vehicle.cs" />
+    <Compile Include="src\Vehicle\VehicleController.cs" />
     <Compile Include="src\Vehicle\VehicleTypeConfig.cs" />
     <Compile Include="src\Vehicle\World.cs" />
     <Compile Include="src\Vehicle\WorldConfig.cs" />

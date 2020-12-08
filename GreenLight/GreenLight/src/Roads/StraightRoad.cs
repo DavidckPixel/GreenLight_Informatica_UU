@@ -10,7 +10,6 @@ namespace GreenLight
     class StraightRoad : AbstractRoad
     {
         private string dir;
-        private int lanes;
 
         private int roadwidth = 10; // HARDCODED WAARDE AANPASSEN
 
@@ -18,7 +17,6 @@ namespace GreenLight
         {
             //CalculateDrivingPath
             this.dir = _dir;
-            this.lanes = _lanes;
             this.CalculateDrivingLane();
         }
 
