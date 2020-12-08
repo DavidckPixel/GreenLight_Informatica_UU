@@ -31,52 +31,52 @@ namespace GreenLight
 
         private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            CurvedButtons temp1 = new CurvedButtons(new Size(60, 60), new Point(18, 18), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp1.Click += (object o, EventArgs EA) => { General_form.Menu_to_lights(); };
-            this.Controls.Add(temp1);
+            CurvedButtons Hand = new CurvedButtons(new Size(60, 60), new Point(18, 18), 25, "../../User Interface Recources/Hand_Button.png", this.BackColor);
+            Hand.Click += (object o, EventArgs EA) => { };
+            this.Controls.Add(Hand);
 
-            CurvedButtons temp2 = new CurvedButtons(new Size(60, 60), new Point(95, 18), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp2.Click += (object o, EventArgs EA) => { General_form.Menu_to_lights(); };
-            this.Controls.Add(temp2);
+            CurvedButtons Speed_sign = new CurvedButtons(new Size(60, 60), new Point(95, 18), 25, "../../User Interface Recources/Speed_Sign_Button.png", this.BackColor);
+            Speed_sign.Click += (object o, EventArgs EA) => {  };
+            this.Controls.Add(Speed_sign);
 
-            CurvedButtons temp3 = new CurvedButtons(new Size(60, 60), new Point(172, 18), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp3.Click += (object o, EventArgs EA) => { General_form.Menu_to_lights(); };
-            this.Controls.Add(temp3);
+            CurvedButtons Yield_sign = new CurvedButtons(new Size(60, 60), new Point(172, 18), 25, "../../User Interface Recources/Yield_Sign_Button.png", this.BackColor);
+            Yield_sign.Click += (object o, EventArgs EA) => { };
+            this.Controls.Add(Yield_sign);
 
-            CurvedButtons temp4 = new CurvedButtons(new Size(60, 60), new Point(18, 96), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp4.Click += (object o, EventArgs EA) => { General_form.Menu_to_lights(); };
-            this.Controls.Add(temp4);
+            CurvedButtons Priority_road_sign = new CurvedButtons(new Size(60, 60), new Point(18, 96), 25, "../../User Interface Recources/Priority_Road_Sign_Button.png", this.BackColor);
+            Priority_road_sign.Click += (object o, EventArgs EA) => { };
+            this.Controls.Add(Priority_road_sign);
 
-            CurvedButtons temp5 = new CurvedButtons(new Size(60, 60), new Point(95, 96), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp5.Click += (object o, EventArgs EA) => { General_form.Menu_to_lights(); };
-            this.Controls.Add(temp5);
+            CurvedButtons Stop_sign = new CurvedButtons(new Size(60, 60), new Point(95, 96), 25, "../../User Interface Recources/Stop_Sign_Button.png", this.BackColor);
+            Stop_sign.Click += (object o, EventArgs EA) => { };
+            this.Controls.Add(Stop_sign);
 
             CurvedButtons temp6 = new CurvedButtons(new Size(60, 60), new Point(172, 96), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp6.Click += (object o, EventArgs EA) => { General_form.Menu_to_lights(); };
+            temp6.Click += (object o, EventArgs EA) => { };
             this.Controls.Add(temp6);
 
             CurvedButtons temp7 = new CurvedButtons(new Size(60, 60), new Point(18, 174), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp7.Click += (object o, EventArgs EA) => { General_form.Menu_to_lights(); };
+            temp7.Click += (object o, EventArgs EA) => { };
             this.Controls.Add(temp7);
 
             CurvedButtons temp8 = new CurvedButtons(new Size(60, 60), new Point(95, 174), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp8.Click += (object o, EventArgs EA) => { General_form.Menu_to_lights(); };
+            temp8.Click += (object o, EventArgs EA) => { };
             this.Controls.Add(temp8);
 
             CurvedButtons temp9 = new CurvedButtons(new Size(60, 60), new Point(172, 174), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp9.Click += (object o, EventArgs EA) => { General_form.Menu_to_lights(); };
+            temp9.Click += (object o, EventArgs EA) => { };
             this.Controls.Add(temp9);
 
             CurvedButtons temp10 = new CurvedButtons(new Size(60, 60), new Point(18, 252), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp10.Click += (object o, EventArgs EA) => { General_form.Menu_to_lights(); };
+            temp10.Click += (object o, EventArgs EA) => { };
             this.Controls.Add(temp10);
 
             CurvedButtons temp11 = new CurvedButtons(new Size(60, 60), new Point(95, 252), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp11.Click += (object o, EventArgs EA) => { General_form.Menu_to_lights(); };
+            temp11.Click += (object o, EventArgs EA) => { };
             this.Controls.Add(temp11);
 
-            CurvedButtons temp12 = new CurvedButtons(new Size(60, 60), new Point(172, 252), 25, "../../User Interface Recources/Yield_Sign_Button.png", this.BackColor);
-            temp12.Click += (object o, EventArgs EA) => { General_form.Menu_to_lights(); };
+            CurvedButtons temp12 = new CurvedButtons(new Size(60, 60), new Point(172, 252), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
+            temp12.Click += (object o, EventArgs EA) => { };
             this.Controls.Add(temp12);
         }
     }

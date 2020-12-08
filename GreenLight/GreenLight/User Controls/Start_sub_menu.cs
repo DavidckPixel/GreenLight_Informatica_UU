@@ -43,6 +43,7 @@ namespace GreenLight
             Project_header.Location = new Point(50, 120);
             Project_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
             this.Controls.Add(Project_header);
+            
             int i = 0;
 
             foreach (string tekst in Recent_projects)

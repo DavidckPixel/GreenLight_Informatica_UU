@@ -30,6 +30,9 @@ namespace GreenLight
 
         private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
+            Selection_box Selection_box = new Selection_box(General_form, Dosis_font_family);
+            Selection_box.Location = new Point(3, 35);
+            this.Controls.Add(Selection_box);
 
             Slider Reaction_time = new Slider(new Point(25, 260), 0, 100, 10);
             this.Controls.Add(Reaction_time);
