@@ -12,20 +12,19 @@ namespace GreenLight
 {
     public partial class Start_main_menu : UserControl
     {
-        public Start_main_menu(int Width, General_form General_form, FontFamily Dosis_font_family)
+        public Start_main_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(196, 196, 198);
-            this.Size = new Size(Width, General_form.Height);
-            Initialize(General_form, Width);
-        }
-
-        public void Size_adjust(General_form General_form, int Sub_menu_width)
-        {
             this.Size = new Size(General_form.Width - Sub_menu_width, General_form.Height);
-            this.Controls.Clear();
             Initialize(General_form, Sub_menu_width);
-        }
 
+            General_form.SizeChanged += (object o, EventArgs EA) =>
+            {
+                this.Size = new Size(General_form.Width - Sub_menu_width, General_form.Height);
+                this.Controls.Clear();
+                Initialize(General_form, Sub_menu_width);
+            };
+        }
         private void Initialize(General_form General_form, int Sub_menu_width) 
         {
             CurvedButtons New_project_button = new CurvedButtons(new Size(200, 200), new Point((General_form.Width - Sub_menu_width) / 2 - 200 - (int) (0.1*General_form.Width), (General_form.Height / 3) * 2 - 100), 100, "../../User Interface Recources/New_Project_Button.png", this.BackColor);

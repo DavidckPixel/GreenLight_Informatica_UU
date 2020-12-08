@@ -12,18 +12,17 @@ namespace GreenLight
 {
     public partial class Simulation_main_menu : UserControl
     {
-        public Simulation_main_menu(int Width, General_form General_form, FontFamily Dosis_font_family)
+        public Simulation_main_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(196, 196, 198);
-            this.Size = new Size(Width, General_form.Height);
-            Initialize(General_form, Width);
-        }
-
-        public void Size_adjust(General_form General_form, int Sub_menu_width)
-        {
             this.Size = new Size(General_form.Width - Sub_menu_width, General_form.Height);
-            this.Controls.Clear();
             Initialize(General_form, Sub_menu_width);
+            General_form.SizeChanged += (object o, EventArgs EA) =>
+            {
+                this.Size = new Size(General_form.Width - Sub_menu_width, General_form.Height);
+                this.Controls.Clear();
+                Initialize(General_form, Sub_menu_width);
+            };
         }
 
         private void Initialize(General_form General_form, int Sub_menu_width)
