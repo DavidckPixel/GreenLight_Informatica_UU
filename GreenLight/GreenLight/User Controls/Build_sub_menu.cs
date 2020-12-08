@@ -46,7 +46,7 @@ namespace GreenLight
             this.Controls.Add(Elements_header);
 
             CurvedButtons Home_button = new CurvedButtons(new Size(80, 40), new Point(Sub_menu_width / 2 - 90, 115), 25, "../../User Interface Recources/Custom_Button_Small.png", "Home", Dosis_font_family, General_form, this.BackColor);
-            Home_button.Click += (object o, EventArgs EA) => { General_form.Menu_to_start(); };
+            Home_button.Click += (object o, EventArgs EA) => {General_form.Menu_to_start(); };
             this.Controls.Add(Home_button);
 
             CurvedButtons Save_button = new CurvedButtons(new Size(80, 40), new Point(Sub_menu_width / 2 + 10, 115), 25, "../../User Interface Recources/Custom_Button_Small.png", "Save", Dosis_font_family, General_form, this.BackColor);

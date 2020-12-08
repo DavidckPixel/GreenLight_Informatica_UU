@@ -50,7 +50,6 @@ namespace GreenLight
             CurvedButtons Stop_sign = new CurvedButtons(new Size(60, 60), new Point(95, 96), 25, "../../User Interface Recources/Stop_Sign_Button.png", this.BackColor);
             Stop_sign.Click += (object o, EventArgs EA) => { };
             this.Controls.Add(Stop_sign);
-
         }
     }
 }

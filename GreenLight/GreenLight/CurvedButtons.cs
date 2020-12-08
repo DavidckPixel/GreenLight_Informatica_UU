@@ -14,6 +14,7 @@ namespace GreenLight
         int curve;
         Color Backcolor;
         public string Image_path = "";
+
         protected override void OnPaint(PaintEventArgs pe)
         {
             GraphicsPath p = new GraphicsPath();
@@ -67,6 +68,7 @@ namespace GreenLight
             this.MouseHover += (object o, EventArgs EA) => { this.Image = Image.FromFile(Image_path.Remove(Image_path.Length - 4) + "_On_Hover.png"); };
             this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(Image_path); };
         }
+
         // Logo
         public CurvedButtons(General_form General_form, int Curve)
         {

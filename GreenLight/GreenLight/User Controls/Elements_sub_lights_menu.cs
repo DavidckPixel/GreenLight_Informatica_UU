@@ -38,7 +38,6 @@ namespace GreenLight
             CurvedButtons Light = new CurvedButtons(new Size(60, 60), new Point(95, 18), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
             Light.Click += (object o, EventArgs EA) => {  };
             this.Controls.Add(Light);
-
         }
     }
 }
