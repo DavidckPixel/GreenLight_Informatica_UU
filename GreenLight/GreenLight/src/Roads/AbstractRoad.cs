@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
-    abstract class AbstractRoad
+    abstract class AbstractRoad : ScreenObject
     {
         protected Point point1;
         protected Point point2;
@@ -19,11 +19,12 @@ namespace GreenLight
         public List<LanePoints> _lanePoints;
 
         //Basic Road Constructor, every road calls this constructor during initialzation
-        public AbstractRoad(Point _point1, Point _point2, int _lanes)
+        public AbstractRoad(Point _point1, Point _point2, int _lanes) : base(_point1, new Size(Math.Abs(_point1.X - _point2.X), Math.Abs(_point1.Y - _point2.Y)))
         {
             this.point1 = _point1;
             this.point2 = _point2;
             this.lanes = _lanes;
+            this.Cords = _point1;
         }
 
         protected abstract void CalculateDrivingLane();

@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace GreenLight
 {
-    class Vehicle     
+    class Vehicle : ScreenObject     
     {
         int weight;
         float length;
@@ -32,7 +32,7 @@ namespace GreenLight
         World physics = WorldConfig.physics[0];
         Thread beweeg;
 
-        public Vehicle(string name, int weight, float length, int maxspeed, int motorpwr, int x, int y, float cw, float surface)
+        public Vehicle(string name, int weight, float length, int maxspeed, int motorpwr, int x, int y, float cw, float surface) : base(new Point(x,y), new Size(40,40))
         {
 
             this.weight = weight;
@@ -44,6 +44,7 @@ namespace GreenLight
             this.y = y;
             this.cw = cw;
             this.surface = surface;
+            this.Cords = new Point(x, y);
             a = this.motorpwr / this.weight;
             abrake = physics.Brakepwr / this.weight;
             Car = new Bitmap(Properties.Resources.Car);
