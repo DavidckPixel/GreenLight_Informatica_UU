@@ -80,7 +80,6 @@
     <Compile Include="src\Roads\CurvedRoad.cs" />
     <Compile Include="src\Roads\DiagonalRoad.cs" />
     <Compile Include="src\Roads\DrivingLane.cs" />
-    <Compile Include="src\Roads\Init.cs" />
     <Compile Include="src\Roads\LanePoints.cs" />
     <Compile Include="src\Roads\StraightRoad.cs" />
     <Compile Include="src\Vehicle\Vehicle.cs" />
