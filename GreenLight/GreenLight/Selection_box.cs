@@ -10,6 +10,8 @@ namespace GreenLight
 {
     class Selection_box : Panel
     {
+        int Selected_index = 0;
+        bool Selected_left_bool = true;
         public Selection_box(General_form General_form, FontFamily Dosis_font_family)
         {
             List<string> Elements_selected = new List<string>();
@@ -35,14 +37,17 @@ namespace GreenLight
         private void Elements_draw(List<string> Elements_selected, List<string> Elements_available, General_form General_form, FontFamily Dosis_font_family) 
         {
             this.Controls.Clear();
-            int Selected_index = 0;
-            bool Selected_left_bool = true;
 
             int i = 0;
             foreach (string element in Elements_selected)
             {
+                Color Hover_Color = Color.FromArgb(109, 109, 109);
+                Color Prime_Color;
+                if (i == Selected_index && Selected_left_bool) Prime_Color = Color.FromArgb(196, 196, 198);
+                else Prime_Color = Color.FromArgb(142, 140, 144);
+
                 PictureBox PB = new PictureBox();
-                PB.BackColor = Color.FromArgb(142, 140, 144);
+                PB.BackColor = Prime_Color;
                 PB.Location = new Point(10, 15 * i+30);
                 PB.Size = new Size(101, 15);
                 PB.Cursor = Cursors.Hand;
@@ -53,17 +58,22 @@ namespace GreenLight
                 PB_label.TextAlign = ContentAlignment.TopCenter;
                 PB_label.ForeColor = Color.White;
                 PB_label.Font = new Font(Dosis_font_family, 8, FontStyle.Bold);
-                PB_label.MouseEnter += (object o, EventArgs EA) => { PB.BackColor = Color.FromArgb(109, 109, 109); };
-                PB_label.MouseLeave += (object o, EventArgs EA) => { PB.BackColor = Color.FromArgb(142, 140, 144); };
-                PB_label.Click += (object o, EventArgs EA) => { Selected_index = Elements_selected.IndexOf(element); Selected_left_bool = true;};
+                PB_label.MouseEnter += (object o, EventArgs EA) => { PB.BackColor = Hover_Color; };
+                PB_label.MouseLeave += (object o, EventArgs EA) => { PB.BackColor = Prime_Color; };
+                PB_label.Click += (object o, EventArgs EA) => { Selected_index = Elements_selected.IndexOf(element); Selected_left_bool = true; Elements_draw(Elements_selected, Elements_available, General_form, Dosis_font_family); };
                 i++;
             }
 
             int j = 0;
             foreach (string element in Elements_available)
             {
+                Color Hover_Color = Color.FromArgb(109, 109, 109);
+                Color Prime_Color;
+                if (j == Selected_index && !Selected_left_bool) Prime_Color = Color.FromArgb(196, 196, 198);
+                else Prime_Color = Color.FromArgb(142, 140, 144);
+
                 PictureBox PB = new PictureBox();
-                PB.BackColor = Color.FromArgb(142, 140, 144);
+                PB.BackColor = Prime_Color;
                 PB.Location = new Point(114, 15 * j + 30);
                 PB.Size = new Size(100, 15);
                 PB.Cursor = Cursors.Hand;
@@ -74,28 +84,20 @@ namespace GreenLight
                 PB_label.TextAlign = ContentAlignment.TopCenter;
                 PB_label.ForeColor = Color.White;
                 PB_label.Font = new Font(Dosis_font_family, 8, FontStyle.Bold);
-                PB_label.MouseEnter += (object o, EventArgs EA) => { PB.BackColor = Color.FromArgb(109, 109, 109); };
-                PB_label.MouseLeave += (object o, EventArgs EA) => { PB.BackColor = Color.FromArgb(142, 140, 144); };
-                PB_label.Click += (object o, EventArgs EA) => { Selected_index = Elements_available.IndexOf(element); Selected_left_bool = false;};
+                PB_label.MouseEnter += (object o, EventArgs EA) => { PB.BackColor = Hover_Color; };
+                PB_label.MouseLeave += (object o, EventArgs EA) => { PB.BackColor = Prime_Color; };
+                PB_label.Click += (object o, EventArgs EA) => { Selected_index = Elements_available.IndexOf(element); Selected_left_bool = false; Elements_draw(Elements_selected, Elements_available, General_form, Dosis_font_family); };
                 j++;
             }
 
-            PictureBox To_left = new PictureBox();
-            To_left.Image = Image.FromFile("../../User Interface Recources/Selection_Box_To_Left.png");
-            To_left.Cursor = Cursors.Hand;
-            To_left.SizeMode = PictureBoxSizeMode.StretchImage;
-            To_left.Size = new Size(17,17);
-            To_left.Location = new Point(104,80);
+            CurvedButtons To_left = new CurvedButtons(new Size(17, 17), new Point(104, 80), 10,
+                "../../User Interface Recources/Selection_Box_To_Left.png", Color.FromArgb(255,255,255));
             To_left.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool,General_form,Dosis_font_family,0); };
             this.Controls.Add(To_left);
             To_left.BringToFront();
 
-            PictureBox To_right = new PictureBox();
-            To_right.Image = Image.FromFile("../../User Interface Recources/Selection_Box_To_Right.png");
-            To_right.Cursor = Cursors.Hand;
-            To_right.SizeMode = PictureBoxSizeMode.StretchImage;
-            To_right.Size = new Size(17, 17);
-            To_right.Location = new Point(104, 94);
+            CurvedButtons To_right = new CurvedButtons(new Size(17, 17), new Point(104, 94), 10,
+                "../../User Interface Recources/Selection_Box_To_Right.png", Color.FromArgb(255, 255, 255));
             To_right.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool,General_form,Dosis_font_family,1); };
             this.Controls.Add(To_right);
             To_right.BringToFront();

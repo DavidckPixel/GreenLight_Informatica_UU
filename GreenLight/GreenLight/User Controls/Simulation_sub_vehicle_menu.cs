@@ -12,27 +12,28 @@ namespace GreenLight
 {
     public partial class Simulation_sub_vehicle_menu : UserControl
     {
-        public Simulation_sub_vehicle_menu(int Menu_width, General_form General_form, FontFamily Dosis_font_family)
+        public Simulation_sub_vehicle_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family)
         {
 
             this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(Menu_width, General_form.Height - 230 - 135);
-            this.Location = new Point(General_form.Width - Menu_width, 230);
-            this.AutoScroll = true;
-            Initialize(General_form, Menu_width, Dosis_font_family);
-        }
-        public void Size_adjust(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
-        {
             this.Size = new Size(Sub_menu_width, General_form.Height - 230 - 135);
             this.Location = new Point(General_form.Width - Sub_menu_width, 230);
-            this.Controls.Clear();
+            this.AutoScroll = true;
             Initialize(General_form, Sub_menu_width, Dosis_font_family);
+            General_form.SizeChanged += (object o, EventArgs EA) => {
+                this.Size = new Size(Sub_menu_width, General_form.Height - 230 - 135);
+                this.Location = new Point(General_form.Width - Sub_menu_width, 230);
+                this.Controls.Clear();
+                Initialize(General_form, Sub_menu_width, Dosis_font_family);
+            };
         }
 
         private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
             Selection_box Selection_box = new Selection_box(General_form, Dosis_font_family);
-            Selection_box.Location = new Point(3, 35);
+            if (General_form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(13,35);
+            else Selection_box.Location = new Point(3, 35);
+
             this.Controls.Add(Selection_box);
 
             Slider Max_speed = new Slider(new Point(25, 360), 30, 300);

@@ -12,20 +12,19 @@ namespace GreenLight
 {
     public partial class Elements_sub_buildings_menu : UserControl
     {
-        public Elements_sub_buildings_menu(int Menu_width, General_form General_form, FontFamily Dosis_font_family)
+        public Elements_sub_buildings_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(Menu_width, General_form.Height - 290 - 80);
-            this.Location = new Point(General_form.Width - Menu_width, 290);
-            this.AutoScroll = true;
-            Initialize(General_form, Menu_width, Dosis_font_family);
-        }
-        public void Size_adjust(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
-        {
             this.Size = new Size(Sub_menu_width, General_form.Height - 290 - 80);
             this.Location = new Point(General_form.Width - Sub_menu_width, 290);
-            this.Controls.Clear();
+            this.AutoScroll = true;
             Initialize(General_form, Sub_menu_width, Dosis_font_family);
+            General_form.SizeChanged += (object o, EventArgs EA) => {
+                this.Size = new Size(Sub_menu_width, General_form.Height - 290 - 80);
+                this.Location = new Point(General_form.Width - Sub_menu_width, 290);
+                this.Controls.Clear();
+                Initialize(General_form, Sub_menu_width, Dosis_font_family);
+            };
         }
 
         private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
@@ -38,6 +37,9 @@ namespace GreenLight
             Fence.Click += (object o, EventArgs EA) => {  };
             this.Controls.Add(Fence);
 
+            CurvedButtons Building = new CurvedButtons(new Size(60, 60), new Point(172, 18), 25, "../../User Interface Recources/Building_Button.png", this.BackColor);
+            Building.Click += (object o, EventArgs EA) => { };
+            this.Controls.Add(Building);
         }
     }
 }
