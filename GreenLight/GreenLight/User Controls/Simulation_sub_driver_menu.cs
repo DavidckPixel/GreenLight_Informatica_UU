@@ -38,9 +38,9 @@ namespace GreenLight
             this.Controls.Add(Reaction_time);
             SliderText Reaction_time_label = new SliderText(Dosis_font_family, new Point(25, 340), "Reaction time:");
             this.Controls.Add(Reaction_time_label);
-            SliderText Reaction_time_Value = new SliderText(Dosis_font_family, new Point(125, 340), (Reaction_time.Value / 10).ToString() + " s");
+            SliderText Reaction_time_Value = new SliderText(Dosis_font_family, new Point(125, 340), Reaction_time.Value.ToString() + " s");
             this.Controls.Add(Reaction_time_Value);
-            Reaction_time.ValueChanged += (object o, EventArgs EA) => { Reaction_time_Value.Text = (Reaction_time.Value / 10).ToString() + " s"; };
+            Reaction_time.ValueChanged += (object o, EventArgs EA) => { Reaction_time_Value.Text = Reaction_time.Value.ToString() + " s"; };
 
             Slider Follow_interval = new Slider(new Point(25, 320), 0, 100);
             this.Controls.Add(Follow_interval);
@@ -50,13 +50,13 @@ namespace GreenLight
             this.Controls.Add(Follow_interval_Value);
             Follow_interval.ValueChanged += (object o, EventArgs EA) => { Follow_interval_Value.Text = Follow_interval.Value.ToString() + " s"; };
 
-            Slider Speed_relative_to_limit = new Slider(new Point(25, 280), 0, 100);
-            this.Controls.Add(Speed_relative_to_limit);
-            SliderText SRTL_label = new SliderText(Dosis_font_family, new Point(25, 260), "Speed relative to limit:");
-            this.Controls.Add(SRTL_label);
-            SliderText SRTL_Value = new SliderText(Dosis_font_family, new Point(125, 260), Speed_relative_to_limit.Value.ToString() + " km/h");
-            this.Controls.Add(SRTL_Value);
-            Speed_relative_to_limit.ValueChanged += (object o, EventArgs EA) => { SRTL_Value.Text = Speed_relative_to_limit.Value.ToString() + " km/h"; };
+            Slider Speeding = new Slider(new Point(25, 280), -50, 100);
+            this.Controls.Add(Speeding);
+            SliderText Speeding_label = new SliderText(Dosis_font_family, new Point(25, 260), "Speeding:");
+            this.Controls.Add(Speeding_label);
+            SliderText Speeding_Value = new SliderText(Dosis_font_family, new Point(125, 260), Speeding.Value.ToString() + " km/h");
+            this.Controls.Add(Speeding_Value);
+            Speeding.ValueChanged += (object o, EventArgs EA) => { Speeding_Value.Text = Speeding.Value.ToString() + " km/h"; };
 
             Slider Rulebreaking = new Slider(new Point(25, 240), 0, 100);
             this.Controls.Add(Rulebreaking);
