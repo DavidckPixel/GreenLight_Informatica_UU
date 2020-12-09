@@ -34,15 +34,15 @@ namespace GreenLight
             Selection_box.Location = new Point(3, 35);
             this.Controls.Add(Selection_box);
 
-            Slider Reaction_time = new Slider(new Point(25, 360), 0, 100, 10);
+            Slider Reaction_time = new Slider(new Point(25, 360), 0, 30);
             this.Controls.Add(Reaction_time);
             SliderText Reaction_time_label = new SliderText(Dosis_font_family, new Point(25, 340), "Reaction time:");
             this.Controls.Add(Reaction_time_label);
-            SliderText Reaction_time_Value = new SliderText(Dosis_font_family, new Point(125, 340), Reaction_time.Value.ToString() + " s");
+            SliderText Reaction_time_Value = new SliderText(Dosis_font_family, new Point(125, 340), (Reaction_time.Value / 10).ToString() + " s");
             this.Controls.Add(Reaction_time_Value);
-            Reaction_time.ValueChanged += (object o, EventArgs EA) => { Reaction_time_Value.Text = Reaction_time.Value.ToString() + " s"; };
+            Reaction_time.ValueChanged += (object o, EventArgs EA) => { Reaction_time_Value.Text = (Reaction_time.Value / 10).ToString() + " s"; };
 
-            Slider Follow_interval = new Slider(new Point(25, 320), 0, 100, 10);
+            Slider Follow_interval = new Slider(new Point(25, 320), 0, 100);
             this.Controls.Add(Follow_interval);
             SliderText Follow_interval_label = new SliderText(Dosis_font_family, new Point(25, 300), "Follow interval:");
             this.Controls.Add(Follow_interval_label);
@@ -50,7 +50,7 @@ namespace GreenLight
             this.Controls.Add(Follow_interval_Value);
             Follow_interval.ValueChanged += (object o, EventArgs EA) => { Follow_interval_Value.Text = Follow_interval.Value.ToString() + " s"; };
 
-            Slider Speed_relative_to_limit = new Slider(new Point(25, 280), 0, 100, 10);
+            Slider Speed_relative_to_limit = new Slider(new Point(25, 280), 0, 100);
             this.Controls.Add(Speed_relative_to_limit);
             SliderText SRTL_label = new SliderText(Dosis_font_family, new Point(25, 260), "Speed relative to limit:");
             this.Controls.Add(SRTL_label);
@@ -58,7 +58,7 @@ namespace GreenLight
             this.Controls.Add(SRTL_Value);
             Speed_relative_to_limit.ValueChanged += (object o, EventArgs EA) => { SRTL_Value.Text = Speed_relative_to_limit.Value.ToString() + " km/h"; };
 
-            Slider Rulebreaking = new Slider(new Point(25, 240), 0, 100, 10);
+            Slider Rulebreaking = new Slider(new Point(25, 240), 0, 100);
             this.Controls.Add(Rulebreaking);
             SliderText Rulebreaking_label = new SliderText(Dosis_font_family, new Point(25, 220), "Rulebreaking:");
             this.Controls.Add(Rulebreaking_label);
@@ -66,7 +66,7 @@ namespace GreenLight
             this.Controls.Add(Rulebreaking_Value);
             Rulebreaking.ValueChanged += (object o, EventArgs EA) => { Rulebreaking_Value.Text = Rulebreaking.Value.ToString() + " %"; };
 
-            Slider Occurunce = new Slider(new Point(25, 200), 0, 100, 10);
+            Slider Occurunce = new Slider(new Point(25, 200), 0, 100);
             this.Controls.Add(Occurunce);
             SliderText Occurunce_label = new SliderText(Dosis_font_family, new Point(25, 180), "Occurunce:");
             this.Controls.Add(Occurunce_label);

@@ -11,19 +11,6 @@ namespace GreenLight
 {
     class Slider : TrackBar
     {
-        public Slider(Point location, int min, int max, int tickfrequency)
-        {
-            this.Location = location;
-            this.TickStyle = TickStyle.None;
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            this.BackColor = Color.Transparent;
-            this.Width = 200;
-            this.Minimum = min;
-            this.Maximum = max;
-            this.Value = (max - min) / 2;
-            this.TickFrequency = tickfrequency; 
-            this.MouseWheel += (object o, MouseEventArgs MEA) => { ((HandledMouseEventArgs)MEA).Handled = true; };
-        }
         public Slider(Point location, int min, int max)
         {
             this.Location = location;
@@ -33,10 +20,8 @@ namespace GreenLight
             this.Width = 200;
             this.Minimum = min;
             this.Maximum = max;
-            this.Value = (max - min) / 2;
+            this.Value = (max - min) / 2 + min;
             this.MouseWheel += (object o, MouseEventArgs MEA) => { ((HandledMouseEventArgs)MEA).Handled = true; };
         }
-
-
     }
 }

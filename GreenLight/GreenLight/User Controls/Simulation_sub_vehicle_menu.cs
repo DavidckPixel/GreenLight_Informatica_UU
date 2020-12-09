@@ -35,7 +35,7 @@ namespace GreenLight
             Selection_box.Location = new Point(3, 35);
             this.Controls.Add(Selection_box);
 
-            Slider Max_speed = new Slider(new Point(25, 360), 0, 100, 10);
+            Slider Max_speed = new Slider(new Point(25, 360), 30, 300);
             this.Controls.Add(Max_speed);
             SliderText Max_speed_label = new SliderText(Dosis_font_family, new Point(25, 340), "Max speed:");
             this.Controls.Add(Max_speed_label);
@@ -43,7 +43,7 @@ namespace GreenLight
             this.Controls.Add(Max_speed_Value);
             Max_speed.ValueChanged += (object o, EventArgs EA) => { Max_speed_Value.Text = Max_speed.Value.ToString() + " km/h"; };
 
-            Slider Length = new Slider(new Point(25, 320), 0, 100, 10);
+            Slider Length = new Slider(new Point(25, 320), 3, 12);
             this.Controls.Add(Length);
             SliderText Length_label = new SliderText(Dosis_font_family, new Point(25, 300), "Length:");
             this.Controls.Add(Length_label);
@@ -51,7 +51,7 @@ namespace GreenLight
             this.Controls.Add(Length_Value);
             Length.ValueChanged += (object o, EventArgs EA) => { Length_Value.Text = Length.Value.ToString() + " m"; };
 
-            Slider Acceleration = new Slider(new Point(25, 280), 0, 100, 10);
+            Slider Acceleration = new Slider(new Point(25, 280), 2, 5);
             this.Controls.Add(Acceleration);
             SliderText Acceleration_label = new SliderText(Dosis_font_family, new Point(25, 260), "Acceleration:");
             this.Controls.Add(Acceleration_label);
@@ -59,7 +59,7 @@ namespace GreenLight
             this.Controls.Add(Acceleration_Value);
             Acceleration.ValueChanged += (object o, EventArgs EA) => { Acceleration_Value.Text = Acceleration.Value.ToString() + " m/s^2"; };
 
-            Slider Weight = new Slider(new Point(25, 240), 0, 100, 10);
+            Slider Weight = new Slider(new Point(25, 240), 0, 40000);
             this.Controls.Add(Weight);
             SliderText Weight_label = new SliderText(Dosis_font_family, new Point(25, 220), "Weight:");
             this.Controls.Add(Weight_label);
@@ -67,7 +67,7 @@ namespace GreenLight
             this.Controls.Add(Weight_Value);
             Weight.ValueChanged += (object o, EventArgs EA) => { Weight_Value.Text = Weight.Value.ToString() + " kg"; };
 
-            Slider Occurunce = new Slider(new Point(25, 200), 0, 100, 10);
+            Slider Occurunce = new Slider(new Point(25, 200), 0, 100);
             this.Controls.Add(Occurunce);
             SliderText Occurunce_label = new SliderText(Dosis_font_family, new Point(25, 180), "Occurunce:");
             this.Controls.Add(Occurunce_label);

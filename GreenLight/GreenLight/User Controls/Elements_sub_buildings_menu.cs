@@ -38,45 +38,6 @@ namespace GreenLight
             Fence.Click += (object o, EventArgs EA) => {  };
             this.Controls.Add(Fence);
 
-            CurvedButtons temp3 = new CurvedButtons(new Size(60, 60), new Point(172, 18), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp3.Click += (object o, EventArgs EA) => {  };
-            this.Controls.Add(temp3);
-
-            CurvedButtons temp4 = new CurvedButtons(new Size(60, 60), new Point(18, 96), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp4.Click += (object o, EventArgs EA) => {  };
-            this.Controls.Add(temp4);
-
-            CurvedButtons temp5 = new CurvedButtons(new Size(60, 60), new Point(95, 96), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp5.Click += (object o, EventArgs EA) => {  };
-            this.Controls.Add(temp5);
-
-            CurvedButtons temp6 = new CurvedButtons(new Size(60, 60), new Point(172, 96), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp6.Click += (object o, EventArgs EA) => {  };
-            this.Controls.Add(temp6);
-
-            CurvedButtons temp7 = new CurvedButtons(new Size(60, 60), new Point(18, 174), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp7.Click += (object o, EventArgs EA) => {  };
-            this.Controls.Add(temp7);
-
-            CurvedButtons temp8 = new CurvedButtons(new Size(60, 60), new Point(95, 174), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp8.Click += (object o, EventArgs EA) => {  };
-            this.Controls.Add(temp8);
-
-            CurvedButtons temp9 = new CurvedButtons(new Size(60, 60), new Point(172, 174), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp9.Click += (object o, EventArgs EA) => {  };
-            this.Controls.Add(temp9);
-
-            CurvedButtons temp10 = new CurvedButtons(new Size(60, 60), new Point(18, 252), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp10.Click += (object o, EventArgs EA) => {  };
-            this.Controls.Add(temp10);
-
-            CurvedButtons temp11 = new CurvedButtons(new Size(60, 60), new Point(95, 252), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp11.Click += (object o, EventArgs EA) => {  };
-            this.Controls.Add(temp11);
-
-            CurvedButtons temp12 = new CurvedButtons(new Size(60, 60), new Point(172, 252), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp12.Click += (object o, EventArgs EA) => {  };
-            this.Controls.Add(temp12);
         }
     }
 }
