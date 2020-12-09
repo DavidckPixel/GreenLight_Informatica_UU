@@ -81,20 +81,21 @@ namespace GreenLight
                "../../User Interface Recources/Pause_Button.png", this.BackColor);
             Pause.Hide();
             this.Controls.Add(Pause);
-            Pause.Click += (object o, EventArgs EA) => { Pause.Hide(); Start.Show(); };
-            Start.Click += (object o, EventArgs EA) => { Start.Hide(); Pause.Show(); };
+            Pause.Click += (object o, EventArgs EA) => { Pause.Hide(); Start.Show(); General_form.SimDataM.Stop_timer(); };
+            Start.Click += (object o, EventArgs EA) => { Start.Hide(); Pause.Show(); General_form.SimDataM.Start_timer(); };
 
 
             CurvedButtons Reset = new CurvedButtons(new Size(60, 60),
                 new Point(95, General_form.Height - 80), 35,
                 "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
+            Reset.Click += (object obj, EventArgs args) => { General_form.SimDataM.Reset_timer(); };
             this.Controls.Add(Reset);
 
             CurvedButtons Stop = new CurvedButtons(new Size(60, 60),
                 new Point(170, General_form.Height - 80), 35,
                 "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Stop);
-            Stop.Click += (object obj, EventArgs args) => { General_form.Menu_to_build(); };
+            Stop.Click += (object obj, EventArgs args) => { General_form.Menu_to_build(); General_form.SimDataM.Reset_timer(); };
 
             CurvedButtons SimulationSpeed_header = new CurvedButtons(new Size(150, 30),
                 new Point(50, this.Height - 130), "../../User Interface Recources/Simulation_Speed_Header.png");

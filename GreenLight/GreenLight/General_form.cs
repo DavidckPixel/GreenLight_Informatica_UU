@@ -36,6 +36,7 @@ namespace GreenLight
         Simulation_sub_weather_menu SimSWM;
         Simulation_sub_vehicle_menu SimSVM;
         Simulation_sub_driver_menu SimSDM;
+        public Simulation_data_menu SimDataM;
         Elements_sub_buildings_menu ElemSBM;
         Elements_sub_lights_menu ElemSLM;
         Elements_sub_roads_menu ElemSRM;
@@ -71,6 +72,7 @@ namespace GreenLight
             SimSWM = new Simulation_sub_weather_menu(Sub_menu_width, this, Dosis_font_family);
             SimSVM = new Simulation_sub_vehicle_menu(Sub_menu_width, this, Dosis_font_family);
             SimSDM = new Simulation_sub_driver_menu(Sub_menu_width, this, Dosis_font_family);
+            SimDataM = new Simulation_data_menu(Sub_menu_width,this,30, Dosis_font_family);
 
             ElemSBM = new Elements_sub_buildings_menu(Sub_menu_width, this, Dosis_font_family);
             ElemSLM = new Elements_sub_lights_menu(Sub_menu_width, this, Dosis_font_family);
@@ -86,6 +88,7 @@ namespace GreenLight
             this.Controls.Add(SimSWM);
             this.Controls.Add(SimSVM);
             this.Controls.Add(SimSDM);
+            this.Controls.Add(SimDataM);
             this.Controls.Add(ElemSBM);
             this.Controls.Add(ElemSLM);
             this.Controls.Add(ElemSRM);
@@ -144,6 +147,8 @@ namespace GreenLight
             Hide_all_menus();
             SimSM.Show();
             SimMM.Show();
+            SimDataM.Show();
+            SimDataM.BringToFront();
         }
 
         public void Menu_to_simulation_weather()
@@ -212,6 +217,7 @@ namespace GreenLight
             SimSWM.Hide();
             SimSVM.Hide();
             SimSDM.Hide();
+            SimDataM.Hide();
             ElemSLM.Hide();
             ElemSSM.Hide();
             ElemSRM.Hide();
