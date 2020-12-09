@@ -16,7 +16,7 @@ namespace GreenLight
         protected Point point2;
 
         protected int lanes;
-        public List<LanePoints> _lanePoints;
+        public List<DrivingLane> Drivinglanes=  new List<DrivingLane>();
 
         //Basic Road Constructor, every road calls this constructor during initialzation
         public AbstractRoad(Point _point1, Point _point2, int _lanes) : base(_point1, new Size(Math.Abs(_point1.X - _point2.X), Math.Abs(_point1.Y - _point2.Y)))
@@ -27,7 +27,7 @@ namespace GreenLight
             this.Cords = _point1;
         }
 
-        protected abstract void CalculateDrivingLane();
+        protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2);
 
         public static int CalculateAngle(Point _point1, Point _point2)
         {

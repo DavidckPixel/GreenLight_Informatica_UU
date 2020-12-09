@@ -56,8 +56,8 @@ namespace GreenLight
                 if (_secondPoint != null && _secondPoint != _firstPoint)
                 {
                     firstClick = true;
-                    if (Selected == "Roads")
-                        CreateRoad(_firstPoint, _secondPoint);
+                    if (Selected == "Roads") ;
+                        //CreateRoad(_firstPoint, _secondPoint);
                 }
             }
 
