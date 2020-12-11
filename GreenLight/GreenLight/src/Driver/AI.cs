@@ -13,9 +13,8 @@ namespace GreenLight
         float followInterval;
         float speedRelativeToLimit;
         float ruleBreakingChance;
-        int speedlimit = 10; //tijdelijk
+        int speedlimit = 28; //tijdelijk
         Thread run;
-        public bool isAccelerating;
         public int targetspeed;
 
         
@@ -29,7 +28,6 @@ namespace GreenLight
             this.speedRelativeToLimit = speedRelativeToLimit;
             this.ruleBreakingChance = ruleBreakingChance;
             targetspeed = speedlimit + speedRelativeToLimit;
-            isAccelerating = true;
             run = new Thread(test);
             run.Start();
 
@@ -39,21 +37,11 @@ namespace GreenLight
         {
             while (true)
             {
-                if (v.speed < speedlimit && !isAccelerating)
+                if (v.speed < targetspeed && !v.isAccelerating && !v.isBraking)
                 {
                     Thread.Sleep(reactionSpeed);
-                    v.tryAccelerate(speedlimit);
-                    isAccelerating = true;                }
-                else if (v.speed >= speedlimit && isAccelerating)
-                {
-                    Thread.Sleep(reactionSpeed);
-                    v.tryBrake(0);
-                }
-                else if (v.speed == 0 && isAccelerating)
-                {
-                    Thread.Sleep(1000);
-                    isAccelerating = false;
-                }
+                    v.tryAccelerate(targetspeed);
+                }               
                 Thread.Sleep(16);
             }
         }

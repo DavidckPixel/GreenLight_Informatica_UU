@@ -8,48 +8,65 @@ namespace GreenLight
 {
     class Vehicle : ScreenObject     
     {
+        float x, y; //Location of the vehicle
+        public float speed = 0;    //Speed of vehicle
+        public float a, abrake; //acceleration and braking speed
+
+        //Properties of the vehicle
+        string name; 
         int weight;
         float length;
-        int maxspeed;
-        //const int brakepwr = 12000; //In Newton
         int motorpwr;
-        public float speed = 0;    //tijdelijke waarde in m/s
-        string name;
-        public float a, abrake; //versnelling & vertraging
-        Thread start, stop;
-        float x, y;
-        float cw; // Weerstandscoëfficient, normaal tussen de 0.25 en 0.35
-        float surface;
-        //float density = 1.293; //in Kg/m3
+        int topspeed; //Topspeed of vehicle
+        float cw; //Drag coefficient
+        float surface; //Surface area of the front of the vehicle
+        
+        
+        //Resistances
         float airResistance;
         float rollingResistance;
-        //float gravity = 9.81; //tijdeljk
-        float crw = 0.012f; // rolweerstandcoëfficient, 0.15 voor ijs, 0.9 voor beton, 0.67 voor droog asfalt, 0.53 voor nat asfalt
-        Bitmap Car;
-        int angle;
+        
+        //fixed values of the world
+        float crw = 0.012f; // Rolling Resistance coëfficient --> Temporary value, should be able to set this in weather settings
+        World physics = WorldConfig.physics[0]; // 
+
         public bool isAccelerating = false;
         public bool isBraking = false;
-        World physics = WorldConfig.physics[0];
-        Thread beweeg;
+        Thread acc, brk;
+        Thread startmove;
 
-        public Vehicle(string name, int weight, float length, int maxspeed, int motorpwr, int x, int y, float cw, float surface) : base(new Point(x,y), new Size(40,40))
+        Bitmap Car; //Image of the vehicle
+        int angle; //Angle at which the image/vehicle is rotated
+
+
+        public Vehicle(string name, int weight, float length, int topspeed, int motorpwr, int x, int y, float cw, float surface) : base(new Point(x,y), new Size(40,40))
         {
-
             this.weight = weight;
             this.length = length;
-            this.maxspeed = maxspeed;
+            this.topspeed = topspeed;
             this.name = name;
             this.motorpwr = motorpwr;
             this.x = x;
             this.y = y;
             this.cw = cw;
             this.surface = surface;
-            this.Cords = new Point(x, y);
+            this.Cords = new Point(x, y); //Ignore this
+            
+            
             a = this.motorpwr / this.weight;
             abrake = physics.Brakepwr / this.weight;
             Car = new Bitmap(Properties.Resources.Car);
-            beweeg = new Thread(() => move(100800, 980));
-            beweeg.Start();
+            startmove = new Thread(() => move(100800, 980));
+            startmove.Start();
+        }
+
+        public void klik(int xt, int yt)
+        {
+            isBraking = false;
+            isAccelerating = false;
+            startmove.Abort();
+            startmove = new Thread(() => move(xt, yt));
+            startmove.Start();
         }
 
         public float Slipperiness {
@@ -57,14 +74,12 @@ namespace GreenLight
             set { crw = value; }
         }
         
-        //Tijdelijke tekenmethode
+        //Tekenmethode
         public void tekenAuto(Graphics g)
         {
             int xtemp = (int) x;
             int ytemp = (int) y;
-            g.DrawImage(RotateImage(Car, angle), xtemp, ytemp, Car.Width, Car.Width);
-            //g.DrawString((speed * 3.6).ToString(), new Font("Calibri", 10), Brushes.Black, 100, 130);
-            //g.DrawString(a.ToString(), new Font("Calibri", 10), Brushes.Black, 100, 100);
+            g.DrawImage(RotateImage(Car, angle), xtemp-Car.Width/2, ytemp - Car.Height / 2, Car.Width, Car.Height);
         }
 
         public static Bitmap RotateImage(Bitmap b, float angle)
@@ -98,7 +113,6 @@ namespace GreenLight
 
         public void brakeToSpeed(float targetspeed)
         {
-            
             while (speed > targetspeed && isBraking)
             {
                 airResistance = (float) (0.5f * physics.Density * cw * surface * speed * speed);
@@ -109,13 +123,28 @@ namespace GreenLight
             if (speed < targetspeed)
             {
                 speed = targetspeed;
-                isBraking = false;
+                
+
+            }
+            isBraking = false;
+        }
+
+        public void brkdistance(int xt, int yt)
+        {
+            airResistance = (float)(0.5f * physics.Density * cw * surface * speed * speed);
+            abrake = (physics.Brakepwr + airResistance) / this.weight;
+            float brktime = speed / abrake;
+            float brkdistance = brktime * speed;
+            float distancefromend = (float) Math.Sqrt((x - xt) * (x - xt) + (y - yt) * (y - yt));
+            if (brkdistance > distancefromend && !isBraking)
+            {
+                tryBrake(0);
+
             }
         }
 
         void calculateAngle(int xt, int yt)
         {
-
             float xDiff = xt - x;
             float yDiff = yt - y;
             angle = (int) (Math.Atan2(yDiff, xDiff) * (180 / Math.PI));
@@ -153,50 +182,30 @@ namespace GreenLight
                     {
                         y = y - ymove * speed / 6.25f;
                     }
+                    brkdistance(xt, yt);
                     Thread.Sleep(16);
-                    
                 }
                 speed = 0;
                 a = 0;
                 isAccelerating = false;
+                Thread.Sleep(32);
             }
         }
-
-/*        public void klik(object o, EventArgs ea)
-        {
-            if (!isAccelerating)
-            {
-                start = new Thread(() => accelerate(maxspeed));
-                start.Start();
-                isAccelerating = true;
-                isBraking = false;
-            }
-            else
-            {
-                stop = new Thread(() => brakeToSpeed(0));
-                stop.Start();
-                isBraking = true;
-                isAccelerating = false;
-            }
-        }*/
+        
 
         public void tryBrake(float targetspeed)
         {
-
             isAccelerating = false;
             isBraking = true;
-
             try
-            {
-                if (stop == null)
+            {                
+                if (brk != null)
                 {
-                    stop = new Thread(() => brakeToSpeed(targetspeed));
-                    stop.Start();
+                    brk = null;
                 }
-                else
-                {
-                    stop = null;
-                }
+
+                brk = new Thread(() => brakeToSpeed(targetspeed));
+                brk.Start();
             }
             catch (Exception e)
             {
@@ -210,16 +219,21 @@ namespace GreenLight
             isAccelerating = true;
             isBraking = false;
 
+            if (targetspeed > topspeed)
+            {
+                targetspeed = topspeed;
+            }
+
             try
             {
-                if (start == null)
+                if (acc == null)
                 {
-                    start = new Thread(() => accelerate(targetspeed));
-                    start.Start();
+                    acc = new Thread(() => accelerate(targetspeed));
+                    acc.Start();
                 }
                 else
                 {
-                    start = null;
+                    acc = null;
                 }
             }
             catch (Exception e)
