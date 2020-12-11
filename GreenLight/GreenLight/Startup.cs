@@ -11,6 +11,7 @@ namespace GreenLight
 {
     class Startup : Form
     {
+        //Quick temporary form for testing purposes, on which a few driving cars are simulated
 
         bool simulate;
         //Vehicle v = VehicleTypeConfig.types[0];

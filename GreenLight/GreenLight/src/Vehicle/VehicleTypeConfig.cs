@@ -10,6 +10,9 @@ namespace GreenLight
 {
     class VehicleTypeConfig
     {
+        //This class initializes and holds the Config data for Vehicles
+        //It uses the newtonsoft json deserializer.
+
         public static List<Vehicle> types;
 
         static VehicleTypeConfig()

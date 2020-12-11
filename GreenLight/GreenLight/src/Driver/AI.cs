@@ -8,6 +8,11 @@ namespace GreenLight
 {
     class AI
     {
+        //This is the AI class, every AI has a vehicle that it takes care of
+        //This class holds variables for driver behaviour and will let the vehicle move accordingly.
+        //For now this class can only make vehicles accelarate or brake to a certain speed,
+        //but in the future the AI will be able to choose where and how fast to drive, depending on the cars around them.
+
         public Vehicle v;
         int reactionSpeed;
         float followInterval;
