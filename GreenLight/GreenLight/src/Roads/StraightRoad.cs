@@ -9,6 +9,9 @@ namespace GreenLight
 {
     class StraightRoad : AbstractRoad
     {
+
+        //Similar to curved road, but now math for StraightRoads
+
         private string dir;
 
         private int roadwidth = 10; // HARDCODED WAARDE AANPASSEN

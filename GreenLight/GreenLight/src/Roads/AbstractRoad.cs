@@ -10,6 +10,12 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
+    //This is the abstract road class from which each roadtype inheritege some basic features.
+    //This basic features include: CalculateDrivingLane, Every road needs to have its own function of CalculateDrivingLane
+    //This class also has a static function that takes 2 points as input, and calculates the angle in degrees between them.
+    //Every Road has 4 base variables: 2 points inbetween which the road lays, the amount of lanes the road has, and a list of the drivingLanes
+    //Drivinglanes are a list of points that the car follows to drive on the road.
+
     abstract class AbstractRoad : ScreenObject
     {
         protected Point point1;
@@ -35,7 +41,6 @@ namespace GreenLight
             int _deltaX = _point1.X - _point2.X ;
             int _deltaY = _point1.Y - _point2.Y;
 
-            //Console.WriteLine("{0} -- {1}",_deltaX, _deltaY);
             double _raddegree = Math.Atan2(_deltaX , _deltaY);
 
             int _degree = (int)(_raddegree * (180 / Math.PI));

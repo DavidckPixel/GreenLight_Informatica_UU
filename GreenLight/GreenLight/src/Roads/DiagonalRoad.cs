@@ -9,6 +9,8 @@ namespace GreenLight
 {
     class DiagonalRoad : AbstractRoad
     {
+        //Similar to CurvedRoad, but now math for diagnol
+
         private string dir;
 
         public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir) : base(_point1, _point2, _lanes)

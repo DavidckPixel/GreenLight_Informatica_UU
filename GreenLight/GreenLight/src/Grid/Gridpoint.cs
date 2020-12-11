@@ -10,6 +10,11 @@ namespace GreenLight
 {
     class Gridpoint : ScreenObject
     {
+        //An actual gridpoint as drawn on the screen
+        //It inheriteges form the ScreenObject, this is a master class for all things that eventually need to be drawn
+        //on the field.
+
+
         Size Size;
 
         public Gridpoint(Point _Cords, Size _Size) : base(_Cords, _Size)
@@ -22,7 +27,7 @@ namespace GreenLight
             return this.Hitbox.Contains(_p);
         }
 
-        public void Draw(Graphics g)
+        public void DrawGrid(Graphics g)
         {
             g.FillEllipse(Brushes.Black, this.Hitbox);
         }

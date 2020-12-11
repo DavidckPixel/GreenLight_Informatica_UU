@@ -11,6 +11,12 @@ namespace GreenLight
 {
     static class Log
     {
+
+        //This is an additional system that deals with the Logging of all events in our program
+        //It automaticly creates a file and writes it with whatever the programmer wants
+        //Its similar to printing things in the console
+        //Just use the function Log.Write("Text") and the "Text" is written in the file
+
         static string file;
         static bool save;
         static string basefile;

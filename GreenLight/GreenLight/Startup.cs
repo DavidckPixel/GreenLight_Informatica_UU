@@ -17,15 +17,12 @@ namespace GreenLight
         public List<Vehicle> carlist = new List<Vehicle> { };
         public List<AI> driverList = new List<AI> { };
 
-        AbstractRoad Test; //TEMP OM TE TESTEN
-
+       
         public Startup()
         {
-            Test = new DiagonalRoad(new Point(20, 20), new Point(220, 220), 2, "S"); //TEMP OM TE TESTEN
-
             simulate = true;
             this.DoubleBuffered = true;
-            this.Paint += Drawing; // Hijacked
+            this.Paint += teken;
 
             Thread run = new Thread(simulation);
             run.Start();
@@ -62,34 +59,6 @@ namespace GreenLight
             {
                 driverList[t].v.tekenAuto(pea.Graphics);
             }
-        }
-
-        public void Drawing(Object o, PaintEventArgs pea)
-        {
-            Graphics g = pea.Graphics;
-            foreach (DrivingLane _temp in Test.Drivinglanes)
-            {
-                _temp.Draw(g);
-            }
-
-        }
-
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            // 
-            // Startup
-            // 
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Name = "Startup";
-            this.Load += new System.EventHandler(this.Startup_Load);
-            this.ResumeLayout(false);
-
-        }
-
-        private void Startup_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
