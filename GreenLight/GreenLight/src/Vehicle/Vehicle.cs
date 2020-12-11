@@ -21,7 +21,6 @@ namespace GreenLight
         float cw; //Drag coefficient
         float surface; //Surface area of the front of the vehicle
         
-        
         //Resistances
         float airResistance;
         float rollingResistance;
@@ -35,11 +34,13 @@ namespace GreenLight
         Thread acc, brk;
         Thread startmove;
 
+        
+
         Bitmap Car; //Image of the vehicle
         int angle; //Angle at which the image/vehicle is rotated
 
 
-        public Vehicle(string name, int weight, float length, int topspeed, int motorpwr, int x, int y, float cw, float surface) : base(new Point(x,y), new Size(40,40))
+        public Vehicle(string name, int weight, float length, int topspeed, int motorpwr, int x, int y, float cw, float surface) : base(new Point(x,y), new Size(20,20))
         {
             this.weight = weight;
             this.length = length;
@@ -52,11 +53,13 @@ namespace GreenLight
             this.surface = surface;
             this.Cords = new Point(x, y); //Ignore this
             
+            Console.WriteLine("Created vehicle");
+            
             
             a = this.motorpwr / this.weight;
             abrake = physics.Brakepwr / this.weight;
             Car = new Bitmap(Properties.Resources.Car);
-            startmove = new Thread(() => move(100800, 980));
+            startmove = new Thread(() => move(4000, 980));
             startmove.Start();
         }
 
@@ -64,7 +67,7 @@ namespace GreenLight
         {
             isBraking = false;
             isAccelerating = false;
-            startmove.Abort();
+            startmove.Abort();            
             startmove = new Thread(() => move(xt, yt));
             startmove.Start();
         }
@@ -113,11 +116,14 @@ namespace GreenLight
 
         public void brakeToSpeed(float targetspeed)
         {
+            
             while (speed > targetspeed && isBraking)
             {
+                
                 airResistance = (float) (0.5f * physics.Density * cw * surface * speed * speed);
                 abrake = (physics.Brakepwr + airResistance) / this.weight;
-                speed -= abrake / 100;
+                
+                speed -= abrake * 0.016f;
                 Thread.Sleep(16);
             }
             if (speed < targetspeed)
@@ -126,7 +132,7 @@ namespace GreenLight
                 
 
             }
-            isBraking = false;
+            //isBraking = false;
         }
 
         public void brkdistance(int xt, int yt)
@@ -135,8 +141,10 @@ namespace GreenLight
             abrake = (physics.Brakepwr + airResistance) / this.weight;
             float brktime = speed / abrake;
             float brkdistance = brktime * speed;
-            float distancefromend = (float) Math.Sqrt((x - xt) * (x - xt) + (y - yt) * (y - yt));
-            if (brkdistance > distancefromend && !isBraking)
+            float distancefromend = (float) Math.Sqrt((x - xt) * (x - xt) + (y - yt) * (y - yt)) / 5;
+            Console.WriteLine(brkdistance + "    -    " + distancefromend + "    -    " + speed);
+
+            if (brkdistance > distancefromend /*&& !isBraking*/)
             {
                 tryBrake(0);
 
@@ -168,24 +176,25 @@ namespace GreenLight
                 {
                     if (x < xt)
                     {
-                        x = x + xmove * speed / 6.25f;       //10 pixels per meter
+                        x = x + xmove * speed * 0.8f;       //5 pixels per meter
                     }
                     if (x > xt)
                     {
-                        x = x - xmove * speed / 6.25f;
+                        x = x - xmove * speed * 0.8f;
                     }
                     if (y < yt)
                     {
-                        y = y + ymove * speed / 6.25f;
+                        y = y + ymove * speed * 0.8f;
                     }
                     if (y > yt)
                     {
-                        y = y - ymove * speed / 6.25f;
+                        y = y - ymove * speed * 0.8f;
                     }
                     brkdistance(xt, yt);
+                    //Console.WriteLine(speed);
                     Thread.Sleep(16);
                 }
-                speed = 0;
+                //speed = 0;
                 a = 0;
                 isAccelerating = false;
                 Thread.Sleep(32);
@@ -195,10 +204,14 @@ namespace GreenLight
 
         public void tryBrake(float targetspeed)
         {
-            isAccelerating = false;
             isBraking = true;
+            isAccelerating = false;
+            
+            
+
             try
-            {                
+            {
+                
                 if (brk != null)
                 {
                     brk = null;
@@ -206,6 +219,8 @@ namespace GreenLight
 
                 brk = new Thread(() => brakeToSpeed(targetspeed));
                 brk.Start();
+
+
             }
             catch (Exception e)
             {
@@ -226,15 +241,13 @@ namespace GreenLight
 
             try
             {
-                if (acc == null)
-                {
-                    acc = new Thread(() => accelerate(targetspeed));
-                    acc.Start();
-                }
-                else
+                if (acc != null)
                 {
                     acc = null;
                 }
+                acc = new Thread(() => accelerate(targetspeed));
+                acc.Start();
+                
             }
             catch (Exception e)
             {

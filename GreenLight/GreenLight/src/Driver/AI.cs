@@ -30,6 +30,7 @@ namespace GreenLight
             targetspeed = speedlimit + speedRelativeToLimit;
             run = new Thread(test);
             run.Start();
+            
 
         }
 
@@ -41,7 +42,7 @@ namespace GreenLight
                 {
                     Thread.Sleep(reactionSpeed);
                     v.tryAccelerate(targetspeed);
-                }               
+                }
                 Thread.Sleep(16);
             }
         }

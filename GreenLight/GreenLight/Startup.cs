@@ -14,7 +14,7 @@ namespace GreenLight
 
         bool simulate;
         //Vehicle v = VehicleTypeConfig.types[0];
-        public List<Vehicle> carlist = new List<Vehicle> { };
+        //public List<Vehicle> carlist = new List<Vehicle> { };
         public List<AI> driverList = new List<AI> { };
         public Startup()
         {
@@ -26,10 +26,10 @@ namespace GreenLight
 
             Thread run = new Thread(simulation);
             run.Start();
-
-            Thread drivers = new Thread(createDriver);
-            drivers.Start();
-            Console.WriteLine(VehicleTypeConfig.types[0]);
+            createDriver();
+            /*Thread drivers = new Thread(createDriver);
+            drivers.Start();*/
+           
             /*KeyPress += testmethod;*/
             MouseClick += clickmethod;
         }
@@ -45,7 +45,11 @@ namespace GreenLight
         }*/
         private void createDriver()
         {
-            for (int aantal = 0; simulate && aantal <= 10; aantal++)
+            Vehicle v = new Vehicle("Auto", 1353, 4.77f, 100, 4223, 10, 10, 0.35f, 2.65f);            
+            AI driver = new AI(v, 250, 2, 0, 0);
+            driverList.Add(driver);
+
+            /*for (int aantal = 0; simulate && aantal < 10; aantal++)
             {
                 Thread.Sleep(3000);
                 Vehicle v = new Vehicle("Auto", 1353, 4.77f, 100, 4223, 10, 10, 0.35f, 2.65f);
@@ -53,7 +57,7 @@ namespace GreenLight
                 //carlist[aantal] = VehicleTypeConfig.types[0];
                 AI driver = new AI(v, 250, 2, 0, 0);
                 driverList.Add(driver);
-            }
+            }*/
         }
         private void simulation()
         {
