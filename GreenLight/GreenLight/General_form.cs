@@ -67,12 +67,13 @@ namespace GreenLight
             BSM = new Build_sub_menu(Sub_menu_width, this, Dosis_font_family);
             BMM = new Build_main_menu(Sub_menu_width, this, Dosis_font_family);
 
+
+            SimDataM = new Simulation_data_menu(Sub_menu_width, this, 30, Dosis_font_family);
             SimSM = new Simulation_sub_menu(Sub_menu_width, this, Dosis_font_family);
             SimMM = new Simulation_main_menu(Sub_menu_width, this, Dosis_font_family);
             SimSWM = new Simulation_sub_weather_menu(Sub_menu_width, this, Dosis_font_family);
             SimSVM = new Simulation_sub_vehicle_menu(Sub_menu_width, this, Dosis_font_family);
             SimSDM = new Simulation_sub_driver_menu(Sub_menu_width, this, Dosis_font_family);
-            SimDataM = new Simulation_data_menu(Sub_menu_width,this,30, Dosis_font_family);
 
             ElemSBM = new Elements_sub_buildings_menu(Sub_menu_width, this, Dosis_font_family);
             ElemSLM = new Elements_sub_lights_menu(Sub_menu_width, this, Dosis_font_family);
@@ -83,12 +84,12 @@ namespace GreenLight
             this.Controls.Add(SSM);
             this.Controls.Add(BMM);
             this.Controls.Add(BSM);
+            this.Controls.Add(SimDataM);
             this.Controls.Add(SimMM);
             this.Controls.Add(SimSM);
             this.Controls.Add(SimSWM);
             this.Controls.Add(SimSVM);
             this.Controls.Add(SimSDM);
-            this.Controls.Add(SimDataM);
             this.Controls.Add(ElemSBM);
             this.Controls.Add(ElemSLM);
             this.Controls.Add(ElemSRM);

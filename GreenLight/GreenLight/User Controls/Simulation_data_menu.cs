@@ -15,23 +15,27 @@ namespace GreenLight
     public partial class Simulation_data_menu : UserControl
     {
         FontFamily Dosis_font_family;
-
         Label time;
+        int _multiplier = 1;
+        TimeSpan Last_Simulation_time;
+        TimeSpan Simulation_time;
         public Simulation_data_menu(int Sub_menu_width, General_form General_form, int Height, FontFamily Dosis_font_family_in)
         {
             Dosis_font_family = Dosis_font_family_in;
             this.BackColor = Color.DarkGray;
             this.Size = new Size(General_form.Width - Sub_menu_width, Height);
-            General_form.SizeChanged += (object o, EventArgs EA) => {
+            General_form.SizeChanged += (object o, EventArgs EA) => 
+            {
                 this.Size = new Size(General_form.Width - Sub_menu_width, Height);
                 this.Controls.Clear();
                 Initialize();
             };
             Initialize();
+            Last_Simulation_time = new TimeSpan(00, 00, 00);
         }
 
         System.Windows.Forms.Timer Timer;
-        Stopwatch Stopwatch = new Stopwatch();
+        public Stopwatch Stopwatch = new Stopwatch();
         public void Start_timer()
         {
             Stopwatch.Start();
@@ -48,13 +52,21 @@ namespace GreenLight
 
         public void Reset_timer()
         {
-            Stopwatch.Restart();
+            Stopwatch.Reset();
+            Last_Simulation_time = new TimeSpan(00, 00, 00);
+        }
+        // Changing the Multiplier does only work once yet, didn't had enough time to finish it before we had to hand in our code base.
+        public void Value_changed(int multiplier)
+        {
+            _multiplier = (int)multiplier;
+            Last_Simulation_time = TimeSpan.FromTicks(Stopwatch.ElapsedTicks * (_multiplier -1));
         }
 
         private void Set_time(object o, EventArgs EA)
         {
-            TimeSpan Time_elapsed = Stopwatch.Elapsed;
-            time.Text = (int)Time_elapsed.Hours + ":" + (int)Time_elapsed.Minutes + ":" + (int)Time_elapsed.Seconds;
+            TimeSpan Time_elapsed = TimeSpan.FromTicks(Stopwatch.ElapsedTicks * _multiplier);
+            Simulation_time = (Time_elapsed.Subtract(Last_Simulation_time));
+            time.Text = (int)Simulation_time.Hours + ":" + (int)Simulation_time.Minutes +  ":" + (int)Simulation_time.Seconds ;
         }
 
         private void Initialize()

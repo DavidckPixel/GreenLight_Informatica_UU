@@ -84,28 +84,46 @@ namespace GreenLight
             Pause.Click += (object o, EventArgs EA) => { Pause.Hide(); Start.Show(); General_form.SimDataM.Stop_timer(); };
             Start.Click += (object o, EventArgs EA) => { Start.Hide(); Pause.Show(); General_form.SimDataM.Start_timer(); };
 
-
             CurvedButtons Reset = new CurvedButtons(new Size(60, 60),
                 new Point(95, General_form.Height - 80), 35,
                 "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
-            Reset.Click += (object obj, EventArgs args) => { General_form.SimDataM.Reset_timer(); };
+            Reset.Click += (object obj, EventArgs args) => { };
             this.Controls.Add(Reset);
+            Reset.Click += (object o, EventArgs EA) => 
+            {
+                if (Pause.Visible)
+                {
+                    General_form.SimDataM.Reset_timer();
+                    Pause.Hide(); 
+                    Start.Show();
+                }
+                else if (Start.Visible && General_form.SimDataM.Stopwatch.Elapsed.ToString() != "00:00:00")
+                {
+                    General_form.SimDataM.Reset_timer();
+                }
+            };
 
             CurvedButtons Stop = new CurvedButtons(new Size(60, 60),
-                new Point(170, General_form.Height - 80), 35,
-                "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
+            new Point(170, General_form.Height - 80), 35,
+            "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Stop);
-            Stop.Click += (object obj, EventArgs args) => { General_form.Menu_to_build(); General_form.SimDataM.Reset_timer(); };
+            Stop.Click += (object obj, EventArgs args) => 
+            { 
+                General_form.Menu_to_build();
+                General_form.SimDataM.Reset_timer(); 
+                Pause.Hide();
+                Start.Show();
+            };
 
             CurvedButtons SimulationSpeed_header = new CurvedButtons(new Size(150, 30),
                 new Point(50, this.Height - 130), "../../User Interface Recources/Simulation_Speed_Header.png");
             this.Controls.Add(SimulationSpeed_header);
 
-            Slider SimulationSpeed = new Slider(new Point(25, this.Height - 105), 0, 100);
+            Slider SimulationSpeed = new Slider(new Point(25, this.Height - 105), 1, 10);
+            SimulationSpeed.Value = 1;
+            SimulationSpeed.ValueChanged += (object obj, EventArgs args) => { General_form.SimDataM.Value_changed(SimulationSpeed.Value); };
             this.Controls.Add(SimulationSpeed);
-
             
-
         }
     }
 }
