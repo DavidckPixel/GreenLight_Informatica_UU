@@ -54,18 +54,21 @@ namespace GreenLight
         {
             Stopwatch.Reset();
             Last_Simulation_time = new TimeSpan(00, 00, 00);
+            Simulation_time = new TimeSpan(00, 00, 00);
         }
-        // Changing the Multiplier does only work once yet, didn't had enough time to finish it before we had to hand in our code base.
         public void Value_changed(int multiplier)
         {
             _multiplier = (int)multiplier;
-            Last_Simulation_time = TimeSpan.FromTicks(Stopwatch.ElapsedTicks * (_multiplier -1));
+            Last_Simulation_time = Simulation_time;
+            if (Stopwatch.IsRunning)
+                Stopwatch.Restart();
+            else Stopwatch.Reset();
         }
 
         private void Set_time(object o, EventArgs EA)
         {
             TimeSpan Time_elapsed = TimeSpan.FromTicks(Stopwatch.ElapsedTicks * _multiplier);
-            Simulation_time = (Time_elapsed.Subtract(Last_Simulation_time));
+            Simulation_time = Last_Simulation_time.Add(Time_elapsed);
             time.Text = (int)Simulation_time.Hours + ":" + (int)Simulation_time.Minutes +  ":" + (int)Simulation_time.Seconds ;
         }
 

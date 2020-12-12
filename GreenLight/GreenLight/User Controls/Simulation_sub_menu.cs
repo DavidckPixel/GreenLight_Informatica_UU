@@ -71,24 +71,41 @@ namespace GreenLight
             Divider3.Location = new Point(0, this.Height - 135);
             this.Controls.Add(Divider3);
 
+            CurvedButtons SimulationSpeed_header = new CurvedButtons(new Size(150, 30),
+                new Point(15, this.Height - 130), "../../User Interface Recources/Simulation_Speed_Header.png");
+            this.Controls.Add(SimulationSpeed_header);
+
+            Slider SimulationSpeed = new Slider(new Point(25, this.Height - 105), 1, 10);
+            SimulationSpeed.Value = 1;
+            this.Controls.Add(SimulationSpeed);
+
+            SliderText SimulationSpeed_Text = new SliderText(Dosis_font_family, new Point(175, this.Height - 127), SimulationSpeed.Value.ToString() + "x");
+            SimulationSpeed_Text.Size = new Size(50, 50);
+            this.Controls.Add(SimulationSpeed_Text);
+           
+            SimulationSpeed.ValueChanged += (object o, EventArgs EA) => 
+                { SimulationSpeed_Text.Text = SimulationSpeed.Value.ToString() + "x"; General_form.SimDataM.Value_changed(SimulationSpeed.Value); };
+
             CurvedButtons Start = new CurvedButtons(new Size(60, 60),
                 new Point(20, General_form.Height - 80), 35,
                 "../../User Interface Recources/Play_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Start);
+            Start.BringToFront();
 
             CurvedButtons Pause = new CurvedButtons(new Size(60, 60),
                new Point(20, General_form.Height - 80), 35,
                "../../User Interface Recources/Pause_Button.png", this.BackColor);
             Pause.Hide();
             this.Controls.Add(Pause);
+            Pause.BringToFront();
             Pause.Click += (object o, EventArgs EA) => { Pause.Hide(); Start.Show(); General_form.SimDataM.Stop_timer(); };
             Start.Click += (object o, EventArgs EA) => { Start.Hide(); Pause.Show(); General_form.SimDataM.Start_timer(); };
 
             CurvedButtons Reset = new CurvedButtons(new Size(60, 60),
                 new Point(95, General_form.Height - 80), 35,
                 "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
-            Reset.Click += (object obj, EventArgs args) => { };
             this.Controls.Add(Reset);
+            Reset.BringToFront();
             Reset.Click += (object o, EventArgs EA) => 
             {
                 if (Pause.Visible)
@@ -96,10 +113,12 @@ namespace GreenLight
                     General_form.SimDataM.Reset_timer();
                     Pause.Hide(); 
                     Start.Show();
+                    SimulationSpeed.Value = 1;
                 }
                 else if (Start.Visible && General_form.SimDataM.Stopwatch.Elapsed.ToString() != "00:00:00")
                 {
                     General_form.SimDataM.Reset_timer();
+                    SimulationSpeed.Value = 1;
                 }
             };
 
@@ -107,6 +126,7 @@ namespace GreenLight
             new Point(170, General_form.Height - 80), 35,
             "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Stop);
+            Stop.BringToFront();
             Stop.Click += (object obj, EventArgs args) => 
             { 
                 General_form.Menu_to_build();
@@ -114,16 +134,6 @@ namespace GreenLight
                 Pause.Hide();
                 Start.Show();
             };
-
-            CurvedButtons SimulationSpeed_header = new CurvedButtons(new Size(150, 30),
-                new Point(50, this.Height - 130), "../../User Interface Recources/Simulation_Speed_Header.png");
-            this.Controls.Add(SimulationSpeed_header);
-
-            Slider SimulationSpeed = new Slider(new Point(25, this.Height - 105), 1, 10);
-            SimulationSpeed.Value = 1;
-            SimulationSpeed.ValueChanged += (object obj, EventArgs args) => { General_form.SimDataM.Value_changed(SimulationSpeed.Value); };
-            this.Controls.Add(SimulationSpeed);
-            
         }
     }
 }
