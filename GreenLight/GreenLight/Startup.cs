@@ -84,7 +84,7 @@ namespace GreenLight
 
             for (int t = 0; t < driverList.Count; t++)
             {
-                driverList[t].v.klik(clickPos.X, clickPos.Y);
+                driverList[t].changeDestination(clickPos.X, clickPos.Y);
             }
         }
     }
