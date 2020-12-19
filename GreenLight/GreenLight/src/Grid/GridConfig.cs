@@ -9,7 +9,7 @@ using System.IO;
 
 namespace GreenLight
 {
-    class GridConfig
+    public class GridConfig
     {
         //This class initializes and holds the Config data for the Grid
         //It uses the newtonsoft json deserializer.

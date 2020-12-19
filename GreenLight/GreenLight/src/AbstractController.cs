@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
-    class VehicleController : EntityController
+    public abstract class AbstractController
     {
+        abstract public void Initialize();
 
-        public override void Initialize()
+        public AbstractController()
         {
-            Log.Write("Initializing the VehicleController");
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace GreenLight
 {
-    abstract class ScreenObject
+    public abstract class ScreenObject
     {
         public Rectangle Hitbox;
         public Point Cords;

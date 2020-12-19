@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GreenLight
 {
-    class StraightRoad : AbstractRoad
+    public class StraightRoad : AbstractRoad
     {
 
         //Similar to curved road, but now math for StraightRoads

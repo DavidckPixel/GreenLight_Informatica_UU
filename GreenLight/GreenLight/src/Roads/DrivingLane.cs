@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GreenLight
 {
-    class DrivingLane
+    public class DrivingLane
     {
         //Every road has a list of these DrivingLanes, a driving lane consists of a list of LanePoints
         //And for now an int that determines which type of road it is.
@@ -16,7 +16,7 @@ namespace GreenLight
         //This is used for testing to see if our algorithm created a smooth road -- This will not be used in final release.
 
 
-        List<LanePoints> points;
+        public List<LanePoints> points;
         int Road; //Needs to be removed
 
         public DrivingLane(List<LanePoints> _points, int _Road)
@@ -37,6 +37,14 @@ namespace GreenLight
                     _pointtemp = x.cord;
                 }
             }catch(Exception e) { }
+        }
+
+        public void LogPoints()
+        {
+            foreach(LanePoints _point in this.points)
+            {
+                Console.WriteLine(_point.cord);
+            }
         }
     }
 }

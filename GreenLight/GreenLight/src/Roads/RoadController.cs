@@ -7,21 +7,45 @@ using System.Drawing;
 
 namespace GreenLight
 {
-    class RoadController
+    public class RoadController : EntityController
     {
 
         //Very early version of the actual code that WILL connect the road system to the rest of our project
         //For now it just holds a calculate direction function
         //Nothing really of interest here yet, Come back later :)
 
-        int drivingLaneDistance = 40;
-        int roadAmount;
-        protected List<DrivingLane> drivinglanes;
-        
-        string Selected;
-        
-        AbstractRoad roadType;
+        public List<AbstractRoad> roads = new List<AbstractRoad>();
 
+        public RoadController()
+        {
+        }
+
+        public void BuildStraightRoad(Point _point1, Point _point2)
+        {
+            string _dir = Direction(_point1, _point2);
+            AbstractRoad _road = new StraightRoad(_point1, _point2, 1, _dir);
+
+            roads.Add(_road);
+        }
+
+        public void BuildDiagnolRoad(Point _point1, Point _point2)
+        {
+            string _dir = Direction(_point1, _point2);
+            AbstractRoad _road = new DiagonalRoad(_point1, _point2, 1, _dir);
+
+            roads.Add(_road);
+        }
+
+        public void BuildCurvedRoad(Point _point1, Point _point2)
+        {
+            string _dir = Direction(_point1, _point2);
+            AbstractRoad _road = new CurvedRoad(_point1, _point2, 3, _dir);
+
+            roads.Add(_road);
+        }
+
+
+        
         public static string Direction(Point _firstPoint, Point _secondPoint)
         {
             string RoadDirection = "";
@@ -66,6 +90,11 @@ namespace GreenLight
 
             }
             return RoadDirection;
+        }
+
+        public override void Initialize()
+        {
+
         }
     }
 }

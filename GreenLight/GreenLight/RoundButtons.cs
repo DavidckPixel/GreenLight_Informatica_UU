@@ -30,7 +30,7 @@ namespace GreenLight
             this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
         }
         
-        public RoundButtons(Size s, Point p, string Color, General_form General_form)
+        public RoundButtons(Size s, Point p, string Color, Form Form)
         {
             this.Cursor = Cursors.Hand;
             this.Size = s;
@@ -43,7 +43,7 @@ namespace GreenLight
                     this.Image = Image.FromFile("../../User Interface Recources/Logo_Minimalize.png");
                     this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Minimalize_On_Hover.png"); };
                     this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Minimalize.png"); };
-                    this.Click += (object o, EventArgs EA) => { General_form.WindowState = FormWindowState.Minimized; };
+                    this.Click += (object o, EventArgs EA) => { Form.WindowState = FormWindowState.Minimized; };
                     break;
                 case "Yellow":
                     this.Location = new Point(p.X + 72, p.Y + 3);
@@ -52,17 +52,17 @@ namespace GreenLight
                     this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Maximize.png"); };
                     this.Click += (object o, EventArgs EA) =>
                     {
-                        if (General_form.WindowState == FormWindowState.Maximized)
+                        if (Form.WindowState == FormWindowState.Maximized)
                         {
-                            General_form.WindowState = FormWindowState.Normal;
-                            General_form.Refresh_region(General_form);
-                            General_form.Refresh();
+                            Form.WindowState = FormWindowState.Normal;
+                            General_Form.Main.UserInterface.Refresh_region(Form);
+                            Form.Refresh();
                         }
                         else
                         {
-                            General_form.WindowState = FormWindowState.Maximized;
-                            General_form.Refresh_region(General_form);
-                            General_form.Refresh();
+                            Form.WindowState = FormWindowState.Maximized;
+                            General_Form.Main.UserInterface.Refresh_region(Form);
+                            Form.Refresh();
                         }
                     };
                     break;

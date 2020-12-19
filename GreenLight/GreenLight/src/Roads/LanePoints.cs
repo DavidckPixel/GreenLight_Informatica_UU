@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace GreenLight
 {
-    struct LanePoints
+    public struct LanePoints
     {
         //lanepoints are very simple put, just a point with a corresponding degree, so every car can drive from points to point
         //and angle itself accordingly between the 2 to create a smooth illusion of driving.

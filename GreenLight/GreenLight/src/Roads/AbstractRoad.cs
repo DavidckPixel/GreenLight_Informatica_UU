@@ -16,7 +16,7 @@ namespace GreenLight
     //Every Road has 4 base variables: 2 points inbetween which the road lays, the amount of lanes the road has, and a list of the drivingLanes
     //Drivinglanes are a list of points that the car follows to drive on the road.
 
-    abstract class AbstractRoad : ScreenObject
+    public abstract class AbstractRoad : ScreenObject
     {
         protected Point point1;
         protected Point point2;
@@ -52,12 +52,26 @@ namespace GreenLight
             return _degree % 360;
         }
 
+        public void Draw(Graphics g)
+        {
+            foreach(DrivingLane _lane in Drivinglanes)
+            {
+                _lane.Draw(g);
+            }
+        }
+
         public Point getPoint1() { return point1; }
         //public void setPoint1(Point _value) { point1 = _value; }
         public Point getPoint2() { return point2; }
         //public void setPoint2(Point _value) { point2 = _value; }
 
         public int getLanes() { return lanes; }
+
+        public override string ToString()
+        {
+            string _temp = point1.ToString() + " - " + point2.ToString();
+            return _temp;
+        }
 
 
     }

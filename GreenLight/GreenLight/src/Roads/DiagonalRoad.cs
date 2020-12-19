@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GreenLight
 {
-    class DiagonalRoad : AbstractRoad
+    public class DiagonalRoad : AbstractRoad
     {
         //Similar to CurvedRoad, but now math for diagnol
 
@@ -27,8 +27,15 @@ namespace GreenLight
         {
             List<LanePoints>_lanePoints = new List<LanePoints>();
             Point _normpoint1 = _point1; Point _normpoint2 = _point2;
-
-            double _rc = (_point2.Y - _point1.Y) / (_point2.X - _point1.X);
+            double _rc;
+            try
+            {
+                _rc = (_point2.Y - _point1.Y) / (_point2.X - _point1.X);
+            }
+            catch (Exception)
+            {
+                _rc = 0;
+            }
             int _dir = GetDirection(_point1, _point2);
             Point _prev = _normpoint1;
 

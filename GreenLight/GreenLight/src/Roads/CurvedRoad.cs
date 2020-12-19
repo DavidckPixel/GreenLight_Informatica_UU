@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace GreenLight
 {
-    class CurvedRoad : AbstractRoad
+    public class CurvedRoad : AbstractRoad
     {
 
         //A roadtype for Curved roads, In here the CalculateDrivingLane function calculates a dynamic curve inbetween 2 points
