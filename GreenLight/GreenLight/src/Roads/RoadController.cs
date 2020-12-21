@@ -56,14 +56,14 @@ namespace GreenLight
                     {
                         if (_firstPoint.X < _secondPoint.X)
                         {
-                            if (_firstPoint.Y < _secondPoint.X)
+                            if (_firstPoint.Y < _secondPoint.Y)
                                 RoadDirection = "SW";
                             else
                                 RoadDirection = "NW";
                         }
                         else
                         {
-                            if (_firstPoint.Y < _secondPoint.X)
+                            if (_firstPoint.Y < _secondPoint.Y)
                                 RoadDirection = "SE";
                             else
                                 RoadDirection = "NE";

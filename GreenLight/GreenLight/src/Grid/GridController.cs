@@ -82,6 +82,7 @@ namespace GreenLight
                 if (_secondPoint != null && _secondPoint != _firstPoint)
                 {
                     Console.WriteLine("Second PointClick!");
+                    Console.WriteLine(_secondPoint.Cords);
                     this.secondPoint = _secondPoint;
 
                     builder.BuildRoad(this.firstPoint.Cords, this.secondPoint.Cords);

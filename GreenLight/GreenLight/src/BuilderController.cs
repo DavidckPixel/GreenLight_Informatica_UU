@@ -26,14 +26,14 @@ namespace GreenLight
 
         public void BuildRoad(Point _point1, Point _point2)
         {
-            string _roadType = "Curved";
+            string _roadType = "Diagonal";
 
             switch (_roadType)
             {
                 case "Straight":
                     roadBuilder.BuildStraightRoad(_point1, _point2);
                     break;
-                case "Diagnol":
+                case "Diagonal":
                     roadBuilder.BuildDiagnolRoad(_point1, _point2);
                     break;
                 case "Curved":
