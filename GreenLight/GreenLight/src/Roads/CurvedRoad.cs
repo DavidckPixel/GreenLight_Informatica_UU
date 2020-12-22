@@ -91,7 +91,7 @@ namespace GreenLight
                 Console.WriteLine(x.ToString());
             }
 
-            return new DrivingLane(_lanePoints, 0);
+            return new DrivingLane(_lanePoints);
         }
 
         private Tuple<int, int> GetDirection(Point _point1, Point _point2)

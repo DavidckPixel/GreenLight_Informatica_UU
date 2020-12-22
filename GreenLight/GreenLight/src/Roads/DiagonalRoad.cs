@@ -79,7 +79,7 @@ namespace GreenLight
                 Console.WriteLine(x.ToString());
             }
 
-            return new DrivingLane(_lanePoints, 0); 
+            return new DrivingLane(_lanePoints); 
         }
 
         private int GetDirection(Point _point1, Point _point2)
@@ -97,31 +97,64 @@ namespace GreenLight
         private DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
             int drivingLaneDistance = 40;
-
+            
             if (lanes % 2 == 0)
             {
                 if (t % 2 == 0)
                 {
-                    _firstPoint.Y -= t / 2 * drivingLaneDistance / 2;
-                    _secondPoint.Y -= t / 2 * drivingLaneDistance / 2;
+                    if (_firstPoint.X == _secondPoint.X)
+                    {
+                        _firstPoint.X -= (t / 2) * drivingLaneDistance - (drivingLaneDistance / 2);
+                        _secondPoint.X -= (t / 2) * drivingLaneDistance - (drivingLaneDistance / 2);
+                    }
+                    else 
+                    {
+                        _firstPoint.Y -= (t / 2) * drivingLaneDistance - (drivingLaneDistance / 2);
+                        _secondPoint.Y -= (t / 2) * drivingLaneDistance - (drivingLaneDistance / 2);
+                    }  
                 }
                 else
                 {
-                    _firstPoint.Y += (t + 1) / 2 * drivingLaneDistance / 2;
-                    _secondPoint.Y += (t + 1) / 2 * drivingLaneDistance / 2;
+                    if (_firstPoint.X == _secondPoint.X)
+                    {
+                        _firstPoint.X += ((t + 1) / 2) * drivingLaneDistance - (drivingLaneDistance / 2);
+                        _secondPoint.X += ((t + 1) / 2) * drivingLaneDistance - (drivingLaneDistance / 2);
+                    }
+                    else
+                    {
+                        _firstPoint.Y += ((t + 1) / 2) * drivingLaneDistance - (drivingLaneDistance / 2);
+                        _secondPoint.Y += ((t + 1) / 2) * drivingLaneDistance - (drivingLaneDistance / 2);
+                    }
                 }
             }
             else // (lanes % 2 == 1)
             {
                 if (t % 2 == 0)
                 {
-                    _firstPoint.Y -= t / 2 * drivingLaneDistance;
-                    _secondPoint.Y -= t / 2 * drivingLaneDistance;
+                    if (_firstPoint.X == _secondPoint.X)
+                    {
+                        _firstPoint.X -= t / 2 * drivingLaneDistance;
+                        _secondPoint.X -= t / 2 * drivingLaneDistance;
+                    }
+                    else
+                    {
+                        _firstPoint.Y -= t / 2 * drivingLaneDistance;
+                        _secondPoint.Y -= t / 2 * drivingLaneDistance;
+                    }
                 }
                 else if (t % 2 == 1 && t != 1)
                 {
-                    _firstPoint.Y += (t - 1) / 2 * drivingLaneDistance;
-                    _secondPoint.Y += (t - 1) / 2 * drivingLaneDistance;
+                    if (_firstPoint.X == _secondPoint.X)
+                    {
+                        _firstPoint.X += (t - 1) / 2 * drivingLaneDistance;
+                        _secondPoint.X += (t - 1) / 2 * drivingLaneDistance;
+                    }
+                    else
+                    {
+                        _firstPoint.Y += (t - 1) / 2 * drivingLaneDistance;
+                        _secondPoint.Y += (t - 1) / 2 * drivingLaneDistance;
+                    }
+                    
                 }
             }
 

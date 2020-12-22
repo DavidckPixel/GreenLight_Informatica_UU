@@ -158,6 +158,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="src\Roads\RoadTestForm.resx">
       <DependentUpon>RoadTestForm.cs</DependentUpon>
@@ -201,6 +202,10 @@
   <ItemGroup>
     <Content Include="Images\BigCar.png" />
     <Content Include="Images\Car.png" />
+    <None Include="Images\Dikkere-Road.png" />
+    <None Include="Images\Road_Verticaal.png" />
+    <None Include="Images\Transparent-Lane.png" />
+    <None Include="Images\Lane.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -23,7 +23,7 @@ namespace GreenLight
         public void BuildStraightRoad(Point _point1, Point _point2)
         {
             string _dir = Direction(_point1, _point2, "StraightRoad");
-            AbstractRoad _road = new StraightRoad(_point1, _point2, 4, _dir);
+            AbstractRoad _road = new StraightRoad(_point1, _point2, 1, _dir);
 
             roads.Add(_road);
         }
@@ -31,7 +31,7 @@ namespace GreenLight
         public void BuildDiagnolRoad(Point _point1, Point _point2)
         {
             string _dir = Direction(_point1, _point2, "DiagonalRoad");
-            AbstractRoad _road = new DiagonalRoad(_point1, _point2, 1, _dir);
+            AbstractRoad _road = new DiagonalRoad(_point1, _point2, 3, _dir);
 
             roads.Add(_road);
         }
@@ -44,8 +44,6 @@ namespace GreenLight
 
             roads.Add(_road);
         }
-
-
         
         public static string Direction(Point _firstPoint, Point _secondPoint, string _Roadtype)
         {
