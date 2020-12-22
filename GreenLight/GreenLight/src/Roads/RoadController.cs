@@ -22,15 +22,15 @@ namespace GreenLight
 
         public void BuildStraightRoad(Point _point1, Point _point2)
         {
-            string _dir = Direction(_point1, _point2);
-            AbstractRoad _road = new StraightRoad(_point1, _point2, 1, _dir);
+            string _dir = Direction(_point1, _point2, "StraightRoad");
+            AbstractRoad _road = new StraightRoad(_point1, _point2, 4, _dir);
 
             roads.Add(_road);
         }
 
         public void BuildDiagnolRoad(Point _point1, Point _point2)
         {
-            string _dir = Direction(_point1, _point2);
+            string _dir = Direction(_point1, _point2, "DiagonalRoad");
             AbstractRoad _road = new DiagonalRoad(_point1, _point2, 1, _dir);
 
             roads.Add(_road);
@@ -38,18 +38,19 @@ namespace GreenLight
 
         public void BuildCurvedRoad(Point _point1, Point _point2)
         {
-            string _dir = Direction(_point1, _point2);
-            AbstractRoad _road = new CurvedRoad(_point1, _point2, 3, _dir);
+            string _dir = Direction(_point1, _point2, "CurvedRoad");
+            Console.WriteLine(_dir);
+            AbstractRoad _road = new CurvedRoad(_point1, _point2, 1, _dir);
 
             roads.Add(_road);
         }
 
 
         
-        public static string Direction(Point _firstPoint, Point _secondPoint)
+        public static string Direction(Point _firstPoint, Point _secondPoint, string _Roadtype)
         {
             string RoadDirection = "";
-            string RoadType = "";
+            string RoadType = _Roadtype;
             switch (RoadType)
             {
                 case "CurvedRoad":
@@ -57,16 +58,16 @@ namespace GreenLight
                         if (_firstPoint.X < _secondPoint.X)
                         {
                             if (_firstPoint.Y < _secondPoint.Y)
-                                RoadDirection = "SW";
+                                RoadDirection = "SE";
                             else
-                                RoadDirection = "NW";
+                                RoadDirection = "NE";
                         }
                         else
                         {
                             if (_firstPoint.Y < _secondPoint.Y)
-                                RoadDirection = "SE";
+                                RoadDirection = "SW";
                             else
-                                RoadDirection = "NE";
+                                RoadDirection = "NW";
                         }
                     }
                     break;
@@ -82,7 +83,7 @@ namespace GreenLight
                         else if (_secondPoint.X < _firstPoint.X)
                             RoadDirection = "W";
                         else if (_firstPoint.Y < _secondPoint.Y)
-                            RoadDirection = "Z";
+                            RoadDirection = "S";
                         else if (_firstPoint.Y > _secondPoint.Y)
                             RoadDirection = "N";
                     }
