@@ -16,6 +16,9 @@ namespace GreenLight
 {
     public partial class General_form : Form
     {
+        //This is the form that will be opened in the end product and will make sure all parts are implemented in the right way
+        //For now it only opens the User Interface, without being able to draw roads or simulate
+
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
 
         private static extern IntPtr CreateRoundRectRgn(

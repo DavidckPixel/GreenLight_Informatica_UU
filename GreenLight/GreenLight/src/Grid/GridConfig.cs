@@ -11,6 +11,9 @@ namespace GreenLight
 {
     class GridConfig
     {
+        //This class initializes and holds the Config data for the Grid
+        //It uses the newtonsoft json deserializer.
+
         public int SpacingWidth;
         public int SpacingHeight;
 

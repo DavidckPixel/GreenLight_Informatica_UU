@@ -8,12 +8,21 @@ namespace GreenLight
 {
     class Vehicle : ScreenObject     
     {
+<<<<<<< HEAD
         public float x, y; //Location of the vehicle
         public float speed = 0;    //Speed of vehicle
         public float a, abrake; //acceleration and braking speed
 
         //Properties of the vehicle
         string name; 
+=======
+        //This is the vehicle class, which creates a car.
+        //This class also contains methods that calculate how the car moves, accelarates and brakes.
+        //All calculations are based on real-life physics
+        //The variables of which the car exists are stored in the VehicleType json file and read in with the VehicleTypeConfig class
+        //World variables like gravity are stored in the Earth json file and read in with the WorldConfig class
+
+>>>>>>> main
         int weight;
         float length;
         int motorpwr;

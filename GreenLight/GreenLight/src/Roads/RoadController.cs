@@ -9,6 +9,11 @@ namespace GreenLight
 {
     class RoadController
     {
+
+        //Very early version of the actual code that WILL connect the road system to the rest of our project
+        //For now it just holds a calculate direction function
+        //Nothing really of interest here yet, Come back later :)
+
         int drivingLaneDistance = 40;
         int roadAmount;
         protected List<DrivingLane> drivinglanes;
@@ -17,34 +22,7 @@ namespace GreenLight
         
         AbstractRoad roadType;
 
-        public void CreateRoad(Gridpoint _firstPoint, Gridpoint _secondPoint, string _roadType, int _lanes)
-        {
-            AbstractRoad newRoad;
-            string RoadType = _roadType;
-            int lanes = _lanes;
-
-            switch (RoadType)
-            {
-                case "CurvedRoad":
-                    
-                        
-                        roadAmount++;
-                    
-                    break;
-
-                case "DiagonalRoad":
-                    for (int t = 1; t <= lanes; t++)
-                    {
-                        
-                        newRoad = new DiagonalRoad(_firstPoint.Cords, _secondPoint.Cords, lanes, Direction(_firstPoint.Cords, _secondPoint.Cords));
-                        //drivinglanes.Add(new DrivingLane(newRoad._lanePoints, roadAmount + 1));
-                    }
-                    roadAmount++;
-                    break;
-            }
-        }
-
-        public static String Direction(Point _firstPoint, Point _secondPoint)
+        public static string Direction(Point _firstPoint, Point _secondPoint)
         {
             string RoadDirection = "";
             string RoadType = "";

@@ -10,6 +10,13 @@ namespace GreenLight
 {
     class CurvedRoad : AbstractRoad
     {
+
+        //A roadtype for Curved roads, In here the CalculateDrivingLane function calculates a dynamic curve inbetween 2 points
+        //It gets a dir in the constructor, which stands for direction, this is to determin which way the cars should drive.
+        //In this class we mainly use a lot of math, but the simple idea is: when the constructor is called, it will calculate a curved line between 2 points
+        //For how many lanes you told the constructor to have.
+
+
         private string dir;
 
         public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir) : base(_point1, _point2, _lanes)

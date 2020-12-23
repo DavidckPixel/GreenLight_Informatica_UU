@@ -71,7 +71,9 @@
     <Compile Include="src\Driver\AI.cs" />
     <Compile Include="src\Driver\AIController.cs" />
     <Compile Include="src\Grid\GridConfig.cs" />
-    <Compile Include="src\Grid\GridController.cs" />
+    <Compile Include="src\Grid\GridController.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="src\Grid\Gridpoint.cs" />
     <Compile Include="src\Logs\Log.cs" />
     <Compile Include="src\Roads\AbstractRoad.cs" />
@@ -80,6 +82,12 @@
     <Compile Include="src\Roads\DrivingLane.cs" />
     <Compile Include="src\Roads\LanePoints.cs" />
     <Compile Include="src\Roads\RoadController.cs" />
+    <Compile Include="src\Roads\RoadTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Roads\RoadTestForm.Designer.cs">
+      <DependentUpon>RoadTestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Roads\StraightRoad.cs" />
     <Compile Include="src\ScreenObject.cs" />
     <Compile Include="src\Vehicle\Vehicle.cs" />
