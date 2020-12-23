@@ -35,20 +35,12 @@ namespace GreenLight
 
                 foreach (LanePoints x in points)
                 {
-                    if (_pointtemp.X - x.cord.X == 0)
-                    {
-                        g.DrawImage(Verticallane, _pointtemp.X -20, _pointtemp.Y, 40, Math.Abs(_pointtemp.Y - x.cord.Y));
-                        g.DrawLine(Pens.Red, _pointtemp, x.cord);
-                    }
-                    else
-                    {
-                        g.DrawImage(Lane, _pointtemp.X, _pointtemp.Y - 20, Math.Abs(_pointtemp.X - x.cord.X), 40);
-                        //g.DrawRectangle(Pens.Black, _pointtemp.X, _pointtemp.Y - 20, Math.Abs(_pointtemp.X - x.cord.X), 40);
-                        g.DrawLine(Pens.Red, _pointtemp, x.cord);
-                    }
+                    g.FillEllipse(Brushes.Gray, _pointtemp.X - 20, _pointtemp.Y - 20, 40, 40);
                     _pointtemp = x.cord;
+                   
                 }
-            }catch(Exception e) { }
+            }
+           catch(Exception e) { }
         }
 
         public static Bitmap RotateImage(Bitmap b, float angle)

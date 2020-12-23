@@ -19,7 +19,7 @@ namespace GreenLight
             this.Screen.Width = 700;
             this.Screen.Height = 300;
             this.Screen.Location = new Point(100, 100);
-
+            this.Screen.BackColor = Color.FromArgb(196, 196, 198);
             this.Screen.Paint += DrawPictureBox;
 
             _tempform.Controls.Add(this.Screen);
