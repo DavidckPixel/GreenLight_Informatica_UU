@@ -26,7 +26,7 @@ namespace GreenLight
 
         public void BuildRoad(Point _point1, Point _point2)
         {
-            string _roadType = "Curved";
+            string _roadType = "Straight";
 
             switch (_roadType)
             {
