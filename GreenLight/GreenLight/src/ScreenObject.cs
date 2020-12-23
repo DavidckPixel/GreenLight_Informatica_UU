@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace GreenLight
 {
-    abstract class ScreenObject
+    public abstract class ScreenObject
     {
         //This is the ScreenObject class from which each object that needs to be drawn (Vehicle, Road, Gridpoint) inherits basic features.
         //This class will draw these objects on the bitmap via the BitmapController with the Draw method.

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
-    class GridController : Form
+    public class GridController : EntityController
     {
         //This controller temperaly draws and creates the GridPoints, this will be changed in later versions
         //The data for the GridPoints (distance width/ height) is stored within a json file, and read in in the GridConfig class
@@ -21,24 +21,40 @@ namespace GreenLight
         public GridConfig config;
         bool firstClick;
         string Selected;
+        PictureBox canvas;
+
+        public Gridpoint firstPoint = null;
+        public Gridpoint secondPoint = null;
+
+        BuilderController builder;
         
-        public GridController()
+        public GridController(PictureBox _bitmap, BuilderController _builder)
         {
+            this.canvas = _bitmap;
             GridConfig.Init(ref this.config);
             CreateGridPoints();
-            this.Paint += DrawGridPoints;
-            this.MouseClick += OnClick;
+            this.canvas.MouseClick += OnClick;
+            this.firstClick = true;
 
-            this.Invalidate();
+            this.builder = _builder;
+        }
+
+        public override void Initialize()
+        {
+
         }
 
         public void CreateGridPoints()
         {
-            for(int y = 0; y < 10; y++)
-            {
-                for (int x = 0; x < 10; x++)
+            int _amountX = canvas.Width / config.SpacingWidth;
+            int _amountY = canvas.Height / config.SpacingHeight;
+
+            for (int y = 0; y < _amountY; y++)
+            { 
+                for (int x = 0; x < _amountX; x++)
                 {
-                    Gridpoints.Add(new Gridpoint(new Point(x * config.SpacingWidth, y * config.SpacingHeight), new Size(5,5)));
+                    
+                    Gridpoints.Add(new Gridpoint(new Point(x * config.SpacingWidth, y * config.SpacingHeight), 5));
                 }
             }
         }
@@ -48,39 +64,42 @@ namespace GreenLight
             Gridpoint _firstPoint = null;
             Gridpoint _secondPoint = null;
 
+            Console.WriteLine("MouseClick Cords: " + mea.Location);
 
             if (firstClick)
             {
                 _firstPoint = Gridpoints.Find(x => x.Collision(mea.Location));
                 if (_firstPoint != null)
                 {
-                    Console.WriteLine("PointClick!");
-                    firstClick = false;
+                    Console.WriteLine(_firstPoint.Cords);
+                    this.firstClick = false;
+                    this.firstPoint = _firstPoint;
                 }
-
-                
             }
             else
             {
                 _secondPoint = Gridpoints.Find(x => x.Collision(mea.Location));
                 if (_secondPoint != null && _secondPoint != _firstPoint)
                 {
-                    firstClick = true;
-                    if (Selected == "Roads") { };
-                    //CreateRoad(_firstPoint, _secondPoint);
+                    Console.WriteLine("Second PointClick!");
+                    Console.WriteLine(_secondPoint.Cords);
+                    this.secondPoint = _secondPoint;
 
-                    Console.WriteLine("PointClick!");
+                    builder.BuildRoad(this.firstPoint.Cords, this.secondPoint.Cords);
+                    this.ResetPoints();
                 }
             }
         }
 
-        
-
-        
-
-        public void DrawGridPoints(Object o, PaintEventArgs pea)
+        private void ResetPoints()
         {
-            Graphics g = pea.Graphics;
+            this.firstPoint = null;
+            this.secondPoint = null;
+            this.firstClick = true;
+        }
+
+        public void DrawGridPoints(Graphics g)
+        {
             foreach(Gridpoint x in Gridpoints)
             {
                 x.DrawGrid(g);

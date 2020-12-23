@@ -1,0 +1,23 @@
+DATE: 19-12-2020_12-38-11
+
+C:\Users\david\source\repos\DavidckPixel\GreenLight_Informatica_UU\GreenLight/GreenLight/Logs/19-12-2020_12-38-11
+Created the Main Controller
+Initializing the MainController..
+Created the Simulation Screen Controller
+Initializing the BuildScreenController..
+Switching Buildscreen SubMenu from {0} to {1}
+
+Roads
+Completed the Initialization of BuildScreenController
+Initializing the SimulationScreenController
+Setting Active Controller to MenuController
+Activating MenuScreenController
+Completed the Initialization of MainController
+Switched Active Controller from {0} to {1}
+GreenLight.MenuController
+GreenLight.BuildScreenController
+DeActivating MenuScreenController
+Activating BuildScreenController
+Switching Buildscreen SubMenu from {0} to {1}
+Roads
+Roads

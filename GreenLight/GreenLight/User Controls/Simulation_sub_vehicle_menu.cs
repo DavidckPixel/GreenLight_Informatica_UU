@@ -12,24 +12,24 @@ namespace GreenLight
 {
     public partial class Simulation_sub_vehicle_menu : UserControl
     {
-        public Simulation_sub_vehicle_menu(int Menu_width, General_form General_form, FontFamily Dosis_font_family)
+        public Simulation_sub_vehicle_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
 
             this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(Menu_width, General_form.Height - 230 - 135);
-            this.Location = new Point(General_form.Width - Menu_width, 230);
+            this.Size = new Size(Menu_width, Form.Height - 230 - 135);
+            this.Location = new Point(Form.Width - Menu_width, 230);
             this.AutoScroll = true;
-            Initialize(General_form, Menu_width, Dosis_font_family);
+            Initialize(Form, Menu_width, Dosis_font_family);
         }
-        public void Size_adjust(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
+        public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            this.Size = new Size(Sub_menu_width, General_form.Height - 230 - 135);
-            this.Location = new Point(General_form.Width - Sub_menu_width, 230);
+            this.Size = new Size(Sub_menu_width, Form.Height - 230 - 135);
+            this.Location = new Point(Form.Width - Sub_menu_width, 230);
             this.Controls.Clear();
-            Initialize(General_form, Sub_menu_width, Dosis_font_family);
+            Initialize(Form, Sub_menu_width, Dosis_font_family);
         }
 
-        private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
+        private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
 
             Slider temp1 = new Slider(new Point(25, 260), 0, 100, 10);

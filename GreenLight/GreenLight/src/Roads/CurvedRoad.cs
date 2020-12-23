@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace GreenLight
 {
-    class CurvedRoad : AbstractRoad
+    public class CurvedRoad : AbstractRoad
     {
 
         //A roadtype for Curved roads, In here the CalculateDrivingLane function calculates a dynamic curve inbetween 2 points
@@ -22,7 +22,7 @@ namespace GreenLight
         public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir) : base(_point1, _point2, _lanes)
         {
             this.dir = _dir;
-
+            
             for (int x = 1; x <= lanes; x++)
             {
                 Drivinglanes.Add(this.CalculateLanes(point1, point2, x));
@@ -32,29 +32,32 @@ namespace GreenLight
         protected override DrivingLane CalculateDrivingLane(Point _point1, Point _point2)
         {
             Console.WriteLine("{0} --- {1}", _point1, _point2);
+            
 
             List<LanePoints> _lanePoints = new List<LanePoints>();
             Point _normpoint1 = _point1; Point _normpoint2 = _point2;
 
             Tuple<int, int> _dir = GetDirection(_point1, _point2);
+            Console.WriteLine(dir);
+
             Point _prev = _normpoint1;
             Point _nulpoint;
 
             if (dir == "NE")
             {
-               _nulpoint = new Point(Math.Max(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
+               _nulpoint = new Point(Math.Max(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y));
             }
             else if (dir == "NW")
             {
-               _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
+               _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y));
             }
             else if (dir == "SW")
             {
-               _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y));
+               _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
             }
             else // (dir == "SE")
             {
-               _nulpoint = new Point(Math.Max(_point1.X, point2.X), Math.Max(_point1.Y, point2.Y));
+               _nulpoint = new Point(Math.Max(_point1.X, point2.X), Math.Min(_point1.Y, point2.Y));
             }
 
             int _deltaX = Math.Abs(_point1.X - _point2.X);
@@ -68,11 +71,11 @@ namespace GreenLight
                 
                 _Xtemp = _point1.X + x *_dir.Item1;
 
-                if (dir == "NE" || dir == "NW")
+                if (dir == "SE" || dir == "SW")
                 {
                     _Ytemp = _nulpoint.Y + (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
                 }
-                else // if (dir == "SE" || dir == "SW")
+                else // if (dir == "NE" || dir == "NW")
                 {
                     _Ytemp = _nulpoint.Y - (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
                 }
@@ -88,7 +91,7 @@ namespace GreenLight
                 Console.WriteLine(x.ToString());
             }
 
-            return new DrivingLane(_lanePoints, 0);
+            return new DrivingLane(_lanePoints);
         }
 
         private Tuple<int, int> GetDirection(Point _point1, Point _point2)

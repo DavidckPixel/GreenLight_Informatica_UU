@@ -66,7 +66,7 @@ namespace GreenLight
             this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
         }
         // Logo
-        public CurvedButtons(General_form General_form, int Curve)
+        public CurvedButtons(Form Form, int Curve)
         {
             curve = Curve;
             this.Size = new Size(175, 70);
@@ -74,15 +74,15 @@ namespace GreenLight
             this.Image = Image.FromFile("../../User Interface Recources/Logo.png");
             this.SizeMode = PictureBoxSizeMode.Zoom;
             Size s = new Size(30, 30);
-            RoundButtons Green = new RoundButtons(s, this.Location, "Green", General_form);
+            RoundButtons Green = new RoundButtons(s, this.Location, "Green", Form);
             this.Controls.Add(Green);
-            RoundButtons Yellow = new RoundButtons(s, this.Location, "Yellow", General_form);
+            RoundButtons Yellow = new RoundButtons(s, this.Location, "Yellow", Form);
             this.Controls.Add(Yellow);
-            RoundButtons Red = new RoundButtons(s, this.Location, "Red", General_form);
+            RoundButtons Red = new RoundButtons(s, this.Location, "Red", Form);
             this.Controls.Add(Red);
         }
         // Curved buttons with text
-        public CurvedButtons(Size Button_size, Point Location, int Curve, string FilePath, string Text, FontFamily Dosis_font_family, General_form General_form, Color BackColor)
+        public CurvedButtons(Size Button_size, Point Location, int Curve, string FilePath, string Text, FontFamily Dosis_font_family, Form Form, Color BackColor)
         {
             curve = Curve;
             Backcolor = BackColor;
@@ -103,7 +103,7 @@ namespace GreenLight
             label.TextAlign = ContentAlignment.MiddleCenter;
             label.Location = new Point(label.Location.X+2, label.Location.Y - 2);
             label.Parent = this;
-            label.Click += (object o, EventArgs EA) => { General_form.Label_click(Text); };
+            label.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Label_click(Text); };
             label.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 4) + "_On_Hover.png"); };
             label.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
             this.Controls.Add(label);
