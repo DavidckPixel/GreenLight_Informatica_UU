@@ -14,7 +14,7 @@ namespace GreenLight
         //All calculations are based on real-life physics
         //The variables of which the car exists are stored in the VehicleType json file and read in with the VehicleTypeConfig class
         //World variables like gravity are stored in the Earth json file and read in with the WorldConfig class
-
+        
         public float x, y; //Location of the vehicle
         public float speed = 0;    //Speed of vehicle
         public float a, abrake; //acceleration and braking speed

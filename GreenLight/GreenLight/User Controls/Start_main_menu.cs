@@ -27,6 +27,22 @@ namespace GreenLight
         }
 
         private void Initialize(Form Form, int Sub_menu_width) 
+
+        //Cleaner but General_form should be just form
+        /*public Start_main_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family)
+        {
+            this.BackColor = Color.FromArgb(196, 196, 198);
+            this.Size = new Size(General_form.Width - Sub_menu_width, General_form.Height);
+            Initialize(General_form, Sub_menu_width);
+
+            General_form.SizeChanged += (object o, EventArgs EA) =>
+            {
+                this.Size = new Size(General_form.Width - Sub_menu_width, General_form.Height);
+                this.Controls.Clear();
+                Initialize(General_form, Sub_menu_width);
+            };
+        }
+        private void Initialize(General_form General_form, int Sub_menu_width) */
         {
             CurvedButtons New_project_button = new CurvedButtons(new Size(200, 200), new Point((Form.Width - Sub_menu_width) / 2 - 200 - (int) (0.1*Form.Width), (Form.Height / 3) * 2 - 100), 100, "../../User Interface Recources/New_Project_Button.png", this.BackColor);
             CurvedButtons Choose_preset_button = new CurvedButtons(new Size(200, 200), new Point((Form.Width-Sub_menu_width)/2 -100, (Form.Height/3)*2-100), 100, "../../User Interface Recources/Choose_Preset_Button.png", this.BackColor);

@@ -13,6 +13,8 @@ namespace GreenLight
     {
         int curve;
         Color Backcolor;
+        public string Image_path = "";
+
         protected override void OnPaint(PaintEventArgs pe)
         {
             GraphicsPath p = new GraphicsPath();
@@ -55,6 +57,7 @@ namespace GreenLight
         // Curved Buttons
         public CurvedButtons(Size Button_size, Point Location, int Curve, string FilePath, Color BackColor)
         {
+            Image_path = FilePath;
             curve = Curve;
             Backcolor = BackColor;
             this.Cursor = Cursors.Hand;
@@ -62,9 +65,10 @@ namespace GreenLight
             this.Size = Button_size;
             this.Image = Image.FromFile(FilePath);
             this.SizeMode = PictureBoxSizeMode.Zoom;
-            this.MouseHover += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 4) + "_On_Hover.png"); };
-            this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
+            this.MouseHover += (object o, EventArgs EA) => { this.Image = Image.FromFile(Image_path.Remove(Image_path.Length - 4) + "_On_Hover.png"); };
+            this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(Image_path); };
         }
+
         // Logo
         public CurvedButtons(Form Form, int Curve)
         {
@@ -108,5 +112,11 @@ namespace GreenLight
             label.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
             this.Controls.Add(label);
         }
+
+        public void Set_Image(string File_path)
+        {
+            Image_path = File_path;
+        }
+            
     }
 }

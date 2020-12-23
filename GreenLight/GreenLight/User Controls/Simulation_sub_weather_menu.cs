@@ -28,13 +28,30 @@ namespace GreenLight
             this.Location = new Point(Form.Width - Sub_menu_width, 230);
             this.Controls.Clear();
             Initialize(Form, Sub_menu_width, Dosis_font_family);
+
         }
+
+        //Cleaner but General_form should be just form
+        /*public Simulation_sub_weather_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family)
+        {
+            this.BackColor = Color.FromArgb(255, 255, 255);
+            this.Size = new Size(Sub_menu_width, General_form.Height - 230 - 135);
+            this.Location = new Point(General_form.Width - Sub_menu_width, 230);
+            this.AutoScroll = true;
+            Initialize(General_form, Sub_menu_width, Dosis_font_family);
+            General_form.SizeChanged += (object o, EventArgs EA) => {
+                this.Size = new Size(Sub_menu_width, General_form.Height - 230 - 135);
+                this.Location = new Point(General_form.Width - Sub_menu_width, 230);
+                this.Controls.Clear();
+                Initialize(General_form, Sub_menu_width, Dosis_font_family);
+            };*/
+        
 
         private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
            
 
-            Slider Slippery = new Slider(new Point(25, 180), 0, 100, 10);
+            Slider Slippery = new Slider(new Point(25, 180), 0, 100);
             this.Controls.Add(Slippery);
 
             SliderText Slippery_label = new SliderText(Dosis_font_family, new Point(25, 160), "Slipperiness:");
@@ -44,7 +61,7 @@ namespace GreenLight
             this.Controls.Add(Slippery_Value);
             Slippery.ValueChanged += (object o, EventArgs EA) => { Slippery_Value.Text = Slippery.Value.ToString() + " %"; };
 
-            Slider Sight = new Slider(new Point(25, 140), 0, 100, 10);
+            Slider Sight = new Slider(new Point(25, 140), 0, 100);
             this.Controls.Add(Sight);
 
             SliderText Sight_label = new SliderText(Dosis_font_family, new Point(25, 120), "Sight:");
@@ -54,7 +71,7 @@ namespace GreenLight
             this.Controls.Add(Sight_Value);
             Sight.ValueChanged += (object o, EventArgs EA) => { Sight_Value.Text = Sight.Value.ToString() + " m"; };
 
-            Slider Snow = new Slider(new Point(25, 100), 0, 5, 10);
+            Slider Snow = new Slider(new Point(25, 100), 0, 5);
             this.Controls.Add(Snow);
 
             SliderText Snow_label = new SliderText(Dosis_font_family, new Point(25, 80), "Snow:");
@@ -64,7 +81,7 @@ namespace GreenLight
             this.Controls.Add(Snow_Value);
             Snow.ValueChanged += (object o, EventArgs EA) => { Snow_Value.Text = Snow.Value.ToString() + " mm"; };
 
-            Slider Rainfall = new Slider(new Point(25, 60), 0, 10, 10);
+            Slider Rainfall = new Slider(new Point(25, 60), 0, 10);
             this.Controls.Add(Rainfall);
 
             SliderText Rainfall_label = new SliderText(Dosis_font_family, new Point(25, 40), "Rainfall:");

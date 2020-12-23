@@ -52,6 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Selection_box.cs">
+    </Compile>
+    <Compile Include="User Controls\Simulation_data_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="SliderText.cs">
       <SubType>Component</SubType>
     </Compile>

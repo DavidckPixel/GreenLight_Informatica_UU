@@ -14,7 +14,15 @@ namespace GreenLight
     {
         public Build_main_menu(int Width, Form Form, FontFamily Dosis_font_family)
         {
+            this.BackColor = Color.FromArgb(196, 196, 198);
+            this.Size = new Size(General_form.Width -Sub_menu_width, General_form.Height);
             // Place bitmap reference here
+            General_form.SizeChanged += (object o, EventArgs EA) =>
+            {
+                this.Size = new Size(General_form.Width - Sub_menu_width, General_form.Height);
+                this.Controls.Clear();
+                Initialize(General_form, Sub_menu_width);
+            };
         }
 
         public void Size_adjust(Form Form, int Sub_menu_width)
@@ -30,7 +38,12 @@ namespace GreenLight
             this.Size = new Size(Form.Width-Sub_menu_width, Form.Height);
 
             RoundButtons Info_button = new RoundButtons(new Size(40, 40), new Point(15, Form.Height - 55), "../../User Interface Recources/Info_Button.png");
-
+        
+        //Cleaner maar General_form moet form zijn
+        /*private void Initialize(General_form General_form, int Main_menu_width) 
+        {
+            RoundButtons Info_button = new RoundButtons(new Size(40, 40), new Point(15, General_form.Height - 55), 
+                "../../User Interface Recources/Info_Button.png"); */
             this.Controls.Add(Info_button);
         }
     }
