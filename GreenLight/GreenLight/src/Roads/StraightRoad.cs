@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GreenLight
 {
-    class StraightRoad : AbstractRoad
+    public class StraightRoad : AbstractRoad
     {
 
         //Similar to curved road, but now math for StraightRoads
@@ -68,7 +68,7 @@ namespace GreenLight
                 }
             }
 
-            return new DrivingLane(_lanePoints, 0);
+            return new DrivingLane(_lanePoints);
 
             foreach (LanePoints x in _lanePoints)
             {
@@ -105,7 +105,7 @@ namespace GreenLight
         private DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
             string _Direction = this.dir;
-            int drivingLaneDistance = 40;
+            int drivingLaneDistance = 40; // Hardcoded nog aanpassen!!
 
             if (_Direction == "E" || _Direction == "W")
             {

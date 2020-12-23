@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace GreenLight
 {
-    class Gridpoint : ScreenObject
+    public class Gridpoint
     {
         //An actual gridpoint as drawn on the screen
         //It inheriteges form the ScreenObject, this is a master class for all things that eventually need to be drawn
@@ -16,10 +16,14 @@ namespace GreenLight
 
 
         Size Size;
+        public Point Cords;
+        Rectangle Hitbox;
 
-        public Gridpoint(Point _Cords, Size _Size) : base(_Cords, _Size)
+        public Gridpoint(Point _Cords, int _Size)
         {
-            this.Size = _Size;
+            this.Cords = _Cords;
+
+            Hitbox = new Rectangle(this.Cords, new Size(_Size, _Size));
         }
 
         public bool Collision(Point _p)

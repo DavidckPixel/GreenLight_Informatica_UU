@@ -12,7 +12,26 @@ namespace GreenLight
 {
     public partial class Simulation_sub_menu : UserControl
     {
-        public bool Simulation_state_playing = false;
+        public Simulation_sub_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
+        {
+            this.BackColor = Color.FromArgb(255,255,255);
+            this.Size = new Size(250,Form.Height);
+            this.Location = new Point(Form.Width-Menu_width, Form.Height);
+            this.AutoScroll = true;
+            Initialize(Form, Menu_width, Dosis_font_family);
+        }
+
+        public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        {
+            this.Size = new Size(Sub_menu_width, Form.Height);
+            this.Location = new Point(Form.Width - Sub_menu_width, 0);
+            this.Controls.Clear();
+            Initialize(Form, Sub_menu_width, Dosis_font_family);
+
+        }
+
+        //Cleaner but General_form should be just form
+        /*public bool Simulation_state_playing = false;
         public Simulation_sub_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255,255,255);
@@ -26,15 +45,15 @@ namespace GreenLight
                 this.Controls.Clear();
                 Initialize(General_form, Sub_menu_width, Dosis_font_family);
             };
-        }
+        }*/
 
-        private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
+        private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            CurvedButtons Logo = new CurvedButtons(General_form, 1);
+            CurvedButtons Logo = new CurvedButtons(Form, 1);
             Logo.Location = new Point(40, 20);
             this.Controls.Add(Logo);
 
-            Move_panel Drag_pad = new Move_panel(General_form);
+            Move_panel Drag_pad = new Move_panel(Form);
             this.Controls.Add(Drag_pad);
 
             CurvedButtons Divider1 = new CurvedButtons();
@@ -49,19 +68,19 @@ namespace GreenLight
                 new Point(20, 150), 30,
                 "../../User Interface Recources/Weather_Setting_Button.png", this.BackColor);
             this.Controls.Add(Weather);
-            Weather.Click += (object obj, EventArgs args) => { General_form.Menu_to_simulation_weather(); };
+            Weather.Click += (object obj, EventArgs args) => { General_Form.Main.SimulationScreen.SwitchSubMenus("Weather"); ; };
 
             CurvedButtons Vehicle = new CurvedButtons(new Size(60, 60),
                 new Point(95, 150), 30,
                 "../../User Interface Recources/Vehicle_Setting_Button.png", this.BackColor);
             this.Controls.Add(Vehicle);
-            Vehicle.Click += (object obj, EventArgs args) => { General_form.Menu_to_simulation_vehicle(); };
+            Vehicle.Click += (object obj, EventArgs args) => { General_Form.Main.SimulationScreen.SwitchSubMenus("Vehicle"); ; };
 
             CurvedButtons Driver = new CurvedButtons(new Size(60, 60),
                 new Point(170, 150), 30,
                 "../../User Interface Recources/Driver_Setting_Button.png", this.BackColor);
             this.Controls.Add(Driver);
-            Driver.Click += (object obj, EventArgs args) => { General_form.Menu_to_simulation_driver(); };
+            Driver.Click += (object obj, EventArgs args) => { General_Form.Main.SimulationScreen.SwitchSubMenus("Driver"); ; };
 
             CurvedButtons Divider2 = new CurvedButtons();
             Divider2.Location = new Point(0, 220);
@@ -87,7 +106,7 @@ namespace GreenLight
                 { SimulationSpeed_Text.Text = SimulationSpeed.Value.ToString() + "x"; General_form.SimDataM.Value_changed(SimulationSpeed.Value); };
 
             CurvedButtons Start = new CurvedButtons(new Size(60, 60),
-                new Point(20, General_form.Height - 80), 35,
+                new Point(20, Form.Height - 80), 35,
                 "../../User Interface Recources/Play_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Start);
             Start.BringToFront();
@@ -102,7 +121,7 @@ namespace GreenLight
             Start.Click += (object o, EventArgs EA) => { Start.Hide(); Pause.Show(); General_form.SimDataM.Start_timer(); };
 
             CurvedButtons Reset = new CurvedButtons(new Size(60, 60),
-                new Point(95, General_form.Height - 80), 35,
+                new Point(95, Form.Height - 80), 35,
                 "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Reset);
             Reset.BringToFront();
@@ -123,6 +142,22 @@ namespace GreenLight
             };
 
             CurvedButtons Stop = new CurvedButtons(new Size(60, 60),
+<<<<<<< HEAD
+                new Point(170, Form.Height - 80), 35,
+                "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
+            this.Controls.Add(Stop);
+            Stop.Click += (object obj, EventArgs args) => { General_Form.Main.MenuController.SwitchToBuild(); };
+
+            CurvedButtons SimulationSpeed_header = new CurvedButtons(new Size(150, 30),
+                new Point(50, this.Height - 130), "../../User Interface Recources/Simulation_Speed_Header.png");
+            this.Controls.Add(SimulationSpeed_header);
+
+            Slider SimulationSpeed = new Slider(new Point(25, this.Height - 105), 0, 100, 10);
+            this.Controls.Add(SimulationSpeed);
+
+            
+
+=======
             new Point(170, General_form.Height - 80), 35,
             "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Stop);
@@ -134,6 +169,7 @@ namespace GreenLight
                 Pause.Hide();
                 Start.Show();
             };
+>>>>>>> main
         }
     }
 }

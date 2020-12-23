@@ -18,7 +18,6 @@ namespace GreenLight
         //public List<Vehicle> carlist = new List<Vehicle> { };
         public List<AI> driverList = new List<AI> { };
 
-       
         public Startup()
         {
 
