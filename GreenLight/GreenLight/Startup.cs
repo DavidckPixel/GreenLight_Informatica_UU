@@ -17,17 +17,11 @@ namespace GreenLight
         //Vehicle v = VehicleTypeConfig.types[0];
         //public List<Vehicle> carlist = new List<Vehicle> { };
         public List<AI> driverList = new List<AI> { };
-<<<<<<< HEAD
-        public Startup()
-        {
-
-
-=======
 
        
         public Startup()
         {
->>>>>>> main
+
             simulate = true;
             this.DoubleBuffered = true;
             this.Paint += teken;
@@ -83,7 +77,7 @@ namespace GreenLight
                 driverList[t].v.tekenAuto(pea.Graphics);
             }
         }
-<<<<<<< HEAD
+
 
         public void clickmethod(object sender, MouseEventArgs mea)
         {
@@ -96,7 +90,6 @@ namespace GreenLight
                 driverList[t].changeDestination(clickPos.X, clickPos.Y);
             }
         }
-=======
->>>>>>> main
+
     }
 }
