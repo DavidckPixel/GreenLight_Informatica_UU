@@ -12,20 +12,18 @@ namespace GreenLight
 {
     public partial class Build_sub_menu : UserControl
     {
-        public Build_sub_menu(int Menu_width, General_form General_form, FontFamily Dosis_font_family)
+        public Build_sub_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255,255,255);
             this.Size = new Size(250, General_form.Height);
-            this.Location = new Point(General_form.Width - Menu_width, 0);
-
-            Initialize(General_form, Menu_width, Dosis_font_family);
-        }
-        public void Size_adjust(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
-        {
-            this.Size = new Size(Sub_menu_width, General_form.Height);
             this.Location = new Point(General_form.Width - Sub_menu_width, 0);
-            this.Controls.Clear();
-            Initialize(General_form,Sub_menu_width, Dosis_font_family);
+            General_form.SizeChanged += (object o, EventArgs EA) => {
+                this.Size = new Size(Sub_menu_width, General_form.Height);
+                this.Location = new Point(General_form.Width - Sub_menu_width, 0);
+                this.Controls.Clear();
+                Initialize(General_form, Sub_menu_width, Dosis_font_family);
+            };
+            Initialize(General_form, Sub_menu_width, Dosis_font_family);
         }
 
         private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family)
@@ -41,15 +39,12 @@ namespace GreenLight
             Move_panel Drag_pad = new Move_panel(General_form);
             this.Controls.Add(Drag_pad);
 
-            PictureBox Elements_header = new PictureBox();
-            Elements_header.Size = new Size(114, 30);
-            Elements_header.SizeMode = PictureBoxSizeMode.StretchImage;
-            Elements_header.Location = new Point(68, 180);
-            Elements_header.Image = Image.FromFile("../../User Interface Recources/Elements_Header.png");
+            CurvedButtons Elements_header = new CurvedButtons(new Size(114, 30),
+               new Point(68, 180), "../../User Interface Recources/Elements_Header.png");
             this.Controls.Add(Elements_header);
 
             CurvedButtons Home_button = new CurvedButtons(new Size(80, 40), new Point(Sub_menu_width / 2 - 90, 115), 25, "../../User Interface Recources/Custom_Button_Small.png", "Home", Dosis_font_family, General_form, this.BackColor);
-            Home_button.Click += (object o, EventArgs EA) => { General_form.Menu_to_start(); };
+            Home_button.Click += (object o, EventArgs EA) => {General_form.Menu_to_start(); };
             this.Controls.Add(Home_button);
 
             CurvedButtons Save_button = new CurvedButtons(new Size(80, 40), new Point(Sub_menu_width / 2 + 10, 115), 25, "../../User Interface Recources/Custom_Button_Small.png", "Save", Dosis_font_family, General_form, this.BackColor);

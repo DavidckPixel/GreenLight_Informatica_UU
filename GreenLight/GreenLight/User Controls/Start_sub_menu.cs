@@ -7,21 +7,18 @@ namespace GreenLight
     public partial class Start_sub_menu : UserControl
     {
 
-        public Start_sub_menu(int Menu_width, General_form General_form, FontFamily Dosis_font_family, string[] Recent_projects)
+        public Start_sub_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family, string[] Recent_projects)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
             this.Size = new Size(250, General_form.Height);
-            this.Location = new Point(General_form.Width - Menu_width, 0);
-
-            Initialize(General_form, Menu_width, Dosis_font_family, Recent_projects);
-        }
-
-        public void Size_adjust(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family, string[] Recent_projects)
-        {
-            this.Size = new Size(Sub_menu_width, General_form.Height);
             this.Location = new Point(General_form.Width - Sub_menu_width, 0);
-            this.Controls.Clear();
             Initialize(General_form, Sub_menu_width, Dosis_font_family, Recent_projects);
+            General_form.SizeChanged += (object o, EventArgs EA) => {
+                this.Size = new Size(Sub_menu_width, General_form.Height);
+                this.Location = new Point(General_form.Width - Sub_menu_width, 0);
+                this.Controls.Clear();
+                Initialize(General_form, Sub_menu_width, Dosis_font_family, Recent_projects);
+            };
         }
 
         private void Initialize(General_form General_form, int Sub_menu_width, FontFamily Dosis_font_family, string[] Recent_projects)
@@ -43,6 +40,7 @@ namespace GreenLight
             Project_header.Location = new Point(50, 120);
             Project_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
             this.Controls.Add(Project_header);
+            
             int i = 0;
 
             foreach (string tekst in Recent_projects)
