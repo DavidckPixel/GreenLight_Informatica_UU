@@ -47,8 +47,8 @@ namespace GreenLight
 
         private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            Selection_box Selection_box = new Selection_box(General_form, Dosis_font_family);
-            if (General_form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(13, 35);
+            Selection_box Selection_box = new Selection_box(Form, Dosis_font_family);
+            if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(13, 35);
             else Selection_box.Location = new Point(3, 35);
             this.Controls.Add(Selection_box);
 

@@ -12,7 +12,7 @@ namespace GreenLight
     {
         int Selected_index = 0;
         bool Selected_left_bool = true;
-        public Selection_box(General_form General_form, FontFamily Dosis_font_family)
+        public Selection_box(Form Form, FontFamily Dosis_font_family)
         {
             List<string> Elements_selected = new List<string>();
             List<string> Elements_available = new List<string>();
@@ -26,15 +26,15 @@ namespace GreenLight
             this.BackgroundImage = Image.FromFile("../../User Interface Recources/Selection_Box.png");
             this.Size = new Size(225, 117);
             this.BackgroundImageLayout = ImageLayout.Zoom;
-            Elements_draw(Elements_selected, Elements_available, General_form, Dosis_font_family);
+            Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family);
         }
 
-        public void Update_Selection_box(List<string> Elements_selected, List<string> Elements_available, General_form General_form, FontFamily Dosis_font_family)
+        public void Update_Selection_box(List<string> Elements_selected, List<string> Elements_available, Form Form, FontFamily Dosis_font_family)
         {
-            Elements_draw(Elements_selected, Elements_available, General_form, Dosis_font_family);
+            Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family);
         }
 
-        private void Elements_draw(List<string> Elements_selected, List<string> Elements_available, General_form General_form, FontFamily Dosis_font_family) 
+        private void Elements_draw(List<string> Elements_selected, List<string> Elements_available, Form Form, FontFamily Dosis_font_family) 
         {
             this.Controls.Clear();
 
@@ -60,7 +60,7 @@ namespace GreenLight
                 PB_label.Font = new Font(Dosis_font_family, 8, FontStyle.Bold);
                 PB_label.MouseEnter += (object o, EventArgs EA) => { PB.BackColor = Hover_Color; };
                 PB_label.MouseLeave += (object o, EventArgs EA) => { PB.BackColor = Prime_Color; };
-                PB_label.Click += (object o, EventArgs EA) => { Selected_index = Elements_selected.IndexOf(element); Selected_left_bool = true; Elements_draw(Elements_selected, Elements_available, General_form, Dosis_font_family); };
+                PB_label.Click += (object o, EventArgs EA) => { Selected_index = Elements_selected.IndexOf(element); Selected_left_bool = true; Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family); };
                 i++;
             }
 
@@ -86,24 +86,24 @@ namespace GreenLight
                 PB_label.Font = new Font(Dosis_font_family, 8, FontStyle.Bold);
                 PB_label.MouseEnter += (object o, EventArgs EA) => { PB.BackColor = Hover_Color; };
                 PB_label.MouseLeave += (object o, EventArgs EA) => { PB.BackColor = Prime_Color; };
-                PB_label.Click += (object o, EventArgs EA) => { Selected_index = Elements_available.IndexOf(element); Selected_left_bool = false; Elements_draw(Elements_selected, Elements_available, General_form, Dosis_font_family); };
+                PB_label.Click += (object o, EventArgs EA) => { Selected_index = Elements_available.IndexOf(element); Selected_left_bool = false; Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family); };
                 j++;
             }
 
             CurvedButtons To_left = new CurvedButtons(new Size(17, 17), new Point(104, 80), 10,
                 "../../User Interface Recources/Selection_Box_To_Left.png", Color.FromArgb(255,255,255));
-            To_left.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool,General_form,Dosis_font_family,0); };
+            To_left.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool,Form,Dosis_font_family,0); };
             this.Controls.Add(To_left);
             To_left.BringToFront();
 
             CurvedButtons To_right = new CurvedButtons(new Size(17, 17), new Point(104, 94), 10,
                 "../../User Interface Recources/Selection_Box_To_Right.png", Color.FromArgb(255, 255, 255));
-            To_right.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool,General_form,Dosis_font_family,1); };
+            To_right.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool,Form,Dosis_font_family,1); };
             this.Controls.Add(To_right);
             To_right.BringToFront();
         }
 
-        private void Elements_switch(List<string> Elements_selected, List<string> Elements_available, int Selected_index, bool Selected_left_bool, General_form General_form, FontFamily Dosis_font_family, int direction)
+        private void Elements_switch(List<string> Elements_selected, List<string> Elements_available, int Selected_index, bool Selected_left_bool, Form Form, FontFamily Dosis_font_family, int direction)
         {
             if (Selected_left_bool && Selected_index >= 0 && Selected_index < Elements_selected.Count && direction == 1)
             {
@@ -115,7 +115,7 @@ namespace GreenLight
                 Elements_selected.Add(Elements_available[Selected_index]);
                 Elements_available.RemoveAt(Selected_index);
             }
-            Elements_draw(Elements_selected, Elements_available, General_form, Dosis_font_family);
+            Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family);
         }
     }
 }

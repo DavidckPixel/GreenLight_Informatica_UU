@@ -38,6 +38,7 @@ namespace GreenLight
         Simulation_sub_weather_menu SimSWM;
         Simulation_sub_vehicle_menu SimSVM;
         Simulation_sub_driver_menu SimSDM;
+        public Simulation_data_menu SimDataM;
         Elements_sub_buildings_menu ElemSBM;
         Elements_sub_lights_menu ElemSLM;
         Elements_sub_roads_menu ElemSRM;
@@ -72,7 +73,9 @@ namespace GreenLight
             SMM = new Start_main_menu(MainForm.Width - Sub_menu_width, MainForm, Dosis_font_family);
 
             BSM = new Build_sub_menu(Sub_menu_width, MainForm, Dosis_font_family);
-            BMM = new Build_main_menu(MainForm.Width - Sub_menu_width, MainForm, Dosis_font_family);
+            BMM = new Build_main_menu(Sub_menu_width, MainForm, Dosis_font_family);
+
+            SimDataM = new Simulation_data_menu(Sub_menu_width, MainForm, 30, Dosis_font_family);
 
             SimSM = new Simulation_sub_menu(Sub_menu_width, MainForm, Dosis_font_family);
             SimMM = new Simulation_main_menu(MainForm.Width - Sub_menu_width, MainForm, Dosis_font_family);
@@ -89,6 +92,7 @@ namespace GreenLight
             MainForm.Controls.Add(SSM);
             MainForm.Controls.Add(BMM);
             MainForm.Controls.Add(BSM);
+            MainForm.Controls.Add(SimDataM);
             MainForm.Controls.Add(SimMM);
             MainForm.Controls.Add(SimSM);
             MainForm.Controls.Add(SimSWM);
@@ -161,6 +165,8 @@ namespace GreenLight
             Hide_all_menus();
             SimSM.Show();
             SimMM.Show();
+            SimDataM.Show();
+            SimDataM.BringToFront();
         }
         public void Menu_to_simulation_weather() 
         {
@@ -221,6 +227,7 @@ namespace GreenLight
             SMM.Hide();
             BSM.Hide();
             BMM.Hide();
+            SimDataM.Hide();
             SimSM.Hide();
             SimMM.Hide();
             SimSWM.Hide();

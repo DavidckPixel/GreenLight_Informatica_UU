@@ -103,7 +103,7 @@ namespace GreenLight
             this.Controls.Add(SimulationSpeed_Text);
            
             SimulationSpeed.ValueChanged += (object o, EventArgs EA) => 
-                { SimulationSpeed_Text.Text = SimulationSpeed.Value.ToString() + "x"; General_form.SimDataM.Value_changed(SimulationSpeed.Value); };
+                { SimulationSpeed_Text.Text = SimulationSpeed.Value.ToString() + "x"; General_Form.Main.UserInterface.SimDataM.Value_changed(SimulationSpeed.Value); };
 
             CurvedButtons Start = new CurvedButtons(new Size(60, 60),
                 new Point(20, Form.Height - 80), 35,
@@ -112,13 +112,13 @@ namespace GreenLight
             Start.BringToFront();
 
             CurvedButtons Pause = new CurvedButtons(new Size(60, 60),
-               new Point(20, General_form.Height - 80), 35,
+               new Point(20, Form.Height - 80), 35,
                "../../User Interface Recources/Pause_Button.png", this.BackColor);
             Pause.Hide();
             this.Controls.Add(Pause);
             Pause.BringToFront();
-            Pause.Click += (object o, EventArgs EA) => { Pause.Hide(); Start.Show(); General_form.SimDataM.Stop_timer(); };
-            Start.Click += (object o, EventArgs EA) => { Start.Hide(); Pause.Show(); General_form.SimDataM.Start_timer(); };
+            Pause.Click += (object o, EventArgs EA) => { Pause.Hide(); Start.Show(); General_Form.Main.UserInterface.SimDataM.Stop_timer(); };
+            Start.Click += (object o, EventArgs EA) => { Start.Hide(); Pause.Show(); General_Form.Main.UserInterface.SimDataM.Start_timer(); };
 
             CurvedButtons Reset = new CurvedButtons(new Size(60, 60),
                 new Point(95, Form.Height - 80), 35,
@@ -129,47 +129,30 @@ namespace GreenLight
             {
                 if (Pause.Visible)
                 {
-                    General_form.SimDataM.Reset_timer();
+                    General_Form.Main.UserInterface.SimDataM.Reset_timer();
                     Pause.Hide(); 
                     Start.Show();
                     SimulationSpeed.Value = 1;
                 }
-                else if (Start.Visible && General_form.SimDataM.Stopwatch.Elapsed.ToString() != "00:00:00")
+                else if (Start.Visible && General_Form.Main.UserInterface.SimDataM.Stopwatch.Elapsed.ToString() != "00:00:00")
                 {
-                    General_form.SimDataM.Reset_timer();
+                    General_Form.Main.UserInterface.SimDataM.Reset_timer();
                     SimulationSpeed.Value = 1;
                 }
             };
 
-            CurvedButtons Stop = new CurvedButtons(new Size(60, 60),
-<<<<<<< HEAD
-                new Point(170, Form.Height - 80), 35,
-                "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
-            this.Controls.Add(Stop);
-            Stop.Click += (object obj, EventArgs args) => { General_Form.Main.MenuController.SwitchToBuild(); };
-
-            CurvedButtons SimulationSpeed_header = new CurvedButtons(new Size(150, 30),
-                new Point(50, this.Height - 130), "../../User Interface Recources/Simulation_Speed_Header.png");
-            this.Controls.Add(SimulationSpeed_header);
-
-            Slider SimulationSpeed = new Slider(new Point(25, this.Height - 105), 0, 100, 10);
-            this.Controls.Add(SimulationSpeed);
-
-            
-
-=======
-            new Point(170, General_form.Height - 80), 35,
+            CurvedButtons Stop = new CurvedButtons(new Size(60, 60), new Point(170, Form.Height - 80), 35,
             "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Stop);
             Stop.BringToFront();
             Stop.Click += (object obj, EventArgs args) => 
             { 
-                General_form.Menu_to_build();
-                General_form.SimDataM.Reset_timer(); 
+                General_Form.Main.UserInterface.Menu_to_build();
+                General_Form.Main.UserInterface.SimDataM.Reset_timer(); 
                 Pause.Hide();
                 Start.Show();
             };
->>>>>>> main
+
         }
     }
 }

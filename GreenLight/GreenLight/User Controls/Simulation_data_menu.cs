@@ -19,14 +19,14 @@ namespace GreenLight
         int _multiplier = 1;
         TimeSpan Last_Simulation_time;
         TimeSpan Simulation_time;
-        public Simulation_data_menu(int Sub_menu_width, General_form General_form, int Height, FontFamily Dosis_font_family_in)
+        public Simulation_data_menu(int Sub_menu_width, Form Form, int Height, FontFamily Dosis_font_family_in)
         {
             Dosis_font_family = Dosis_font_family_in;
             this.BackColor = Color.DarkGray;
-            this.Size = new Size(General_form.Width - Sub_menu_width, Height);
-            General_form.SizeChanged += (object o, EventArgs EA) => 
+            this.Size = new Size(Form.Width - Sub_menu_width, Height);
+            Form.SizeChanged += (object o, EventArgs EA) => 
             {
-                this.Size = new Size(General_form.Width - Sub_menu_width, Height);
+                this.Size = new Size(Form.Width - Sub_menu_width, Height);
                 this.Controls.Clear();
                 Initialize();
             };

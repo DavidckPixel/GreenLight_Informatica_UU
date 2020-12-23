@@ -15,13 +15,13 @@ namespace GreenLight
         public Build_main_menu(int Width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(196, 196, 198);
-            this.Size = new Size(General_form.Width -Sub_menu_width, General_form.Height);
+            this.Size = new Size(Form.Width - Width, Form.Height);
             // Place bitmap reference here
-            General_form.SizeChanged += (object o, EventArgs EA) =>
+            Form.SizeChanged += (object o, EventArgs EA) =>
             {
-                this.Size = new Size(General_form.Width - Sub_menu_width, General_form.Height);
+                this.Size = new Size(Form.Width - Width, Form.Height);
                 this.Controls.Clear();
-                Initialize(General_form, Sub_menu_width);
+                Initialize(Form, Width);
             };
         }
 
