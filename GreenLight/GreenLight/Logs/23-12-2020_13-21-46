@@ -1,0 +1,132 @@
+DATE: 23-12-2020_13-21-46
+
+C:\Users\Danny Bui\Documents\GitHub\GreenLight_Informatica_UU\GreenLight/GreenLight/Logs/23-12-2020_13-21-46
+Created the Main Controller
+Initializing the MainController..
+Created the Simulation Screen Controller
+Initializing the BuildScreenController..
+Switching Buildscreen SubMenu from {0} to {1}
+
+Roads
+Completed the Initialization of BuildScreenController
+Initializing the SimulationScreenController
+Setting Active Controller to MenuController
+Activating MenuScreenController
+Completed the Initialization of MainController
+Switched Active Controller from GreenLight.MenuControllerto GreenLight.BuildScreenController
+DeActivating MenuScreenController
+Activating BuildScreenController
+Switching Buildscreen SubMenu from {0} to {1}
+Roads
+Roads
+Switching Buildscreen SubMenu from {0} to {1}
+Roads
+Lights
+Switching Buildscreen SubMenu from {0} to {1}
+Lights
+Signs
+Switching Buildscreen SubMenu from {0} to {1}
+Signs
+Roads
+Switching Buildscreen SubMenu from {0} to {1}
+Roads
+Buildings
+Switching Buildscreen SubMenu from {0} to {1}
+Buildings
+Signs
+Switching Buildscreen SubMenu from {0} to {1}
+Signs
+Lights
+Switching Buildscreen SubMenu from {0} to {1}
+Lights
+Roads
+Switching Buildscreen SubMenu from {0} to {1}
+Roads
+Buildings
+Switching Buildscreen SubMenu from {0} to {1}
+Buildings
+Lights
+Switching Buildscreen SubMenu from {0} to {1}
+Lights
+Roads
+Switching Buildscreen SubMenu from {0} to {1}
+Roads
+Signs
+Switching Buildscreen SubMenu from {0} to {1}
+Signs
+Roads
+Switching Buildscreen SubMenu from {0} to {1}
+Roads
+Buildings
+Switching Buildscreen SubMenu from {0} to {1}
+Buildings
+Roads
+Switching Buildscreen SubMenu from {0} to {1}
+Roads
+Lights
+Switching Buildscreen SubMenu from {0} to {1}
+Lights
+Roads
+Switching Buildscreen SubMenu from {0} to {1}
+Roads
+Buildings
+Switching Buildscreen SubMenu from {0} to {1}
+Buildings
+Signs
+Switching Buildscreen SubMenu from {0} to {1}
+Signs
+Lights
+Switching Buildscreen SubMenu from {0} to {1}
+Lights
+Roads
+Switching Buildscreen SubMenu from {0} to {1}
+Roads
+Buildings
+Switching Buildscreen SubMenu from {0} to {1}
+Buildings
+Signs
+Switching Buildscreen SubMenu from {0} to {1}
+Signs
+Roads
+Switching Buildscreen SubMenu from {0} to {1}
+Roads
+Lights
+Switched Active Controller from GreenLight.BuildScreenControllerto GreenLight.SimulationScreenController
+DeActivating BuildScreenController
+Switch Simulation Submenu from  to Weather
+Switch completed
+Set Active Submenu to Weather
+Completed drawing the roads on the simulation screen
+Switch Simulation Submenu from Weather to Vehicle
+Switch completed
+Switch Simulation Submenu from Vehicle to Driver
+Switch completed
+Switch Simulation Submenu from Driver to Weather
+Switch completed
+Switch Simulation Submenu from Weather to Driver
+Switch completed
+Switch Simulation Submenu from Driver to Vehicle
+Switch completed
+Switch Simulation Submenu from Vehicle to Weather
+Switch completed
+Switch Simulation Submenu from Weather to Vehicle
+Switch completed
+Switch Simulation Submenu from Vehicle to Driver
+Switch completed
+Switch Simulation Submenu from Driver to Weather
+Switch completed
+Switched Active Controller from GreenLight.SimulationScreenControllerto GreenLight.BuildScreenController
+DeActivating SimulationScreenController
+Activating BuildScreenController
+Switching Buildscreen SubMenu from {0} to {1}
+Lights
+Roads
+Switching Buildscreen SubMenu from {0} to {1}
+Roads
+Roads
+Switching Buildscreen SubMenu from {0} to {1}
+Roads
+Lights
+Switching Buildscreen SubMenu from {0} to {1}
+Lights
+Signs

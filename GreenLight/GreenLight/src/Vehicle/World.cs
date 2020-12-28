@@ -8,6 +8,8 @@ namespace GreenLight
 {
     class World
     {
+        //This class stores variables that all cars/roads take into their calculations
+
         public int Brakepwr;
         public double Density;
         public double Gravity;

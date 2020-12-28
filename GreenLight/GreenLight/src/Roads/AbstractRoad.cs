@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
-    //This is the abstract road class from which each roadtype inheritege some basic features.
+    //This is the abstract road class from which each roadtype inherits some basic features.
     //This basic features include: CalculateDrivingLane, Every road needs to have its own function of CalculateDrivingLane
     //This class also has a static function that takes 2 points as input, and calculates the angle in degrees between them.
     //Every Road has 4 base variables: 2 points inbetween which the road lays, the amount of lanes the road has, and a list of the drivingLanes

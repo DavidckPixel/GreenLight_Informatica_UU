@@ -22,12 +22,13 @@ namespace GreenLight
         bool firstClick;
         string Selected;
         PictureBox canvas;
+        private bool _points_visible = true;
 
         public Gridpoint firstPoint = null;
         public Gridpoint secondPoint = null;
 
         BuilderController builder;
-        
+
         public GridController(PictureBox _bitmap, BuilderController _builder)
         {
             this.canvas = _bitmap;
@@ -39,9 +40,22 @@ namespace GreenLight
             this.builder = _builder;
         }
 
+        public bool Set_visible
+        {
+            set
+            {
+                _points_visible = value;
+            }
+        }
+
         public override void Initialize()
         {
 
+        }
+
+        public void canvas_resize(Size _size) 
+        {
+            this.canvas.Size = _size;
         }
 
         public void CreateGridPoints()
@@ -82,6 +96,7 @@ namespace GreenLight
                 if (_secondPoint != null && _secondPoint != _firstPoint)
                 {
                     Console.WriteLine("Second PointClick!");
+                    Console.WriteLine(_secondPoint.Cords);
                     this.secondPoint = _secondPoint;
 
                     builder.BuildRoad(this.firstPoint.Cords, this.secondPoint.Cords);
@@ -89,6 +104,7 @@ namespace GreenLight
                 }
             }
         }
+
 
         private void ResetPoints()
         {
@@ -99,6 +115,7 @@ namespace GreenLight
 
         public void DrawGridPoints(Graphics g)
         {
+            if(_points_visible)
             foreach(Gridpoint x in Gridpoints)
             {
                 x.DrawGrid(g);

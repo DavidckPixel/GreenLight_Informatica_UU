@@ -17,9 +17,12 @@ namespace GreenLight
         {
             this.form = _tempform;
             this.Screen = new PictureBox();
-            this.Screen.Width = 700;
-            this.Screen.Height = 300;
-            this.Screen.Location = new Point(100, 100);
+            this.Screen.Width = _tempform.Width - 250;
+            this.Screen.Height = _tempform.Height;
+            this.Screen.BackColor = Color.FromArgb(196, 196, 198);
+            this.Screen.Location = new Point(0, 0);
+            _tempform.Resize += (object o, EventArgs ea) => { this.resize(_tempform); };
+           
             
             this.Screen.Paint += DrawPictureBox;
             builder = new BuilderController(this.Screen);
@@ -27,6 +30,16 @@ namespace GreenLight
             _tempform.Controls.Add(this.Screen);
 
             Console.WriteLine("BuildController made!");
+        }
+
+        int i = 0;
+        private void resize(Form _tempform) 
+        {
+            i++;
+            this.Screen.Width = _tempform.Width - 250;
+            this.Screen.Height = _tempform.Height;
+            builder.gridController.canvas_resize(new Size(_tempform.Width - 250, _tempform.Height));
+            builder.gridController.CreateGridPoints();
         }
 
         public override void Initialize()

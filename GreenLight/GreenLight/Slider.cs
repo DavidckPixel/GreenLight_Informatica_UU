@@ -11,7 +11,7 @@ namespace GreenLight
 {
     class Slider : TrackBar
     {
-        public Slider(Point location, int min, int max, int tickfrequency)
+        public Slider(Point location, int min, int max)
         {
             this.Location = location;
             this.TickStyle = TickStyle.None;
@@ -20,10 +20,8 @@ namespace GreenLight
             this.Width = 200;
             this.Minimum = min;
             this.Maximum = max;
-            this.Value = (max - min) / 2;
-            this.TickFrequency = tickfrequency; 
+            this.Value = (max - min) / 2 + min;
+            this.MouseWheel += (object o, MouseEventArgs MEA) => { ((HandledMouseEventArgs)MEA).Handled = true; };
         }
-
-
     }
 }

@@ -13,7 +13,7 @@ namespace GreenLight
     public partial class RoadTestForm : Form
     {
 
-        //Quick temperary form for testing purposes, a form onwhich the road sketch can be drawn
+        //Quick temporary form for testing purposes, a form on which the road sketch can be drawn
         //To test different kinds of roads, change what kind of road is made in the Test Variable
         //You can pick from: DiagonalRoad/CurvedRoad/StraightRoad, You can alos set the amount of lanes u require.
         //Make sure that you pick the Direction string accoredable

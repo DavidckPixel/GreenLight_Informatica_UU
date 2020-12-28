@@ -27,6 +27,22 @@ namespace GreenLight
         }
 
         private void Initialize(Form Form, int Sub_menu_width) 
+
+        //Cleaner but General_form should be just form
+        /*public Start_main_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family)
+        {
+            this.BackColor = Color.FromArgb(196, 196, 198);
+            this.Size = new Size(General_form.Width - Sub_menu_width, General_form.Height);
+            Initialize(General_form, Sub_menu_width);
+
+            General_form.SizeChanged += (object o, EventArgs EA) =>
+            {
+                this.Size = new Size(General_form.Width - Sub_menu_width, General_form.Height);
+                this.Controls.Clear();
+                Initialize(General_form, Sub_menu_width);
+            };
+        }
+        private void Initialize(General_form General_form, int Sub_menu_width) */
         {
             int _ButtonSize = User_Controls.Config.startMainMenu["buttonSize"];
             int _ButtonXdiff = User_Controls.Config.startMainMenu["buttonXdiff"];

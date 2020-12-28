@@ -11,6 +11,9 @@ namespace GreenLight
 {
     static class WorldConfig
     {
+        //This class initializes and holds the Config data for the World in which the simulation takes place
+        //It uses the newtonsoft json deserializer.
+
         public static List<World> physics;
 
         static WorldConfig()

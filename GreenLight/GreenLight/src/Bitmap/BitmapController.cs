@@ -10,6 +10,9 @@ namespace GreenLight
 {
     class BitmapController
     {
+        //This is the BitmapController class which will make sure all screenobjects will be drawn on the same bitmap.
+        //For now this class is pretty much empty.
+
         public static BitmapController bitmapController;
 
         public Bitmap drawfield;

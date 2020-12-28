@@ -17,12 +17,14 @@ namespace GreenLight
 
 
         public List<LanePoints> points;
-        int Road; //Needs to be removed
+        Bitmap Lane;
+        Bitmap Verticallane;
 
-        public DrivingLane(List<LanePoints> _points, int _Road)
+        public DrivingLane(List<LanePoints> _points)
         {
             this.points = _points;
-            this.Road = _Road;
+            Lane = new Bitmap(Properties.Resources.Lane);
+            Verticallane = new Bitmap(Properties.Resources.Road_Verticaal);
         }
 
         public void Draw(Graphics g)
@@ -33,10 +35,25 @@ namespace GreenLight
 
                 foreach (LanePoints x in points)
                 {
-                    g.DrawLine(Pens.Black, _pointtemp, x.cord);
+                    g.FillEllipse(Brushes.Gray, _pointtemp.X - 20, _pointtemp.Y - 20, 40, 40);
                     _pointtemp = x.cord;
+                   
                 }
-            }catch(Exception e) { }
+            }
+           catch(Exception e) { }
+        }
+
+        public static Bitmap RotateImage(Bitmap b, float angle)
+        {
+            Bitmap returnBitmap = new Bitmap(b.Width, b.Height);
+            using (Graphics g = Graphics.FromImage(returnBitmap))
+            {
+                g.TranslateTransform((float)b.Width / 2, (float)b.Height / 2);
+                g.RotateTransform(angle);
+                g.TranslateTransform(-(float)b.Width / 2, -(float)b.Height / 2);
+                g.DrawImage(b, new Point(0, 0));
+            }
+            return returnBitmap;
         }
 
         public void LogPoints()
