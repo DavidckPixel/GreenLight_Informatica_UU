@@ -15,7 +15,7 @@ namespace GreenLight
         public Simulation_sub_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255,255,255);
-            this.Size = new Size(250,Form.Height);
+            this.Size = new Size(User_Controls.Config.standardSubMenu["subMenuWidth"], Form.Height);
             this.Location = new Point(Form.Width-Menu_width, Form.Height);
             this.AutoScroll = true;
             Initialize(Form, Menu_width, Dosis_font_family);
@@ -31,68 +31,73 @@ namespace GreenLight
 
         private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
+            Dictionary<string, int> menu = User_Controls.Config.simSubMenu;
+
             CurvedButtons Logo = new CurvedButtons(Form, 1);
-            Logo.Location = new Point(40, 20);
+            Logo.Location = new Point(User_Controls.Config.standardSubMenu["logoX"], User_Controls.Config.standardSubMenu["logoY"]);
             this.Controls.Add(Logo);
 
             Move_panel Drag_pad = new Move_panel(Form);
             this.Controls.Add(Drag_pad);
 
             CurvedButtons Divider1 = new CurvedButtons();
-            Divider1.Location = new Point(0, 100);
+            Divider1.Location = new Point(User_Controls.Config.standardSubMenu["deviderX"], User_Controls.Config.standardSubMenu["logoY"]);
             this.Controls.Add(Divider1);
 
-            CurvedButtons Settings_header = new CurvedButtons(new Size(150, 35),
-               new Point(50, 110), "../../User Interface Recources/Settings_Header.png");
+            CurvedButtons Settings_header = new CurvedButtons(new Size(menu["settingsHeaderSizeX"], menu["settingsHeaderSizeY"]),  //settingsHeaderSizeX //settingsHeaderSizeY
+               new Point(menu["settingsHeaderX"], menu["settingsHeaderY"]), "../../User Interface Recources/Settings_Header.png"); //settingsHeaderX //settingsHeaderY
             this.Controls.Add(Settings_header);
 
-            CurvedButtons Weather = new CurvedButtons(new Size(60, 60),
-                new Point(20, 150), 30,
+            //ButtonSize //ButtonY
+            int _buttonSize = menu["ButtonSize"];
+
+            CurvedButtons Weather = new CurvedButtons(new Size(_buttonSize, _buttonSize),
+                new Point(menu["buttonStart"] , menu["ButtonY"]), 30,                                         //weatherX 
                 "../../User Interface Recources/Weather_Setting_Button.png", this.BackColor);
             this.Controls.Add(Weather);
             Weather.Click += (object obj, EventArgs args) => { General_Form.Main.SimulationScreen.SwitchSubMenus("Weather"); ; };
 
-            CurvedButtons Vehicle = new CurvedButtons(new Size(60, 60),
-                new Point(95, 150), 30,
+            CurvedButtons Vehicle = new CurvedButtons(new Size(_buttonSize, _buttonSize),
+                new Point(menu["buttonStart"] + menu["ButtonX"], menu["ButtonY"]), 30,                                         //vehicleX
                 "../../User Interface Recources/Vehicle_Setting_Button.png", this.BackColor);
             this.Controls.Add(Vehicle);
             Vehicle.Click += (object obj, EventArgs args) => { General_Form.Main.SimulationScreen.SwitchSubMenus("Vehicle"); ; };
 
-            CurvedButtons Driver = new CurvedButtons(new Size(60, 60),
-                new Point(170, 150), 30,
+            CurvedButtons Driver = new CurvedButtons(new Size(_buttonSize, _buttonSize),
+                new Point(menu["buttonStart"] + menu["ButtonX"] * 2, menu["ButtonY"]), 30,                                        //driverX
                 "../../User Interface Recources/Driver_Setting_Button.png", this.BackColor);
             this.Controls.Add(Driver);
             Driver.Click += (object obj, EventArgs args) => { General_Form.Main.SimulationScreen.SwitchSubMenus("Driver"); ; };
 
             CurvedButtons Divider2 = new CurvedButtons();
-            Divider2.Location = new Point(0, 220);
+            Divider2.Location = new Point(0, menu["devider2"]);                              //devider2
             this.Controls.Add(Divider2);
 
             CurvedButtons Divider3 = new CurvedButtons();
-            Divider3.Location = new Point(0, this.Height - 135);
+            Divider3.Location = new Point(0, this.Height - menu["devider3"]);                //devider3
             this.Controls.Add(Divider3);
 
-            CurvedButtons Start = new CurvedButtons(new Size(60, 60),
-                new Point(20, Form.Height - 80), 35,
+            CurvedButtons Start = new CurvedButtons(new Size(_buttonSize, _buttonSize),           //controlsX, controlsY
+                new Point(menu["buttonStart"], Form.Height - menu["controlsY"]), 35,
                 "../../User Interface Recources/Play_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Start);
 
-            CurvedButtons Reset = new CurvedButtons(new Size(60, 60),
-                new Point(95, Form.Height - 80), 35,
+            CurvedButtons Reset = new CurvedButtons(new Size(_buttonSize, _buttonSize),
+                new Point(menu["buttonStart"] + menu["ButtonX"], Form.Height - menu["controlsY"]), 35,
                 "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Reset);
 
-            CurvedButtons Stop = new CurvedButtons(new Size(60, 60),
-                new Point(170, Form.Height - 80), 35,
+            CurvedButtons Stop = new CurvedButtons(new Size(_buttonSize, _buttonSize),
+                new Point(menu["buttonStart"] + menu["ButtonX"] * 2, Form.Height - menu["controlsY"]), 35,                           
                 "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Stop);
             Stop.Click += (object obj, EventArgs args) => { General_Form.Main.MenuController.SwitchToBuild(); };
 
-            CurvedButtons SimulationSpeed_header = new CurvedButtons(new Size(150, 30),
-                new Point(50, this.Height - 130), "../../User Interface Recources/Simulation_Speed_Header.png");
+            CurvedButtons SimulationSpeed_header = new CurvedButtons(new Size(menu["speedHeaderSizeX"], menu["speedHeaderSizeY"]), //speedHeaderSizeX //speedHeaderSizeY
+                new Point(menu["speedHeaderX"], this.Height - menu["speedHeaderY"]), "../../User Interface Recources/Simulation_Speed_Header.png"); //speedHeaderX //speedHeaderY
             this.Controls.Add(SimulationSpeed_header);
 
-            Slider SimulationSpeed = new Slider(new Point(25, this.Height - 105), 0, 100, 10);
+            Slider SimulationSpeed = new Slider(new Point(menu["speedX"], this.Height - menu["speedY"]), 0, 100, 10); //speedX //speedY
             this.Controls.Add(SimulationSpeed);
 
             

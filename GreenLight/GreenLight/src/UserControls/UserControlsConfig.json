@@ -1,0 +1,121 @@
+{
+    "projectName": "GreenLight District",
+    "projectVersion": "0.6.12",
+
+    "subMenuWidth": 100,
+
+    "buildSubMenu": {
+        "elementHeaderSizeX": 114,
+        "elementHeaderSizeY": 30,
+        "elementHeaderX": 68,
+        "elementHeaderY": 180,
+        "buttonSizeL": 80,
+        "buttonSizeS": 40,
+        "devider2": 165,
+        "devider3": 280,
+        "devider4": 75,
+        "simStartSizeX": 160,
+        "simStartSizeY": 38,
+        "simStartX": 80,
+        "simStartY": 55,
+        "buttonL": 115,
+        "buttonS": 220,
+        "buttonHome": 90,
+        "buttonSave": 10,
+        "buttonRoad": 107,
+        "buttonLight": 49,
+        "buttonSign": 9,
+        "buttonBuilding": 67
+    },
+
+    "simSubMenu": {
+        "settingsHeaderSizeX": 150,
+        "settingsHeaderSizeY": 35,
+        "settingsHeaderX": 50,
+        "settingsHeaderY": 110,
+        "ButtonSize": 60,
+        "ButtonY": 150,
+        "ButtonX": 75,
+        "devider2": 220,
+        "devider3": 135,
+        "controlsY": 80,
+        "speedHeaderSizeX": 150,
+        "speedHeaderSizeY": 30,
+        "speedHeaderX": 50,
+        "speedHeaderY": 130,
+        "speedX": 25,
+        "speedY": 105,
+        "buttonStart":  20
+
+    },
+
+    "standardSubMenu": {
+        "subMenuWidth": 250,
+        "deviderX": 0,
+        "deviderY": 100,
+        "logoX": 40,
+        "logoY": 20
+    },
+
+    "standardMainMenu": {
+        "infobuttonsize": 40,
+        "infoX": 15,
+        "infoYfromtop": 55
+    },
+
+    "startMainMenu": {
+        "buttonSize": 200,
+        "buttonXdiff": 100,
+        "buttonCurve": 100,
+        "buttonYdiff": 100,
+        "logoXsize": 400,
+        "logoYsize": 160,
+        "logoXfromMiddle": 200,
+        "logoYfromMiddle": 250
+    },
+
+    "startSubMenu": {
+        "headerXsize": 150,
+        "headerYsize": 25,
+        "headerX": 50,
+        "headerY": 120,
+        "projectXsize": 160,
+        "projectYsize": 38,
+        "projectButtonCurve": 25,
+        "projectYbase": 160,
+        "projectYdiff": 45,
+        "projectX": 80,
+        "divider2X": 0,
+        "divider2Y": 75,
+        "aboutX": 80,
+        "aboutY": 55,
+        "aboutCurve": 25
+    },
+
+  "buildElementsMenu": {
+    "elementsXbase": 290,
+    "elementsXplus": 80,
+    "buttonSize": 60,
+    "buttonXbase": 18,
+    "buttonXdiff": 77,
+    "buttonYbase": 18,
+    "buttonYdiff": 78,
+    "buttonCurve": 25
+
+
+  },
+
+  "simElementsMenu": {
+    "menuSizeY": 135,
+    "menuY": 230,
+    "sliderDiffY": 40,
+    "sliderStart": 60,
+    "sliderX": 25,
+    "headerSizeX": 150,
+    "headerSizeY": 30,
+    "headerX": 50,
+    "headerY": 5,
+    "textStart": 40,
+    "textX": 125
+  }
+}

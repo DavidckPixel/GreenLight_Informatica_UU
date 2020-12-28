@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GreenLight
+{
+    class User_Controls_Config
+    {
+        public string projectName;
+        public string projectVersion;
+
+        public int subMenuWidth;
+
+        public Dictionary<string, int> standardSubMenu; // submenu width //LogoMenu //Devider //Logo
+
+        public Dictionary<string, int> standardMainMenu; //InfoButton 
+
+        public Dictionary<string, int> startMainMenu; //done
+
+        public Dictionary<string, int> startSubMenu; //done
+
+        public Dictionary<string, int> buildSubMenu; //done
+
+        public Dictionary<string, int> simSubMenu; //done
+
+        public Dictionary<string, int> buildElementsMenu; //Laura bezig
+
+        public Dictionary<string, int> simElementsMenu;
+    }
+}
