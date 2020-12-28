@@ -54,7 +54,7 @@
   <ItemGroup>
     <Compile Include="Selection_box.cs">
     </Compile>
-    <Compile Include="User Controls\Simulation_data_menu.cs">
+    <Compile Include="src\UserControls\Simulation_data_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SliderText.cs">

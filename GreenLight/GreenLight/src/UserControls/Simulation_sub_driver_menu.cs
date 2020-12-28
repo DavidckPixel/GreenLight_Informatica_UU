@@ -35,19 +35,19 @@ namespace GreenLight
             int _start = menu["sliderStart"];
             int _diff = menu["sliderDiffY"];
 
-            Slider temp1 = new Slider(new Point(_sliderX, _start + _diff * 4), 0, 100, 10); //sliderDiffY //sliderStart:100 / sliderX:25 //headerSizeX //headerSizeY //headerX //headerY
+            Slider temp1 = new Slider(new Point(_sliderX, _start + _diff * 4), 0, 100); //sliderDiffY //sliderStart:100 / sliderX:25 //headerSizeX //headerSizeY //headerX //headerY
             this.Controls.Add(temp1);
 
-            Slider temp2 = new Slider(new Point(_sliderX, _start + _diff * 3), 0, 100, 10);
+            Slider temp2 = new Slider(new Point(_sliderX, _start + _diff * 3), 0, 100);
             this.Controls.Add(temp2);
 
-            Slider temp3 = new Slider(new Point(_sliderX, _start + _diff * 2), 0, 100, 10);
+            Slider temp3 = new Slider(new Point(_sliderX, _start + _diff * 2), 0, 100);
             this.Controls.Add(temp3);
 
-            Slider temp4 = new Slider(new Point(_sliderX, _start + _diff), 0, 100, 10);
+            Slider temp4 = new Slider(new Point(_sliderX, _start + _diff), 0, 100);
             this.Controls.Add(temp4);
 
-            Slider temp5 = new Slider(new Point(_sliderX, _start), 0, 100, 10);
+            Slider temp5 = new Slider(new Point(_sliderX, _start), 0, 100);
             this.Controls.Add(temp5);
 
             CurvedButtons Edit_Driver_Header = new CurvedButtons(new Size(menu["headerSizeX"], menu["headerSizeY"]),
