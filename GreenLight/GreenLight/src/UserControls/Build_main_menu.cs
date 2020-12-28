@@ -34,16 +34,12 @@ namespace GreenLight
 
         private void Initialize(Form Form, int Sub_menu_width) 
         {
+            
             this.BackColor = Color.FromArgb(196, 196, 198);
             this.Size = new Size(Form.Width-Sub_menu_width, Form.Height);
+            int _ButtonSize = User_Controls.Config.standardMainMenu["infobuttonsize"];
+            RoundButtons Info_button = new RoundButtons(new Size(_ButtonSize, _ButtonSize), new Point(User_Controls.Config.standardMainMenu["infoX"], Form.Height - User_Controls.Config.standardMainMenu["infoYfromtop"]), "../../User Interface Recources/Info_Button.png");
 
-            RoundButtons Info_button = new RoundButtons(new Size(40, 40), new Point(15, Form.Height - 55), "../../User Interface Recources/Info_Button.png");
-        
-        //Cleaner maar General_form moet form zijn
-        /*private void Initialize(General_form General_form, int Main_menu_width) 
-        {
-            RoundButtons Info_button = new RoundButtons(new Size(40, 40), new Point(15, General_form.Height - 55), 
-                "../../User Interface Recources/Info_Button.png"); */
             this.Controls.Add(Info_button);
         }
     }
