@@ -107,6 +107,7 @@
     <Compile Include="src\UserControls\User_Controls_Config.cs" />
     <Compile Include="src\Vehicle\Vehicle.cs" />
     <Compile Include="src\Vehicle\VehicleController.cs" />
+    <Compile Include="src\Vehicle\VehicleStats.cs" />
     <Compile Include="src\Vehicle\VehicleTypeConfig.cs" />
     <Compile Include="src\Vehicle\World.cs" />
     <Compile Include="src\Vehicle\WorldConfig.cs" />

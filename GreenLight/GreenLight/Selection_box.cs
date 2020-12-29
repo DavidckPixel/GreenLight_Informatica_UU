@@ -8,20 +8,22 @@ using System.Drawing;
 
 namespace GreenLight
 {
-    class Selection_box : Panel
+    public class Selection_box : Panel
     {
         int Selected_index = 0;
         bool Selected_left_bool = true;
-        public Selection_box(Form Form, FontFamily Dosis_font_family)
-        {
-            List<string> Elements_selected = new List<string>();
-            List<string> Elements_available = new List<string>();
 
-            Elements_selected.Add("Test 1");
+        public List<string> Elements_available = new List<string>();
+
+        public Selection_box(Form Form, FontFamily Dosis_font_family, List<string> _available)
+        {
+            List<string> Elements_selected = _available;
+
+            /*Elements_selected.Add("Test 1");
             Elements_selected.Add("Test 2");
             Elements_selected.Add("Test 3");
             Elements_selected.Add("Test 4");
-            Elements_selected.Add("Test 5");
+            Elements_selected.Add("Test 5"); */
 
             this.BackgroundImage = Image.FromFile("../../User Interface Recources/Selection_Box.png");
             this.Size = new Size(225, 117);
@@ -116,6 +118,11 @@ namespace GreenLight
                 Elements_available.RemoveAt(Selected_index);
             }
             Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family);
+        }
+
+        public void Add_Element(string element)
+        {
+            Elements_available.Add(element);
         }
     }
 }

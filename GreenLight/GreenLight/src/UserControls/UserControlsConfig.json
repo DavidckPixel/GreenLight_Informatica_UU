@@ -116,6 +116,14 @@
     "headerX": 50,
     "headerY": 5,
     "textStart": 40,
-    "textX": 125
+    "textX": 125,
+    "sliderStartDriver": 200,
+    "textStartDriver": 180,
+    "sliderStartVehicleY": 360,
+    "sliderTextX": 125,
+    "startTextY": 340
+
+    
+
   }
 }

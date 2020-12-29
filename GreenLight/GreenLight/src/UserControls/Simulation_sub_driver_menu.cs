@@ -32,23 +32,61 @@ namespace GreenLight
         {
             Dictionary<string, int> menu = User_Controls.Config.simElementsMenu;
             int _sliderX = menu["sliderX"];
-            int _start = menu["sliderStart"];
+            int _start = menu["sliderStartDriver"];
             int _diff = menu["sliderDiffY"];
+            int _text = menu["textX"];
+            int _textstart = menu["textStartDriver"];
 
-            Slider temp1 = new Slider(new Point(_sliderX, _start + _diff * 4), 0, 100); //sliderDiffY //sliderStart:100 / sliderX:25 //headerSizeX //headerSizeY //headerX //headerY
-            this.Controls.Add(temp1);
+            //----------------------------------------------
 
-            Slider temp2 = new Slider(new Point(_sliderX, _start + _diff * 3), 0, 100);
-            this.Controls.Add(temp2);
+            List<string> _temp = VehicleController.getStringVehicleStats();
 
-            Slider temp3 = new Slider(new Point(_sliderX, _start + _diff * 2), 0, 100);
-            this.Controls.Add(temp3);
+            Selection_box Selection_box = new Selection_box(Form, Dosis_font_family, _temp);
+            if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(13, 35);
+            else Selection_box.Location = new Point(3, 35);
+            this.Controls.Add(Selection_box);
 
-            Slider temp4 = new Slider(new Point(_sliderX, _start + _diff), 0, 100);
-            this.Controls.Add(temp4);
+            Slider Reaction_time = new Slider(new Point(_sliderX, _start + _diff * 4), 0, 30);
+            this.Controls.Add(Reaction_time);
+            SliderText Reaction_time_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff * 4), "Reaction time:");
+            this.Controls.Add(Reaction_time_label);
+            SliderText Reaction_time_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart + _diff * 4), Reaction_time.Value.ToString() + " s");
+            this.Controls.Add(Reaction_time_Value);
+            Reaction_time.ValueChanged += (object o, EventArgs EA) => { Reaction_time_Value.Text = Reaction_time.Value.ToString() + " s"; };
 
-            Slider temp5 = new Slider(new Point(_sliderX, _start), 0, 100);
-            this.Controls.Add(temp5);
+            Slider Follow_interval = new Slider(new Point(_sliderX, _start + _diff * 3), 0, 100);
+            this.Controls.Add(Follow_interval);
+            SliderText Follow_interval_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff * 3), "Follow interval:");
+            this.Controls.Add(Follow_interval_label);
+            SliderText Follow_interval_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart + _diff * 3), Follow_interval.Value.ToString() + " s");
+            this.Controls.Add(Follow_interval_Value);
+            Follow_interval.ValueChanged += (object o, EventArgs EA) => { Follow_interval_Value.Text = Follow_interval.Value.ToString() + " s"; };
+
+            Slider Speeding = new Slider(new Point(_sliderX, _start + _diff * 2), -50, 100);
+            this.Controls.Add(Speeding);
+            SliderText Speeding_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff * 2), "Speeding:");
+            this.Controls.Add(Speeding_label);
+            SliderText Speeding_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart + _diff * 2), Speeding.Value.ToString() + " km/h");
+            this.Controls.Add(Speeding_Value);
+            Speeding.ValueChanged += (object o, EventArgs EA) => { Speeding_Value.Text = Speeding.Value.ToString() + " km/h"; };
+
+            Slider Rulebreaking = new Slider(new Point(_sliderX, _start + _diff), 0, 100);
+            this.Controls.Add(Rulebreaking);
+            SliderText Rulebreaking_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff), "Rulebreaking:");
+            this.Controls.Add(Rulebreaking_label);
+            SliderText Rulebreaking_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart + _diff), Rulebreaking.Value.ToString() + " %");
+            this.Controls.Add(Rulebreaking_Value);
+            Rulebreaking.ValueChanged += (object o, EventArgs EA) => { Rulebreaking_Value.Text = Rulebreaking.Value.ToString() + " %"; };
+
+            Slider Occurunce = new Slider(new Point(_sliderX, _start), 0, 100);
+            this.Controls.Add(Occurunce);
+            SliderText Occurunce_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart), "Occurunce:");
+            this.Controls.Add(Occurunce_label);
+            SliderText Occurunce_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart), Occurunce.Value.ToString() + " %");
+            this.Controls.Add(Occurunce_Value);
+            Occurunce.ValueChanged += (object o, EventArgs EA) => { Occurunce_Value.Text = Occurunce.Value.ToString() + " %"; };
+
+            //----------------------------------------------
 
             CurvedButtons Edit_Driver_Header = new CurvedButtons(new Size(menu["headerSizeX"], menu["headerSizeY"]),
                new Point(menu["headerX"], menu["headerY"]), "../../User Interface Recources/Edit_Driver_Header.png");

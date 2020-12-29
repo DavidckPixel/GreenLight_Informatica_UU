@@ -39,53 +39,11 @@ namespace GreenLight
             int _ButtonYdiff = menu["buttonYdiff"];
             int _ButtonCurve = menu["buttonCurve"];
 
-            CurvedButtons temp1 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp1.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Menu_to_lights(); };
-            this.Controls.Add(temp1);
-
-            CurvedButtons temp2 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp2.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Menu_to_lights(); };
-            this.Controls.Add(temp2);
-
-            CurvedButtons temp3 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + 2 * _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp3.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Menu_to_lights(); };
-            this.Controls.Add(temp3);
-
-            CurvedButtons temp4 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp4.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Menu_to_lights(); };
-            this.Controls.Add(temp4);
-
-            CurvedButtons temp5 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp5.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Menu_to_lights(); };
-            this.Controls.Add(temp5);
-
-            CurvedButtons temp6 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + 2 * _ButtonXdiff, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp6.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Menu_to_lights(); };
-            this.Controls.Add(temp6);
-
-            CurvedButtons temp7 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase + 2 * _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp7.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Menu_to_lights(); };
-            this.Controls.Add(temp7);
-
-            CurvedButtons temp8 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + 2 * _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp8.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Menu_to_lights(); };
-            this.Controls.Add(temp8);
-
-            CurvedButtons temp9 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + 2 * _ButtonXdiff, _ButtonYbase + 2 * _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp9.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Menu_to_lights(); };
-            this.Controls.Add(temp9);
-
-            CurvedButtons temp10 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase + 3 * _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp10.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Menu_to_lights(); };
-            this.Controls.Add(temp10);
-
-            CurvedButtons temp11 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + 3 * _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            temp11.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Menu_to_lights(); };
-            this.Controls.Add(temp11);
-
-            CurvedButtons temp12 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + 2 * _ButtonXdiff, _ButtonYbase + 3 * _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/Yield_Sign_Button.png", this.BackColor);
-            temp12.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Menu_to_lights(); };
-            this.Controls.Add(temp12);
+            CurvedButtons Hand = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Hand_Button.png", this.BackColor);
+            Hand.Click += (object o, EventArgs EA) => { };
+            this.Controls.Add(Hand);
+                        
+            
         }
     }
 }
