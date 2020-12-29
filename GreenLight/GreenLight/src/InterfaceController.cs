@@ -36,8 +36,8 @@ namespace GreenLight
         Simulation_sub_menu SimSM;
         Simulation_main_menu SimMM;
         Simulation_sub_weather_menu SimSWM;
-        Simulation_sub_vehicle_menu SimSVM;
-        Simulation_sub_driver_menu SimSDM;
+        public Simulation_sub_vehicle_menu SimSVM;
+        public Simulation_sub_driver_menu SimSDM;
         public Simulation_data_menu SimDataM;
         Elements_sub_buildings_menu ElemSBM;
         Elements_sub_lights_menu ElemSLM;

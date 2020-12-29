@@ -48,17 +48,17 @@ namespace GreenLight
         int angle; //Angle at which the image/vehicle is rotated
 
 
-        public Vehicle(string name, int weight, float length, int topspeed, int motorpwr, int x, int y, float cw, float surface) : base(new Point(x,y), new Size(20,20))
+        public Vehicle(VehicleStats _stat, int x, int y) : base(new Point(x,y), new Size(20,20))
         {
-            this.weight = weight;
-            this.length = length;
-            this.topspeed = topspeed;
-            this.name = name;
-            this.motorpwr = motorpwr;
+            this.weight = _stat.Weight;
+            this.length = _stat.Length;
+            this.topspeed = _stat.Topspeed;
+            this.name = _stat.Name;
+            this.motorpwr = _stat.Motorpwr;
             this.x = x;
             this.y = y;
-            this.cw = cw;
-            this.surface = surface;
+            this.cw = _stat.Cw;
+            this.surface = _stat.Surface;
             this.Cords = new Point(x, y); //Ignore this
             
             Console.WriteLine("Created vehicle");
