@@ -71,7 +71,7 @@ namespace GreenLight
                     break;
                 case "DiagonalRoad":
                     {
-                        RoadDirection = "";
+                        RoadDirection = "D";
                     }
                     break;
                 case "StraightRoad":

@@ -85,6 +85,7 @@ namespace GreenLight
                 _firstPoint = Gridpoints.Find(x => x.Collision(mea.Location));
                 if (_firstPoint != null)
                 {
+                    Console.WriteLine("First PointClick!");
                     Console.WriteLine(_firstPoint.Cords);
                     this.firstClick = false;
                     this.firstPoint = _firstPoint;

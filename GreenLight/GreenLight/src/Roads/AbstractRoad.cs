@@ -33,7 +33,7 @@ namespace GreenLight
             this.Cords = _point1;
         }
 
-        protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2);
+        protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
 
         public static int CalculateAngle(Point _point1, Point _point2)
         {

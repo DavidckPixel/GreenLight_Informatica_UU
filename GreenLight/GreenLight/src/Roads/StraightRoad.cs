@@ -27,7 +27,7 @@ namespace GreenLight
             }
         }
 
-        protected override DrivingLane CalculateDrivingLane(Point _point1, Point _point2)
+        protected override DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thisLane)
         {
             Console.WriteLine("STARTPOINTS : {0} -- {1},   {2}", _point1, _point2, this.dir);
 
@@ -68,7 +68,7 @@ namespace GreenLight
                 }
             }
 
-            return new DrivingLane(_lanePoints);
+            return new DrivingLane(_lanePoints, this.dir, lanes, _thisLane);
 
             foreach (LanePoints x in _lanePoints)
             {
@@ -113,13 +113,13 @@ namespace GreenLight
                 {
                     if (t % 2 == 0)
                     {
-                        _firstPoint.Y -= t / 2 * drivingLaneDistance / 2;
-                        _secondPoint.Y -= t / 2 * drivingLaneDistance / 2;
+                        _firstPoint.Y += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
+                        _secondPoint.Y += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
                     }
                     else
                     {
-                        _firstPoint.Y += (t + 1) / 2 * drivingLaneDistance / 2;
-                        _secondPoint.Y += (t + 1) / 2 * drivingLaneDistance / 2;
+                        _firstPoint.Y -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
+                        _secondPoint.Y -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
                     }
                 }
                 else // (lanes % 2 == 1)
@@ -142,13 +142,13 @@ namespace GreenLight
                 {
                     if (t % 2 == 0)
                     {
-                        _firstPoint.X -= t / 2 * drivingLaneDistance / 2;
-                        _secondPoint.X -= t / 2 * drivingLaneDistance / 2;
+                        _firstPoint.X += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
+                        _secondPoint.X += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
                     }
                     else
                     {
-                        _firstPoint.X += (t + 1) / 2 * drivingLaneDistance / 2;
-                        _secondPoint.X += (t + 1) / 2 * drivingLaneDistance / 2;
+                        _firstPoint.X -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
+                        _secondPoint.X -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
                     }
                 }
                 else // (lanes % 2 == 1)
@@ -165,7 +165,7 @@ namespace GreenLight
                     }
                 }
             }
-            return CalculateDrivingLane(_firstPoint, _secondPoint);
+            return CalculateDrivingLane(_firstPoint, _secondPoint, t);
         }
     }
 }
