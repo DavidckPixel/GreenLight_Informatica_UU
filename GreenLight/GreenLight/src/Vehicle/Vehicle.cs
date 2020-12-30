@@ -2,25 +2,24 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
+using System.Collections.Generic;
 
 
 namespace GreenLight
 {
     class Vehicle : ScreenObject     
     {
-
-        //This is the vehicle class, which creates a car.
-        //This class also contains methods that calculate how the car moves, accelarates and brakes.
-        //All calculations are based on real-life physics
-        //The variables of which the car exists are stored in the VehicleType json file and read in with the VehicleTypeConfig class
-        //World variables like gravity are stored in the Earth json file and read in with the WorldConfig class
-        
         public float x, y; //Location of the vehicle
         public float speed = 0;    //Speed of vehicle
         public float a, abrake; //acceleration and braking speed
 
         //Properties of the vehicle
         string name; 
+        //This is the vehicle class, which creates a car.
+        //This class also contains methods that calculate how the car moves, accelarates and brakes.
+        //All calculations are based on real-life physics
+        //The variables of which the car exists are stored in the VehicleType json file and read in with the VehicleTypeConfig class
+        //World variables like gravity are stored in the Earth json file and read in with the WorldConfig class
 
         int weight;
         float length;
@@ -46,40 +45,29 @@ namespace GreenLight
         
         Bitmap Car; //Image of the vehicle
         int angle; //Angle at which the image/vehicle is rotated
+        public int frame = 0;
+        public int listcounter = 0;
 
 
-        public Vehicle(VehicleStats _stat, int x, int y) : base(new Point(x,y), new Size(20,20))
+        public Vehicle(string name, int weight, float length, int topspeed, int motorpwr, int x, int y, float cw, float surface) : base(new Point(x,y), new Size(20,20))
         {
-            this.weight = _stat.Weight;
-            this.length = _stat.Length;
-            this.topspeed = _stat.Topspeed;
-            this.name = _stat.Name;
-            this.motorpwr = _stat.Motorpwr;
+            this.weight = weight;
+            this.length = length;
+            this.topspeed = topspeed;
+            this.name = name;
+            this.motorpwr = motorpwr;
             this.x = x;
             this.y = y;
-            this.cw = _stat.Cw;
-            this.surface = _stat.Surface;
+            this.cw = cw;
+            this.surface = surface;
             this.Cords = new Point(x, y); //Ignore this
             
             Console.WriteLine("Created vehicle");
             
-            
             a = this.motorpwr / this.weight;
             abrake = physics.Brakepwr / this.weight;
             Car = new Bitmap(Properties.Resources.Car);
-
         }
-
-        //method to change destination in multi-threaded car system
-
-        /*public void klik(int xt, int yt)
-        {
-            isBraking = false;
-            isAccelerating = false;
-            startmove.Abort();            
-            startmove = new Thread(() => move(xt, yt));
-            startmove.Start();
-        }*/
 
         public float Slipperiness {
             get{ return crw; }
@@ -87,11 +75,24 @@ namespace GreenLight
         }
         
         //Tekenmethode
-        public void tekenAuto(Graphics g)
+        public void tekenAuto(Graphics g, List<Point> location)
         {
-            int xtemp = (int) x;
-            int ytemp = (int) y;
+            int xtemp = 0;
+            int ytemp = 0;
+            try
+            {
+                xtemp = location[frame].X;
+                ytemp = location[frame].Y;
+            }
+            catch
+            { Console.WriteLine("Not Av.");;
+            }
             g.DrawImage(RotateImage(Car, angle), xtemp-Car.Width/2, ytemp - Car.Height / 2, Car.Width, Car.Height);
+            if (frame == 300)
+            {
+                listcounter++;
+            }
+            frame++;
         }
 
         public static Bitmap RotateImage(Bitmap b, float angle)
@@ -166,9 +167,6 @@ namespace GreenLight
 
             float brktime = speed / abrake;
             float brkdistance = brktime * speed;
-            
-            //Console.WriteLine(brkdistance + "    -    " + distancefromend + "    -    " + speed);
-
             return brkdistance;
         }
 
@@ -180,14 +178,8 @@ namespace GreenLight
 
         }
 
-
-/*        private void Vehicle_Load(object sender, EventArgs e)
-        {
-
-        }
-*/
         //method used to calculate new x and y for vehicle in single threaded car system
-        public void move(int xt, int yt)
+        public Point move(int xt, int yt)
         {
             if (Math.Abs(x - xt) > 1 && Math.Abs(y - yt) > 1)
             {
@@ -209,7 +201,7 @@ namespace GreenLight
                 if (y > yt)
                 {
                     y = y - ymove * speed * 0.8f;
-                }            
+                }
                 
             }
             else
@@ -218,102 +210,9 @@ namespace GreenLight
                 isAccelerating = false;
                 isBraking = false;
             }
+            return new Point((int)x, (int)y);
         }
 
-        //method used to calculate new x and y in multi treaded car system
-        /*public void move(int xt, int yt) //xt and yt are the targetcoordinates
-        {
-            calculateAngle(xt, yt);
-            float xmove = Math.Abs(xt - x) / (Math.Abs(xt - x) + Math.Abs(yt - y));
-            float ymove = 1.0f - xmove;
-            while (true)
-            {
-                while (Math.Abs(x - xt) > 1 && Math.Abs(y - yt) > 1)
-                {
-                    if (x < xt)
-                    {
-                        x = x + xmove * speed * 0.8f;       //5 pixels per meter
-                    }
-                    if (x > xt)
-                    {
-                        x = x - xmove * speed * 0.8f;
-                    }
-                    if (y < yt)
-                    {
-                        y = y + ymove * speed * 0.8f;
-                    }
-                    if (y > yt)
-                    {
-                        y = y - ymove * speed * 0.8f;
-                    }
-                    brkdistance(xt, yt);
-                    //Console.WriteLine(speed);
-                    Thread.Sleep(16);
-                }
-                //speed = 0;
-                a = 0;
-                isAccelerating = false;
-                Thread.Sleep(32);
-            }
-        }*/
-
-        //method used to call the brake to speed method in multi threaded car system;
-        /*public void tryBrake(float targetspeed)
-        {
-            isBraking = true;
-            isAccelerating = false;
-            
-            
-
-            try
-            {
-                
-                if (brk != null)
-                {
-                    brk = null;
-                }
-
-                brk = new Thread(() => brakeToSpeed(targetspeed));
-                brk.Start();
-
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }*/
-
-
-        //method used to call the accelerate to speed method in multi threaded car system;
-        /*public void tryAccelerate(float targetspeed)
-        {
-
-            isAccelerating = true;
-            isBraking = false;
-
-            if (targetspeed > topspeed)
-            {
-                targetspeed = topspeed;
-            }
-
-            try
-            {
-                if (acc != null)
-                {
-                    acc = null;
-                }
-                acc = new Thread(() => accelerate(targetspeed));
-                acc.Start();
-                
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }*/
-
-        //method used to accelerate to target speed in the single threaded car system
         public void accelerate(float targetspeed)
         {
             airResistance = (float)(0.5f * physics.Density * cw * surface * speed * speed);
@@ -330,26 +229,5 @@ namespace GreenLight
                 isAccelerating = false;
             }
         }
-        
-        //method used to accelerate to target speed in the multi threaded car system
-        /*public void accelerate(float targetspeed)
-        {
-            while (speed < targetspeed && isAccelerating)
-            {
-                airResistance = (float) (0.5f * physics.Density * cw * surface * speed * speed);
-                rollingResistance = (float) (crw * this.weight * physics.Gravity);
-                a = (this.motorpwr - (airResistance + rollingResistance)) / this.weight;
-                if (airResistance + rollingResistance < this.motorpwr)
-                {
-                    speed += a * 0.016f;
-                }                
-                Thread.Sleep(16);
-            }            
-            if (speed > targetspeed)
-            {
-                speed = targetspeed;
-                isAccelerating = false;
-            }
-        }*/
     }
 }

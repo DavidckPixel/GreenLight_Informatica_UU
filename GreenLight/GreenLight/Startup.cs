@@ -17,17 +17,16 @@ namespace GreenLight
         //Vehicle v = VehicleTypeConfig.types[0];
         //public List<Vehicle> carlist = new List<Vehicle> { };
         public List<AI> driverList = new List<AI> { };
-
+        bool listchoice = true;
         public Startup()
         {
-
+            createDriver();
             simulate = true;
             this.DoubleBuffered = true;
             this.Paint += teken;
 
             Thread run = new Thread(simulation);
             run.Start();
-            createDriver();
             /*Thread drivers = new Thread(createDriver);
             drivers.Start();*/
            
@@ -46,9 +45,9 @@ namespace GreenLight
         }*/
         private void createDriver()
         {
-            /*Vehicle v = new Vehicle(new VehicleStats("Auto", 1353, 4.77f, 100, 4223, 2, 2.65f), 10, 10);            
+            Vehicle v = new Vehicle("Auto", 1353, 4.77f, 100, 4223, 10, 10, 0.35f, 2.65f);            
             AI driver = new AI(v, 250, 2, 0, 0);
-            driverList.Add(driver);*/
+            driverList.Add(driver);
 
             /*for (int aantal = 0; simulate && aantal < 10; aantal++)
             {
@@ -73,22 +72,34 @@ namespace GreenLight
         {
             for (int t = 0; t < driverList.Count; t++)
             {
-                driverList[t].v.tekenAuto(pea.Graphics);
+                if (listchoice && driverList[t].v.frame <= 624)
+                {
+                    driverList[t].v.tekenAuto(pea.Graphics, driverList[t].location);
+                    if (driverList[t].v.frame == 624)
+                    {
+                        listchoice = false;
+                        driverList[t].v.frame = 0;
+                    }
+                }
+                else if (!listchoice && driverList[t].v.frame <= 624)
+                {
+                    driverList[t].v.tekenAuto(pea.Graphics, driverList[t].location2);
+                    if (driverList[t].v.frame == 624)
+                    {
+                        listchoice = true;
+                        driverList[t].v.frame = 0;
+                    }
+                }
             }
         }
 
-
         public void clickmethod(object sender, MouseEventArgs mea)
         {
-
             Point clickPos = this.PointToClient(Cursor.Position);
-
-
             for (int t = 0; t < driverList.Count; t++)
             {
                 driverList[t].changeDestination(clickPos.X, clickPos.Y);
             }
         }
-
     }
 }

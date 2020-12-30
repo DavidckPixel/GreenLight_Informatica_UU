@@ -121,13 +121,4 @@
   <data name="Car" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Car.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Lane" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Lane.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Road_Verticaal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Road_Verticaal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Transparent_Lane" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Transparent-Lane.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

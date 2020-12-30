@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
-    public class GridController : EntityController
+    class GridController : Form
     {
         //This controller temperaly draws and creates the GridPoints, this will be changed in later versions
         //The data for the GridPoints (distance width/ height) is stored within a json file, and read in in the GridConfig class
@@ -21,54 +21,24 @@ namespace GreenLight
         public GridConfig config;
         bool firstClick;
         string Selected;
-        PictureBox canvas;
-        private bool _points_visible = true;
-
-        public Gridpoint firstPoint = null;
-        public Gridpoint secondPoint = null;
-
-        BuilderController builder;
-
-        public GridController(PictureBox _bitmap, BuilderController _builder)
+        
+        public GridController()
         {
-            this.canvas = _bitmap;
             GridConfig.Init(ref this.config);
             CreateGridPoints();
-            this.canvas.MouseClick += OnClick;
-            this.firstClick = true;
+            this.Paint += DrawGridPoints;
+            this.MouseClick += OnClick;
 
-            this.builder = _builder;
-        }
-
-        public bool Set_visible
-        {
-            set
-            {
-                _points_visible = value;
-            }
-        }
-
-        public override void Initialize()
-        {
-
-        }
-
-        public void canvas_resize(Size _size) 
-        {
-            this.canvas.Size = _size;
+            this.Invalidate();
         }
 
         public void CreateGridPoints()
         {
-            int _amountX = canvas.Width / config.SpacingWidth;
-            int _amountY = canvas.Height / config.SpacingHeight;
-
-            for (int y = 0; y < _amountY; y++)
-            { 
-                for (int x = 0; x < _amountX; x++)
+            for(int y = 0; y < 10; y++)
+            {
+                for (int x = 0; x < 10; x++)
                 {
-                    
-                    Gridpoints.Add(new Gridpoint(new Point(x * config.SpacingWidth, y * config.SpacingHeight), 5));
+                    Gridpoints.Add(new Gridpoint(new Point(x * config.SpacingWidth, y * config.SpacingHeight), new Size(5,5)));
                 }
             }
         }
@@ -78,45 +48,39 @@ namespace GreenLight
             Gridpoint _firstPoint = null;
             Gridpoint _secondPoint = null;
 
-            Console.WriteLine("MouseClick Cords: " + mea.Location);
 
             if (firstClick)
             {
                 _firstPoint = Gridpoints.Find(x => x.Collision(mea.Location));
                 if (_firstPoint != null)
                 {
-                    Console.WriteLine("First PointClick!");
-                    Console.WriteLine(_firstPoint.Cords);
-                    this.firstClick = false;
-                    this.firstPoint = _firstPoint;
+                    Console.WriteLine("PointClick!");
+                    firstClick = false;
                 }
+
+                
             }
             else
             {
                 _secondPoint = Gridpoints.Find(x => x.Collision(mea.Location));
                 if (_secondPoint != null && _secondPoint != _firstPoint)
                 {
-                    Console.WriteLine("Second PointClick!");
-                    Console.WriteLine(_secondPoint.Cords);
-                    this.secondPoint = _secondPoint;
+                    firstClick = true;
+                    if (Selected == "Roads") { };
+                    //CreateRoad(_firstPoint, _secondPoint);
 
-                    builder.BuildRoad(this.firstPoint.Cords, this.secondPoint.Cords);
-                    this.ResetPoints();
+                    Console.WriteLine("PointClick!");
                 }
             }
         }
 
+        
 
-        private void ResetPoints()
-        {
-            this.firstPoint = null;
-            this.secondPoint = null;
-            this.firstClick = true;
-        }
+        
 
-        public void DrawGridPoints(Graphics g)
+        public void DrawGridPoints(Object o, PaintEventArgs pea)
         {
-            if(_points_visible)
+            Graphics g = pea.Graphics;
             foreach(Gridpoint x in Gridpoints)
             {
                 x.DrawGrid(g);
