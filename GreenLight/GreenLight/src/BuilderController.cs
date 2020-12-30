@@ -13,6 +13,7 @@ namespace GreenLight
         public RoadController roadBuilder;
         public GridController gridController;
         PictureBox Screen;
+        public string roadType = "X";
 
         public BuilderController(PictureBox _screen)
         {
@@ -26,9 +27,7 @@ namespace GreenLight
 
         public void BuildRoad(Point _point1, Point _point2)
         {
-            string _roadType = "Diagonal";
-
-            switch (_roadType)
+            switch (roadType)
             {
                 case "Straight":
                     roadBuilder.BuildStraightRoad(_point1, _point2);
@@ -37,7 +36,10 @@ namespace GreenLight
                     roadBuilder.BuildDiagnolRoad(_point1, _point2);
                     break;
                 case "Curved":
-                    roadBuilder.BuildCurvedRoad(_point1, _point2);
+                    if(_point1.X != _point2.X && _point1.Y != _point2.Y)
+                        roadBuilder.BuildCurvedRoad(_point1, _point2);
+                    break;
+                case "X":
                     break;
             }
 

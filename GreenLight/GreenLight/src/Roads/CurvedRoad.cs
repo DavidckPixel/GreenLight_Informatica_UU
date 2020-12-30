@@ -45,19 +45,19 @@ namespace GreenLight
 
             if (dir == "NE")
             {
-               _nulpoint = new Point(Math.Max(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y));
+               _nulpoint = new Point(Math.Max(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
             }
             else if (dir == "NW")
             {
-               _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y));
+               _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
             }
             else if (dir == "SW")
             {
-               _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
+               _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y));
             }
             else // (dir == "SE")
             {
-               _nulpoint = new Point(Math.Max(_point1.X, point2.X), Math.Min(_point1.Y, point2.Y));
+               _nulpoint = new Point(Math.Max(_point1.X, point2.X), Math.Max(_point1.Y, point2.Y));
             }
 
             int _deltaX = Math.Abs(_point1.X - _point2.X);
@@ -71,22 +71,25 @@ namespace GreenLight
 
             for (int x = 0, y = 0; x <= _deltaX || y <= _deltaY; x++, y++)
             {
+                if ((x >= _deltaX && y >= _deltaY) || _prev == _point2)
+                    break;
+
                 _Xtemp = _point1.X + x * _dir.Item1;
                 _ytemp = _point1.Y + y * _dir.Item2;
 
-                if ((dir == "SE" || dir == "SW") && x <= _deltaX)
+                if ((dir == "NE" || dir == "NW") && x <= _deltaX)
                 {
                     _Ytemp = _nulpoint.Y + (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
                 }
-                else if ((dir == "NE" || dir == "NW") && x <= _deltaX)
+                else if ((dir == "SE" || dir == "SW") && x <= _deltaX)
                 {
                     _Ytemp = _nulpoint.Y - (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
                 }
-                if ((dir == "SE" || dir == "SW") && y <= _deltaY)
+                if ((dir == "NE" || dir == "NW") && y <= _deltaY)
                 {
                     _xtemp = _nulpoint.X + (int)Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - _nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
                 }
-                else if ((dir == "NE" || dir == "NW") && y <= _deltaY)
+                else if ((dir == "SE" || dir == "SW") && y <= _deltaY)
                 {
                     _xtemp = _nulpoint.X - (int)Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - _nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
                 }
@@ -146,61 +149,61 @@ namespace GreenLight
 
             string _Direction = this.dir;
 
-                if (_Direction == "NE" || _Direction == "SW")
+                if (_Direction == "SE" || _Direction == "NW")
                 {
                     if (lanes % 2 == 0)
                     {
                         if (t % 2 == 0)
                         {
-                            _firstPoint.Y += t / 2 * drivingLaneDistance / 2;
-                            _secondPoint.X -= t / 2 * drivingLaneDistance / 2;
+                            _firstPoint.X -= (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
+                            _secondPoint.Y -= (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
                         }
                         else
                         {
-                            _firstPoint.Y -= (t + 1) / 2 * drivingLaneDistance / 2;
-                            _secondPoint.X += (t + 1) / 2 * drivingLaneDistance / 2;
+                            _firstPoint.X += (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
+                            _secondPoint.Y += (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
                         }
                     }
                     else // (lanes % 2 == 1)
                     {
                         if (t % 2 == 0)
                         {
-                            _firstPoint.Y += t / 2 * drivingLaneDistance;
-                            _secondPoint.Y -= t / 2 * drivingLaneDistance;
-                        }
-                        else if (t % 2 == 1 && t != 1)
-                        {
-                            _firstPoint.Y -= (t - 1) / 2 * drivingLaneDistance;
-                            _secondPoint.Y += (t - 1) / 2 * drivingLaneDistance;
-                        }
-                    }
-                }
-                else if (_Direction == "SE" || _Direction == "NW")
-                {
-                    if (lanes % 2 == 0)
-                    {
-                        if (t % 2 == 0)
-                        {
-                            _firstPoint.Y += t / 2 * drivingLaneDistance / 2;
-                            _secondPoint.X += t / 2 * drivingLaneDistance / 2;
-                        }
-                        else
-                        {
-                            _firstPoint.Y -= (t + 1) / 2 * drivingLaneDistance / 2;
-                            _secondPoint.X -= (t + 1) / 2 * drivingLaneDistance / 2;
-                        }
-                    }
-                    else // (lanes % 2 == 1)
-                    {
-                        if (t % 2 == 0)
-                        {
-                            _firstPoint.Y += t / 2 * drivingLaneDistance;
+                            _firstPoint.X += t / 2 * drivingLaneDistance;
                             _secondPoint.Y += t / 2 * drivingLaneDistance;
                         }
                         else if (t % 2 == 1 && t != 1)
                         {
-                            _firstPoint.Y -= (t - 1) / 2 * drivingLaneDistance;
+                            _firstPoint.X -= (t - 1) / 2 * drivingLaneDistance;
                             _secondPoint.Y -= (t - 1) / 2 * drivingLaneDistance;
+                        }
+                    }
+                }
+                else if (_Direction == "NE" || _Direction == "SW")
+                {
+                    if (lanes % 2 == 0)
+                    {
+                        if (t % 2 == 0)
+                        {
+                            _firstPoint.X -= (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
+                            _secondPoint.Y += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
+                        }
+                        else
+                        {
+                            _firstPoint.X += (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
+                            _secondPoint.Y -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
+                        }
+                    }
+                    else // (lanes % 2 == 1)
+                    {
+                        if (t % 2 == 0)
+                        {
+                            _firstPoint.X += t / 2 * drivingLaneDistance;
+                            _secondPoint.Y -= t / 2 * drivingLaneDistance;
+                        }
+                        else if (t % 2 == 1 && t != 1)
+                        {
+                            _firstPoint.X -= (t - 1) / 2 * drivingLaneDistance;
+                            _secondPoint.Y += (t - 1) / 2 * drivingLaneDistance;
                         }
                     }
                 }

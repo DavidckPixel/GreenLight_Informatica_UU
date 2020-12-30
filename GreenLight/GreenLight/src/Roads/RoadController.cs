@@ -40,7 +40,7 @@ namespace GreenLight
         {
             string _dir = Direction(_point1, _point2, "CurvedRoad");
             Console.WriteLine(_dir);
-            AbstractRoad _road = new CurvedRoad(_point1, _point2, 1, _dir);
+            AbstractRoad _road = new CurvedRoad(_point1, _point2, 3, _dir);
 
             roads.Add(_road);
         }
@@ -56,16 +56,16 @@ namespace GreenLight
                         if (_firstPoint.X < _secondPoint.X)
                         {
                             if (_firstPoint.Y < _secondPoint.Y)
-                                RoadDirection = "SE";
-                            else
                                 RoadDirection = "NE";
+                            else
+                                RoadDirection = "SE";
                         }
                         else
                         {
                             if (_firstPoint.Y < _secondPoint.Y)
-                                RoadDirection = "SW";
-                            else
                                 RoadDirection = "NW";
+                            else
+                                RoadDirection = "SW";
                         }
                     }
                     break;
