@@ -184,7 +184,7 @@ namespace GreenLight
 
 
         //method used to calculate new x and y for vehicle in single threaded car system
-        public Point move(int xt, int yt)
+        public void move(int xt, int yt)
         {
             if (Math.Abs(x - xt) > 1 && Math.Abs(y - yt) > 1)
             {
@@ -215,9 +215,102 @@ namespace GreenLight
                 isAccelerating = false;
                 isBraking = false;
             }
-            return new Point((int)x, (int)y);
         }
 
+        //method used to calculate new x and y in multi treaded car system
+        /*public void move(int xt, int yt) //xt and yt are the targetcoordinates
+        {
+            calculateAngle(xt, yt);
+            float xmove = Math.Abs(xt - x) / (Math.Abs(xt - x) + Math.Abs(yt - y));
+            float ymove = 1.0f - xmove;
+            while (true)
+            {
+                while (Math.Abs(x - xt) > 1 && Math.Abs(y - yt) > 1)
+                {
+                    if (x < xt)
+                    {
+                        x = x + xmove * speed * 0.8f;       //5 pixels per meter
+                    }
+                    if (x > xt)
+                    {
+                        x = x - xmove * speed * 0.8f;
+                    }
+                    if (y < yt)
+                    {
+                        y = y + ymove * speed * 0.8f;
+                    }
+                    if (y > yt)
+                    {
+                        y = y - ymove * speed * 0.8f;
+                    }
+                    brkdistance(xt, yt);
+                    //Console.WriteLine(speed);
+                    Thread.Sleep(16);
+                }
+                //speed = 0;
+                a = 0;
+                isAccelerating = false;
+                Thread.Sleep(32);
+            }
+        }*/
+
+        //method used to call the brake to speed method in multi threaded car system;
+        /*public void tryBrake(float targetspeed)
+        {
+            isBraking = true;
+            isAccelerating = false;
+            
+            
+
+            try
+            {
+                
+                if (brk != null)
+                {
+                    brk = null;
+                }
+
+                brk = new Thread(() => brakeToSpeed(targetspeed));
+                brk.Start();
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }*/
+
+
+        //method used to call the accelerate to speed method in multi threaded car system;
+        /*public void tryAccelerate(float targetspeed)
+        {
+
+            isAccelerating = true;
+            isBraking = false;
+
+            if (targetspeed > topspeed)
+            {
+                targetspeed = topspeed;
+            }
+
+            try
+            {
+                if (acc != null)
+                {
+                    acc = null;
+                }
+                acc = new Thread(() => accelerate(targetspeed));
+                acc.Start();
+                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }*/
+
+        //method used to accelerate to target speed in the single threaded car system
         public void accelerate(float targetspeed)
         {
             airResistance = (float)(0.5f * physics.Density * cw * surface * speed * speed);
@@ -234,5 +327,26 @@ namespace GreenLight
                 isAccelerating = false;
             }
         }
+        
+        //method used to accelerate to target speed in the multi threaded car system
+        /*public void accelerate(float targetspeed)
+        {
+            while (speed < targetspeed && isAccelerating)
+            {
+                airResistance = (float) (0.5f * physics.Density * cw * surface * speed * speed);
+                rollingResistance = (float) (crw * this.weight * physics.Gravity);
+                a = (this.motorpwr - (airResistance + rollingResistance)) / this.weight;
+                if (airResistance + rollingResistance < this.motorpwr)
+                {
+                    speed += a * 0.016f;
+                }                
+                Thread.Sleep(16);
+            }            
+            if (speed > targetspeed)
+            {
+                speed = targetspeed;
+                isAccelerating = false;
+            }
+        }*/
     }
 }
