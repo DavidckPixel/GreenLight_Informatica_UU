@@ -9,13 +9,20 @@ namespace GreenLight
     class DriverStats
     {
         public string Name;
-        public int ReactionSpeed;
+        public float ReactionTime;
         public float FollowInterval;
-        public float SpeedRelativeToLimit;
+        public int SpeedRelativeToLimit;
         public float RuleBreakingChance;
 
-        public DriverStats(string Name, int ReactionSpeed, float FollowInterval, float SpeedRelativeToLimit, float RuleBreakingChance)
+        public DriverStats(string Name, float ReactionTime, float FollowInterval, int SpeedRelativeToLimit, float RuleBreakingChance)
         {
+            this.Name = Name;
+            this.ReactionTime = ReactionTime;
+            this.FollowInterval = FollowInterval;
+            this.SpeedRelativeToLimit = SpeedRelativeToLimit;
+            this.RuleBreakingChance = RuleBreakingChance;
+
+            Console.WriteLine("Constructed DriverStat");
 
         }
 

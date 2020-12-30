@@ -14,9 +14,9 @@ namespace GreenLight
         //but in the future the AI will be able to choose where and how fast to drive, depending on the cars around them.
 
         public Vehicle v;
-        int reactionSpeed;
+        float reactionSpeed;
         float followInterval;
-        float speedRelativeToLimit;
+        int speedRelativeToLimit;
         float ruleBreakingChance;
         int speedlimit = 28; //tijdelijk
         Thread run;
@@ -25,15 +25,15 @@ namespace GreenLight
         Point destinationpoint = new Point(4000, 980); //Ingegeven door road?
 
         
-        public AI(Vehicle v, int reactionSpeed, float followInterval, int speedRelativeToLimit, float ruleBreakingChance)
+        public AI(Vehicle v, DriverStats _stats)
         {
             this.v = v;
-            
 
-            this.reactionSpeed = reactionSpeed;
-            this.followInterval = followInterval;
-            this.speedRelativeToLimit = speedRelativeToLimit;
-            this.ruleBreakingChance = ruleBreakingChance;
+
+            this.reactionSpeed = _stats.ReactionTime;
+            this.followInterval = _stats.FollowInterval;
+            this.speedRelativeToLimit = _stats.SpeedRelativeToLimit;
+            this.ruleBreakingChance = _stats.RuleBreakingChance;
             targetspeed = speedlimit + speedRelativeToLimit;
             
             //thread used to update vehicle speed and whereabouts in the single threaded car system

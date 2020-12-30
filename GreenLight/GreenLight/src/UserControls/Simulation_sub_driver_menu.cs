@@ -12,6 +12,8 @@ namespace GreenLight
 {
     public partial class Simulation_sub_driver_menu : UserControl
     {
+        public Selection_box Selection_box;
+
         public Simulation_sub_driver_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
@@ -37,12 +39,12 @@ namespace GreenLight
             int _text = menu["textX"];
             int _textstart = menu["textStartDriver"];
 
-            //----------------------------------------------
+            
 
-            List<string> _temp = VehicleController.getStringVehicleStats();
+            List<string> _temp = AIController.getStringDriverStats();
             Dictionary<string, int> DriverMenu = User_Controls.Config.simDriver;
 
-            Selection_box Selection_box = new Selection_box(Form, Dosis_font_family, _temp);
+            Selection_box = new Selection_box(Form, Dosis_font_family, _temp);
             if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxMaxX"], User_Controls.Config.standardSubMenu["selectionBoxMaxY"]);
             else Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxX"], User_Controls.Config.standardSubMenu["selectionBoxY"]);
             this.Controls.Add(Selection_box);
