@@ -54,7 +54,11 @@
         "deviderX": 0,
         "deviderY": 100,
         "logoX": 40,
-        "logoY": 20
+        "logoY": 20,
+        "selectionBoxMaxX": 13,
+        "selectionBoxMaxY": 35,
+        "selectionBoxX": 3,
+        "selectionBoxY": 35
     },
 
     "standardMainMenu": {
@@ -105,25 +109,67 @@
 
   },
 
-  "simElementsMenu": {
-    "menuSizeY": 135,
-    "menuY": 230,
-    "sliderDiffY": 40,
-    "sliderStart": 60,
-    "sliderX": 25,
-    "headerSizeX": 150,
-    "headerSizeY": 30,
-    "headerX": 50,
-    "headerY": 5,
-    "textStart": 40,
-    "textX": 125,
-    "sliderStartDriver": 200,
-    "textStartDriver": 180,
-    "sliderStartVehicleY": 360,
-    "sliderTextX": 125,
-    "startTextY": 340
+    "simElementsMenu": {
+        "menuSizeY": 135,
+        "menuY": 230,
+        "sliderDiffY": 40,
+        "sliderStart": 60,
+        "sliderX": 25,
+        "headerSizeX": 150,
+        "headerSizeY": 30,
+        "headerX": 50,
+        "headerY": 5,
+        "textStart": 40,
+        "textX": 125,
+        "sliderStartDriver": 200,
+        "textStartDriver": 180,
+        "sliderStartVehicleY": 360,
+        "sliderTextX": 125,
+        "startTextY": 340
 
-    
 
-  }
+
+    },
+
+    "simDriver": {      
+        "reactionTimeMin": 0,
+        "reactionTimeMax": 30,
+        "followIntervalMin": 0,
+        "followIntervalMax": 100,
+        "speedingMin": -50,
+        "speedingMax": 100,
+        "ruleBreakingMin": 0,
+        "ruleBreakingMax": 100,
+        "occurenceMin": 0,
+        "occurenceMax": 100
+    },
+
+    "simVehicle": {
+        "topSpeedMin": 30,
+        "topSpeedMax": 300,
+        "occurenceMin": 0,
+        "occurenceMax": 100,
+        "horsepwrMin": 40,
+        "horsepwrMax": 1500,
+        "lengthMin": 3,
+        "lengthMax": 12,
+        "weightMin": 1000,
+        "weightMax": 40000,
+        "surfaceMin": 1,
+        "surfaceMax": 20,
+        "cwMin": 0,
+        "cwMax": 1
+    },
+
+    "simDataMenu": {
+        "timeLabelX": 5,
+        "timeLabelY": 0,
+        "timeLabelSizeX": 148,
+        "timeLabelSizeY": 30,
+        "timeX": 160,
+        "timeY": 0,
+        "timeSizeX": 90,
+        "timeSizeY": 30
+    }
+
 }

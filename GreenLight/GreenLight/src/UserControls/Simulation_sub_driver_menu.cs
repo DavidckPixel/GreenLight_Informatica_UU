@@ -40,13 +40,14 @@ namespace GreenLight
             //----------------------------------------------
 
             List<string> _temp = VehicleController.getStringVehicleStats();
+            Dictionary<string, int> DriverMenu = User_Controls.Config.simDriver;
 
             Selection_box Selection_box = new Selection_box(Form, Dosis_font_family, _temp);
-            if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(13, 35);
-            else Selection_box.Location = new Point(3, 35);
+            if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxMaxX"], User_Controls.Config.standardSubMenu["selectionBoxMaxY"]);
+            else Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxX"], User_Controls.Config.standardSubMenu["selectionBoxY"]);
             this.Controls.Add(Selection_box);
 
-            Slider Reaction_time = new Slider(new Point(_sliderX, _start + _diff * 4), 0, 30);
+            Slider Reaction_time = new Slider(new Point(_sliderX, _start + _diff * 4), DriverMenu["reactionTimeMin"], DriverMenu["reactionTimeMax"]);
             this.Controls.Add(Reaction_time);
             SliderText Reaction_time_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff * 4), "Reaction time:");
             this.Controls.Add(Reaction_time_label);
@@ -54,7 +55,7 @@ namespace GreenLight
             this.Controls.Add(Reaction_time_Value);
             Reaction_time.ValueChanged += (object o, EventArgs EA) => { Reaction_time_Value.Text = Reaction_time.Value.ToString() + " s"; };
 
-            Slider Follow_interval = new Slider(new Point(_sliderX, _start + _diff * 3), 0, 100);
+            Slider Follow_interval = new Slider(new Point(_sliderX, _start + _diff * 3), DriverMenu["followIntervalMin"], DriverMenu["followIntervalMax"]);
             this.Controls.Add(Follow_interval);
             SliderText Follow_interval_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff * 3), "Follow interval:");
             this.Controls.Add(Follow_interval_label);
@@ -62,7 +63,7 @@ namespace GreenLight
             this.Controls.Add(Follow_interval_Value);
             Follow_interval.ValueChanged += (object o, EventArgs EA) => { Follow_interval_Value.Text = Follow_interval.Value.ToString() + " s"; };
 
-            Slider Speeding = new Slider(new Point(_sliderX, _start + _diff * 2), -50, 100);
+            Slider Speeding = new Slider(new Point(_sliderX, _start + _diff * 2), DriverMenu["speedingMin"], DriverMenu["speedingMax"]);
             this.Controls.Add(Speeding);
             SliderText Speeding_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff * 2), "Speeding:");
             this.Controls.Add(Speeding_label);
@@ -70,7 +71,7 @@ namespace GreenLight
             this.Controls.Add(Speeding_Value);
             Speeding.ValueChanged += (object o, EventArgs EA) => { Speeding_Value.Text = Speeding.Value.ToString() + " km/h"; };
 
-            Slider Rulebreaking = new Slider(new Point(_sliderX, _start + _diff), 0, 100);
+            Slider Rulebreaking = new Slider(new Point(_sliderX, _start + _diff), DriverMenu["ruleBreakingMin"], DriverMenu["ruleBreakingMax"]);
             this.Controls.Add(Rulebreaking);
             SliderText Rulebreaking_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff), "Rulebreaking:");
             this.Controls.Add(Rulebreaking_label);
@@ -78,7 +79,7 @@ namespace GreenLight
             this.Controls.Add(Rulebreaking_Value);
             Rulebreaking.ValueChanged += (object o, EventArgs EA) => { Rulebreaking_Value.Text = Rulebreaking.Value.ToString() + " %"; };
 
-            Slider Occurunce = new Slider(new Point(_sliderX, _start), 0, 100);
+            Slider Occurunce = new Slider(new Point(_sliderX, _start), DriverMenu["occurenceMin"], DriverMenu["occurenceMax"]);
             this.Controls.Add(Occurunce);
             SliderText Occurunce_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart), "Occurunce:");
             this.Controls.Add(Occurunce_label);

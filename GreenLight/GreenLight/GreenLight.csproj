@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Selection_box.cs">
     </Compile>
+    <Compile Include="src\Driver\DriverStats.cs" />
     <Compile Include="src\UserControls\Simulation_data_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -195,6 +196,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="src\Driver\DriverType.json" />
     <None Include="src\Grid\GridConfig.json" />
     <None Include="src\Logs\LogConfig.json" />
     <None Include="src\UserControls\UserControlsConfig.json" />
