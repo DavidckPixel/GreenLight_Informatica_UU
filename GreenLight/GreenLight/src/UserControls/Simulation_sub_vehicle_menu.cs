@@ -41,23 +41,42 @@ namespace GreenLight
             int _textY = menu["startTextY"];
 
             List<string> _temp = VehicleController.getStringVehicleStats();
+            
 
             Selection_box = new Selection_box(Form, Dosis_font_family, _temp);
-            if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(13, 35);
-            else Selection_box.Location = new Point(3, 35);
+            if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxMaxX"], User_Controls.Config.standardSubMenu["selectionBoxMaxY"]);
+            else Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxX"], User_Controls.Config.standardSubMenu["selectionBoxY"]);
 
             this.Controls.Add(Selection_box);
 
+            Dictionary<string, int> vehiclemenu = User_Controls.Config.simVehicle;
 
-            Slider Max_speed = new Slider(new Point(_sliderX, _startY), 30, 300);
+
+            Slider Cw = new Slider(new Point(_sliderX, _startY + 2 * _diffY), vehiclemenu["surfaceMin"], vehiclemenu["surfaceMax"]);
+            this.Controls.Add(Cw);
+            SliderText Cw_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY + 2 * _diffY), "Drag Co:");
+            this.Controls.Add(Cw_label);
+            SliderText Cw_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY + 2 * _diffY), Cw.Value.ToString() + " ");
+            this.Controls.Add(Cw_Value);
+            Cw.ValueChanged += (object o, EventArgs EA) => { Cw_Value.Text = Cw.Value.ToString() + " "; };
+
+            Slider Surface = new Slider(new Point(_sliderX, _startY + _diffY), vehiclemenu["surfaceMin"], vehiclemenu["surfaceMax"]);
+            this.Controls.Add(Surface);
+            SliderText Surface_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY + 1 * _diffY), "Frontal Surface:");
+            this.Controls.Add(Surface_label);
+            SliderText Surface_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY + 1* _diffY), Surface.Value.ToString() + " m^2");
+            this.Controls.Add(Surface_Value);
+            Surface.ValueChanged += (object o, EventArgs EA) => { Surface_Value.Text = Surface.Value.ToString() + " m^2"; };
+
+            Slider Max_speed = new Slider(new Point(_sliderX, _startY), vehiclemenu["topSpeedMin"], vehiclemenu["topSpeedMax"]);
             this.Controls.Add(Max_speed);
-            SliderText Max_speed_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY), "Max speed:");
+            SliderText Max_speed_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY), "Topspeed:");
             this.Controls.Add(Max_speed_label);
             SliderText Max_speed_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY), Max_speed.Value.ToString() + " km/h");
             this.Controls.Add(Max_speed_Value);
             Max_speed.ValueChanged += (object o, EventArgs EA) => { Max_speed_Value.Text = Max_speed.Value.ToString() + " km/h"; };
 
-            Slider Length = new Slider(new Point(_sliderX, _startY - _diffY), 3, 12);
+            Slider Length = new Slider(new Point(_sliderX, _startY - _diffY), vehiclemenu["lengthMin"], vehiclemenu["lengthMax"]);
             this.Controls.Add(Length);
             SliderText Length_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY - 1 * _diffY), "Length:");
             this.Controls.Add(Length_label);
@@ -65,15 +84,15 @@ namespace GreenLight
             this.Controls.Add(Length_Value);
             Length.ValueChanged += (object o, EventArgs EA) => { Length_Value.Text = Length.Value.ToString() + " m"; };
 
-            Slider Acceleration = new Slider(new Point(_sliderX, _startY - 2* _diffY), 2, 5);
-            this.Controls.Add(Acceleration);
-            SliderText Acceleration_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY - 2 * _diffY), "Acceleration:");
-            this.Controls.Add(Acceleration_label);
-            SliderText Acceleration_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY - 2 * _diffY), Acceleration.Value.ToString() + " m/s^2");
-            this.Controls.Add(Acceleration_Value);
-            Acceleration.ValueChanged += (object o, EventArgs EA) => { Acceleration_Value.Text = Acceleration.Value.ToString() + " m/s^2"; };
+            Slider HorsePower = new Slider(new Point(_sliderX, _startY - 2* _diffY), vehiclemenu["horsepwrMin"], vehiclemenu["horsepwrMax"]);
+            this.Controls.Add(HorsePower);
+            SliderText HorsePower_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY - 2 * _diffY), "Horsepower:");
+            this.Controls.Add(HorsePower_label);
+            SliderText HorsePower_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY - 2 * _diffY), HorsePower.Value.ToString() + " hp");
+            this.Controls.Add(HorsePower_Value);
+            HorsePower.ValueChanged += (object o, EventArgs EA) => { HorsePower_Value.Text = HorsePower.Value.ToString() + " hp"; };
 
-            Slider Weight = new Slider(new Point(_sliderX, _startY - 3 * _diffY), 0, 40000);
+            Slider Weight = new Slider(new Point(_sliderX, _startY - 3 * _diffY), vehiclemenu["weightMin"], vehiclemenu["weightMax"]);
             this.Controls.Add(Weight);
             SliderText Weight_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY - 3 * _diffY), "Weight:");
             this.Controls.Add(Weight_label);
@@ -81,7 +100,7 @@ namespace GreenLight
             this.Controls.Add(Weight_Value);
             Weight.ValueChanged += (object o, EventArgs EA) => { Weight_Value.Text = Weight.Value.ToString() + " kg"; };
 
-            Slider Occurunce = new Slider(new Point(_sliderX, _startY - 4 * _diffY), 0, 100);
+            Slider Occurunce = new Slider(new Point(_sliderX, _startY - 4 * _diffY), vehiclemenu["occurenceMin"], vehiclemenu["occurenceMax"]);
             this.Controls.Add(Occurunce);
             SliderText Occurunce_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY - 4 * _diffY), "Occurunce:");
             this.Controls.Add(Occurunce_label);

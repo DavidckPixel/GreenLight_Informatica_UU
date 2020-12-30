@@ -74,11 +74,13 @@ namespace GreenLight
 
         private void Initialize()
         {
+            Dictionary<string, int> menu = User_Controls.Config.simDataMenu;
+
             Label Time_label = new Label();
             Time_label.Text = "Simulation Time:";
             Time_label.ForeColor = Color.White;
-            Time_label.Location = new Point(5, 0);
-            Time_label.Size = new Size(148, 30);
+            Time_label.Location = new Point(menu["timeLabelX"], menu["timeLabelY"]);
+            Time_label.Size = new Size(menu["timeLabelSizeX"], menu["timeLabelSizeY"]);
             Time_label.Font = new Font(Dosis_font_family, 15, FontStyle.Bold);
             this.Controls.Add(Time_label);
 
@@ -86,8 +88,8 @@ namespace GreenLight
             time.Text = "0:0:0";
             time.ForeColor = Color.White;
             time.Font = new Font(Dosis_font_family, 15, FontStyle.Bold);
-            time.Location = new Point(160, 0);
-            time.Size = new Size(90, 30);
+            time.Location = new Point(menu["timeX"], menu["timeY"]);
+            time.Size = new Size(menu["timeSizeX"], menu["timeSizeY"]);
             this.Controls.Add(time);
         }
     }

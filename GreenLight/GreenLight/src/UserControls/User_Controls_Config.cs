@@ -25,8 +25,18 @@ namespace GreenLight
 
         public Dictionary<string, int> simSubMenu; //done
 
-        public Dictionary<string, int> buildElementsMenu; //Laura bezig
+        public Dictionary<string, int> buildElementsMenu; //done
 
-        public Dictionary<string, int> simElementsMenu;
+        public Dictionary<string, int> simElementsMenu; //done
+
+        public Dictionary<string, int> simDriver; //Daan bezig
+
+        public Dictionary<string, int> simVehicle; //LauraBezig
+
+        public Dictionary<string, int> simDataMenu; //done
+       
+
+
+
     }
 }

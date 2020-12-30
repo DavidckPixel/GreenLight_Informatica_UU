@@ -46,9 +46,9 @@ namespace GreenLight
         }*/
         private void createDriver()
         {
-            Vehicle v = new Vehicle(new VehicleStats("Auto", 1353, 4.77f, 100, 4223, 2, 2.65f), 10, 10);            
+            /*Vehicle v = new Vehicle(new VehicleStats("Auto", 1353, 4.77f, 100, 4223, 2, 2.65f), 10, 10);            
             AI driver = new AI(v, 250, 2, 0, 0);
-            driverList.Add(driver);
+            driverList.Add(driver);*/
 
             /*for (int aantal = 0; simulate && aantal < 10; aantal++)
             {
