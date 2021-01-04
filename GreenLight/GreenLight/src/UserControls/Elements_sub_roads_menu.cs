@@ -40,10 +40,16 @@ namespace GreenLight
             int _ButtonCurve = menu["buttonCurve"];
 
             CurvedButtons Hand = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Hand_Button.png", this.BackColor);
-            Hand.Click += (object o, EventArgs EA) => { };
+            Hand.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadType = "X"; };
             this.Controls.Add(Hand);
-                        
-            
+
+            CurvedButtons Diagonal_Road = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Road_Button.png", this.BackColor);
+            Diagonal_Road.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadType = "Diagonal"; };
+            this.Controls.Add(Diagonal_Road);
+
+            CurvedButtons Curved_Road = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
+            Curved_Road.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadType = "Curved"; };
+            this.Controls.Add(Curved_Road);
         }
     }
 }

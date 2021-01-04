@@ -33,10 +33,9 @@ namespace GreenLight
             Verticallane = new Bitmap(Properties.Resources.Road_Verticaal);
         }
 
-
         public Pen getPen(int _side)
         {
-            Pen p = new Pen(Color.White, 3);
+            Pen p = new Pen(Color.FromArgb(248,185,0), 3);
 
             if (thisLane <= roadLanes - 2)
             {
@@ -45,12 +44,16 @@ namespace GreenLight
             else if (roadLanes == 1)
             {
                 p.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+                p.Width = 7;
+                p.Color = Color.White;
             }
             else if (thisLane == roadLanes - 1)
             {
                 if (_side == 1)
                 {
                     p.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+                    p.Width = 7;
+                    p.Color = Color.White;
                 }
                 else
                 {
@@ -66,19 +69,72 @@ namespace GreenLight
                 else
                 {
                     p.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+                    p.Width = 7;
+                    p.Color = Color.White;
                 }
             }
             return p;
         }
+
         public void Draw(Graphics g)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            Pen p = new Pen(Color.Gray, 40);
-            int drivingLaneDistance = 40;
+            Pen p = new Pen(Color.FromArgb(21,21,21), 40);
+            int drivingLaneDistance = 40; 
             double slp, slpPer, oneX, amountX;
+            int startAngle = 0, sweepAngle = 90;
+            Rectangle rect = new Rectangle();
+            Size size;
+            Rectangle outer, inner;
+            int side1 = 0, side2 = 0;
 
             if (dir.Length > 1) //CurvedRoad
             {
+                size = new Size(Math.Abs(points[points.Count - 1].cord.X - points[0].cord.X) * 2, Math.Abs(points[points.Count - 1].cord.Y - points[0].cord.Y) * 2);
+                switch (dir)
+                {
+                    case "SE":
+                        {
+                            startAngle = 180;
+                            rect = new Rectangle(new Point(Math.Min(points[0].cord.X, points[points.Count - 1].cord.X), Math.Min(points[0].cord.Y, points[points.Count - 1].cord.Y)), size);
+                            side1 = 2;
+                            side2 = 1;
+                        }
+                        break;
+                    case "SW":
+                        {
+                            startAngle = 270;
+                            rect = new Rectangle(new Point(Math.Max(points[0].cord.X, points[points.Count - 1].cord.X) - size.Width, Math.Min(points[0].cord.Y, points[points.Count - 1].cord.Y)), size);
+                            side1 = 1;
+                            side2 = 2;
+                        }
+                        break;
+                    case "NW":
+                        {
+                            startAngle = 0;
+                            rect = new Rectangle(new Point(Math.Max(points[0].cord.X, points[points.Count - 1].cord.X) - size.Width, Math.Max(points[0].cord.Y, points[points.Count - 1].cord.Y) - size.Height), size);
+                            side1 = 1;
+                            side2 = 2;
+                        }
+                        break;
+                    case "NE":
+                        {
+                            startAngle = 90;
+                            rect = new Rectangle(new Point(Math.Min(points[0].cord.X, points[points.Count - 1].cord.X), Math.Max(points[0].cord.Y, points[points.Count - 1].cord.Y) - size.Height), size);
+                            side1 = 2;
+                            side2 = 1;
+                        }
+                        break;
+                }
+                Console.WriteLine(dir);
+                g.DrawArc(p, rect, startAngle, sweepAngle);
+
+                
+                outer = new Rectangle(new Point(rect.Location.X - drivingLaneDistance / 2, rect.Location.Y - drivingLaneDistance / 2), new Size(rect.Width + drivingLaneDistance, rect.Height + drivingLaneDistance));
+                inner = new Rectangle(new Point(rect.Location.X + drivingLaneDistance / 2, rect.Location.Y + drivingLaneDistance / 2), new Size(rect.Width - drivingLaneDistance, rect.Height - drivingLaneDistance));
+                
+                g.DrawArc(getPen(side1), outer, startAngle, sweepAngle);
+                g.DrawArc(getPen(side2), inner, startAngle, sweepAngle);
 
             }
             else
@@ -123,35 +179,6 @@ namespace GreenLight
                     }
                 }
             }
-
-
-            Point[] _pointsarray = new Point[points.Count];
-            int t = 0;
-            foreach (LanePoints x in points)
-            {
-                _pointsarray[t] = x.cord;
-                t++;
-            }
-
-            //g.DrawArc(p, _pointtemp.X, _pointtemp.Y - 20, Math.Abs(_pointtemp.X - x.cord.X), 40, 0, x.degree);
-            //g.DrawCurve(p, _pointsarray);
-
-            try
-            {
-                Point _pointtemp = points[0].cord;
-
-                foreach (LanePoints x in points)
-                {
-                    //g.DrawRectangle(Pens.Black, _pointtemp.X, _pointtemp.Y - 20, Math.Abs(_pointtemp.X - x.cord.X), 40);
-                    //   g.DrawImage(Lane, _pointtemp.X, _pointtemp.Y - 20, Math.Abs(_pointtemp.X - x.cord.X), 40);
-                    //  g.FillEllipse(Brushes.Gray, _pointtemp.X - 20, _pointtemp.Y - 20, 40, 40);
-                    //g.DrawLine(Pens.Red, _pointtemp, x.cord);
-                    // g.FillEllipse(Brushes.Gray, _pointtemp.X -20, _pointtemp.Y - 20, 40, 40);
-                    // g.DrawRectangle(Pens.Red, _pointtemp.X, _pointtemp.Y, 1, 1);
-                    _pointtemp = x.cord;
-                }
-            }
-            catch (Exception e) { }
         }
 
         public static Bitmap RotateImage(Bitmap b, float angle)
