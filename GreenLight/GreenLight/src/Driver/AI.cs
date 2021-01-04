@@ -21,6 +21,9 @@ namespace GreenLight
         int speedRelativeToLimit;
         float ruleBreakingChance;
         int speedlimit = 28; //tijdelijk
+
+        //Hoe the f** gaan we dit implementeren?
+        public int prioritylevel = 2; //rijdt niet op yieldweg maar ook niet op priority
         
         Thread moveVehicle;
         public int targetspeed;

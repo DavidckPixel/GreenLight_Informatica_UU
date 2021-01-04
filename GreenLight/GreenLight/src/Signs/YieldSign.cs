@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
-    class YieldSign
+    public class YieldSign : AbstractSign
     {
+        int prioritylevel; 
+        
+        public YieldSign()
+        {
+            this.prioritylevel = 1;
+        }
+            
+        
+        public override void Read(AI _ai)
+        {
+            _ai.prioritylevel = prioritylevel;
+        }
     }
 }

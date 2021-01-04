@@ -13,6 +13,11 @@ namespace GreenLight
         public List<AbstractSign> Signs = new List<AbstractSign>();
         public SpeedSignController speedSign;
         public StopSignController stopSign;
+        public YieldSignController yieldSignC;
+        public PrioritySignController prioritySignC;
+
+        public bool yieldSign = false;
+        public bool prioritySign = false;
 
         Form main;
 
@@ -27,11 +32,45 @@ namespace GreenLight
             this.stopSign = new StopSignController(_main, this);
 
             this.stopSign.initSettingScreen();
+
+            this.stopSign = new StopSignController(_main, this);
+
+            this.stopSign.initSettingScreen();
+
+            this.prioritySignC = new PrioritySignController(_main, this);
+            this.yieldSignC = new YieldSignController(_main, this);
+
+            this.prioritySignC.initSettingScreen();
+            this.yieldSignC.initSettingScreen();
         }
 
         public override void Initialize()
         {
 
+        }
+
+        public void placePriorityLevelSign()
+        {
+            if (yieldSign == true && prioritySign == false)
+            {
+                yieldSignC.placeSign();
+            }
+            else if (yieldSign == false && prioritySign == true)
+            {
+                prioritySignC.placeSign();
+            }
+        }
+
+        public void deletePriorityLevelSign()
+        {
+            if (yieldSign == true && prioritySign == false)
+            {
+                yieldSignC.deleteSign();
+            }
+            else if (yieldSign == false && prioritySign == true)
+            {
+                prioritySignC.deleteSign();
+            }
         }
     }
 }

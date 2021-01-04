@@ -118,10 +118,14 @@ namespace GreenLight
                     General_Form.Main.BuildScreen.builder.signController.speedSign.newSign();
                     break;
                 case "yieldSign":
-                    
+                    General_Form.Main.BuildScreen.builder.signController.yieldSign = true;
+                    General_Form.Main.BuildScreen.builder.signController.prioritySign = false;
+                    General_Form.Main.BuildScreen.builder.signController.yieldSignC.newSign();
                     break;
                 case "prioritySign":
-                    
+                    General_Form.Main.BuildScreen.builder.signController.yieldSign = false;
+                    General_Form.Main.BuildScreen.builder.signController.prioritySign = true;
+                    General_Form.Main.BuildScreen.builder.signController.prioritySignC.newSign();
                     break;
                 case "stopSign":
                     Point _begin = _selectedRoad.getPoint1();

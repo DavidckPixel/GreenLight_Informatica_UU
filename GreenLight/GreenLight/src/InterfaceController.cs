@@ -140,6 +140,12 @@ namespace GreenLight
                 case "Cancel":
                     General_Form.Main.BuildScreen.builder.signController.stopSign.deleteSign();
                     break;
+                case "Place Sign":
+                    General_Form.Main.BuildScreen.builder.signController.placePriorityLevelSign();
+                    break;
+                case "Don't Place":
+                    General_Form.Main.BuildScreen.builder.signController.deletePriorityLevelSign();
+                    break;
 
 
             }
