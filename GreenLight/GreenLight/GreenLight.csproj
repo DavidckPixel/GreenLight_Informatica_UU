@@ -53,10 +53,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Selection_box.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\Driver\DriverStats.cs" />
     <Compile Include="src\Signs\AbstractSignController.cs" />
     <Compile Include="src\Signs\AbstractSign.cs" />
+    <Compile Include="src\Signs\StopSign.cs" />
+    <Compile Include="src\Signs\StopSignController.cs" />
     <Compile Include="src\Signs\MainSignController.cs" />
     <Compile Include="src\Signs\SpeedSign.cs" />
     <Compile Include="src\Signs\SpeedSignController.cs" />
@@ -186,11 +189,6 @@
     <EmbeddedResource Include="src\UserControls\Simulation_main_menu.resx">
       <DependentUpon>Simulation_main_menu.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Logs\26-11-2020_13-33-02" />
-    <None Include="Logs\26-11-2020_13-34-01" />
-    <None Include="Logs\26-11-2020_13-37-28" />
-    <None Include="Logs\26-11-2020_14-50-09" />
-    <None Include="Logs\27-11-2020_11-51-53" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -213,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fonts\" />
+    <Folder Include="Logs\" />
     <Folder Include="User Interface Recources\" />
   </ItemGroup>
   <ItemGroup>

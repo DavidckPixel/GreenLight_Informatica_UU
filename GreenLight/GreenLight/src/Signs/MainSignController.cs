@@ -12,6 +12,7 @@ namespace GreenLight
 
         public List<AbstractSign> Signs = new List<AbstractSign>();
         public SpeedSignController speedSign;
+        //public StopSignController stopSign;
 
         Form main;
 
