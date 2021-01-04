@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace GreenLight
 {
@@ -15,9 +16,12 @@ namespace GreenLight
         //Nothing really of interest here yet, Come back later :)
 
         public List<AbstractRoad> roads = new List<AbstractRoad>();
+        public PictureBox Screen;
 
-        public RoadController()
+        public RoadController(PictureBox _screen)
         {
+            this.Screen = _screen;
+            this.Screen.MouseClick += RoadClick;
         }
 
         public void BuildStraightRoad(Point _point1, Point _point2)
@@ -94,6 +98,35 @@ namespace GreenLight
         public override void Initialize()
         {
 
+        }
+
+        public void RoadClick(object o, MouseEventArgs mea)
+        {
+            AbstractRoad _selectedRoad = roads.Find(x => x.Hitbox.Contains(mea.Location));
+            if (_selectedRoad == null)
+            {
+                return;
+            }
+
+            Console.WriteLine(_selectedRoad.Cords.ToString());
+
+            switch (General_Form.Main.BuildScreen.builder.signType)
+            {
+                case "X":
+                    break;                
+                case "speedSign":
+                    General_Form.Main.BuildScreen.builder.signController.speedSign.newSign();
+                    break;
+                case "yieldSign":
+                    
+                    break;
+                case "prioritySign":
+                    
+                    break;
+                case "stopSign":
+                    
+                    break;
+            }
         }
     }
 }

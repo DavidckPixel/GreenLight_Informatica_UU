@@ -25,7 +25,7 @@ namespace GreenLight
            
             
             this.Screen.Paint += DrawPictureBox;
-            builder = new BuilderController(this.Screen);
+            builder = new BuilderController(this.Screen, _tempform);
 
             _tempform.Controls.Add(this.Screen);
 

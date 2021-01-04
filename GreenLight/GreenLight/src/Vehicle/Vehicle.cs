@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace GreenLight
 {
-    class Vehicle : ScreenObject     
+    public class Vehicle : ScreenObject     
     {
 
         //This is the vehicle class, which creates a car.
@@ -51,7 +51,7 @@ namespace GreenLight
         public int listcounter = 0;
 
 
-        public Vehicle(VehicleStats _stat, int x, int y) : base(new Point(x,y), new Size(20,20))
+        public Vehicle(VehicleStats _stat, int x, int y) : base(new Point(x,y), new Point(x+20,y+20))
         {
             this.weight = _stat.Weight;
             this.length = _stat.Length;

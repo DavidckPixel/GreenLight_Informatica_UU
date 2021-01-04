@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
-    class VehicleStats
+    public class VehicleStats
     {
         public string Name;
         public int Weight;

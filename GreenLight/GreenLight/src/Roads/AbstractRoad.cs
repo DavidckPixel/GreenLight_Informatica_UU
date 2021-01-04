@@ -25,7 +25,7 @@ namespace GreenLight
         public List<DrivingLane> Drivinglanes=  new List<DrivingLane>();
 
         //Basic Road Constructor, every road calls this constructor during initialzation
-        public AbstractRoad(Point _point1, Point _point2, int _lanes) : base(_point1, new Size(Math.Abs(_point1.X - _point2.X), Math.Abs(_point1.Y - _point2.Y)))
+        public AbstractRoad(Point _point1, Point _point2, int _lanes) : base(_point1, _point2)
         {
             this.point1 = _point1;
             this.point2 = _point2;
@@ -58,6 +58,10 @@ namespace GreenLight
             {
                 _lane.Draw(g);
             }
+
+            Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.Yellow));
+
+            g.FillRectangle(Notsolid, this.Hitbox);
         }
 
         public Point getPoint1() { return point1; }

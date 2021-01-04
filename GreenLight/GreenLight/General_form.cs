@@ -26,6 +26,7 @@ namespace GreenLight
 
         public General_Form()
         {
+            this.IsMdiContainer = true;
             Main = new MainScreenController(this);
             Main.Initialize();
         }

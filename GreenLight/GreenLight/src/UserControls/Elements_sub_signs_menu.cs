@@ -42,23 +42,23 @@ namespace GreenLight
             //-----------------------------------------
 
             CurvedButtons Hand = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Hand_Button.png", this.BackColor);
-            Hand.Click += (object o, EventArgs EA) => { };
+            Hand.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.signType = "X"; };
             this.Controls.Add(Hand);
 
             CurvedButtons Speed_sign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Speed_Sign_Button.png", this.BackColor);
-            Speed_sign.Click += (object o, EventArgs EA) => { };
+            Speed_sign.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.signType = "speedSign"; };
             this.Controls.Add(Speed_sign);
 
             CurvedButtons Yield_sign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Yield_Sign_Button.png", this.BackColor);
-            Yield_sign.Click += (object o, EventArgs EA) => { };
+            Yield_sign.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.signType = "yieldSign"; };
             this.Controls.Add(Yield_sign);
 
             CurvedButtons Priority_road_sign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/Priority_Road_Sign_Button.png", this.BackColor);
-            Priority_road_sign.Click += (object o, EventArgs EA) => { };
+            Priority_road_sign.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.signType = "prioritySign"; };
             this.Controls.Add(Priority_road_sign);
 
             CurvedButtons Stop_sign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/Stop_Sign_Button.png", this.BackColor);
-            Stop_sign.Click += (object o, EventArgs EA) => { };
+            Stop_sign.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.signType = "stopSign"; };
             this.Controls.Add(Stop_sign);
         }
     }

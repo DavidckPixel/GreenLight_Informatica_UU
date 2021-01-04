@@ -123,8 +123,13 @@ namespace GreenLight
                 case "Home":
                     General_Form.Main.SwitchControllers(General_Form.Main.MenuController);
                     break;
-
                 case "Save":
+                    break;
+                case "Delete":
+                    General_Form.Main.BuildScreen.builder.signController.speedSign.DeleteSign();
+                    break;
+                case "Done":
+                    General_Form.Main.BuildScreen.builder.signController.speedSign.saveButton();
                     break;
             }
         }
