@@ -61,6 +61,8 @@ namespace GreenLight
             this.Active = _controller;
             this.Active.Activate();
             this.form.Invalidate();
+
+            Console.WriteLine("Switched and invalidated!");
         }
 
         public override void Activate()

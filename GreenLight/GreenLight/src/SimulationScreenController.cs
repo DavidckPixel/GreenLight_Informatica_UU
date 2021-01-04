@@ -16,9 +16,9 @@ namespace GreenLight
         public SimulationScreenController(Form _tempform)
         {
             this.Screen = new PictureBox();
-            this.Screen.Width = 700;
-            this.Screen.Height = 300;
-            this.Screen.Location = new Point(100, 100);
+            this.Screen.Width = _tempform.Width - 250;
+            this.Screen.Height = _tempform.Height;
+            this.Screen.Location = new Point(0, 0);
             this.Screen.BackColor = Color.FromArgb(196, 196, 198);
             this.Screen.Paint += DrawPictureBox;
 

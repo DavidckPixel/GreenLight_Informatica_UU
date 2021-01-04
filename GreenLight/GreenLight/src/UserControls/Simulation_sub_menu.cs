@@ -120,7 +120,7 @@ namespace GreenLight
                 "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Stop);
             Stop.Click += (object obj, EventArgs args) => {
-                General_Form.Main.UserInterface.Menu_to_build();
+                General_Form.Main.SwitchControllers(General_Form.Main.BuildScreen);
                 General_Form.Main.UserInterface.SimDataM.Reset_timer();
                 Pause.Hide();
                 Start.Show();
