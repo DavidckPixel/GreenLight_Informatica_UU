@@ -21,6 +21,8 @@ namespace GreenLight
 
         public SpeedSign selected;
 
+        PrivateFontCollection Font_collection = new PrivateFontCollection();
+
         public SpeedSignController(Form _main, MainSignController _signcontroller)
         {
             this.signController = _signcontroller;
@@ -53,8 +55,7 @@ namespace GreenLight
             Textbox1.Location = new Point(40, 150);
             this.settingScreen.Controls.Add(Textbox1);
 
-            //Waarschijnlijk beter om mee te geven aan initSettingScreen zoals in Build_sub_menu.Initialize
-            PrivateFontCollection Font_collection = new PrivateFontCollection();
+            //Waarschijnlijk beter om mee te geven aan initSettingScreen zoals in Build_sub_menu.Initialize            
             Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");
             FontFamily Dosis_font_family = Font_collection.Families[0];
 
