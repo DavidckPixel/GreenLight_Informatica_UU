@@ -96,7 +96,7 @@ namespace GreenLight
 
         private DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
-            int drivingLaneDistance = 40;
+            int drivingLaneDistance = 20;
             double slp, slpPer, oneX, amountX;
 
             if (_firstPoint.X != _secondPoint.X && _firstPoint.Y != _secondPoint.Y)

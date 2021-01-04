@@ -143,7 +143,7 @@ namespace GreenLight
 
         private DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
-            int drivingLaneDistance = 40;
+            int drivingLaneDistance = 20;
 
             Console.WriteLine("TEST: {0} -- {1}", _firstPoint, _secondPoint);
 

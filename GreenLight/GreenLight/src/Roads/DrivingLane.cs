@@ -79,8 +79,8 @@ namespace GreenLight
         public void Draw(Graphics g)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            Pen p = new Pen(Color.FromArgb(21,21,21), 40);
-            int drivingLaneDistance = 40; 
+            Pen p = new Pen(Color.FromArgb(21,21,21), 20);
+            int drivingLaneDistance = 20; 
             double slp, slpPer, oneX, amountX;
             int startAngle = 0, sweepAngle = 90;
             Rectangle rect = new Rectangle();

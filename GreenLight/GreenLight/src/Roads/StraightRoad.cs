@@ -105,7 +105,7 @@ namespace GreenLight
         private DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
             string _Direction = this.dir;
-            int drivingLaneDistance = 40; // Hardcoded nog aanpassen!!
+            int drivingLaneDistance = 20; // Hardcoded nog aanpassen!!
 
             if (_Direction == "E" || _Direction == "W")
             {
