@@ -22,6 +22,11 @@ namespace GreenLight
             _ai.needToBrake(x, y);
         }
 
+        public void editLocation(Point _location)
+        {
+            this.x = _location.X;
+            this.y = _location.Y;
+        }
         public Point getSignLocation()
         {
             return new Point(x, y);

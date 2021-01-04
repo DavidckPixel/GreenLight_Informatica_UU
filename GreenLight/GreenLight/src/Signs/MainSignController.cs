@@ -12,7 +12,7 @@ namespace GreenLight
 
         public List<AbstractSign> Signs = new List<AbstractSign>();
         public SpeedSignController speedSign;
-        //public StopSignController stopSign;
+        public StopSignController stopSign;
 
         Form main;
 
@@ -23,6 +23,10 @@ namespace GreenLight
             this.speedSign = new SpeedSignController(_main, this);
 
             this.speedSign.initSettingScreen();
+
+            this.stopSign = new StopSignController(_main, this);
+
+            this.stopSign.initSettingScreen();
         }
 
         public override void Initialize()

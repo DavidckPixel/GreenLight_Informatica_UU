@@ -124,6 +124,9 @@ namespace GreenLight
                     
                     break;
                 case "stopSign":
+                    Point _begin = _selectedRoad.getPoint1();
+                    Point _end = _selectedRoad.getPoint2();
+                    General_Form.Main.BuildScreen.builder.signController.stopSign.newSign(_begin, _end);
                     
                     break;
             }

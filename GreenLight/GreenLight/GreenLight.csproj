@@ -58,6 +58,10 @@
     <Compile Include="src\Driver\DriverStats.cs" />
     <Compile Include="src\Signs\AbstractSignController.cs" />
     <Compile Include="src\Signs\AbstractSign.cs" />
+    <Compile Include="src\Signs\PrioritySign.cs" />
+    <Compile Include="src\Signs\PrioritySignController.cs" />
+    <Compile Include="src\Signs\YieldSign.cs" />
+    <Compile Include="src\Signs\YieldSignController.cs" />
     <Compile Include="src\Signs\StopSign.cs" />
     <Compile Include="src\Signs\StopSignController.cs" />
     <Compile Include="src\Signs\MainSignController.cs" />
