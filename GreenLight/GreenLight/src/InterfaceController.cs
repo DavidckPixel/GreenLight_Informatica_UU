@@ -126,7 +126,7 @@ namespace GreenLight
                 case "Save":
                     break;
                 case "Delete":
-                    General_Form.Main.BuildScreen.builder.signController.speedSign.DeleteSign();
+                    General_Form.Main.BuildScreen.builder.signController.speedSign.deleteSign();
                     break;
                 case "Done":
                     General_Form.Main.BuildScreen.builder.signController.speedSign.saveButton();

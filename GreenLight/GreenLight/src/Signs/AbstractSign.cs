@@ -11,10 +11,11 @@ namespace GreenLight
 
         public AbstractSign()
         {
-            ID = General_Form.Main.BuildScreen.builder.signController.Signs.Count();
+            ID = General_Form.Main.BuildScreen.builder.signController.SignCount;
         }
 
         public abstract void Read(AI _ai);
         private int ID;
+        public AbstractSignController controller;
     }
 }

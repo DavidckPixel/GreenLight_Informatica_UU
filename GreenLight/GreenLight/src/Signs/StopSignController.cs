@@ -29,7 +29,7 @@ namespace GreenLight
             this.mainScreen = _main;
         }
 
-        public void initSettingScreen()
+        public override void initSettingScreen()
         {
             //Waarschijnlijk beter om mee te geven aan initSettingScreen zoals in Build_sub_menu.Initialize
             Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");
@@ -104,13 +104,13 @@ namespace GreenLight
             }
         }
 
-        private void errorMessage(string _error)
+        public void errorMessage(string _error)
         {
             this.errorMess.Text = _error;            
             this.settingScreen.Invalidate();
         }
 
-        public void openMenu()
+        public override void openMenu()
         {
             if (selected == null)
             {
@@ -133,26 +133,25 @@ namespace GreenLight
 
         }
 
-        public void onSignClick(AbstractSign _sign)
+        public override void onSignClick(AbstractSign _sign)
         {
             selected = (StopSign)_sign;
             openMenu();
         }
 
-        public void newSign(Point _start, Point _end)
+        public override AbstractSign newSign()
         {
-            StopSign _temp = new StopSign(_end.X, _end.Y);
+            StopSign _temp = new StopSign(this);
             this.signController.Signs.Add(_temp);
-            this.point1 = _start;
-            this.point2 = _end;
 
             onSignClick(_temp);
+
+            return _temp;
         }
 
-        public void deleteSign()
+        public override void deleteSign()
         {
-
-            this.signController.Signs.Remove(selected);
+            this.signController.deleteSign(selected);
             this.settingScreen.Hide();
         }
 

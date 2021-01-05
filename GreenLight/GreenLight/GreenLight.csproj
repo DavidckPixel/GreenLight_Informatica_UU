@@ -55,9 +55,13 @@
     <Compile Include="Selection_box.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="src\CurvedHitbox.cs" />
     <Compile Include="src\Driver\DriverStats.cs" />
+    <Compile Include="src\Hitbox.cs" />
+    <Compile Include="src\RectHitbox.cs" />
     <Compile Include="src\Signs\AbstractSignController.cs" />
     <Compile Include="src\Signs\AbstractSign.cs" />
+    <Compile Include="src\Signs\PlacedSign.cs" />
     <Compile Include="src\Signs\PrioritySign.cs" />
     <Compile Include="src\Signs\PrioritySignController.cs" />
     <Compile Include="src\Signs\YieldSign.cs" />

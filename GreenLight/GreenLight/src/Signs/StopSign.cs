@@ -11,10 +11,9 @@ namespace GreenLight
     {
         int x, y;
 
-        public StopSign(int _x, int _y)
+        public StopSign(AbstractSignController _controller)
         {
-            this.x = _x;
-            this.y = _y;
+            controller = _controller;
         }
 
         public override void Read(AI _ai)

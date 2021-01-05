@@ -9,9 +9,10 @@ namespace GreenLight
     public class PrioritySign : AbstractSign
     {
         int prioritylevel;
-        public PrioritySign()
+        public PrioritySign(AbstractSignController _controller)
         {
             this.prioritylevel = 3;
+            controller = _controller;
         }
         public override void Read(AI _ai)
         {

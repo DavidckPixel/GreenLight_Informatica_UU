@@ -10,12 +10,12 @@ namespace GreenLight
     {
         int prioritylevel; 
         
-        public YieldSign()
+        public YieldSign(AbstractSignController _controller)
         {
             this.prioritylevel = 1;
+            controller = _controller;
         }
             
-        
         public override void Read(AI _ai)
         {
             _ai.prioritylevel = prioritylevel;

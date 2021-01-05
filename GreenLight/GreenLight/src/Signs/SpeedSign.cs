@@ -10,9 +10,10 @@ namespace GreenLight
     {
         int speed;
 
-        public SpeedSign()
+        public SpeedSign(AbstractSignController _controller)
         {
             this.speed = 50; //BaseSPEED
+            controller = _controller;
         }
 
         public void editSpeed(int _speed)

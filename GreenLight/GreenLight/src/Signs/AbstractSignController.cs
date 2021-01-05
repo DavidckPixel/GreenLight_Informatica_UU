@@ -11,5 +11,11 @@ namespace GreenLight
     {
         protected Form mainScreen;
         protected Form settingScreen;
+
+        public abstract void onSignClick(AbstractSign _sign);
+        public abstract AbstractSign newSign();
+        public abstract void deleteSign();
+        public abstract void openMenu();
+        public abstract void initSettingScreen();
     }
 }

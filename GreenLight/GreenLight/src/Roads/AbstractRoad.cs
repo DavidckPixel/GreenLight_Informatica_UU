@@ -23,6 +23,7 @@ namespace GreenLight
 
         protected int lanes;
         public List<DrivingLane> Drivinglanes=  new List<DrivingLane>();
+        public List<PlacedSign> Signs = new List<PlacedSign>();
 
         //Basic Road Constructor, every road calls this constructor during initialzation
         public AbstractRoad(Point _point1, Point _point2, int _lanes) : base(_point1, _point2)
@@ -57,6 +58,10 @@ namespace GreenLight
             foreach(DrivingLane _lane in Drivinglanes)
             {
                 _lane.Draw(g);
+            }
+            foreach(PlacedSign _sign in Signs)
+            {
+                _sign.draw(g);
             }
 
             Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.Yellow));

@@ -29,7 +29,7 @@ namespace GreenLight
             this.mainScreen = _main;
         }
 
-        public void initSettingScreen()
+        public override void initSettingScreen()
         {
             this.settingScreen = new Form();
             //is.settingScreen.MdiParent = this.mainScreen;
@@ -103,7 +103,7 @@ namespace GreenLight
             this.settingScreen.Invalidate();
         }
 
-        public void openMenu()
+        public override void openMenu()
         {
             if (selected == null)
             {
@@ -125,24 +125,25 @@ namespace GreenLight
 
         }
 
-        public void onSignClick(AbstractSign _sign)
+        public override void onSignClick(AbstractSign _sign)
         {
             selected = (SpeedSign)_sign;
             openMenu();
         }
 
-        public void newSign()
+        public override AbstractSign newSign()
         {
-            SpeedSign _temp = new SpeedSign();
+            SpeedSign _temp = new SpeedSign(this);
             this.signController.Signs.Add(_temp);
 
             onSignClick(_temp);
+
+            return _temp;
         }
 
-        public void DeleteSign()
+        public override void deleteSign()
         {
-            
-            this.signController.Signs.Remove(selected);
+            this.signController.deleteSign(selected);
             this.settingScreen.Hide();
         }
     }
