@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HitBox_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HitBox_form.Designer.cs">
+      <DependentUpon>HitBox_form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Selection_box.cs">
       <SubType>Component</SubType>
     </Compile>

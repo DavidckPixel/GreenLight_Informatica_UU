@@ -86,24 +86,24 @@ namespace GreenLight
 
         public override bool Contains(Point _p)
         {
-            Console.WriteLine("{0}\n{1}\n{2}\n{3}", (_p.Y - bLeft) / rcLeft <= _p.X, (_p.Y - bRight) / rcRight >= _p.X, _p.X * rcTop + bTop <= _p.Y, _p.X * rcBottom + bBottom >= _p.Y);
+            //Console.WriteLine("{0}\n{1}\n{2}\n{3}", (_p.Y - bLeft) / rcLeft <= _p.X, (_p.Y - bRight) / rcRight >= _p.X, _p.X * rcTop + bTop <= _p.Y, _p.X * rcBottom + bBottom >= _p.Y);
 
             try
             {
                 if (rcLeft == 0 || rcRight == 0)
                 {
-                    Console.WriteLine("hier wel eens??");
+                    //Console.WriteLine("hier wel eens??");
                     if(_p.X > bRight && bLeft > _p.X && _p.Y > bTop && bBottom > _p.Y)
                     {
                         return true;
                     }
                 }
-                else if (rcTop == 0 || rcBottom == 0)
+                else if ((rcTop == 0 || rcBottom == 0) && (rcLeft == 1 || rcRight ==1))
                 {
                     //if (ditobject.Beginpunt.Y  >= p.Y && ditobject.Beginpunt.Y  <= p.Y && p.X >= ditobject.Beginpunt.X && p.X <= ditobject.Eindpunt.X)
                     if (bLeft <= _p.X && bRight >= _p.X && bTop <= _p.Y && bBottom >= _p.Y)
                     {
-                        Console.WriteLine("Kom je hier??");
+                        //Console.WriteLine("Kom je hier??");
                         return true;
                     }
                     

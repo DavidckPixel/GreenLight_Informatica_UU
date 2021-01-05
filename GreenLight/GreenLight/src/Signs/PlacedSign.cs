@@ -9,7 +9,7 @@ namespace GreenLight
 {
     public struct PlacedSign
     {
-        public Rectangle Hitbox;
+        public RectHitbox Hitbox;
         public Point Location;
         public string Direction;
         public AbstractSign Sign;
@@ -20,14 +20,13 @@ namespace GreenLight
             this.Direction = _direction;
             this.Sign = _sign;
 
-            this.Hitbox = new Rectangle(Location, new Size(1, 1));
-            this.Hitbox.Inflate(6, 6);
+            this.Hitbox = new RectHitbox(new Point(_location.X - 3, _location.Y - 3), new Point(_location.X + 3, _location.Y - 3), new Point(_location.X - 3, _location.Y + 3), new Point(_location.X + 3, _location.Y + 3));
         }
 
         public void draw(Graphics g)
         {
             Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.Red));
-            g.FillRectangle(Notsolid, this.Hitbox);
+            //g.FillRectangle(Notsolid, this.Hitbox);
         }
     }
 }

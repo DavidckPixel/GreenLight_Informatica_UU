@@ -1,6 +1,6 @@
 ﻿namespace GreenLight
 {
-    partial class Form1
+    partial class HitBox_form
     {
         /// <summary>
         /// Required designer variable.
@@ -37,4 +37,3 @@
         #endregion
     }
 }
-

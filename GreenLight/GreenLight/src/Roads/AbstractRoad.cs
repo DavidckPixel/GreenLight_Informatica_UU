@@ -25,6 +25,8 @@ namespace GreenLight
         public List<DrivingLane> Drivinglanes=  new List<DrivingLane>();
         public List<PlacedSign> Signs = new List<PlacedSign>();
 
+        public RectHitbox Hitbox2; //Word nog aangepast Jaj
+
         //Basic Road Constructor, every road calls this constructor during initialzation
         public AbstractRoad(Point _point1, Point _point2, int _lanes) : base(_point1, _point2)
         {
@@ -32,6 +34,8 @@ namespace GreenLight
             this.point2 = _point2;
             this.lanes = _lanes;
             this.Cords = _point1;
+
+
         }
 
         protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
