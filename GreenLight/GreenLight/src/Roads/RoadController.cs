@@ -111,6 +111,7 @@ namespace GreenLight
             AbstractRoad _selectedRoad = roads.Find(x => x.Hitbox2.Contains(mea.Location));
             if (_selectedRoad == null)
             {
+                Console.Write("HitBOX test");
                 return;
             }
 

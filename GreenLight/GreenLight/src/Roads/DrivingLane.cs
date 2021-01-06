@@ -129,12 +129,19 @@ namespace GreenLight
                 Console.WriteLine(dir);
                 g.DrawArc(p, rect, startAngle, sweepAngle);
 
+                try
+                {
+                    outer = new Rectangle(new Point(rect.Location.X - drivingLaneDistance / 2, rect.Location.Y - drivingLaneDistance / 2), new Size(rect.Width + drivingLaneDistance, rect.Height + drivingLaneDistance));
+                    inner = new Rectangle(new Point(rect.Location.X + drivingLaneDistance / 2, rect.Location.Y + drivingLaneDistance / 2), new Size(rect.Width - drivingLaneDistance, rect.Height - drivingLaneDistance));
+
+                    g.DrawArc(getPen(side1), outer, startAngle, sweepAngle);
+                    g.DrawArc(getPen(side2), inner, startAngle, sweepAngle);
+                }
+                catch (Exception)
+                {
+
+                }
                 
-                outer = new Rectangle(new Point(rect.Location.X - drivingLaneDistance / 2, rect.Location.Y - drivingLaneDistance / 2), new Size(rect.Width + drivingLaneDistance, rect.Height + drivingLaneDistance));
-                inner = new Rectangle(new Point(rect.Location.X + drivingLaneDistance / 2, rect.Location.Y + drivingLaneDistance / 2), new Size(rect.Width - drivingLaneDistance, rect.Height - drivingLaneDistance));
-                
-                g.DrawArc(getPen(side1), outer, startAngle, sweepAngle);
-                g.DrawArc(getPen(side2), inner, startAngle, sweepAngle);
 
             }
             else

@@ -23,7 +23,8 @@ namespace GreenLight
         {
             this.dir = _dir;
 
-            //Point[] _points = hitBoxPoints(_point1, _point2);
+            Point[] _points = hitBoxPoints(_point1, _point2);
+            this.Hitbox2 = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], dir);
 
             for (int x = 1; x <= lanes; x++)
             {
@@ -215,6 +216,76 @@ namespace GreenLight
 
                 return CalculateDrivingLane(_firstPoint, _secondPoint, t);
             }
-        
+
+        private Point[] hitBoxPoints(Point one, Point two)
+        {
+            Point _one, _two;
+            int _laneWidth = 40;
+            int _roadWidth = (_laneWidth * this.lanes) / 2;
+            Point[] _points = new Point[4];
+
+            if(dir == "NW" || dir == "NE")
+            {
+                if (one.X < two.X)
+                {
+                    _one = two;
+                    _two = one;
+                }
+                else
+                {
+                    _one = one;
+                    _two = two;
+                }
+
+                if(dir == "NW")
+                {
+                    _points[0] = new Point(_one.X + _roadWidth, _one.Y);
+                    _points[1] = new Point(_one.X - _roadWidth, _one.Y);
+                    _points[2] = new Point(_two.X, _two.Y + _roadWidth);
+                    _points[3] = new Point(_two.X, _two.Y - _roadWidth);
+                }
+                else
+                {
+                    _points[0] = new Point(_one.X, _one.Y + _roadWidth);
+                    _points[1] = new Point(_one.X, _one.Y - _roadWidth);
+                    _points[2] = new Point(_two.X + _roadWidth, _two.Y);
+                    _points[3] = new Point(_two.X - _roadWidth, _two.Y);
+                }
+            }
+            else
+            {
+                if (one.X < two.X)
+                {
+                    _one = one;
+                    _two = two;
+                }
+                else
+                {
+                    _one = two;
+                    _two = one;
+                }
+
+                if(dir == "SE")
+                {
+                    //
+                    _points[0] = new Point(_one.X - _roadWidth, _one.Y);
+                    _points[1] = new Point(_one.X + _roadWidth, _one.Y);
+                    _points[2] = new Point(_two.X, _two.Y - _roadWidth);
+                    _points[3] = new Point(_two.X, _two.Y + _roadWidth);
+
+                }
+                else
+                {
+                    //
+                    _points[0] = new Point(_one.X, _one.Y - _roadWidth);
+                    _points[1] = new Point(_one.X, _one.Y + _roadWidth);
+                    _points[2] = new Point(_two.X - _roadWidth, _two.Y);
+                    _points[3] = new Point(_two.X + _roadWidth, _two.Y);
+                }
+            }
+
+            return _points;
+        }
+
     }
 }

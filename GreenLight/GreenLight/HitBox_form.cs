@@ -14,7 +14,7 @@ namespace GreenLight
     {
 
         RectHitbox test1, test2, test3, test4, test5, test6,test7,test8,test9,test10, test11, test12, test13, test14;
-        CurvedHitbox curftest1, curftest2, curftest3, curftest4;
+        CurvedHitbox curftest1, curftest2, curftest3, curftest4, curftest5;
 
         List<testcord> Points1 = new List<testcord>();
         List<Hitbox> hitboxes = new List<Hitbox>();
@@ -89,17 +89,20 @@ namespace GreenLight
             */
 
 
-            curftest1 = new CurvedHitbox(new Point(100, 300), new Point(150, 300), new Point(300, 100), new Point(300, 150), "SE");
+            curftest1 = new CurvedHitbox(new Point(100, 300), new Point(150, 300), new Point(300, 100), new Point(300, 150), "NW");
             hitboxes.Add(curftest1);
 
-            curftest2 = new CurvedHitbox(new Point(300, 100), new Point(300, 150), new Point(500, 300), new Point(450, 300), "SW");
+            curftest2 = new CurvedHitbox(new Point(300, 100), new Point(300, 150), new Point(500, 300), new Point(450, 300), "NE");
             hitboxes.Add(curftest2);
 
-            curftest3 = new CurvedHitbox(new Point(500, 300), new Point(450, 300), new Point(300, 500), new Point(300, 450), "NW");
+            curftest3 = new CurvedHitbox(new Point(500, 300), new Point(450, 300), new Point(300, 500), new Point(300, 450), "SE");
             hitboxes.Add(curftest3);
 
-            curftest4 = new CurvedHitbox(new Point(300, 500), new Point(300, 450), new Point(100, 300), new Point(150, 300), "NE");
+            curftest4 = new CurvedHitbox(new Point(300, 500), new Point(300, 450), new Point(100, 300), new Point(150, 300), "SW");
             hitboxes.Add(curftest4);
+
+            curftest5 = new CurvedHitbox(new Point (100, 600), new Point(150, 600), new Point(800, 450), new Point(800, 400), "NW");
+            hitboxes.Add(curftest5);
 
             this.Paint += teken;
             this.MouseClick += klik;
