@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using Microsoft.VisualBasic;
 
 namespace GreenLight
 {
@@ -91,6 +92,13 @@ namespace GreenLight
                 PB_label.Click += (object o, EventArgs EA) => { Selected_index = Elements_available.IndexOf(element); Selected_left_bool = false; Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family); };
                 j++;
             }
+           
+          
+            CurvedButtons Add = new CurvedButtons(new Size(17, 17), new Point(104, 66), 10,
+                "../../User Interface Recources/Selection_Box_Add.png", Color.FromArgb(255, 255, 255));
+            Add.Click += (object o, EventArgs EA) => { string name = Interaction.InputBox("Enter Name: ", "Driver", "no name", 100, 100); Elements_selected.Add(name); Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family); };
+            this.Controls.Add(Add);
+            Add.BringToFront();
 
             CurvedButtons To_left = new CurvedButtons(new Size(17, 17), new Point(104, 80), 10,
                 "../../User Interface Recources/Selection_Box_To_Left.png", Color.FromArgb(255,255,255));

@@ -79,7 +79,7 @@ namespace GreenLight
             this.Controls.Add(Save_button);
 
             CurvedButtons Road_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 - menu["buttonRoad"], menu["buttonS"]), 25, "../../User Interface Recources/Road_Button.png", this.BackColor);
-            Road_button.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.SwitchSubMenus("Roads");  };
+            Road_button.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.SwitchSubMenus("Roads");};
             this.Controls.Add(Road_button);
 
             CurvedButtons Light_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 - menu["buttonLight"], menu["buttonS"]), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
@@ -100,12 +100,15 @@ namespace GreenLight
 
             CurvedButtons Divider4 = new CurvedButtons();
             Divider4.Location = new Point(0, Form.Height - menu["devider4"]); //devider4
-            this.Controls.Add(Divider4);
+            this.Controls.Add(Divider4);     
 
             CurvedButtons Start_sim_button = new CurvedButtons(new Size(menu["simStartSizeX"], menu["simStartSizeY"]), new Point(Sub_menu_width / 2 - menu["simStartX"], Form.Height - menu["simStartY"]), 25,
                 "../../User Interface Recources/Custom_Button.png", "Start simulation", Dosis_font_family, Form, this.BackColor);
             Start_sim_button.Click += (object o, EventArgs EA) => { General_Form.Main.MenuController.SwitchToSimulation(); ; };
             this.Controls.Add(Start_sim_button);
+
+            CurvedButtons Undo_button = new CurvedButtons(new Size(30, 30), new Point(10, Form.Height - menu["simStartY"]), 25, "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
+            this.Controls.Add(Undo_button);
 
             CurvedButtons Divider3 = new CurvedButtons();
             Divider3.Location = new Point(0, menu["devider3"]); //devider3
