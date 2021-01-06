@@ -11,8 +11,8 @@ namespace GreenLight
     {
         public Point topleft, topright, bottomleft, bottomright;
 
-        double rcTop, rcBottom, rcLeft, rcRight;
-        double bTop, bBottom, bLeft, bRight;
+        public double? rcTop, rcBottom, rcLeft, rcRight;
+        public double? bTop, bBottom, bLeft, bRight;
 
         public RectHitbox(Point _topleft, Point _topright, Point _bottomleft, Point _bottomright)
         {
@@ -35,6 +35,8 @@ namespace GreenLight
             bottomrightX = _bottomright.X;
             bottomrightY = _bottomright.Y;
 
+            //----------------------------------------------------------------
+
             if ((toprightX - topleftX) != 0)
             {
                 rcTop = (toprightY - topleftY) / (toprightX - topleftX);
@@ -42,12 +44,12 @@ namespace GreenLight
             }
             else
             {
-                 Console.WriteLine("??");
-                 rcTop = 1;
-                 bTop = topleftX;
+                Console.WriteLine("??");
+                rcTop = null;
+                bTop = topleftX;
             }
-            
-            if((bottomrightX - bottomleftX) != 0)
+
+            if ((bottomrightX - bottomleftX) != 0)
             {
                 rcBottom = (bottomrightY - bottomleftY) / (bottomrightX - bottomleftX);
                 bBottom = bottomleftY - rcBottom * bottomleftX;
@@ -55,11 +57,11 @@ namespace GreenLight
             else
             {
                 Console.WriteLine("??");
-                rcBottom = 1;
+                rcBottom = null;
                 bBottom = bottomleftX;
             }
 
-            if((topleftX - bottomleftX) != 0)
+            if ((topleftX - bottomleftX) != 0)
             {
                 rcLeft = (topleftY - bottomleftY) / (topleftX - bottomleftX);
                 bLeft = bottomleftY - rcLeft * bottomleftX;
@@ -67,7 +69,7 @@ namespace GreenLight
             else
             {
                 Console.WriteLine("??");
-                rcLeft = 1;
+                rcLeft = null;
                 bLeft = bottomleftX;
             }
 
@@ -79,26 +81,24 @@ namespace GreenLight
             else
             {
                 Console.WriteLine("??");
-                rcRight = 1;
+                rcRight = null;
                 bRight = toprightX;
             }
         }
 
         public override bool Contains(Point _p)
         {
-            //Console.WriteLine("{0}\n{1}\n{2}\n{3}", (_p.Y - bLeft) / rcLeft <= _p.X, (_p.Y - bRight) / rcRight >= _p.X, _p.X * rcTop + bTop <= _p.Y, _p.X * rcBottom + bBottom >= _p.Y);
-
             try
             {
                 if (rcLeft == 0 || rcRight == 0)
                 {
                     //Console.WriteLine("hier wel eens??");
-                    if(_p.X > bRight && bLeft > _p.X && _p.Y > bTop && bBottom > _p.Y)
+                    if (_p.X > bRight && bLeft > _p.X && _p.Y > bTop && bBottom > _p.Y)
                     {
                         return true;
                     }
                 }
-                else if ((rcTop == 0 || rcBottom == 0) && (rcLeft == 1 || rcRight ==1))
+                else if ((rcTop == 0 || rcBottom == 0) && (rcLeft == null || rcRight == null))
                 {
                     //if (ditobject.Beginpunt.Y  >= p.Y && ditobject.Beginpunt.Y  <= p.Y && p.X >= ditobject.Beginpunt.X && p.X <= ditobject.Eindpunt.X)
                     if (bLeft <= _p.X && bRight >= _p.X && bTop <= _p.Y && bBottom >= _p.Y)
@@ -106,7 +106,14 @@ namespace GreenLight
                         //Console.WriteLine("Kom je hier??");
                         return true;
                     }
-                    
+
+                }
+                else if (rcLeft == null || rcRight == null)
+                {
+                    if (_p.X > this.topleft.X && _p.X < this.topright.X && _p.X * rcTop + bTop <= _p.Y && _p.X * rcBottom + bBottom >= _p.Y)
+                    {
+                        return true;
+                    }
                 }
                 else
                 {
@@ -123,53 +130,42 @@ namespace GreenLight
             return false;
         }
 
-
-        public override bool Collide(Hitbox _h)
+        public override bool Contains(RectHitbox _h)
         {
-            throw new NotImplementedException();
+            bool _temp = (this.Contains(_h.topright) && this.Contains(_h.topleft) && this.Contains(_h.bottomright) && this.Contains(_h.bottomleft));
+            return _temp;
         }
 
-        /*public int KlikOpLijn(Point p, MijnObject ditobject, MijnObject indexobject, int lijstPositie)
+        public override bool Collide(RectHitbox _h)
         {
-            double dx = (ditobject.Eindpunt.X - ditobject.Beginpunt.X);
-            double dy = (ditobject.Eindpunt.Y - ditobject.Beginpunt.Y);
+            bool _temp = (this.Contains(_h.topright) || this.Contains(_h.topleft) || this.Contains(_h.bottomright) || this.Contains(_h.bottomleft));
+            return _temp;
+        }
 
-            if (dx == 0)
+        public override bool Equals(object o)
+        {
+            try
             {
-                double laagsteY = ditobject.Beginpunt.Y;
-                double hoogsteY = ditobject.Eindpunt.Y;
-                if (dy < 0)
-                {
-                    laagsteY = ditobject.Eindpunt.Y;
-                    hoogsteY = ditobject.Beginpunt.Y;
-                }
-
-                if (ditobject.Beginpunt.X + (ditobject.KwastFormaat + 3) >= p.X && ditobject.Beginpunt.X - (ditobject.KwastFormaat + 3) <= p.X && p.Y >= laagsteY && p.Y <= hoogsteY)
-                {
-                    lijstPositie = ObjectIsHoger(indexobject, lijstPositie);
-                }
+                RectHitbox _h = (RectHitbox)o;
+                bool _temp = (this.topright == _h.topright && this.topleft == _h.topleft && this.bottomleft == _h.bottomleft && this.bottomright == _h.bottomright);
+                return _temp;
             }
-
-            else if (dy == 0)
+            catch (Exception)
             {
-                if (ditobject.Beginpunt.Y + (ditobject.KwastFormaat + 3) >= p.Y && ditobject.Beginpunt.Y - (ditobject.KwastFormaat + 3) <= p.Y && p.X >= ditobject.Beginpunt.X && p.X <= ditobject.Eindpunt.X)
-                {
-                    lijstPositie = ObjectIsHoger(indexobject, lijstPositie);
-                }
+                return false;
             }
+        }
 
-            else
+
+        public override void Draw(Graphics g)
+        {
+            Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.Yellow));
+            Point[] _points = new Point[]
             {
-                double rc = dy / dx;
-                double b = ditobject.Beginpunt.Y - rc * ditobject.Beginpunt.X;
+                topleft, topright, bottomright, bottomleft
+            };
 
-                if (((p.X * rc + b <= p.Y + (ditobject.KwastFormaat + 3) && p.X * rc + b >= p.Y - (ditobject.KwastFormaat + 3)) || ((p.Y - b) / rc <= p.X + (ditobject.KwastFormaat + 3) && (p.Y - b) / rc >= p.X - (ditobject.KwastFormaat + 3))) && p.X >= ditobject.Beginpunt.X && p.X <= ditobject.Eindpunt.X)
-                {
-                    lijstPositie = ObjectIsHoger(indexobject, lijstPositie);
-                }
-
-            }
-            return lijstPositie;
-        }*/
+            g.FillPolygon(Notsolid, _points);
+        }
     }
 }

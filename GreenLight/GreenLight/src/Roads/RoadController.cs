@@ -108,11 +108,13 @@ namespace GreenLight
                 return;
             }
 
-            AbstractRoad _selectedRoad = roads.Find(x => x.Hitbox.Contains(mea.Location));
+            AbstractRoad _selectedRoad = roads.Find(x => x.Hitbox2.Contains(mea.Location));
             if (_selectedRoad == null)
             {
                 return;
             }
+
+            Console.WriteLine(true);
 
             Console.WriteLine(_selectedRoad.Cords.ToString());
         }

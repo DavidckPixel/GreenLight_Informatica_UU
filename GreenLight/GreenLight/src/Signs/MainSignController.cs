@@ -133,7 +133,7 @@ namespace GreenLight
             }
 
             List<AbstractRoad> _roadlist = General_Form.Main.BuildScreen.builder.roadBuilder.roads;
-            AbstractRoad _selectedRoad = _roadlist.Find(x => x.Hitbox.Contains(mea.Location));
+            AbstractRoad _selectedRoad = _roadlist.Find(x => x.Hitbox2.Contains(mea.Location));
 
             if (signType == "X")
             {

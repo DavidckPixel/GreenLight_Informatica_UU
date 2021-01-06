@@ -85,6 +85,7 @@ namespace GreenLight
                 {
                     _Ytemp = _nulpoint.Y - (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
                 }
+
                 if ((dir == "NE" || dir == "NW") && y <= _deltaY)
                 {
                     _xtemp = _nulpoint.X + (int)Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - _nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));

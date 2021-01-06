@@ -68,9 +68,11 @@ namespace GreenLight
                 _sign.draw(g);
             }
 
-            Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.Yellow));
+            //Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.Yellow));
 
-            g.FillRectangle(Notsolid, this.Hitbox);
+            //g.FillRectangle(Notsolid, this.Hitbox);
+
+            this.Hitbox2.Draw(g);
         }
 
         public Point getPoint1() { return point1; }
