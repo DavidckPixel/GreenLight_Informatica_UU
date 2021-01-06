@@ -76,25 +76,25 @@ namespace GreenLight
             this.Controls.Add(Sight_Value);
             Sight.ValueChanged += (object o, EventArgs EA) => { Sight_Value.Text = Sight.Value.ToString() + " m"; };
 
-            Slider Snow = new Slider(new Point(_sliderX, _start + _diff), 0, 5);
+            Slider Snow = new Slider(new Point(_sliderX, _start + _diff), 0, 50);
             this.Controls.Add(Snow);
 
             SliderText Snow_label = new SliderText(Dosis_font_family, new Point(_sliderX, _startText + _diff), "Snow:");
             this.Controls.Add(Snow_label);
 
-            SliderText Snow_Value = new SliderText(Dosis_font_family, new Point(_textX, _startText + _diff), Snow.Value.ToString() + " mm");
+            SliderText Snow_Value = new SliderText(Dosis_font_family, new Point(_textX, _startText + _diff), (Snow.Value / 10).ToString() + " mm");
             this.Controls.Add(Snow_Value);
-            Snow.ValueChanged += (object o, EventArgs EA) => { Snow_Value.Text = Snow.Value.ToString() + " mm"; };
+            Snow.ValueChanged += (object o, EventArgs EA) => { Snow_Value.Text = (((double)(Snow.Value)) / 10).ToString() + " mm"; };
 
-            Slider Rainfall = new Slider(new Point(_sliderX, _start), 0, 10);
+            Slider Rainfall = new Slider(new Point(_sliderX, _start), 0, 100);
             this.Controls.Add(Rainfall);
 
             SliderText Rainfall_label = new SliderText(Dosis_font_family, new Point(_sliderX, _startText), "Rainfall:");
             this.Controls.Add(Rainfall_label);
 
-            SliderText Rainfall_Value = new SliderText(Dosis_font_family, new Point(_textX, _startText), Rainfall.Value.ToString() + " mm/h");
+            SliderText Rainfall_Value = new SliderText(Dosis_font_family, new Point(_textX, _startText), (Rainfall.Value / 10).ToString() + " mm/h");
             this.Controls.Add(Rainfall_Value);
-            Rainfall.ValueChanged += (object o, EventArgs EA) => { Rainfall_Value.Text = Rainfall.Value.ToString() + " mm/h"; };
+            Rainfall.ValueChanged += (object o, EventArgs EA) => { Rainfall_Value.Text = (((double)(Rainfall.Value)) / 10).ToString() + " mm/h"; };
 
             CurvedButtons Weather_header = new CurvedButtons(new Size(menu["headerSizeX"], menu["headerSizeY"]),
                new Point(menu["headerX"], menu["headerY"]), "../../User Interface Recources/Weather_Header.png");

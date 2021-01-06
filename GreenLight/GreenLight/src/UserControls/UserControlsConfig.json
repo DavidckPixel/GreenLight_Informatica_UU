@@ -151,14 +151,14 @@
         "occurenceMax": 100,
         "horsepwrMin": 40,
         "horsepwrMax": 1500,
-        "lengthMin": 3,
-        "lengthMax": 12,
+        "lengthMin": 30,
+        "lengthMax": 120,
         "weightMin": 1000,
         "weightMax": 40000,
-        "surfaceMin": 1,
-        "surfaceMax": 20,
+        "surfaceMin": 10,
+        "surfaceMax": 200,
         "cwMin": 0,
-        "cwMax": 1
+        "cwMax": 10
     },
 
     "simDataMenu": {

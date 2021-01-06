@@ -53,17 +53,17 @@ namespace GreenLight
             this.Controls.Add(Reaction_time);
             SliderText Reaction_time_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff * 4), "Reaction time:");
             this.Controls.Add(Reaction_time_label);
-            SliderText Reaction_time_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart + _diff * 4), Reaction_time.Value.ToString() + " s");
+            SliderText Reaction_time_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart + _diff * 4), (Reaction_time.Value / 10).ToString() + " s");
             this.Controls.Add(Reaction_time_Value);
-            Reaction_time.ValueChanged += (object o, EventArgs EA) => { Reaction_time_Value.Text = Reaction_time.Value.ToString() + " s"; };
+            Reaction_time.ValueChanged += (object o, EventArgs EA) => { Reaction_time_Value.Text = (((Reaction_time.Value)) / 10).ToString() + " s"; };
 
             Slider Follow_interval = new Slider(new Point(_sliderX, _start + _diff * 3), DriverMenu["followIntervalMin"], DriverMenu["followIntervalMax"]);
             this.Controls.Add(Follow_interval);
             SliderText Follow_interval_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff * 3), "Follow interval:");
             this.Controls.Add(Follow_interval_label);
-            SliderText Follow_interval_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart + _diff * 3), Follow_interval.Value.ToString() + " s");
+            SliderText Follow_interval_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart + _diff * 3), (Follow_interval.Value / 10).ToString() + " s");
             this.Controls.Add(Follow_interval_Value);
-            Follow_interval.ValueChanged += (object o, EventArgs EA) => { Follow_interval_Value.Text = Follow_interval.Value.ToString() + " s"; };
+            Follow_interval.ValueChanged += (object o, EventArgs EA) => { Follow_interval_Value.Text = (((double)(Follow_interval.Value)) / 10).ToString() + " s"; };
 
             Slider Speeding = new Slider(new Point(_sliderX, _start + _diff * 2), DriverMenu["speedingMin"], DriverMenu["speedingMax"]);
             this.Controls.Add(Speeding);

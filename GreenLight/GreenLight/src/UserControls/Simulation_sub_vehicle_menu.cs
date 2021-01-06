@@ -56,17 +56,17 @@ namespace GreenLight
             this.Controls.Add(Cw);
             SliderText Cw_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY + 2 * _diffY), "Drag Co:");
             this.Controls.Add(Cw_label);
-            SliderText Cw_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY + 2 * _diffY), Cw.Value.ToString() + " ");
+            SliderText Cw_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY + 2 * _diffY), (Cw.Value / 10 ).ToString() + " ");
             this.Controls.Add(Cw_Value);
-            Cw.ValueChanged += (object o, EventArgs EA) => { Cw_Value.Text = Cw.Value.ToString() + " "; };
+            Cw.ValueChanged += (object o, EventArgs EA) => { Cw_Value.Text = (((double)(Cw.Value)) / 10).ToString() + " "; };
 
             Slider Surface = new Slider(new Point(_sliderX, _startY + _diffY), vehiclemenu["surfaceMin"], vehiclemenu["surfaceMax"]);
             this.Controls.Add(Surface);
             SliderText Surface_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY + 1 * _diffY), "Frontal Surface:");
             this.Controls.Add(Surface_label);
-            SliderText Surface_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY + 1* _diffY), Surface.Value.ToString() + " m^2");
+            SliderText Surface_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY + 1* _diffY), (Surface.Value / 10).ToString() + " m^2");
             this.Controls.Add(Surface_Value);
-            Surface.ValueChanged += (object o, EventArgs EA) => { Surface_Value.Text = Surface.Value.ToString() + " m^2"; };
+            Surface.ValueChanged += (object o, EventArgs EA) => { Surface_Value.Text = (((double)(Surface.Value)) / 10).ToString() + " m^2"; };
 
             Slider Max_speed = new Slider(new Point(_sliderX, _startY), vehiclemenu["topSpeedMin"], vehiclemenu["topSpeedMax"]);
             this.Controls.Add(Max_speed);
@@ -80,9 +80,9 @@ namespace GreenLight
             this.Controls.Add(Length);
             SliderText Length_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY - 1 * _diffY), "Length:");
             this.Controls.Add(Length_label);
-            SliderText Length_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY - 1 * _diffY), Length.Value.ToString() + " m");
+            SliderText Length_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY - 1 * _diffY), (Length.Value / 10).ToString() + " m");
             this.Controls.Add(Length_Value);
-            Length.ValueChanged += (object o, EventArgs EA) => { Length_Value.Text = Length.Value.ToString() + " m"; };
+            Length.ValueChanged += (object o, EventArgs EA) => { Length_Value.Text = (((double)(Length.Value)) / 10).ToString() + " m"; };
 
             Slider HorsePower = new Slider(new Point(_sliderX, _startY - 2* _diffY), vehiclemenu["horsepwrMin"], vehiclemenu["horsepwrMax"]);
             this.Controls.Add(HorsePower);
