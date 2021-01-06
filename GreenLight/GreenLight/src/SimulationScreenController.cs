@@ -99,7 +99,7 @@ namespace GreenLight
             
             //Console.WriteLine("Drawing the Picturebox of simulator!");
 
-            foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
+            foreach (AbstractRoad _road in RoadController.roads)
             {
                 _road.Draw(g);
             }

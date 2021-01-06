@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +19,7 @@ namespace GreenLight
 
         private string dir;
 
-        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir) : base(_point1, _point2, _lanes)
+        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "CurvedRoad", _beginconnection, _endconnection)
         {
             this.dir = _dir;
             

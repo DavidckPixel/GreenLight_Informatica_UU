@@ -22,15 +22,21 @@ namespace GreenLight
         protected Point point2;
 
         protected int lanes;
-        public List<DrivingLane> Drivinglanes=  new List<DrivingLane>();
+        public string roadtype;
+        public List<DrivingLane> Drivinglanes = new List<DrivingLane>();
+        public double slp;
+        public bool beginconnection, endconnection;
 
         //Basic Road Constructor, every road calls this constructor during initialzation
-        public AbstractRoad(Point _point1, Point _point2, int _lanes) : base(_point1, new Size(Math.Abs(_point1.X - _point2.X), Math.Abs(_point1.Y - _point2.Y)))
+        public AbstractRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection) : base(_point1, new Size(Math.Abs(_point1.X - _point2.X), Math.Abs(_point1.Y - _point2.Y)))
         {
             this.point1 = _point1;
             this.point2 = _point2;
             this.lanes = _lanes;
+            this.roadtype = _roadtype;
             this.Cords = _point1;
+            this.beginconnection = _beginconnection;
+            this.endconnection = _endconnection;
         }
 
         protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
@@ -66,6 +72,8 @@ namespace GreenLight
         //public void setPoint2(Point _value) { point2 = _value; }
 
         public int getLanes() { return lanes; }
+
+        public string getRoadtype() { return roadtype; }
 
         public override string ToString()
         {

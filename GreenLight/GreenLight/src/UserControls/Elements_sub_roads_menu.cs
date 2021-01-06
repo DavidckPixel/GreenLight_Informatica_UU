@@ -12,6 +12,7 @@ namespace GreenLight
 {
     public partial class Elements_sub_roads_menu : UserControl
     {
+        public TextBox LaneAmount;
         public Elements_sub_roads_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
 
@@ -50,6 +51,13 @@ namespace GreenLight
             CurvedButtons Curved_Road = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
             Curved_Road.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadType = "Curved"; };
             this.Controls.Add(Curved_Road);
+
+            this.LaneAmount = new TextBox();
+            LaneAmount.Text = "1";
+            LaneAmount.Width = 20;
+            LaneAmount.Height = 20;
+            LaneAmount.Location = new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff);
+            this.Controls.Add(LaneAmount);
         }
     }
 }

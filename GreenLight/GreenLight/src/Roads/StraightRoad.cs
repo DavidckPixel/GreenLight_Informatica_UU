@@ -10,13 +10,13 @@ namespace GreenLight
     public class StraightRoad : AbstractRoad
     {
 
-        //Similar to curved road, but now math for StraightRoads
+        //This class is not used anymore
 
         private string dir;
 
         private int roadwidth = 10; // HARDCODED WAARDE AANPASSEN
 
-        public StraightRoad(Point _point1, Point _point2, int _lanes, string _dir) : base(_point1, _point2, _lanes)
+        public StraightRoad(Point _point1, Point _point2, int _lanes, string _dir, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "StraightRoad", _beginconnection, _endconnection)
         {
             
             this.dir = _dir;
