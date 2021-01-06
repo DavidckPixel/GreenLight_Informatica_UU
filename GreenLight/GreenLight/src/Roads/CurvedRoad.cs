@@ -22,7 +22,9 @@ namespace GreenLight
         public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir) : base(_point1, _point2, _lanes)
         {
             this.dir = _dir;
-            
+
+            //Point[] _points = hitBoxPoints(_point1, _point2);
+
             for (int x = 1; x <= lanes; x++)
             {
                 Drivinglanes.Add(this.CalculateLanes(point1, point2, x));

@@ -21,9 +21,9 @@ namespace GreenLight
         List<Color> colours = new List<Color>()
         {
             Color.Green,
-            Color.DarkViolet,
+            //Color.DarkViolet,
             Color.Red,
-            Color.DarkBlue,
+            //Color.DarkBlue,
             Color.DarkMagenta,
             Color.DarkOrange,
             Color.Black,
@@ -92,10 +92,10 @@ namespace GreenLight
             curftest1 = new CurvedHitbox(new Point(100, 300), new Point(150, 300), new Point(300, 100), new Point(300, 150), "SE");
             hitboxes.Add(curftest1);
 
-            curftest2 = new CurvedHitbox(new Point(300, 100), new Point(300, 150), new Point(450, 300), new Point(500, 300), "SW");
+            curftest2 = new CurvedHitbox(new Point(300, 100), new Point(300, 150), new Point(500, 300), new Point(450, 300), "SW");
             hitboxes.Add(curftest2);
 
-            curftest3 = new CurvedHitbox(new Point(500, 300), new Point(500, 350), new Point(300, 500), new Point(350, 500), "NW");
+            curftest3 = new CurvedHitbox(new Point(500, 300), new Point(450, 300), new Point(300, 500), new Point(300, 450), "NW");
             hitboxes.Add(curftest3);
 
             curftest4 = new CurvedHitbox(new Point(300, 500), new Point(300, 450), new Point(100, 300), new Point(150, 300), "NE");
@@ -131,7 +131,7 @@ namespace GreenLight
                 g.FillRectangle(_brush, new Rectangle(new Point(test.x, test.y), new Size(4, 4)));
             }
 
-            curftest1.Draw(g);
+            
         }
 
         public void klik(object o, MouseEventArgs mea)
