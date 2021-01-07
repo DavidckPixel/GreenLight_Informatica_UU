@@ -124,7 +124,7 @@ namespace GreenLight
                         break;
                 }
                 Console.WriteLine(dir);
-                g.DrawArc(p, rect, startAngle, sweepAngle);
+               g.DrawArc(p, rect, startAngle, sweepAngle);
 
                 
                 outer = new Rectangle(new Point(rect.Location.X - drivingLaneDistance / 2, rect.Location.Y - drivingLaneDistance / 2), new Size(rect.Width + drivingLaneDistance, rect.Height + drivingLaneDistance));

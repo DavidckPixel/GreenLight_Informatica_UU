@@ -67,11 +67,11 @@ namespace GreenLight
             int _ytemp = 0;
             int _xtemp = 0;
 
-            Console.WriteLine(_nulpoint);
+            Console.WriteLine(_deltaX +  " ------ " +  _deltaY);
 
             for (int x = 0, y = 0; x <= _deltaX || y <= _deltaY; x++, y++)
             {
-                if ((x >= _deltaX && y >= _deltaY) || _prev == _point2)
+                if ((x > _deltaX && y > _deltaY) || _prev == _point2)
                     break;
 
                 _Xtemp = _point1.X + x * _dir.Item1;
