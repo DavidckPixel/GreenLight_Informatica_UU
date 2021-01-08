@@ -37,7 +37,7 @@ namespace GreenLight
             Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family);
         }
 
-        private void Elements_draw(List<string> Elements_selected, List<string> Elements_available, Form Form, FontFamily Dosis_font_family) 
+        private void Elements_draw(List<string> Elements_selected, List<string> Elements_available, Form Form, FontFamily Dosis_font_family)
         {
             this.Controls.Clear();
 
@@ -51,7 +51,7 @@ namespace GreenLight
 
                 PictureBox PB = new PictureBox();
                 PB.BackColor = Prime_Color;
-                PB.Location = new Point(10, 15 * i+30);
+                PB.Location = new Point(10, 15 * i + 30);
                 PB.Size = new Size(101, 15);
                 PB.Cursor = Cursors.Hand;
                 this.Controls.Add(PB);
@@ -92,8 +92,13 @@ namespace GreenLight
                 PB_label.Click += (object o, EventArgs EA) => { Selected_index = Elements_available.IndexOf(element); Selected_left_bool = false; Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family); };
                 j++;
             }
-           
-          
+
+            CurvedButtons Remove = new CurvedButtons(new Size(17, 17), new Point(104, 52), 10,
+               "../../User Interface Recources/Selection_Box_Remove.png", Color.FromArgb(255, 255, 255));
+            Remove.Click += (object o, EventArgs EA) => { if (Selected_left_bool) Elements_selected.RemoveAt(Selected_index); else Elements_available.RemoveAt(Selected_index) ; Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family); };
+            this.Controls.Add(Remove);
+            Remove.BringToFront();
+
             CurvedButtons Add = new CurvedButtons(new Size(17, 17), new Point(104, 66), 10,
                 "../../User Interface Recources/Selection_Box_Add.png", Color.FromArgb(255, 255, 255));
             Add.Click += (object o, EventArgs EA) => { string name = Interaction.InputBox("Enter Name: ", "Driver", "no name", 100, 100); Elements_selected.Add(name); Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family); };
@@ -101,14 +106,14 @@ namespace GreenLight
             Add.BringToFront();
 
             CurvedButtons To_left = new CurvedButtons(new Size(17, 17), new Point(104, 80), 10,
-                "../../User Interface Recources/Selection_Box_To_Left.png", Color.FromArgb(255,255,255));
-            To_left.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool,Form,Dosis_font_family,0); };
+                "../../User Interface Recources/Selection_Box_To_Left.png", Color.FromArgb(255, 255, 255));
+            To_left.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool, Form, Dosis_font_family, 0); };
             this.Controls.Add(To_left);
             To_left.BringToFront();
 
             CurvedButtons To_right = new CurvedButtons(new Size(17, 17), new Point(104, 94), 10,
                 "../../User Interface Recources/Selection_Box_To_Right.png", Color.FromArgb(255, 255, 255));
-            To_right.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool,Form,Dosis_font_family,1); };
+            To_right.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool, Form, Dosis_font_family, 1); };
             this.Controls.Add(To_right);
             To_right.BringToFront();
         }
@@ -120,7 +125,7 @@ namespace GreenLight
                 Elements_available.Add(Elements_selected[Selected_index]);
                 Elements_selected.RemoveAt(Selected_index);
             }
-            else if(Selected_index >= 0 && Selected_index < Elements_available.Count)
+            else if (Selected_index >= 0 && Selected_index < Elements_available.Count)
             {
                 Elements_selected.Add(Elements_available[Selected_index]);
                 Elements_available.RemoveAt(Selected_index);
@@ -132,5 +137,6 @@ namespace GreenLight
         {
             Elements_available.Add(element);
         }
+
     }
 }
