@@ -13,9 +13,10 @@ namespace GreenLight
 
         private string dir;
 
-        public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir) : base(_point1, _point2, _lanes)
+        public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type) : base(_point1, _point2, _lanes)
         {
             this.dir = _dir;
+            this.Type = _type;
 
             Point[] _points = hitBoxPoints(_point1, _point2);
             //Console.WriteLine("{0},{1},{2},{3}", _points[1], _points[0], _points[3], _points[2]);

@@ -26,6 +26,7 @@ namespace GreenLight
         public List<PlacedSign> Signs = new List<PlacedSign>();
 
         public Hitbox Hitbox2; //Word nog aangepast Jaj
+        public string Type;
 
         //Basic Road Constructor, every road calls this constructor during initialzation
         public AbstractRoad(Point _point1, Point _point2, int _lanes) : base(_point1, _point2)
@@ -34,8 +35,6 @@ namespace GreenLight
             this.point2 = _point2;
             this.lanes = _lanes;
             this.Cords = _point1;
-
-
         }
 
         protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
@@ -87,6 +86,8 @@ namespace GreenLight
             string _temp = point1.ToString() + " - " + point2.ToString();
             return _temp;
         }
+
+
 
 
     }

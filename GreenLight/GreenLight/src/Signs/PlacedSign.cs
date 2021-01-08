@@ -14,7 +14,7 @@ namespace GreenLight
         public string Direction;
         public AbstractSign Sign;
 
-        public PlacedSign(Point _location, string _direction, AbstractSign _sign)
+        public PlacedSign(Point _location, string _direction, AbstractSign _sign, AbstractRoad _read = null)
         {
             this.Location = _location;
             this.Direction = _direction;

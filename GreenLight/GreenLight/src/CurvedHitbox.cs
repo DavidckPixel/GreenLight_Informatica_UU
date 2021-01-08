@@ -22,6 +22,8 @@ namespace GreenLight
 
         public CurvedHitbox(Point _start1, Point _start2, Point _end1, Point _end2, string _dir)
         {
+            topleft = _start1;
+
             max_start = _start1;
             min_start = _start2;
             max_end = _end1;

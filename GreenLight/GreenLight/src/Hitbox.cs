@@ -9,6 +9,9 @@ namespace GreenLight
 {
     abstract public class Hitbox
     {
+        public Point topleft, topright, bottomleft, bottomright;
+        public int SizeX, SizeY;
+
         public abstract bool Contains(Point _p);
         //public abstract bool Contains(RectHitbox _h);
 

@@ -21,6 +21,9 @@ namespace GreenLight
             this.Screen.Height = _tempform.Height;
             this.Screen.BackColor = Color.FromArgb(196, 196, 198);
             this.Screen.Location = new Point(0, 0);
+
+            this.Screen.Image = new System.Drawing.Bitmap(Screen.Width, Screen.Height);
+
             _tempform.Resize += (object o, EventArgs ea) => { this.resize(_tempform); };
            
             

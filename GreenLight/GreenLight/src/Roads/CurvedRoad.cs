@@ -19,9 +19,10 @@ namespace GreenLight
 
         private string dir;
 
-        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir) : base(_point1, _point2, _lanes)
+        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type) : base(_point1, _point2, _lanes)
         {
             this.dir = _dir;
+            this.Type = _type;
 
             Point[] _points = hitBoxPoints(_point1, _point2);
             this.Hitbox2 = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], dir);

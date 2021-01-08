@@ -23,6 +23,10 @@ namespace GreenLight
         Bitmap Lane;
         Bitmap Verticallane;
 
+        private LanePoints middle;
+
+        int AngleDir;
+
         public DrivingLane(List<LanePoints> _points, string _dir, int _roadLanes, int _thisLane)
         {
             this.points = _points;
@@ -31,6 +35,9 @@ namespace GreenLight
             this.thisLane = _thisLane;
             Lane = new Bitmap(Properties.Resources.Lane);
             Verticallane = new Bitmap(Properties.Resources.Road_Verticaal);
+
+            middle = this.points[this.points.Count() / 2];
+            AngleDir = middle.degree;
         }
 
         public Pen getPen(int _side)
@@ -186,6 +193,12 @@ namespace GreenLight
                     }
                 }
             }
+
+            Image _image = Image.FromFile("../../User Interface Recources/Arrow.png");
+            Bitmap _bitmap = new Bitmap(_image);
+            _bitmap = RotateImage(_bitmap, AngleDir);  //HIER MOET NOG NAAR GEKEKEN WORDEN!!!!
+            _bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
+            g.DrawImage(_bitmap, new Rectangle(middle.cord, new Size(15,15)));
         }
 
         public static Bitmap RotateImage(Bitmap b, float angle)

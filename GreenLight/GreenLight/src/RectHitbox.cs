@@ -9,7 +9,7 @@ namespace GreenLight
 {
     public class RectHitbox : Hitbox
     {
-        public Point topleft, topright, bottomleft, bottomright;
+        
 
         public double? rcTop, rcBottom, rcLeft, rcRight;
         public double? bTop, bBottom, bLeft, bRight;
