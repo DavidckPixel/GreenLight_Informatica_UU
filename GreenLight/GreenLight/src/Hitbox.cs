@@ -14,7 +14,7 @@ namespace GreenLight
 
         public abstract bool Collide(RectHitbox _h);
 
-        public abstract void Draw(Graphics g);
+        public abstract void Draw(Graphics g, Color _color);
 
     }
 }

@@ -139,7 +139,15 @@ namespace GreenLight
             {
                 try
                 {
+                    if (_selectedRoad == null)
+                    {
+                        return;
+                    }
                     AbstractSign _sign = _selectedRoad.Signs.Find(x => x.Hitbox.Contains(mea.Location)).Sign;
+                    if (_sign == null)
+                    {
+                        return;
+                    }
                     _sign.controller.onSignClick(_sign);
 
                     return;

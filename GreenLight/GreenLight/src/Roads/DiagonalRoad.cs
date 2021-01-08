@@ -238,6 +238,13 @@ namespace GreenLight
                 _points[2] = new Point(_two.X + _roadWidth, _two.Y); //Laagste Punt
                 _points[3] = new Point(_two.X - _roadWidth, _two.Y); 
             }
+            else if(_angle >= 0 && _angle < 45)
+            {
+                _points[1] = new Point(_two.X, _two.Y - _roadWidth);
+                _points[2] = new Point(_one.X, _one.Y + _roadWidth);
+                _points[0] = new Point(_one.X, _one.Y - _roadWidth);
+                _points[3] = new Point(_two.X, _two.Y + _roadWidth);
+            }
             else
             {
 

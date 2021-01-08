@@ -25,7 +25,8 @@ namespace GreenLight
 
         public void draw(Graphics g)
         {
-            Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.Red));
+            //Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.Red));
+            this.Hitbox.Draw(g, Color.Red);
             //g.FillRectangle(Notsolid, this.Hitbox);
         }
     }

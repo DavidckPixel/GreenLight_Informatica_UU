@@ -72,7 +72,7 @@ namespace GreenLight
 
             //g.FillRectangle(Notsolid, this.Hitbox);
 
-            this.Hitbox2.Draw(g);
+            this.Hitbox2.Draw(g, Color.Yellow);
         }
 
         public Point getPoint1() { return point1; }

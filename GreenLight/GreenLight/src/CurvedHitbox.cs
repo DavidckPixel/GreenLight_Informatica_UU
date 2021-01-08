@@ -119,11 +119,11 @@ namespace GreenLight
                     break;
             }
 
-            Console.WriteLine(max_radiusX);
-            Console.WriteLine(max_radiusY);
-            Console.WriteLine(min_radiusX);
-            Console.WriteLine(min_radiusY);
-            Console.WriteLine();
+            //Console.WriteLine(max_radiusX);
+            //Console.WriteLine(max_radiusY);
+            //Console.WriteLine(min_radiusX);
+            //Console.WriteLine(min_radiusY);
+            //Console.WriteLine();
 
             this.PenWidth = Math.Abs((int)(max_radiusX - min_radiusX));
         }
@@ -181,10 +181,10 @@ namespace GreenLight
             throw new NotImplementedException();
         }
 
-        public override void Draw(Graphics g)
+        public override void Draw(Graphics g, Color _color)
         {
             Brush _brush = new SolidBrush(Color.FromArgb(100, Color.Black));
-            Pen _pen = new Pen(new SolidBrush(Color.FromArgb(100, Color.Yellow)), PenWidth);
+            Pen _pen = new Pen(new SolidBrush(Color.FromArgb(100, _color)), PenWidth);
 
             Console.WriteLine(PenWidth);
 

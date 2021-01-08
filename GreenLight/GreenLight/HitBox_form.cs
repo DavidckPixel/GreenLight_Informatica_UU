@@ -16,14 +16,19 @@ namespace GreenLight
         RectHitbox test1, test2, test3, test4, test5, test6,test7,test8,test9,test10, test11, test12, test13, test14;
         CurvedHitbox curftest1, curftest2, curftest3, curftest4, curftest5;
 
+        RectHitbox Under1, Under2, Under3, Under4, Under5, Under6, Under7, Under8;
+        RectHitbox Up1, Up2, Up3, Up4, Up5;
+        RectHitbox Right1, Right2, Right3;
+        CurvedHitbox Q1, Q2, Q3, Q4;
+
         List<testcord> Points1 = new List<testcord>();
         List<Hitbox> hitboxes = new List<Hitbox>();
         List<Color> colours = new List<Color>()
         {
             Color.Green,
-            //Color.DarkViolet,
+            Color.DarkViolet,
             Color.Red,
-            //Color.DarkBlue,
+            Color.DarkBlue,
             Color.DarkMagenta,
             Color.DarkOrange,
             Color.Black,
@@ -33,7 +38,15 @@ namespace GreenLight
             Color.Wheat,
             Color.YellowGreen,
             Color.Khaki,
-            Color.Gold
+            Color.Gold,
+            Color.DarkOliveGreen,
+            Color.PaleVioletRed,
+            Color.Honeydew,
+            Color.SpringGreen,
+            Color.MediumSlateBlue,
+            Color.Crimson,
+            Color.Fuchsia,
+            Color.PapayaWhip
         };
 
         public class testcord
@@ -60,8 +73,8 @@ namespace GreenLight
             test3 = new RectHitbox(new Point(550, 50), new Point(650, 50), new Point(450, 200), new Point(550, 200));
             test4 = new RectHitbox(new Point(50, 250), new Point(150, 250), new Point(200, 400), new Point(300, 400));
             test5 = new RectHitbox(new Point(550, 250), new Point(650, 250), new Point(400, 400), new Point(500, 400));
-            test6 = new RectHitbox(new Point(150,400), new Point(300,450), new Point(150,500), new Point(300,550));
-            test7 = new RectHitbox(new Point(450,450), new Point(600,400), new Point(450,550), new Point(600,500));
+            test6 = new RectHitbox(new Point(150, 400), new Point(300, 450), new Point(150, 500), new Point(300, 550));
+            test7 = new RectHitbox(new Point(450, 450), new Point(600, 400), new Point(450, 550), new Point(600, 500));
             test8 = new RectHitbox(new Point(750, 100), new Point(950, 100), new Point(750, 150), new Point(950, 150));
             test9 = new RectHitbox(new Point(700, 250), new Point(850, 200), new Point(700, 350), new Point(850, 300));
             test10 = new RectHitbox(new Point(950, 200), new Point(1100, 250), new Point(950, 300), new Point(1100, 350));
@@ -69,7 +82,7 @@ namespace GreenLight
             test12 = new RectHitbox(new Point(950, 400), new Point(1050, 400), new Point(1100, 550), new Point(1200, 550));
             test13 = new RectHitbox(new Point(800, 600), new Point(900, 600), new Point(700, 750), new Point(800, 750));
             //test14 = new RectHitbox(new Point(950, 600), new Point(1050, 600), new Point(1050, 750), new Point(1150, 750));
-            test14 = new RectHitbox(new Point(350, 850), new Point(400, 900),  new Point(300, 900), new Point(350, 950));
+            test14 = new RectHitbox(new Point(350, 850), new Point(400, 900), new Point(300, 900), new Point(350, 950));
 
             //test7 = new RectHitbox(new Point(,), new Point(,), new Point(,), new Point(,));
             hitboxes.Add(test1);
@@ -88,21 +101,72 @@ namespace GreenLight
             hitboxes.Add(test14);
             */
 
+            Up1 = new RectHitbox(new Point(175, 250), new Point(225, 250), new Point(275, 350), new Point(325, 350));
+            Up2 = new RectHitbox(new Point(275, 225), new Point(325, 225), new Point(325, 350), new Point(375, 350));
+            Up3 = new RectHitbox(new Point(375, 200), new Point(425, 200), new Point(375, 350), new Point(425, 350));
+            Up4 = new RectHitbox(new Point(475, 225), new Point(525, 225), new Point(425,350), new Point(475,350));
+            Up5 = new RectHitbox(new Point(575,250), new Point(625,250), new Point(475,350), new Point(525,350));
 
-            curftest1 = new CurvedHitbox(new Point(100, 300), new Point(150, 300), new Point(300, 100), new Point(300, 150), "NW");
-            hitboxes.Add(curftest1);
+            hitboxes.Add(Up1);
+            hitboxes.Add(Up2);
+            hitboxes.Add(Up3);
+            hitboxes.Add(Up4);
+            hitboxes.Add(Up5);
 
-            curftest2 = new CurvedHitbox(new Point(300, 100), new Point(300, 150), new Point(500, 300), new Point(450, 300), "NE");
-            hitboxes.Add(curftest2);
+            Right1 = new RectHitbox(new Point(525, 350), new Point(625, 300), new Point(525, 400), new Point(625, 350));
+            Right2 = new RectHitbox(new Point(525, 400), new Point(650, 400), new Point(525, 450), new Point(650, 450));
+            Right3 = new RectHitbox(new Point(525, 450), new Point(625, 500), new Point(525, 500), new Point(625, 550));
 
-            curftest3 = new CurvedHitbox(new Point(500, 300), new Point(450, 300), new Point(300, 500), new Point(300, 450), "SE");
-            hitboxes.Add(curftest3);
+            hitboxes.Add(Right1);
+            hitboxes.Add(Right2);
+            hitboxes.Add(Right3);
 
-            curftest4 = new CurvedHitbox(new Point(300, 500), new Point(300, 450), new Point(100, 300), new Point(150, 300), "SW");
-            hitboxes.Add(curftest4);
+            Under1 = new RectHitbox(new Point(175,300), new Point(175,250), new Point(275,350), new Point(275,300));
+            Under2 = new RectHitbox(new Point(150,350), new Point(275,350), new Point(150,400), new Point(275,400));
+            Under3 = new RectHitbox(new Point(175,450), new Point(175,500), new Point(275,450), new Point(275,400)); //
+            Under4 = new RectHitbox(new Point(275,450), new Point(325,450), new Point(175,550), new Point(225,550));
+            Under5 = new RectHitbox(new Point(325,450), new Point(375,450), new Point(275,575), new Point(325,575));
+            Under6 = new RectHitbox(new Point(375,450), new Point(425,450), new Point(375,600), new Point(425,600));
+            Under7 = new RectHitbox(new Point(425,450), new Point(475,450), new Point(475,575), new Point(525,575));
+            Under8 = new RectHitbox(new Point(475,450), new Point(525,450), new Point(575,550), new Point(625,550));
 
-            curftest5 = new CurvedHitbox(new Point (100, 600), new Point(150, 600), new Point(800, 450), new Point(800, 400), "NW");
-            hitboxes.Add(curftest5);
+            hitboxes.Add(Under1);
+            hitboxes.Add(Under2);
+            hitboxes.Add(Under3);
+            hitboxes.Add(Under4);
+            hitboxes.Add(Under5);
+            hitboxes.Add(Under6);
+            hitboxes.Add(Under7);
+            hitboxes.Add(Under8);
+
+
+            Q1 = new CurvedHitbox(new Point(25 , 425 ), new Point( 75, 425), new Point(400, 75 ), new Point(400, 125), "SE");
+            Q2 = new CurvedHitbox(new Point(400, 75), new Point(400, 125), new Point( 775, 425), new Point(725, 425), "SW");
+            Q3 = new CurvedHitbox(new Point(775, 425), new Point(725, 425), new Point( 400, 775), new Point( 400, 725 ), "NW");
+            Q4 = new CurvedHitbox(new Point(400, 775), new Point(400, 725), new Point(25, 425), new Point(75, 425), "NE");
+
+            hitboxes.Add(Q1);
+            hitboxes.Add(Q2);
+            hitboxes.Add(Q3);
+            hitboxes.Add(Q4);
+
+
+
+
+            //curftest1 = new CurvedHitbox(new Point(100, 300), new Point(150, 300), new Point(300, 100), new Point(300, 150), "SE");
+            // hitboxes.Add(curftest1);
+
+            //curftest2 = new CurvedHitbox(new Point(300, 100), new Point(300, 150), new Point(500, 300), new Point(450, 300), "SW");
+            //hitboxes.Add(curftest2);
+
+            //curftest3 = new CurvedHitbox(new Point(500, 300), new Point(450, 300), new Point(300, 500), new Point(300, 450), "NW");
+            //hitboxes.Add(curftest3);
+
+            //curftest4 = new CurvedHitbox(new Point(300, 500), new Point(300, 450), new Point(100, 300), new Point(150, 300), "NE");
+            //hitboxes.Add(curftest4);
+
+            //curftest5 = new CurvedHitbox(new Point (100, 600), new Point(150, 600), new Point(800, 400), new Point(800, 450), "SE");
+            //hitboxes.Add(curftest5);
 
             this.Paint += teken;
             this.MouseClick += klik;
@@ -125,7 +189,7 @@ namespace GreenLight
                 _brush = new SolidBrush(colours[hitboxes.IndexOf(_temp)]);
                 _pen = new Pen(_brush);
 
-                _temp.Draw(g);
+                _temp.Draw(g, Color.Yellow);
             }
 
             foreach (testcord test in Points1)

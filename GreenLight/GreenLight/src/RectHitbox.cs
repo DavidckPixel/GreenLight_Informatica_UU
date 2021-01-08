@@ -157,9 +157,9 @@ namespace GreenLight
         }
 
 
-        public override void Draw(Graphics g)
+        public override void Draw(Graphics g, Color _color)
         {
-            Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.Yellow));
+            Brush Notsolid = new SolidBrush(Color.FromArgb(100, _color));
             Point[] _points = new Point[]
             {
                 topleft, topright, bottomright, bottomleft

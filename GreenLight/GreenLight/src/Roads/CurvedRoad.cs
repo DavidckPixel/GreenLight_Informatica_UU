@@ -248,8 +248,8 @@ namespace GreenLight
                 {
                     _points[0] = new Point(_one.X, _one.Y + _roadWidth);
                     _points[1] = new Point(_one.X, _one.Y - _roadWidth);
-                    _points[2] = new Point(_two.X + _roadWidth, _two.Y);
-                    _points[3] = new Point(_two.X - _roadWidth, _two.Y);
+                    _points[2] = new Point(_two.X - _roadWidth, _two.Y);
+                    _points[3] = new Point(_two.X + _roadWidth, _two.Y);
                 }
             }
             else
@@ -279,8 +279,8 @@ namespace GreenLight
                     //
                     _points[0] = new Point(_one.X, _one.Y - _roadWidth);
                     _points[1] = new Point(_one.X, _one.Y + _roadWidth);
-                    _points[2] = new Point(_two.X - _roadWidth, _two.Y);
-                    _points[3] = new Point(_two.X + _roadWidth, _two.Y);
+                    _points[2] = new Point(_two.X + _roadWidth, _two.Y);
+                    _points[3] = new Point(_two.X - _roadWidth, _two.Y);
                 }
             }
 
