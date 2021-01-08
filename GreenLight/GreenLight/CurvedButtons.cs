@@ -9,7 +9,7 @@ using System.Drawing.Drawing2D;
 
 namespace GreenLight
 {
-    class CurvedButtons : PictureBox
+    public class CurvedButtons : PictureBox
     {
         int curve;
         Color Backcolor;

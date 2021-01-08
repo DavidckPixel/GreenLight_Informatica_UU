@@ -9,7 +9,7 @@ using System.IO;
 
 namespace GreenLight
 {
-    class VehicleController : EntityController
+    public class VehicleController : EntityController
     {
 
         public List<Vehicle> vehicleList = new List<Vehicle>();
@@ -24,12 +24,16 @@ namespace GreenLight
         {
         }
 
-        public void AddVehicle(int _x, int _y, VehicleStats _stats = null)
+        public Vehicle getVehicle(int _x, int _y, VehicleStats _stats = null)
         {
             if (_stats == null)
             {
-                _stats = getRandomStats();
+                Random ran = new Random();
+                int _index = ran.Next(0, vehicles.Count() - 1);
+                _stats = vehicles[_index];
             }
+
+            return new Vehicle(_stats, _x, _y);
         }
 
         private VehicleStats getRandomStats()

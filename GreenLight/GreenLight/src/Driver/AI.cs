@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace GreenLight
 {
-    class AI
+    public class AI
     {
         //This is the AI class, every AI has a vehicle that it takes care of
         //This class holds variables for driver behaviour and will let the vehicle move accordingly.
@@ -21,6 +21,9 @@ namespace GreenLight
         int speedRelativeToLimit;
         float ruleBreakingChance;
         int speedlimit = 28; //tijdelijk
+
+        //Hoe the f** gaan we dit implementeren?
+        public int prioritylevel = 2; //rijdt niet op yieldweg maar ook niet op priority
         
         Thread moveVehicle;
         public int targetspeed;
@@ -29,6 +32,8 @@ namespace GreenLight
         public List<Point> location = new List<Point>();
         public List<Point> location2 = new List<Point>();
         List<Point> locationlocal = new List<Point>();
+
+        public int maxSpeed;
 
         
         public AI(Vehicle v, DriverStats _stats)
@@ -112,6 +117,7 @@ namespace GreenLight
             v.isBraking = false;
             v.isAccelerating = true;            
         }
+
         //Method used to calculate if the car needs to start braking in the single threaded car system
         public void needToBrake(int xt, int yt)
         {

@@ -12,14 +12,18 @@ namespace GreenLight
     {
         public RoadController roadBuilder;
         public GridController gridController;
-        PictureBox Screen;
-        public string roadType = "X";
+        public MainSignController signController;
 
-        public BuilderController(PictureBox _screen)
+        PictureBox Screen;
+        //public string roadType = "X";
+        //public string signType = "X";
+
+        public BuilderController(PictureBox _screen, Form _main)
         {
             this.Screen = _screen;
             this.gridController = new GridController(_screen, this);
-            this.roadBuilder = new RoadController();
+            this.roadBuilder = new RoadController(_screen);
+            this.signController = new MainSignController(_main, _screen);
         }
 
         public override void Initialize()
@@ -27,7 +31,7 @@ namespace GreenLight
 
         public void BuildRoad(Point _point1, Point _point2)
         {
-            switch (roadType)
+            switch (roadBuilder.roadType)
             {
                 case "Straight":
                     roadBuilder.BuildStraightRoad(_point1, _point2);
@@ -45,5 +49,6 @@ namespace GreenLight
 
             Screen.Invalidate();
         }
+
     }
 }

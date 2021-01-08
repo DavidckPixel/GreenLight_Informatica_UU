@@ -123,9 +123,31 @@ namespace GreenLight
                 case "Home":
                     General_Form.Main.SwitchControllers(General_Form.Main.MenuController);
                     break;
-
                 case "Save":
                     break;
+                case "Delete":
+                    General_Form.Main.BuildScreen.builder.signController.speedSign.deleteSign();
+                    break;
+                case "Done":
+                    General_Form.Main.BuildScreen.builder.signController.speedSign.saveButton();
+                    break;
+                case "First Point":
+                    General_Form.Main.BuildScreen.builder.signController.stopSign.firstButton();
+                    break;
+                case "Second Point":
+                    General_Form.Main.BuildScreen.builder.signController.stopSign.secondButton();
+                    break;
+                case "Cancel":
+                    General_Form.Main.BuildScreen.builder.signController.stopSign.deleteSign();
+                    break;
+                case "Place Sign":
+                    General_Form.Main.BuildScreen.builder.signController.placePriorityLevelSign();
+                    break;
+                case "Don't Place":
+                    General_Form.Main.BuildScreen.builder.signController.deletePriorityLevelSign();
+                    break;
+
+
             }
         }
         public void Size_adjust()

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
-    class DriverStats
+    public class DriverStats
     {
         public string Name;
         public float ReactionTime;

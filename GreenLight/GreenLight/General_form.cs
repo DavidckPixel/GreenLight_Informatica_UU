@@ -18,16 +18,20 @@ namespace GreenLight
     {
         //This is the form that will be opened in the end product and will make sure all parts are implemented in the right way
         //For now it only opens the User Interface, without being able to draw roads or simulate
-        
-        public static MainScreenController Main;
-        
 
+        public static MainScreenController Main;
+
+        
         //[DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
 
         public General_Form()
         {
+            this.IsMdiContainer = true;
             Main = new MainScreenController(this);
-            Main.Initialize();
+            Main.Initialize(); 
+
         }
+
+        
     }
 }

@@ -18,7 +18,11 @@ namespace GreenLight
 
         public StraightRoad(Point _point1, Point _point2, int _lanes, string _dir) : base(_point1, _point2, _lanes)
         {
-            
+
+            Point[] _points = hitBoxPoints(_point1, _point2);
+            //Console.WriteLine("{0},{1},{2},{3}", _points[1], _points[0], _points[3], _points[2]);
+            this.Hitbox2 = new RectHitbox(_points[1], _points[0], _points[3], _points[2]);
+
             this.dir = _dir;
 
             for(int x = 1; x <= this.lanes; x++)
@@ -55,7 +59,6 @@ namespace GreenLight
             {
                 temp++;
 
-                Console.WriteLine("{0} -- {1}", _normpoint1, _normpoint2);
                 _normpoint1 = new Point(_normpoint1.X - _dir.Item1, _normpoint1.Y - _dir.Item2);
 
                 _lanePoints.Add(new LanePoints(_normpoint1, AbstractRoad.CalculateAngle(_prev, _normpoint1)));
@@ -166,6 +169,63 @@ namespace GreenLight
                 }
             }
             return CalculateDrivingLane(_firstPoint, _secondPoint, t);
+        }
+
+        private Point[] hitBoxPoints(Point one, Point two)
+        {
+            Point _one, _two;
+            int _laneWidth = 40;
+            int _roadWidth = (_laneWidth * this.lanes) / 2;
+
+            if (one.Y <= two.Y)
+            {
+                _one = one;
+                _two = two;
+            }
+            else
+            {
+                _two = one;
+                _one = two;
+            }
+
+            Point[] _points = new Point[4];
+            int _angle;
+
+            float xDiff = _one.X - _two.X;
+            float yDiff = _one.Y - _two.Y;
+            _angle = (int)(Math.Atan2(yDiff, xDiff) * (180 / Math.PI));
+            _angle = Math.Abs(_angle);
+
+            Console.WriteLine("Angle: {0}", _angle);
+
+            if (_angle >= 45 && (_angle < 135 || _angle > 180))
+            {
+                _points[0] = new Point(_one.X + _roadWidth, _one.Y);
+                _points[1] = new Point(_one.X - _roadWidth, _one.Y); //Hoogste punt Altijd
+                _points[2] = new Point(_two.X + _roadWidth, _two.Y); //Laagste Punt
+                _points[3] = new Point(_two.X - _roadWidth, _two.Y);
+            }
+            else
+            {
+
+                Console.WriteLine("Kom je hier??");
+
+                _points[1] = new Point(_one.X, _one.Y - _roadWidth); //Hoogste punt, altijd
+                _points[2] = new Point(_two.X, _two.Y + _roadWidth); // Laagste Punt
+
+                if (_one.Y + _roadWidth <= _two.Y - _roadWidth)
+                {
+                    _points[0] = new Point(_one.X, _one.Y + _roadWidth);
+                    _points[3] = new Point(_two.X, _two.Y - _roadWidth);
+                }
+                else
+                {
+                    _points[3] = new Point(_one.X, _one.Y + _roadWidth);
+                    _points[0] = new Point(_two.X, _two.Y - _roadWidth);
+                }
+            }
+
+            return _points;
         }
     }
 }

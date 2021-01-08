@@ -24,6 +24,7 @@ namespace GreenLight
             //Application.Run(new RoadTestForm()); //For testing Road
             //Application.Run(new Startup()); //For testing Cars
             //Application.Run(new GridController()); //For testing Grid
+            //Application.Run(new HitBox_form()); //For testing Hitboxes
 
         }
     }

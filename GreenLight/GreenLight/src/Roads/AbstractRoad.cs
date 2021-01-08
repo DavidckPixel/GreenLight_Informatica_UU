@@ -23,14 +23,19 @@ namespace GreenLight
 
         protected int lanes;
         public List<DrivingLane> Drivinglanes=  new List<DrivingLane>();
+        public List<PlacedSign> Signs = new List<PlacedSign>();
+
+        public Hitbox Hitbox2; //Word nog aangepast Jaj
 
         //Basic Road Constructor, every road calls this constructor during initialzation
-        public AbstractRoad(Point _point1, Point _point2, int _lanes) : base(_point1, new Size(Math.Abs(_point1.X - _point2.X), Math.Abs(_point1.Y - _point2.Y)))
+        public AbstractRoad(Point _point1, Point _point2, int _lanes) : base(_point1, _point2)
         {
             this.point1 = _point1;
             this.point2 = _point2;
             this.lanes = _lanes;
             this.Cords = _point1;
+
+
         }
 
         protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
@@ -58,6 +63,16 @@ namespace GreenLight
             {
                 _lane.Draw(g);
             }
+            foreach(PlacedSign _sign in Signs)
+            {
+                _sign.draw(g);
+            }
+
+            //Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.Yellow));
+
+            //g.FillRectangle(Notsolid, this.Hitbox);
+
+            this.Hitbox2.Draw(g, Color.Yellow);
         }
 
         public Point getPoint1() { return point1; }

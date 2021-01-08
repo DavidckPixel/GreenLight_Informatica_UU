@@ -25,7 +25,7 @@ namespace GreenLight
            
             
             this.Screen.Paint += DrawPictureBox;
-            builder = new BuilderController(this.Screen);
+            builder = new BuilderController(this.Screen, _tempform);
 
             _tempform.Controls.Add(this.Screen);
 
@@ -75,20 +75,22 @@ namespace GreenLight
 
             string _old = this.ActiveSubMenu;
             this.ActiveSubMenu = _menu;
+            General_Form.Main.BuildScreen.builder.signController.signType = "D";
+            General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "D";
 
             switch (_menu)
             {
                 case "Roads":
-                    RoadsMenu();
+                    RoadsMenu();                    
                     break;
                 case "Signs":
-                    SignsMenu();
+                    SignsMenu();                    
                     break;
                 case "Lights":
-                    LightsMenu();
+                    LightsMenu();                    
                     break;
                 case "Buildings":
-                    BuildingsMenu();
+                    BuildingsMenu();                    
                     break;
                 default:
                     Log.Write("Switch Failed, Returning back to " + _old);
