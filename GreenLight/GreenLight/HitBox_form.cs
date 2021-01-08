@@ -13,8 +13,8 @@ namespace GreenLight
     public partial class HitBox_form : Form
     {
 
-        RectHitbox test1, test2, test3, test4, test5, test6,test7,test8,test9,test10, test11, test12, test13, test14;
-        CurvedHitbox curftest1, curftest2, curftest3, curftest4, curftest5;
+        Hitbox test1, test2, test3, test4, test5, test6,test7,test8,test9,test10, test11, test12, test13, test14;
+        Hitbox curftest1, curftest2, curftest3, curftest4, curftest5;
 
         RectHitbox Under1, Under2, Under3, Under4, Under5, Under6, Under7, Under8;
         RectHitbox Up1, Up2, Up3, Up4, Up5;
@@ -23,6 +23,7 @@ namespace GreenLight
 
         List<testcord> Points1 = new List<testcord>();
         List<Hitbox> hitboxes = new List<Hitbox>();
+        List<Hitbox> hitboxes2 = new List<Hitbox>();
         List<Color> colours = new List<Color>()
         {
             Color.Green,
@@ -65,7 +66,7 @@ namespace GreenLight
         }
         public HitBox_form()
         {
-            this.Size = new Size(1500, 1000);
+            this.Size = new Size(1000, 1000);
 
             /*
             test1 = new RectHitbox(new Point(50, 50), new Point(150, 50), new Point(150, 200), new Point(250, 200));
@@ -101,6 +102,7 @@ namespace GreenLight
             hitboxes.Add(test14);
             */
 
+            
             Up1 = new RectHitbox(new Point(175, 250), new Point(225, 250), new Point(275, 350), new Point(325, 350));
             Up2 = new RectHitbox(new Point(275, 225), new Point(325, 225), new Point(325, 350), new Point(375, 350));
             Up3 = new RectHitbox(new Point(375, 200), new Point(425, 200), new Point(375, 350), new Point(425, 350));
@@ -121,14 +123,14 @@ namespace GreenLight
             hitboxes.Add(Right2);
             hitboxes.Add(Right3);
 
-            Under1 = new RectHitbox(new Point(175,300), new Point(175,250), new Point(275,350), new Point(275,300));
-            Under2 = new RectHitbox(new Point(150,350), new Point(275,350), new Point(150,400), new Point(275,400));
-            Under3 = new RectHitbox(new Point(175,450), new Point(175,500), new Point(275,450), new Point(275,400)); //
-            Under4 = new RectHitbox(new Point(275,450), new Point(325,450), new Point(175,550), new Point(225,550));
-            Under5 = new RectHitbox(new Point(325,450), new Point(375,450), new Point(275,575), new Point(325,575));
-            Under6 = new RectHitbox(new Point(375,450), new Point(425,450), new Point(375,600), new Point(425,600));
-            Under7 = new RectHitbox(new Point(425,450), new Point(475,450), new Point(475,575), new Point(525,575));
-            Under8 = new RectHitbox(new Point(475,450), new Point(525,450), new Point(575,550), new Point(625,550));
+            Under1 = new RectHitbox(new Point(175,300), new Point(275,350), new Point(175, 350), new Point(275,400));
+            Under2 = new RectHitbox(new Point(150,400), new Point(275,400), new Point(150,450), new Point(275,450));
+            Under3 = new RectHitbox(new Point(175,500), new Point(275,450), new Point(175,550), new Point(275,500)); //
+            Under4 = new RectHitbox(new Point(275,500), new Point(325,500), new Point(175,600), new Point(225,600));
+            Under5 = new RectHitbox(new Point(325,500), new Point(375,500), new Point(275,625), new Point(325,625));
+            Under6 = new RectHitbox(new Point(375,500), new Point(425,500), new Point(375,650), new Point(425,650));
+            Under7 = new RectHitbox(new Point(425,500), new Point(475,500), new Point(475,625), new Point(525,625));
+            Under8 = new RectHitbox(new Point(475,500), new Point(525,500), new Point(575,600), new Point(625,600));
 
             hitboxes.Add(Under1);
             hitboxes.Add(Under2);
@@ -137,7 +139,7 @@ namespace GreenLight
             hitboxes.Add(Under5);
             hitboxes.Add(Under6);
             hitboxes.Add(Under7);
-            hitboxes.Add(Under8);
+            hitboxes.Add(Under8); 
 
 
             Q1 = new CurvedHitbox(new Point(25 , 425 ), new Point( 75, 425), new Point(400, 75 ), new Point(400, 125), "SE");
@@ -145,10 +147,11 @@ namespace GreenLight
             Q3 = new CurvedHitbox(new Point(775, 425), new Point(725, 425), new Point( 400, 775), new Point( 400, 725 ), "NW");
             Q4 = new CurvedHitbox(new Point(400, 775), new Point(400, 725), new Point(25, 425), new Point(75, 425), "NE");
 
-            hitboxes.Add(Q1);
-            hitboxes.Add(Q2);
-            hitboxes.Add(Q3);
-            hitboxes.Add(Q4);
+            hitboxes2.Add(Q1);
+            hitboxes2.Add(Q2);
+            hitboxes2.Add(Q3);
+            hitboxes2.Add(Q4); 
+            
 
 
 
@@ -192,6 +195,14 @@ namespace GreenLight
                 _temp.Draw(g, Color.Yellow);
             }
 
+            foreach (Hitbox _temp in hitboxes2)
+            {
+                _brush = new SolidBrush(colours[hitboxes2.IndexOf(_temp)]);
+                _pen = new Pen(_brush);
+
+                _temp.Draw(g, Color.Yellow);
+            }
+
             foreach (testcord test in Points1)
             {
                 _brush = new SolidBrush(test.color);
@@ -212,8 +223,6 @@ namespace GreenLight
             Console.WriteLine("---------------------------------"); */
 
             //Console.WriteLine(curftest1.midX + " -- " + curftest1.midY);
-
-            Console.WriteLine(curftest1.Contains(mea.Location));
             Console.WriteLine();
         }
 
@@ -225,7 +234,7 @@ namespace GreenLight
             Point _point;
             Color _color;
 
-            for (int z = 0; z < 15000; z++)
+            for (int z = 0; z < 20000; z++)
             {
                 x = ran.Next(0, this.Width);
                 y = ran.Next(0, this.Height);
@@ -235,9 +244,18 @@ namespace GreenLight
 
                 foreach(Hitbox _temp in hitboxes)
                 {
-                    if (_temp.Contains(_point))
+                    if (_temp.Contains(_point) )
                     {
                         _color = colours[hitboxes.IndexOf(_temp)];
+                    }
+                    Points.Add(new testcord(x, y, _color));
+                }
+
+                foreach (Hitbox _temp in hitboxes2)
+                {
+                    if (_temp.Contains(_point))
+                    {
+                        _color = colours[hitboxes2.IndexOf(_temp)];
                     }
                     Points.Add(new testcord(x, y, _color));
                 }

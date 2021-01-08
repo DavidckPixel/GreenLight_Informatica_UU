@@ -130,11 +130,12 @@ namespace GreenLight
             return false;
         }
 
+        /*
         public override bool Contains(RectHitbox _h)
         {
             bool _temp = (this.Contains(_h.topright) && this.Contains(_h.topleft) && this.Contains(_h.bottomright) && this.Contains(_h.bottomleft));
             return _temp;
-        }
+        } */
 
         public override bool Collide(RectHitbox _h)
         {

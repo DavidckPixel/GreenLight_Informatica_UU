@@ -10,7 +10,7 @@ namespace GreenLight
     abstract public class Hitbox
     {
         public abstract bool Contains(Point _p);
-        public abstract bool Contains(RectHitbox _h);
+        //public abstract bool Contains(RectHitbox _h);
 
         public abstract bool Collide(RectHitbox _h);
 

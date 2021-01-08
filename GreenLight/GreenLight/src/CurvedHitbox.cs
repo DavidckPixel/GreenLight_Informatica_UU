@@ -203,9 +203,9 @@ namespace GreenLight
             
         }
 
-        public override bool Contains(RectHitbox _h)
+        /*public override bool Contains(RectHitbox _h)
         {
             throw new NotImplementedException();
-        }
+        } */
     }
 }
