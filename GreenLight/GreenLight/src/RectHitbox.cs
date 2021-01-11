@@ -9,17 +9,21 @@ namespace GreenLight
 {
     public class RectHitbox : Hitbox
     {
-        
+
+
+        Point bottomleft, bottomright, topleft, topright;
 
         public double? rcTop, rcBottom, rcLeft, rcRight;
         public double? bTop, bBottom, bLeft, bRight;
 
-        public RectHitbox(Point _topleft, Point _topright, Point _bottomleft, Point _bottomright)
+        public RectHitbox(Point _topleft, Point _topright, Point _bottomleft, Point _bottomright, Color _color) : base(_topleft, _topright, _bottomleft, _bottomright)
         {
             bottomleft = _bottomleft;
             bottomright = _bottomright;
             topleft = _topleft;
             topright = _topright;
+
+            Topcord = new Point(BetterMin(_topleft.X, _topright.X, _bottomleft.X, _bottomright.X), BetterMin(_topleft.Y, _topright.Y, _bottomleft.Y, _bottomright.Y));
 
             double topleftX, topleftY, toprightX, toprightY, bottomleftX, bottomleftY, bottomrightX, bottomrightY;
 
@@ -34,6 +38,8 @@ namespace GreenLight
 
             bottomrightX = _bottomright.X;
             bottomrightY = _bottomright.Y;
+
+            this.color = _color;
 
             //----------------------------------------------------------------
 
@@ -158,9 +164,9 @@ namespace GreenLight
         }
 
 
-        public override void Draw(Graphics g, Color _color)
+        public override void Draw(Graphics g)
         {
-            Brush Notsolid = new SolidBrush(Color.FromArgb(100, _color));
+            Brush Notsolid = new SolidBrush(Color.FromArgb(100, this.color));
             Point[] _points = new Point[]
             {
                 topleft, topright, bottomright, bottomleft
@@ -168,5 +174,7 @@ namespace GreenLight
 
             g.FillPolygon(Notsolid, _points);
         }
+
+        
     }
 }

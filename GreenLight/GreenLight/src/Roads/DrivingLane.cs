@@ -25,9 +25,11 @@ namespace GreenLight
 
         private LanePoints middle;
 
+        public Hitbox hitbox;
+
         int AngleDir;
 
-        public DrivingLane(List<LanePoints> _points, string _dir, int _roadLanes, int _thisLane)
+        public DrivingLane(List<LanePoints> _points, string _dir, int _roadLanes, int _thisLane, Hitbox _hitbox)
         {
             this.points = _points;
             this.dir = _dir;
@@ -35,6 +37,8 @@ namespace GreenLight
             this.thisLane = _thisLane;
             Lane = new Bitmap(Properties.Resources.Lane);
             Verticallane = new Bitmap(Properties.Resources.Road_Verticaal);
+
+            this.hitbox = _hitbox;
 
             middle = this.points[this.points.Count() / 2];
             AngleDir = middle.degree;
@@ -133,16 +137,20 @@ namespace GreenLight
                         }
                         break;
                 }
+
                 Console.WriteLine(dir);
-                g.DrawArc(p, rect, startAngle, sweepAngle);
+                
 
                 try
                 {
+                    g.DrawArc(p, rect, startAngle, sweepAngle);
+
                     outer = new Rectangle(new Point(rect.Location.X - drivingLaneDistance / 2, rect.Location.Y - drivingLaneDistance / 2), new Size(rect.Width + drivingLaneDistance, rect.Height + drivingLaneDistance));
                     inner = new Rectangle(new Point(rect.Location.X + drivingLaneDistance / 2, rect.Location.Y + drivingLaneDistance / 2), new Size(rect.Width - drivingLaneDistance, rect.Height - drivingLaneDistance));
 
                     g.DrawArc(getPen(side1), outer, startAngle, sweepAngle);
                     g.DrawArc(getPen(side2), inner, startAngle, sweepAngle);
+
                 }
                 catch (Exception)
                 {
@@ -178,6 +186,7 @@ namespace GreenLight
                         g.DrawLine(getPen(2), new Point(points[0].cord.X, points[0].cord.Y + drivingLaneDistance / 2), new Point(points[points.Count - 1].cord.X, points[points.Count - 1].cord.Y + drivingLaneDistance / 2));
                     }
 
+
                 }
                 else //StraightRoad
                 {
@@ -193,6 +202,8 @@ namespace GreenLight
                     }
                 }
             }
+
+            hitbox.Draw(g);
 
             Image _image = Image.FromFile("../../User Interface Recources/Arrow.png");
             Bitmap _bitmap = new Bitmap(_image);

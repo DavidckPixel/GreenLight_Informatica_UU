@@ -107,10 +107,10 @@ namespace GreenLight
             label.TextAlign = ContentAlignment.MiddleCenter;
             label.Location = new Point(label.Location.X+2, label.Location.Y - 2);
             label.Parent = this;
-            label.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Label_click(Text); };
+            label.Click += (object o, EventArgs EA) => { this.OnClick(EA); };
             label.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 4) + "_On_Hover.png"); };
             label.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
-            this.Controls.Add(label);
+            this.Controls.Add(label); 
         }
 
         public void Set_Image(string File_path)

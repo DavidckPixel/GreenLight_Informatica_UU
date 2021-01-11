@@ -82,6 +82,7 @@ namespace GreenLight
             CurvedButtons About_button = new CurvedButtons(new Size(startmenu["projectXsize"], startmenu["projectYsize"]),
                 new Point(Sub_menu_width / 2 - startmenu["aboutX"], Form.Height - startmenu["aboutY"]), startmenu["aboutCurve"], "../../User Interface Recources/Custom_Button.png",
                 "About", Dosis_font_family, Form, this.BackColor);
+            About_button.Click += (object o, EventArgs ea) => { System.Diagnostics.Process.Start("https://github.com/DavidckPixel/GreenLight_Informatica_UU"); };
             this.Controls.Add(About_button);
         }
     }

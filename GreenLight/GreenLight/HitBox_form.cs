@@ -103,11 +103,11 @@ namespace GreenLight
             */
 
             
-            Up1 = new RectHitbox(new Point(175, 250), new Point(225, 250), new Point(275, 350), new Point(325, 350));
-            Up2 = new RectHitbox(new Point(275, 225), new Point(325, 225), new Point(325, 350), new Point(375, 350));
-            Up3 = new RectHitbox(new Point(375, 200), new Point(425, 200), new Point(375, 350), new Point(425, 350));
-            Up4 = new RectHitbox(new Point(475, 225), new Point(525, 225), new Point(425,350), new Point(475,350));
-            Up5 = new RectHitbox(new Point(575,250), new Point(625,250), new Point(475,350), new Point(525,350));
+            Up1 = new RectHitbox(new Point(175, 250), new Point(225, 250), new Point(275, 350), new Point(325, 350),Color.Yellow);
+            Up2 = new RectHitbox(new Point(275, 225), new Point(325, 225), new Point(325, 350), new Point(375, 350),Color.Yellow);
+            Up3 = new RectHitbox(new Point(375, 200), new Point(425, 200), new Point(375, 350), new Point(425, 350), Color.Yellow);
+            Up4 = new RectHitbox(new Point(475, 225), new Point(525, 225), new Point(425,350), new Point(475,350), Color.Yellow);
+            Up5 = new RectHitbox(new Point(575,250), new Point(625,250), new Point(475,350), new Point(525,350), Color.Yellow);
 
             hitboxes.Add(Up1);
             hitboxes.Add(Up2);
@@ -115,22 +115,22 @@ namespace GreenLight
             hitboxes.Add(Up4);
             hitboxes.Add(Up5);
 
-            Right1 = new RectHitbox(new Point(525, 350), new Point(625, 300), new Point(525, 400), new Point(625, 350));
-            Right2 = new RectHitbox(new Point(525, 400), new Point(650, 400), new Point(525, 450), new Point(650, 450));
-            Right3 = new RectHitbox(new Point(525, 450), new Point(625, 500), new Point(525, 500), new Point(625, 550));
+            Right1 = new RectHitbox(new Point(525, 350), new Point(625, 300), new Point(525, 400), new Point(625, 350), Color.Yellow);
+            Right2 = new RectHitbox(new Point(525, 400), new Point(650, 400), new Point(525, 450), new Point(650, 450), Color.Yellow);
+            Right3 = new RectHitbox(new Point(525, 450), new Point(625, 500), new Point(525, 500), new Point(625, 550), Color.Yellow);
 
             hitboxes.Add(Right1);
             hitboxes.Add(Right2);
             hitboxes.Add(Right3);
 
-            Under1 = new RectHitbox(new Point(175,300), new Point(275,350), new Point(175, 350), new Point(275,400));
-            Under2 = new RectHitbox(new Point(150,400), new Point(275,400), new Point(150,450), new Point(275,450));
-            Under3 = new RectHitbox(new Point(175,500), new Point(275,450), new Point(175,550), new Point(275,500)); //
-            Under4 = new RectHitbox(new Point(275,500), new Point(325,500), new Point(175,600), new Point(225,600));
-            Under5 = new RectHitbox(new Point(325,500), new Point(375,500), new Point(275,625), new Point(325,625));
-            Under6 = new RectHitbox(new Point(375,500), new Point(425,500), new Point(375,650), new Point(425,650));
-            Under7 = new RectHitbox(new Point(425,500), new Point(475,500), new Point(475,625), new Point(525,625));
-            Under8 = new RectHitbox(new Point(475,500), new Point(525,500), new Point(575,600), new Point(625,600));
+            Under1 = new RectHitbox(new Point(175,300), new Point(275,350), new Point(175, 350), new Point(275,400), Color.Yellow);
+            Under2 = new RectHitbox(new Point(150,400), new Point(275,400), new Point(150,450), new Point(275,450), Color.Yellow);
+            Under3 = new RectHitbox(new Point(175,500), new Point(275,450), new Point(175,550), new Point(275,500), Color.Yellow); //
+            Under4 = new RectHitbox(new Point(275,500), new Point(325,500), new Point(175,600), new Point(225,600), Color.Yellow);
+            Under5 = new RectHitbox(new Point(325,500), new Point(375,500), new Point(275,625), new Point(325,625), Color.Yellow);
+            Under6 = new RectHitbox(new Point(375,500), new Point(425,500), new Point(375,650), new Point(425,650), Color.Yellow);
+            Under7 = new RectHitbox(new Point(425,500), new Point(475,500), new Point(475,625), new Point(525,625), Color.Yellow);
+            Under8 = new RectHitbox(new Point(475,500), new Point(525,500), new Point(575,600), new Point(625,600), Color.Yellow);
 
             hitboxes.Add(Under1);
             hitboxes.Add(Under2);
@@ -142,10 +142,10 @@ namespace GreenLight
             hitboxes.Add(Under8); 
 
 
-            Q1 = new CurvedHitbox(new Point(25 , 425 ), new Point( 75, 425), new Point(400, 75 ), new Point(400, 125), "SE");
-            Q2 = new CurvedHitbox(new Point(400, 75), new Point(400, 125), new Point( 775, 425), new Point(725, 425), "SW");
-            Q3 = new CurvedHitbox(new Point(775, 425), new Point(725, 425), new Point( 400, 775), new Point( 400, 725 ), "NW");
-            Q4 = new CurvedHitbox(new Point(400, 775), new Point(400, 725), new Point(25, 425), new Point(75, 425), "NE");
+            Q1 = new CurvedHitbox(new Point(25 , 425 ), new Point( 75, 425), new Point(400, 75 ), new Point(400, 125), "SE", Color.Yellow);
+            Q2 = new CurvedHitbox(new Point(400, 75), new Point(400, 125), new Point( 775, 425), new Point(725, 425), "SW", Color.Yellow);
+            Q3 = new CurvedHitbox(new Point(775, 425), new Point(725, 425), new Point( 400, 775), new Point( 400, 725 ), "NW", Color.Yellow);
+            Q4 = new CurvedHitbox(new Point(400, 775), new Point(400, 725), new Point(25, 425), new Point(75, 425), "NE", Color.Yellow);
 
             hitboxes2.Add(Q1);
             hitboxes2.Add(Q2);
@@ -192,7 +192,7 @@ namespace GreenLight
                 _brush = new SolidBrush(colours[hitboxes.IndexOf(_temp)]);
                 _pen = new Pen(_brush);
 
-                _temp.Draw(g, Color.Yellow);
+                _temp.Draw(g);
             }
 
             foreach (Hitbox _temp in hitboxes2)
@@ -200,7 +200,7 @@ namespace GreenLight
                 _brush = new SolidBrush(colours[hitboxes2.IndexOf(_temp)]);
                 _pen = new Pen(_brush);
 
-                _temp.Draw(g, Color.Yellow);
+                _temp.Draw(g);
             }
 
             foreach (testcord test in Points1)

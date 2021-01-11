@@ -18,9 +18,9 @@ namespace GreenLight
             this.dir = _dir;
             this.Type = _type;
 
-            Point[] _points = hitBoxPoints(_point1, _point2);
+            Point[] _points = hitBoxPoints(_point1, _point2, lanes);
             //Console.WriteLine("{0},{1},{2},{3}", _points[1], _points[0], _points[3], _points[2]);
-            this.Hitbox2 = new RectHitbox(_points[1], _points[0], _points[3], _points[2]);
+            this.Hitbox2 = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
 
             for (int x = 1; x <= this.lanes; x++)
             {
@@ -77,9 +77,9 @@ namespace GreenLight
 
                 _prev = _normpoint1;
             }
-           
-
-            return new DrivingLane(_lanePoints, this.dir, lanes, _thisLane); 
+            Point[] _points = hitBoxPoints(_point1, _point2, 1);
+            Hitbox _temp = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Green);
+            return new DrivingLane(_lanePoints, this.dir, lanes, _thisLane, _temp); 
         }
 
         private int GetDirection(Point _point1, Point _point2)
@@ -205,11 +205,10 @@ namespace GreenLight
             return CalculateDrivingLane(_firstPoint, _secondPoint, t);
         }
 
-        private Point[] hitBoxPoints(Point one, Point two)
+        public static Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 40)
         {
             Point _one, _two;
-            int _laneWidth = 40;
-            int _roadWidth = (_laneWidth * this.lanes) / 2;
+            int _roadWidth = (_laneWidth * _lanes) / 2;
 
             if (one.Y <= two.Y)
             {

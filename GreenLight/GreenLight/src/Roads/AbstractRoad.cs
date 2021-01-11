@@ -28,6 +28,8 @@ namespace GreenLight
         public Hitbox Hitbox2; //Word nog aangepast Jaj
         public string Type;
 
+        public List<Hitbox> offsetlaneHitbox = new List<Hitbox>();
+
         //Basic Road Constructor, every road calls this constructor during initialzation
         public AbstractRoad(Point _point1, Point _point2, int _lanes) : base(_point1, _point2)
         {
@@ -71,7 +73,7 @@ namespace GreenLight
 
             //g.FillRectangle(Notsolid, this.Hitbox);
 
-            this.Hitbox2.Draw(g, Color.Yellow);
+            this.Hitbox2.Draw(g);
         }
 
         public Point getPoint1() { return point1; }

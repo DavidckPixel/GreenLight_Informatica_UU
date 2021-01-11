@@ -12,7 +12,7 @@ namespace GreenLight
     public class StopSignController : AbstractSignController
     {
         public Label QuestionLabel, errorMess, BeginLabel, EndLabel;
-        public CurvedButtons BeginButton, EndButton, CancelButton;
+        public CurvedButtons SaveButton, CancelButton;
         
         public MainSignController signController;
 
@@ -40,6 +40,7 @@ namespace GreenLight
 
             this.settingScreen.Size = new Size(400, 400);
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
+            this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
             QuestionLabel = new Label();
             QuestionLabel.Text = "Location for Sign?";
@@ -62,46 +63,20 @@ namespace GreenLight
             EndLabel.Text = "should be cords";
             this.settingScreen.Controls.Add(EndLabel);
 
-            BeginButton = new CurvedButtons(new Size(80, 40), new Point(10, 150), 25, "../../User Interface Recources/Custom_Button_Small.png", "First Point", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            this.settingScreen.Controls.Add(BeginButton);
+            SaveButton = new CurvedButtons(new Size(80, 40), new Point(10, 300), 25, "../../User Interface Recources/Custom_Button_Small.png", "Done", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            SaveButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.stopSign.placeSign(); };
+            this.settingScreen.Controls.Add(SaveButton);
 
-            EndButton = new CurvedButtons(new Size(80, 40), new Point(110, 150), 25, "../../User Interface Recources/Custom_Button_Small.png", "Second Point", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            this.settingScreen.Controls.Add(EndButton);
-
-            CancelButton = new CurvedButtons(new Size(80, 40), new Point(60 , 300), 25, "../../User Interface Recources/Custom_Button_Small.png", "Cancel", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            CancelButton = new CurvedButtons(new Size(80, 40), new Point(60 , 300), 25, "../../User Interface Recources/Custom_Button_Small.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            CancelButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.stopSign.deleteSign(); };
             this.settingScreen.Controls.Add(CancelButton);
 
 
         }
-        public void firstButton()
+        
+        public void placeSign()
         {
-            Point _correctpoint = point1;
-
-            if (_correctpoint != null)
-            {
-                selected.editLocation(_correctpoint);
-                this.settingScreen.Hide();
-            }
-            else
-            {
-                errorMessage("Input too high");
-                return;
-            }
-        }
-        public void secondButton()
-        {
-            Point _correctpoint = point2;
-
-            if (_correctpoint != null)
-            {
-                selected.editLocation(_correctpoint);
-                this.settingScreen.Hide();
-            }
-            else
-            {
-                errorMessage("Input not correct");
-                return;
-            }
+            this.settingScreen.Hide();
         }
 
         public void errorMessage(string _error)

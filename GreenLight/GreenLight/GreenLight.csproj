@@ -195,6 +195,9 @@
     <EmbeddedResource Include="src\Roads\RoadTestForm.resx">
       <DependentUpon>RoadTestForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="src\UserControls\Start_sub_menu.resx">
+      <DependentUpon>Start_sub_menu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Vehicle\Vehicle.resx">
       <DependentUpon>Vehicle.cs</DependentUpon>
     </EmbeddedResource>

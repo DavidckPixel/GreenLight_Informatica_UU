@@ -24,8 +24,8 @@ namespace GreenLight
             this.dir = _dir;
             this.Type = _type;
 
-            Point[] _points = hitBoxPoints(_point1, _point2);
-            this.Hitbox2 = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], dir);
+            Point[] _points = hitBoxPoints(_point1, _point2, this.lanes);
+            this.Hitbox2 = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], dir, Color.Yellow);
 
             for (int x = 1; x <= lanes; x++)
             {
@@ -119,7 +119,10 @@ namespace GreenLight
                 Console.WriteLine(x.ToString());
             }
 
-            return new DrivingLane(_lanePoints, this.dir, lanes, _thisLane);
+            Point[] _points = hitBoxPoints(_point1, _point2, 1);
+            Hitbox _temp = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], dir, Color.Green);
+
+            return new DrivingLane(_lanePoints, this.dir, lanes, _thisLane, _temp);
         }
 
         private Tuple<int, int> GetDirection(Point _point1, Point _point2)
@@ -218,11 +221,11 @@ namespace GreenLight
                 return CalculateDrivingLane(_firstPoint, _secondPoint, t);
             }
 
-        private Point[] hitBoxPoints(Point one, Point two)
+        private Point[] hitBoxPoints(Point one, Point two, int _lanes)
         {
             Point _one, _two;
             int _laneWidth = 40;
-            int _roadWidth = (_laneWidth * this.lanes) / 2;
+            int _roadWidth = (_laneWidth * _lanes) / 2;
             Point[] _points = new Point[4];
 
             if(dir == "NW" || dir == "NE")

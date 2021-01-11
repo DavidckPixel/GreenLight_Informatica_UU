@@ -36,6 +36,7 @@ namespace GreenLight
 
             this.settingScreen.Size = new Size(300, 600);
             this.settingScreen.BackColor = Color.FromArgb(255,255,255);
+            this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
             label1 = new Label();
             label1.Text = "Speed?";
@@ -60,9 +61,11 @@ namespace GreenLight
             FontFamily Dosis_font_family = Font_collection.Families[0];
 
             Button1 = new CurvedButtons(new Size(80, 40), new Point(10, 400), 25, "../../User Interface Recources/Custom_Button_Small.png", "Done", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            Button1.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.speedSign.saveButton(); };
             this.settingScreen.Controls.Add(Button1); 
 
-            Button2 = new CurvedButtons(new Size(80, 40), new Point(120, 400), 25, "../../User Interface Recources/Custom_Button_Small.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);    
+            Button2 = new CurvedButtons(new Size(80, 40), new Point(120, 400), 25, "../../User Interface Recources/Custom_Button_Small.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            Button2.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.speedSign.deleteSign(); };
             this.settingScreen.Controls.Add(Button2);
         }
 

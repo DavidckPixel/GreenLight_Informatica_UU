@@ -48,6 +48,7 @@ namespace GreenLight
             int _ButtonXdiff = User_Controls.Config.startMainMenu["buttonXdiff"];
             int _ButtonYdiff = User_Controls.Config.startMainMenu["buttonYdiff"];
             int _ButtonCurve = User_Controls.Config.startMainMenu["buttonCurve"];
+
             CurvedButtons New_project_button = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point((Form.Width - Sub_menu_width) / 2 - _ButtonXdiff * 2  - (int) (0.1*Form.Width), (Form.Height / 3) * 2 - _ButtonYdiff), _ButtonCurve, "../../User Interface Recources/New_Project_Button.png", this.BackColor);
             CurvedButtons Choose_preset_button = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point((Form.Width-Sub_menu_width)/2 - _ButtonXdiff, (Form.Height/3)*2 - _ButtonYdiff), _ButtonCurve, "../../User Interface Recources/Choose_Preset_Button.png", this.BackColor);
             CurvedButtons Browse_directory_button = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point((Form.Width - Sub_menu_width) / 2 + (int)(0.1 * Form.Width), (Form.Height / 3) * 2 - _ButtonYdiff), _ButtonCurve, "../../User Interface Recources/Browse_Directory_Button.png", this.BackColor);

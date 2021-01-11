@@ -20,13 +20,13 @@ namespace GreenLight
             this.Direction = _direction;
             this.Sign = _sign;
 
-            this.Hitbox = new RectHitbox(new Point(_location.X - 3, _location.Y - 3), new Point(_location.X + 3, _location.Y - 3), new Point(_location.X - 3, _location.Y + 3), new Point(_location.X + 3, _location.Y + 3));
+            this.Hitbox = new RectHitbox(new Point(_location.X - 3, _location.Y - 3), new Point(_location.X + 3, _location.Y - 3), new Point(_location.X - 3, _location.Y + 3), new Point(_location.X + 3, _location.Y + 3), Color.Red);
         }
 
         public void draw(Graphics g)
         {
             //Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.Red));
-            this.Hitbox.Draw(g, Color.Red);
+            this.Hitbox.Draw(g);
             //g.FillRectangle(Notsolid, this.Hitbox);
         }
     }
