@@ -216,15 +216,12 @@ namespace GreenLight
                     }
                 }
 
-            Console.WriteLine("STARTPOINTS : {0} -- {1}", _firstPoint, _secondPoint);
-
                 return CalculateDrivingLane(_firstPoint, _secondPoint, t);
             }
 
-        private Point[] hitBoxPoints(Point one, Point two, int _lanes)
+        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 40)
         {
             Point _one, _two;
-            int _laneWidth = 40;
             int _roadWidth = (_laneWidth * _lanes) / 2;
             Point[] _points = new Point[4];
 
@@ -291,5 +288,9 @@ namespace GreenLight
             return _points;
         }
 
+        public override Hitbox CreateHitbox(Point[] _points)
+        {
+            return new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], dir, Color.Yellow);
+        }
     }
 }

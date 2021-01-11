@@ -205,7 +205,7 @@ namespace GreenLight
             return CalculateDrivingLane(_firstPoint, _secondPoint, t);
         }
 
-        public static Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 40)
+        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 40)
         {
             Point _one, _two;
             int _roadWidth = (_laneWidth * _lanes) / 2;
@@ -229,7 +229,7 @@ namespace GreenLight
             _angle = (int)(Math.Atan2(yDiff, xDiff) * (180 / Math.PI));
             _angle = Math.Abs(_angle);
 
-            Console.WriteLine("Angle: {0}", _angle);
+            //Console.WriteLine("Angle: {0}", _angle);
 
             if (_angle >= 45 && (_angle < 135 || _angle > 180)) 
             {
@@ -266,6 +266,12 @@ namespace GreenLight
             }
 
             return _points;
+        }
+
+
+        public override Hitbox CreateHitbox(Point[] _points)
+        {
+            return new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Red);
         }
     }   
 }

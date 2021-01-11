@@ -41,6 +41,8 @@ namespace GreenLight
 
         protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
 
+        public abstract Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 40);
+
         public static int CalculateAngle(Point _point1, Point _point2)
         {
             //calculateAngle
@@ -57,6 +59,9 @@ namespace GreenLight
 
             return _degree % 360;
         }
+
+        public abstract Hitbox CreateHitbox(Point[] _array);
+
 
         public void Draw(Graphics g)
         {

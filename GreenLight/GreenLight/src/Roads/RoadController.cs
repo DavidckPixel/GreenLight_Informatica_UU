@@ -257,13 +257,12 @@ namespace GreenLight
                 Point _one = _drivinglane.points.First().cord;
                 Point _two = _drivinglane.points.Last().cord;
 
+                Console.WriteLine("DRIVING POINTS FOR THE CURVED LINE ARE: {0} -- {1}", _one, _two);
+
                 Point _oneoffset = new Point(_one.X - _diff.X, _one.Y - _diff.Y);
                 Point _twooffset = new Point(_two.X - _diff.X, _two.Y - _diff.Y);
 
                 double _scale;
-
-                //double diffX = Math.Abs(_oneoffset.X - _twooffset.X);
-                //double diffY = Math.Abs(_oneoffset.Y - _twooffset.Y);
 
                 double diff = Math.Max(selectedRoad.Hitbox2.Size.Width, selectedRoad.Hitbox2.Size.Height) + 20;
 
@@ -271,72 +270,97 @@ namespace GreenLight
                 {
                     _scale = (double)(this.settingScreenImage.Width) / diff;
                 }
-                else 
+                else
                 {
                     _scale = (double)(this.settingScreenImage.Height) / diff;
                 }
 
-                //----------- TOT HIER KLOPT
+                double? offset;
 
 
-                Console.WriteLine("Made a Offset Hitbox for the DrivingLane! {0}, {1} , Middle: {2} Too high: {4} -- Scale: {3}", _oneoffset, _twooffset, (_oneoffset.Y + _twooffset.Y) / 2, _scale, 260 - (_oneoffset.Y + _twooffset.Y) / 2);
 
-                //_oneoffset = new Point((int)(_oneoffset.X + 10 * _scale) ,(int) (_oneoffset.Y* _scale) + 10);
-                //_twooffset = new Point((int)(_twooffset.X + 10 * _scale) ,(int)(_twooffset.Y * _scale) + 10);
+                int Graden = AbstractRoad.CalculateAngle(_one, _two);
 
-                //_oneoffset = new Point((int)((_oneoffset.X + 10) * _scale), (int)((_oneoffset.Y + 10) * _scale));
-                //_twooffset = new Point((int)((_twooffset.X + 10) * _scale), (int)((_twooffset.Y + 10) * _scale));
-
-                Console.WriteLine("GET LANES: " + selectedRoad.getLanes() * 40);
-
-                if(selectedRoad.Hitbox2.Size.Width >= selectedRoad.Hitbox2.Size.Height)
+                if (selectedRoad.Hitbox2.Size.Width >= selectedRoad.Hitbox2.Size.Height)
                 {
-                    double offset = (double)this.settingScreenImage.Height / 2 - ((((double)selectedRoad.getLanes() * 40)) / 2) * _scale;
+                    if ((Graden >= 315 && Graden < 360) || (Graden >= 0 && Graden < 45) || (Graden >= 135 && Graden < 225))
+                    {
 
-                    _oneoffset = new Point((int)((_oneoffset.X + 10) * _scale), (int)(((_oneoffset.Y) * _scale) + offset));
-                    _twooffset = new Point((int)((_twooffset.X + 10) * _scale), (int)(((_twooffset.Y) * _scale) + offset));
+                        if (selectedRoad.Type == "Curved")
+                        {
+                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.Hitbox2.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
+                        }
+                        else
+                        {
+                            int temp = Math.Abs(_oneoffset.Y - _twooffset.Y);
+                            offset = (double)this.settingScreenImage.Height / 2 - temp / 2 * _scale;
+                        }
+
+                        _oneoffset = new Point((int)((_oneoffset.X + 10) * _scale), (int)(((_oneoffset.Y) * _scale) + offset));
+                        _twooffset = new Point((int)((_twooffset.X + 10) * _scale), (int)(((_twooffset.Y) * _scale) + offset));
+                    }
+                    else
+                    {
+
+                        if (selectedRoad.Type == "Curved")
+                        {
+                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.Hitbox2.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
+                        }
+                        else
+                        {
+                            int temp = Math.Abs(_oneoffset.Y - _twooffset.Y);
+                            offset = (double)this.settingScreenImage.Height / 2 - ((((double)selectedRoad.getLanes() * 40) / 2) * _scale) - temp / 2 * _scale;
+                        }
+
+                        _oneoffset = new Point((int)((_oneoffset.X + 10) * _scale), (int)(((_oneoffset.Y) * _scale) + offset));
+                        _twooffset = new Point((int)((_twooffset.X + 10) * _scale), (int)(((_twooffset.Y) * _scale) + offset));
+                    }
                 }
                 else if (selectedRoad.Hitbox2.Size.Width < selectedRoad.Hitbox2.Size.Height)
                 {
-                    _oneoffset = new Point((int)((_oneoffset.X) * _scale), (int)((_oneoffset.Y + 10) * _scale ));
-                    _twooffset = new Point((int)((_twooffset.X) * _scale), (int)((_twooffset.Y + 10) * _scale));
+                    if ((Graden >= 315 && Graden < 360) || (Graden >= 0 && Graden < 45) || (Graden >= 135 && Graden < 225))
+                    {
+
+                        if (selectedRoad.Type == "Curved")
+                        {
+                            offset = (double)this.settingScreenImage.Width / 2 - selectedRoad.Hitbox2.Size.Width / 2 * _scale; //WERKT VOOR CIRCLE
+                        }
+                        else
+                        {
+                            int temp = Math.Abs(_oneoffset.X - _twooffset.X);
+                            offset = (double)this.settingScreenImage.Width / 2 - ((((double)selectedRoad.getLanes() * 40) / 2) * _scale) - temp / 2 * _scale;
+                        }
+
+
+                        _oneoffset = new Point((int)(((_oneoffset.X) * _scale) + offset), (int)((_oneoffset.Y + 10) * _scale));
+                        _twooffset = new Point((int)(((_twooffset.X) * _scale) + offset), (int)((_twooffset.Y + 10) * _scale));
+                    }
+                    else
+                    {
+
+                        if (selectedRoad.Type == "Curved")
+                        {
+                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.Hitbox2.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
+                        }
+                        else
+                        {
+                            int temp = Math.Abs(_oneoffset.X - _twooffset.X);
+                            offset = (double)this.settingScreenImage.Width / 2 - temp / 2 * _scale;
+                        }
+
+                        //double offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.Hitbox2.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
+
+                        _oneoffset = new Point((int)(((_oneoffset.X) * _scale) + offset), (int)((_oneoffset.Y + 10) * _scale));
+                        _twooffset = new Point((int)(((_twooffset.X) * _scale) + offset), (int)((_twooffset.Y + 10) * _scale));
+                    }
                 }
 
+                Point[] _points = selectedRoad.hitBoxPoints(_oneoffset, _twooffset, 1, (int)(40 * _scale));
 
-                Console.WriteLine("Made a Offset Hitbox for the DrivingLane! {0}, {1} , Middle: {2} Too high: {4} -- Scale: {3}", _oneoffset, _twooffset, (_oneoffset.Y + _twooffset.Y) / 2, _scale, 260 - (_oneoffset.Y + _twooffset.Y) / 2);
+                Hitbox _hitbox = selectedRoad.CreateHitbox(_points);
 
-                Point[] _points = DiagonalRoad.hitBoxPoints(_oneoffset, _twooffset, 1, (int)(40 * _scale));
-
-                Hitbox _hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Red);
                 this.selectedRoad.offsetlaneHitbox.Add(_hitbox);
-
-                Console.WriteLine("Made a Offset Hitbox for the DrivingLane! {0}, {1} , Middle: {2} Too high: {4} -- Scale: {3}", _oneoffset, _twooffset, (_oneoffset.Y + _twooffset.Y) / 2, _scale , 260 - (_oneoffset.Y + _twooffset.Y) / 2);
             }
-
-
-            /*
-            int diff2 = Math.Abs(selectedRoad.Hitbox2.Size.Width - selectedRoad.Hitbox2.Size.Height) / 2;
-
-            if (selectedRoad.Hitbox2.Size.Width > selectedRoad.Hitbox2.Size.Height)
-            {
-                _oneoffset.Y += (int)((double)diff2 + (20 * _scale) - 10 * _scale);
-                _twooffset.Y += (int)((double)diff2 + (20 * _scale) - 10 * _scale);
-                //oneoffset.Y -= diff2;
-                //_twooffset.Y -= diff2;
-
-                _oneoffset.X += (int)(10 * _scale);
-                _twooffset.X += (int)(10 * _scale);
-            }
-            else{
-                _oneoffset.X += (int)((double)this.settingScreenImage.Width / 2 - ((40 * _scale) * selectedRoad.getLanes() / 2) + 10);
-                _twooffset.X += (int)((double)this.settingScreenImage.Width / 2 - ((40 * _scale) * selectedRoad.getLanes() / 2) + 10);
-
-                //_oneoffset.X -= diff2;
-                //_twooffset.X -= diff2;
-
-                _oneoffset.Y += 10;
-                _twooffset.Y += 10;
-            }*/
         }
     }
 }
