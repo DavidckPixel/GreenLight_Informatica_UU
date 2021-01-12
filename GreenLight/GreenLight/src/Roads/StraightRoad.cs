@@ -16,12 +16,14 @@ namespace GreenLight
 
         private int roadwidth = 10; // HARDCODED WAARDE AANPASSEN
 
-        public StraightRoad(Point _point1, Point _point2, int _lanes, string _dir, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "StraightRoad", _beginconnection, _endconnection)
+        public StraightRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "StraightRoad", _beginconnection, _endconnection)
         {
+
+            this.Type = _type;
 
             Point[] _points = hitBoxPoints(_point1, _point2);
             //Console.WriteLine("{0},{1},{2},{3}", _points[1], _points[0], _points[3], _points[2]);
-            this.Hitbox2 = new RectHitbox(_points[1], _points[0], _points[3], _points[2]);
+            this.Hitbox2 = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
 
             this.dir = _dir;
 
@@ -71,7 +73,7 @@ namespace GreenLight
                 }
             }
 
-            return new DrivingLane(_lanePoints, this.dir, lanes, _thisLane);
+            return new DrivingLane(_lanePoints, this.dir, lanes, _thisLane, null);
 
             foreach (LanePoints x in _lanePoints)
             {
@@ -226,6 +228,16 @@ namespace GreenLight
             }
 
             return _points;
+        }
+
+        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 40)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Hitbox CreateHitbox(Point[] _array)
+        {
+            throw new NotImplementedException();
         }
     }
 }

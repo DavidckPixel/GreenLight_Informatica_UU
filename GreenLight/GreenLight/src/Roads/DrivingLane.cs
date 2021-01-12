@@ -20,13 +20,47 @@ namespace GreenLight
         public string dir;
         int roadLanes;
         int thisLane;
+        Bitmap Lane;
+        Bitmap Verticallane;
 
-        public DrivingLane(List<LanePoints> _points, string _dir, int _roadLanes, int _thisLane)
+        private LanePoints middle;
+
+        public Hitbox hitbox;
+        public Hitbox offsetHitbox;
+
+        int AngleDir;
+
+        public DrivingLane(List<LanePoints> _points, string _dir, int _roadLanes, int _thisLane, Hitbox _hitbox)
         {
             this.points = _points;
             this.dir = _dir;
             this.roadLanes = _roadLanes;
             this.thisLane = _thisLane;
+            Lane = new Bitmap(Properties.Resources.Lane);
+            Verticallane = new Bitmap(Properties.Resources.Road_Verticaal);
+
+            this.hitbox = _hitbox;
+
+            middle = this.points[this.points.Count() / 2]; //THIS LINE GIVES PROBLEMS WHEN MAKING CURVED ROAD 2 up or down and 2 right or left..
+            AngleDir = middle.degree;
+        }
+
+        public void FlipPoints()
+        {
+            List<LanePoints> _templist = new List<LanePoints>();
+
+            points.Reverse();
+            
+            foreach(LanePoints x in points)
+            {
+                x.FlipDegree();
+                _templist.Add(x);
+            }
+
+            points = _templist;
+
+            middle = this.points[this.points.Count() / 2]; //THIS LINE GIVES PROBLEMS WHEN MAKING CURVED ROAD 2 up or down and 2 right or left..
+            AngleDir = middle.degree;
         }
 
         public Pen getPen(int _side)
@@ -124,17 +158,21 @@ namespace GreenLight
                         break;
                 }
                 Console.WriteLine(dir);
-               g.DrawArc(p, rect, startAngle, sweepAngle);
+               
 
                 try
                 {
+                    
+
+                    g.DrawArc(p, rect, startAngle, sweepAngle);
+
                     outer = new Rectangle(new Point(rect.Location.X - drivingLaneDistance / 2, rect.Location.Y - drivingLaneDistance / 2), new Size(rect.Width + drivingLaneDistance, rect.Height + drivingLaneDistance));
                     inner = new Rectangle(new Point(rect.Location.X + drivingLaneDistance / 2, rect.Location.Y + drivingLaneDistance / 2), new Size(rect.Width - drivingLaneDistance, rect.Height - drivingLaneDistance));
 
                     g.DrawArc(getPen(side1), outer, startAngle, sweepAngle);
                     g.DrawArc(getPen(side2), inner, startAngle, sweepAngle);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
 
                 }
@@ -143,6 +181,8 @@ namespace GreenLight
             }
             else
             {
+                g.DrawLine(p, points[0].cord, points[points.Count - 1].cord);
+
                 if (dir == "D")  //DiagonalRoad
                 {
                     Point[] polygon = new Point[4];
@@ -202,6 +242,24 @@ namespace GreenLight
                         g.DrawLine(getPen(2), new Point(points[0].cord.X, points[0].cord.Y + drivingLaneDistance / 2), new Point(points[points.Count - 1].cord.X, points[points.Count - 1].cord.Y + drivingLaneDistance / 2));
                     }
                 }*/
+            }
+
+            hitbox.Draw(g);
+
+            Image _image = Image.FromFile("../../User Interface Recources/Arrow.png");
+            Bitmap _bitmap = new Bitmap(_image);
+            _bitmap = RotateImage(_bitmap, AngleDir);  //HIER MOET NOG NAAR GEKEKEN WORDEN!!!!
+            _bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
+            g.DrawImage(_bitmap, new Rectangle(middle.cord, new Size(15,15)));
+
+            Console.WriteLine(AngleDir);
+        }
+
+        public void DrawoffsetHitbox(Graphics g)
+        {
+            if (offsetHitbox != null)
+            {
+                offsetHitbox.Draw(g);
             }
         }
 

@@ -21,9 +21,6 @@ namespace GreenLight
             this.Screen.Height = _tempform.Height;
             this.Screen.BackColor = Color.FromArgb(196, 196, 198);
             this.Screen.Location = new Point(0, 0);
-
-            this.Screen.Image = new System.Drawing.Bitmap(Screen.Width, Screen.Height);
-
             _tempform.Resize += (object o, EventArgs ea) => { this.resize(_tempform); };
            
             
@@ -124,13 +121,12 @@ namespace GreenLight
             General_Form.Main.SwitchControllers(General_Form.Main.SimulationScreen);
         }
 
-        
         public void DrawPictureBox(object o, PaintEventArgs pea)
         {
             Graphics g = pea.Graphics;
             builder.gridController.DrawGridPoints(g);
 
-            foreach(AbstractRoad _road in builder.roadBuilder.roads)
+            foreach(AbstractRoad _road in RoadController.roads)
             {
                 _road.Draw(g);
             }

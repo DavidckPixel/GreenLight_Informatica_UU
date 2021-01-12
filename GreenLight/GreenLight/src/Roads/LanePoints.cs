@@ -14,7 +14,7 @@ namespace GreenLight
         //and angle itself accordingly between the 2 to create a smooth illusion of driving.
 
         public Point cord { get; }
-        public int degree { get; }
+        public int degree;
 
         public LanePoints(Point _cord, int _degree)
         {
@@ -26,6 +26,11 @@ namespace GreenLight
         {
             string _temp = "CORDS: "+ this.cord + "  -  DEGREE: " + this.degree;
             return _temp;
+        }
+
+        public void FlipDegree()
+        {
+            degree = ((degree + 180) % 360);
         }
     }
 }

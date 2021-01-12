@@ -9,18 +9,21 @@ using System.Drawing.Text;
 
 namespace GreenLight
 {
-    public class PrioritySignController : AbstractSignController
+    public class StopSignController : AbstractSignController
     {
-        public Label QuestionLabel, errorMess;
-        public CurvedButtons YesButton, NoButton;
-
+        public Label QuestionLabel, errorMess, BeginLabel, EndLabel;
+        public CurvedButtons SaveButton, CancelButton;
+        
         public MainSignController signController;
 
-        public PrioritySign selected;
+        public StopSign selected;
+
+        public Point point1;
+        public Point point2;
 
         PrivateFontCollection Font_collection = new PrivateFontCollection();
 
-        public PrioritySignController(Form _main, MainSignController _signcontroller)
+        public StopSignController(Form _main, MainSignController _signcontroller)
         {
             this.signController = _signcontroller;
             this.mainScreen = _main;
@@ -40,7 +43,7 @@ namespace GreenLight
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
             QuestionLabel = new Label();
-            QuestionLabel.Text = "Place Priority Sign?";
+            QuestionLabel.Text = "Location for Sign?";
             QuestionLabel.Location = new Point(20, 10);
             this.settingScreen.Controls.Add(QuestionLabel);
 
@@ -49,21 +52,33 @@ namespace GreenLight
             errorMess.Text = "";
             errorMess.ForeColor = Color.Red;
             this.settingScreen.Controls.Add(errorMess);
-            
 
-            YesButton = new CurvedButtons(new Size(80, 40), new Point(10, 150), 25, "../../User Interface Recources/Custom_Button_Small.png", "Place Sign", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            YesButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.prioritySignC.placeSign(); };
-            this.settingScreen.Controls.Add(YesButton);
+            BeginLabel = new Label();
+            BeginLabel.Location = new Point(20, 100);
+            BeginLabel.Text = "should be cords";
+            this.settingScreen.Controls.Add(BeginLabel);
 
-            NoButton = new CurvedButtons(new Size(80, 40), new Point(110, 150), 25, "../../User Interface Recources/Custom_Button_Small.png", "Don't Place", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            NoButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.prioritySignC.deleteSign(); };
-            this.settingScreen.Controls.Add(NoButton);
+            EndLabel = new Label();
+            EndLabel.Location = new Point(120, 100);
+            EndLabel.Text = "should be cords";
+            this.settingScreen.Controls.Add(EndLabel);
+
+            SaveButton = new CurvedButtons(new Size(80, 40), new Point(10, 300), 25, "../../User Interface Recources/Custom_Button_Small.png", "Done", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            SaveButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.stopSign.placeSign(); };
+            this.settingScreen.Controls.Add(SaveButton);
+
+            CancelButton = new CurvedButtons(new Size(80, 40), new Point(60 , 300), 25, "../../User Interface Recources/Custom_Button_Small.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            CancelButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.stopSign.deleteSign(); };
+            this.settingScreen.Controls.Add(CancelButton);
+
 
         }
+        
 
-        public void placeSign()
+        public void errorMessage(string _error)
         {
-            this.settingScreen.Hide();
+            this.errorMess.Text = _error;            
+            this.settingScreen.Invalidate();
         }
 
         public override void openMenu()
@@ -78,20 +93,26 @@ namespace GreenLight
                 return;
             }
 
-            this.errorMess.Text = "";            
+            this.errorMess.Text = "";
+            this.BeginLabel.Text = point1.ToString();
+            this.EndLabel.Text = point2.ToString();
+
+            Console.WriteLine(this.settingScreen.Visible.ToString());
 
             this.settingScreen.Show();
             this.settingScreen.BringToFront();
 
         }
+
         public override void onSignClick(AbstractSign _sign)
         {
-            selected = (PrioritySign)_sign;
+            selected = (StopSign)_sign;
             openMenu();
         }
+
         public override AbstractSign newSign()
         {
-            PrioritySign _temp = new PrioritySign(this);
+            StopSign _temp = new StopSign(this);
             this.signController.Signs.Add(_temp);
 
             onSignClick(_temp);
@@ -104,5 +125,8 @@ namespace GreenLight
             this.signController.deleteSign(selected);
             this.settingScreen.Hide();
         }
+
+
+
     }
 }

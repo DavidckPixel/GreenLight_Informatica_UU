@@ -12,6 +12,7 @@ namespace GreenLight
 {
     class Connection
     {
+        List<AbstractRoad> roadlist;
         public Connection(Point _point1, Point _point2, int _lanes, string _dir, string _dir2, AbstractRoad _roadOne, AbstractRoad _roadTwo, int _count)
         {
             Console.WriteLine("-- Connection --");
@@ -20,6 +21,8 @@ namespace GreenLight
             Point _temp2 = _roadOne.getPoint2();
             Point _temp3 = _roadTwo.getPoint1();
             Point _temp4 = _roadTwo.getPoint2();
+
+            roadlist = General_Form.Main.BuildScreen.builder.roadBuilder.roads;
 
             if (_roadOne.roadtype == "DiagonalRoad" && _roadTwo.roadtype == "DiagonalRoad")
             {
@@ -58,8 +61,10 @@ namespace GreenLight
 
         public void StraightandStraight(Point _point1, Point _point2, int _lanes, Point _temp1, Point _temp2, Point _temp3, Point _temp4, AbstractRoad _roadOne, AbstractRoad _roadTwo, char _roadOneEnds, char _roadTwoEnds)
         {
-               RoadController.roads.Remove(_roadOne);
-               RoadController.roads.Remove(_roadTwo);
+            
+            roadlist.Remove(_roadOne);
+
+            roadlist.Remove(_roadTwo);
 
             if (_roadOne.slp == _roadTwo.slp && _roadOne.slp == 0)
             {
@@ -189,12 +194,12 @@ namespace GreenLight
                     }
                     General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, true, true);
                 }
-                    Console.WriteLine(RoadController.roads.Count);
+                    Console.WriteLine(roadlist.Count);
             }
 
             else if (_roadOne.slp == _roadTwo.slp)
             {
-                Console.WriteLine(RoadController.roads.Count);
+                Console.WriteLine(roadlist.Count);
                 if (_roadOne.slp > 0)
                 {
                     General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(new Point(Math.Min(Math.Min(_temp1.X, _temp2.X), Math.Min(_temp3.X, _temp4.X)), Math.Min(Math.Min(_temp1.Y, _temp2.Y), Math.Min(_temp3.Y, _temp4.Y))),
@@ -234,7 +239,7 @@ namespace GreenLight
                     }
 
                     Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    RoadController.roads.Remove(_roadOne);
+                    roadlist.Remove(_roadOne);
                     General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(new Point(_temp1.X + _distance * _direction, _temp1.Y), _temp2, _lanes, _beginconnection, _endconnection);
 
                 }
@@ -254,7 +259,7 @@ namespace GreenLight
                     }
 
                     Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    RoadController.roads.Remove(_roadOne);
+                    roadlist.Remove(_roadOne);
                     General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(_temp1, new Point(_temp2.X + _distance * _direction, _temp2.Y), _lanes, _beginconnection, _endconnection);
 
                 }
@@ -274,7 +279,7 @@ namespace GreenLight
                     }
 
                     Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    RoadController.roads.Remove(_roadTwo);
+                    roadlist.Remove(_roadTwo);
                     General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(new Point(_temp3.X + _distance * _direction, _temp3.Y), _temp4, _lanes, _beginconnection, _endconnection);
                 }
                 else
@@ -294,7 +299,7 @@ namespace GreenLight
 
 
                     Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    RoadController.roads.Remove(_roadTwo);
+                    roadlist.Remove(_roadTwo);
                     General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(_temp3, new Point(_temp4.X + _distance * _direction, _temp4.Y), _lanes, _beginconnection, _endconnection);
                 }
             }
@@ -321,7 +326,7 @@ namespace GreenLight
                     }
 
                     Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    RoadController.roads.Remove(_roadOne);
+                    roadlist.Remove(_roadOne);
                     General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(new Point(_temp1.X, _temp1.Y + _distance * _direction), _temp2, _lanes, _beginconnection, _endconnection);
                 }
                 else if (_roadOne.slp == 0 && Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) > Math.Sqrt(Math.Pow(_point1.X - _temp2.X, 2) + Math.Pow(_point1.Y - _temp2.Y, 2)))
@@ -340,7 +345,7 @@ namespace GreenLight
                     }
 
                     Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    RoadController.roads.Remove(_roadOne);
+                    roadlist.Remove(_roadOne);
                     General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(_temp1, new Point(_temp2.X, _temp2.Y + _distance * _direction), _lanes, _beginconnection, _endconnection);
                 }
                 else if (_roadTwo.slp == 0 && Math.Sqrt(Math.Pow(_point2.X - _temp3.X, 2) + Math.Pow(_point2.Y - _temp3.Y, 2)) < Math.Sqrt(Math.Pow(_point2.X - _temp4.X, 2) + Math.Pow(_point2.Y - _temp4.Y, 2)))
@@ -359,7 +364,7 @@ namespace GreenLight
                     }
 
                     Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    RoadController.roads.Remove(_roadTwo);
+                    roadlist.Remove(_roadTwo);
                     General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(new Point(_temp3.X, _temp3.Y + _distance * _direction), _temp4, _lanes, _beginconnection, _endconnection);
                 }
                 else
@@ -378,15 +383,15 @@ namespace GreenLight
                     }
 
                     Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    RoadController.roads.Remove(_roadTwo);
+                    roadlist.Remove(_roadTwo);
                     General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(_temp3, new Point(_temp4.X, _temp4.Y + _distance * _direction), _lanes, _beginconnection, _endconnection);
                 }
             }
 
             else if(_roadOneEnds == 'h' && _roadTwoEnds == 'v')
             {
-                RoadController.roads.Remove(_roadOne);
-                RoadController.roads.Remove(_roadTwo);
+                roadlist.Remove(_roadOne);
+                roadlist.Remove(_roadTwo);
                 Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
 
                 if (_roadOne.slp == 0)
@@ -507,8 +512,8 @@ namespace GreenLight
 
             else if (_roadOneEnds == 'v' && _roadTwoEnds == 'h')
             {
-                RoadController.roads.Remove(_roadOne);
-                RoadController.roads.Remove(_roadTwo);
+                roadlist.Remove(_roadOne);
+                roadlist.Remove(_roadTwo);
                 Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
 
                 if (_roadTwo.slp == 0)

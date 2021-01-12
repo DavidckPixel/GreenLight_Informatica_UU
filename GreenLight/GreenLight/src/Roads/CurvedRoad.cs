@@ -17,20 +17,24 @@ namespace GreenLight
         //For how many lanes you told the constructor to have.
 
 
-        private string dir;
-
-        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "CurvedRoad", _beginconnection, _endconnection)
+        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "CurvedRoad", _beginconnection, _endconnection)
         {
-            this.dir = _dir;
+            this.Dir = _dir;
+            this.Type = _type;
 
-            Point[] _points = hitBoxPoints(_point1, _point2);
-            this.Hitbox2 = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], dir);
-
-            for (int x = 1; x <= lanes; x++)
+            if (Dir == "SE" || Dir == "SW" || Dir == "NE" || Dir == "NW")
             {
-                Drivinglanes.Add(this.CalculateLanes(point1, point2, x));
+                Point[] _points = hitBoxPoints(_point1, _point2, this.lanes);
+                this.Hitbox2 = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], _dir, Color.Yellow);
+
+                for (int x = 1; x <= lanes; x++)
+                {
+                    Drivinglanes.Add(this.CalculateLanes(point1, point2, x));
+                }
             }
         }
+
+        
 
         protected override DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thisLane)
         {
@@ -41,20 +45,20 @@ namespace GreenLight
             Point _normpoint1 = _point1; Point _normpoint2 = _point2;
 
             Tuple<int, int> _dir = GetDirection(_point1, _point2);
-            Console.WriteLine(dir);
+            Console.WriteLine(Dir);
 
             Point _prev = _normpoint1;
             Point _nulpoint;
 
-            if (dir == "NE")
+            if (Dir == "NE")
             {
                _nulpoint = new Point(Math.Max(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
             }
-            else if (dir == "NW")
+            else if (Dir == "NW")
             {
                _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
             }
-            else if (dir == "SW")
+            else if (Dir == "SW")
             {
                _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y));
             }
@@ -70,30 +74,29 @@ namespace GreenLight
             int _ytemp = 0;
             int _xtemp = 0;
 
-            Console.WriteLine(_deltaX +  " ------ " +  _deltaY);
 
             for (int x = 0, y = 0; x <= _deltaX || y <= _deltaY; x++, y++)
             {
-                if ((x > _deltaX && y > _deltaY) || _prev == _point2)
+                if ((x >= _deltaX && y >= _deltaY) || _prev == _point2)
                     break;
 
                 _Xtemp = _point1.X + x * _dir.Item1;
                 _ytemp = _point1.Y + y * _dir.Item2;
 
-                if ((dir == "NE" || dir == "NW") && x <= _deltaX)
+                if ((Dir == "NE" || Dir == "NW") && x <= _deltaX)
                 {
                     _Ytemp = _nulpoint.Y + (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
                 }
-                else if ((dir == "SE" || dir == "SW") && x <= _deltaX)
+                else if ((Dir == "SE" || Dir == "SW") && x <= _deltaX)
                 {
                     _Ytemp = _nulpoint.Y - (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
                 }
 
-                if ((dir == "NE" || dir == "NW") && y <= _deltaY)
+                if ((Dir == "NE" || Dir == "NW") && y <= _deltaY)
                 {
                     _xtemp = _nulpoint.X + (int)Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - _nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
                 }
-                else if ((dir == "SE" || dir == "SW") && y <= _deltaY)
+                else if ((Dir == "SE" || Dir == "SW") && y <= _deltaY)
                 {
                     _xtemp = _nulpoint.X - (int)Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - _nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
                 }
@@ -118,7 +121,10 @@ namespace GreenLight
                 Console.WriteLine(x.ToString());
             }
 
-            return new DrivingLane(_lanePoints, this.dir, lanes, _thisLane);
+            Point[] _points = hitBoxPoints(_point1, _point2, 1);
+            Hitbox _temp = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], Dir, Color.Green);
+
+            return new DrivingLane(_lanePoints, this.Dir, lanes, _thisLane, _temp);
         }
 
         private Tuple<int, int> GetDirection(Point _point1, Point _point2)
@@ -151,7 +157,7 @@ namespace GreenLight
 
             Console.WriteLine("TEST: {0} -- {1}", _firstPoint, _secondPoint);
 
-            string _Direction = this.dir;
+            string _Direction = this.Dir;
 
                 if (_Direction == "SE" || _Direction == "NW")
                 {
@@ -212,19 +218,16 @@ namespace GreenLight
                     }
                 }
 
-            Console.WriteLine("STARTPOINTS : {0} -- {1}", _firstPoint, _secondPoint);
-
                 return CalculateDrivingLane(_firstPoint, _secondPoint, t);
             }
 
-        private Point[] hitBoxPoints(Point one, Point two)
+        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20)
         {
             Point _one, _two;
-            int _laneWidth = 40;
-            int _roadWidth = (_laneWidth * this.lanes) / 2;
+            int _roadWidth = (_laneWidth * _lanes) / 2;
             Point[] _points = new Point[4];
 
-            if(dir == "NW" || dir == "NE")
+            if(Dir == "NW" || Dir == "NE")
             {
                 if (one.X < two.X)
                 {
@@ -237,7 +240,7 @@ namespace GreenLight
                     _two = two;
                 }
 
-                if(dir == "NW")
+                if(Dir == "NW")
                 {
                     _points[0] = new Point(_one.X + _roadWidth, _one.Y);
                     _points[1] = new Point(_one.X - _roadWidth, _one.Y);
@@ -265,7 +268,7 @@ namespace GreenLight
                     _two = one;
                 }
 
-                if(dir == "SE")
+                if(Dir == "SE")
                 {
                     //
                     _points[0] = new Point(_one.X - _roadWidth, _one.Y);
@@ -287,5 +290,9 @@ namespace GreenLight
             return _points;
         }
 
+        public override Hitbox CreateHitbox(Point[] _points)
+        {
+            return new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], Dir, Color.Yellow);
+        }
     }
 }

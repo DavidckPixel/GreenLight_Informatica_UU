@@ -27,6 +27,9 @@ namespace GreenLight
         public string roadtype;
         public double slp;
         public bool beginconnection, endconnection;
+        
+        public string Type;
+        public string Dir;
 
         //Basic Road Constructor, every road calls this constructor during initialzation
         public AbstractRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection) : base(_point1, _point2)
@@ -41,6 +44,8 @@ namespace GreenLight
         }
 
         protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
+
+        public abstract Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 40);
 
         public static int CalculateAngle(Point _point1, Point _point2)
         {
@@ -59,6 +64,9 @@ namespace GreenLight
             return _degree % 360;
         }
 
+        public abstract Hitbox CreateHitbox(Point[] _array);
+
+
         public void Draw(Graphics g)
         {
             foreach(DrivingLane _lane in Drivinglanes)
@@ -74,7 +82,7 @@ namespace GreenLight
 
             //g.FillRectangle(Notsolid, this.Hitbox);
 
-            this.Hitbox2.Draw(g, Color.Yellow);
+            this.Hitbox2.Draw(g);
         }
 
         public Point getPoint1() { return point1; }
