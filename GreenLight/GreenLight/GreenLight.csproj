@@ -66,6 +66,7 @@
     <Compile Include="src\Driver\DriverStats.cs" />
     <Compile Include="src\Hitbox.cs" />
     <Compile Include="src\RectHitbox.cs" />
+    <Compile Include="src\Roads\Connection.cs" />
     <Compile Include="src\Signs\AbstractSignController.cs" />
     <Compile Include="src\Signs\AbstractSign.cs" />
     <Compile Include="src\Signs\PlacedSign.cs" />

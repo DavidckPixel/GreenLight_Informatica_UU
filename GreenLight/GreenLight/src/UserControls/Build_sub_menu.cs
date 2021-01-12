@@ -112,9 +112,6 @@ namespace GreenLight
             Start_sim_button.Click += (object o, EventArgs EA) => { General_Form.Main.MenuController.SwitchToSimulation(); ; };
             this.Controls.Add(Start_sim_button);
 
-            CurvedButtons Undo_button = new CurvedButtons(new Size(30, 30), new Point(10, Form.Height - menu["simStartY"]), 25, "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
-            this.Controls.Add(Undo_button);
-
             CurvedButtons Divider3 = new CurvedButtons();
             Divider3.Location = new Point(0, menu["devider3"]); //devider3
             this.Controls.Add(Divider3);

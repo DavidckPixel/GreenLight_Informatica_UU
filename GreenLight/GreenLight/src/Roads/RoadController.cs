@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace GreenLight
 {
@@ -16,7 +15,7 @@ namespace GreenLight
         //For now it just holds a calculate direction function
         //Nothing really of interest here yet, Come back later :)
 
-        public List<AbstractRoad> roads = new List<AbstractRoad>();
+        public static List<AbstractRoad> roads = new List<AbstractRoad>();
         public PictureBox Screen;
         public string roadType = "D";
 
@@ -93,7 +92,7 @@ namespace GreenLight
                             {
                                 if (_endconnection == false)
                                 {
-                                    Connection _connection = new Connection(_point2, _temp1, _lanes, _dir, x.Drivinglanes[0].dir, _road, x, _count);
+                                    Connection connection = new Connection(_point2, _temp1, _lanes, _dir, x.Drivinglanes[0].dir, _road, x, _count);
                                 }
                                 else
                                 {
