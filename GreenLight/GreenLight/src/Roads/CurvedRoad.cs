@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +19,7 @@ namespace GreenLight
 
         private string dir;
 
-        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir) : base(_point1, _point2, _lanes)
+        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "CurvedRoad", _beginconnection, _endconnection)
         {
             this.dir = _dir;
 
@@ -70,11 +70,11 @@ namespace GreenLight
             int _ytemp = 0;
             int _xtemp = 0;
 
-            Console.WriteLine(_nulpoint);
+            Console.WriteLine(_deltaX +  " ------ " +  _deltaY);
 
             for (int x = 0, y = 0; x <= _deltaX || y <= _deltaY; x++, y++)
             {
-                if ((x >= _deltaX && y >= _deltaY) || _prev == _point2)
+                if ((x > _deltaX && y > _deltaY) || _prev == _point2)
                     break;
 
                 _Xtemp = _point1.X + x * _dir.Item1;
@@ -147,7 +147,7 @@ namespace GreenLight
 
         private DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
-            int drivingLaneDistance = 40;
+            int drivingLaneDistance = 20;
 
             Console.WriteLine("TEST: {0} -- {1}", _firstPoint, _secondPoint);
 

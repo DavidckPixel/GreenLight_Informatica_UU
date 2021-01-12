@@ -22,7 +22,7 @@ namespace GreenLight
 
         public RoadTestForm()
         {
-            Test = new DiagonalRoad(new Point(20, 20), new Point(220, 220), 2, "S"); //TEMP OM TE TESTEN
+           // Test = new DiagonalRoad(new Point(20, 20), new Point(220, 220), 2, "S"); //TEMP OM TE TESTEN
             this.Paint += Drawing;
         }
 

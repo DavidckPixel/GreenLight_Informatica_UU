@@ -41,7 +41,7 @@ namespace GreenLight
         public Simulation_data_menu SimDataM;
         Elements_sub_buildings_menu ElemSBM;
         Elements_sub_lights_menu ElemSLM;
-        Elements_sub_roads_menu ElemSRM;
+        public Elements_sub_roads_menu ElemSRM;
         Elements_sub_signs_menu ElemSSM;
 
         int Sub_menu_width = 250;

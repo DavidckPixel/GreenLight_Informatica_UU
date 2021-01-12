@@ -9,11 +9,12 @@ namespace GreenLight
 {
     public class DiagonalRoad : AbstractRoad
     {
-        //Similar to CurvedRoad, but now math for diagnol
+        //Similar to CurvedRoad, but now math for diagonal
 
         private string dir;
+        
 
-        public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir) : base(_point1, _point2, _lanes)
+        public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "DiagonalRoad", _beginconnection, _endconnection)
         {
             this.dir = _dir;
 
@@ -31,14 +32,14 @@ namespace GreenLight
         {
             List<LanePoints>_lanePoints = new List<LanePoints>();
             Point _normpoint1 = _point1; Point _normpoint2 = _point2;
-            double _rc;
+            double _slp;
             Point _prev = _normpoint1;
             bool divByZero = false;
            
-            _rc = (double)(_point2.Y - _point1.Y) / (double)(_point2.X - _point1.X);
+            _slp = (double)(_point2.Y - _point1.Y) / (double)(_point2.X - _point1.X);
             if (_point2.X - _point1.X == 0)
             { 
-                _rc = 0;
+                _slp = 0;
                 int _vertical;
                 divByZero = true;
                 if (_point1.Y > _point2.Y)
@@ -54,7 +55,8 @@ namespace GreenLight
                     _prev = _normpoint1;
                 }
             }
-            Console.WriteLine(_rc);
+            Console.WriteLine(_slp);
+            this.slp = _slp;
 
             int _dir = GetDirection(_point1, _point2);
 
@@ -71,7 +73,7 @@ namespace GreenLight
 
             for (int x = 0; x <= Math.Abs(_point1.X - _point2.X) && !divByZero; x++)
             {
-                _normpoint1 = new Point(_point1.X + x * _dir, (int)(_point1.Y + x * _rc * _dir));
+                _normpoint1 = new Point(_point1.X + x * _dir, (int)(_point1.Y + x * _slp * _dir));
                 _lanePoints.Add(new LanePoints(_normpoint1, AbstractRoad.CalculateAngle(_prev, _normpoint1)));
 
                 _prev = _normpoint1;
@@ -93,50 +95,76 @@ namespace GreenLight
             }
         }
 
-        private DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
+        public DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
-            int drivingLaneDistance = 40;
+            int drivingLaneDistance = 20;
+            int side;
             double slp, slpPer, oneX, amountX;
 
             if (_firstPoint.X != _secondPoint.X && _firstPoint.Y != _secondPoint.Y)
             {
                 slp = (double)(_firstPoint.Y - _secondPoint.Y) / (double)(_secondPoint.X - _firstPoint.X);
-                slpPer = -1 / slp;
-                oneX = Math.Abs(Math.Sqrt(1 + Math.Pow(slpPer, 2)));
-                amountX = drivingLaneDistance / oneX;
+
+                //slpPer = -1 / slp;
+                //oneX = Math.Abs(Math.Sqrt(1 + Math.Pow(slpPer, 2)));
+                //amountX = drivingLaneDistance / oneX;
 
                 if (lanes % 2 == 0)
                 {
                     if (t % 2 == 0)
                     {
-                        _firstPoint.X += (int)(amountX / 2 + amountX * (t / 2 - 1));
-                        _firstPoint.Y -= (int)(slpPer * amountX / 2 + slpPer * amountX * (t / 2 - 1));
-                        _secondPoint.X += (int)(amountX / 2 + amountX * (t / 2 - 1));
-                        _secondPoint.Y -= (int)(slpPer * amountX / 2 + slpPer * amountX * (t / 2 - 1));
+                        if (slp <= -1 || slp >= 1)
+                        {
+                            _firstPoint.X += (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t / 2 - 1));
+                            _secondPoint.X += (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t / 2 - 1));
+                        }
+                        else
+                        {
+                            _firstPoint.Y += (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t / 2 - 1));
+                            _secondPoint.Y += (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t / 2 - 1));
+                        }
                     }
                     else
                     {
-                        _firstPoint.X -= (int)(amountX / 2 + amountX * (t - 1) / 2);
-                        _firstPoint.Y += (int)(slpPer * amountX / 2 + slpPer * amountX * (t - 1) / 2);
-                        _secondPoint.X -= (int)(amountX / 2 + amountX * (t - 1) / 2);
-                        _secondPoint.Y += (int)(slpPer * amountX / 2 + slpPer * amountX * (t - 1) / 2);
+                        if (slp <= -1 || slp >= 1)
+                        {
+                            _firstPoint.X -= (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t - 1) / 2);
+                            _secondPoint.X -= (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t - 1) / 2);
+                        }
+                        else
+                        {
+                            _firstPoint.Y -= (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t - 1) / 2);
+                            _secondPoint.Y -= (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t - 1) / 2);
+                        }
                     }
                 }
                 else // (lanes % 2 == 1)
                 {
                     if (t % 2 == 0)
                     {
-                        _firstPoint.X -= (int)(amountX * t / 2);
-                        _firstPoint.Y += (int)(slpPer * amountX * t / 2);
-                        _secondPoint.X -= (int)(amountX * t / 2);
-                        _secondPoint.Y += (int)(slpPer * amountX * t / 2);
+                        if (slp <= -1 || slp >= 1)
+                        {
+                            _firstPoint.X -= (int)(drivingLaneDistance * t / 2);
+                            _secondPoint.X -= (int)(drivingLaneDistance * t / 2);
+                        }
+                        else
+                        {
+                            _firstPoint.Y -= (int)(drivingLaneDistance * t / 2);
+                            _secondPoint.Y -= (int)(drivingLaneDistance * t / 2);
+                        }
                     }
                     else if (t % 2 == 1 && t != 1)
                     {
-                        _firstPoint.X += (int)(amountX * (t - 1) / 2);
-                        _firstPoint.Y -= (int)(slpPer * amountX * (t - 1) / 2);
-                        _secondPoint.X += (int)(amountX * (t - 1) / 2);
-                        _secondPoint.Y -= (int)(slpPer * amountX * (t - 1) / 2);
+                        if (slp <= -1 || slp >= 1)
+                        {
+                            _firstPoint.X += (int)(drivingLaneDistance * (t - 1) / 2);
+                            _secondPoint.X += (int)(drivingLaneDistance * (t - 1) / 2);
+                        }
+                        else
+                        {
+                            _firstPoint.Y += (int)(drivingLaneDistance * (t - 1) / 2);
+                            _secondPoint.Y += (int)(drivingLaneDistance * (t - 1) / 2);
+                        }
 
                     }
                 }

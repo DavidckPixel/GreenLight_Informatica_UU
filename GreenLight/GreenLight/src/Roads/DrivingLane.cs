@@ -17,11 +17,9 @@ namespace GreenLight
 
 
         public List<LanePoints> points;
-        string dir;
+        public string dir;
         int roadLanes;
         int thisLane;
-        Bitmap Lane;
-        Bitmap Verticallane;
 
         public DrivingLane(List<LanePoints> _points, string _dir, int _roadLanes, int _thisLane)
         {
@@ -29,8 +27,6 @@ namespace GreenLight
             this.dir = _dir;
             this.roadLanes = _roadLanes;
             this.thisLane = _thisLane;
-            Lane = new Bitmap(Properties.Resources.Lane);
-            Verticallane = new Bitmap(Properties.Resources.Road_Verticaal);
         }
 
         public Pen getPen(int _side)
@@ -44,7 +40,7 @@ namespace GreenLight
             else if (roadLanes == 1)
             {
                 p.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-                p.Width = 7;
+                p.Width = 4;
                 p.Color = Color.White;
             }
             else if (thisLane == roadLanes - 1)
@@ -52,7 +48,7 @@ namespace GreenLight
                 if (_side == 1)
                 {
                     p.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-                    p.Width = 7;
+                    p.Width = 4;
                     p.Color = Color.White;
                 }
                 else
@@ -69,7 +65,7 @@ namespace GreenLight
                 else
                 {
                     p.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-                    p.Width = 7;
+                    p.Width = 4;
                     p.Color = Color.White;
                 }
             }
@@ -79,8 +75,9 @@ namespace GreenLight
         public void Draw(Graphics g)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            Pen p = new Pen(Color.FromArgb(21,21,21), 40);
-            int drivingLaneDistance = 40; 
+            Pen p = new Pen(Color.FromArgb(21,21,21), 20);
+            Brush b = new SolidBrush(Color.FromArgb(21, 21, 21));
+            int drivingLaneDistance = 20; 
             double slp, slpPer, oneX, amountX;
             int startAngle = 0, sweepAngle = 90;
             Rectangle rect = new Rectangle();
@@ -127,7 +124,7 @@ namespace GreenLight
                         break;
                 }
                 Console.WriteLine(dir);
-                g.DrawArc(p, rect, startAngle, sweepAngle);
+               g.DrawArc(p, rect, startAngle, sweepAngle);
 
                 try
                 {
@@ -146,33 +143,53 @@ namespace GreenLight
             }
             else
             {
-                g.DrawLine(p, points[0].cord, points[points.Count - 1].cord);
-
                 if (dir == "D")  //DiagonalRoad
                 {
+                    Point[] polygon = new Point[4];
+
                     if (points[0].cord.X != points[points.Count - 1].cord.X && points[0].cord.Y != points[points.Count - 1].cord.Y)
                     {
                         slp = (double)(points[0].cord.Y - points[points.Count - 1].cord.Y) / (double)(points[points.Count - 1].cord.X - points[0].cord.X);
-                        slpPer = -1 / slp;
-                        oneX = Math.Abs(Math.Sqrt(1 + Math.Pow(slpPer, 2)));
-                        amountX = (drivingLaneDistance / 2) / oneX;
+                        if (slp <= -1 || slp >= 1)
+                        {
+                            polygon[0] = new Point(points[0].cord.X - drivingLaneDistance / 2, points[0].cord.Y);
+                            polygon[1] = new Point(points[0].cord.X + drivingLaneDistance / 2, points[0].cord.Y);
+                            polygon[2] = new Point(points[points.Count - 1].cord.X + drivingLaneDistance / 2, points[points.Count - 1].cord.Y);
+                            polygon[3] = new Point(points[points.Count - 1].cord.X - drivingLaneDistance / 2, points[points.Count - 1].cord.Y);
+                        }
+                        else
+                        {
+                            polygon[0] = new Point(points[0].cord.X, points[0].cord.Y - drivingLaneDistance / 2);
+                            polygon[1] = new Point(points[0].cord.X, points[0].cord.Y + drivingLaneDistance / 2);
+                            polygon[2] = new Point(points[points.Count - 1].cord.X, points[points.Count - 1].cord.Y + drivingLaneDistance / 2);
+                            polygon[3] = new Point(points[points.Count - 1].cord.X, points[points.Count - 1].cord.Y - drivingLaneDistance / 2);
+                        }
 
-                        g.DrawLine(getPen(1), new Point(points[0].cord.X - (int)amountX, points[0].cord.Y + (int)(slpPer * amountX)), new Point(points[points.Count - 1].cord.X - (int)amountX, points[points.Count - 1].cord.Y + (int)(slpPer * amountX)));
-                        g.DrawLine(getPen(2), new Point(points[0].cord.X + (int)amountX, points[0].cord.Y - (int)(slpPer * amountX)), new Point(points[points.Count - 1].cord.X + (int)amountX, points[points.Count - 1].cord.Y - (int)(slpPer * amountX)));
+                        //slpPer = -1 / slp;
+                        //oneX = Math.Abs(Math.Sqrt(1 + Math.Pow(slpPer, 2)));
+                        //amountX = (drivingLaneDistance / 2) / oneX;
+
+                        g.FillPolygon(b, polygon);
+                        g.DrawLine(getPen(1), polygon[0], polygon[3]);
+                        g.DrawLine(getPen(2), polygon[1], polygon[2]);
+                        //g.DrawLine(getPen(1), new Point(points[0].cord.X - (int)amountX, points[0].cord.Y + (int)(slpPer * amountX)), new Point(points[points.Count - 1].cord.X - (int)amountX, points[points.Count - 1].cord.Y + (int)(slpPer * amountX)));
+                        //g.DrawLine(getPen(2), new Point(points[0].cord.X + (int)amountX, points[0].cord.Y - (int)(slpPer * amountX)), new Point(points[points.Count - 1].cord.X + (int)amountX, points[points.Count - 1].cord.Y - (int)(slpPer * amountX)));
                     }
                     else if (points[0].cord.X == points[points.Count - 1].cord.X)
                     {
+                        g.DrawLine(p, points[0].cord, points[points.Count - 1].cord);
                         g.DrawLine(getPen(1), new Point(points[0].cord.X - drivingLaneDistance / 2, points[0].cord.Y), new Point(points[points.Count - 1].cord.X - drivingLaneDistance / 2, points[points.Count - 1].cord.Y));
                         g.DrawLine(getPen(2), new Point(points[0].cord.X + drivingLaneDistance / 2, points[0].cord.Y), new Point(points[points.Count - 1].cord.X + drivingLaneDistance / 2, points[points.Count - 1].cord.Y));
                     }
                     else
                     {
+                        g.DrawLine(p, points[0].cord, points[points.Count - 1].cord);
                         g.DrawLine(getPen(1), new Point(points[0].cord.X, points[0].cord.Y - drivingLaneDistance / 2), new Point(points[points.Count - 1].cord.X, points[points.Count - 1].cord.Y - drivingLaneDistance / 2));
                         g.DrawLine(getPen(2), new Point(points[0].cord.X, points[0].cord.Y + drivingLaneDistance / 2), new Point(points[points.Count - 1].cord.X, points[points.Count - 1].cord.Y + drivingLaneDistance / 2));
                     }
 
                 }
-                else //StraightRoad
+                /*else //StraightRoad
                 {
                     if (points[0].cord.X == points[points.Count - 1].cord.X)
                     {
@@ -184,7 +201,7 @@ namespace GreenLight
                         g.DrawLine(getPen(1), new Point(points[0].cord.X, points[0].cord.Y - drivingLaneDistance / 2), new Point(points[points.Count - 1].cord.X, points[points.Count - 1].cord.Y - drivingLaneDistance / 2));
                         g.DrawLine(getPen(2), new Point(points[0].cord.X, points[0].cord.Y + drivingLaneDistance / 2), new Point(points[points.Count - 1].cord.X, points[points.Count - 1].cord.Y + drivingLaneDistance / 2));
                     }
-                }
+                }*/
             }
         }
 
