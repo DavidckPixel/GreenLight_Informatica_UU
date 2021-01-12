@@ -92,13 +92,13 @@ namespace GreenLight
             }
         }
 
+
         public override bool Contains(Point _p)
         {
             try
             {
                 if (rcLeft == 0 || rcRight == 0)
                 {
-                    //Console.WriteLine("hier wel eens??");
                     if (_p.X > bRight && bLeft > _p.X && _p.Y > bTop && bBottom > _p.Y)
                     {
                         return true;
@@ -113,6 +113,20 @@ namespace GreenLight
                         return true;
                     }
 
+                }
+                else if(rcTop == null || rcBottom == null)
+                {
+                    //Console.WriteLine("KOM JE HIER ALS JE GEEN HITBOX DETECT??");
+
+                    //Console.WriteLine("TopLeft {0} , TopRight {1} , BottomLeft {2} , BottomRight {3}", topleft, topright, bottomleft, bottomright);
+
+                    int _maxX = Math.Max(this.topleft.X, this.bottomleft.X);
+                    int _minX = Math.Min(this.topleft.X, this.bottomleft.X);
+
+                    if (_p.X >= _minX && _p.X <= _maxX && _p.X * rcLeft + bLeft <= _p.Y && _p.X * rcRight + bRight >= _p.Y)
+                    {
+                        return true;
+                    }
                 }
                 else if (rcLeft == null || rcRight == null)
                 {
@@ -129,19 +143,19 @@ namespace GreenLight
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine("Devided By 0");
+                Console.WriteLine(e);
             }
             return false;
         }
 
-        /*
-        public override bool Contains(RectHitbox _h)
+        
+        public bool Contains(RectHitbox _h)
         {
             bool _temp = (this.Contains(_h.topright) && this.Contains(_h.topleft) && this.Contains(_h.bottomright) && this.Contains(_h.bottomleft));
             return _temp;
-        } */
+        } 
 
         public override bool Collide(RectHitbox _h)
         {

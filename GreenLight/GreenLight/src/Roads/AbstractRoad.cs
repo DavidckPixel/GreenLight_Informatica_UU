@@ -29,7 +29,7 @@ namespace GreenLight
         public string Type;
         public string Dir;
 
-        public List<Hitbox> offsetlaneHitbox = new List<Hitbox>();
+        //public List<Hitbox> offsetlaneHitbox = new List<Hitbox>();
 
         //Basic Road Constructor, every road calls this constructor during initialzation
         public AbstractRoad(Point _point1, Point _point2, int _lanes) : base(_point1, _point2)

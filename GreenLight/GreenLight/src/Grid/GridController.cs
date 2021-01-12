@@ -27,6 +27,8 @@ namespace GreenLight
         public Gridpoint firstPoint = null;
         public Gridpoint secondPoint = null;
 
+        private Point mousecords;
+
         BuilderController builder;
 
         public GridController(PictureBox _bitmap, BuilderController _builder)
@@ -35,6 +37,7 @@ namespace GreenLight
             GridConfig.Init(ref this.config);
             CreateGridPoints();
             this.canvas.MouseClick += OnClick;
+            this.canvas.MouseMove += moveMouse;
             this.firstClick = true;
 
             this.builder = _builder;
@@ -75,10 +78,22 @@ namespace GreenLight
 
         public void OnClick(Object o, MouseEventArgs mea)
         {
+            string _type = General_Form.Main.BuildScreen.builder.roadBuilder.roadType;
+
+            if (_type == "X" || _type == "D")
+            {
+                return;
+            }
+
             Gridpoint _firstPoint = null;
             Gridpoint _secondPoint = null;
 
-            Console.WriteLine("MouseClick Cords: " + mea.Location);
+            Console.WriteLine("MouseClick Button: " + mea.Button);
+
+            if(mea.Button == MouseButtons.Right)
+            {
+                this.ResetPoints();
+            }
 
             if (firstClick)
             {
@@ -106,20 +121,47 @@ namespace GreenLight
             }
         }
 
-
         private void ResetPoints()
         {
             this.firstPoint = null;
             this.secondPoint = null;
             this.firstClick = true;
+
+            this.canvas.Invalidate();
+        }
+
+        public void moveMouse(object o, MouseEventArgs mea)
+        {
+            if (firstClick == true)
+            {
+                return;
+            }
+
+            //Gridpoints.Find(x => x.Cords);
+            //Gridpoint X = Gridpoints.Aggregate((x, y) => Math.Abs(x.Cords.X - mea.Location.X) > Math.Abs(y.Cords.X - mea.Location.X) && Math.Abs(x.Cords.Y - mea.Location.Y) > Math.Abs(y.Cords.Y - mea.Location.Y) ? x : y);
+
+            mousecords = mea.Location;
+            canvas.Invalidate();
         }
 
         public void DrawGridPoints(Graphics g)
         {
-            if(_points_visible)
-            foreach(Gridpoint x in Gridpoints)
+            if (_points_visible)
             {
-                x.DrawGrid(g);
+                foreach (Gridpoint x in Gridpoints)
+                {
+                    x.DrawGrid(g);
+                }
+
+
+                if (firstClick == true)
+                {
+                    return;
+                }
+
+                Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.DarkRed));
+                Rectangle rec = new Rectangle(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y), Math.Abs(firstPoint.Cords.X - mousecords.X), Math.Abs(firstPoint.Cords.Y - mousecords.Y));
+                g.FillRectangle(Notsolid, rec);
             }
         }
 

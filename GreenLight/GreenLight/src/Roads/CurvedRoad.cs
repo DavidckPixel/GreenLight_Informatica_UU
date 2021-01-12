@@ -17,31 +17,35 @@ namespace GreenLight
         //For how many lanes you told the constructor to have.
 
 
-        
-
         public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type) : base(_point1, _point2, _lanes)
         {
             this.Dir = _dir;
             this.Type = _type;
 
-            Point[] _points = hitBoxPoints(_point1, _point2, this.lanes);
-            this.Hitbox2 = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], _dir, Color.Yellow);
-
             if (Dir == "SE" || Dir == "SW"|| Dir == "NE" || Dir == "NW")
             {
+                Point[] _points = hitBoxPoints(_point1, _point2, this.lanes);
+                this.Hitbox2 = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], _dir, Color.Yellow);
+
                 for (int x = 1; x <= lanes; x++)
                 {
                     Drivinglanes.Add(this.CalculateLanes(point1, point2, x));
                 }
             }
+
+            /*
             else if(Dir == "SEccw" || Dir == "SWccw" || Dir == "NEccw" || Dir == "NWccw")
             {
+
+                Point[] _points = hitBoxPoints(_point2, _point1, this.lanes);
+                this.Hitbox2 = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], _dir, Color.Yellow);
+
                 for (int x = 1; x <= lanes; x++)
                 {
                     Drivinglanes.Add(this.CalculateLanes(point2, point1, x));
                 }
             }
-            
+            */
             
             
         }
@@ -60,15 +64,15 @@ namespace GreenLight
             Point _prev = _normpoint1;
             Point _nulpoint;
 
-            if (Dir == "NE" || Dir == "NEccw")
+            if (Dir == "NE")
             {
                _nulpoint = new Point(Math.Max(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
             }
-            else if (Dir == "NW" || Dir == "NWccw")
+            else if (Dir == "NW")
             {
                _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
             }
-            else if (Dir == "SW" || Dir == "SWccw")
+            else if (Dir == "SW")
             {
                _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y));
             }
@@ -94,20 +98,20 @@ namespace GreenLight
                 _Xtemp = _point1.X + x * _dir.Item1;
                 _ytemp = _point1.Y + y * _dir.Item2;
 
-                if ((Dir == "NE" || Dir == "NW" || Dir == "NEccw" || Dir == "NWccw") && x <= _deltaX)
+                if ((Dir == "NE" || Dir == "NW") && x <= _deltaX)
                 {
                     _Ytemp = _nulpoint.Y + (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
                 }
-                else if ((Dir == "SE" || Dir == "SW" || Dir == "SEccw" || Dir == "SWccw") && x <= _deltaX)
+                else if ((Dir == "SE" || Dir == "SW") && x <= _deltaX)
                 {
                     _Ytemp = _nulpoint.Y - (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
                 }
 
-                if ((Dir == "NE" || Dir == "NW" || Dir == "NEccw" || Dir == "NWccw") && y <= _deltaY)
+                if ((Dir == "NE" || Dir == "NW") && y <= _deltaY)
                 {
                     _xtemp = _nulpoint.X + (int)Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - _nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
                 }
-                else if ((Dir == "SE" || Dir == "SW" || Dir == "SEccw" || Dir == "SWccw") && y <= _deltaY)
+                else if ((Dir == "SE" || Dir == "SW") && y <= _deltaY)
                 {
                     _xtemp = _nulpoint.X - (int)Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - _nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
                 }
@@ -170,7 +174,7 @@ namespace GreenLight
 
             string _Direction = this.Dir;
 
-                if (_Direction == "SE" || _Direction == "NW" || _Direction == "SEccw" || _Direction == "NWccw")
+                if (_Direction == "SE" || _Direction == "NW")
                 {
                     if (lanes % 2 == 0)
                     {
@@ -199,7 +203,7 @@ namespace GreenLight
                         }
                     }
                 }
-                else if (_Direction == "NE" || _Direction == "SW" || _Direction == "NEccw" || _Direction == "SWccw")
+                else if (_Direction == "NE" || _Direction == "SW")
                 {
                     if (lanes % 2 == 0)
                     {

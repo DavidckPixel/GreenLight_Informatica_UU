@@ -16,6 +16,13 @@ namespace GreenLight
         Hitbox test1, test2, test3, test4, test5, test6,test7,test8,test9,test10, test11, test12, test13, test14;
         Hitbox curftest1, curftest2, curftest3, curftest4, curftest5;
 
+        Hitbox Weirdbox;
+
+        private void HitBox_form_Load(object sender, EventArgs e)
+        {
+
+        }
+
         RectHitbox Under1, Under2, Under3, Under4, Under5, Under6, Under7, Under8;
         RectHitbox Up1, Up2, Up3, Up4, Up5;
         RectHitbox Right1, Right2, Right3;
@@ -47,7 +54,7 @@ namespace GreenLight
             Color.MediumSlateBlue,
             Color.Crimson,
             Color.Fuchsia,
-            Color.PapayaWhip
+            Color.PapayaWhip,
         };
 
         public class testcord
@@ -102,6 +109,7 @@ namespace GreenLight
             hitboxes.Add(test14);
             */
 
+            /*
             
             Up1 = new RectHitbox(new Point(175, 250), new Point(225, 250), new Point(275, 350), new Point(325, 350),Color.Yellow);
             Up2 = new RectHitbox(new Point(275, 225), new Point(325, 225), new Point(325, 350), new Point(375, 350),Color.Yellow);
@@ -139,7 +147,11 @@ namespace GreenLight
             hitboxes.Add(Under5);
             hitboxes.Add(Under6);
             hitboxes.Add(Under7);
-            hitboxes.Add(Under8); 
+            hitboxes.Add(Under8);
+            */
+
+            Weirdbox = new RectHitbox(new Point(32,93), new Point(32,163), new Point(496,200), new Point(496,270), Color.Red);
+            hitboxes.Add(Weirdbox);
 
 
             Q1 = new CurvedHitbox(new Point(25 , 425 ), new Point( 75, 425), new Point(400, 75 ), new Point(400, 125), "SE", Color.Yellow);

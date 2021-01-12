@@ -22,7 +22,7 @@ namespace GreenLight
 
         private Form settingScreen;
         private PictureBox settingScreenImage;
-        private CurvedButtons doneButton, deleteButton, curveFlipButton;
+        private CurvedButtons doneButton, deleteButton;
 
         private AbstractRoad selectedRoad;
 
@@ -75,17 +75,7 @@ namespace GreenLight
 
             settingScreen.Controls.Add(doneButton);
             settingScreen.Controls.Add(deleteButton);
-
-            curveFlipButton = new CurvedButtons(new Size(80, 40), new Point(190, 500), 25, "../../User Interface Recources/Custom_Button_Small.png", "Flip", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            curveFlipButton.Click += (object o, EventArgs ea) => { FlipRoad(this.selectedRoad); };
-            settingScreen.Controls.Add(curveFlipButton);
-
-
-
-        
-
             
-
             this.settingScreen.Controls.Add(settingScreenImage);
         }
 
@@ -181,18 +171,9 @@ namespace GreenLight
         {
             selectedRoad.Hitbox2.color = Color.Pink;
 
-            if(selectedRoad.offsetlaneHitbox.Count == 0)
+            if(selectedRoad.Drivinglanes.All(x => x.offsetHitbox == null))
             {
                 DrivingLaneHitbox();
-            }
-
-            if (selectedRoad.Type == "Curved")
-            {
-                curveFlipButton.Visible = true;
-            }
-            else
-            {
-                curveFlipButton.Visible = false;
             }
 
             settingScreen.Show();
@@ -225,7 +206,24 @@ namespace GreenLight
 
         private void SettingBoxClick(object o, MouseEventArgs mea)
         {
+            if (selectedRoad.Drivinglanes.All(x => x.offsetHitbox == null))
+            {
+                Console.WriteLine("No DrivingLane hitboxes have been Created");
+                return;
+            }
 
+            DrivingLane _lane = selectedRoad.Drivinglanes.Find(x => x.offsetHitbox.Contains(mea.Location));
+
+            if (_lane == null)
+            {
+                return;
+            }
+
+            _lane.FlipPoints();
+
+            Screen.Invalidate();
+            settingScreen.Invalidate();
+            settingScreenImage.Invalidate();
         }
 
         private void SettingBoxDraw(object o, PaintEventArgs pea)
@@ -262,9 +260,7 @@ namespace GreenLight
 
             g.DrawImage(b, _des, _rec, GraphicsUnit.Pixel);
 
-            selectedRoad.offsetlaneHitbox.ForEach(x => x.Draw(g));
-            selectedRoad.offsetlaneHitbox.ForEach(x => Console.WriteLine(x.Topcord));
-            selectedRoad.offsetlaneHitbox.ForEach(x => Console.WriteLine(x.Size));
+            selectedRoad.Drivinglanes.ForEach(x => x.DrawoffsetHitbox(g));
         }
 
         private void DrivingLaneHitbox()
@@ -378,9 +374,13 @@ namespace GreenLight
 
                 Hitbox _hitbox = selectedRoad.CreateHitbox(_points);
 
-                this.selectedRoad.offsetlaneHitbox.Add(_hitbox);
+                Console.WriteLine("HITBOX CREATED!!!");
+
+                _drivinglane.offsetHitbox = _hitbox;
             }
         }
+
+        /*
 
         private void FlipRoad (AbstractRoad _flippedroad)
         {
@@ -431,5 +431,6 @@ namespace GreenLight
 
             }
         }
+        */
     }
 }

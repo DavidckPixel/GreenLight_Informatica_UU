@@ -182,6 +182,9 @@
     <Compile Include="src\UserControls\Elements_sub_buildings_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <EmbeddedResource Include="HitBox_form.resx">
+      <DependentUpon>HitBox_form.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

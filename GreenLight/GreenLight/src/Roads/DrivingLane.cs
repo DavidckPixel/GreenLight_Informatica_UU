@@ -26,6 +26,7 @@ namespace GreenLight
         private LanePoints middle;
 
         public Hitbox hitbox;
+        public Hitbox offsetHitbox;
 
         int AngleDir;
 
@@ -39,6 +40,24 @@ namespace GreenLight
             Verticallane = new Bitmap(Properties.Resources.Road_Verticaal);
 
             this.hitbox = _hitbox;
+
+            middle = this.points[this.points.Count() / 2]; //THIS LINE GIVES PROBLEMS WHEN MAKING CURVED ROAD 2 up or down and 2 right or left..
+            AngleDir = middle.degree;
+        }
+
+        public void FlipPoints()
+        {
+            List<LanePoints> _templist = new List<LanePoints>();
+
+            points.Reverse();
+            
+            foreach(LanePoints x in points)
+            {
+                x.FlipDegree();
+                _templist.Add(x);
+            }
+
+            points = _templist;
 
             middle = this.points[this.points.Count() / 2]; //THIS LINE GIVES PROBLEMS WHEN MAKING CURVED ROAD 2 up or down and 2 right or left..
             AngleDir = middle.degree;
@@ -172,10 +191,12 @@ namespace GreenLight
                 }
 
                 Console.WriteLine(dir);
-                
+               
 
                 try
                 {
+                    
+
                     g.DrawArc(p, rect, startAngle, sweepAngle);
 
                     outer = new Rectangle(new Point(rect.Location.X - drivingLaneDistance / 2, rect.Location.Y - drivingLaneDistance / 2), new Size(rect.Width + drivingLaneDistance, rect.Height + drivingLaneDistance));
@@ -185,9 +206,8 @@ namespace GreenLight
                     g.DrawArc(getPen(side2), inner, startAngle, sweepAngle);
 
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
                 }
                 
 
@@ -243,6 +263,16 @@ namespace GreenLight
             _bitmap = RotateImage(_bitmap, AngleDir);  //HIER MOET NOG NAAR GEKEKEN WORDEN!!!!
             _bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
             g.DrawImage(_bitmap, new Rectangle(middle.cord, new Size(15,15)));
+
+            Console.WriteLine(AngleDir);
+        }
+
+        public void DrawoffsetHitbox(Graphics g)
+        {
+            if (offsetHitbox != null)
+            {
+                offsetHitbox.Draw(g);
+            }
         }
 
         public static Bitmap RotateImage(Bitmap b, float angle)
