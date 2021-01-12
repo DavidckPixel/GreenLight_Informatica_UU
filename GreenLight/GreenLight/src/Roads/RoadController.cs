@@ -392,19 +392,35 @@ namespace GreenLight
                 string _newDir = selectedRoad.Dir;
                 if (_oldDir == "SE")
                 {
-                    _newDir = "NW";
+                    _newDir = "SEccw";
                 }
                 else if(_oldDir == "SW")
                 {
-                    _newDir = "NE";
+                    _newDir = "SWccw";
                 }
                 else if (_oldDir == "NW")
                 {
-                    _newDir = "SE";
+                    _newDir = "NWccw";
                 }
                 else if (_oldDir == "NE")
                 {
+                    _newDir = "NEccw";
+                }
+                else if (_oldDir == "SEccw")
+                {
+                    _newDir = "SE";
+                }
+                else if (_oldDir == "SWccw")
+                {
                     _newDir = "SW";
+                }
+                else if (_oldDir == "NWccw")
+                {
+                    _newDir = "NW";
+                }
+                else if (_oldDir == "NEccw")
+                {
+                    _newDir = "NE";
                 }
 
                 CurvedRoad _temp = new CurvedRoad(selectedRoad.getPoint1(), selectedRoad.getPoint2(), selectedRoad.getLanes(), _newDir, "Curved");

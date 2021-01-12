@@ -83,7 +83,35 @@ namespace GreenLight
 
                     }
                     break;
+                case "NWccw":
+                    {
+                        midX = max_endX;
+                        midY = max_startY;
+                        start_angle = 180;
+                        mid_startX = (int)(max_startX + min_startX) / 2;
+                        mid_startY = (int)max_startY;
+                        mid_endX = (int)max_endX;
+                        mid_endY = (int)(max_endY + min_endY) / 2;
+
+                        rect = new Rectangle(new Point((int)midX - mid_radiusX, (int)midY - mid_radiusY), new Size(mid_radiusX * 2, mid_radiusY * 2));
+
+                        //rect = new Rectangle(new Point(Math.Min(points[0].cord.X, points[points.Count - 1].cord.X), Math.Min(points[0].cord.Y, points[points.Count - 1].cord.Y)), size);
+
+                    }
+                    break;
                 case "SW":
+                    {
+                        midX = max_startX;
+                        midY = max_endY;
+
+                        start_angle = 270;
+                        mid_startX = (int)max_startX;
+                        mid_startY = (int)(max_startY + min_startY) / 2;
+
+                        rect = new Rectangle(new Point((int)midX - mid_radiusX, (int)midY - mid_radiusY), new Size(mid_radiusX * 2, mid_radiusY * 2));
+                    }
+                    break;
+                case "NEccw":
                     {
                         midX = max_startX;
                         midY = max_endY;
@@ -106,7 +134,31 @@ namespace GreenLight
                         rect = new Rectangle(new Point((int)midX - mid_radiusX, (int)midY - mid_radiusY), new Size(mid_radiusX * 2, mid_radiusY * 2));
                     }
                     break;
+                case "SEccw":
+                    {
+                        midX = max_endX;
+                        midY = max_startY;
+                        start_angle = 0;
+                        mid_startX = (int)(max_startX + min_startX) / 2;
+                        mid_startY = (int)max_startY;
+
+                        rect = new Rectangle(new Point((int)midX - mid_radiusX, (int)midY - mid_radiusY), new Size(mid_radiusX * 2, mid_radiusY * 2));
+                    }
+                    break;
                 case "NE":
+                    {
+                        midX = max_startX;
+                        midY = max_endY;
+                        start_angle = 90;
+                        mid_startX = (int)max_startX;
+                        mid_startY = (int)(max_startY + min_startY) / 2;
+                        mid_endX = (int)(max_endX + min_endX) / 2;
+                        mid_endY = (int)max_endY;
+
+                        rect = new Rectangle(new Point((int)midX - mid_radiusX, (int)midY - mid_radiusY), new Size(mid_radiusX * 2, mid_radiusY * 2));
+                    }
+                    break;
+                case "SWccw":
                     {
                         midX = max_startX;
                         midY = max_endY;
@@ -148,6 +200,15 @@ namespace GreenLight
                             }
                         }
                         break;
+                    case "NWccw":
+                        {
+                            if (_p.X < midX && _p.Y < midY)
+                            {
+                                return true;
+                            }
+                        }
+                        break;
+
                     case "SW":
                         {
                             if (_p.X > midX && _p.Y < midY)
@@ -156,6 +217,15 @@ namespace GreenLight
                             }
                         }
                         break;
+                    case "NEccw":
+                        {
+                            if (_p.X > midX && _p.Y < midY)
+                            {
+                                return true;
+                            }
+                        }
+                        break;
+
                     case "NW":
                         {
                             if (_p.X > midX && _p.Y > midY)
@@ -164,7 +234,23 @@ namespace GreenLight
                             }
                         }
                         break;
+                    case "SEccw":
+                        {
+                            if (_p.X > midX && _p.Y > midY)
+                            {
+                                return true;
+                            }
+                        }
+                        break;
                     case "NE":
+                        {
+                            if (_p.X < midX && _p.Y > midY)
+                            {
+                                return true;
+                            }
+                        }
+                        break;
+                    case "SWccw":
                         {
                             if (_p.X < midX && _p.Y > midY)
                             {
