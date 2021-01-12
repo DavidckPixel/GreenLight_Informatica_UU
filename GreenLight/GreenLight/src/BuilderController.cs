@@ -36,11 +36,11 @@ namespace GreenLight
             switch (roadBuilder.roadType)
             {
                 case "Diagonal":
-                    roadBuilder.BuildDiagonalRoad(_point1, _point2, _lanes, false, false);
+                    roadBuilder.BuildDiagonalRoad(_point1, _point2, _lanes, false, false, null, null);
                     break;
                 case "Curved":
                     if(_point1.X != _point2.X && _point1.Y != _point2.Y)
-                        roadBuilder.BuildCurvedRoad(_point1, _point2, _lanes, false, false);
+                        roadBuilder.BuildCurvedRoad(_point1, _point2, _lanes, false, false, null, null);
                     break;
                 case "X":
                     break;

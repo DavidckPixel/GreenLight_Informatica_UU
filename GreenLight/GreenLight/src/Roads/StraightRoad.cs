@@ -16,7 +16,7 @@ namespace GreenLight
 
         private int roadwidth = 10; // HARDCODED WAARDE AANPASSEN
 
-        public StraightRoad(Point _point1, Point _point2, int _lanes, string _dir, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "StraightRoad", _beginconnection, _endconnection)
+        public StraightRoad(Point _point1, Point _point2, int _lanes, string _dir, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "StraightRoad", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
 
             Point[] _points = hitBoxPoints(_point1, _point2);

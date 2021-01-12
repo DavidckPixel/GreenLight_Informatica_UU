@@ -33,19 +33,19 @@ namespace GreenLight
             roads.Add(_road);
         }*/
 
-        public void BuildDiagonalRoad(Point _point1, Point _point2, int _lanes, bool _beginconnection, bool _endconnection)
+        public void BuildDiagonalRoad(Point _point1, Point _point2, int _lanes, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
         {
             string _dir = Direction(_point1, _point2, "DiagonalRoad");
             Console.WriteLine("build" + _beginconnection + "-----" + _endconnection);
-            AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, _beginconnection, _endconnection);
+            AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
         }
 
-        public void BuildCurvedRoad(Point _point1, Point _point2, int _lanes, bool _beginconnection, bool _endconnection)
+        public void BuildCurvedRoad(Point _point1, Point _point2, int _lanes, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
         {
             string _dir = Direction(_point1, _point2, "CurvedRoad");
-            AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, _beginconnection, _endconnection);
+            AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
         }
@@ -75,6 +75,8 @@ namespace GreenLight
                                 else
                                 {
                                     x.beginconnection = true;
+                                    x.beginConnectedTo = _road;
+                                    _road.beginConnectedTo = x;
                                 }
                             }
                             else if (_point1 == _temp2 || Math.Sqrt(Math.Pow(_point1.X - _temp2.X, 2) + Math.Pow(_point1.Y - _temp2.Y, 2)) <= 21)
@@ -86,6 +88,8 @@ namespace GreenLight
                                 else
                                 {
                                     x.endconnection = true;
+                                    x.endConnectedTo = _road;
+                                    _road.beginConnectedTo = x;
                                 }
                             }
                             else if (_point2 == _temp1 || Math.Sqrt(Math.Pow(_point2.X - _temp1.X, 2) + Math.Pow(_point2.Y - _temp1.Y, 2)) <= 21)
@@ -97,6 +101,9 @@ namespace GreenLight
                                 else
                                 {
                                     x.beginconnection = true;
+                                    x.beginConnectedTo = _road;
+                                    _road.endConnectedTo = x;
+
                                 }
                             }
                             else if (_point2 == _temp2 || Math.Sqrt(Math.Pow(_point2.X - _temp2.X, 2) + Math.Pow(_point2.Y - _temp2.Y, 2)) <= 21)
@@ -108,6 +115,8 @@ namespace GreenLight
                                 else
                                 {
                                     x.endconnection = true;
+                                    x.endConnectedTo = _road;
+                                    _road.endConnectedTo = x;
                                 }
                             }
                         }
@@ -191,9 +200,19 @@ namespace GreenLight
                 Console.Write("HitBOX test");
                 return;
             }
-
-            Console.WriteLine(true);
-
+            string message = "Do you want to delete this road?";
+            string title = "Delete road";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            DialogResult result = MessageBox.Show(message, title, buttons);
+            if (result == DialogResult.Yes)
+            {
+                roads.Remove(_selectedRoad);
+                Screen.Invalidate();
+            }
+            else
+            {
+                Application.ExitThread();
+            }    
             Console.WriteLine(_selectedRoad.Cords.ToString());
         }
     }

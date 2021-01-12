@@ -19,7 +19,7 @@ namespace GreenLight
 
         private string dir;
 
-        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "CurvedRoad", _beginconnection, _endconnection)
+        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "CurvedRoad", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
             this.dir = _dir;
 
