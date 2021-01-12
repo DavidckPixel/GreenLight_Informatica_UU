@@ -40,7 +40,7 @@ namespace GreenLight
 
             this.hitbox = _hitbox;
 
-            middle = this.points[this.points.Count() / 2];
+            middle = this.points[this.points.Count() / 2]; //THIS LINE GIVES PROBLEMS WHEN MAKING CURVED ROAD 2 up or down and 2 right or left..
             AngleDir = middle.degree;
         }
 
