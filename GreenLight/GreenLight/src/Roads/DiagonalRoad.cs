@@ -11,11 +11,11 @@ namespace GreenLight
     {
         //Similar to CurvedRoad, but now math for diagnol
 
-        private string dir;
+        
 
         public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type) : base(_point1, _point2, _lanes)
         {
-            this.dir = _dir;
+            this.Dir = _dir;
             this.Type = _type;
 
             Point[] _points = hitBoxPoints(_point1, _point2, lanes);
@@ -79,7 +79,7 @@ namespace GreenLight
             }
             Point[] _points = hitBoxPoints(_point1, _point2, 1);
             Hitbox _temp = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Green);
-            return new DrivingLane(_lanePoints, this.dir, lanes, _thisLane, _temp); 
+            return new DrivingLane(_lanePoints, this.Dir, lanes, _thisLane, _temp); 
         }
 
         private int GetDirection(Point _point1, Point _point2)

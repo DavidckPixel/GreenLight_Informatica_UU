@@ -27,6 +27,7 @@ namespace GreenLight
 
         public Hitbox Hitbox2; //Word nog aangepast Jaj
         public string Type;
+        public string Dir;
 
         public List<Hitbox> offsetlaneHitbox = new List<Hitbox>();
 

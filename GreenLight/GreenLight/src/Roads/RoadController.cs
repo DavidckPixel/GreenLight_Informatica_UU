@@ -22,7 +22,7 @@ namespace GreenLight
 
         private Form settingScreen;
         private PictureBox settingScreenImage;
-        private CurvedButtons doneButton, deleteButton;
+        private CurvedButtons doneButton, deleteButton, curveFlipButton;
 
         private AbstractRoad selectedRoad;
 
@@ -75,6 +75,16 @@ namespace GreenLight
 
             settingScreen.Controls.Add(doneButton);
             settingScreen.Controls.Add(deleteButton);
+
+            curveFlipButton = new CurvedButtons(new Size(80, 40), new Point(190, 500), 25, "../../User Interface Recources/Custom_Button_Small.png", "Flip", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            curveFlipButton.Click += (object o, EventArgs ea) => { FlipRoad(this.selectedRoad); };
+            settingScreen.Controls.Add(curveFlipButton);
+
+
+
+        
+
+            
 
             this.settingScreen.Controls.Add(settingScreenImage);
         }
@@ -174,6 +184,15 @@ namespace GreenLight
             if(selectedRoad.offsetlaneHitbox.Count == 0)
             {
                 DrivingLaneHitbox();
+            }
+
+            if (selectedRoad.Type == "Curved")
+            {
+                curveFlipButton.Visible = true;
+            }
+            else
+            {
+                curveFlipButton.Visible = false;
             }
 
             settingScreen.Show();
@@ -360,6 +379,56 @@ namespace GreenLight
                 Hitbox _hitbox = selectedRoad.CreateHitbox(_points);
 
                 this.selectedRoad.offsetlaneHitbox.Add(_hitbox);
+            }
+        }
+
+        private void FlipRoad (AbstractRoad _flippedroad)
+        {
+            roads.Remove(_flippedroad);
+
+            if (_flippedroad == this.selectedRoad)
+            {
+                string _oldDir = selectedRoad.Dir;
+                string _newDir = selectedRoad.Dir;
+                if (_oldDir == "SE")
+                {
+                    _newDir = "SEccw";
+                }
+                else if(_oldDir == "SW")
+                {
+                    _newDir = "SWccw";
+                }
+                else if (_oldDir == "NW")
+                {
+                    _newDir = "NWccw";
+                }
+                else if (_oldDir == "NE")
+                {
+                    _newDir = "NEccw";
+                }
+                else if (_oldDir == "SEccw")
+                {
+                    _newDir = "SE";
+                }
+                else if (_oldDir == "SWccw")
+                {
+                    _newDir = "SW";
+                }
+                else if (_oldDir == "NWccw")
+                {
+                    _newDir = "NW";
+                }
+                else if (_oldDir == "NEccw")
+                {
+                    _newDir = "NE";
+                }
+
+                CurvedRoad _temp = new CurvedRoad(selectedRoad.getPoint1(), selectedRoad.getPoint2(), selectedRoad.getLanes(), _newDir, "Curved");
+                this.selectedRoad = _temp;
+                roads.Add(_temp);                                
+                DisableSettingScreen();
+                EnableSettingScreen();
+
             }
         }
     }
