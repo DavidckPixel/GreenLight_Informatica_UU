@@ -12,7 +12,7 @@ namespace GreenLight
     {
         public string ActiveSubMenu;
         public BuilderController builder;
-
+        public bool Toggle;
         public BuildScreenController(Form _tempform)
         {
             this.form = _tempform;
@@ -34,7 +34,7 @@ namespace GreenLight
 
             Console.WriteLine("BuildController made!");
         }
-
+        int j = 0;
         int i = 0;
         private void resize(Form _tempform) 
         {
@@ -134,6 +134,17 @@ namespace GreenLight
             {
                 _road.Draw(g);
             }
-        }  
+        }
+
+        public bool ToggleHitbox()
+        {
+            if (j % 2 == 0)
+            {
+                j++;
+                return true;
+            }
+            j++;
+            return false;
+        }
     }
 }

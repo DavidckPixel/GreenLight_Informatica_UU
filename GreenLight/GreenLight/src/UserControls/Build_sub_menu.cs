@@ -106,6 +106,9 @@ namespace GreenLight
             Undo_button.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadBuilder.UndoRoad(); };
             this.Controls.Add(Undo_button);
 
+            CurvedButtons Toggle_button = new CurvedButtons(new Size(30, 30), new Point(Sub_menu_width - 40, Form.Height - menu["simStartY"]), 25, "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
+            Toggle_button.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.Toggle = General_Form.Main.BuildScreen.ToggleHitbox(); General_Form.Main.BuildScreen.Screen.Invalidate(); };
+            this.Controls.Add(Toggle_button);
 
             CurvedButtons Start_sim_button = new CurvedButtons(new Size(menu["simStartSizeX"], menu["simStartSizeY"]), new Point(Sub_menu_width / 2 - menu["simStartX"], Form.Height - menu["simStartY"]), 25,
                 "../../User Interface Recources/Custom_Button.png", "Start simulation", Dosis_font_family, Form, this.BackColor);

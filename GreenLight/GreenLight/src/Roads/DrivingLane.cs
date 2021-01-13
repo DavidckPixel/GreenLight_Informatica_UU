@@ -244,6 +244,7 @@ namespace GreenLight
                 }*/
             }
 
+
             hitbox.Draw(g);
 
             Image _image = Image.FromFile("../../User Interface Recources/Arrow.png");

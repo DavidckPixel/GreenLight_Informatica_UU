@@ -177,15 +177,16 @@ namespace GreenLight
 
         public override void Draw(Graphics g)
         {
-            Brush Notsolid = new SolidBrush(Color.FromArgb(100, this.color));
-            Point[] _points = new Point[]
+            if (General_Form.Main.BuildScreen.Toggle)
             {
+                Brush Notsolid = new SolidBrush(Color.FromArgb(100, this.color));
+                Point[] _points = new Point[]
+                {
                 topleft, topright, bottomright, bottomleft
-            };
+                };
 
-            g.FillPolygon(Notsolid, _points);
+                g.FillPolygon(Notsolid, _points);
+            }
         }
-
-        
     }
 }

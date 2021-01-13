@@ -127,7 +127,7 @@ namespace GreenLight
                 }
             }
             
-            AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, "Curved", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
+            AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, _type, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
         }
