@@ -272,66 +272,65 @@ namespace GreenLight
             foreach(ConnectionLink _link in selectedRoad.connectLinks)
             {
 
-                    if (((_link.end.Side == "Top" || _link.end.Side == "Bottom") && (_link.begin.Side == "Top" || _link.begin.Side == "Bottom"))
-                        || ((_link.end.Side == "Left" || _link.end.Side == "Right") && (_link.begin.Side == "Left" || _link.begin.Side == "Right")))
+                if (((_link.end.Side == "Top" || _link.end.Side == "Bottom") && (_link.begin.Side == "Top" || _link.begin.Side == "Bottom"))
+                    || ((_link.end.Side == "Left" || _link.end.Side == "Right") && (_link.begin.Side == "Left" || _link.begin.Side == "Right")))
+                {
+                    _temp = DiagonalRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "");
+                }
+                else
+                {   //-----------------------------------------------------
+                    if (_link.begin.Side == "Left" && _link.end.Side == "Top")
                     {
-                        _temp = DiagonalRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad);
+                        //omgedraaid
+                        _temp = CurvedRoad.CalculateDrivingLane(_link.end.Location, _link.begin.Location, 1, selectedRoad, "NW");
+
                     }
-                    else
-                    {   //-----------------------------------------------------
-                        if( _link.begin.Side == "Left" && _link.end.Side == "Top")
-                        {
-                            //omgedraaid
-                            _temp = CurvedRoad.CalculateDrivingLane(_link.end.Location, _link.begin.Location, 1, selectedRoad, "NW");
-                            
-                        }
-                        else if (_link.begin.Side == "Top" && _link.end.Side == "Left")
-                        {
-                            _temp = CurvedRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "NW");
-
-                        }
-                        //------------------------------------------------
-                        else if (_link.begin.Side == "Right" && _link.end.Side == "Bottom")
-                        {
-                            //omgedraaid
-                            _temp = CurvedRoad.CalculateDrivingLane(_link.end.Location, _link.begin.Location, 1, selectedRoad, "SE");
-
-                        }
-                        else if (_link.begin.Side == "Bottom" && _link.end.Side == "Right")
-                        {
-                            _temp = CurvedRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "SE");
-
-                        }
-                        //---------------------------------------------
-                        else if (_link.begin.Side == "Bottom" && _link.end.Side == "Left")
-                        {
-                            //omgedraaid
-                            _temp = CurvedRoad.CalculateDrivingLane(_link.end.Location, _link.begin.Location, 1, selectedRoad, "SW");
-
-                        }
-                        else if (_link.begin.Side == "Left" && _link.end.Side == "Bottom")
-                        {
-                            _temp = CurvedRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "SW");
-
-                        }
-                        //---------------------------------------------
-                        else if (_link.begin.Side == "Top" && _link.end.Side == "Right")
-                        {
-                            //omgedraaid
-                            _temp = CurvedRoad.CalculateDrivingLane(_link.end.Location, _link.begin.Location, 1, selectedRoad, "NE");
-
-                        }
-                        else if (_link.begin.Side == "Right" && _link.end.Side == "Top")
-                        {
-                            _temp = CurvedRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "NE");
-
-                        }
-
-                    if (_temp != null)
+                    else if (_link.begin.Side == "Top" && _link.end.Side == "Left")
                     {
+                        _temp = CurvedRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "NW");
 
-                        this.selectedRoad.Drivinglanes.Add(new CrossLane(_temp.points, _link));
                     }
+                    //------------------------------------------------
+                    else if (_link.begin.Side == "Right" && _link.end.Side == "Bottom")
+                    {
+                        //omgedraaid
+                        _temp = CurvedRoad.CalculateDrivingLane(_link.end.Location, _link.begin.Location, 1, selectedRoad, "SE");
+
+                    }
+                    else if (_link.begin.Side == "Bottom" && _link.end.Side == "Right")
+                    {
+                        _temp = CurvedRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "SE");
+
+                    }
+                    //---------------------------------------------
+                    else if (_link.begin.Side == "Bottom" && _link.end.Side == "Left")
+                    {
+                        //omgedraaid
+                        _temp = CurvedRoad.CalculateDrivingLane(_link.end.Location, _link.begin.Location, 1, selectedRoad, "SW");
+
+                    }
+                    else if (_link.begin.Side == "Left" && _link.end.Side == "Bottom")
+                    {
+                        _temp = CurvedRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "SW");
+
+                    }
+                    //---------------------------------------------
+                    else if (_link.begin.Side == "Top" && _link.end.Side == "Right")
+                    {
+                        //omgedraaid
+                        _temp = CurvedRoad.CalculateDrivingLane(_link.end.Location, _link.begin.Location, 1, selectedRoad, "NE");
+
+                    }
+                    else if (_link.begin.Side == "Right" && _link.end.Side == "Top")
+                    {
+                        _temp = CurvedRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "NE");
+
+                    }
+                }
+
+                if (_temp != null)
+                {   
+                this.selectedRoad.Drivinglanes.Add(new CrossLane(_temp.points, _link));  
                 }
             }
 
