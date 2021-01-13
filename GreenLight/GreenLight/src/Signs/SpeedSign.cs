@@ -23,7 +23,7 @@ namespace GreenLight
 
         public override void Read(AI _ai)
         {
-            _ai.maxSpeed = speed;
+           // _ai.maxSpeed = speed;
         }
 
         public int getSpeed()

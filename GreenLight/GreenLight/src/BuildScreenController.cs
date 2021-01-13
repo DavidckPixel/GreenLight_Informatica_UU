@@ -130,7 +130,7 @@ namespace GreenLight
             Graphics g = pea.Graphics;
             builder.gridController.DrawGridPoints(g);
 
-            foreach(AbstractRoad _road in builder.roadBuilder.roads)
+            foreach(AbstractRoad _road in RoadController.roads)
             {
                 _road.Draw(g);
             }

@@ -22,9 +22,9 @@ namespace GreenLight
             Point _temp3 = _roadTwo.getPoint1();
             Point _temp4 = _roadTwo.getPoint2();
 
-            if (_lanes > 1)
+            //if (_lanes > 1)
 
-                if (_roadOne.roadtype == "DiagonalRoad" && _roadTwo.roadtype == "DiagonalRoad")
+                if (_roadOne.Type == "Diagonal" && _roadTwo.Type == "Diagonal")
                 {
                     char _roadOneEnds;
                     char _roadTwoEnds;
@@ -130,7 +130,7 @@ namespace GreenLight
                             General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(_temp3, new Point(_temp4.X - (_shift - 2), _temp4.Y), _lanes, _roadTwo.beginconnection, true, _roadTwo.beginConnectedTo, _roadOne);
                         }
                     }
-                    General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, true, true, RoadController.roads[RoadController.roads.Count - 2], RoadController.roads[RoadController.roads.Count - 1]);
+                    General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, "Curved", true, true, RoadController.roads[RoadController.roads.Count - 2], RoadController.roads[RoadController.roads.Count - 1]);
                 }
 
                 else if (_roadOneEnds == 'v' && _roadTwoEnds == 'h')
@@ -190,7 +190,7 @@ namespace GreenLight
                             General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(_temp3, new Point(_temp4.X, _temp4.Y - (_shift - 2)), _lanes, _roadTwo.beginconnection, true, _roadTwo.beginConnectedTo, null);
                         }
                     }
-                    General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, true, true, RoadController.roads[RoadController.roads.Count - 1], RoadController.roads[RoadController.roads.Count - 2]);
+                    General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, "Curved", true, true, RoadController.roads[RoadController.roads.Count - 1], RoadController.roads[RoadController.roads.Count - 2]);
                 }
                 Console.WriteLine(RoadController.roads.Count);
             }
@@ -522,7 +522,7 @@ namespace GreenLight
                         }
                     }
                 }
-                General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, true, true, RoadController.roads[RoadController.roads.Count - 2], RoadController.roads[RoadController.roads.Count - 1]);
+                General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, "Curved", true, true, RoadController.roads[RoadController.roads.Count - 2], RoadController.roads[RoadController.roads.Count - 1]);
             }
 
             else if (_roadOneEnds == 'v' && _roadTwoEnds == 'h')
@@ -644,7 +644,7 @@ namespace GreenLight
                         }
                     }
                 }
-                General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, true, true, RoadController.roads[RoadController.roads.Count - 1], RoadController.roads[RoadController.roads.Count - 2]);
+                General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, "Curved", true, true, RoadController.roads[RoadController.roads.Count - 1], RoadController.roads[RoadController.roads.Count - 2]);
             }
         }
     }

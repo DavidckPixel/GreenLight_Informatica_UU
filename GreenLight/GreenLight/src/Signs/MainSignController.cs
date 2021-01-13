@@ -105,7 +105,7 @@ namespace GreenLight
                 return;
             }
 
-            List<AbstractRoad> _roadlist = General_Form.Main.BuildScreen.builder.roadBuilder.roads;
+            List<AbstractRoad> _roadlist = RoadController.roads;
             AbstractRoad _selectedRoad = _roadlist.Find(x => x.Hitbox2.Contains(mea.Location));
 
             if (signType == "X")
@@ -177,7 +177,7 @@ namespace GreenLight
 
         public void deleteSign(AbstractSign _abstractSign = null)
         {
-            List<AbstractRoad> _roadlist = General_Form.Main.BuildScreen.builder.roadBuilder.roads;
+            List<AbstractRoad> _roadlist = RoadController.roads;
 
             foreach(AbstractRoad _road in _roadlist)
             {

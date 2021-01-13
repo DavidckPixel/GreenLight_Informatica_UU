@@ -16,7 +16,7 @@ namespace GreenLight
         //For now it just holds a calculate direction function
         //Nothing really of interest here yet, Come back later :)
 
-        public List<AbstractRoad> roads = new List<AbstractRoad>();
+        public static List<AbstractRoad> roads = new List<AbstractRoad>();
         public PictureBox Screen;
         public string roadType = "D";
 
@@ -82,7 +82,7 @@ namespace GreenLight
         {
             string _dir = Direction(_point1, _point2, "DiagonalRoad");
             Console.WriteLine("build" + _beginconnection + "-----" + _endconnection);
-            AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
+            AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, "Diagonal", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
 			OPC.AddOriginPoint(80, _point1);
