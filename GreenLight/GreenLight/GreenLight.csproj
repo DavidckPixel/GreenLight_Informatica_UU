@@ -67,6 +67,12 @@
     <Compile Include="src\Hitbox.cs" />
     <Compile Include="src\RectHitbox.cs" />
     <Compile Include="src\Roads\Connection.cs" />
+    <Compile Include="src\Roads\ConnectionLink.cs" />
+    <Compile Include="src\Roads\ConnectionPoint.cs" />
+    <Compile Include="src\Roads\CrossLane.cs" />
+    <Compile Include="src\Roads\CrossRoad.cs" />
+    <Compile Include="src\Roads\CrossRoadController.cs" />
+    <Compile Include="src\Roads\Lane.cs" />
     <Compile Include="src\Signs\AbstractSignController.cs" />
     <Compile Include="src\Signs\AbstractSign.cs" />
     <Compile Include="src\Signs\PlacedSign.cs" />

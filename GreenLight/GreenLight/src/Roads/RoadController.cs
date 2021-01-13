@@ -26,12 +26,16 @@ namespace GreenLight
 
         private AbstractRoad selectedRoad;
 
+        public CrossRoadController crossRoadController;
+
         PrivateFontCollection Font_collection = new PrivateFontCollection();
 
         public RoadController(PictureBox _screen)
         {
             this.Screen = _screen;
             this.Screen.MouseClick += RoadClick;
+
+            crossRoadController = new CrossRoadController(this.Screen);
 
             initSettingScreen();
         }
@@ -86,6 +90,12 @@ namespace GreenLight
             AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, "Diagonal", _beginconnection, _endconnection);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
+        }
+
+        public void BuildCrossRoad(Point _point1, int _lanes, bool _beginconnection, bool _endconnection)
+        {
+            AbstractRoad _temp = crossRoadController.newCrossRoad(_point1, _lanes, "CrossRoad");
+            this.roads.Add(_temp);
         }
 
         public void BuildCurvedRoad(Point _point1, Point _point2, int _lanes, string _type, bool _beginconnection, bool _endconnection)
@@ -266,16 +276,22 @@ namespace GreenLight
                 return;
             }
 
-            this.selectedRoad = roads.Find(x => x.Hitbox2.Contains(mea.Location));
-            if (this.selectedRoad == null)
+            try
             {
-                Console.Write("No Road Clicked!");
-                return;
-            }
+                this.selectedRoad = roads.Find(x => x.Hitbox2.Contains(mea.Location));
+                if (this.selectedRoad == null)
+                {
+                    Console.Write("No Road Clicked!");
+                    return;
+                }
 
-            if (this.roadType == "X")
+                if (this.roadType == "X")
+                {
+                    EnableSettingScreen();
+                }
+            }catch(Exception e)
             {
-                EnableSettingScreen();
+
             }
         }
 
@@ -324,7 +340,7 @@ namespace GreenLight
                 return;
             }
 
-            DrivingLane _lane = selectedRoad.Drivinglanes.Find(x => x.offsetHitbox.Contains(mea.Location));
+            DrivingLane _lane = (DrivingLane)selectedRoad.Drivinglanes.Find(x => x.offsetHitbox.Contains(mea.Location));
 
             if (_lane == null)
             {

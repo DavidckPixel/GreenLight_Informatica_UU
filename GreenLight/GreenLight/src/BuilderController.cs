@@ -46,6 +46,9 @@ namespace GreenLight
                     if (_point1.X != _point2.X && _point1.Y != _point2.Y)
                         roadBuilder.BuildCurvedRoad(_point1, _point2, _lanes, roadBuilder.roadType, false, false);
                     break;
+                case "Cross":
+                    roadBuilder.BuildCrossRoad(_point1, _lanes, false, false);
+                    break;
                 case "X":
                     break;
             }

@@ -34,9 +34,7 @@ namespace GreenLight
             }
         }
 
-        
-
-        protected override DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thisLane)
+        public static DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thisLane, AbstractRoad _road, string Dir)
         {
             Console.WriteLine("{0} --- {1}", _point1, _point2);
             
@@ -45,7 +43,7 @@ namespace GreenLight
             Point _normpoint1 = _point1; Point _normpoint2 = _point2;
 
             Tuple<int, int> _dir = GetDirection(_point1, _point2);
-            Console.WriteLine(Dir);
+            Console.WriteLine(_road.Dir);
 
             Point _prev = _normpoint1;
             Point _nulpoint;
@@ -64,7 +62,7 @@ namespace GreenLight
             }
             else // (dir == "SE")
             {
-               _nulpoint = new Point(Math.Max(_point1.X, point2.X), Math.Max(_point1.Y, point2.Y));
+               _nulpoint = new Point(Math.Max(_point1.X, _road.point2.X), Math.Max(_road.point1.Y, _road.point2.Y)); //Aangepast
             }
 
             int _deltaX = Math.Abs(_point1.X - _point2.X);
@@ -82,6 +80,7 @@ namespace GreenLight
 
                 _Xtemp = _point1.X + x * _dir.Item1;
                 _ytemp = _point1.Y + y * _dir.Item2;
+
 
                 if ((Dir == "NE" || Dir == "NW") && x <= _deltaX)
                 {
@@ -121,13 +120,13 @@ namespace GreenLight
                 Console.WriteLine(x.ToString());
             }
 
-            Point[] _points = hitBoxPoints(_point1, _point2, 1);
+            Point[] _points = _road.hitBoxPoints(_point1, _point2, 1);
             Hitbox _temp = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], Dir, Color.Green);
 
-            return new DrivingLane(_lanePoints, this.Dir, lanes, _thisLane, _temp);
+            return new DrivingLane(_lanePoints, _road.Dir, _road.lanes, _thisLane, _temp);
         }
 
-        private Tuple<int, int> GetDirection(Point _point1, Point _point2)
+        private static Tuple<int, int> GetDirection(Point _point1, Point _point2)
         {
             int dirx = 0; int diry = 0;
 
@@ -218,7 +217,7 @@ namespace GreenLight
                     }
                 }
 
-                return CalculateDrivingLane(_firstPoint, _secondPoint, t);
+                return CalculateDrivingLane(_firstPoint, _secondPoint, t, this, this.Dir);
             }
 
         public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20)

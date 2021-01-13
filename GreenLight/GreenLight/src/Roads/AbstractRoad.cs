@@ -18,10 +18,10 @@ namespace GreenLight
 
     public abstract class AbstractRoad : ScreenObject
     {
-        protected Point point1;
-        protected Point point2;
-        protected int lanes;
-        public List<DrivingLane> Drivinglanes=  new List<DrivingLane>();
+        public Point point1;
+        public Point point2;
+        public int lanes;
+        public List<Lane> Drivinglanes=  new List<Lane>();
         public List<PlacedSign> Signs = new List<PlacedSign>();
         public Hitbox Hitbox2; //Word nog aangepast Jaj
         public string roadtype;
@@ -43,9 +43,9 @@ namespace GreenLight
             this.endconnection = _endconnection;
         }
 
-        protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
+        //protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
 
-        public abstract Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 40);
+        public abstract Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20);
 
         public static int CalculateAngle(Point _point1, Point _point2)
         {

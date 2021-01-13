@@ -56,11 +56,15 @@ namespace GreenLight
             Curved_Road2.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Curved2"; };
             this.Controls.Add(Curved_Road2);
 
+            CurvedButtons Crossroad = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/CrossRoadButton.png", this.BackColor);
+            Crossroad.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross"; };
+            this.Controls.Add(Crossroad);
+
             this.LaneAmount = new TextBox();
             LaneAmount.Text = "1";
             LaneAmount.Width = 20;
             LaneAmount.Height = 20;
-            LaneAmount.Location = new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff);
+            LaneAmount.Location = new Point(_ButtonXbase + 2 * _ButtonXdiff, _ButtonYbase + _ButtonYdiff);
             this.Controls.Add(LaneAmount);
         }
     }

@@ -29,7 +29,7 @@ namespace GreenLight
             }
         }
 
-        protected override DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thisLane)
+        public static DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thisLane, AbstractRoad _road)
         {
             List<LanePoints>_lanePoints = new List<LanePoints>();
             Point _normpoint1 = _point1; Point _normpoint2 = _point2;
@@ -57,7 +57,7 @@ namespace GreenLight
                 }
             }
             Console.WriteLine(_slp);
-            this.slp = _slp;
+            _road.slp = _slp;
 
             int _dir = GetDirection(_point1, _point2);
 
@@ -79,12 +79,12 @@ namespace GreenLight
 
                 _prev = _normpoint1;
             }
-            Point[] _points = hitBoxPoints(_point1, _point2, 1);
+            Point[] _points = _road.hitBoxPoints(_point1, _point2, 1);
             Hitbox _temp = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Green);
-            return new DrivingLane(_lanePoints, this.Dir, lanes, _thisLane, _temp); 
+            return new DrivingLane(_lanePoints, _road.Dir, _road.lanes, _thisLane, _temp); 
         }
 
-        private int GetDirection(Point _point1, Point _point2)
+        private static int GetDirection(Point _point1, Point _point2)
         {
             if (_point2.X >= _point1.X)
             {
@@ -230,7 +230,7 @@ namespace GreenLight
                 }
             }
 
-            return CalculateDrivingLane(_firstPoint, _secondPoint, t);
+            return CalculateDrivingLane(_firstPoint, _secondPoint, t, this);
         }
 
         public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20)
