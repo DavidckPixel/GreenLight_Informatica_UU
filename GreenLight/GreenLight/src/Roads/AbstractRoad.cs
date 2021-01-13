@@ -27,12 +27,12 @@ namespace GreenLight
         public string roadtype;
         public double slp;
         public bool beginconnection, endconnection;
-        
         public string Type;
         public string Dir;
+        public AbstractRoad beginConnectedTo, endConnectedTo;
 
         //Basic Road Constructor, every road calls this constructor during initialzation
-        public AbstractRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection) : base(_point1, _point2)
+        public AbstractRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2)
         {
             this.point1 = _point1;
             this.point2 = _point2;
@@ -41,6 +41,8 @@ namespace GreenLight
             this.Cords = _point1;
             this.beginconnection = _beginconnection;
             this.endconnection = _endconnection;
+            this.beginConnectedTo = _beginConnectedTo;
+            this.endConnectedTo = _endConnectedTo; 
         }
 
         protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);

@@ -17,7 +17,9 @@ namespace GreenLight
         //For how many lanes you told the constructor to have.
 
 
-        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "CurvedRoad", _beginconnection, _endconnection)
+        private string dir;
+
+        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "CurvedRoad", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
             this.Dir = _dir;
             this.Type = _type;
@@ -62,7 +64,7 @@ namespace GreenLight
             {
                _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y));
             }
-            else // (dir == "SE")
+            else // (Dir == "SE")
             {
                _nulpoint = new Point(Math.Max(_point1.X, point2.X), Math.Max(_point1.Y, point2.Y));
             }

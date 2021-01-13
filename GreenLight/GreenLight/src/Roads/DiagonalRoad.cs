@@ -13,7 +13,7 @@ namespace GreenLight
 
         private string dir;
 
-        public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "DiagonalRoad", _beginconnection, _endconnection)
+        public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "DiagonalRoad", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
             this.Dir = _dir;
             this.Type = _type;
