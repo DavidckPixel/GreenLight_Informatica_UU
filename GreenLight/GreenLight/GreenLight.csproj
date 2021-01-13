@@ -234,11 +234,18 @@
   <ItemGroup>
     <Folder Include="Fonts\" />
     <Folder Include="Logs\" />
-    <Folder Include="User Interface Recources\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\BigCar.png" />
     <Content Include="Images\Car.png" />
+    <Content Include="User Interface Recources\CurveButton.png" />
+    <Content Include="User Interface Recources\CurveButton_On_Hover.png" />
+    <Content Include="User Interface Recources\CurveHollowButton.png" />
+    <Content Include="User Interface Recources\CurveHollowButton_On_Hover.png" />
+    <Content Include="User Interface Recources\TemporaryCurve.png" />
+    <Content Include="User Interface Recources\TemporaryCurve_On_Hover.png" />
+    <Content Include="User Interface Recources\TemporaryHollowCurve.png" />
+    <Content Include="User Interface Recources\TemporaryHollowCurve_On_Hover.png" />
     <None Include="Images\Dikkere-Road.png" />
     <None Include="Images\Road_Verticaal.png" />
     <None Include="Images\Transparent-Lane.png" />
