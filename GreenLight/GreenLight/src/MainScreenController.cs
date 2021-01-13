@@ -86,7 +86,5 @@ namespace GreenLight
                 this.Active.Screen.Invalidate();
             }
         }
-        
-
     }
 }

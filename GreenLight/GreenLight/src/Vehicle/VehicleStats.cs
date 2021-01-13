@@ -25,8 +25,6 @@ namespace GreenLight
             this.Motorpwr = Motorpwr;
             this.Surface = Surface;
             this.Cw = Cw;
-
-            Console.WriteLine("Constructed!");
         }
     }
 }

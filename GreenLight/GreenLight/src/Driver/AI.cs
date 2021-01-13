@@ -27,13 +27,12 @@ namespace GreenLight
         
         Thread moveVehicle;
         public int targetspeed;
-        Point destinationpoint = new Point(4000, 980); //Ingegeven door road?
+        Point destinationpoint = new Point(1900, 1060); //Ingegeven door road?
+        Point endpoint; //Definitief eindpunt auto?
 		int framesbuffered = 625;
         public List<Point> location = new List<Point>();
         public List<Point> location2 = new List<Point>();
         List<Point> locationlocal = new List<Point>();
-
-        public int maxSpeed;
 
         
         public AI(Vehicle v, DriverStats _stats)
@@ -50,12 +49,6 @@ namespace GreenLight
             //thread used to update vehicle speed and whereabouts in the single threaded car system
             moveVehicle = new Thread(vehiclemovement);
             moveVehicle.Start();
-            
-            //thread used to test the AI in the multi threaded car system
-            /*run = new Thread(test);*/
-            /*run.Start();*/
-
-
         }
 
         //method used to drive the vehicle in the single threaded car System;
@@ -65,22 +58,23 @@ namespace GreenLight
             {
                 if (v.listcounter % 2 == 0)
                 {
-                    location.Clear();
                     calculateList();
+                    location.Clear();
                     foreach (Point p in locationlocal)
                     {
                         location.Add(p);
                     }
-                    Thread.Sleep(9000);
+                    /*Console.WriteLine("Lijst 1 berekend. Xend: " + location[624].X + "  -  Listnummer: " + v.listcounter);*/
                     locationlocal.Clear();
-                    location2.Clear();
                     framesbuffered = 625;
+                    Thread.Sleep(9000);
                     calculateList();
+                    location2.Clear();
                     foreach (Point p in locationlocal)
                     {
                         location2.Add(p);
                     }
-                    Console.WriteLine("Lijst 1: " + location.Count + "   Lijst 2: " + location2.Count + "  Listnummer: " + v.listcounter);
+                    /*Console.WriteLine("Lijst 2 berekend. Xend: " + location2[624].X + "  -  Listnummer: " + v.listcounter);*/
                     locationlocal.Clear();
                     framesbuffered = 625;
                     Thread.Sleep(9000);
@@ -104,7 +98,7 @@ namespace GreenLight
                     v.accelerate(targetspeed);
                 }
                 needToBrake(destinationpoint.X, destinationpoint.Y);
-                //Console.WriteLine("braking: " + v.isBraking + "    -    accelarating:" + v.isAccelerating + "    -    speed:" + v.speed + " Frames: " + framesbuffered);
+                /*Console.WriteLine("braking: " + v.isBraking + "    -    accelarating:" + v.isAccelerating + "    -    speed:" + v.speed + " Frames: " + framesbuffered);*/
                 framesbuffered--;
             }
         }
@@ -117,7 +111,7 @@ namespace GreenLight
             v.isBraking = false;
             v.isAccelerating = true;            
         }
-
+        
         //Method used to calculate if the car needs to start braking in the single threaded car system
         public void needToBrake(int xt, int yt)
         {

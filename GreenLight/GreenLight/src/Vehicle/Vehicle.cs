@@ -62,15 +62,11 @@ namespace GreenLight
             this.y = y;
             this.cw = _stat.Cw;
             this.surface = _stat.Surface;
-            this.Cords = new Point(x, y); //Ignore this
-            
-            Console.WriteLine("Created vehicle");
-            
+            this.Cords = new Point(x, y); //Ignore this          
             
             a = this.motorpwr / this.weight;
             abrake = physics.Brakepwr / this.weight;
             Car = new Bitmap(Properties.Resources.Car);
-
         }
 
         public float Slipperiness {
@@ -89,7 +85,7 @@ namespace GreenLight
                 ytemp = location[frame].Y;
             }
             catch
-            { Console.WriteLine("Not Av.");;
+            { Console.WriteLine("Not Av." + location.Count);;
             }
             g.DrawImage(RotateImage(Car, angle), xtemp-Car.Width/2, ytemp - Car.Height / 2, Car.Width, Car.Height);
             if (frame == 300)
@@ -144,25 +140,6 @@ namespace GreenLight
             }
         }
         
-        //Brake to targetspeed method for multithreaded car system        
-        /*public void brakeToSpeed(float targetspeed)
-        {
-            
-            while (speed > targetspeed && isBraking)
-            {                
-                airResistance = (float) (0.5f * physics.Density * cw * surface * speed * speed);
-                abrake = (physics.Brakepwr + airResistance) / this.weight;
-                
-                speed -= abrake * 0.016f;
-                Thread.Sleep(16);
-            }
-            if (speed < targetspeed)
-            {
-                speed = targetspeed;                
-            }
-            //isBraking = false;
-        }*/
-
         //Method to calculate the distance the car would need to brake to zero
         public float brkdistance(int xt, int yt)
         {

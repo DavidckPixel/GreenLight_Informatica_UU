@@ -78,8 +78,6 @@ namespace GreenLight
 
         public void OnClick(Object o, MouseEventArgs mea)
         {
-            
-
             string _type = General_Form.Main.BuildScreen.builder.roadBuilder.roadType;
 
             if (_type == "X" || _type == "D")

@@ -86,6 +86,9 @@ namespace GreenLight
             AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, "Diagonal", _beginconnection, _endconnection);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
+			OPC.AddOriginPoint(80, _point1);
+            OPC.AddOriginPoint(80, _point2);
+            //Console.WriteLine(OPC.GetSpawnPoint);
         }
 
         public void BuildCurvedRoad(Point _point1, Point _point2, int _lanes, string _type, bool _beginconnection, bool _endconnection)

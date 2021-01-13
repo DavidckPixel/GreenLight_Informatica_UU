@@ -63,6 +63,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\CurvedHitbox.cs" />
+    <Compile Include="src\OriginPointController.cs" />
+    <Compile Include="src\VehicleOriginPoint.cs" />
     <Compile Include="src\Driver\DriverStats.cs" />
     <Compile Include="src\Hitbox.cs" />
     <Compile Include="src\RectHitbox.cs" />
@@ -234,6 +236,7 @@
   <ItemGroup>
     <Folder Include="Fonts\" />
     <Folder Include="Logs\" />
+    <Folder Include="User Interface Recources\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\BigCar.png" />

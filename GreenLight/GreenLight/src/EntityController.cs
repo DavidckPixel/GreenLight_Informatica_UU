@@ -8,6 +8,6 @@ namespace GreenLight
 {
     public abstract class EntityController : AbstractController
     {
-
+        public OriginPointController OPC = new OriginPointController();
     }
 }

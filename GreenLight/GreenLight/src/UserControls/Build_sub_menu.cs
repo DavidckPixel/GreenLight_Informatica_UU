@@ -111,7 +111,6 @@ namespace GreenLight
                 "../../User Interface Recources/Custom_Button.png", "Start simulation", Dosis_font_family, Form, this.BackColor);
             Start_sim_button.Click += (object o, EventArgs EA) => { General_Form.Main.MenuController.SwitchToSimulation();  };
             this.Controls.Add(Start_sim_button);
-           
 
             CurvedButtons Divider3 = new CurvedButtons();
             Divider3.Location = new Point(0, menu["devider3"]); //devider3

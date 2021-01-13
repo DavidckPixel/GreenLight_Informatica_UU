@@ -105,8 +105,6 @@
     "buttonYbase": 18,
     "buttonYdiff": 78,
     "buttonCurve": 25
-
-
   },
 
     "simElementsMenu": {
@@ -126,9 +124,6 @@
         "sliderStartVehicleY": 360,
         "sliderTextX": 125,
         "startTextY": 340
-
-
-
     },
 
     "simDriver": {      
@@ -171,5 +166,4 @@
         "timeSizeX": 90,
         "timeSizeY": 30
     }
-
 }

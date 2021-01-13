@@ -106,5 +106,4 @@ namespace GreenLight
             Log.Write("Completed drawing the roads on the simulation screen");
         }
     }
-
 }

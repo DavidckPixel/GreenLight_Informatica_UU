@@ -21,10 +21,6 @@ namespace GreenLight
             this.FollowInterval = FollowInterval;
             this.SpeedRelativeToLimit = SpeedRelativeToLimit;
             this.RuleBreakingChance = RuleBreakingChance;
-
-            Console.WriteLine("Constructed DriverStat");
-
         }
-
     }
 }

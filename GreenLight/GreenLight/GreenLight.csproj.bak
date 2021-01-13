@@ -183,6 +183,9 @@
     <Compile Include="src\UserControls\Elements_sub_buildings_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <EmbeddedResource Include="HitBox_form.resx">
+      <DependentUpon>HitBox_form.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -195,6 +198,9 @@
     </Compile>
     <EmbeddedResource Include="src\Roads\RoadTestForm.resx">
       <DependentUpon>RoadTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\UserControls\Start_sub_menu.resx">
+      <DependentUpon>Start_sub_menu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Vehicle\Vehicle.resx">
       <DependentUpon>Vehicle.cs</DependentUpon>
@@ -228,11 +234,18 @@
   <ItemGroup>
     <Folder Include="Fonts\" />
     <Folder Include="Logs\" />
-    <Folder Include="User Interface Recources\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\BigCar.png" />
     <Content Include="Images\Car.png" />
+    <Content Include="User Interface Recources\CurveButton.png" />
+    <Content Include="User Interface Recources\CurveButton_On_Hover.png" />
+    <Content Include="User Interface Recources\CurveHollowButton.png" />
+    <Content Include="User Interface Recources\CurveHollowButton_On_Hover.png" />
+    <Content Include="User Interface Recources\TemporaryCurve.png" />
+    <Content Include="User Interface Recources\TemporaryCurve_On_Hover.png" />
+    <Content Include="User Interface Recources\TemporaryHollowCurve.png" />
+    <Content Include="User Interface Recources\TemporaryHollowCurve_On_Hover.png" />
     <None Include="Images\Dikkere-Road.png" />
     <None Include="Images\Road_Verticaal.png" />
     <None Include="Images\Transparent-Lane.png" />
