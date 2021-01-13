@@ -88,9 +88,43 @@ namespace GreenLight
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
         }
 
-        public void BuildCurvedRoad(Point _point1, Point _point2, int _lanes, bool _beginconnection, bool _endconnection)
+        public void BuildCurvedRoad(Point _point1, Point _point2, int _lanes, string _type, bool _beginconnection, bool _endconnection)
         {
             string _dir = Direction(_point1, _point2, "CurvedRoad");
+            Point _temp1 = _point1;
+            Point _temp2 = _point2;
+
+            if (_type == "Curved")
+            {
+                if (_dir == "NW")
+                {
+                    _dir = "SE";
+                    _point1 = _temp2;
+                    _point2 = _temp1;
+                }
+                else if (_dir == "NE")
+                {
+                    _dir = "SW";
+                    _point1 = _temp2;
+                    _point2 = _temp1;
+                }
+            }
+            else if (_type == "Curved2")
+            {
+                if (_dir == "SE")
+                {
+                    _dir = "NW";
+                    _point1 = _temp2;
+                    _point2 = _temp1;
+                }
+                else if (_dir == "SW")
+                {
+                    _dir = "NE";
+                    _point1 = _temp2;
+                    _point2 = _temp1;
+                }
+            }
+            
             AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, "Curved", _beginconnection, _endconnection);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);

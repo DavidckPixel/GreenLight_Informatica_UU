@@ -132,7 +132,7 @@ namespace GreenLight
                             General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(_temp3, new Point(_temp4.X - 18, _temp4.Y), _lanes, _roadTwo.beginconnection, true);
                         }
                     }
-                    General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, true, true);
+                    General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, "Curved", true, true);
                 }
 
                 else if (_roadOneEnds == 'v' && _roadTwoEnds == 'h')
@@ -192,7 +192,7 @@ namespace GreenLight
                             General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(_temp3, new Point(_temp4.X, _temp4.Y - 18), _lanes, _roadTwo.beginconnection, true);
                         }
                     }
-                    General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, true, true);
+                    General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, "Curved", true, true);
                 }
                     Console.WriteLine(roadlist.Count);
             }
@@ -507,7 +507,7 @@ namespace GreenLight
                         }
                     }
                 }
-                General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, true, true);
+                General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, "Curved", true, true);
             }
 
             else if (_roadOneEnds == 'v' && _roadTwoEnds == 'h')
@@ -629,7 +629,7 @@ namespace GreenLight
                         }
                     }
                 }
-                General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, true, true);
+                General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, "Curved", true, true);
             }
         }
     }
