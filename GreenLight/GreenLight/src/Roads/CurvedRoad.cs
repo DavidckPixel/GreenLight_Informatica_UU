@@ -47,7 +47,8 @@ namespace GreenLight
             Point _normpoint1 = _point1; Point _normpoint2 = _point2;
 
             Tuple<int, int> _dir = GetDirection(_point1, _point2);
-            Console.WriteLine(Dir);
+
+            Console.WriteLine("--- CurvedRoad ----  " + Dir);
 
             Point _prev = _normpoint1;
             Point _nulpoint;
@@ -126,7 +127,7 @@ namespace GreenLight
             Point[] _points = hitBoxPoints(_point1, _point2, 1);
             Hitbox _temp = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], Dir, Color.Green);
 
-            return new DrivingLane(_lanePoints, this.Dir, lanes, _thisLane, _temp);
+            return new DrivingLane(_lanePoints, Dir, lanes, _thisLane, _temp);
         }
 
         private Tuple<int, int> GetDirection(Point _point1, Point _point2)
