@@ -74,7 +74,7 @@ namespace GreenLight
             else if (roadLanes == 1)
             {
                 p.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-                p.Width = 4;
+                p.Width = 5;
                 p.Color = Color.White;
             }
             else if (thisLane == roadLanes - 1)
@@ -82,7 +82,7 @@ namespace GreenLight
                 if (_side == 1)
                 {
                     p.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-                    p.Width = 4;
+                    p.Width = 5;
                     p.Color = Color.White;
                 }
                 else
@@ -99,7 +99,7 @@ namespace GreenLight
                 else
                 {
                     p.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-                    p.Width = 4;
+                    p.Width = 5;
                     p.Color = Color.White;
                 }
             }
@@ -162,8 +162,6 @@ namespace GreenLight
 
                 try
                 {
-                    
-
                     g.DrawArc(p, rect, startAngle, sweepAngle);
 
                     outer = new Rectangle(new Point(rect.Location.X - drivingLaneDistance / 2, rect.Location.Y - drivingLaneDistance / 2), new Size(rect.Width + drivingLaneDistance, rect.Height + drivingLaneDistance));
@@ -176,8 +174,6 @@ namespace GreenLight
                 {
 
                 }
-                
-
             }
             else
             {
@@ -221,7 +217,7 @@ namespace GreenLight
                         g.DrawLine(getPen(1), new Point(points[0].cord.X - drivingLaneDistance / 2, points[0].cord.Y), new Point(points[points.Count - 1].cord.X - drivingLaneDistance / 2, points[points.Count - 1].cord.Y));
                         g.DrawLine(getPen(2), new Point(points[0].cord.X + drivingLaneDistance / 2, points[0].cord.Y), new Point(points[points.Count - 1].cord.X + drivingLaneDistance / 2, points[points.Count - 1].cord.Y));
                     }
-                    else
+                    else if (points[0].cord.Y == points[points.Count - 1].cord.Y)
                     {
                         g.DrawLine(p, points[0].cord, points[points.Count - 1].cord);
                         g.DrawLine(getPen(1), new Point(points[0].cord.X, points[0].cord.Y - drivingLaneDistance / 2), new Point(points[points.Count - 1].cord.X, points[points.Count - 1].cord.Y - drivingLaneDistance / 2));
@@ -243,7 +239,6 @@ namespace GreenLight
                     }
                 }*/
             }
-
 
             hitbox.Draw(g);
 
