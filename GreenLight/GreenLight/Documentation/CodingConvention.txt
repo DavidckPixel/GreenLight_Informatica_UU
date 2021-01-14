@@ -1,0 +1,199 @@
+﻿//------------------------------------------------------------------------------------------//
+							CODING CONVENTION
+//------------------------------------------------------------------------------------------//
+	PROJECT:	Greenlight-District
+	DATE OF WRITING:	14/1/2021
+	LAST UPDATED:	N.E.
+	UPDATED BY:		N.E.
+//-------------------------------------------------------------------------------------------//
+
+
+INTRODUCTION
+-----------------------------
+
+Welcome to the Greenlight-District coding convention document, this following document will contain the coding do's and dont
+within the project. This document is appliciable for everyone looking to contribute to the project. As this is a University
+Project for the second half of the first semester of a Computer Science bacholer at the University of Utrecht, all code included 
+within this project is therefor property of the University. As this document and the subsequencal code is made and written by 
+still rather unexperienced students, it may differeniate from the standard c# coding convention. These areas will be marked with 
+a (*) and provided with the more standard approach.
+
+This document will contain broader topics then just the naming convention and will also include coding and structure guidelines, 
+combined with the Github contributation rules as decided on by our group and supervised by Kristina Szilagyi.
+
+We encourage any studnet/ professor or outsider who is curious to learn more about the inner workings of our project, and subsequently 
+our team, to read this document.
+
+Incase you have any feedback on this document please contact David at: d.c.koymans@students.uu.nl
+
+//------------------------------------------------------------------------------------------------//
+
+
+TABLE OF CONTENT
+-------------------------------
+
+	*NAMING CONVENTION
+		this section will contain the naming convention for variables / classes and method
+
+	*CODING CONVENTION
+		this section will include numerious rules regarding coding and contribution
+
+	*GITHUB CONVENTION
+		this section will include rules for our github
+
+//---------------------------------------------------------------------------------------------------//
+
+
+NAMING CONVENTION
+---------------------------
+The following section will contain the rules used for variable/method naming. We strictly encourage every contributor to follow
+these rules as it create structure in our project and will make it easier for other contributors to read, understand and use the code.
+as stated above, some of these naming conventions will differ from the standard c# naming convention. The main reason for this is personal
+preference and lack of experience. All conventions will be structured in the same way and will include examples as well as a discription on 
+why we choice to go with these rules.
+
+The most important thing to note: our project is in english and therefor all code/ names/ comment should be explicitly in english.
+
+	-----------------------------------------
+->	VARIABLES
+		when naming our variables we diffirientiate between 2 different types of variables, we have local variables and global variables.
+		In some coding langueges it is standard to name any constants using CAPITAL notation, this is however not applicit in c# and our project.
+
+		-----
+		TYPE:			local variables(*)
+		DISCRIPTION:	all local variables are declared with the naming starting with an underscore. After the underscore the normal variable convention
+						applies
+		EXAMPLE:		var _localVariable
+		REASON:			Using this method to differentiate between local and global variable gives us alot of insight to quickly see which variables are local
+						and which are not.
+		(*):			This convention differs from the standard coding convention in that normally local variables are declared the same as global variables.
+						The underscore method can also be used for private & static variables.
+
+		----
+		TYPE:			variables
+		DISCRIPTION:	For our global variables (nomatter if they are static/private) we use the camelCasing notation. this notation implies the
+						that the first part of the word is not capitalized, any subsequential parts do start with a Capital letter.
+		EXAMPLE:		var globalVariable
+		REASON:			This is the standard c# coding convention for variables and allows to easily see the different between variables and functions
+
+	-------------------------------------------
+->	METHODS
+		when declaring methods (functions), its important to make it clear from the method name exactly what the method does, we do not differentiate between private/void/static
+		functions and all follow the same notation. All methods much be declared with either a public or private property
+
+		----
+		TYPE:			Method()
+		DISCRIPTION:	all methods are named using the Pascal notation. This notation implies that all parts of the name begin with a Capital Letter
+		EXAMPLE:		public void TestMethod()
+		REASON:			this is the standard c# coding convention
+
+	------------------------------------------
+-> CLASSES
+		All classes are declared the same as Methods, it is important that the functionality of the class can be gathered from its name. All classes must be declared using either a
+		private or public property.
+
+	-------------------------------------------
+-> COMMENTS
+		Within the project we demand accurate and usefull comments. All files should start with a block comment explain its purpose and interaction with the rest of the project.
+		Comments inbetween the code is highly appreciated but not required. When done make sure the purpose of the code can clearly be read from the comment.
+		Proper use of comments will greatly increase efficiency when working on or with someone elses code.
+
+		Commenting out old code for testing purposes is allowed, but keep it to a minimum, big blocks of commented out code must be moved to the bottom of the file.
+
+		When Commenting on a line of code that needs to be partly rewritten or done differently in the future. Do not use a comment, instead use the approriate form that can be 
+		found in our github in the documentation folder.
+
+//----------------------------------------------------------------------------------------------------------------------------//
+
+
+CODING CONVENTION
+------------------------
+The following section will contain rules for do's and don't when contributing to the project. Following these rules is REQUIRED and any branch 
+not up to standards will not be merged. We are strict on this part to keep our project orderly and structured.
+
+	------------------------------------------
+-> IF-STATEMENTS
+		Most importantly: all if-statements code block msut be in Curly Brackets, although it is possible within c# to not use brackets if the code is only one line,
+		We do NOT use this feature, since it takes away the structure and makes it alot more difficult to read and see what is actually going on. The block of code within 
+		the brackets must be one tab to the right of the page. The brackets must also contain their own line.
+
+		If statements should, when possible to avoid, never go deeper then 3, (so no more then 3 embedded if statements), instead of putting the entire block of code in an if-statement
+		try using a gate instead. EXAMPLE:
+
+		if(veryImportantType == null)
+		{
+			return;
+		}
+
+		when possible, when an if statement contains more then 3 else ifs, use a switch-case instead. From 3 else ifs onward the switch is more efficient.
+
+	-----------------------------------------
+->TRY-STATEMENT
+		Incases where it is possible for the project to get a critical error, for example: Division by 0/ Variable is null. Put is in a try statement, also
+		create a system that allows the program to deal and solve such errors whenever possible.
+
+		Every Catch should have a log.Write(exception) so that the exception is written to the log file.
+
+	----------------------------------------
+->OBJECT REFERENCING
+		Within our project certain objects (often controllers) are used in parts where they are not easily available. In these cases these objects can be obtained
+		with General_form.Main ... This however is often a very long line of references, so when referencing an object not easily accessable more then once:
+		copy it into a local variable and use that instead. EXAMPLE:
+
+		BuildScreenController _buildScreenController = General_form.Main.Buildscreen;
+
+	---------------------------------------
+->THIS
+	All class variables used in methods should be prefixed with THIS. Although not required by c# it is very helpfull to keep the overview.
+
+	---------------------------------------
+->BUG CATCHING
+	When done with a certain module of the project, make sure its excesively bug tested before sharing it. Write code to test the module
+	if neccessary.
+
+//----------------------------------------------------------------------------------------------------------------------------//
+
+
+GITHUB CONVENTION
+-----------------------
+Github is the version manager and code control service we use for our project. As this is the place where all the (often conflicting) code comes together,
+and where the code is shared among contributors. it is important that this is organised in a structured and well working manner.
+
+
+	---------------------------------------
+->BRANCHES
+	when contributing to our project, use branches, never push directly to the main (unless its a very small correction on a merge done very recently). 
+	Name the branches accordingly to what you are working on.
+
+->MERGING
+	Before merging make sure that all confliction errors are dealt with accordingly and that the code is still functional. NEVER merge untested and
+	or not finished / buggy code to the main. Always when merging do so with two people (or have the merge request reviewed) before finalizing it. 
+	It is often very handy to have an extra set of eyes on the code before it is shared
+		
+//---------------------------------------------------------------------------------------------------------------------------//
+
+
+//-----------------------------------------------------------------------------------------------------------------------------//
+							UPDATE HISTORY
+//-----------------------------------------------------------------------------------------------------------------------------//
+As this project is a learning curve for most of its contributors this document is constantly under review with the possibilty for change.
+Any change applied to this document will be logged in the follow section, and requires the follinw information:
+
+	*DATE:
+	*UPDATED BY:
+	*CHANGELOG:
+	*REASON:
+
+---------------------------------------------------
+
+	*DATE: 14/1/2021
+	*UPDATED BY: David Koymans
+	*CHANGELOG: Initial Creation of the document
+	*REASON: N.E
+
+
+
+
+//-----------------------------------------------------------------------------------------------------------------------------//
+All rights reserved.
+//-----------------------------------------------------------------------------------------------------------------------------//
