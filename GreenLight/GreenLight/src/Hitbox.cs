@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
+//This is the main hitbox class from which the other hitboxes inherit, it holds all the basic function and has some extra features
+//used to find the topcord and the square size of the hitbox.
+//It also has 2 static functions which simply is the Math.max function but then upgraded to take 4 integers instead of the normal 2
+
 namespace GreenLight
 {
     abstract public class Hitbox

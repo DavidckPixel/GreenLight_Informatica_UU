@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
+//this is the object that is actually placed on the Road that has a hitbox and says which specific sign is clicked
+
 namespace GreenLight
 {
     public struct PlacedSign

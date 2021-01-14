@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
+//BuildScreenController is a controller class that inherits from the screencontroller
+//It is one of the 3 screen controllers, this controller deals with all the stuff that relates
+//to the screen and visuals of the Road builder
+//this is also the place where the picturebox is created onwhich the road/signs and grid draws
+//it also holds a main draw function
+
 namespace GreenLight
 {
     public class BuildScreenController : ScreenController
     {
         public string ActiveSubMenu;
         public BuilderController builder;
+        int i = 0;
 
         public BuildScreenController(Form _tempform)
         {
@@ -35,7 +42,6 @@ namespace GreenLight
             Console.WriteLine("BuildController made!");
         }
 
-        int i = 0;
         private void resize(Form _tempform) 
         {
             i++;

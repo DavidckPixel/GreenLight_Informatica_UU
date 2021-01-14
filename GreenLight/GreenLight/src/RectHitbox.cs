@@ -5,6 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Recthitbox is our own better version of the Rect Class in c#, it inherits from the abstract hitbox class.
+//It allows for the creation of odd shaped hitboxes (like the shape of our roads) and does a bunch of math to
+//figure out if a given point is inside this shape not.
+
 namespace GreenLight
 {
     public class RectHitbox : Hitbox
@@ -103,20 +107,14 @@ namespace GreenLight
                 }
                 else if ((rcTop == 0 || rcBottom == 0) && (rcLeft == null || rcRight == null))
                 {
-                    //if (ditobject.Beginpunt.Y  >= p.Y && ditobject.Beginpunt.Y  <= p.Y && p.X >= ditobject.Beginpunt.X && p.X <= ditobject.Eindpunt.X)
                     if (bLeft <= _p.X && bRight >= _p.X && bTop <= _p.Y && bBottom >= _p.Y)
                     {
-                        //Console.WriteLine("Kom je hier??");
                         return true;
                     }
 
                 }
                 else if(rcTop == null || rcBottom == null)
                 {
-                    //Console.WriteLine("KOM JE HIER ALS JE GEEN HITBOX DETECT??");
-
-                    //Console.WriteLine("TopLeft {0} , TopRight {1} , BottomLeft {2} , BottomRight {3}", topleft, topright, bottomleft, bottomright);
-
                     int _maxX = Math.Max(this.topleft.X, this.bottomleft.X);
                     int _minX = Math.Min(this.topleft.X, this.bottomleft.X);
 
@@ -146,13 +144,6 @@ namespace GreenLight
             }
             return false;
         }
-
-        /*
-        public override bool Contains(RectHitbox _h)
-        {
-            bool _temp = (this.Contains(_h.topright) && this.Contains(_h.topleft) && this.Contains(_h.bottomright) && this.Contains(_h.bottomleft));
-            return _temp;
-        } */
 
         public override bool Collide(RectHitbox _h)
         {

@@ -20,10 +20,10 @@ namespace GreenLight
     {
         public Point point1;
         public Point point2;
+
         public int lanes;
         public List<Lane> Drivinglanes=  new List<Lane>();
         public List<PlacedSign> Signs = new List<PlacedSign>();
-        public Hitbox Hitbox2; //Word nog aangepast Jaj
         public string roadtype;
         public double slp;
         public bool beginconnection, endconnection;
@@ -32,13 +32,12 @@ namespace GreenLight
         public string Dir;
 
         //Basic Road Constructor, every road calls this constructor during initialzation
-        public AbstractRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection) : base(_point1, _point2)
+        public AbstractRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection) : base(new Point(Math.Min(_point1.X, _point2.X),Math.Min(_point1.Y, _point2.Y)))
         {
             this.point1 = _point1;
             this.point2 = _point2;
             this.lanes = _lanes;
             this.roadtype = _roadtype;
-            this.Cords = _point1;
             this.beginconnection = _beginconnection;
             this.endconnection = _endconnection;
         }
@@ -78,17 +77,11 @@ namespace GreenLight
                 _sign.draw(g);
             }
 
-            //Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.Yellow));
-
-            //g.FillRectangle(Notsolid, this.Hitbox);
-
-            this.Hitbox2.Draw(g);
+            this.hitbox.Draw(g);
         }
 
         public Point getPoint1() { return point1; }
-        //public void setPoint1(Point _value) { point1 = _value; }
         public Point getPoint2() { return point2; }
-        //public void setPoint2(Point _value) { point2 = _value; }
 
         public int getLanes() { return lanes; }
 

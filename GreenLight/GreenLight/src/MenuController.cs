@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
+//this is the screencontroller that controls the main menu
+
 namespace GreenLight
 {
     public class MenuController : ScreenController

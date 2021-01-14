@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//CurvedHitbox is a object that can be created given 4 points. It then uses a bunch of math to calculate a arc shape polygon
+//it also contains a Contain(point p) function that can be used to to see if a certain point is within the hitbox.
+
 namespace GreenLight
 {
     class CurvedHitbox : Hitbox

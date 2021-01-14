@@ -10,11 +10,9 @@ namespace GreenLight
 {
     public abstract class Lane
     {
-
         public ConnectionLink link;
 
         public List<LanePoints> points;
-        public Point begin, end;
         public string dir;
         public Hitbox offsetHitbox;
 

@@ -20,7 +20,6 @@ namespace GreenLight
         public List<Gridpoint> Gridpoints = new List<Gridpoint>();
         public GridConfig config;
         bool firstClick;
-        string Selected;
         PictureBox canvas;
         private bool _points_visible = true;
 
@@ -78,20 +77,18 @@ namespace GreenLight
 
         public void OnClick(Object o, MouseEventArgs mea)
         {
-            
-
             string _type = General_Form.Main.BuildScreen.builder.roadBuilder.roadType;
 
-            Gridpoint _firstPoint = Gridpoints.Find(x => x.Collision(mea.Location));
+            Gridpoint _point = Gridpoints.Find(x => x.Collision(mea.Location));
 
-            if (_type == "X" || _type == "D" || _firstPoint == null)
+            if (_type == "X" || _type == "D" || _point == null)
             {
                 return;
             }
 
             if(_type == "Cross")
             {
-                builder.BuildRoad(_firstPoint.Cords, _firstPoint.Cords);
+                builder.BuildRoad(_point.Cords, _point.Cords);
                 return;
             }
 
@@ -105,19 +102,19 @@ namespace GreenLight
 
             if (firstClick)
             {
-                if (_firstPoint != null)
+                if (_point != null)
                 {
                     Console.WriteLine("First PointClick!");
-                    Console.WriteLine(_firstPoint.Cords);
+                    Console.WriteLine(_point.Cords);
                     this.firstClick = false;
-                    this.firstPoint = _firstPoint;
+                    this.firstPoint = _point;
                 }
             }
             else
             {
                     Console.WriteLine("Second PointClick!");
-                    Console.WriteLine(_firstPoint.Cords);
-                    this.secondPoint = _firstPoint;
+                    Console.WriteLine(_point.Cords);
+                    this.secondPoint = _point;
 
                     builder.BuildRoad(this.firstPoint.Cords, this.secondPoint.Cords);
                     this.ResetPoints();

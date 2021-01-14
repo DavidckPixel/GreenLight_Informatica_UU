@@ -15,11 +15,7 @@ namespace GreenLight
         public Label QuestionLabel, errorMess;
         public CurvedButtons YesButton, NoButton;
 
-        public MainSignController signController;
-
         public YieldSign selected;
-
-        PrivateFontCollection Font_collection = new PrivateFontCollection();
 
         public YieldSignController(Form _main, MainSignController _signcontroller)
         {
@@ -29,11 +25,6 @@ namespace GreenLight
 
         public override void initSettingScreen()
         {
-            //Waarschijnlijk beter om mee te geven aan initSettingScreen zoals in Build_sub_menu.Initialize
-            Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");
-            FontFamily Dosis_font_family = Font_collection.Families[0];
-
-
             this.settingScreen = new Form();
 
             this.settingScreen.Size = new Size(400, 400);
@@ -52,11 +43,11 @@ namespace GreenLight
             this.settingScreen.Controls.Add(errorMess);
 
 
-            YesButton = new CurvedButtons(new Size(80, 40), new Point(10, 150), 25, "../../User Interface Recources/Custom_Button_Small.png", "Place Sign", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            YesButton = new CurvedButtons(new Size(80, 40), new Point(10, 150), 25, "../../User Interface Recources/Custom_Button_Small.png", "Place Sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             YesButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.yieldSignC.placeSign(); };
             this.settingScreen.Controls.Add(YesButton);
 
-            NoButton = new CurvedButtons(new Size(80, 40), new Point(110, 150), 25, "../../User Interface Recources/Custom_Button_Small.png", "Don't Place", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            NoButton = new CurvedButtons(new Size(80, 40), new Point(110, 150), 25, "../../User Interface Recources/Custom_Button_Small.png", "Don't Place", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             NoButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.yieldSignC.deleteSign(); };
             this.settingScreen.Controls.Add(NoButton);
         }

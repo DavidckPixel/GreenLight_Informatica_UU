@@ -26,7 +26,6 @@ namespace GreenLight
 
         string Button = "Select";
 
-        PrivateFontCollection Font_collection = new PrivateFontCollection(); //TEMP DIT MOET NOG GLOBAAL
 
         public CrossRoadController(PictureBox _screen)
         {
@@ -70,14 +69,10 @@ namespace GreenLight
             this.settingScreenImage.BackColor = Color.Black;
             //TEMP
 
-            Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");
-            FontFamily Dosis_font_family = Font_collection.Families[0];
-
-
-            selectButton = new CurvedButtons(new Size(80, 40), new Point(10, 500), 25, "../../User Interface Recources/Custom_Button_Small.png", "Select", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            selectButton = new CurvedButtons(new Size(80, 40), new Point(10, 500), 25, "../../User Interface Recources/Custom_Button_Small.png", "Select", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             selectButton.Click += (object o, EventArgs ea) => { this.Button = "Select";  };
 
-            linkButton = new CurvedButtons(new Size(80, 40), new Point(100, 500), 25, "../../User Interface Recources/Custom_Button_Small.png", "Link", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            linkButton = new CurvedButtons(new Size(80, 40), new Point(100, 500), 25, "../../User Interface Recources/Custom_Button_Small.png", "Link", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             linkButton.Click += (object o, EventArgs ea) => 
             {
                 if(selectedRoad.selectedPoint == null)
@@ -87,17 +82,17 @@ namespace GreenLight
                 this.Button = "Link";
             };
 
-            disableButton = new CurvedButtons(new Size(80, 40), new Point(190, 500), 25, "../../User Interface Recources/Custom_Button_Small.png", "Disable", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            disableButton = new CurvedButtons(new Size(80, 40), new Point(190, 500), 25, "../../User Interface Recources/Custom_Button_Small.png", "Disable", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             disableButton.Click += (object o, EventArgs ea) => 
             {
                 this.Button = "Disable";
                 this.selectedRoad.SwitchSelectedPoint(null);
             };
 
-            saveButton = new CurvedButtons(new Size(80, 40), new Point(10, 600), 25, "../../User Interface Recources/Custom_Button_Small.png", "Save", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            saveButton = new CurvedButtons(new Size(80, 40), new Point(10, 600), 25, "../../User Interface Recources/Custom_Button_Small.png", "Save", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             saveButton.Click += (object o, EventArgs ea) => { CreateDrivingLanes(); this.settingScreenImage.Invalidate(); };
 
-            deleteButton = new CurvedButtons(new Size(80, 40), new Point(100, 600), 25, "../../User Interface Recources/Custom_Button_Small.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            deleteButton = new CurvedButtons(new Size(80, 40), new Point(100, 600), 25, "../../User Interface Recources/Custom_Button_Small.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             deleteButton.Click += (object o, EventArgs ea) => { DeleteCrossroad(this.selectedRoad); };
 
             error = new Label();
@@ -107,7 +102,7 @@ namespace GreenLight
             error.Size = new Size(390, 50);
             error.Hide();
 
-            errorButton = new CurvedButtons(new Size(40, 40), new Point(400, 650), 25, "../../User Interface Recources/Custom_Button_Small.png", "Oke!", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            errorButton = new CurvedButtons(new Size(40, 40), new Point(400, 650), 25, "../../User Interface Recources/Custom_Button_Small.png", "Oke!", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             errorButton.Click += HideError;
             errorButton.Hide();
 
@@ -171,7 +166,6 @@ namespace GreenLight
 
         private void SettingBoxDraw(object o, PaintEventArgs pea)
         {
-            //Teken hier het plaatje
             Graphics g = pea.Graphics;
 
             this.selectedRoad.connectPoints.ForEach(x => x.Draw(g));
@@ -267,7 +261,8 @@ namespace GreenLight
 
         private void CreateDrivingLanes()
         {
-            DrivingLane _temp = null;
+            List<LanePoints> _temp = null;
+            selectedRoad.Drivinglanes.Clear();
 
             foreach(ConnectionLink _link in selectedRoad.connectLinks)
             {
@@ -275,62 +270,62 @@ namespace GreenLight
                 if (((_link.end.Side == "Top" || _link.end.Side == "Bottom") && (_link.begin.Side == "Top" || _link.begin.Side == "Bottom"))
                     || ((_link.end.Side == "Left" || _link.end.Side == "Right") && (_link.begin.Side == "Left" || _link.begin.Side == "Right")))
                 {
-                    _temp = DiagonalRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "");
+                    _temp = LanePoints.CalculateDiagonalLane(_link.begin.Location, _link.end.Location);
                 }
                 else
                 {   //-----------------------------------------------------
                     if (_link.begin.Side == "Left" && _link.end.Side == "Top")
                     {
                         //omgedraaid
-                        _temp = CurvedRoad.CalculateDrivingLane(_link.end.Location, _link.begin.Location, 1, selectedRoad, "NW");
+                        _temp = LanePoints.CalculateCurveLane(_link.end.Location, _link.begin.Location, "NW");
 
                     }
                     else if (_link.begin.Side == "Top" && _link.end.Side == "Left")
                     {
-                        _temp = CurvedRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "NW");
+                        _temp = LanePoints.CalculateCurveLane(_link.begin.Location, _link.end.Location, "NW");
 
                     }
                     //------------------------------------------------
                     else if (_link.begin.Side == "Right" && _link.end.Side == "Bottom")
                     {
                         //omgedraaid
-                        _temp = CurvedRoad.CalculateDrivingLane(_link.end.Location, _link.begin.Location, 1, selectedRoad, "SE");
+                        _temp = LanePoints.CalculateCurveLane(_link.end.Location, _link.begin.Location, "SE");
 
                     }
                     else if (_link.begin.Side == "Bottom" && _link.end.Side == "Right")
                     {
-                        _temp = CurvedRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "SE");
+                        _temp = LanePoints.CalculateCurveLane(_link.begin.Location, _link.end.Location,"SE");
 
                     }
                     //---------------------------------------------
                     else if (_link.begin.Side == "Bottom" && _link.end.Side == "Left")
                     {
                         //omgedraaid
-                        _temp = CurvedRoad.CalculateDrivingLane(_link.end.Location, _link.begin.Location, 1, selectedRoad, "SW");
+                        _temp = LanePoints.CalculateCurveLane(_link.end.Location, _link.begin.Location, "SW");
 
                     }
                     else if (_link.begin.Side == "Left" && _link.end.Side == "Bottom")
                     {
-                        _temp = CurvedRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "SW");
+                        _temp = LanePoints.CalculateCurveLane(_link.begin.Location, _link.end.Location, "SW");
 
                     }
                     //---------------------------------------------
                     else if (_link.begin.Side == "Top" && _link.end.Side == "Right")
                     {
                         //omgedraaid
-                        _temp = CurvedRoad.CalculateDrivingLane(_link.end.Location, _link.begin.Location, 1, selectedRoad, "NE");
+                        _temp = LanePoints.CalculateCurveLane(_link.end.Location, _link.begin.Location, "NE");
 
                     }
                     else if (_link.begin.Side == "Right" && _link.end.Side == "Top")
                     {
-                        _temp = CurvedRoad.CalculateDrivingLane(_link.begin.Location, _link.end.Location, 1, selectedRoad, "NE");
+                        _temp = LanePoints.CalculateCurveLane(_link.begin.Location, _link.end.Location, "NE");
 
                     }
                 }
 
                 if (_temp != null)
                 {   
-                this.selectedRoad.Drivinglanes.Add(new CrossLane(_temp.points, _link));  
+                this.selectedRoad.Drivinglanes.Add(new CrossLane(_temp, _link));  
                 }
             }
 

@@ -63,6 +63,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\CurvedHitbox.cs" />
+    <Compile Include="src\DrawData.cs" />
     <Compile Include="src\Driver\DriverStats.cs" />
     <Compile Include="src\Hitbox.cs" />
     <Compile Include="src\RectHitbox.cs" />

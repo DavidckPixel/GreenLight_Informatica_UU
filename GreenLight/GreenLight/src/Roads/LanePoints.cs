@@ -32,5 +32,150 @@ namespace GreenLight
         {
             degree = ((degree + 180) % 360);
         }
+
+        //The following Functions are some General purpose static functions that calculated the LanePoints based on 2 points
+        //a function for both curves and Diagonal / (straight) lines
+
+        public static List<LanePoints> CalculateCurveLane(Point _point1, Point _point2, string Dir)
+        {
+            List<LanePoints> _lanePoints = new List<LanePoints>();
+            Point _normpoint1 = _point1; Point _normpoint2 = _point2;
+
+            Tuple<int, int> _dir = GetCurveDirection(_point1, _point2);
+
+            Point _prev = _normpoint1;
+            Point _nulpoint;
+
+            if (Dir == "NE")
+            {
+                _nulpoint = new Point(Math.Max(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
+            }
+            else if (Dir == "NW")
+            {
+                _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
+            }
+            else if (Dir == "SW")
+            {
+                _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y));
+            }
+            else // (dir == "SE")
+            {
+                _nulpoint = new Point(Math.Max(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y)); //Aangepast
+            }
+
+            int _deltaX = Math.Abs(_point1.X - _point2.X);
+            int _deltaY = Math.Abs(_point1.Y - _point2.Y);
+            int _Ytemp = 0;
+            int _Xtemp = 0;
+            int _ytemp = 0;
+            int _xtemp = 0;
+
+
+            for (int x = 0, y = 0; x <= _deltaX || y <= _deltaY; x++, y++)
+            {
+                if ((x >= _deltaX && y >= _deltaY) || _prev == _point2)
+                    break;
+
+                _Xtemp = _point1.X + x * _dir.Item1;
+                _ytemp = _point1.Y + y * _dir.Item2;
+
+
+                if ((Dir == "NE" || Dir == "NW") && x <= _deltaX)
+                {
+                    _Ytemp = _nulpoint.Y + (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
+                }
+                else if ((Dir == "SE" || Dir == "SW") && x <= _deltaX)
+                {
+                    _Ytemp = _nulpoint.Y - (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
+                }
+
+                if ((Dir == "NE" || Dir == "NW") && y <= _deltaY)
+                {
+                    _xtemp = _nulpoint.X + (int)Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - _nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
+                }
+                else if ((Dir == "SE" || Dir == "SW") && y <= _deltaY)
+                {
+                    _xtemp = _nulpoint.X - (int)Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - _nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
+                }
+
+                if (Math.Sqrt(Math.Pow(Math.Abs(_prev.X - _Xtemp), 2) + Math.Pow(Math.Abs(_prev.Y - _Ytemp), 2)) <= Math.Sqrt(Math.Pow(Math.Abs(_prev.X - _xtemp), 2) + Math.Pow(Math.Abs(_prev.Y - _ytemp), 2)))
+                {
+                    _normpoint1 = new Point(_Xtemp, _Ytemp);
+                }
+                else
+                {
+                    _normpoint1 = new Point(_xtemp, _ytemp);
+                }
+
+                _lanePoints.Add(new LanePoints(_normpoint1, AbstractRoad.CalculateAngle(_prev, _normpoint1)));
+
+                _prev = _normpoint1;
+            }
+
+            return _lanePoints;
+        }
+
+        private static Tuple<int, int> GetCurveDirection(Point _point1, Point _point2)
+        {
+            int dirx = 0; int diry = 0;
+
+            if (_point1.X < _point2.X)
+            {
+                dirx = 1;
+            }
+            else if (_point1.X > _point2.X)
+            {
+                dirx = -1;
+            }
+            if (_point1.Y < _point2.Y)
+            {
+                diry = 1;
+            }
+            else if (_point1.Y > _point2.Y)
+            {
+                diry = -1;
+            }
+
+            return Tuple.Create(dirx, diry);
+        }
+
+        public static List<LanePoints> CalculateDiagonalLane(Point _point1, Point _point2)
+        {
+            List<LanePoints> _lanePoints = new List<LanePoints>();
+            Point _normpoint1 = _point1; Point _normpoint2 = _point2;
+            double _slp;
+            Point _prev = _normpoint1;
+            bool divByZero = false;
+
+            _slp = (double)(_point2.Y - _point1.Y) / (double)(_point2.X - _point1.X);
+            if (_point2.X - _point1.X == 0)
+            {
+                _slp = 0;
+                int _vertical = _point1.Y > _point2.Y ? -1 : 1; //ADDED THIS INSTEAD OF IF-STATEMENT
+                divByZero = true;
+
+                for (int y = 0; y <= Math.Abs(_point1.Y - _point2.Y); y++)
+                {
+                    _normpoint1 = new Point(_point1.X, (int)(_point1.Y + y * _vertical));
+                    _lanePoints.Add(new LanePoints(_normpoint1, AbstractRoad.CalculateAngle(_prev, _normpoint1)));
+
+                    _prev = _normpoint1;
+                }
+            }
+            
+            //_road.slp = _slp; Moved this to be done in Class with same code, just different place
+
+            int _dir = _point2.X >= _point1.X ? 1 : -1; //Removed GetDiagonalDirection here
+
+            for (int x = 0; x <= Math.Abs(_point1.X - _point2.X) && !divByZero; x++)
+            {
+                _normpoint1 = new Point(_point1.X + x * _dir, (int)(_point1.Y + x * _slp * _dir));
+                _lanePoints.Add(new LanePoints(_normpoint1, AbstractRoad.CalculateAngle(_prev, _normpoint1)));
+
+                _prev = _normpoint1;
+            }
+
+            return _lanePoints;
+        }
     }
 }

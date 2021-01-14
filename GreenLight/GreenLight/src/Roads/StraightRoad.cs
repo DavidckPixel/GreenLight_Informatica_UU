@@ -23,7 +23,7 @@ namespace GreenLight
 
             Point[] _points = hitBoxPoints(_point1, _point2);
             //Console.WriteLine("{0},{1},{2},{3}", _points[1], _points[0], _points[3], _points[2]);
-            this.Hitbox2 = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
+            this.hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
 
             this.dir = _dir;
 

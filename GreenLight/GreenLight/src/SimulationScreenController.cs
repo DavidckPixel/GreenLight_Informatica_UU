@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
+//This is very similar to the build controller but instead is called when switching to the simulation screen.
+
 namespace GreenLight
 {
     public class SimulationScreenController : ScreenController

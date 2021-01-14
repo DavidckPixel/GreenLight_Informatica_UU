@@ -278,7 +278,7 @@ namespace GreenLight
 
             try
             {
-                this.selectedRoad = roads.Find(x => x.Hitbox2.Contains(mea.Location));
+                this.selectedRoad = roads.Find(x => x.hitbox.Contains(mea.Location));
                 if (this.selectedRoad == null)
                 {
                     Console.Write("No Road Clicked!");
@@ -297,7 +297,7 @@ namespace GreenLight
 
         private void EnableSettingScreen()
         {
-            selectedRoad.Hitbox2.color = Color.Pink;
+            selectedRoad.hitbox.color = Color.Pink;
 
             if(selectedRoad.Drivinglanes.All(x => x.offsetHitbox == null))
             {
@@ -317,7 +317,7 @@ namespace GreenLight
 
         private void DoneSettingScreen()
         {
-            selectedRoad.Hitbox2.color = Color.Yellow;
+            selectedRoad.hitbox.color = Color.Yellow;
             DisableSettingScreen();
         }
 
@@ -361,7 +361,7 @@ namespace GreenLight
             Bitmap b = new Bitmap(Screen.Width, Screen.Height);
             Screen.DrawToBitmap(b, new Rectangle(new Point(0, 0), Screen.Size));
 
-            Hitbox _hitbox = selectedRoad.Hitbox2;
+            Hitbox _hitbox = selectedRoad.hitbox;
 
             int _maxSize = Math.Max(_hitbox.Size.Width, _hitbox.Size.Height) + 20;
             int _diff = Math.Abs(_hitbox.Size.Width - _hitbox.Size.Height) / 2;
@@ -393,7 +393,7 @@ namespace GreenLight
 
         private void DrivingLaneHitbox()
         {
-            Point _diff = selectedRoad.Hitbox2.Topcord;
+            Point _diff = selectedRoad.hitbox.Topcord;
 
             foreach (DrivingLane _drivinglane in selectedRoad.Drivinglanes)
             {
@@ -407,9 +407,9 @@ namespace GreenLight
 
                 double _scale;
 
-                double diff = Math.Max(selectedRoad.Hitbox2.Size.Width, selectedRoad.Hitbox2.Size.Height) + 20;
+                double diff = Math.Max(selectedRoad.hitbox.Size.Width, selectedRoad.hitbox.Size.Height) + 20;
 
-                if (selectedRoad.Hitbox2.Size.Width > selectedRoad.Hitbox2.Size.Height)
+                if (selectedRoad.hitbox.Size.Width > selectedRoad.hitbox.Size.Height)
                 {
                     _scale = (double)(this.settingScreenImage.Width) / diff;
                 }
@@ -424,14 +424,14 @@ namespace GreenLight
 
                 int Graden = AbstractRoad.CalculateAngle(_one, _two);
 
-                if (selectedRoad.Hitbox2.Size.Width >= selectedRoad.Hitbox2.Size.Height)
+                if (selectedRoad.hitbox.Size.Width >= selectedRoad.hitbox.Size.Height)
                 {
                     if ((Graden >= 315 && Graden < 360) || (Graden >= 0 && Graden < 45) || (Graden >= 135 && Graden < 225))
                     {
 
                         if (selectedRoad.Type == "Curved")
                         {
-                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.Hitbox2.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
+                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.hitbox.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
                         }
                         else
                         {
@@ -447,7 +447,7 @@ namespace GreenLight
 
                         if (selectedRoad.Type == "Curved")
                         {
-                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.Hitbox2.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
+                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.hitbox.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
                         }
                         else
                         {
@@ -459,14 +459,14 @@ namespace GreenLight
                         _twooffset = new Point((int)((_twooffset.X + 10) * _scale), (int)(((_twooffset.Y) * _scale) + offset));
                     }
                 }
-                else if (selectedRoad.Hitbox2.Size.Width < selectedRoad.Hitbox2.Size.Height)
+                else if (selectedRoad.hitbox.Size.Width < selectedRoad.hitbox.Size.Height)
                 {
                     if ((Graden >= 315 && Graden < 360) || (Graden >= 0 && Graden < 45) || (Graden >= 135 && Graden < 225))
                     {
 
                         if (selectedRoad.Type == "Curved")
                         {
-                            offset = (double)this.settingScreenImage.Width / 2 - selectedRoad.Hitbox2.Size.Width / 2 * _scale; //WERKT VOOR CIRCLE
+                            offset = (double)this.settingScreenImage.Width / 2 - selectedRoad.hitbox.Size.Width / 2 * _scale; //WERKT VOOR CIRCLE
                         }
                         else
                         {
@@ -483,7 +483,7 @@ namespace GreenLight
 
                         if (selectedRoad.Type == "Curved")
                         {
-                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.Hitbox2.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
+                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.hitbox.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
                         }
                         else
                         {

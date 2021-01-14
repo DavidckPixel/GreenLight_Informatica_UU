@@ -13,15 +13,11 @@ namespace GreenLight
     {
         public Label QuestionLabel, errorMess, BeginLabel, EndLabel;
         public CurvedButtons SaveButton, CancelButton;
-        
-        public MainSignController signController;
 
         public StopSign selected;
 
         public Point point1;
         public Point point2;
-
-        PrivateFontCollection Font_collection = new PrivateFontCollection();
 
         public StopSignController(Form _main, MainSignController _signcontroller)
         {
@@ -31,11 +27,6 @@ namespace GreenLight
 
         public override void initSettingScreen()
         {
-            //Waarschijnlijk beter om mee te geven aan initSettingScreen zoals in Build_sub_menu.Initialize
-            Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");
-            FontFamily Dosis_font_family = Font_collection.Families[0];
-
-
             this.settingScreen = new Form();
 
             this.settingScreen.Size = new Size(400, 400);
@@ -63,11 +54,11 @@ namespace GreenLight
             EndLabel.Text = "should be cords";
             this.settingScreen.Controls.Add(EndLabel);
 
-            SaveButton = new CurvedButtons(new Size(80, 40), new Point(10, 300), 25, "../../User Interface Recources/Custom_Button_Small.png", "Done", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            SaveButton = new CurvedButtons(new Size(80, 40), new Point(10, 300), 25, "../../User Interface Recources/Custom_Button_Small.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             SaveButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.stopSign.placeSign(); };
             this.settingScreen.Controls.Add(SaveButton);
 
-            CancelButton = new CurvedButtons(new Size(80, 40), new Point(60 , 300), 25, "../../User Interface Recources/Custom_Button_Small.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            CancelButton = new CurvedButtons(new Size(80, 40), new Point(60 , 300), 25, "../../User Interface Recources/Custom_Button_Small.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             CancelButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.stopSign.deleteSign(); };
             this.settingScreen.Controls.Add(CancelButton);
 

@@ -25,7 +25,7 @@ namespace GreenLight
             if (Dir == "SE" || Dir == "SW" || Dir == "NE" || Dir == "NW")
             {
                 Point[] _points = hitBoxPoints(_point1, _point2, this.lanes);
-                this.Hitbox2 = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], _dir, Color.Yellow);
+                this.hitbox = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], _dir, Color.Yellow);
 
                 for (int x = 1; x <= lanes; x++)
                 {
@@ -34,120 +34,12 @@ namespace GreenLight
             }
         }
 
-        public static DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thisLane, AbstractRoad _road, string Dir)
+        private DrivingLane CreateDrivingLane(Point _point1, Point _point2, int _thisLane)
         {
-            Console.WriteLine("{0} --- {1}", _point1, _point2);
-            
-
-            List<LanePoints> _lanePoints = new List<LanePoints>();
-            Point _normpoint1 = _point1; Point _normpoint2 = _point2;
-
-            Tuple<int, int> _dir = GetDirection(_point1, _point2);
-            Console.WriteLine(_road.Dir);
-
-            Point _prev = _normpoint1;
-            Point _nulpoint;
-
-            if (Dir == "NE")
-            {
-               _nulpoint = new Point(Math.Max(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
-            }
-            else if (Dir == "NW")
-            {
-               _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
-            }
-            else if (Dir == "SW")
-            {
-               _nulpoint = new Point(Math.Min(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y));
-            }
-            else // (dir == "SE")
-            {
-               _nulpoint = new Point(Math.Max(_point1.X, _road.point2.X), Math.Max(_road.point1.Y, _road.point2.Y)); //Aangepast
-            }
-
-            int _deltaX = Math.Abs(_point1.X - _point2.X);
-            int _deltaY = Math.Abs(_point1.Y - _point2.Y);
-            int _Ytemp = 0;
-            int _Xtemp = 0;
-            int _ytemp = 0;
-            int _xtemp = 0;
-
-
-            for (int x = 0, y = 0; x <= _deltaX || y <= _deltaY; x++, y++)
-            {
-                if ((x >= _deltaX && y >= _deltaY) || _prev == _point2)
-                    break;
-
-                _Xtemp = _point1.X + x * _dir.Item1;
-                _ytemp = _point1.Y + y * _dir.Item2;
-
-
-                if ((Dir == "NE" || Dir == "NW") && x <= _deltaX)
-                {
-                    _Ytemp = _nulpoint.Y + (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
-                }
-                else if ((Dir == "SE" || Dir == "SW") && x <= _deltaX)
-                {
-                    _Ytemp = _nulpoint.Y - (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
-                }
-
-                if ((Dir == "NE" || Dir == "NW") && y <= _deltaY)
-                {
-                    _xtemp = _nulpoint.X + (int)Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - _nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
-                }
-                else if ((Dir == "SE" || Dir == "SW") && y <= _deltaY)
-                {
-                    _xtemp = _nulpoint.X - (int)Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - _nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
-                }
-
-                if (Math.Sqrt(Math.Pow(Math.Abs(_prev.X - _Xtemp), 2) + Math.Pow(Math.Abs(_prev.Y - _Ytemp), 2)) <= Math.Sqrt(Math.Pow(Math.Abs(_prev.X - _xtemp), 2) + Math.Pow(Math.Abs(_prev.Y - _ytemp), 2)))
-                {
-                    _normpoint1 = new Point(_Xtemp, _Ytemp);
-                }
-                else
-                {
-                    _normpoint1 = new Point(_xtemp, _ytemp);
-                }
-
-
-                _lanePoints.Add(new LanePoints(_normpoint1, AbstractRoad.CalculateAngle(_prev, _normpoint1)));
-
-                _prev = _normpoint1;
-            }
-
-            foreach (LanePoints x in _lanePoints)
-            {
-                Console.WriteLine(x.ToString());
-            }
-
-            Point[] _points = _road.hitBoxPoints(_point1, _point2, 1);
+            Point[] _points = this.hitBoxPoints(_point1, _point2, 1);
             Hitbox _temp = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], Dir, Color.Green);
 
-            return new DrivingLane(_lanePoints, _road.Dir, _road.lanes, _thisLane, _temp);
-        }
-
-        private static Tuple<int, int> GetDirection(Point _point1, Point _point2)
-        {
-            int dirx = 0; int diry = 0;
-
-            if (_point1.X < _point2.X)
-            {
-                dirx = 1;
-            }
-            else if (_point1.X > _point2.X)
-            {
-                dirx = -1;
-            }
-            if (_point1.Y < _point2.Y)
-            {
-                diry = 1;
-            }
-            else if (_point1.Y > _point2.Y)
-            {
-                diry = -1;
-            }
-
-            return Tuple.Create(dirx, diry);
+            return new DrivingLane(LanePoints.CalculateCurveLane(_point1,_point2, this.Dir), this.Dir, this.lanes, _thisLane, _temp);
         }
 
         private DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
@@ -217,7 +109,7 @@ namespace GreenLight
                     }
                 }
 
-                return CalculateDrivingLane(_firstPoint, _secondPoint, t, this, this.Dir);
+                return CreateDrivingLane(_firstPoint, _secondPoint, t);
             }
 
         public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20)

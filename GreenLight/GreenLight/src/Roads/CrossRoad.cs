@@ -17,7 +17,7 @@ namespace GreenLight
 
         public CrossRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, _roadtype, _beginconnection, _endconnection)
         {
-            Hitbox2 = CreateHitbox(hitBoxPoints(_point1, _point1, _lanes));
+            hitbox = CreateHitbox(hitBoxPoints(_point1, _point1, _lanes));
 
             int _width = (_lanes + 2) * 20 + 20;
             Scale = 500 / (double)_width;
