@@ -55,53 +55,54 @@ why we choice to go with these rules.
 The most important thing to note: our project is in english and therefor all code/ names/ comment should be explicitly in english.
 
 	-----------------------------------------
-->	VARIABLES
+	->VARIABLES
 		when naming our variables we diffirientiate between 2 different types of variables, we have local variables and global variables.
 		In some coding langueges it is standard to name any constants using CAPITAL notation, this is however not applicit in c# and our project.
 
 		-----
-		TYPE:			local variables(*)
+		TYPE:		local variables(*)
 		DISCRIPTION:	all local variables are declared with the naming starting with an underscore. After the underscore the normal variable convention
-						applies
-		EXAMPLE:		var _localVariable
-		REASON:			Using this method to differentiate between local and global variable gives us alot of insight to quickly see which variables are local
-						and which are not.
-		(*):			This convention differs from the standard coding convention in that normally local variables are declared the same as global variables.
-						The underscore method can also be used for private & static variables.
+				applies
+		EXAMPLE:	var _localVariable
+		REASON:		Using this method to differentiate between local and global variable gives us alot of insight to quickly see which variables are local
+				and which are not.
+		(*):		This convention differs from the standard coding convention in that normally local variables are declared the same as global 					variables.
+				The underscore method can also be used for private & static variables.
 
 		----
-		TYPE:			variables
+		TYPE:		variables
 		DISCRIPTION:	For our global variables (nomatter if they are static/private) we use the camelCasing notation. this notation implies the
-						that the first part of the word is not capitalized, any subsequential parts do start with a Capital letter.
-		EXAMPLE:		var globalVariable
-		REASON:			This is the standard c# coding convention for variables and allows to easily see the different between variables and functions
+				that the first part of the word is not capitalized, any subsequential parts do start with a Capital letter.
+		EXAMPLE:	var globalVariable
+		REASON:		This is the standard c# coding convention for variables and allows to easily see the different between variables and functions
 
 	-------------------------------------------
-->	METHODS
-		when declaring methods (functions), its important to make it clear from the method name exactly what the method does, we do not differentiate between private/void/static
+	->METHODS
+		when declaring methods (functions), its important to make it clear from the method name exactly what the method does, we do not differentiate between 		      private/void/static
 		functions and all follow the same notation. All methods much be declared with either a public or private property
 
 		----
-		TYPE:			Method()
+		TYPE:		Method()
 		DISCRIPTION:	all methods are named using the Pascal notation. This notation implies that all parts of the name begin with a Capital Letter
-		EXAMPLE:		public void TestMethod()
-		REASON:			this is the standard c# coding convention
+		EXAMPLE:	public void TestMethod()
+		REASON:		this is the standard c# coding convention
 
 	------------------------------------------
 -> CLASSES
-		All classes are declared the same as Methods, it is important that the functionality of the class can be gathered from its name. All classes must be declared using either a
-		private or public property.
+	All classes are declared the same as Methods, it is important that the functionality of the class can be gathered from its name. All classes must be 		declared using either a private or public property.
 
 	-------------------------------------------
 -> COMMENTS
-		Within the project we demand accurate and usefull comments. All files should start with a block comment explain its purpose and interaction with the rest of the project.
-		Comments inbetween the code is highly appreciated but not required. When done make sure the purpose of the code can clearly be read from the comment.
-		Proper use of comments will greatly increase efficiency when working on or with someone elses code.
+	Within the project we demand accurate and usefull comments. All files should start with a block comment explain its purpose and 
+	interaction with the rest of the project.
+	Comments inbetween the code is highly appreciated but not required. When done make sure the purpose of the code can clearly be read from the comment.
+	Proper use of comments will greatly increase efficiency when working on or with someone elses code.
 
-		Commenting out old code for testing purposes is allowed, but keep it to a minimum, big blocks of commented out code must be moved to the bottom of the file.
+	Commenting out old code for testing purposes is allowed, but keep it to a minimum, big blocks of commented out code must be moved to the bottom of the file.
 
-		When Commenting on a line of code that needs to be partly rewritten or done differently in the future. Do not use a comment, instead use the approriate form that can be 
-		found in our github in the documentation folder.
+	When Commenting on a line of code that needs to be partly rewritten or done differently in the future. Do not use a comment, 
+	instead use the approriate form that can be 
+	found in our github in the documentation folder.
 
 //----------------------------------------------------------------------------------------------------------------------------//
 
@@ -113,11 +114,13 @@ not up to standards will not be merged. We are strict on this part to keep our p
 
 	------------------------------------------
 -> IF-STATEMENTS
-		Most importantly: all if-statements code block msut be in Curly Brackets, although it is possible within c# to not use brackets if the code is only one line,
-		We do NOT use this feature, since it takes away the structure and makes it alot more difficult to read and see what is actually going on. The block of code within 
-		the brackets must be one tab to the right of the page. The brackets must also contain their own line.
+		Most importantly: all if-statements code block msut be in Curly Brackets, although it is possible within c# to not use brackets 
+		if the code is only one line,
+		We do NOT use this feature, since it takes away the structure and makes it alot more difficult to read and see what is actually going on.
+		The block of code within the brackets must be one tab to the right of the page. The brackets must also contain their own line.
 
-		If statements should, when possible to avoid, never go deeper then 3, (so no more then 3 embedded if statements), instead of putting the entire block of code in an if-statement
+		If statements should, when possible to avoid, never go deeper then 3, (so no more then 3 embedded if statements), instead of putting the 
+		entire block of code in an if-statement
 		try using a gate instead. EXAMPLE:
 
 		if(veryImportantType == null)
@@ -136,8 +139,10 @@ not up to standards will not be merged. We are strict on this part to keep our p
 
 	----------------------------------------
 ->OBJECT REFERENCING
-		Within our project certain objects (often controllers) are used in parts where they are not easily available. In these cases these objects can be obtained
-		with General_form.Main ... This however is often a very long line of references, so when referencing an object not easily accessable more then once:
+		Within our project certain objects (often controllers) are used in parts where they are not easily available.
+		In these cases these objects can be obtained with General_form.Main ... This however is often a very long line of references, so when 
+		referencing an object not easily accessable more then once:
+		
 		copy it into a local variable and use that instead. EXAMPLE:
 
 		BuildScreenController _buildScreenController = General_form.Main.Buildscreen;
