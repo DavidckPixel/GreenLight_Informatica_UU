@@ -20,15 +20,12 @@ namespace GreenLight
         public string dir;
         int roadLanes;
         int thisLane;
-        Bitmap Lane;
-        Bitmap Verticallane;
-
         private LanePoints middle;
 
         public Hitbox hitbox;
         public Hitbox offsetHitbox;
 
-        int AngleDir;
+        public int AngleDir;
 
         public DrivingLane(List<LanePoints> _points, string _dir, int _roadLanes, int _thisLane, Hitbox _hitbox)
         {
@@ -36,8 +33,6 @@ namespace GreenLight
             this.dir = _dir;
             this.roadLanes = _roadLanes;
             this.thisLane = _thisLane;
-            Lane = new Bitmap(Properties.Resources.Lane);
-            Verticallane = new Bitmap(Properties.Resources.Road_Verticaal);
 
             this.hitbox = _hitbox;
 

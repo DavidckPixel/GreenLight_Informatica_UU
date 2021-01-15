@@ -12,7 +12,7 @@ namespace GreenLight
 {
     public partial class Elements_sub_lights_menu : UserControl
     {
-        private List<CurvedButtons> ESLM= new List<CurvedButtons>();
+        public List<CurvedButtons> ESLM= new List<CurvedButtons>();
         public Elements_sub_lights_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
 
@@ -51,7 +51,6 @@ namespace GreenLight
             this.Controls.Add(Light);
             ESLM.Add(Light);
         }
-
         private void ResetButtons(CurvedButtons Selected, string Filepath)
         {
             foreach (CurvedButtons x in ESLM)

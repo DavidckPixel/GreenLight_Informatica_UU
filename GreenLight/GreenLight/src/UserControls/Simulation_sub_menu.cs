@@ -12,7 +12,8 @@ namespace GreenLight
 {
     public partial class Simulation_sub_menu : UserControl
     {
-        private List<CurvedButtons> SSM = new List<CurvedButtons>();
+        public List<CurvedButtons> SSM = new List<CurvedButtons>();
+        public CurvedButtons Weather;
         public Simulation_sub_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255,255,255);
@@ -70,7 +71,7 @@ namespace GreenLight
             //ButtonSize //ButtonY
             int _buttonSize = menu["ButtonSize"];
 
-            CurvedButtons Weather = new CurvedButtons(new Size(_buttonSize, _buttonSize),
+            Weather = new CurvedButtons(new Size(_buttonSize, _buttonSize),
                 new Point(menu["buttonStart"] , menu["ButtonY"]), 30,                                         //weatherX 
                 "../../User Interface Recources/Weather_Setting_Button.png", this.BackColor);
             this.Controls.Add(Weather);

@@ -13,7 +13,7 @@ namespace GreenLight
     public partial class Elements_sub_roads_menu : UserControl
     {
         public TextBox LaneAmount;
-        private List<CurvedButtons> ESRM = new List<CurvedButtons>();
+        public List<CurvedButtons> ESRM = new List<CurvedButtons>();
         public Elements_sub_roads_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
 

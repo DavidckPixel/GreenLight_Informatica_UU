@@ -142,6 +142,7 @@ namespace GreenLight
         public void Menu_to_build() 
         {
             Hide_all_menus();
+            Reset_All_Buttons(BSM.Road_button, BSM.Road_button.Image_path);
             BSM.Show();
             BMM.Show();
         }
@@ -150,6 +151,7 @@ namespace GreenLight
             Hide_all_menus();
             SimDataM.Show();
             SimDataM.BringToFront();
+            Reset_All_Buttons(SimSM.Weather, SimSM.Weather.Image_path);
             SimSM.Show();
             SimMM.Show();
         }
@@ -222,6 +224,46 @@ namespace GreenLight
             ElemSSM.Hide();
             ElemSRM.Hide();
             ElemSBM.Hide();
+        }
+
+        public void Reset_All_Buttons(CurvedButtons Selected, string Filepath)
+        {
+            foreach (CurvedButtons x in BSM.BSM_Buttons)
+            {
+                x.Selected = false;
+                x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
+            }
+            foreach (CurvedButtons x in ElemSLM.ESLM)
+            {
+                x.Selected = false;
+                x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
+            }
+            foreach (CurvedButtons x in ElemSSM.ESSM)
+            {
+                x.Selected = false;
+                x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
+            }
+            foreach (CurvedButtons x in ElemSRM.ESRM)
+            {
+                x.Selected = false;
+                x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
+            }
+            foreach (CurvedButtons x in ElemSBM.ESBM_Buttons)
+            {
+                x.Selected = false;
+                x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
+            }
+            foreach (CurvedButtons x in SimSM.SSM)
+            {
+                x.Selected = false;
+                x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
+            }
+            try
+            {
+                Selected.Selected = true;
+                Selected.Image = Image.FromFile(Filepath.Remove(Filepath.Length - 10) + "Select.png");
+            }
+            catch (Exception e) { }
         }
     }
 }

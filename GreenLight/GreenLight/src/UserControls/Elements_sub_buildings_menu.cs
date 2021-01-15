@@ -12,7 +12,7 @@ namespace GreenLight
 {
     public partial class Elements_sub_buildings_menu : UserControl
     {
-        private List<CurvedButtons> ESBM_Buttons = new List<CurvedButtons>();
+        public List<CurvedButtons> ESBM_Buttons = new List<CurvedButtons>();
         public Elements_sub_buildings_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);

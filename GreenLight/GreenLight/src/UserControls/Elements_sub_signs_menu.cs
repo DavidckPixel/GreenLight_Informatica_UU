@@ -12,7 +12,7 @@ namespace GreenLight
 {
     public partial class Elements_sub_signs_menu : UserControl
     {
-        private List<CurvedButtons> ESSM = new List<CurvedButtons>();
+        public List<CurvedButtons> ESSM = new List<CurvedButtons>();
         public Elements_sub_signs_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
 
