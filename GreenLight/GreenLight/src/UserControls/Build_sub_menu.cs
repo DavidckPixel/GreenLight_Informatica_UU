@@ -12,6 +12,7 @@ namespace GreenLight
 {
     public partial class Build_sub_menu : UserControl
     {
+        List<CurvedButtons> BSM_Buttons = new List<CurvedButtons>();
         public Build_sub_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255,255,255);
@@ -70,29 +71,33 @@ namespace GreenLight
 
             //buttonSizeL //buttonSizeS //devider2 //devider4 //devider3 /simStartSizeX /simStartSizeY / simStartX / simStartY / buttonL / buttonS / buttonHome / buttonSave / buttonRoad / buttonLight / buttonSign / buttonBuilding
 
-            CurvedButtons Home_button = new CurvedButtons(new Size(menu["buttonSizeL"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 - menu["buttonHome"], menu["buttonL"]), 25, "../../User Interface Recources/Custom_Button_Small.png", "Home", Dosis_font_family, Form, this.BackColor);
+            CurvedButtons Home_button = new CurvedButtons(new Size(menu["buttonSizeL"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 - menu["buttonHome"], menu["buttonL"]), 25, "../../User Interface Recources/Custom_Small_Button.png", "Home", Dosis_font_family, Form, this.BackColor);
             Home_button.Click += (object o, EventArgs EA) => { General_Form.Main.SwitchControllers(General_Form.Main.MenuController); };
             this.Controls.Add(Home_button);
 
-            CurvedButtons Save_button = new CurvedButtons(new Size(menu["buttonSizeL"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 + menu["buttonSave"], menu["buttonL"]), 25, "../../User Interface Recources/Custom_Button_Small.png", "Save", Dosis_font_family, Form, this.BackColor);
+            CurvedButtons Save_button = new CurvedButtons(new Size(menu["buttonSizeL"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 + menu["buttonSave"], menu["buttonL"]), 25, "../../User Interface Recources/Custom_Small_Button.png", "Save", Dosis_font_family, Form, this.BackColor);
             Save_button.Click += (object o, EventArgs EA) => { };
             this.Controls.Add(Save_button);
 
             CurvedButtons Road_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 - menu["buttonRoad"], menu["buttonS"]), 25, "../../User Interface Recources/Road_Button.png", this.BackColor);
-            Road_button.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.SwitchSubMenus("Roads");};
+            Road_button.Click += (object o, EventArgs EA) => { ResetButtons(Road_button, Road_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Roads");};
             this.Controls.Add(Road_button);
+            BSM_Buttons.Add(Road_button);
 
             CurvedButtons Light_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 - menu["buttonLight"], menu["buttonS"]), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            Light_button.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.SwitchSubMenus("Lights"); };
+            Light_button.Click += (object o, EventArgs EA) => { ResetButtons(Light_button, Light_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Lights"); };
             this.Controls.Add(Light_button);
+            BSM_Buttons.Add(Light_button);
 
             CurvedButtons Sign_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 + menu["buttonSign"], menu["buttonS"]), 25, "../../User Interface Recources/Speed_Sign_Button.png", this.BackColor);
-            Sign_button.Click += (object o, EventArgs EA) =>  { General_Form.Main.BuildScreen.SwitchSubMenus("Signs"); };
+            Sign_button.Click += (object o, EventArgs EA) => { ResetButtons(Sign_button, Sign_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Signs"); };
             this.Controls.Add(Sign_button);
+            BSM_Buttons.Add(Sign_button);
 
             CurvedButtons Building_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 + menu["buttonBuilding"], menu["buttonS"]), 25, "../../User Interface Recources/Building_Button.png", this.BackColor);
-            Building_button.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.SwitchSubMenus("Buildings"); };
+            Building_button.Click += (object o, EventArgs EA) => { ResetButtons(Building_button, Building_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Buildings"); };
             this.Controls.Add(Building_button);
+            BSM_Buttons.Add(Building_button);
 
             CurvedButtons Divider2 = new CurvedButtons();
             Divider2.Location = new Point(0, menu["divider2"]); //divider2
@@ -118,6 +123,16 @@ namespace GreenLight
             CurvedButtons Divider3 = new CurvedButtons();
             Divider3.Location = new Point(0, menu["divider3"]); //divider3
             this.Controls.Add(Divider3);
+        }
+        private void ResetButtons(CurvedButtons Selected, string Filepath)
+        {
+            foreach ( CurvedButtons x in BSM_Buttons )
+            {
+                x.Selected = false;
+                x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
+            }
+            Selected.Selected = true;
+            Selected.Image = Image.FromFile(Filepath.Remove(Filepath.Length - 10) + "Select.png");
         }
     }
 }

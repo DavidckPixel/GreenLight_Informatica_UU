@@ -118,6 +118,7 @@ namespace GreenLight
             SSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family, Recent_projects);
             BMM.Size_adjust(MainForm, Sub_menu_width);
             BSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
+            SimDataM.Size_adjust(MainForm, Sub_menu_width, 30);
             SimMM.Size_adjust(MainForm, Sub_menu_width);
             SimSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
             SimSWM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
@@ -147,10 +148,10 @@ namespace GreenLight
         public void Menu_to_simulation() 
         {
             Hide_all_menus();
-            SimSM.Show();
-            SimMM.Show();
             SimDataM.Show();
             SimDataM.BringToFront();
+            SimSM.Show();
+            SimMM.Show();
         }
         public void Menu_to_simulation_weather() 
         {

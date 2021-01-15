@@ -63,11 +63,11 @@ namespace GreenLight
             EndLabel.Text = "should be cords";
             this.settingScreen.Controls.Add(EndLabel);
 
-            SaveButton = new CurvedButtons(new Size(80, 40), new Point(10, 300), 25, "../../User Interface Recources/Custom_Button_Small.png", "Done", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            SaveButton = new CurvedButtons(new Size(80, 40), new Point(10, 300), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             SaveButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.stopSign.placeSign(); };
             this.settingScreen.Controls.Add(SaveButton);
 
-            CancelButton = new CurvedButtons(new Size(80, 40), new Point(60 , 300), 25, "../../User Interface Recources/Custom_Button_Small.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            CancelButton = new CurvedButtons(new Size(80, 40), new Point(60 , 300), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             CancelButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.stopSign.deleteSign(); };
             this.settingScreen.Controls.Add(CancelButton);
 

@@ -66,10 +66,10 @@ namespace GreenLight
             Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");
             FontFamily Dosis_font_family = Font_collection.Families[0];
 
-            doneButton = new CurvedButtons(new Size(80, 40), new Point(10, 520), 25, "../../User Interface Recources/Custom_Button_Small.png", "Save", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            doneButton = new CurvedButtons(new Size(80, 40), new Point(10, 520), 25, "../../User Interface Recources/Custom_Small_Button.png", "Save", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             doneButton.Click += (object o, EventArgs ea) => { DoneSettingScreen(); };
 
-            deleteButton = new CurvedButtons(new Size(90, 40), new Point(100, 520), 25, "../../User Interface Recources/Custom_Button_Small.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            deleteButton = new CurvedButtons(new Size(90, 40), new Point(100, 520), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             deleteButton.Click += (object o, EventArgs ea) => { DeleteRoad(this.selectedRoad); };
 
             Move_panel move_panel = new Move_panel(settingScreen);

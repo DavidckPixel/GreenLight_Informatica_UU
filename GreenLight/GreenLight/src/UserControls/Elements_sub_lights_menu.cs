@@ -12,6 +12,7 @@ namespace GreenLight
 {
     public partial class Elements_sub_lights_menu : UserControl
     {
+        private List<CurvedButtons> ESLM= new List<CurvedButtons>();
         public Elements_sub_lights_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
 
@@ -41,12 +42,25 @@ namespace GreenLight
 
             
             CurvedButtons Hand = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Hand_Button.png", this.BackColor);
-            Hand.Click += (object o, EventArgs EA) => { };
+            Hand.Click += (object o, EventArgs EA) => { ResetButtons(Hand, Hand.Image_path); };
             this.Controls.Add(Hand);
+            ESLM.Add(Hand);
 
             CurvedButtons Light = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            Light.Click += (object o, EventArgs EA) => { };
+            Light.Click += (object o, EventArgs EA) => { ResetButtons(Light, Light.Image_path); };
             this.Controls.Add(Light);
+            ESLM.Add(Light);
+        }
+
+        private void ResetButtons(CurvedButtons Selected, string Filepath)
+        {
+            foreach (CurvedButtons x in ESLM)
+            {
+                x.Selected = false;
+                x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
+            }
+            Selected.Selected = true;
+            Selected.Image = Image.FromFile(Filepath.Remove(Filepath.Length - 10) + "Select.png");
         }
     }
 }
