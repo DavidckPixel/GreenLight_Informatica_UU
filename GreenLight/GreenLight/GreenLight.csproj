@@ -246,6 +246,9 @@
     <Folder Include="User Interface Recources\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Documentation\BugReport Document.txt" />
+    <Content Include="Documentation\CodingConvention.txt" />
+    <Content Include="Documentation\Touchup Document.txt" />
     <Content Include="Images\BigCar.png" />
     <Content Include="Images\Car.png" />
     <Content Include="User Interface Recources\CurveButton.png" />

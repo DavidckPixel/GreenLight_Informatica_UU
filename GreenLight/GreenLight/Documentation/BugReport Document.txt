@@ -1,0 +1,22 @@
+﻿//------------------------------------------------------------------------------------------//
+							 BUG REPORTS
+//------------------------------------------------------------------------------------------//
+
+When encountering a problem running our project, please report it here with the correct format:
+
+----------------FORMAT------------------
+
+@@-----------------[BUG NUMBER]---------------@@
+NAME:			(name of the reporter)
+DATE:			(date that it is reported)
+PRIORITY:		(priority level of the bug: LOW - MEDIUM - HIGH)
+
+STATUS:			(state of the bug, can be: OPEN - IN PROGRESS - FIXED)
+SOLVER:			(name of the person who is solving the issue)
+
+ERRORNAME:		(give the error a name! name it in a way the error is clear)
+DUPLICATION:	(discribe in detail the neccessary steps to duplicate it)
+DISCRIPTION		(give a general discription with maybe some possible fixes and additional information)
+@@--------------------------------------------@@
+
+//--------------------------------REPORTS-----------------------------------------------------//

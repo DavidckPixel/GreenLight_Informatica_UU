@@ -1,0 +1,22 @@
+﻿//------------------------------------------------------------------------------------------//
+							 TOUCH UPS
+//------------------------------------------------------------------------------------------//
+
+This document is used when code needs to be rewritten/ fixed
+
+----------------FORMAT----------------
+
+##-----------[NUMBER]-----------##
+NAME:			(name of the reporter)
+DATE:			(date that it is reported)
+PRIORITY:		(priority level: LOW - MEDIUM - HIGH)
+
+STATUS:			(status, can be: OPEN - IN PROGRESS - FIXED)
+SOLVER:			(name of the person who is solving the issue)
+
+NAME:			(give it a name! name it in a way that is clear)
+METHODS:		(give the method(s) that need to be fixed up)
+DISCRIPTION		(give a general discription of why it needs to be fixed up, and how)
+##-------------------------------##
+
+//------------------------------------------------------------------------------------------//
