@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 
+//Base class for driving lane
+
 namespace GreenLight
 {
     public abstract class Lane
@@ -24,7 +26,7 @@ namespace GreenLight
             Point _old = points.First().cord;
                 foreach (LanePoints _point in points)
                 {
-                    g.DrawLine(Pens.Purple, _point.cord, _old);
+                    g.DrawLine(Pens.DarkGoldenrod, _point.cord, _old);
                     _old = _point.cord;
                 }
             

@@ -100,8 +100,26 @@ namespace GreenLight
 
         public override void Draw(Graphics g)
         {
+            Brush _b = new SolidBrush(Color.FromArgb(21, 21, 21));
+
+            double lanewidth = (double)this.lanes * 20;
+
+            g.FillRectangle(_b, new Rectangle(new Point(point1.X - (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2)), new Size(this.lanes * 20, this.lanes * 20)));
+            DrawSides(g, "Top", new Point(point1.X - (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2 ) - 20), new Size((int)lanewidth, 20), _b );
+            DrawSides(g, "Right", new Point(point1.X + (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2)), new Size(20, (int)(lanewidth)), _b);
+            DrawSides(g, "Left", new Point(point1.X - (int)(lanewidth / 2) - 20, point1.Y - (int)(lanewidth / 2)), new Size(20, (int)(lanewidth)), _b);
+            DrawSides(g, "Bottom", new Point(point1.X - (int)(lanewidth / 2), point1.Y + (int)(lanewidth / 2)), new Size((int)lanewidth, 20), _b);
+
             DrawLine(g);
             this.hitbox.Draw(g);
+        }
+
+        public void DrawSides(Graphics g, string _side, Point _topleft, Size _size, Brush _b)
+        {
+            if (!this.connectPoints.Any(x => x.Side == _side && x.Active == false))
+            {
+                g.FillRectangle(_b, new Rectangle(_topleft, _size));
+            }
         }
     }
 }

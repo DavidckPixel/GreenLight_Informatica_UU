@@ -77,13 +77,18 @@ namespace GreenLight
                 _sign.draw(g);
             }
 
-            this.Drivinglanes.ForEach(x => Console.WriteLine(x.points.First()));
+            DrawLine(g);
 
             this.hitbox.Draw(g);
         }
 
         public void DrawLine(Graphics g)
         {
+            if (!General_Form.Main.BuildScreen.builder.roadBuilder.visualizeLanePoints)
+            {
+                return;
+            }
+
             foreach(Lane _lane in Drivinglanes)
             {
                 _lane.DrawLine(g);

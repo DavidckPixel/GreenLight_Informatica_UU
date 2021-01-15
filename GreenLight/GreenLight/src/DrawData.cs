@@ -11,7 +11,9 @@ namespace GreenLight
 {
     public static class DrawData
     {
-        static PrivateFontCollection Font_collection = new PrivateFontCollection(); //TEMP DIT MOET NOG GLOBAAL
+        //General Tools used in visual effects
+
+        static PrivateFontCollection Font_collection = new PrivateFontCollection(); 
         public static FontFamily Dosis_font_family;
 
         static DrawData()

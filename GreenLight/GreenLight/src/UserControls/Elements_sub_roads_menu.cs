@@ -13,6 +13,7 @@ namespace GreenLight
     public partial class Elements_sub_roads_menu : UserControl
     {
         public TextBox LaneAmount;
+
         public Elements_sub_roads_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
 
@@ -65,7 +66,25 @@ namespace GreenLight
             LaneAmount.Width = 20;
             LaneAmount.Height = 20;
             LaneAmount.Location = new Point(_ButtonXbase + 2 * _ButtonXdiff, _ButtonYbase + _ButtonYdiff);
+
+        
             this.Controls.Add(LaneAmount);
+
+            CheckBox showLanePoints = new CheckBox();
+            showLanePoints.Location = new Point(_ButtonXbase + 2 * _ButtonXdiff, _ButtonYbase + _ButtonYdiff * 2);
+            showLanePoints.Checked = true;
+            showLanePoints.CheckedChanged += (object o, EventArgs ea) => 
+            {
+                General_Form.Main.BuildScreen.builder.roadBuilder.visualizeLanePoints = showLanePoints.Checked;
+                General_Form.Main.BuildScreen.Screen.Invalidate();
+            };
+            Controls.Add(showLanePoints);
+
+            Label showLanePointsLabel = new Label();
+            showLanePointsLabel.Text = "Visualize Driving Lanes: ";
+            showLanePointsLabel.Location = new Point(_ButtonXbase, _ButtonYbase + _ButtonYdiff * 2);
+            showLanePointsLabel.Size = new Size(150,20);
+            Controls.Add(showLanePointsLabel);
         }
     }
 }

@@ -36,6 +36,8 @@ namespace GreenLight
 
         public CrossRoadController crossRoadController;
 
+        public bool visualizeLanePoints = true; //Boolean whether or not the lanePoints are visualised
+
         PrivateFontCollection Font_collection = new PrivateFontCollection();
 
         public RoadController(PictureBox _screen)
