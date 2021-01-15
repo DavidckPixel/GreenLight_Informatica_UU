@@ -20,7 +20,7 @@ namespace GreenLight
             this.BackColor = Color.FromArgb(255, 255, 255);
             this.Size = new Size(Menu_width, Form.Height - User_Controls.Config.buildElementsMenu["elementsXbase"] - User_Controls.Config.buildElementsMenu["elementsXplus"]);
             this.Location = new Point(Form.Width - Menu_width, User_Controls.Config.buildElementsMenu["elementsXbase"]);
-            this.AutoScroll = true;
+            //this.AutoScroll = true;
             Initialize(Form, Menu_width, Dosis_font_family);
         }
         public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
@@ -61,27 +61,29 @@ namespace GreenLight
             this.Controls.Add(Curved_Road2);
             ESRM.Add(Curved_Road2);
 
+
+            CurvedButtons Crossroad = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/CrossRoad_Button.png", this.BackColor);
+            Crossroad.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross"; };
+            this.Controls.Add(Crossroad);
+            ESRM.Add(Crossroad);
+
             PictureBox LaneAmount_background = new PictureBox();
             LaneAmount_background.Image = Image.FromFile("../../User Interface Recources/Lane_Amount_Border.png");
-            LaneAmount_background.Location = new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase+_ButtonYdiff*1);
+            LaneAmount_background.Location = new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase+_ButtonYdiff*1);
             LaneAmount_background.SizeMode = PictureBoxSizeMode.Zoom;
             LaneAmount_background.Size = new Size(_ButtonSize, _ButtonSize);
             this.Controls.Add(LaneAmount_background);
 
-            CurvedButtons Crossroad = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/CrossRoadButton.png", this.BackColor);
-            Crossroad.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross"; };
-            this.Controls.Add(Crossroad);
-
             this.LaneAmount = new TextBox();
             LaneAmount.BorderStyle = BorderStyle.None;
+            LaneAmount.Text = "1";
             LaneAmount.MaxLength = 1;
+            LaneAmount.Width = 20;
+            LaneAmount.Height = 20;
             LaneAmount.TextAlign = HorizontalAlignment.Center;
-            LaneAmount.Location = new Point(_ButtonXbase + _ButtonXdiff + _ButtonSize / 2 - LaneAmount.Size.Width / 2, _ButtonYbase + _ButtonYdiff + _ButtonSize / 2 - LaneAmount.Size.Height / 2);
+            LaneAmount.Location = new Point((_ButtonXbase + _ButtonXdiff * 2) + (_ButtonSize / 2 - LaneAmount.Size.Width / 2), _ButtonYbase + _ButtonYdiff + _ButtonSize / 2 - LaneAmount.Size.Height / 2);
             this.Controls.Add(LaneAmount);
             LaneAmount.BringToFront();
-
-
-            this.Controls.Add(LaneAmount);
 
             CheckBox showLanePoints = new CheckBox();
             showLanePoints.Location = new Point(_ButtonXbase + 2 * _ButtonXdiff, _ButtonYbase + _ButtonYdiff * 2);

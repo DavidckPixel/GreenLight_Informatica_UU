@@ -88,8 +88,11 @@ namespace GreenLight
             if (this.Active.Screen != null)
             {
                 this.Active.Screen.Show();
-                this.Active.Screen.BringToFront();
                 this.Active.Screen.Invalidate();
+                if (this.Active != SimulationScreen)
+                {
+                    this.Active.Screen.BringToFront();
+                }
             }
         }
         

@@ -52,15 +52,13 @@ namespace GreenLight
             this.settingScreen.Controls.Add(Textbox1);
 
 
-            //Waarschijnlijk beter om mee te geven aan initSettingScreen zoals in Build_sub_menu.Initialize            
-            Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");
-            FontFamily Dosis_font_family = Font_collection.Families[0];
+            //Waarschijnlijk beter om mee te geven aan initSettingScreen zoals in Build_sub_menu.Initialize 
 
-            Button1 = new CurvedButtons(new Size(80, 40), new Point(10, 400), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            Button1 = new CurvedButtons(new Size(80, 40), new Point(10, 400), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             Button1.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.speedSign.saveButton(); };
             this.settingScreen.Controls.Add(Button1); 
 
-            Button2 = new CurvedButtons(new Size(80, 40), new Point(120, 400), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);    
+            Button2 = new CurvedButtons(new Size(80, 40), new Point(120, 400), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);    
             Button2.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.speedSign.deleteSign(); };
             this.settingScreen.Controls.Add(Button2);
         }

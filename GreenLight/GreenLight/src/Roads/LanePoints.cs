@@ -73,7 +73,7 @@ namespace GreenLight
 
             for (int x = 0, y = 0; x <= _deltaX || y <= _deltaY; x++, y++)
             {
-                if ((x >= _deltaX && y >= _deltaY) || _prev == _point2)
+                if ((x > _deltaX && y > _deltaY) || _prev == _point2)
                     break;
 
                 _Xtemp = _point1.X + x * _dir.Item1;

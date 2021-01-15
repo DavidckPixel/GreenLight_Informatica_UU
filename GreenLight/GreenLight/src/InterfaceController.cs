@@ -151,11 +151,11 @@ namespace GreenLight
         public void Menu_to_simulation() 
         {
             Hide_all_menus();
-            SimDataM.Show();
-            SimDataM.BringToFront();
             Reset_All_Buttons(SimSM.Weather, SimSM.Weather.Image_path);
             SimSM.Show();
             SimMM.Show();
+            SimDataM.Show();
+            SimDataM.BringToFront();
         }
         public void Menu_to_simulation_weather() 
         {

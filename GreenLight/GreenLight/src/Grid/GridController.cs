@@ -86,7 +86,7 @@ namespace GreenLight
                 return;
             }
 
-            if(_type == "Cross")
+            if (_type == "Cross")
             {
                 builder.BuildRoad(_point.Cords, _point.Cords);
                 return;
@@ -95,7 +95,7 @@ namespace GreenLight
 
             Console.WriteLine("MouseClick Button: " + mea.Button);
 
-            if(mea.Button == MouseButtons.Right)
+            if (mea.Button == MouseButtons.Right)
             {
                 this.ResetPoints();
             }
@@ -112,8 +112,8 @@ namespace GreenLight
             }
             else
             {
-                _secondPoint = Gridpoints.Find(x => x.Collision(mea.Location));
-                if (_secondPoint != null && _secondPoint != _firstPoint )
+                this.secondPoint = Gridpoints.Find(x => x.Collision(mea.Location));
+                if (this.secondPoint != null && this.secondPoint != this.firstPoint)
                 {
                     Console.WriteLine("Second PointClick!");
                     Console.WriteLine(_point.Cords);
@@ -124,7 +124,7 @@ namespace GreenLight
                 }
             }
 
-
+        }
         private void ResetPoints()
         {
             this.firstPoint = null;

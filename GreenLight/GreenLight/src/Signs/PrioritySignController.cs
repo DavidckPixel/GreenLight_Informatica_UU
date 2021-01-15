@@ -41,11 +41,11 @@ namespace GreenLight
             errorMess.ForeColor = Color.Red;
             this.settingScreen.Controls.Add(errorMess);
 
-            YesButton = new CurvedButtons(new Size(80, 40), new Point(10, 150), 25, "../../User Interface Recources/Custom_Small_Button.png", "Place Sign", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            YesButton = new CurvedButtons(new Size(80, 40), new Point(10, 150), 25, "../../User Interface Recources/Custom_Small_Button.png", "Place Sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             YesButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.prioritySignC.placeSign(); };
             this.settingScreen.Controls.Add(YesButton);
 
-            NoButton = new CurvedButtons(new Size(80, 40), new Point(110, 150), 25, "../../User Interface Recources/Custom_Small_Button.png", "Don't Place", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            NoButton = new CurvedButtons(new Size(80, 40), new Point(110, 150), 25, "../../User Interface Recources/Custom_Small_Button.png", "Don't Place", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             NoButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.prioritySignC.deleteSign(); };
             this.settingScreen.Controls.Add(NoButton);
 

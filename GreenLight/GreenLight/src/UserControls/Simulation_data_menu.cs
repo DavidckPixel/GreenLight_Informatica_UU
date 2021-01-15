@@ -25,7 +25,6 @@ namespace GreenLight
             Dosis_font_family = Dosis_font_family_in;
             this.BackColor = Color.DarkGray;
             this.Size = new Size(Form.Width - Sub_menu_width, Height);
-            this.BringToFront();
             Initialize();
             Last_Simulation_time = new TimeSpan(00, 00, 00);
         }
@@ -34,7 +33,6 @@ namespace GreenLight
         {
             this.Location = new Point(0, 0);
             this.Size = new Size(Form.Width - Sub_menu_width, Height);
-            this.BringToFront();
             this.Controls.Clear();
             Initialize();
         }

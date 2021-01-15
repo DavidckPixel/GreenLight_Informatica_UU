@@ -18,9 +18,7 @@ namespace GreenLight
         int roadLanes;
         int thisLane;
         private LanePoints middle;
-
         public Hitbox hitbox;
-
         public int AngleDir;
 
         public DrivingLane(List<LanePoints> _points, string _dir, int _roadLanes, int _thisLane, Hitbox _hitbox)
@@ -29,9 +27,7 @@ namespace GreenLight
             this.dir = _dir;
             this.roadLanes = _roadLanes;
             this.thisLane = _thisLane;
-
             this.hitbox = _hitbox;
-
             middle = this.points[this.points.Count() / 2]; //THIS LINE GIVES PROBLEMS WHEN MAKING CURVED ROAD 2 up or down and 2 right or left..
             AngleDir = middle.degree;
         }

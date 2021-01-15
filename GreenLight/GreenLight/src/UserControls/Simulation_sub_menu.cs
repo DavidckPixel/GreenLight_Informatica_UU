@@ -19,7 +19,6 @@ namespace GreenLight
             this.BackColor = Color.FromArgb(255,255,255);
             this.Size = new Size(User_Controls.Config.standardSubMenu["subMenuWidth"], Form.Height);
             this.Location = new Point(Form.Width-Menu_width, Form.Height);
-            this.AutoScroll = true;
             Initialize(Form, Menu_width, Dosis_font_family);
         }
 
