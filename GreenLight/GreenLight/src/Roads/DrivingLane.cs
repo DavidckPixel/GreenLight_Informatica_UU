@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GreenLight
 {
-    public class DrivingLane
+    public class DrivingLane : Lane
     {
         //Every road has a list of these DrivingLanes, a driving lane consists of a list of LanePoints
         //And for now an int that determines which type of road it is.
@@ -15,9 +15,6 @@ namespace GreenLight
         //Draws a straight lane between all the points in the LanePoints list in order.
         //This is used for testing to see if our algorithm created a smooth road -- This will not be used in final release.
 
-
-        public List<LanePoints> points;
-        public string dir;
         int roadLanes;
         int thisLane;
         Bitmap Lane;
@@ -26,7 +23,6 @@ namespace GreenLight
         private LanePoints middle;
 
         public Hitbox hitbox;
-        public Hitbox offsetHitbox;
 
         int AngleDir;
 
@@ -106,7 +102,7 @@ namespace GreenLight
             return p;
         }
 
-        public void Draw(Graphics g)
+        public override void Draw(Graphics g)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             Pen p = new Pen(Color.FromArgb(21,21,21), 20);
@@ -255,7 +251,7 @@ namespace GreenLight
             Console.WriteLine(AngleDir);
         }
 
-        public void DrawoffsetHitbox(Graphics g)
+        public override void DrawoffsetHitbox(Graphics g)
         {
             if (offsetHitbox != null)
             {

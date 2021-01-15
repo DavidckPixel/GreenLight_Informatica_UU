@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
+//The most basic sign class from which all the signs inherit
+//An important thing to note is that every sign has its unique identifier stored in ID
+
 namespace GreenLight
 {
     public abstract class AbstractSign
@@ -16,7 +19,7 @@ namespace GreenLight
         }
 
         public abstract void Read(AI _ai);
-        private int ID;
+        private int ID { get; }
         public AbstractSignController controller;
     }
 }

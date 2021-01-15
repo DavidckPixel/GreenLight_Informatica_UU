@@ -9,9 +9,13 @@ namespace GreenLight
 {
     public class DiagonalRoad : AbstractRoad
     {
-        //Similar to CurvedRoad, but now math for diagonal
+        //A roadtype for Vertical, horizontal and diagonal roads. 
+        //The CalculateLanes function calculates a straight line between 2 points, and uses this to create drivinglane objects for the road.
+        //It gets a dir in the constructor, which stands for direction, this is to deterin which way the cars should drive.
+        //The corners of the road are calculated and used to contruct a Recthitbox for the road
+        //In this class we mainly use a lot of math, but the simple idea is: when the constructor is called, it will calculate a curved line between 2 points
+        //For how many lanes you told the constructor to have.
 
-        private string dir;
 
         public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "DiagonalRoad", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
@@ -19,8 +23,7 @@ namespace GreenLight
             this.Type = _type;
 
             Point[] _points = hitBoxPoints(_point1, _point2, lanes);
-            //Console.WriteLine("{0},{1},{2},{3}", _points[1], _points[0], _points[3], _points[2]);
-            this.Hitbox2 = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
+            this.hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
 
             for (int x = 1; x <= this.lanes; x++)
             {
@@ -28,78 +31,25 @@ namespace GreenLight
             }
         }
 
-        protected override DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thisLane)
+        private DrivingLane CreateDrivingLane(Point _point1, Point _point2, int _thisLane)
         {
-            List<LanePoints>_lanePoints = new List<LanePoints>();
-            Point _normpoint1 = _point1; Point _normpoint2 = _point2;
-            double _slp;
-            Point _prev = _normpoint1;
-            bool divByZero = false;
-           
-            _slp = (double)(_point2.Y - _point1.Y) / (double)(_point2.X - _point1.X);
+            double _slp = (double)(_point2.Y - _point1.Y) / (double)(_point2.X - _point1.X); //This code was borrow from the CalculateLanePoints since apperantly the slp is calculated in there
             if (_point2.X - _point1.X == 0)
-            { 
+            {
                 _slp = 0;
-                int _vertical;
-                divByZero = true;
-                if (_point1.Y > _point2.Y)
-                    _vertical = -1;
-                else
-                    _vertical = 1;
-
-                for (int y = 0 ; y <= Math.Abs(_point1.Y - _point2.Y); y++)
-                {
-                    _normpoint1 = new Point(_point1.X, (int)(_point1.Y + y * _vertical));
-                    _lanePoints.Add(new LanePoints(_normpoint1, AbstractRoad.CalculateAngle(_prev, _normpoint1)));
-
-                    _prev = _normpoint1;
-                }
             }
-            Console.WriteLine(_slp);
+
             this.slp = _slp;
-
-            int _dir = GetDirection(_point1, _point2);
-
-            /*if (_rc >= 0.5 || _point2.X - _point1.X == 0)
-            {
-                for (int y = 0; y <= Math.Abs(_point1.Y - _point2.Y); y++)
-                {
-                    _normpoint1 = new Point(_point1.X + y/_rc * _dir, (int)(_point1.Y + y * _rc * _dir));
-                    _lanePoints.Add(new LanePoints(_normpoint1, AbstractRoad.CalculateAngle(_prev, _normpoint1)));
-
-                    _prev = _normpoint1;
-                }
-            }*/
-
-            for (int x = 0; x <= Math.Abs(_point1.X - _point2.X) && !divByZero; x++)
-            {
-                _normpoint1 = new Point(_point1.X + x * _dir, (int)(_point1.Y + x * _slp * _dir));
-                _lanePoints.Add(new LanePoints(_normpoint1, AbstractRoad.CalculateAngle(_prev, _normpoint1)));
-
-                _prev = _normpoint1;
-            }
+        
             Point[] _points = hitBoxPoints(_point1, _point2, 1);
             Hitbox _temp = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Green);
-            return new DrivingLane(_lanePoints, this.Dir, lanes, _thisLane, _temp); 
-        }
-
-        private int GetDirection(Point _point1, Point _point2)
-        {
-            if (_point2.X >= _point1.X)
-            {
-                return 1;
-            }
-            else
-            {
-                return -1;
-            }
+            return new DrivingLane(LanePoints.CalculateDiagonalLane(_point1,_point2), this.Dir, this.lanes, _thisLane, _temp);
         }
 
         public DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
             int drivingLaneDistance = 20;
-            int side;
-            double slp, slpPer, oneX, amountX;
+            double slp;
 
             if (_firstPoint.X != _secondPoint.X && _firstPoint.Y != _secondPoint.Y)
             {
@@ -229,7 +179,7 @@ namespace GreenLight
                 }
             }
 
-            return CalculateDrivingLane(_firstPoint, _secondPoint, t);
+            return CreateDrivingLane(_firstPoint, _secondPoint, t);
         }
 
         public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20)
@@ -274,8 +224,6 @@ namespace GreenLight
             }
             else
             {
-
-                Console.WriteLine("Kom je hier??");
 
                 _points[1] = new Point(_one.X, _one.Y - _roadWidth); //Hoogste punt, altijd
                 _points[2] = new Point(_two.X, _two.Y + _roadWidth); // Laagste Punt

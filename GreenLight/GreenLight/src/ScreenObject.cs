@@ -14,25 +14,20 @@ namespace GreenLight
         //This class will draw these objects on the bitmap via the BitmapController with the Draw method.
         //It also gives each ScreenObject its cords and a hitbox, which is a rectangle that contains the whole ScreenObject.
 
-        public Rectangle Hitbox;
-        public Point Cords;
+       // public Rectangle Hitbox;
+        public Point topLeft;
+        public Hitbox hitbox;
 
-        public ScreenObject(Point _p1, Point _p2)
+        public ScreenObject(Point _topleft)
         {
-            int left, top, right, bottom;
-
-            left = Math.Min(_p1.X, _p2.X);
-            right = Math.Max(_p1.X, _p2.X);
-
-            top = Math.Min(_p1.Y, _p2.Y);
-            bottom = Math.Max(_p1.Y, _p2.Y);
-
-            Hitbox = Rectangle.FromLTRB(left, top, right, bottom);
+            topLeft = _topleft;
         }
 
         public virtual void Draw(Graphics g)
         {
-
+            hitbox.Draw(g);
         }
     }
-}
+
+
+        }

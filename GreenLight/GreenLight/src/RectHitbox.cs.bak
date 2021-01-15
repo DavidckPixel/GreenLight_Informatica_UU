@@ -14,12 +14,14 @@ namespace GreenLight
         public double? rcTop, rcBottom, rcLeft, rcRight;
         public double? bTop, bBottom, bLeft, bRight;
 
-        public RectHitbox(Point _topleft, Point _topright, Point _bottomleft, Point _bottomright)
+        public RectHitbox(Point _topleft, Point _topright, Point _bottomleft, Point _bottomright, Color _color) : base(_topleft, _topright, _bottomleft, _bottomright)
         {
             bottomleft = _bottomleft;
             bottomright = _bottomright;
             topleft = _topleft;
             topright = _topright;
+
+            Topcord = new Point(BetterMin(_topleft.X, _topright.X, _bottomleft.X, _bottomright.X), BetterMin(_topleft.Y, _topright.Y, _bottomleft.Y, _bottomright.Y));
 
             double topleftX, topleftY, toprightX, toprightY, bottomleftX, bottomleftY, bottomrightX, bottomrightY;
 
@@ -34,6 +36,8 @@ namespace GreenLight
 
             bottomrightX = _bottomright.X;
             bottomrightY = _bottomright.Y;
+
+            this.color = _color;
 
             //----------------------------------------------------------------
 
@@ -92,7 +96,6 @@ namespace GreenLight
             {
                 if (rcLeft == 0 || rcRight == 0)
                 {
-                    //Console.WriteLine("hier wel eens??");
                     if (_p.X > bRight && bLeft > _p.X && _p.Y > bTop && bBottom > _p.Y)
                     {
                         return true;
@@ -107,6 +110,20 @@ namespace GreenLight
                         return true;
                     }
 
+                }
+                else if(rcTop == null || rcBottom == null)
+                {
+                    //Console.WriteLine("KOM JE HIER ALS JE GEEN HITBOX DETECT??");
+
+                    //Console.WriteLine("TopLeft {0} , TopRight {1} , BottomLeft {2} , BottomRight {3}", topleft, topright, bottomleft, bottomright);
+
+                    int _maxX = Math.Max(this.topleft.X, this.bottomleft.X);
+                    int _minX = Math.Min(this.topleft.X, this.bottomleft.X);
+
+                    if (_p.X >= _minX && _p.X <= _maxX && _p.X * rcLeft + bLeft <= _p.Y && _p.X * rcRight + bRight >= _p.Y)
+                    {
+                        return true;
+                    }
                 }
                 else if (rcLeft == null || rcRight == null)
                 {
@@ -123,9 +140,9 @@ namespace GreenLight
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine("Devided By 0");
+                Console.WriteLine(e);
             }
             return false;
         }
@@ -158,9 +175,9 @@ namespace GreenLight
         }
 
 
-        public override void Draw(Graphics g, Color _color)
+        public override void Draw(Graphics g)
         {
-            Brush Notsolid = new SolidBrush(Color.FromArgb(100, _color));
+            Brush Notsolid = new SolidBrush(Color.FromArgb(100, this.color));
             Point[] _points = new Point[]
             {
                 topleft, topright, bottomright, bottomleft
@@ -168,5 +185,7 @@ namespace GreenLight
 
             g.FillPolygon(Notsolid, _points);
         }
+
+        
     }
 }

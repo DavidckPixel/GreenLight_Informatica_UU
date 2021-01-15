@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 
+//This is the controller that handles all the sign placement, every Sign has its own controller because every sign requires its own input
+//for example: speed needs a set speed but other signs need other things.
+//This controller also has the function that checks the mouse position, and finds the closest point to it
+//so there is still alot of flexibilty where on the road the sign needs to be placed.
+
+
 namespace GreenLight
 {
     public class MainSignController : EntityController
@@ -105,8 +111,8 @@ namespace GreenLight
                 return;
             }
 
-            List<AbstractRoad> _roadlist = RoadController.roads;
-            AbstractRoad _selectedRoad = _roadlist.Find(x => x.Hitbox2.Contains(mea.Location));
+            List<AbstractRoad> _roadlist = General_Form.Main.BuildScreen.builder.roadBuilder.roads;
+            AbstractRoad _selectedRoad = _roadlist.Find(x => x.hitbox.Contains(mea.Location));
 
             if (signType == "X")
             {
@@ -137,7 +143,7 @@ namespace GreenLight
                 return;
             }
 
-            if (!selectedRoad.Hitbox2.Contains(mea.Location))
+            if (!selectedRoad.hitbox.Contains(mea.Location))
             {
                 closeDragMode();
                 return;
@@ -148,7 +154,6 @@ namespace GreenLight
             {
                 return;
             }
-            Console.WriteLine("LocationSelected!!!");
             this.selectedRoad.Signs.Add(new PlacedSign(closest.cord, "", _temp));
             SignCount++;
             closeDragMode();
@@ -177,7 +182,7 @@ namespace GreenLight
 
         public void deleteSign(AbstractSign _abstractSign = null)
         {
-            List<AbstractRoad> _roadlist = RoadController.roads;
+            List<AbstractRoad> _roadlist = General_Form.Main.BuildScreen.builder.roadBuilder.roads;
 
             foreach(AbstractRoad _road in _roadlist)
             {

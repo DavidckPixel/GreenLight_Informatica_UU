@@ -12,11 +12,19 @@ namespace GreenLight
     public class RoadController : EntityController
     {
 
-        //Very early version of the actual code that WILL connect the road system to the rest of our project
-        //For now it just holds a calculate direction function
-        //Nothing really of interest here yet, Come back later :)
+        //This class contains methods to build a straight (horizontal, vertical or diagonal) road, a curved road.
+        //It also contains a method to build a crossroad, by redirecting to the newcrossroad method in the crossroadcontroller.
+        //This class manages clicking on roads. 
+        //When a road is clicked, a window opens, in which you can change the direction of the driving lanes of that particular road, 
+        //by clicking on a lane in a Image of the road, shown on the settingsscreen.
+        //Because a hitbox is re-calculated for every driving lane of the road on the Image on the settingscreen.
+        //You can also delete the road you've selected, with the delete Button.
+        //A method to calculate the direction of the road is here as well. 
+        //(Not sure it's correct in how curved road direction is calculated a the moment?).
+        //There is also a method that manages connections between roads.
 
-        public static List<AbstractRoad> roads = new List<AbstractRoad>();
+
+        public List<AbstractRoad> roads = new List<AbstractRoad>();
         public PictureBox Screen;
         public string roadType = "D";
 
@@ -26,6 +34,10 @@ namespace GreenLight
 
         private AbstractRoad selectedRoad;
 
+        public CrossRoadController crossRoadController;
+
+        public bool visualizeLanePoints = true; //Boolean whether or not the lanePoints are visualised
+
         PrivateFontCollection Font_collection = new PrivateFontCollection();
 
         public RoadController(PictureBox _screen)
@@ -33,9 +45,13 @@ namespace GreenLight
             this.Screen = _screen;
             this.Screen.MouseClick += RoadClick;
 
+            crossRoadController = new CrossRoadController(this.Screen);
+
             initSettingScreen();
         }
 
+
+        //Not in use anymore, since straightroad merged in diagonalroad.
         /*public void BuildStraightRoad(Point _point1, Point _point2)
         {
             string _dir = Direction(_point1, _point2, "StraightRoad");
@@ -47,7 +63,6 @@ namespace GreenLight
         {
             this.settingScreen = new Form();
             this.settingScreen.Hide();
-            //is.settingScreen.MdiParent = this.mainScreen;
 
             this.settingScreen.Size = new Size(520, 600);
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
@@ -81,7 +96,7 @@ namespace GreenLight
         public void BuildDiagonalRoad(Point _point1, Point _point2, int _lanes, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
         {
             string _dir = Direction(_point1, _point2, "DiagonalRoad");
-            Console.WriteLine("build" + _beginconnection + "-----" + _endconnection);
+            //Console.WriteLine("build" + _beginconnection + "-----" + _endconnection);
             AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, "Diagonal", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
@@ -90,6 +105,12 @@ namespace GreenLight
             //Console.WriteLine(OPC.GetSpawnPoint);
         }
 
+        public void BuildCrossRoad(Point _point1, int _lanes, bool _beginconnection, bool _endconnection)
+        {
+            AbstractRoad _temp = crossRoadController.newCrossRoad(_point1, _lanes, "CrossRoad");
+            this.roads.Add(_temp);
+        }
+        
         public void BuildCurvedRoad(Point _point1, Point _point2, int _lanes, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
         {
             string _dir = Direction(_point1, _point2, "CurvedRoad");
@@ -275,7 +296,9 @@ namespace GreenLight
                 return;
             }
 
-            this.selectedRoad = roads.Find(x => x.Hitbox2.Contains(mea.Location));
+            try
+            {
+                this.selectedRoad = roads.Find(x => x.hitbox.Contains(mea.Location));
             if (this.selectedRoad == null)
             {
                 Console.Write("No Road Clicked!");
@@ -286,11 +309,23 @@ namespace GreenLight
             {
                 EnableSettingScreen();
             }
+            }catch(Exception e)
+            {
+
+            }
         }
 
         private void EnableSettingScreen()
         {
-            selectedRoad.Hitbox2.color = Color.Pink;
+            Console.WriteLine(selectedRoad.Type);
+
+            if(selectedRoad.Type == "Cross")
+            {
+                crossRoadController.ShowSettingScreen((CrossRoad)selectedRoad);
+                return;
+            }
+
+            selectedRoad.hitbox.color = Color.Pink;
 
             if(selectedRoad.Drivinglanes.All(x => x.offsetHitbox == null))
             {
@@ -310,7 +345,7 @@ namespace GreenLight
 
         private void DoneSettingScreen()
         {
-            selectedRoad.Hitbox2.color = Color.Yellow;
+            selectedRoad.hitbox.color = Color.Yellow;
             DisableSettingScreen();
         }
 
@@ -329,11 +364,11 @@ namespace GreenLight
         {
             if (selectedRoad.Drivinglanes.All(x => x.offsetHitbox == null))
             {
-                Console.WriteLine("No DrivingLane hitboxes have been Created");
+                //Console.WriteLine("No DrivingLane hitboxes have been Created");
                 return;
             }
 
-            DrivingLane _lane = selectedRoad.Drivinglanes.Find(x => x.offsetHitbox.Contains(mea.Location));
+            DrivingLane _lane = (DrivingLane)selectedRoad.Drivinglanes.Find(x => x.offsetHitbox.Contains(mea.Location));
 
             if (_lane == null)
             {
@@ -354,7 +389,7 @@ namespace GreenLight
             Bitmap b = new Bitmap(Screen.Width, Screen.Height);
             Screen.DrawToBitmap(b, new Rectangle(new Point(0, 0), Screen.Size));
 
-            Hitbox _hitbox = selectedRoad.Hitbox2;
+            Hitbox _hitbox = selectedRoad.hitbox;
 
             int _maxSize = Math.Max(_hitbox.Size.Width, _hitbox.Size.Height) + 20;
             int _diff = Math.Abs(_hitbox.Size.Width - _hitbox.Size.Height) / 2;
@@ -374,7 +409,6 @@ namespace GreenLight
                 _rec = new Rectangle(_hitbox.Topcord.X - 10 - _diff, _hitbox.Topcord.Y - 10, _maxSize, _maxSize);
             }
 
-            //Image is too distorted, Take Max of WIdth and Height = use in square as both X and Y;
 
             
             Rectangle _des = new Rectangle(0, 0, this.settingScreenImage.Width, this.settingScreenImage.Height);
@@ -386,23 +420,23 @@ namespace GreenLight
 
         private void DrivingLaneHitbox()
         {
-            Point _diff = selectedRoad.Hitbox2.Topcord;
+            Point _diff = selectedRoad.hitbox.Topcord;
 
             foreach (DrivingLane _drivinglane in selectedRoad.Drivinglanes)
             {
                 Point _one = _drivinglane.points.First().cord;
                 Point _two = _drivinglane.points.Last().cord;
 
-                Console.WriteLine("DRIVING POINTS FOR THE CURVED LINE ARE: {0} -- {1}", _one, _two);
+                //Console.WriteLine("DRIVING POINTS FOR THE CURVED LINE ARE: {0} -- {1}", _one, _two);
 
                 Point _oneoffset = new Point(_one.X - _diff.X, _one.Y - _diff.Y);
                 Point _twooffset = new Point(_two.X - _diff.X, _two.Y - _diff.Y);
 
                 double _scale;
 
-                double diff = Math.Max(selectedRoad.Hitbox2.Size.Width, selectedRoad.Hitbox2.Size.Height) + 20;
+                double diff = Math.Max(selectedRoad.hitbox.Size.Width, selectedRoad.hitbox.Size.Height) + 20;
 
-                if (selectedRoad.Hitbox2.Size.Width > selectedRoad.Hitbox2.Size.Height)
+                if (selectedRoad.hitbox.Size.Width > selectedRoad.hitbox.Size.Height)
                 {
                     _scale = (double)(this.settingScreenImage.Width) / diff;
                 }
@@ -417,14 +451,14 @@ namespace GreenLight
 
                 int Graden = AbstractRoad.CalculateAngle(_one, _two);
 
-                if (selectedRoad.Hitbox2.Size.Width >= selectedRoad.Hitbox2.Size.Height)
+                if (selectedRoad.hitbox.Size.Width >= selectedRoad.hitbox.Size.Height)
                 {
                     if ((Graden >= 315 && Graden < 360) || (Graden >= 0 && Graden < 45) || (Graden >= 135 && Graden < 225))
                     {
 
                         if (selectedRoad.Type == "Curved")
                         {
-                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.Hitbox2.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
+                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.hitbox.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
                         }
                         else
                         {
@@ -440,7 +474,7 @@ namespace GreenLight
 
                         if (selectedRoad.Type == "Curved")
                         {
-                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.Hitbox2.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
+                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.hitbox.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
                         }
                         else
                         {
@@ -452,14 +486,14 @@ namespace GreenLight
                         _twooffset = new Point((int)((_twooffset.X + 10) * _scale), (int)(((_twooffset.Y) * _scale) + offset));
                     }
                 }
-                else if (selectedRoad.Hitbox2.Size.Width < selectedRoad.Hitbox2.Size.Height)
+                else if (selectedRoad.hitbox.Size.Width < selectedRoad.hitbox.Size.Height)
                 {
                     if ((Graden >= 315 && Graden < 360) || (Graden >= 0 && Graden < 45) || (Graden >= 135 && Graden < 225))
                     {
 
                         if (selectedRoad.Type == "Curved")
                         {
-                            offset = (double)this.settingScreenImage.Width / 2 - selectedRoad.Hitbox2.Size.Width / 2 * _scale; //WERKT VOOR CIRCLE
+                            offset = (double)this.settingScreenImage.Width / 2 - selectedRoad.hitbox.Size.Width / 2 * _scale; //WERKT VOOR CIRCLE
                         }
                         else
                         {
@@ -476,7 +510,7 @@ namespace GreenLight
 
                         if (selectedRoad.Type == "Curved")
                         {
-                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.Hitbox2.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
+                            offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.hitbox.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
                         }
                         else
                         {
@@ -495,77 +529,11 @@ namespace GreenLight
 
                 Hitbox _hitbox = selectedRoad.CreateHitbox(_points);
 
-                Console.WriteLine("HITBOX CREATED!!!");
+                //Console.WriteLine("HITBOX CREATED!!!");
 
                 _drivinglane.offsetHitbox = _hitbox;
             }
         }
 
-        /*
-
-        private void FlipRoad (AbstractRoad _flippedroad)
-        {
-            roads.Remove(_flippedroad);
-
-            if (_flippedroad == this.selectedRoad)
-            {
-                string _oldDir = selectedRoad.Dir;
-                string _newDir = selectedRoad.Dir;
-                if (_oldDir == "SE")
-                {
-                    _newDir = "SEccw";
-                }
-                else if(_oldDir == "SW")
-                {
-                    _newDir = "SWccw";
-                }
-                else if (_oldDir == "NW")
-                {
-                    _newDir = "NWccw";
-                }
-                else if (_oldDir == "NE")
-                {
-                    _newDir = "NEccw";
-                }
-                else if (_oldDir == "SEccw")
-                {
-                    _newDir = "SE";
-                }
-                else if (_oldDir == "SWccw")
-                {
-                    _newDir = "SW";
-                }
-                else if (_oldDir == "NWccw")
-                {
-                    _newDir = "NW";
-                }
-                else if (_oldDir == "NEccw")
-                {
-                    _newDir = "NE";
-                }
-
-                CurvedRoad _temp = new CurvedRoad(selectedRoad.getPoint1(), selectedRoad.getPoint2(), selectedRoad.getLanes(), _newDir, "Curved");
-                this.selectedRoad = _temp;
-                roads.Add(_temp);                                
-                DisableSettingScreen();
-                EnableSettingScreen();
-
-            }
-            string message = "Do you want to delete this road?";
-            string title = "Delete road";
-            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-            DialogResult result = MessageBox.Show(message, title, buttons);
-            if (result == DialogResult.Yes)
-            {
-                roads.Remove(_selectedRoad);
-                Screen.Invalidate();
-            }
-            else
-            {
-                Application.ExitThread();
-            }    
-            Console.WriteLine(_selectedRoad.Cords.ToString());
         }
-        */
     }
-}

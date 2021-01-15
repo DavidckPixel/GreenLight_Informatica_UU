@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
+//This is very similar to the build controller but instead is called when switching to the simulation screen.
+
 namespace GreenLight
 {
     public class SimulationScreenController : ScreenController
@@ -99,11 +101,12 @@ namespace GreenLight
             
             //Console.WriteLine("Drawing the Picturebox of simulator!");
 
-            foreach (AbstractRoad _road in RoadController.roads)
+            foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
             {
                 _road.Draw(g);
             }
             Log.Write("Completed drawing the roads on the simulation screen");
         }
     }
+
 }

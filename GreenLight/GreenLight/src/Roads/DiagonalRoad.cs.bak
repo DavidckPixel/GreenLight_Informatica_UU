@@ -9,19 +9,21 @@ namespace GreenLight
 {
     public class DiagonalRoad : AbstractRoad
     {
-        //Similar to CurvedRoad, but now math for diagonal
+        //A roadtype for Vertical, horizontal and diagonal roads. 
+        //The CalculateLanes function calculates a straight line between 2 points, and uses this to create drivinglane objects for the road.
+        //It gets a dir in the constructor, which stands for direction, this is to deterin which way the cars should drive.
+        //The corners of the road are calculated and used to contruct a Recthitbox for the road
+        //In this class we mainly use a lot of math, but the simple idea is: when the constructor is called, it will calculate a curved line between 2 points
+        //For how many lanes you told the constructor to have.
 
-        private string dir;
-        
 
-        public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "DiagonalRoad", _beginconnection, _endconnection)
+        public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "DiagonalRoad", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
             this.Dir = _dir;
             this.Type = _type;
 
             Point[] _points = hitBoxPoints(_point1, _point2, lanes);
-            //Console.WriteLine("{0},{1},{2},{3}", _points[1], _points[0], _points[3], _points[2]);
-            this.Hitbox2 = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
+            this.hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
 
             for (int x = 1; x <= this.lanes; x++)
             {
@@ -275,8 +277,6 @@ namespace GreenLight
             }
             else
             {
-
-                Console.WriteLine("Kom je hier??");
 
                 _points[1] = new Point(_one.X, _one.Y - _roadWidth); //Hoogste punt, altijd
                 _points[2] = new Point(_two.X, _two.Y + _roadWidth); // Laagste Punt

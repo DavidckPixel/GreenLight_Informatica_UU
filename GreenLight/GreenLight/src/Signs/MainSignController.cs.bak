@@ -17,9 +17,6 @@ namespace GreenLight
         public YieldSignController yieldSignC;
         public PrioritySignController prioritySignC;
 
-        public bool yieldSign = false;
-        public bool prioritySign = false;
-
         public AbstractRoad selectedRoad;
         public bool dragMode;
         private LanePoints closest;
@@ -57,30 +54,6 @@ namespace GreenLight
         public override void Initialize()
         {
 
-        }
-
-        public void placePriorityLevelSign()
-        {
-            if (yieldSign == true && prioritySign == false)
-            {
-                yieldSignC.placeSign();
-            }
-            else if (yieldSign == false && prioritySign == true)
-            {
-                prioritySignC.placeSign();
-            }
-        }
-
-        public void deletePriorityLevelSign()
-        {
-            if (yieldSign == true && prioritySign == false)
-            {
-                yieldSignC.deleteSign();
-            }
-            else if (yieldSign == false && prioritySign == true)
-            {
-                prioritySignC.deleteSign();
-            }
         }
 
         public void setDragMode(AbstractRoad _road)
@@ -164,7 +137,7 @@ namespace GreenLight
                 return;
             }
 
-            if (!selectedRoad.Hitbox.Contains(mea.Location))
+            if (!selectedRoad.Hitbox2.Contains(mea.Location))
             {
                 closeDragMode();
                 return;
@@ -190,12 +163,8 @@ namespace GreenLight
                 case "speedSign":
                     return speedSign.newSign();
                 case "yieldSign":
-                    yieldSign = true;
-                    prioritySign = false;
                     return yieldSignC.newSign();
                 case "prioritySign":
-                    yieldSign = false;
-                    prioritySign = true;
                     return prioritySignC.newSign();
                 case "stopSign":
                     Point _begin = selectedRoad.getPoint1();

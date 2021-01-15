@@ -20,13 +20,15 @@ namespace GreenLight
 
         int PenWidth;
 
-        public CurvedHitbox(Point _start1, Point _start2, Point _end1, Point _end2, string _dir)
+        public CurvedHitbox(Point _start1, Point _start2, Point _end1, Point _end2, string _dir, Color _color) : base(_start1, _start2, _end1, _end2)
         {
             max_start = _start1;
             min_start = _start2;
             max_end = _end1;
             min_end = _end2;
             dir = _dir;
+
+            this.color = _color;
 
             //----------------------------------------------- 
             // TYPE CASTING TO DOUBLE
@@ -181,10 +183,10 @@ namespace GreenLight
             throw new NotImplementedException();
         }
 
-        public override void Draw(Graphics g, Color _color)
+        public override void Draw(Graphics g)
         {
             Brush _brush = new SolidBrush(Color.FromArgb(100, Color.Black));
-            Pen _pen = new Pen(new SolidBrush(Color.FromArgb(100, _color)), PenWidth);
+            Pen _pen = new Pen(new SolidBrush(Color.FromArgb(100, this.color)), PenWidth);
 
             Console.WriteLine(PenWidth);
 

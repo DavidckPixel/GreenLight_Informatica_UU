@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
+//This controller is arguably the most important and base controller. This is the controller that is at the top and handles everything
+//It keeps track of which ScreenController is currently selected and draws/ updates is accordingly
+//It hold 3 different screencontrollers -> Buildscreen (for the road builder)
+// -> SimulationScreen (for the simulation)
+// -> Menuscreen (for the main menu) which is also the start value of active
+//It also holds a very important function that deals with switching between thse 3 screencontrollers
+
 namespace GreenLight
 {
     public class MainScreenController : ScreenController
@@ -86,5 +93,7 @@ namespace GreenLight
                 this.Active.Screen.Invalidate();
             }
         }
+        
+
     }
 }

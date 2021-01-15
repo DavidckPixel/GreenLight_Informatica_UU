@@ -25,8 +25,11 @@ namespace GreenLight
 
             Thread run = new Thread(simulation);
             run.Start();
-            Thread drivers = new Thread(createDriver);
-            drivers.Start();
+            /*Thread drivers = new Thread(createDriver);
+            drivers.Start();*/
+           
+            /*KeyPress += testmethod;*/
+            //MouseClick += clickmethod;
         }
 
         private void createDriver()

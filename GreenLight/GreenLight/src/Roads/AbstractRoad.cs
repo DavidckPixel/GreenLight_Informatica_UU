@@ -18,36 +18,36 @@ namespace GreenLight
 
     public abstract class AbstractRoad : ScreenObject
     {
-        protected Point point1;
-        protected Point point2;
-        protected int lanes;
-        public List<DrivingLane> Drivinglanes=  new List<DrivingLane>();
+        public Point point1;
+        public Point point2;
+
+        public int lanes;
+        public List<Lane> Drivinglanes=  new List<Lane>();
         public List<PlacedSign> Signs = new List<PlacedSign>();
-        public Hitbox Hitbox2; //Word nog aangepast Jaj
         public string roadtype;
         public double slp;
         public bool beginconnection, endconnection;
+        
         public string Type;
         public string Dir;
         public AbstractRoad beginConnectedTo, endConnectedTo;
 
         //Basic Road Constructor, every road calls this constructor during initialzation
-        public AbstractRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2)
+        public AbstractRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(new Point(Math.Min(_point1.X, _point2.X),Math.Min(_point1.Y, _point2.Y)))
         {
             this.point1 = _point1;
             this.point2 = _point2;
             this.lanes = _lanes;
             this.roadtype = _roadtype;
-            this.Cords = _point1;
             this.beginconnection = _beginconnection;
             this.endconnection = _endconnection;
             this.beginConnectedTo = _beginConnectedTo;
             this.endConnectedTo = _endConnectedTo; 
         }
 
-        protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
+        //protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
 
-        public abstract Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 40);
+        public abstract Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20);
 
         public static int CalculateAngle(Point _point1, Point _point2)
         {
@@ -69,9 +69,9 @@ namespace GreenLight
         public abstract Hitbox CreateHitbox(Point[] _array);
 
 
-        public void Draw(Graphics g)
+        public virtual void Draw(Graphics g)
         {
-            foreach(DrivingLane _lane in Drivinglanes)
+            foreach(Lane _lane in Drivinglanes)
             {
                 _lane.Draw(g);
             }
@@ -80,17 +80,26 @@ namespace GreenLight
                 _sign.draw(g);
             }
 
-            //Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.Yellow));
+            DrawLine(g);
 
-            //g.FillRectangle(Notsolid, this.Hitbox);
+            this.hitbox.Draw(g);
+        }
 
-            this.Hitbox2.Draw(g);
+        public void DrawLine(Graphics g)
+        {
+            if (!General_Form.Main.BuildScreen.builder.roadBuilder.visualizeLanePoints)
+            {
+                return;
+            }
+
+            foreach(Lane _lane in Drivinglanes)
+            {
+                _lane.DrawLine(g);
+            }
         }
 
         public Point getPoint1() { return point1; }
-        //public void setPoint1(Point _value) { point1 = _value; }
         public Point getPoint2() { return point2; }
-        //public void setPoint2(Point _value) { point2 = _value; }
 
         public int getLanes() { return lanes; }
 

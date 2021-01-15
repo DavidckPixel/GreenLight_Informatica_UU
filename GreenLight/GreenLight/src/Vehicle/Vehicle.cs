@@ -51,7 +51,7 @@ namespace GreenLight
         public int listcounter = 0;
 
 
-        public Vehicle(VehicleStats _stat, int x, int y) : base(new Point(x,y), new Point(x+20,y+20))
+        public Vehicle(VehicleStats _stat, int x, int y) : base(new Point(x,y))
         {
             this.weight = _stat.Weight;
             this.length = _stat.Length;
@@ -62,7 +62,7 @@ namespace GreenLight
             this.y = y;
             this.cw = _stat.Cw;
             this.surface = _stat.Surface;
-            this.Cords = new Point(x, y); //Ignore this          
+                    
             
             a = this.motorpwr / this.weight;
             abrake = physics.Brakepwr / this.weight;

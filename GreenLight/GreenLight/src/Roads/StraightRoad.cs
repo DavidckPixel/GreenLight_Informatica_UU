@@ -15,13 +15,15 @@ namespace GreenLight
         private string dir;
 
         private int roadwidth = 10; // HARDCODED WAARDE AANPASSEN
+
         public StraightRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "StraightRoad", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
+
             this.Type = _type;
 
             Point[] _points = hitBoxPoints(_point1, _point2);
             //Console.WriteLine("{0},{1},{2},{3}", _points[1], _points[0], _points[3], _points[2]);
-            this.Hitbox2 = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
+            this.hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
 
             this.dir = _dir;
 
@@ -31,9 +33,9 @@ namespace GreenLight
             }
         }
 
-        protected override DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thisLane)
+        protected static DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thisLane, StraightRoad _road)
         {
-            Console.WriteLine("STARTPOINTS : {0} -- {1},   {2}", _point1, _point2, this.dir);
+            Console.WriteLine("STARTPOINTS : {0} -- {1},   {2}", _point1, _point2, _road.dir);
 
             List<LanePoints> _lanePoints = new List<LanePoints>();
             Point _normpoint1 = _point1; Point _normpoint2 = _point2;
@@ -51,7 +53,7 @@ namespace GreenLight
             } */
            
 
-            Tuple<int, int> _dir = GetDirection(_normpoint1, _normpoint2);
+            Tuple<int, int> _dir = _road.GetDirection(_normpoint1, _normpoint2);
             Point _prev = _normpoint1;
             int temp = 0;
 
@@ -71,14 +73,13 @@ namespace GreenLight
                 }
             }
 
-            return new DrivingLane(_lanePoints, this.dir, lanes, _thisLane, null);
-
             foreach (LanePoints x in _lanePoints)
             {
                 Log.Write(x.ToString());
             }
 
-              
+            return new DrivingLane(_lanePoints, _road.dir, _road.lanes, _thisLane, null);
+
         }
 
         private Tuple<int,int> GetDirection(Point _point1, Point _point2)
@@ -168,7 +169,7 @@ namespace GreenLight
                     }
                 }
             }
-            return CalculateDrivingLane(_firstPoint, _secondPoint, t);
+            return CalculateDrivingLane(_firstPoint, _secondPoint, t, this);
         }
 
         private Point[] hitBoxPoints(Point one, Point two)

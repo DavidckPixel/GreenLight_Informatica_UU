@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
+//This is the controller that deals with everything simulation related, and holds the vehicle and AI controller
+
 namespace GreenLight
 {
     public class SimulationController : AbstractController

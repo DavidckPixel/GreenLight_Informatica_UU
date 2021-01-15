@@ -20,7 +20,6 @@ namespace GreenLight
         public List<Gridpoint> Gridpoints = new List<Gridpoint>();
         public GridConfig config;
         bool firstClick;
-        string Selected;
         PictureBox canvas;
         private bool _points_visible = true;
 
@@ -80,13 +79,19 @@ namespace GreenLight
         {
             string _type = General_Form.Main.BuildScreen.builder.roadBuilder.roadType;
 
-            if (_type == "X" || _type == "D")
+            Gridpoint _point = Gridpoints.Find(x => x.Collision(mea.Location));
+
+            if (_type == "X" || _type == "D" || _point == null)
             {
                 return;
             }
 
-            Gridpoint _firstPoint = null;
-            Gridpoint _secondPoint = null;
+            if(_type == "Cross")
+            {
+                builder.BuildRoad(_point.Cords, _point.Cords);
+                return;
+            }
+
 
             Console.WriteLine("MouseClick Button: " + mea.Button);
 
@@ -97,29 +102,24 @@ namespace GreenLight
 
             if (firstClick)
             {
-                _firstPoint = Gridpoints.Find(x => x.Collision(mea.Location));
-                if (_firstPoint != null)
+                if (_point != null)
                 {
                     Console.WriteLine("First PointClick!");
-                    Console.WriteLine(_firstPoint.Cords);
+                    Console.WriteLine(_point.Cords);
                     this.firstClick = false;
-                    this.firstPoint = _firstPoint;
+                    this.firstPoint = _point;
                 }
             }
             else
             {
-                _secondPoint = Gridpoints.Find(x => x.Collision(mea.Location));
-                if (_secondPoint != null && _secondPoint != _firstPoint)
-                {
                     Console.WriteLine("Second PointClick!");
-                    Console.WriteLine(_secondPoint.Cords);
-                    this.secondPoint = _secondPoint;
+                    Console.WriteLine(_point.Cords);
+                    this.secondPoint = _point;
 
                     builder.BuildRoad(this.firstPoint.Cords, this.secondPoint.Cords);
                     this.ResetPoints();
                 }
             }
-        }
 
 
         private void ResetPoints()
@@ -133,7 +133,7 @@ namespace GreenLight
 
         public void moveMouse(object o, MouseEventArgs mea)
         {
-            if (firstClick == true)
+            if (firstClick == true && General_Form.Main.BuildScreen.builder.roadBuilder.roadType != "Cross")
             {
                 return;
             }
@@ -154,13 +154,24 @@ namespace GreenLight
                 x.DrawGrid(g);
                 }
 
+                Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.DarkRed));
+
+                if (General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "Cross")
+                {
+                    Rectangle _rec = new Rectangle(mousecords, new Size(1, 1));
+                    int _lanes = int.Parse(General_Form.Main.UserInterface.ElemSRM.LaneAmount.Text);
+                    int _inflate = _lanes * 20 / 2;
+                    _rec.Inflate(_inflate,_inflate);
+                    g.FillRectangle(Notsolid, _rec);
+
+                    return;
+                }
 
                 if (firstClick == true)
                 {
                     return;
                 }
 
-                Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.DarkRed));
                 Rectangle rec = new Rectangle(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y), Math.Abs(firstPoint.Cords.X - mousecords.X), Math.Abs(firstPoint.Cords.Y - mousecords.Y));
                 g.FillRectangle(Notsolid, rec);
             }

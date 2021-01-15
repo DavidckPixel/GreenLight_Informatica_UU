@@ -21,6 +21,7 @@ namespace GreenLight
         
         public static MainScreenController Main;
 
+        
         //[DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
 
         public General_Form()
@@ -30,5 +31,7 @@ namespace GreenLight
             Main.Initialize(); 
 
         }
+
+        
     }
-}
+    }
