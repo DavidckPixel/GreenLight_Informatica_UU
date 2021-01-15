@@ -28,7 +28,7 @@ namespace GreenLight
         {
             this.IsMdiContainer = true;
             Main = new MainScreenController(this);
-            Main.Initialize(); 
+            Main.Initialize();
 
         }
 

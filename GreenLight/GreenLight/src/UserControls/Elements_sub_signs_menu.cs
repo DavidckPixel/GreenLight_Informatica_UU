@@ -12,6 +12,7 @@ namespace GreenLight
 {
     public partial class Elements_sub_signs_menu : UserControl
     {
+        public List<CurvedButtons> ESSM = new List<CurvedButtons>();
         public Elements_sub_signs_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
 
@@ -42,24 +43,39 @@ namespace GreenLight
             //-----------------------------------------
 
             CurvedButtons Hand = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Hand_Button.png", this.BackColor);
-            Hand.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.signController.signType = "X"; };
+            Hand.Click += (object o, EventArgs EA) => { ResetButtons(Hand, Hand.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "X"; };
             this.Controls.Add(Hand);
+            ESSM.Add(Hand);
 
             CurvedButtons Speed_sign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Speed_Sign_Button.png", this.BackColor);
-            Speed_sign.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.signController.signType = "speedSign"; };
+            Speed_sign.Click += (object o, EventArgs EA) => { ResetButtons(Speed_sign, Speed_sign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "speedSign"; };
             this.Controls.Add(Speed_sign);
+            ESSM.Add(Speed_sign);
 
             CurvedButtons Yield_sign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Yield_Sign_Button.png", this.BackColor);
-            Yield_sign.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.signController.signType = "yieldSign"; };
+            Yield_sign.Click += (object o, EventArgs EA) => { ResetButtons(Yield_sign, Yield_sign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "yieldSign"; };
             this.Controls.Add(Yield_sign);
+            ESSM.Add(Yield_sign);
 
             CurvedButtons Priority_road_sign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/Priority_Road_Sign_Button.png", this.BackColor);
-            Priority_road_sign.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.signController.signType = "prioritySign"; };
+            Priority_road_sign.Click += (object o, EventArgs EA) => { ResetButtons(Priority_road_sign, Priority_road_sign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "prioritySign"; };
             this.Controls.Add(Priority_road_sign);
+            ESSM.Add(Priority_road_sign);
 
             CurvedButtons Stop_sign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/Stop_Sign_Button.png", this.BackColor);
-            Stop_sign.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.signController.signType = "stopSign"; };
+            Stop_sign.Click += (object o, EventArgs EA) => { ResetButtons(Stop_sign, Stop_sign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "stopSign"; };
             this.Controls.Add(Stop_sign);
+            ESSM.Add(Stop_sign);
+        }
+        private void ResetButtons(CurvedButtons Selected, string Filepath)
+        {
+            foreach (CurvedButtons x in ESSM)
+            {
+                x.Selected = false;
+                x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
+            }
+            Selected.Selected = true;
+            Selected.Image = Image.FromFile(Filepath.Remove(Filepath.Length - 10) + "Select.png");
         }
     }
 }

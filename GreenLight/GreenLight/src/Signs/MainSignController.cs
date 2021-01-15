@@ -87,7 +87,20 @@ namespace GreenLight
                 return;
             }
 
-            List<LanePoints> _lanepoints = this.selectedRoad.Drivinglanes.First().points;
+            int _outerLane = 0;
+            int _lanes = this.selectedRoad.getLanes();
+            int _dir = this.selectedRoad.Drivinglanes.First().AngleDir;
+
+            if(_dir >= 0 && _dir < 180  && _lanes != 1)
+            {
+                _outerLane = _lanes;   
+            }
+            else if (_dir >= 180 && _dir < 360 && _lanes != 1)
+            {
+                _outerLane = _lanes - 1;
+            }
+
+                List<LanePoints> _lanepoints = this.selectedRoad.Drivinglanes[_outerLane].points;
             float _shortDistance = 2000; 
             foreach (LanePoints _lanepoint in _lanepoints)
             {
@@ -154,7 +167,28 @@ namespace GreenLight
             {
                 return;
             }
-            this.selectedRoad.Signs.Add(new PlacedSign(closest.cord, "", _temp));
+            Console.WriteLine("LocationSelected!!!");
+
+            Image _sign_image = Image.FromFile("../../User Interface Recources/Speed_Sign.png"); 
+            switch (signType)
+            {
+                case "X":
+                    break;
+                case "speedSign":
+                    _sign_image = Image.FromFile("../../User Interface Recources/Speed_Sign.png");
+                    break;
+                case "yieldSign":
+                    _sign_image = Image.FromFile("../../User Interface Recources/Yield_Sign.png");
+                    break;
+                case "prioritySign":
+                    _sign_image = Image.FromFile("../../User Interface Recources/Priority_Sign.png");
+                    break;
+                case "stopSign":
+                    _sign_image = Image.FromFile("../../User Interface Recources/Stop_Sign.png");
+                    break;
+            }
+
+            this.selectedRoad.Signs.Add(new PlacedSign(closest.cord, "", _temp, _sign_image, _selectedRoad));
             SignCount++;
             closeDragMode();
         }

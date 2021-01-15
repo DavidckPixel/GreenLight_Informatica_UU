@@ -194,18 +194,20 @@ namespace GreenLight
             Console.WriteLine(PenWidth);
 
             //g.DrawRectangle(_pen, rect);
+            if (General_Form.Main.BuildScreen.Toggle)
+            {
+                g.DrawArc(_pen, rect, start_angle, 90);
 
-            g.DrawArc(_pen, rect, start_angle, 90);
+                //g.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.Red)), rect);
+                g.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.Blue)), new Rectangle(new Point((int)midX, (int)midY), new Size(5, 5)));
 
-            //g.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.Red)), rect);
-            g.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.Blue)), new Rectangle(new Point((int)midX, (int)midY), new Size(5, 5)));
 
-            
-            g.FillRectangle(_brush, new Rectangle(max_start, new Size(5, 5)));
-            g.FillRectangle(_brush, new Rectangle(min_start, new Size(5, 5)));
-            g.FillRectangle(_brush, new Rectangle(max_end, new Size(5, 5)));
-            g.FillRectangle(_brush, new Rectangle(min_end, new Size(5, 5)));
-            
+                g.FillRectangle(_brush, new Rectangle(max_start, new Size(5, 5)));
+                g.FillRectangle(_brush, new Rectangle(min_start, new Size(5, 5)));
+                g.FillRectangle(_brush, new Rectangle(max_end, new Size(5, 5)));
+                g.FillRectangle(_brush, new Rectangle(min_end, new Size(5, 5)));
+            }
+
         }
 
         /*public override bool Contains(RectHitbox _h)

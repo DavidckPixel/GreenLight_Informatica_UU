@@ -46,8 +46,8 @@ namespace GreenLight
             {
                 Color Hover_Color = Color.FromArgb(109, 109, 109);
                 Color Prime_Color;
-                if (i == Selected_index && Selected_left_bool) Prime_Color = Color.FromArgb(196, 196, 198);
-                else Prime_Color = Color.FromArgb(142, 140, 144);
+                if (i == Selected_index && Selected_left_bool) Prime_Color = Color.FromArgb(142, 140, 144);
+                else Prime_Color = Color.FromArgb(196, 196, 198); 
 
                 PictureBox PB = new PictureBox();
                 PB.BackColor = Prime_Color;
@@ -72,7 +72,7 @@ namespace GreenLight
             {
                 Color Hover_Color = Color.FromArgb(109, 109, 109);
                 Color Prime_Color;
-                if (j == Selected_index && !Selected_left_bool) Prime_Color = Color.FromArgb(196, 196, 198);
+                if (j == Selected_index && !Selected_left_bool) Prime_Color = Color.FromArgb(142, 140, 144);
                 else Prime_Color = Color.FromArgb(142, 140, 144);
 
                 PictureBox PB = new PictureBox();
@@ -94,25 +94,25 @@ namespace GreenLight
             }
 
             CurvedButtons Remove = new CurvedButtons(new Size(17, 17), new Point(104, 52), 10,
-               "../../User Interface Recources/Selection_Box_Remove.png", Color.FromArgb(255, 255, 255));
+               "../../User Interface Recources/Selection_Box_Remove_Button.png", Color.FromArgb(255, 255, 255));
             Remove.Click += (object o, EventArgs EA) => { if (Selected_left_bool) Elements_selected.RemoveAt(Selected_index); else Elements_available.RemoveAt(Selected_index) ; Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family); };
             this.Controls.Add(Remove);
             Remove.BringToFront();
 
             CurvedButtons Add = new CurvedButtons(new Size(17, 17), new Point(104, 66), 10,
-                "../../User Interface Recources/Selection_Box_Add.png", Color.FromArgb(255, 255, 255));
+                "../../User Interface Recources/Selection_Box_Add_Button.png", Color.FromArgb(255, 255, 255));
             Add.Click += (object o, EventArgs EA) => { string name = Interaction.InputBox("Enter Name: ", "Driver", "no name", 100, 100); Elements_selected.Add(name); Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family); };
             this.Controls.Add(Add);
             Add.BringToFront();
 
             CurvedButtons To_left = new CurvedButtons(new Size(17, 17), new Point(104, 80), 10,
-                "../../User Interface Recources/Selection_Box_To_Left.png", Color.FromArgb(255, 255, 255));
+                "../../User Interface Recources/Selection_Box_To_Left_Button.png", Color.FromArgb(255, 255, 255));
             To_left.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool, Form, Dosis_font_family, 0); };
             this.Controls.Add(To_left);
             To_left.BringToFront();
 
             CurvedButtons To_right = new CurvedButtons(new Size(17, 17), new Point(104, 94), 10,
-                "../../User Interface Recources/Selection_Box_To_Right.png", Color.FromArgb(255, 255, 255));
+                "../../User Interface Recources/Selection_Box_To_Right_Button.png", Color.FromArgb(255, 255, 255));
             To_right.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool, Form, Dosis_font_family, 1); };
             this.Controls.Add(To_right);
             To_right.BringToFront();

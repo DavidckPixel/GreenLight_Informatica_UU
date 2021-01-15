@@ -112,6 +112,9 @@ namespace GreenLight
             }
             else
             {
+                _secondPoint = Gridpoints.Find(x => x.Collision(mea.Location));
+                if (_secondPoint != null && _secondPoint != _firstPoint )
+                {
                     Console.WriteLine("Second PointClick!");
                     Console.WriteLine(_point.Cords);
                     this.secondPoint = _point;
@@ -127,7 +130,6 @@ namespace GreenLight
             this.firstPoint = null;
             this.secondPoint = null;
             this.firstClick = true;
-
             this.canvas.Invalidate();
         }
 

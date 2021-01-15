@@ -19,6 +19,9 @@ namespace GreenLight
         public string ActiveSubMenu;
         public BuilderController builder;
         int i = 0;
+        int j = 0;
+
+        public bool Toggle;
 
         public BuildScreenController(Form _tempform)
         {
@@ -140,6 +143,17 @@ namespace GreenLight
             {
                 _road.Draw(g);
             }
-        }  
+        }
+
+        public bool ToggleHitbox()
+        {
+            if (j % 2 == 0)
+            {
+                j++;
+                return true;
+            }
+            j++;
+            return false;
+        }
     }
 }

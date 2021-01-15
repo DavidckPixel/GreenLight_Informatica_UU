@@ -21,17 +21,22 @@ namespace GreenLight
         TimeSpan Simulation_time;
         public Simulation_data_menu(int Sub_menu_width, Form Form, int Height, FontFamily Dosis_font_family_in)
         {
+            this.Location = new Point(0, 0);
             Dosis_font_family = Dosis_font_family_in;
             this.BackColor = Color.DarkGray;
             this.Size = new Size(Form.Width - Sub_menu_width, Height);
-            Form.SizeChanged += (object o, EventArgs EA) => 
-            {
-                this.Size = new Size(Form.Width - Sub_menu_width, Height);
-                this.Controls.Clear();
-                Initialize();
-            };
+            this.BringToFront();
             Initialize();
             Last_Simulation_time = new TimeSpan(00, 00, 00);
+        }
+
+        public void Size_adjust(Form Form, int Sub_menu_width, int Height)
+        {
+            this.Location = new Point(0, 0);
+            this.Size = new Size(Form.Width - Sub_menu_width, Height);
+            this.BringToFront();
+            this.Controls.Clear();
+            Initialize();
         }
 
         System.Windows.Forms.Timer Timer;

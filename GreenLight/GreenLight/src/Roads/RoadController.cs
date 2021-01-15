@@ -64,7 +64,7 @@ namespace GreenLight
             this.settingScreen = new Form();
             this.settingScreen.Hide();
 
-            this.settingScreen.Size = new Size(520, 600);
+            this.settingScreen.Size = new Size(520, 570);
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
@@ -81,11 +81,17 @@ namespace GreenLight
             Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");
             FontFamily Dosis_font_family = Font_collection.Families[0];
 
-            doneButton = new CurvedButtons(new Size(80, 40), new Point(10, 500), 25, "../../User Interface Recources/Custom_Button_Small.png", "Save", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            doneButton = new CurvedButtons(new Size(80, 40), new Point(10, 520), 25, "../../User Interface Recources/Custom_Small_Button.png", "Save", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             doneButton.Click += (object o, EventArgs ea) => { DoneSettingScreen(); };
 
-            deleteButton = new CurvedButtons(new Size(80, 40), new Point(100, 500), 25, "../../User Interface Recources/Custom_Button_Small.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            deleteButton = new CurvedButtons(new Size(90, 40), new Point(100, 520), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             deleteButton.Click += (object o, EventArgs ea) => { DeleteRoad(this.selectedRoad); };
+
+            Move_panel move_panel = new Move_panel(settingScreen);
+            move_panel.Location = new Point(200,510);
+            move_panel.Size = new Size(400,80);
+            settingScreen.Controls.Add(move_panel);
+
 
             settingScreen.Controls.Add(doneButton);
             settingScreen.Controls.Add(deleteButton);
@@ -148,13 +154,14 @@ namespace GreenLight
                 }
             }
             
-            AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, "Curved", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
+            AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, _type, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
         }
 
         public void Connection(Point _point1, Point _point2, int _lanes, string _dir, AbstractRoad _road, bool _beginconnection, bool _endconnection)
         {
+            Console.WriteLine(_beginconnection + "Builder" + _endconnection);
             Point _temp1, _temp2;
             int _count = 0;
             try
@@ -173,10 +180,11 @@ namespace GreenLight
                             {
                                 if (_beginconnection == false)
                                 {
-                                    Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Drivinglanes[0].dir, _road, x, _count);
+                                    Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Dir, _road, x, _count);
                                 }
                                 else
                                 {
+                                    Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.beginconnection = true;
                                     x.beginConnectedTo = _road;
                                     _road.beginConnectedTo = x;
@@ -190,6 +198,7 @@ namespace GreenLight
                                 }
                                 else
                                 {
+                                    Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.endconnection = true;
                                     x.endConnectedTo = _road;
                                     _road.beginConnectedTo = x;
@@ -203,6 +212,7 @@ namespace GreenLight
                                 }
                                 else
                                 {
+                                    Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.beginconnection = true;
                                     x.beginConnectedTo = _road;
                                     _road.endConnectedTo = x;
@@ -217,6 +227,7 @@ namespace GreenLight
                                 }
                                 else
                                 {
+                                    Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.endconnection = true;
                                     x.endConnectedTo = _road;
                                     _road.endConnectedTo = x;
@@ -232,7 +243,7 @@ namespace GreenLight
 
         public static string Direction(Point _firstPoint, Point _secondPoint, string _Roadtype)
         {
-            string RoadDirection = "";
+            string RoadDirection = "x";
             string RoadType = _Roadtype;
             switch (RoadType)
             {

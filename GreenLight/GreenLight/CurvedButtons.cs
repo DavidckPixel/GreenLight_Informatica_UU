@@ -14,6 +14,7 @@ namespace GreenLight
         int curve;
         Color Backcolor;
         public string Image_path = "";
+        public bool Selected;
 
         protected override void OnPaint(PaintEventArgs pe)
         {
@@ -57,6 +58,7 @@ namespace GreenLight
         // Curved Buttons
         public CurvedButtons(Size Button_size, Point Location, int Curve, string FilePath, Color BackColor)
         {
+            Selected = false;
             Image_path = FilePath;
             curve = Curve;
             Backcolor = BackColor;
@@ -65,8 +67,8 @@ namespace GreenLight
             this.Size = Button_size;
             this.Image = Image.FromFile(FilePath);
             this.SizeMode = PictureBoxSizeMode.Zoom;
-            this.MouseHover += (object o, EventArgs EA) => { this.Image = Image.FromFile(Image_path.Remove(Image_path.Length - 4) + "_On_Hover.png"); };
-            this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(Image_path); };
+            this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(Image_path.Remove(Image_path.Length - 10) + "Select.png"); };
+            this.MouseLeave += (object o, EventArgs EA) => { if (!Selected) { this.Image = Image.FromFile(Image_path); }; };
         }
 
         // Logo
@@ -95,7 +97,7 @@ namespace GreenLight
             this.Size = Button_size;
             this.Image = Image.FromFile(FilePath);
             this.SizeMode = PictureBoxSizeMode.StretchImage;
-            this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 4) + "_On_Hover.png"); };
+            this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 10) + "Select.png"); };
             this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
 
             System.Windows.Forms.Label label = new System.Windows.Forms.Label();
@@ -108,7 +110,7 @@ namespace GreenLight
             label.Location = new Point(label.Location.X+2, label.Location.Y - 2);
             label.Parent = this;
             label.Click += (object o, EventArgs EA) => { this.OnClick(EA); };
-            label.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 4) + "_On_Hover.png"); };
+            label.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 10) + "Select.png"); };
             label.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
             this.Controls.Add(label);
         }

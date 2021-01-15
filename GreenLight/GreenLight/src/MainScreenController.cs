@@ -20,7 +20,6 @@ namespace GreenLight
         public BuildScreenController BuildScreen;
         public SimulationScreenController SimulationScreen;
         public MenuController MenuController;
-
         public ScreenController Active;
 
         public InterfaceController UserInterface;
