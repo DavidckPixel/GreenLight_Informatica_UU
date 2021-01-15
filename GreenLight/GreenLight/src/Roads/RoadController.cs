@@ -140,6 +140,7 @@ namespace GreenLight
 
         public void Connection(Point _point1, Point _point2, int _lanes, string _dir, AbstractRoad _road, bool _beginconnection, bool _endconnection)
         {
+            Console.WriteLine(_beginconnection + "Builder" + _endconnection);
             Point _temp1, _temp2;
             int _count = 0;
             try
@@ -158,10 +159,11 @@ namespace GreenLight
                             {
                                 if (_beginconnection == false)
                                 {
-                                    Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Drivinglanes[0].dir, _road, x, _count);
+                                    Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Dir, _road, x, _count);
                                 }
                                 else
                                 {
+                                    Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.beginconnection = true;
                                     x.beginConnectedTo = _road;
                                     _road.beginConnectedTo = x;
@@ -175,6 +177,7 @@ namespace GreenLight
                                 }
                                 else
                                 {
+                                    Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.endconnection = true;
                                     x.endConnectedTo = _road;
                                     _road.beginConnectedTo = x;
@@ -188,6 +191,7 @@ namespace GreenLight
                                 }
                                 else
                                 {
+                                    Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.beginconnection = true;
                                     x.beginConnectedTo = _road;
                                     _road.endConnectedTo = x;
@@ -202,6 +206,7 @@ namespace GreenLight
                                 }
                                 else
                                 {
+                                    Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.endconnection = true;
                                     x.endConnectedTo = _road;
                                     _road.endConnectedTo = x;
@@ -217,7 +222,7 @@ namespace GreenLight
 
         public static string Direction(Point _firstPoint, Point _secondPoint, string _Roadtype)
         {
-            string RoadDirection = "";
+            string RoadDirection = "x";
             string RoadType = _Roadtype;
             switch (RoadType)
             {
