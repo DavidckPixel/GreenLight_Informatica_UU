@@ -9,7 +9,13 @@ namespace GreenLight
 {
     public class DiagonalRoad : AbstractRoad
     {
-        //Similar to CurvedRoad, but now math for diagonal
+        //A roadtype for Vertical, horizontal and diagonal roads. 
+        //The CalculateLanes function calculates a straight line between 2 points, and uses this to create drivinglane objects for the road.
+        //It gets a dir in the constructor, which stands for direction, this is to deterin which way the cars should drive.
+        //The corners of the road are calculated and used to contruct a Recthitbox for the road
+        //In this class we mainly use a lot of math, but the simple idea is: when the constructor is called, it will calculate a curved line between 2 points
+        //For how many lanes you told the constructor to have.
+
 
         public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, "DiagonalRoad", _beginconnection, _endconnection)
         {

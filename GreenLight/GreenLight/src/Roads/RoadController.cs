@@ -12,9 +12,17 @@ namespace GreenLight
     public class RoadController : EntityController
     {
 
-        //Very early version of the actual code that WILL connect the road system to the rest of our project
-        //For now it just holds a calculate direction function
-        //Nothing really of interest here yet, Come back later :)
+        //This class contains methods to build a straight (horizontal, vertical or diagonal) road, a curved road.
+        //It also contains a method to build a crossroad, by redirecting to the newcrossroad method in the crossroadcontroller.
+        //This class manages clicking on roads. 
+        //When a road is clicked, a window opens, in which you can change the direction of the driving lanes of that particular road, 
+        //by clicking on a lane in a Image of the road, shown on the settingsscreen.
+        //Because a hitbox is re-calculated for every driving lane of the road on the Image on the settingscreen.
+        //You can also delete the road you've selected, with the delete Button.
+        //A method to calculate the direction of the road is here as well. 
+        //(Not sure it's correct in how curved road direction is calculated a the moment?).
+        //There is also a method that manages connections between roads.
+        
 
         public List<AbstractRoad> roads = new List<AbstractRoad>();
         public PictureBox Screen;
@@ -40,6 +48,8 @@ namespace GreenLight
             initSettingScreen();
         }
 
+
+        //Not in use anymore, since straightroad merged in diagonalroad.
         /*public void BuildStraightRoad(Point _point1, Point _point2)
         {
             string _dir = Direction(_point1, _point2, "StraightRoad");
@@ -52,7 +62,6 @@ namespace GreenLight
         {
             this.settingScreen = new Form();
             this.settingScreen.Hide();
-            //is.settingScreen.MdiParent = this.mainScreen;
 
             this.settingScreen.Size = new Size(520, 600);
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
@@ -86,7 +95,7 @@ namespace GreenLight
         public void BuildDiagonalRoad(Point _point1, Point _point2, int _lanes, bool _beginconnection, bool _endconnection)
         {
             string _dir = Direction(_point1, _point2, "DiagonalRoad");
-            Console.WriteLine("build" + _beginconnection + "-----" + _endconnection);
+            //Console.WriteLine("build" + _beginconnection + "-----" + _endconnection);
             AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, "Diagonal", _beginconnection, _endconnection);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
@@ -336,7 +345,7 @@ namespace GreenLight
         {
             if (selectedRoad.Drivinglanes.All(x => x.offsetHitbox == null))
             {
-                Console.WriteLine("No DrivingLane hitboxes have been Created");
+                //Console.WriteLine("No DrivingLane hitboxes have been Created");
                 return;
             }
 
@@ -381,8 +390,7 @@ namespace GreenLight
                 _rec = new Rectangle(_hitbox.Topcord.X - 10 - _diff, _hitbox.Topcord.Y - 10, _maxSize, _maxSize);
             }
 
-            //Image is too distorted, Take Max of WIdth and Height = use in square as both X and Y;
-
+            
             
             Rectangle _des = new Rectangle(0, 0, this.settingScreenImage.Width, this.settingScreenImage.Height);
 
@@ -400,7 +408,7 @@ namespace GreenLight
                 Point _one = _drivinglane.points.First().cord;
                 Point _two = _drivinglane.points.Last().cord;
 
-                Console.WriteLine("DRIVING POINTS FOR THE CURVED LINE ARE: {0} -- {1}", _one, _two);
+                //Console.WriteLine("DRIVING POINTS FOR THE CURVED LINE ARE: {0} -- {1}", _one, _two);
 
                 Point _oneoffset = new Point(_one.X - _diff.X, _one.Y - _diff.Y);
                 Point _twooffset = new Point(_two.X - _diff.X, _two.Y - _diff.Y);
@@ -502,63 +510,11 @@ namespace GreenLight
 
                 Hitbox _hitbox = selectedRoad.CreateHitbox(_points);
 
-                Console.WriteLine("HITBOX CREATED!!!");
+                //Console.WriteLine("HITBOX CREATED!!!");
 
                 _drivinglane.offsetHitbox = _hitbox;
             }
         }
 
-        /*
-
-        private void FlipRoad (AbstractRoad _flippedroad)
-        {
-            roads.Remove(_flippedroad);
-
-            if (_flippedroad == this.selectedRoad)
-            {
-                string _oldDir = selectedRoad.Dir;
-                string _newDir = selectedRoad.Dir;
-                if (_oldDir == "SE")
-                {
-                    _newDir = "SEccw";
-                }
-                else if(_oldDir == "SW")
-                {
-                    _newDir = "SWccw";
-                }
-                else if (_oldDir == "NW")
-                {
-                    _newDir = "NWccw";
-                }
-                else if (_oldDir == "NE")
-                {
-                    _newDir = "NEccw";
-                }
-                else if (_oldDir == "SEccw")
-                {
-                    _newDir = "SE";
-                }
-                else if (_oldDir == "SWccw")
-                {
-                    _newDir = "SW";
-                }
-                else if (_oldDir == "NWccw")
-                {
-                    _newDir = "NW";
-                }
-                else if (_oldDir == "NEccw")
-                {
-                    _newDir = "NE";
-                }
-
-                CurvedRoad _temp = new CurvedRoad(selectedRoad.getPoint1(), selectedRoad.getPoint2(), selectedRoad.getLanes(), _newDir, "Curved");
-                this.selectedRoad = _temp;
-                roads.Add(_temp);                                
-                DisableSettingScreen();
-                EnableSettingScreen();
-
-            }
-        }
-        */
     }
 }

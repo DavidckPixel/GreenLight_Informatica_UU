@@ -11,6 +11,14 @@ namespace GreenLight
 {
     public class CrossRoadController : EntityController
     {
+
+        //This class contains methods to build crossroad, and immediately open a settingsscreen in which the user can determine which paths a driver can take over the crossroad.
+        //Connectionpoints are part of the crossroad, and can be enabled or disabled on the settingscreen, linked, or selected.
+        //This class also manages clicking on crossroads.
+        //It contains a method to calculate drivinglanes out of links, and crosslanes out of those. 
+
+
+
         public PictureBox Screen;
 
         public Form settingScreen;

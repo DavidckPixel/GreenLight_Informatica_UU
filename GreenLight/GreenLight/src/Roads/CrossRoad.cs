@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
+    
+    //A roadtype for Crossroads.
+    //The corners of the crossroad are calculated and used to contruct a Recthitbox for the crossroad
+    //A scale is calculated, and used to calculate connectionpoints for this road at the right place for when a settingsscreen is opened for the crossroad.
+
+
     public class CrossRoad : AbstractRoad
     {
         public List<ConnectionPoint> connectPoints = new List<ConnectionPoint>();
