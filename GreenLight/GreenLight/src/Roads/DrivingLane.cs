@@ -157,7 +157,7 @@ namespace GreenLight
                         }
                         break;
                 }
-                Console.WriteLine(dir);
+                Console.WriteLine(" ------ DrivingLane ------- "+ dir);
                
 
                 try

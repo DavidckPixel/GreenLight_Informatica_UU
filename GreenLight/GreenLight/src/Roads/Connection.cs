@@ -10,11 +10,18 @@ using System;
 
 namespace GreenLight
 {
+    // This is the Connection class, which makes it possible to connect roads that end close to one another. (one gridpoint)
+    // For now it can only connect two diagonal roads, but since there are a lot of ways you can draw two diagonal roads, 
+    // we needed a lot of different ways to connect them, hence the 1000 lines of if-statements.
+
     class Connection
     {
-        int _shift = 20;
+        private int _shift = 20;
+
+        // The constructor method sees what kind of roads have to be connected and calls another method accordingly. 
         public Connection(Point _point1, Point _point2, int _lanes, string _dir, string _dir2, AbstractRoad _roadOne, AbstractRoad _roadTwo, int _count)
         {
+            
             Console.WriteLine("-- Connection --");
 
             Point _temp1 = _roadOne.getPoint1();
@@ -31,8 +38,14 @@ namespace GreenLight
                 _shift = 40;
             }
 
+            Console.WriteLine(_roadOne.Type + " ------- " + _roadTwo.Type);
+
             if (_roadOne.Type == "Diagonal" && _roadTwo.Type == "Diagonal")
             {
+                // Here we check wether te connecting part of the road is horizontal or vertical,
+                // so not wether the road itself is horizontal or vertical but just the end of the road.
+                // This makes it a little bit more clear and easier. 
+
                 char _roadOneEnds;
                 char _roadTwoEnds;
                 if ((_roadOne.slp > -1 && _roadOne.slp < 1 && _roadOne.slp != 0) || (_roadOne.slp == 0 && _temp1.Y == _temp2.Y))
@@ -45,7 +58,6 @@ namespace GreenLight
                     _roadTwoEnds = 'h';
 
                 Console.WriteLine(_roadOneEnds + "--------" + _roadTwoEnds);
-
                 if (_roadOne.slp == _roadTwo.slp)
                 {
                     StraightandStraight(_point1, _point2, _lanes, _temp1, _temp2, _temp3, _temp4, _roadOne, _roadTwo, _roadOneEnds, _roadTwoEnds);
@@ -64,12 +76,38 @@ namespace GreenLight
                 }
 
             }
-            else
-            {
 
+            else if ((_roadOne.Type == "Curved" || _roadOne.Type == "Curved2" ) && (_roadTwo.Type == "Curved" || _roadTwo.Type == "Curved2" ))
+            {
+                char _roadOneEnds;
+                char _roadTwoEnds;
+
+                if (Math.Abs(_temp1.X - _point1.X) < Math.Abs(_temp2.X - _point1.X))
+                {
+                    _roadOneEnds = 'h';
+                }
+                else
+                {
+                    _roadOneEnds = 'v';
+                }
+                if (Math.Abs(_temp3.X - _point2.X) < Math.Abs(_temp4.X - _point2.X))
+                {
+                    _roadTwoEnds = 'h';
+                }
+                else
+                {
+                    _roadTwoEnds = 'v';
+                }
+
+                Console.WriteLine(_dir + " -- " + _roadOneEnds + " ------- " + _dir2 + " -- " + _roadTwoEnds);
+
+                CurvedandCurved(_point1, _point2, _lanes, _temp1, _temp2, _temp3, _temp4, _roadOne, _roadTwo, _roadOneEnds, _roadTwoEnds, _dir, _dir2);
             }
+            else { }
         }
 
+        // This method connects two straight roads, either both horizontal, both vertical or one of each.
+        // It also takes care of connections between two diagonal roads with the same slope (that is not 0).
         public void StraightandStraight(Point _point1, Point _point2, int _lanes, Point _temp1, Point _temp2, Point _temp3, Point _temp4, AbstractRoad _roadOne, AbstractRoad _roadTwo, char _roadOneEnds, char _roadTwoEnds)
         {
             RoadController.roads.Remove(_roadOne);
@@ -77,14 +115,18 @@ namespace GreenLight
             string _curvedType = "Curved";
             if (_roadOne.slp == _roadTwo.slp && _roadOne.slp == 0)
             {
+                // If both roads are Horizontal or vertical it will create one new road.
                 if (_roadOneEnds == 'v' && _roadTwoEnds == 'v')
                 {
                     General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(new Point(Math.Min(Math.Min(_temp1.X, _temp2.X), Math.Min(_temp3.X, _temp4.X)), _temp1.Y), new Point(Math.Max(Math.Max(_temp1.X, _temp2.X), Math.Max(_temp3.X, _temp4.X)), _temp1.Y), _lanes, _roadTwo.beginconnection, _roadTwo.endconnection, _roadTwo.beginConnectedTo, _roadTwo.endConnectedTo);
                 }
+
                 else if (_roadOneEnds == 'h' && _roadTwoEnds == 'h')
                 {
                     General_Form.Main.BuildScreen.builder.roadBuilder.BuildDiagonalRoad(new Point(_temp1.X, Math.Min(Math.Min(_temp1.Y, _temp2.Y), Math.Min(_temp3.Y, _temp4.Y))), new Point(_temp1.X, Math.Max(Math.Max(_temp1.Y, _temp2.Y), Math.Max(_temp3.Y, _temp4.Y))), _lanes, _roadTwo.beginconnection, _roadTwo.endconnection, _roadTwo.beginConnectedTo, _roadTwo.endConnectedTo);
                 }
+
+                // If one is horizontal and the other one is vertical it will modify the old roads and create a curved road to connect them.
                 else if (_roadOneEnds == 'h' && _roadTwoEnds == 'v')
                 {
                     Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
@@ -213,6 +255,8 @@ namespace GreenLight
                 Console.WriteLine(_curvedType);
             }
 
+            // Two non horizontal or vertical roads with the same slope.
+
             else if (_roadOne.slp == _roadTwo.slp)
             {
                 Console.WriteLine(RoadController.roads.Count);
@@ -229,12 +273,15 @@ namespace GreenLight
             }
         }
 
+        // This method connects a straight road with a diagonal, so a horizontal or vertical road and a road with a slope.
         public void StraightandDiagonal(Point _point1, Point _point2, int _lanes, Point _temp1, Point _temp2, Point _temp3, Point _temp4, AbstractRoad _roadOne, AbstractRoad _roadTwo, char _roadOneEnds, char _roadTwoEnds)
         {
             int _direction;
             bool _beginconnection, _endconnection;
             AbstractRoad _beginConnectedTo, _endConnectedTo;
             string _curvedType = "Curved";
+
+            // If the roads end the same, we can simply just enlarge the horizontal or vertical road. 
 
             if (_roadOneEnds == 'v' && _roadTwoEnds == 'v')
             {
@@ -422,6 +469,8 @@ namespace GreenLight
                 }
             }
 
+            // If they don't have the same ending then we once again have to draw a curved road to connect them, we also ahve to adjust the original roads a little bit.
+
             else if (_roadOneEnds == 'h' && _roadTwoEnds == 'v')
             {
                 RoadController.roads.Remove(_roadOne);
@@ -496,7 +545,7 @@ namespace GreenLight
                         }
                     }
                 }
-
+                
                 else // if(_roadTwo.slp == 0)
                 {
                     if (Math.Abs(_temp1.Y - _point1.Y) < Math.Abs(_temp2.Y - _point1.Y))
@@ -715,12 +764,15 @@ namespace GreenLight
             }
         }
 
+        // This method connects two diagonal roads, so two roads with a slope, but not the same slope.
         public void DiagonalandDiagonal(Point _point1, Point _point2, int _lanes, Point _temp1, Point _temp2, Point _temp3, Point _temp4, AbstractRoad _roadOne, AbstractRoad _roadTwo, char _roadOneEnds, char _roadTwoEnds)
         {
-            double _distance = Math.Sqrt(Math.Pow(_point1.X - _point2.X, 2) + Math.Pow(_point1.Y - _point2.Y, 2));
-            int _direction = 1;
+            double _distance = Math.Sqrt(Math.Pow(_point1.X - _point2.X, 2) + Math.Pow(_point1.Y - _point2.Y, 2)) + 1;
+            int _direction;
             bool _beginconnection, _endconnection;
             AbstractRoad _beginConnectedTo, _endConnectedTo;
+
+            // If the roads end the same, we can simply just enlarge on of the two roads. 
 
             if (_roadOneEnds == 'v' && _roadTwoEnds == 'v')
             {
@@ -802,12 +854,17 @@ namespace GreenLight
                 }
             }
 
+            // If they don't have the same ending then we once again have to draw a curved road to connect them, we also ahve to adjust the original roads a little bit. 
+            
+
             else if (_roadOneEnds == 'v' && _roadTwoEnds == 'h')
             {
                 RoadController.roads.Remove(_roadOne);
                 RoadController.roads.Remove(_roadTwo);
                 Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
                 string _curveType = "Curved";
+
+                // _roadOne
 
                 if (Math.Abs(_temp1.X - _point1.X) < Math.Abs(_temp2.X - _point1.X))
                 {
@@ -871,7 +928,9 @@ namespace GreenLight
                         }
                     }
                 }
-                ////////////////////////
+
+                // _roadTwo
+
                 if (Math.Abs(_temp3.Y - _point2.Y) < Math.Abs(_temp4.Y - _point2.Y))
                 {
                     if (_temp3.Y < _temp4.Y)
@@ -950,6 +1009,8 @@ namespace GreenLight
 
                 if (Math.Abs(_temp1.Y - _point1.Y) < Math.Abs(_temp2.Y - _point1.Y))
                 {
+                    // _roadOne
+
                     if (_temp1.Y < _temp2.Y)
                     {
                         _curveType = "Curved";
@@ -1081,12 +1142,274 @@ namespace GreenLight
                     }
                 }
                 General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, _curveType, true, true, RoadController.roads[RoadController.roads.Count - 1], RoadController.roads[RoadController.roads.Count - 2]);
+            }
+        }
 
+        // This method connects two curved(1) roads together.
+        public void CurvedandCurved(Point _point1, Point _point2, int _lanes, Point _temp1, Point _temp2, Point _temp3, Point _temp4, AbstractRoad _roadOne, AbstractRoad _roadTwo, char _roadOneEnds, char _roadTwoEnds, string _dir, string _dir2)
+        {
+            
+            if (_roadOneEnds == _roadTwoEnds && _dir != _dir2)
+            {
+                double _distance = Math.Sqrt(Math.Pow(_point1.X - _point2.X, 2) + Math.Pow(_point1.Y - _point2.Y, 2)) + 1;
+                int _direction;
+                bool _beginconnection, _endconnection;
+                AbstractRoad _beginConnectedTo, _endConnectedTo;
 
+                if (_roadOneEnds == 'v')
+                {
+                    if ((_dir == "SE" && _dir2 == "NE") || (_dir == "NE" && _dir2 == "SE"))
+                        return;
+                    else if ((_dir == "SW" && _dir2 == "NW") || (_dir == "NW" && _dir2 == "SW"))
+                        return;
+
+                    else
+                    {
+                        if (Math.Abs(_temp1.X - _point1.X) < Math.Abs(_temp2.X - _point1.X))
+                        {
+                            if (_temp1.X < _temp2.X)
+                                _direction = -1;
+
+                            else
+                                _direction = 1;
+
+                            _beginconnection = true;
+                            _endconnection = _roadOne.endconnection;
+                            _beginConnectedTo = _roadTwo;
+                            _endConnectedTo = _roadOne.endConnectedTo;
+
+                            Console.WriteLine(_beginconnection + "---------" + _endconnection);
+                            RoadController.roads.Remove(_roadOne);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(new Point(_temp1.X + (int)(_distance * _direction), _temp1.Y), _temp2, _lanes, _dir, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
+                        }
+                        else if (Math.Abs(_temp1.X - _point1.X) > Math.Abs(_temp2.X - _point1.X))
+                        {
+                            if (_temp2.X < _temp1.X)
+                                _direction = -1;
+
+                            else
+                                _direction = 1;
+
+                            _beginconnection = _roadOne.beginconnection;
+                            _endconnection = true;
+                            _beginConnectedTo = _roadOne.beginConnectedTo;
+                            _endConnectedTo = _roadTwo;
+
+                            Console.WriteLine(_beginconnection + "---------" + _endconnection);
+                            RoadController.roads.Remove(_roadOne);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_temp1, new Point(_temp2.X + (int)(_distance * _direction), _temp2.Y), _lanes, _dir, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
+                        }
+                    }
+                }
+                else //if (_roadOneEnds == 'h')
+                {
+                    if ((_dir == "SE" && _dir2 == "SW") || (_dir == "SW" && _dir2 == "SE"))
+                        return;
+
+                    else
+                    {
+                        if (Math.Abs(_temp1.Y - _point1.Y) < Math.Abs(_temp2.Y - _point1.Y))
+                        {
+                            if (_temp1.Y < _temp2.Y)
+                                _direction = -1;
+
+                            else
+                                _direction = 1;
+
+                            _beginconnection = true;
+                            _endconnection = _roadOne.endconnection;
+                            _beginConnectedTo = _roadTwo;
+                            _endConnectedTo = _roadOne.endConnectedTo;
+
+                            Console.WriteLine(_beginconnection + "---------" + _endconnection);
+                            RoadController.roads.Remove(_roadOne);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(new Point(_temp1.X, _temp1.Y + (int)(_distance * _direction)), _temp2, _lanes, _dir, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
+                        }
+                        else if (Math.Abs(_temp1.Y - _point1.Y) > Math.Abs(_temp2.Y - _point1.Y))
+                        {
+                            if (_temp2.Y < _temp1.Y)
+                                _direction = -1;
+
+                            else
+                                _direction = 1;
+
+                            _beginconnection = _roadOne.beginconnection;
+                            _endconnection = true;
+                            _beginConnectedTo = _roadOne.beginConnectedTo;
+                            _endConnectedTo = _roadTwo;
+
+                            Console.WriteLine(_beginconnection + "---------" + _endconnection);
+                            RoadController.roads.Remove(_roadOne);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_temp1, new Point(_temp2.X, _temp2.Y + (int)(_distance * _direction)), _lanes, _dir, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
+                        }
+                    }
+                }
             }
 
+            else if (_roadOneEnds != _roadTwoEnds )
+            {
+                if (_roadOneEnds == 'v' && _roadTwoEnds == 'h')
+                {
+                    RoadController.roads.Remove(_roadOne);
+                    RoadController.roads.Remove(_roadTwo);
+                    Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
+                    string _curveType = "Curved";
+
+                    // _roadOne
+
+                    if (Math.Abs(_temp1.X - _point1.X) < Math.Abs(_temp2.X - _point1.X))
+                    {
+                        if (_temp1.X < _temp2.X)
+                        {
+                            Console.WriteLine(1.1);
+                            _curvedend = new Point(_temp1.X + _shift, _temp1.Y);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(new Point(_temp1.X + (_shift - 2), _temp1.Y), _temp2, _lanes, _dir, true, _roadOne.endconnection, null, _roadOne.endConnectedTo);
+                        }
+                        else
+                        {
+                            Console.WriteLine(1.2);
+                            _curvedend = new Point(_temp1.X - _shift, _temp1.Y);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(new Point(_temp1.X - (_shift - 2), _temp1.Y), _temp2, _lanes, _dir, true, _roadOne.endconnection, null, _roadOne.endConnectedTo);
+                        }
+                    }
+                    else if (Math.Abs(_temp1.X - _point1.X) > Math.Abs(_temp2.X - _point1.X))
+                    {
+                        if (_temp1.X < _temp2.X)
+                        {
+                            Console.WriteLine(1.3);
+                            _curvedend = new Point(_temp2.X - _shift, _temp2.Y);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_temp1, new Point(_temp2.X - (_shift - 2), _temp3.Y), _lanes, _dir, _roadOne.beginconnection, true, _roadOne.beginConnectedTo, null);
+                        }
+                        else
+                        {
+                            Console.WriteLine(1.4);
+                            _curvedend = new Point(_temp2.X + _shift, _temp2.Y);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_temp1, new Point(_temp2.X + (_shift - 2), _temp2.Y), _lanes, _dir, _roadOne.beginconnection, true, _roadOne.beginConnectedTo, null);
+                        }
+                    }
+
+                    // _roadTwo
+
+
+                    if (Math.Abs(_temp3.Y - _point2.Y) < Math.Abs(_temp4.Y - _point2.Y))
+                    {
+                        if (_temp3.Y < _temp4.Y)
+                        {
+                            Console.WriteLine(1.5);
+                            _curveType = "Curved";
+                            _curvedstart = new Point(_temp3.X, _temp3.Y + _shift);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(new Point(_temp3.X, _temp3.Y + _shift), _temp4, _lanes, _dir2, true, _roadTwo.endconnection, null, _roadTwo.endConnectedTo);
+                        }
+                        else
+                        {
+                            Console.WriteLine(1.6);
+                            _curveType = "Curved2";
+                            _curvedstart = new Point(_temp3.X, _temp3.Y - _shift);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(new Point(_temp3.X, _temp3.Y - _shift), _temp4, _lanes, _dir2, true, _roadTwo.endconnection, null, _roadTwo.endConnectedTo);
+                        }
+                    }
+                    else if (Math.Abs(_temp3.Y - _point2.Y) > Math.Abs(_temp4.Y - _point2.Y))
+                    {
+
+                        if (_temp3.Y < _temp4.Y)
+                        {
+                            Console.WriteLine(1.7);
+                            _curveType = "Curved2";
+                            _curvedstart = new Point(_temp4.X, _temp4.Y - _shift);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_temp3, new Point(_temp4.X, _temp4.Y - _shift), _lanes, _dir2, _roadTwo.beginconnection, true, _roadTwo.beginConnectedTo, null);
+                        }
+                        else
+                        {
+                            Console.WriteLine(1.8);
+                            _curveType = "Curved";
+                            _curvedstart = new Point(_temp4.X, _temp4.Y + _shift);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_temp3, new Point(_temp4.X, _temp4.Y + _shift), _lanes, _dir2, _roadTwo.beginconnection, true, _roadTwo.beginConnectedTo, null);
+                        }
+                    }
+                    General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, _curveType, true, true, RoadController.roads[RoadController.roads.Count - 2], RoadController.roads[RoadController.roads.Count - 1]);
+                }
+                else if (_roadOneEnds == 'h' && _roadTwoEnds == 'v')
+                {
+                    RoadController.roads.Remove(_roadOne);
+                    RoadController.roads.Remove(_roadTwo);
+                    Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
+                    string _curveType = "Curved";
+
+                    // _roadOne
+
+                    if (Math.Abs(_temp1.Y - _point1.Y) < Math.Abs(_temp2.Y - _point1.Y))
+                    {
+                        if (_temp1.Y < _temp2.Y)
+                        {
+                            Console.WriteLine(2.1);
+                            _curveType = "Curved";
+                            _curvedstart = new Point(_temp1.X, _temp1.Y + _shift);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(new Point(_temp1.X, _temp1.Y + _shift), _temp2, _lanes, _dir2, true, _roadOne.endconnection, null, _roadOne.endConnectedTo);
+                        }
+                        else
+                        {
+                            Console.WriteLine(2.2);
+                            _curveType = "Curved2";
+                            _curvedstart = new Point(_temp1.X, _temp1.Y - _shift);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(new Point(_temp1.X, _temp1.Y - _shift), _temp2, _lanes, _dir2, true, _roadOne.endconnection, null, _roadOne.endConnectedTo);
+                        }
+                    }
+                    else if (Math.Abs(_temp1.Y - _point1.Y) > Math.Abs(_temp2.Y - _point1.Y))
+                    {
+                        if (_temp1.Y < _temp2.Y)
+                        {
+                            Console.WriteLine(2.3);
+                            _curveType = "Curved2";
+                            _curvedstart = new Point(_temp2.X, _temp2.Y - _shift);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_temp1, new Point(_temp2.X, _temp2.Y - _shift), _lanes, _dir2, _roadOne.beginconnection, true, _roadOne.beginConnectedTo, null);
+                        }
+                        else
+                        {
+                            Console.WriteLine(2.4);
+                            _curveType = "Curved";
+                            _curvedstart = new Point(_temp2.X, _temp2.Y + _shift);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_temp1, new Point(_temp2.X, _temp2.Y + _shift), _lanes, _dir2, _roadOne.beginconnection, true, _roadOne.beginConnectedTo, null);
+                        }
+                    }
+
+                    // _roadTwo
+
+                    if (Math.Abs(_temp3.X - _point2.X) < Math.Abs(_temp4.X - _point2.X))
+                    {
+                        if (_temp3.X < _temp4.X)
+                        {
+                            Console.WriteLine(2.5);
+                            _curvedend = new Point(_temp3.X + _shift, _temp3.Y);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(new Point(_temp3.X + (_shift - 2), _temp1.Y), _temp4, _lanes, _dir, true, _roadTwo.endconnection, null, _roadTwo.endConnectedTo);
+                        }
+                        else
+                        {
+                            Console.WriteLine(2.6);
+                            _curvedend = new Point(_temp3.X - _shift, _temp3.Y);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(new Point(_temp3.X - (_shift - 2), _temp3.Y), _temp4, _lanes, _dir, true, _roadTwo.endconnection, null, _roadTwo.endConnectedTo);
+                        }
+                    }
+                    else if (Math.Abs(_temp3.X - _point2.X) > Math.Abs(_temp4.X - _point2.X))
+                    {
+                        if (_temp3.X < _temp4.X)
+                        {
+                            Console.WriteLine(2.7);
+                            _curvedend = new Point(_temp4.X - _shift, _temp4.Y);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_temp3, new Point(_temp4.X - (_shift - 2), _temp4.Y), _lanes, _dir, _roadTwo.beginconnection, true, _roadTwo.beginConnectedTo, null);
+                        }
+                        else
+                        {
+                            Console.WriteLine(2.8);
+                            _curvedend = new Point(_temp4.X + _shift, _temp4.Y);
+                            General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_temp3, new Point(_temp4.X + (_shift - 2), _temp4.Y), _lanes, _dir, _roadTwo.beginconnection, true, _roadTwo.beginConnectedTo, null);
+                        }
+                    }
+                    General_Form.Main.BuildScreen.builder.roadBuilder.BuildCurvedRoad(_curvedstart, _curvedend, _lanes, _curveType, true, true, RoadController.roads[RoadController.roads.Count - 1], RoadController.roads[RoadController.roads.Count - 2]);
+                 }
+            }
 
         }
     }
 }
+
 
