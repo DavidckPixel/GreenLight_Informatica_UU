@@ -19,14 +19,15 @@ namespace GreenLight
         public List<ConnectionLink> connectLinks = new List<ConnectionLink>();
 
         public ConnectionPoint selectedPoint;
-        private double Scale;
+        public double Scale;
 
         public CrossRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection) : base(_point1, _point2, _lanes, _roadtype, _beginconnection, _endconnection)
         {
-            hitbox = CreateHitbox(hitBoxPoints(_point1, _point1, _lanes));
+            hitbox = CreateHitbox(hitBoxPoints(_point1, _point1, _lanes + 2));
 
             int _width = (_lanes + 2) * 20 + 20;
             Scale = 500 / (double)_width;
+            this.Type = _roadtype;
 
             createConnectionPoints();
             SwitchSelectedPoint(connectPoints.First());
@@ -95,6 +96,12 @@ namespace GreenLight
             {
                 connectPoints.Add(new ConnectionPoint(new Point(_loc.X + (int)(20 * this.Scale) * x * _X, _loc.Y + (int)(20 * this.Scale) * x * _Y), _side, this.Scale));
             }
+        }
+
+        public override void Draw(Graphics g)
+        {
+            DrawLine(g);
+            this.hitbox.Draw(g);
         }
     }
 }

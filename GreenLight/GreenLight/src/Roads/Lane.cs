@@ -18,5 +18,16 @@ namespace GreenLight
 
         public abstract void Draw(Graphics g);
         public abstract void DrawoffsetHitbox(Graphics g);
+
+        public void DrawLine(Graphics g)
+        {
+            Point _old = points.First().cord;
+                foreach (LanePoints _point in points)
+                {
+                    g.DrawLine(Pens.Purple, _point.cord, _old);
+                    _old = _point.cord;
+                }
+            
+        }
     }
 }

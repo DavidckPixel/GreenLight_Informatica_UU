@@ -44,10 +44,10 @@ namespace GreenLight
 
         public AbstractRoad newCrossRoad(Point _point1, int _lanes, string _dir)
         {
-            CrossRoad _temp = new CrossRoad(_point1, _point1, _lanes, _dir, false, false);
+            CrossRoad _temp = new CrossRoad(_point1, _point1, _lanes, "Cross", false, false);
             this.selectedRoad = _temp;
 
-            ShowSettingScreen();
+            ShowSettingScreen(_temp);
             //Open het menu;
             Console.WriteLine("New CrossRoad Made!");
 
@@ -127,10 +127,11 @@ namespace GreenLight
             this.settingScreen.Controls.Add(this.settingScreenImage);
         }
 
-        public void ShowSettingScreen()
+        public void ShowSettingScreen(CrossRoad _road)
         {
             General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "D";
 
+            this.selectedRoad = _road;
             this.settingScreen.Show();
             this.settingScreen.BringToFront();
             this.settingScreenImage.Invalidate();
@@ -190,17 +191,6 @@ namespace GreenLight
                     {
                         g.DrawLine(Pens.Orange, _link.begin.Location, _link.end.Location);
                     }
-                }
-            }
-            Point _old;
-
-            foreach(Lane _lane in selectedRoad.Drivinglanes)
-            {
-                _old = _lane.points.First().cord;
-                foreach(LanePoints _point in _lane.points)
-                {
-                    g.DrawLine(Pens.Purple, _point.cord, _old);
-                    _old = _point.cord;
                 }
             }
         }
@@ -271,62 +261,70 @@ namespace GreenLight
         {
             List<LanePoints> _temp = null;
             selectedRoad.Drivinglanes.Clear();
+            Point _end, _begin;
 
             foreach(ConnectionLink _link in selectedRoad.connectLinks)
             {
 
+                _end = _link.end.Location;
+                _begin = _link.begin.Location;
+
+                TranslatePoints(ref _begin, ref _end, selectedRoad);
+
+                Console.WriteLine("Crossroad: {0} - {1},", _begin, _end);
+
                 if (((_link.end.Side == "Top" || _link.end.Side == "Bottom") && (_link.begin.Side == "Top" || _link.begin.Side == "Bottom"))
                     || ((_link.end.Side == "Left" || _link.end.Side == "Right") && (_link.begin.Side == "Left" || _link.begin.Side == "Right")))
                 {
-                    _temp = LanePoints.CalculateDiagonalLane(_link.begin.Location, _link.end.Location);
+                    _temp = LanePoints.CalculateDiagonalLane(_begin, _end);
                 }
                 else
                 {   //-----------------------------------------------------
                     if (_link.begin.Side == "Left" && _link.end.Side == "Top")
                     {
                         //omgedraaid
-                        _temp = LanePoints.CalculateCurveLane(_link.end.Location, _link.begin.Location, "NW");
+                        _temp = LanePoints.CalculateCurveLane(_end, _begin, "NW");
 
                     }
                     else if (_link.begin.Side == "Top" && _link.end.Side == "Left")
                     {
-                        _temp = LanePoints.CalculateCurveLane(_link.begin.Location, _link.end.Location, "NW");
+                        _temp = LanePoints.CalculateCurveLane(_begin, _end, "NW");
 
                     }
                     //------------------------------------------------
                     else if (_link.begin.Side == "Right" && _link.end.Side == "Bottom")
                     {
                         //omgedraaid
-                        _temp = LanePoints.CalculateCurveLane(_link.end.Location, _link.begin.Location, "SE");
+                        _temp = LanePoints.CalculateCurveLane(_end, _begin, "SE");
 
                     }
                     else if (_link.begin.Side == "Bottom" && _link.end.Side == "Right")
                     {
-                        _temp = LanePoints.CalculateCurveLane(_link.begin.Location, _link.end.Location,"SE");
+                        _temp = LanePoints.CalculateCurveLane(_begin, _end, "SE");
 
                     }
                     //---------------------------------------------
                     else if (_link.begin.Side == "Bottom" && _link.end.Side == "Left")
                     {
                         //omgedraaid
-                        _temp = LanePoints.CalculateCurveLane(_link.end.Location, _link.begin.Location, "SW");
+                        _temp = LanePoints.CalculateCurveLane(_end, _begin, "SW");
 
                     }
                     else if (_link.begin.Side == "Left" && _link.end.Side == "Bottom")
                     {
-                        _temp = LanePoints.CalculateCurveLane(_link.begin.Location, _link.end.Location, "SW");
+                        _temp = LanePoints.CalculateCurveLane(_begin, _end, "SW");
 
                     }
                     //---------------------------------------------
                     else if (_link.begin.Side == "Top" && _link.end.Side == "Right")
                     {
                         //omgedraaid
-                        _temp = LanePoints.CalculateCurveLane(_link.end.Location, _link.begin.Location, "NE");
+                        _temp = LanePoints.CalculateCurveLane(_end, _begin, "NE");
 
                     }
                     else if (_link.begin.Side == "Right" && _link.end.Side == "Top")
                     {
-                        _temp = LanePoints.CalculateCurveLane(_link.begin.Location, _link.end.Location, "NE");
+                        _temp = LanePoints.CalculateCurveLane(_begin, _end, "NE");
 
                     }
                 }
@@ -337,8 +335,22 @@ namespace GreenLight
                 }
             }
 
+            this.Screen.Invalidate();
+            this.DisableSettingScreen();
+        }
 
-            
+        private void TranslatePoints(ref Point _begin, ref Point _end, CrossRoad _road)
+        {
+            double _lanes = 0.5 * 20;
+
+            double _beginX = _begin.X / _road.Scale + _road.hitbox.Topcord.X - _lanes;
+            double _beginY = _begin.Y / _road.Scale + _road.hitbox.Topcord.Y - _lanes;
+
+            double _endX = _end.X / _road.Scale + _road.hitbox.Topcord.X - _lanes;
+            double _endY = _end.Y / _road.Scale + _road.hitbox.Topcord.Y - _lanes;
+
+            _begin = new Point((int)Math.Ceiling(_beginX), (int)Math.Ceiling(_beginY));
+            _end = new Point((int)Math.Ceiling(_endX), (int)Math.Ceiling(_endY));
         }
     }
 }

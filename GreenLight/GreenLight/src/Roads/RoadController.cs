@@ -306,6 +306,14 @@ namespace GreenLight
 
         private void EnableSettingScreen()
         {
+            Console.WriteLine(selectedRoad.Type);
+
+            if(selectedRoad.Type == "Cross")
+            {
+                crossRoadController.ShowSettingScreen((CrossRoad)selectedRoad);
+                return;
+            }
+
             selectedRoad.hitbox.color = Color.Pink;
 
             if(selectedRoad.Drivinglanes.All(x => x.offsetHitbox == null))

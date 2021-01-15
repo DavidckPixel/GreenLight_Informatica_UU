@@ -66,9 +66,9 @@ namespace GreenLight
         public abstract Hitbox CreateHitbox(Point[] _array);
 
 
-        public void Draw(Graphics g)
+        public virtual void Draw(Graphics g)
         {
-            foreach(DrivingLane _lane in Drivinglanes)
+            foreach(Lane _lane in Drivinglanes)
             {
                 _lane.Draw(g);
             }
@@ -77,7 +77,17 @@ namespace GreenLight
                 _sign.draw(g);
             }
 
+            this.Drivinglanes.ForEach(x => Console.WriteLine(x.points.First()));
+
             this.hitbox.Draw(g);
+        }
+
+        public void DrawLine(Graphics g)
+        {
+            foreach(Lane _lane in Drivinglanes)
+            {
+                _lane.DrawLine(g);
+            }
         }
 
         public Point getPoint1() { return point1; }
