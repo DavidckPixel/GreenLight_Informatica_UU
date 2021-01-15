@@ -65,7 +65,7 @@ namespace GreenLight
             this.Size = Button_size;
             this.Image = Image.FromFile(FilePath);
             this.SizeMode = PictureBoxSizeMode.Zoom;
-            this.MouseHover += (object o, EventArgs EA) => { this.Image = Image.FromFile(Image_path.Remove(Image_path.Length - 4) + "_On_Hover.png"); };
+            this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(Image_path.Remove(Image_path.Length - 4) + "_On_Hover.png"); };
             this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(Image_path); };
         }
 

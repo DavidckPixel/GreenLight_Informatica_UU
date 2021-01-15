@@ -31,7 +31,15 @@ namespace GreenLight
 
         public void BuildRoad(Point _point1, Point _point2)
         {
-            int _lanes = int.Parse(General_Form.Main.UserInterface.ElemSRM.LaneAmount.Text);
+            int _lanes = 1;
+            try { _lanes = int.Parse(General_Form.Main.UserInterface.ElemSRM.LaneAmount.Text); }
+            catch { _lanes = 1; }
+
+            if(_lanes > 5)
+            {
+                _lanes = 5;
+                General_Form.Main.UserInterface.ElemSRM.LaneAmount.Text = "5";
+            }
 
             switch (roadBuilder.roadType)
             {

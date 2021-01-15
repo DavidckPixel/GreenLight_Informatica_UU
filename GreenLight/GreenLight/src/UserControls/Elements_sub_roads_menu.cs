@@ -48,7 +48,7 @@ namespace GreenLight
             Diagonal_Road.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Diagonal"; };
             this.Controls.Add(Diagonal_Road);
 
-            CurvedButtons Curved_Road = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/CurveButton.png", this.BackColor);
+            CurvedButtons Curved_Road = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Curved_Road_Button.png", this.BackColor);
             Curved_Road.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Curved"; };
             this.Controls.Add(Curved_Road);
 
@@ -56,12 +56,23 @@ namespace GreenLight
             Curved_Road2.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Curved2"; };
             this.Controls.Add(Curved_Road2);
 
+            PictureBox LaneAmount_background = new PictureBox();
+            LaneAmount_background.Image = Image.FromFile("../../User Interface Recources/Lane_Amount_Border.png");
+            LaneAmount_background.Location = new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase+_ButtonYdiff*1);
+            LaneAmount_background.SizeMode = PictureBoxSizeMode.Zoom;
+            LaneAmount_background.Size = new Size(_ButtonSize, _ButtonSize);
+            this.Controls.Add(LaneAmount_background);
+
             this.LaneAmount = new TextBox();
+            LaneAmount.BorderStyle = BorderStyle.None;
             LaneAmount.Text = "1";
             LaneAmount.Width = 20;
             LaneAmount.Height = 20;
-            LaneAmount.Location = new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff);
+            LaneAmount.MaxLength = 1;
+            LaneAmount.TextAlign = HorizontalAlignment.Center;
+            LaneAmount.Location = new Point(_ButtonXbase + _ButtonXdiff + _ButtonSize/2 - LaneAmount.Size.Width/2, _ButtonYbase + _ButtonYdiff+_ButtonSize/2 - LaneAmount.Size.Height/2);
             this.Controls.Add(LaneAmount);
+            LaneAmount.BringToFront();
         }
     }
 }

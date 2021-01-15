@@ -49,7 +49,7 @@ namespace GreenLight
             this.settingScreen.Hide();
             //is.settingScreen.MdiParent = this.mainScreen;
 
-            this.settingScreen.Size = new Size(520, 600);
+            this.settingScreen.Size = new Size(520, 570);
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
@@ -66,11 +66,17 @@ namespace GreenLight
             Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");
             FontFamily Dosis_font_family = Font_collection.Families[0];
 
-            doneButton = new CurvedButtons(new Size(80, 40), new Point(10, 500), 25, "../../User Interface Recources/Custom_Button_Small.png", "Save", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            doneButton = new CurvedButtons(new Size(80, 40), new Point(10, 520), 25, "../../User Interface Recources/Custom_Button_Small.png", "Save", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             doneButton.Click += (object o, EventArgs ea) => { DoneSettingScreen(); };
 
-            deleteButton = new CurvedButtons(new Size(80, 40), new Point(100, 500), 25, "../../User Interface Recources/Custom_Button_Small.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            deleteButton = new CurvedButtons(new Size(90, 40), new Point(100, 520), 25, "../../User Interface Recources/Custom_Button_Small.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             deleteButton.Click += (object o, EventArgs ea) => { DeleteRoad(this.selectedRoad); };
+
+            Move_panel move_panel = new Move_panel(settingScreen);
+            move_panel.Location = new Point(200,510);
+            move_panel.Size = new Size(400,80);
+            settingScreen.Controls.Add(move_panel);
+
 
             settingScreen.Controls.Add(doneButton);
             settingScreen.Controls.Add(deleteButton);

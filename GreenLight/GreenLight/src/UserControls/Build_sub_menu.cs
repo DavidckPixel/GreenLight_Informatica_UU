@@ -95,18 +95,18 @@ namespace GreenLight
             this.Controls.Add(Building_button);
 
             CurvedButtons Divider2 = new CurvedButtons();
-            Divider2.Location = new Point(0, menu["devider2"]); //devider2
+            Divider2.Location = new Point(0, menu["divider2"]); //divider2
             this.Controls.Add(Divider2);
 
             CurvedButtons Divider4 = new CurvedButtons();
-            Divider4.Location = new Point(0, Form.Height - menu["devider4"]); //devider4
+            Divider4.Location = new Point(0, Form.Height - menu["divider4"]); //divider4
             this.Controls.Add(Divider4);     
 
-            CurvedButtons Undo_button = new CurvedButtons(new Size(30, 30), new Point(10, Form.Height - menu["simStartY"]), 25, "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
+            CurvedButtons Undo_button = new CurvedButtons(new Size(30, 30), new Point(10, Form.Height - menu["simStartY"]+3), 20, "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
             Undo_button.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadBuilder.UndoRoad(); };
             this.Controls.Add(Undo_button);
 
-            CurvedButtons Toggle_button = new CurvedButtons(new Size(30, 30), new Point(Sub_menu_width - 40, Form.Height - menu["simStartY"]), 25, "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
+            CurvedButtons Toggle_button = new CurvedButtons(new Size(30, 30), new Point(Sub_menu_width - 40, Form.Height - menu["simStartY"]+3), 20, "../../User Interface Recources/Toggle_Button.png", this.BackColor);
             Toggle_button.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.Toggle = General_Form.Main.BuildScreen.ToggleHitbox(); General_Form.Main.BuildScreen.Screen.Invalidate(); };
             this.Controls.Add(Toggle_button);
 
@@ -116,7 +116,7 @@ namespace GreenLight
             this.Controls.Add(Start_sim_button);
 
             CurvedButtons Divider3 = new CurvedButtons();
-            Divider3.Location = new Point(0, menu["devider3"]); //devider3
+            Divider3.Location = new Point(0, menu["divider3"]); //divider3
             this.Controls.Add(Divider3);
         }
     }
