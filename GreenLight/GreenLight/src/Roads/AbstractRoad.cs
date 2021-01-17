@@ -49,22 +49,7 @@ namespace GreenLight
 
         public abstract Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20);
 
-        public static int CalculateAngle(Point _point1, Point _point2)
-        {
-            //calculateAngle
-            int _deltaX = _point1.X - _point2.X ;
-            int _deltaY = _point1.Y - _point2.Y;
-
-            double _raddegree = Math.Atan2(_deltaX , _deltaY);
-
-            int _degree = (int)(_raddegree * (180 / Math.PI));
-            if (_degree < 0)
-            {
-                _degree = 360 + _degree;
-            }
-
-            return _degree % 360;
-        }
+        
 
         public abstract Hitbox CreateHitbox(Point[] _array);
 

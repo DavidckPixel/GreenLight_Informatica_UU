@@ -25,11 +25,8 @@ namespace GreenLight
 
             Thread run = new Thread(simulation);
             run.Start();
-            /*Thread drivers = new Thread(createDriver);
-            drivers.Start();*/
-           
-            /*KeyPress += testmethod;*/
-            //MouseClick += clickmethod;
+            Thread drivers = new Thread(createDriver);
+            drivers.Start();
         }
 
         private void createDriver()
@@ -38,9 +35,9 @@ namespace GreenLight
             AI driver = new AI(v, new DriverStats("new driver", 250, 2, 0, 0));
             driverList.Add(driver);*/
 
-            for (int n = 0; simulate && n < 40; n++)
+            for (int n = 0; simulate && n < 1; n++)
             {
-                Vehicle v = new Vehicle(new VehicleStats("Auto", 1353, 4.77f, 100, 4223, 2, 2.65f), 10, 10);
+                Vehicle v = new Vehicle(new VehicleStats("Auto", 1353, 4.77f, 100, 4223, 0.3f, 2.65f), 10, 10);
                 AI driver = new AI(v, new DriverStats("new driver", 250, 2, 0, 0));
                 driverList.Add(driver);
                 listchoice.Add(true);
@@ -62,17 +59,18 @@ namespace GreenLight
             {
                 if (listchoice[t] && driverList[t].v.frame <= 624)
                 {
-                    driverList[t].v.tekenAuto(pea.Graphics, driverList[t].location);
+                    driverList[t].v.drawVehicle(pea.Graphics, driverList[t].location);
                     if (driverList[t].v.frame == 624)
                     {
                         listchoice[t] = false;
                         driverList[t].v.frame = 0;
-                        /*Console.WriteLine("Switch naar lijst 2 van vehicle " + t + ".");*/
+                        /*Console.WriteLine
+                         * ("Switch naar lijst 2 van vehicle " + t + ".");*/
                     }
                 }
                 else if (!listchoice[t] && driverList[t].v.frame <= 624)
                 {
-                    driverList[t].v.tekenAuto(pea.Graphics, driverList[t].location2);
+                    driverList[t].v.drawVehicle(pea.Graphics, driverList[t].location2);
                     if (driverList[t].v.frame == 624)
                     {
                         listchoice[t] = true;

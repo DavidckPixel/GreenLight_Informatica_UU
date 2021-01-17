@@ -57,12 +57,12 @@ namespace GreenLight
             this.length = _stat.Length;
             this.topspeed = _stat.Topspeed;
             this.name = _stat.Name;
-            this.motorpwr = _stat.Motorpwr;
+            this.motorpwr = _stat.Motorpwr; //In Watt
             this.x = x;
             this.y = y;
             this.cw = _stat.Cw;
             this.surface = _stat.Surface;
-                    
+            //this.Cords = new Point(x, y); //Ignore this          
             
             a = this.motorpwr / this.weight;
             abrake = physics.Brakepwr / this.weight;
@@ -75,7 +75,7 @@ namespace GreenLight
         }
         
         //Tekenmethode
-        public void tekenAuto(Graphics g, List<Point> location)
+        public void drawVehicle(Graphics g, List<Point> location)
         {
             int xtemp = 0;
             int ytemp = 0;
@@ -117,7 +117,6 @@ namespace GreenLight
                 abrake = (physics.Brakepwr + airResistance ) / this.weight;
                 speed -= abrake / 100;
                 braketime -= 0.01f;
-                Thread.Sleep(16);
             }
             if (speed < 0)
             {
@@ -130,9 +129,8 @@ namespace GreenLight
         {
             airResistance = (float)(0.5f * physics.Density * cw * surface * speed * speed);
             abrake = (physics.Brakepwr + airResistance) / this.weight;
-
-            speed -= (abrake * (0.07f)); //Een waarde tussen 0.069 en 0.07 werkt hier het best, maar waar the f*** komt deze waarde vandaan???
-            
+            //abrake = (float) physics.Brakepwr / this.weight;
+            speed -= (abrake * (0.016f));
             if (speed <= targetspeed)
             {
                 speed = targetspeed;
@@ -141,13 +139,14 @@ namespace GreenLight
         }
         
         //Method to calculate the distance the car would need to brake to zero
-        public float brkdistance(int xt, int yt)
+        public float brkdistance()
         {
             airResistance = (float)(0.5f * physics.Density * cw * surface * speed * speed);
             abrake = (physics.Brakepwr + airResistance) / this.weight;
+            //abrake = (physics.Brakepwr) / this.weight;
 
-            float brktime = speed / abrake;
-            float brkdistance = brktime * speed;
+            float brkdistance = weight * speed * speed / (physics.Brakepwr*2);
+            //Console.WriteLine("Speed: " + speed + "  Brakepwr: " + physics.Brakepwr + "   Breakdistance: " + brkdistance);
             return brkdistance;
         }
 
@@ -163,28 +162,27 @@ namespace GreenLight
         //method used to calculate new x and y for vehicle in single threaded car system
         public Point move(int xt, int yt)
         {
-            if (Math.Abs(x - xt) > 1 && Math.Abs(y - yt) > 1)
+            if (Math.Abs(x - xt) > 1 || Math.Abs(y - yt) > 1)
             {
                 //calculateAngle(xt, yt);
                 float xmove = Math.Abs(xt - x) / (Math.Abs(xt - x) + Math.Abs(yt - y));
                 float ymove = 1.0f - xmove;
                 if (x < xt)
                 {
-                    x = x + xmove * speed * 0.8f;       //5 pixels per meter
+                    x = x + xmove * speed * 0.08f;       //5 pixels per meter
                 }
                 if (x > xt)
                 {
-                    x = x - xmove * speed * 0.8f;
+                    x = x - xmove * speed * 0.08f;
                 }
                 if (y < yt)
                 {
-                    y = y + ymove * speed * 0.8f;
+                    y = y + ymove * speed * 0.08f;
                 }
                 if (y > yt)
                 {
-                    y = y - ymove * speed * 0.8f;
+                    y = y - ymove * speed * 0.08f;
                 }            
-                
             }
             else
             {

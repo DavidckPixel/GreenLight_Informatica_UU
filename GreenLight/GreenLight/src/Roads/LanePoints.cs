@@ -8,29 +8,50 @@ using System.Drawing;
 
 namespace GreenLight
 {
-    public struct LanePoints
+    public class LanePoints
     {
         //lanepoints are very simple put, just a point with a corresponding degree, so every car can drive from points to point
         //and angle itself accordingly between the 2 to create a smooth illusion of driving.
 
-        public Point cord { get; }
+        public Point cord { get; set; }
         public int degree;
+        public Tuple<double, double> distance;
 
         public LanePoints(Point _cord, int _degree)
         {
             this.cord = _cord;
             this.degree = _degree;
+            this.distance = new Tuple<double, double>(0, 0);
         }
 
         public override string ToString()
         {
-            string _temp = "CORDS: "+ this.cord + "  -  DEGREE: " + this.degree;
+            string _temp = "CORDS: "+ this.cord + "  -  DEGREE: " + this.degree + " - distance: " + this.distance.Item1 ;
             return _temp;
         }
+        
+        public void setDistance(double _first, double _second)
+        {
+            this.distance = new Tuple<double, double>(_first, _second);
+        }
 
-        public void FlipDegree()
+        
+        public void Flip()
+        {
+            FlipDegree();
+            FlipTuple();
+        }
+        
+        private void FlipDegree()
         {
             degree = ((degree + 180) % 360);
+        }
+        
+        private void FlipTuple()
+        {
+            double _item1 = distance.Item1;
+            double _item2 = distance.Item2;
+            distance = new Tuple<double, double>(_item2, _item1);
         }
 
         //The following Functions are some General purpose static functions that calculated the LanePoints based on 2 points
@@ -107,11 +128,11 @@ namespace GreenLight
                     _normpoint1 = new Point(_xtemp, _ytemp);
                 }
 
-                _lanePoints.Add(new LanePoints(_normpoint1, AbstractRoad.CalculateAngle(_prev, _normpoint1)));
+                _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle(_prev, _normpoint1)));
 
                 _prev = _normpoint1;
             }
-
+            RoadMath.CalculateDistanceLanePoints(ref _lanePoints);
             return _lanePoints;
         }
 
@@ -157,7 +178,7 @@ namespace GreenLight
                 for (int y = 0; y <= Math.Abs(_point1.Y - _point2.Y); y++)
                 {
                     _normpoint1 = new Point(_point1.X, (int)(_point1.Y + y * _vertical));
-                    _lanePoints.Add(new LanePoints(_normpoint1, AbstractRoad.CalculateAngle(_prev, _normpoint1)));
+                    _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle(_prev, _normpoint1)));
 
                     _prev = _normpoint1;
                 }
@@ -170,11 +191,11 @@ namespace GreenLight
             for (int x = 0; x <= Math.Abs(_point1.X - _point2.X) && !divByZero; x++)
             {
                 _normpoint1 = new Point(_point1.X + x * _dir, (int)(_point1.Y + x * _slp * _dir));
-                _lanePoints.Add(new LanePoints(_normpoint1, AbstractRoad.CalculateAngle(_prev, _normpoint1)));
+                _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle(_prev, _normpoint1)));
 
                 _prev = _normpoint1;
             }
-
+            RoadMath.CalculateDistanceLanePoints(ref _lanePoints);
             return _lanePoints;
         }
     }

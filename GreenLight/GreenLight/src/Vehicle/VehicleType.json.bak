@@ -1,12 +1,12 @@
 [
   {
     "Name": "VW Passat variant 2015",
-    "Weight": 1353,
+    "Weight": 1352,
     "Length": 4.77,
     "Topspeed": 61,
-    "Motorpwr": 111900,
+    "Motorpwr": 4223,
     "Surface": 2.65,
-    "Cw": 0.3
+    "Cw": 0.35
   },
 
   {
@@ -14,7 +14,7 @@
     "Weight": 10000,
     "Length": 5.0,
     "Topspeed": 100,
-    "Motorpwr": 100000,
+    "Motorpwr": 1000,
     "Surface": 5.0,
     "Cw": 1.0
   }

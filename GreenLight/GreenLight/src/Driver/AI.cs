@@ -27,7 +27,7 @@ namespace GreenLight
         
         Thread moveVehicle;
         public int targetspeed;
-        Point destinationpoint = new Point(1900, 1060); //Ingegeven door road?
+        Point destinationpoint = new Point(1900, 10); //Ingegeven door road?
         Point endpoint; //Definitief eindpunt auto?
 		int framesbuffered = 625;
         public List<Point> location = new List<Point>();
@@ -49,12 +49,6 @@ namespace GreenLight
             //thread used to update vehicle speed and whereabouts in the single threaded car system
             moveVehicle = new Thread(vehiclemovement);
             moveVehicle.Start();
-            
-            //thread used to test the AI in the multi threaded car system
-            /*run = new Thread(test);*/
-            /*run.Start();*/
-
-
         }
 
         //method used to drive the vehicle in the single threaded car System;
@@ -104,7 +98,7 @@ namespace GreenLight
                     v.accelerate(targetspeed);
                 }
                 needToBrake(destinationpoint.X, destinationpoint.Y);
-                /*Console.WriteLine("braking: " + v.isBraking + "    -    accelarating:" + v.isAccelerating + "    -    speed:" + v.speed + " Frames: " + framesbuffered);*/
+                //Console.WriteLine("braking: " + v.isBraking + "    -    accelarating:" + v.isAccelerating + "    -    speed:" + v.speed + " Frames: " + framesbuffered + "   X: " + v.x);
                 framesbuffered--;
             }
         }
@@ -121,14 +115,18 @@ namespace GreenLight
         //Method used to calculate if the car needs to start braking in the single threaded car system
         public void needToBrake(int xt, int yt)
         {
-            float distancefromend = (float)Math.Sqrt((v.x - xt) * (v.x - xt) + (v.y - yt) * (v.y - yt)) / 5;
-            float brakedistance = v.brkdistance(xt, yt);
-            
+            float distancefromend = (float) (Math.Sqrt((v.x - xt) * (v.x - xt) + (v.y - yt) * (v.y - yt))/5);
+            float brakedistance = v.brkdistance();
             if (brakedistance >= distancefromend)
             {
                 v.isBraking = true;
                 v.isAccelerating = false;
             }
+        }
+
+        public void Draw(Graphics g)
+        {
+            v.drawVehicle(g, locationlocal);
         }
     }
 }

@@ -32,7 +32,6 @@ namespace GreenLight
             Vehicle _vehicle = General_Form.Main.SimulationScreen.Simulator.vehicleController.getVehicle(_x,_y);
 
             driverlist.Add(new AI(_vehicle, _stats));
-            
         }
 
         public DriverStats getDriverStats(DriverStats _stats = null)
@@ -103,7 +102,7 @@ namespace GreenLight
             {
                 initDriverStats();
             }
-            Console.WriteLine(drivertypes.Count());
+            //Console.WriteLine(drivertypes.Count());
 
             List<string> _temp = new List<string>();
             drivertypes.ForEach(x => _temp.Add(x.Name));
@@ -113,7 +112,7 @@ namespace GreenLight
         static public void SaveJson()
         {
             string json = JsonConvert.SerializeObject(drivertypes);
-            Console.WriteLine(json);
+            //Console.WriteLine(json);
 
             string file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Driver\\DriverType.json";
 

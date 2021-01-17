@@ -26,6 +26,7 @@ namespace GreenLight
 
         public List<AbstractRoad> roads = new List<AbstractRoad>();
         public PictureBox Screen;
+        public OriginPointController OPC = new OriginPointController();
         public string roadType = "D";
 
         private Form settingScreen;
@@ -460,7 +461,7 @@ namespace GreenLight
 
 
 
-                int Graden = AbstractRoad.CalculateAngle(_one, _two);
+                int Graden = RoadMath.CalculateAngle(_one, _two);
 
                 if (selectedRoad.hitbox.Size.Width >= selectedRoad.hitbox.Size.Height)
                 {

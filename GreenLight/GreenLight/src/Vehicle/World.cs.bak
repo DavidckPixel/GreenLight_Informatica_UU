@@ -14,15 +14,11 @@ namespace GreenLight
         public double Density;
         public double Gravity;
 
-        public float slip;
-
         public World(int _Brakepwr, double _Density, double _Gravity)
         {
             this.Brakepwr = _Brakepwr;
             this.Density = _Density;
             this.Gravity = _Gravity;
-
-            this.slip = 0.012f; //TEMP
         }
     }
 }

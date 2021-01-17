@@ -122,7 +122,5 @@ namespace GreenLight
                 sr.Write(json);
             }
         }
-
-
     }
 }

@@ -63,6 +63,16 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\CurvedHitbox.cs" />
+    <Compile Include="src\Driver\BetterAI.cs" />
+    <Compile Include="src\Driver\BetterVehicle.cs" />
+    <Compile Include="src\Driver\BetterVehicleTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Driver\BetterVehicleTest.Designer.cs">
+      <DependentUpon>BetterVehicleTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Driver\GPS.cs" />
+    <Compile Include="src\Driver\RoadMath.cs" />
     <Compile Include="src\OriginPointController.cs" />
     <Compile Include="src\VehicleOriginPoint.cs" />
     <Compile Include="src\DrawData.cs" />
@@ -243,7 +253,6 @@
   <ItemGroup>
     <Folder Include="Fonts\" />
     <Folder Include="Logs\" />
-    <Folder Include="User Interface Recources\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documentation\BugReport Document.txt" />

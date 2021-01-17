@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
-    public abstract class AbstractController
+    public class GPS
     {
-        abstract public void Initialize();
-
-        public AbstractController()
-        {
-        }
+        public int? ForcedLane = null;
     }
 }

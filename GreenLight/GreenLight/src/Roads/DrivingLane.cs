@@ -16,8 +16,10 @@ namespace GreenLight
         //This is used for testing to see if our algorithm created a smooth road -- This will not be used in final release.
 
         int roadLanes;
-        int thisLane;
+        public int thisLane;
         private LanePoints middle;
+        public bool flipped;
+
         public Hitbox hitbox;
         public int AngleDir;
 
@@ -28,6 +30,8 @@ namespace GreenLight
             this.roadLanes = _roadLanes;
             this.thisLane = _thisLane;
             this.hitbox = _hitbox;
+            this.flipped = true; //Base value
+
             middle = this.points[this.points.Count() / 2]; //THIS LINE GIVES PROBLEMS WHEN MAKING CURVED ROAD 2 up or down and 2 right or left..
             AngleDir = middle.degree;
         }
@@ -37,10 +41,11 @@ namespace GreenLight
             List<LanePoints> _templist = new List<LanePoints>();
 
             points.Reverse();
+            flipped = !flipped;
             
             foreach(LanePoints x in points)
             {
-                x.FlipDegree();
+                x.Flip();
                 _templist.Add(x);
             }
 
@@ -235,7 +240,7 @@ namespace GreenLight
             _bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
             g.DrawImage(_bitmap, new Rectangle(middle.cord, new Size(15,15)));
 
-            Console.WriteLine(AngleDir);
+            //Console.WriteLine(AngleDir);
         }
 
         public override void DrawoffsetHitbox(Graphics g)

@@ -1,7 +1,7 @@
 
   [
     { //Program takes this one
-      "Brakepwr": 120,
+      "Brakepwr": 12000,
       "Density": 1.293,
       "Gravity": 9.81
     },
@@ -16,3 +16,4 @@
       "Gravity": 9.12341
     }
   ]
+
