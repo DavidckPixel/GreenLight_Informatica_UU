@@ -99,21 +99,29 @@ namespace GreenLight
             {
                 _outerLane = _lanes - 1;
             }
-
-                List<LanePoints> _lanepoints = this.selectedRoad.Drivinglanes[_outerLane].points;
-            float _shortDistance = 2000; 
-            foreach (LanePoints _lanepoint in _lanepoints)
+            try
             {
-                float _distance = (float)Math.Sqrt((mea.Location.X - _lanepoint.cord.X) * (mea.Location.X - _lanepoint.cord.X) + (mea.Location.Y - _lanepoint.cord.Y) * (mea.Location.Y - _lanepoint.cord.Y));
-
-                if (_shortDistance > _distance)
+                List<LanePoints> _lanepoints = this.selectedRoad.Drivinglanes[_outerLane].points;
+                float _shortDistance = 2000;
+                foreach (LanePoints _lanepoint in _lanepoints)
                 {
-                    _shortDistance = _distance;
-                    closest = _lanepoint;
+                    float _distance = (float)Math.Sqrt((mea.Location.X - _lanepoint.cord.X) * (mea.Location.X - _lanepoint.cord.X) + (mea.Location.Y - _lanepoint.cord.Y) * (mea.Location.Y - _lanepoint.cord.Y));
+
+                    if (_shortDistance > _distance)
+                    {
+                        _shortDistance = _distance;
+                        closest = _lanepoint;
+                    }
                 }
+
+                Console.WriteLine(_shortDistance);
+            }
+            catch(Exception e)
+            {
+
             }
 
-            Console.WriteLine(_shortDistance);
+           
         }
 
         public void mouseClick(object o, MouseEventArgs mea)

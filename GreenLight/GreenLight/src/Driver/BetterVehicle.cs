@@ -26,7 +26,7 @@ namespace GreenLight
         public int currentAngel = 90;
 
         public AbstractRoad currentRoad;
-        public DrivingLane currentLane;
+        public Lane currentLane;
 
         public double locationX, locationY;
 
@@ -118,23 +118,22 @@ namespace GreenLight
             this.vehicleAI.drivingRoads = _path;
 
             this.currentRoad = _path[startIndex];
-            this.currentLane = (DrivingLane)this.currentRoad.Drivinglanes.First();
+            this.currentLane = this.currentRoad.Drivinglanes.First();
 
+            this.vehicleAI.nextRoad = _path[startIndex + 1];
             this.vehicleAI.SetPath(startIndex);
         }
 
         public void SwitchRoad()
         {
-            this.currentRoad = this.vehicleAI.drivingRoads[this.vehicleAI.index];
-            this.currentLane = (DrivingLane)this.currentRoad.Drivinglanes.First();
+            this.currentRoad = this.vehicleAI.nextRoad;
+            this.currentLane = this.currentRoad.Drivinglanes.First();
         }
 
         private void StayOnLane(double _localspeed)
         {
             if (_localspeed > this.vehicleAI.vehiclePointDistance)
             {
-                //Console.WriteLine("Had to change lane points to: {0}", this.vehicleAI.vehiclePointDistance);
-
                 _localspeed -= this.vehicleAI.vehiclePointDistance;
 
                 this.locationX = vehicleAI.goal.cord.X;

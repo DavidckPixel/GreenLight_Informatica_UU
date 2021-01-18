@@ -191,10 +191,10 @@ namespace GreenLight
             Brush _brush = new SolidBrush(Color.FromArgb(100, Color.Black));
             Pen _pen = new Pen(new SolidBrush(Color.FromArgb(100, this.color)), PenWidth);
 
-            Console.WriteLine(PenWidth);
+            bool draw = General_Form.Main == null ? true : General_Form.Main.BuildScreen.Toggle;
 
             //g.DrawRectangle(_pen, rect);
-            if (General_Form.Main.BuildScreen.Toggle)
+            if (draw)
             {
                 g.DrawArc(_pen, rect, start_angle, 90);
 

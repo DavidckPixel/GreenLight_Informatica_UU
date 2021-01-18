@@ -16,9 +16,7 @@ namespace GreenLight
         //This is used for testing to see if our algorithm created a smooth road -- This will not be used in final release.
 
         int roadLanes;
-        public int thisLane;
         private LanePoints middle;
-        public bool flipped;
 
         public Hitbox hitbox;
         public int AngleDir;
