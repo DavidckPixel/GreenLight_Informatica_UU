@@ -403,22 +403,22 @@ namespace GreenLight
 
             Hitbox _hitbox = selectedRoad.hitbox;
 
-            int _maxSize = Math.Max(_hitbox.Size.Width, _hitbox.Size.Height) + 20;
+            int _maxSize = Math.Max(_hitbox.Size.Width, _hitbox.Size.Height) + Roads.Config.scaleOffset * 2;
             int _diff = Math.Abs(_hitbox.Size.Width - _hitbox.Size.Height) / 2;
 
             Rectangle _rec;
 
             if(_hitbox.Size.Width > _hitbox.Size.Height)
             {
-                _rec = new Rectangle(_hitbox.Topcord.X - 10, _hitbox.Topcord.Y - 10 - _diff, _maxSize, _maxSize);
+                _rec = new Rectangle(_hitbox.Topcord.X - Roads.Config.scaleOffset, _hitbox.Topcord.Y - Roads.Config.scaleOffset - _diff, _maxSize, _maxSize);
             }
             else if(_hitbox.Size.Width == _hitbox.Size.Height)
             {
-                _rec = new Rectangle(_hitbox.Topcord.X - 10, _hitbox.Topcord.Y - 10, _maxSize, _maxSize);
+                _rec = new Rectangle(_hitbox.Topcord.X - Roads.Config.scaleOffset, _hitbox.Topcord.Y - Roads.Config.scaleOffset, _maxSize, _maxSize);
             }
             else
             {
-                _rec = new Rectangle(_hitbox.Topcord.X - 10 - _diff, _hitbox.Topcord.Y - 10, _maxSize, _maxSize);
+                _rec = new Rectangle(_hitbox.Topcord.X - Roads.Config.scaleOffset - _diff, _hitbox.Topcord.Y - Roads.Config.scaleOffset, _maxSize, _maxSize);
             }
 
 
@@ -446,7 +446,7 @@ namespace GreenLight
 
                 double _scale;
 
-                double diff = Math.Max(selectedRoad.hitbox.Size.Width, selectedRoad.hitbox.Size.Height) + 20;
+                double diff = Math.Max(selectedRoad.hitbox.Size.Width, selectedRoad.hitbox.Size.Height) + Roads.Config.scaleOffset * 2;
 
                 if (selectedRoad.hitbox.Size.Width > selectedRoad.hitbox.Size.Height)
                 {
@@ -478,8 +478,8 @@ namespace GreenLight
                             offset = (double)this.settingScreenImage.Height / 2 - temp / 2 * _scale;
                         }
 
-                        _oneoffset = new Point((int)((_oneoffset.X + 10) * _scale), (int)(((_oneoffset.Y) * _scale) + offset));
-                        _twooffset = new Point((int)((_twooffset.X + 10) * _scale), (int)(((_twooffset.Y) * _scale) + offset));
+                        _oneoffset = new Point((int)((_oneoffset.X + Roads.Config.scaleOffset) * _scale), (int)(((_oneoffset.Y) * _scale) + offset));
+                        _twooffset = new Point((int)((_twooffset.X + Roads.Config.scaleOffset) * _scale), (int)(((_twooffset.Y) * _scale) + offset));
                     }
                     else
                     {
@@ -491,11 +491,11 @@ namespace GreenLight
                         else
                         {
                             int temp = Math.Abs(_oneoffset.Y - _twooffset.Y);
-                            offset = (double)this.settingScreenImage.Height / 2 - ((((double)selectedRoad.getLanes() * 20) / 2) * _scale) - temp / 2 * _scale;
+                            offset = (double)this.settingScreenImage.Height / 2 - ((((double)selectedRoad.getLanes() * Roads.Config.laneWidth) / 2) * _scale) - temp / 2 * _scale;
                         }
 
-                        _oneoffset = new Point((int)((_oneoffset.X + 10) * _scale), (int)(((_oneoffset.Y) * _scale) + offset));
-                        _twooffset = new Point((int)((_twooffset.X + 10) * _scale), (int)(((_twooffset.Y) * _scale) + offset));
+                        _oneoffset = new Point((int)((_oneoffset.X + Roads.Config.scaleOffset) * _scale), (int)(((_oneoffset.Y) * _scale) + offset));
+                        _twooffset = new Point((int)((_twooffset.X + Roads.Config.scaleOffset) * _scale), (int)(((_twooffset.Y) * _scale) + offset));
                     }
                 }
                 else if (selectedRoad.hitbox.Size.Width < selectedRoad.hitbox.Size.Height)
@@ -510,12 +510,12 @@ namespace GreenLight
                         else
                         {
                             int temp = Math.Abs(_oneoffset.X - _twooffset.X);
-                            offset = (double)this.settingScreenImage.Width / 2 - ((((double)selectedRoad.getLanes() * 20) / 2) * _scale) - temp / 2 * _scale;
+                            offset = (double)this.settingScreenImage.Width / 2 - ((((double)selectedRoad.getLanes() * Roads.Config.laneWidth) / 2) * _scale) - temp / 2 * _scale;
                         }
 
 
-                        _oneoffset = new Point((int)(((_oneoffset.X) * _scale) + offset), (int)((_oneoffset.Y + 10) * _scale));
-                        _twooffset = new Point((int)(((_twooffset.X) * _scale) + offset), (int)((_twooffset.Y + 10) * _scale));
+                        _oneoffset = new Point((int)(((_oneoffset.X) * _scale) + offset), (int)((_oneoffset.Y + Roads.Config.scaleOffset) * _scale));
+                        _twooffset = new Point((int)(((_twooffset.X) * _scale) + offset), (int)((_twooffset.Y + Roads.Config.scaleOffset) * _scale));
                     }
                     else
                     {
@@ -532,12 +532,12 @@ namespace GreenLight
 
                         //double offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.Hitbox2.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
 
-                        _oneoffset = new Point((int)(((_oneoffset.X) * _scale) + offset), (int)((_oneoffset.Y + 10) * _scale));
-                        _twooffset = new Point((int)(((_twooffset.X) * _scale) + offset), (int)((_twooffset.Y + 10) * _scale));
+                        _oneoffset = new Point((int)(((_oneoffset.X) * _scale) + offset), (int)((_oneoffset.Y + Roads.Config.scaleOffset) * _scale));
+                        _twooffset = new Point((int)(((_twooffset.X) * _scale) + offset), (int)((_twooffset.Y + Roads.Config.scaleOffset) * _scale));
                     }
                 }
 
-                Point[] _points = selectedRoad.hitBoxPoints(_oneoffset, _twooffset, 1, (int)(20 * _scale));
+                Point[] _points = selectedRoad.hitBoxPoints(_oneoffset, _twooffset, 1, (int)(Roads.Config.laneWidth * _scale));
 
                 Hitbox _hitbox = selectedRoad.CreateHitbox(_points);
 

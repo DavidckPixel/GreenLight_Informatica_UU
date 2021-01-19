@@ -74,6 +74,8 @@
     <Compile Include="src\Driver\GPS.cs" />
     <Compile Include="src\Driver\RoadMath.cs" />
     <Compile Include="src\OriginPointController.cs" />
+    <Compile Include="src\Roads\Roads.cs" />
+    <Compile Include="src\Roads\RoadsConfig.cs" />
     <Compile Include="src\VehicleOriginPoint.cs" />
     <Compile Include="src\DrawData.cs" />
     <Compile Include="src\Driver\DriverStats.cs" />
@@ -243,6 +245,7 @@
     <None Include="src\Driver\DriverType.json" />
     <None Include="src\Grid\GridConfig.json" />
     <None Include="src\Logs\LogConfig.json" />
+    <None Include="src\Roads\RoadsConfig.json" />
     <None Include="src\UserControls\UserControlsConfig.json" />
     <None Include="src\Vehicle\Earth.json" />
     <None Include="src\Vehicle\VehicleType.json" />
