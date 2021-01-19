@@ -127,11 +127,14 @@ namespace GreenLight
                 {
                     _normpoint1 = new Point(_xtemp, _ytemp);
                 }
+                //Console.WriteLine("normpoint: " + _normpoint1 + " prev: " + _prev);
 
                 _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle(_prev, _normpoint1)));
+                //Console.WriteLine("ANGLE NOW: " + RoadMath.CalculateAngle(_prev, _normpoint1));
 
                 _prev = _normpoint1;
             }
+            //Console.WriteLine("test for first point: "+_lanePoints.First());
             RoadMath.CalculateDistanceLanePoints(ref _lanePoints);
             return _lanePoints;
         }
