@@ -95,10 +95,10 @@ namespace GreenLight
             Console.WriteLine(this.laneWidth);
 
             createConnectionPointSide(new Point((int)(Width + (Extra + this.laneWidth) / 2 * this.Scale), (int)(Width)), 1, 0, "Top");
-            createConnectionPointSide(new Point((int)(Width + Extra * this.Scale), (int)(Width+ ((lanes * this.laneWidth + Extra) * this.Scale))), 1, 0, "Bottom");
+            createConnectionPointSide(new Point((int)(Width + (Extra + this.laneWidth) / 2 * this.Scale), (int)(Width+ ((lanes * this.laneWidth + Extra) * this.Scale))), 1, 0, "Bottom");
 
-            createConnectionPointSide(new Point((int)(Width), (int)(Width + Extra * this.Scale)), 0, 1, "Left");
-            createConnectionPointSide(new Point((int)(Width + ((lanes * this.laneWidth + Extra) * this.Scale)), (int)(Width + Extra * this.Scale)), 0, 1, "Right");
+            createConnectionPointSide(new Point((int)(Width), (int)(Width + (Extra + this.laneWidth) / 2 * this.Scale)), 0, 1, "Left");
+            createConnectionPointSide(new Point((int)(Width + ((lanes * this.laneWidth + Extra) * this.Scale)), (int)(Width + (Extra + this.laneWidth) / 2 * this.Scale)), 0, 1, "Right");
         }
 
         private void createConnectionPointSide(Point _loc, int _X, int _Y, string _side)

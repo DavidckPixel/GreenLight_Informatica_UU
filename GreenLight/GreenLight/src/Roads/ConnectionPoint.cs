@@ -19,8 +19,9 @@ namespace GreenLight
             this.Location = _loc;
             this.Side = _side;
             this.Active = true;
+            double _unscaledSize = Math.Max(Math.Min(Roads.Config.laneWidth / 4, Roads.Config.crossroadExtra), Math.Min(Roads.Config.laneWidth, Roads.Config.crossroadExtra/4));
 
-            int _size = (int)(5 * _scale);
+            int _size = (int)(_unscaledSize * _scale);
 
             Point[] _points = new Point[4];
 
