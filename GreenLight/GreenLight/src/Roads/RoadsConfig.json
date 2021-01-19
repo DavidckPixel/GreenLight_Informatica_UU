@@ -1,7 +1,25 @@
 {
     "laneWidth": 20,
     "scaleOffset": 10,
-    "crossroadExtra": 20
+    "crossroadExtra": 20,
+
+    "settingsScreen": {
+        "length": 570,
+        "width": 520,
+        "offset": 10,
+        "buttonHeight": 40,
+        "buttonWidth": 80,
+        "betweenButtons": 10,
+        "buttonCurve": 25,
+        "mpX": 200,
+        "mpY": 510,
+        "mpWidth": 400,
+        "mpHeight": 80
+    }
+
+    "opStandardWeight": 80,
+
+
 
 
 

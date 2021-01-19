@@ -8,10 +8,15 @@ namespace GreenLight
 {
     class RoadsConfig
     {
+        //Size of (cross)roads
         public int laneWidth;
         public int scaleOffset;
         public int crossroadExtra;
 
-        public Dictionary<string, int> test;
+        //OriginPoints
+        public int opStandardWeight;
+
+        //settingsscreen roads
+        public Dictionary<string, int> settingsScreen;
     }
 }

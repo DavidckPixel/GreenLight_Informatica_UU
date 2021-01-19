@@ -62,10 +62,12 @@ namespace GreenLight
         }*/
         private void initSettingScreen()
         {
+            Dictionary<string, int> menu = Roads.Config.settingsScreen;
+
             this.settingScreen = new Form();
             this.settingScreen.Hide();
 
-            this.settingScreen.Size = new Size(520, 570);
+            this.settingScreen.Size = new Size(menu["width"], menu["length"]);
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
@@ -74,23 +76,23 @@ namespace GreenLight
             settingScreenImage.Paint += SettingBoxDraw;
             settingScreenImage.MouseClick += SettingBoxClick;
 
-            settingScreenImage.Size = new Size(500, 500);
-            settingScreenImage.Location = new Point(10, 10);
+            settingScreenImage.Size = new Size(menu["width"] - 2 * menu["offset"], menu["width"] - 2 * menu["offset"]);
+            settingScreenImage.Location = new Point(menu["offset"], menu["offset"]);
             settingScreenImage.BackColor = Color.Black;
 
             //TEMP HERE
             Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");
             FontFamily Dosis_font_family = Font_collection.Families[0];
 
-            doneButton = new CurvedButtons(new Size(80, 40), new Point(10, 520), 25, "../../User Interface Recources/Custom_Small_Button.png", "Save", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            doneButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Save", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             doneButton.Click += (object o, EventArgs ea) => { DoneSettingScreen(); };
 
-            deleteButton = new CurvedButtons(new Size(90, 40), new Point(100, 520), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            deleteButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             deleteButton.Click += (object o, EventArgs ea) => { DeleteRoad(this.selectedRoad); };
 
             Move_panel move_panel = new Move_panel(settingScreen);
-            move_panel.Location = new Point(200,510);
-            move_panel.Size = new Size(400,80);
+            move_panel.Location = new Point(menu["mpX"], menu["mpY"]);
+            move_panel.Size = new Size(menu["mpWidth"], menu["mpHeight"]);
             settingScreen.Controls.Add(move_panel);
 
 
@@ -107,8 +109,8 @@ namespace GreenLight
             AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, "Diagonal", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
-			OPC.AddOriginPoint(80, _point1);
-            OPC.AddOriginPoint(80, _point2);
+			OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point1);
+            OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point2);
             //Console.WriteLine(OPC.GetSpawnPoint);
         }
 
