@@ -206,9 +206,9 @@ namespace GreenLight
             _angle = (int)(Math.Atan2(yDiff, xDiff) * (180 / Math.PI));
             _angle = Math.Abs(_angle);
 
-            //Console.WriteLine("Angle: {0}", _angle);
+            Console.WriteLine("Angle: {0}", _angle);
 
-            if (_angle >= 45 && (_angle < 135 || _angle > 180)) 
+            if (_angle >= 45 && (_angle <= 135 || _angle > 180)) 
             {
                 _points[0] = new Point(_one.X + _roadWidth, _one.Y);
                 _points[1] = new Point(_one.X - _roadWidth, _one.Y); //Hoogste punt Altijd
