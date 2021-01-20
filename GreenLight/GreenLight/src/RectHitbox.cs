@@ -24,6 +24,7 @@ namespace GreenLight
             bottomright = _bottomright;
             topleft = _topleft;
             topright = _topright;
+            
 
             Topcord = new Point(BetterMin(_topleft.X, _topright.X, _bottomleft.X, _bottomright.X), BetterMin(_topleft.Y, _topright.Y, _bottomleft.Y, _bottomright.Y));
 
@@ -42,6 +43,8 @@ namespace GreenLight
             bottomrightY = _bottomright.Y;
 
             this.color = _color;
+
+            this.Type = "Rect";
 
             //----------------------------------------------------------------
 
@@ -145,9 +148,20 @@ namespace GreenLight
             return false;
         }
 
-        public override bool Collide(RectHitbox _h)
+        public override bool Collide(Hitbox _h)
         {
-            bool _temp = (this.Contains(_h.topright) || this.Contains(_h.topleft) || this.Contains(_h.bottomright) || this.Contains(_h.bottomleft));
+            bool _temp = false;
+            if(_h.Type == "Rect")
+            {
+                RectHitbox box = (RectHitbox)_h;
+                _temp = (this.Contains(box.topright) || this.Contains(box.topleft) || this.Contains(box.bottomright) || this.Contains(box.bottomleft));
+            }
+            else if(_h.Type == "Curved")
+            {
+                CurvedHitbox box = (CurvedHitbox)_h;
+                _temp = (this.Contains(box.max_start) || this.Contains(box.max_end) || this.Contains(box.min_end) || this.Contains(box.min_start));
+            }
+            
             return _temp;
         }
 

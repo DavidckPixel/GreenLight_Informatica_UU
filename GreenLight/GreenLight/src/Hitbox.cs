@@ -14,6 +14,7 @@ namespace GreenLight
     abstract public class Hitbox
     {
         public Point Topcord;
+        public string Type;
         public Size Size;
 
         public int SizeX, SizeY;
@@ -30,7 +31,7 @@ namespace GreenLight
         public abstract bool Contains(Point _p);
         //public abstract bool Contains(RectHitbox _h);
 
-        public abstract bool Collide(RectHitbox _h);
+        public abstract bool Collide(Hitbox _h);
 
         public abstract void Draw(Graphics g);
 
