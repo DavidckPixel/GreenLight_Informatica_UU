@@ -60,19 +60,19 @@ namespace GreenLight
             
 
             testRoad = new CurvedRoad(start, new Point(400, 400), 1, "NE", "Curved", false, false, null, null);
-            testRoad2 = new DiagonalRoad(new Point(400,400), end, 1, "S", "Diagonal", false, false, null, null);
+            testRoad2 = new DiagonalRoad(new Point(400,400), end, 1, "D", "Diagonal", false, false, null, null);
 
             roads.Add(testRoad);
             roads.Add(testRoad2);
 
             roads.Add(new CurvedRoad(end, new Point(900, 500), 1, "NW", "Curved", false, false, null, null));
-            roads.Add(new DiagonalRoad(new Point(900, 500), new Point(700, 200), 1, "N", "Diagonal", false, false, null, null));
+            roads.Add(new DiagonalRoad(new Point(900, 500), new Point(700, 200), 1, "D", "Diagonal", false, false, null, null));
             roads.Add(new CurvedRoad(new Point(700, 200), new Point(400, 100), 1, "SW", "Curved", false, false, null, null));
             roads.Add(new CurvedRoad(new Point(400, 100), new Point(250, 50), 1, "NE", "Curved", false, false, null, null));
             roads.Add(new CurvedRoad(new Point(250, 50), new Point(150, 0), 1, "SW", "Curved", false, false, null, null));
             roads.Add(new CurvedRoad(new Point(150, 0), start, 1, "SE", "Curved", false, false, null, null));
 
-            testRoad3 = new DiagonalRoad(new Point(100, 800), new Point(800, 900), 2, "E", "Diagonal", false, false, null, null);
+            testRoad3 = new DiagonalRoad(new Point(100, 800), new Point(800, 900), 2, "D", "Diagonal", false, false, null, null);
             roads2.Add(testRoad3);
 
              
