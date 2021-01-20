@@ -147,7 +147,7 @@ namespace GreenLight
                         }
                         break;
                 }
-                Console.WriteLine(" ------ DrivingLane ------- "+ dir);
+                //Console.WriteLine(" ------ DrivingLane ------- "+ dir);
                
 
                 try
@@ -234,9 +234,7 @@ namespace GreenLight
 
             Image _image = Image.FromFile("../../User Interface Recources/Arrow.png");
             Bitmap _bitmap = new Bitmap(_image);
-            _bitmap = DrawData.RotateImage(_bitmap, RoadMath.TranslateDegree(AngleDir));  //HIER MOET NOG NAAR GEKEKEN WORDEN!!!!
-
-            Console.WriteLine("ANGLE DIR: {0}", RoadMath.TranslateDegree(AngleDir));
+            _bitmap = DrawData.RotateImage(_bitmap, AngleDir);  //HIER MOET NOG NAAR GEKEKEN WORDEN!!!!
 
             g.DrawImage(_bitmap, new Rectangle(new Point(middle.cord.X - 7, middle.cord.Y - 7), new Size(15, 15)));
 

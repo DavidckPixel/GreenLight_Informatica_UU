@@ -75,7 +75,7 @@ namespace GreenLight
                     speed += a * vehicleAI.accelerate;
                 }
 
-                Console.WriteLine("Accelerating!!! - {0}", this.speed);
+                //Console.WriteLine("Accelerating!!! - {0}", this.speed);
             }
 
             brakeDistance = weight * speed * speed / (physics.Brakepwr * 2);
@@ -85,7 +85,7 @@ namespace GreenLight
 
         public void ChangeLocation(double _speed)
         {
-            double radAngel = this.currentAngel * (Math.PI / 180);
+            double radAngel =( (this.currentAngel + 270) % 360) * (Math.PI / 180);
 
             double moveX = Math.Cos(radAngel) * _speed;
             double moveY = Math.Sin(radAngel) * _speed;
@@ -104,7 +104,7 @@ namespace GreenLight
         {
             g.FillRectangle(Brushes.Red, new Rectangle(new Point((int)this.locationX, (int)this.locationY), new Size(5, 5)));
 
-            Image _image = Image.FromFile("../../Images/BetterCar.png");
+            Image _image = Image.FromFile("../../Images/BetterCarStraight.png");
             Bitmap _bitmap = new Bitmap(_image);
 
             _image = DrawData.BetterRotateImage(_image, this.currentAngel);  //HIER MOET NOG NAAR GEKEKEN WORDEN!!!!
@@ -125,9 +125,6 @@ namespace GreenLight
         public void SwitchRoad(AbstractRoad _road, int _laneIndex)
         {
             this.currentRoad = _road;
-
-            Console.WriteLine("LANE INDEX IS: " + _laneIndex);
-
             this.currentLane = this.currentRoad.Drivinglanes[_laneIndex];
         }
 

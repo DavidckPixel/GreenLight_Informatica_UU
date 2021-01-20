@@ -237,7 +237,7 @@ namespace GreenLight
             {
                 if (pointsTillEnd >= checkPointsAhead)
                 {
-                    Console.WriteLine("WE ARE CURRENTLY ON THE CROSSROAD!");
+                    //Console.WriteLine("WE ARE CURRENTLY ON THE CROSSROAD!");
 
                     currentCrossRoad = (CrossRoad)_currentRoad;
                     for (int x = 0; x < 30; x++)
@@ -268,14 +268,14 @@ namespace GreenLight
                 }
                 else
                 {
-                    Console.WriteLine("THE CROSSROAD IS THE NEXT ROAD!");
-                    Console.WriteLine(pointsdiff);
+                    //Console.WriteLine("THE CROSSROAD IS THE NEXT ROAD!");
+                    //Console.WriteLine(pointsdiff);
                     currentCrossRoad = (CrossRoad)this.nextRoad;
                     for (int x = 0; x < Math.Abs(pointsdiff); x++)
                     {
                         _location = this.nextRoad.Drivinglanes.First().points[x].cord;
 
-                        Console.WriteLine(_location);
+                        //Console.WriteLine(_location);
 
                         int y = 0;
                         foreach (CrossRoadSide _side in currentCrossRoad.sides)
@@ -285,7 +285,7 @@ namespace GreenLight
                                 _currentFoundHitbox = _side.hitbox;
                                 _side.aiOnSide.Add(this);
                                 _side.status = true;
-                                Console.WriteLine("STATUS SET!");
+                                //Console.WriteLine("STATUS SET!");
 
                                 _side.priorityLevel = this.priority > _side.priorityLevel ? this.priority : _side.priorityLevel;
                             }
@@ -298,7 +298,7 @@ namespace GreenLight
                         }
                     }
 
-                    Console.WriteLine("The SIDES: LINKS: {0}, BOTTOM: {1}, RIGHT: {2}, TOP: {3} ", currentCrossRoad.sides[0].status, currentCrossRoad.sides[1].status, currentCrossRoad.sides[2].status, currentCrossRoad.sides[3].status);
+                    //Console.WriteLine("The SIDES: LINKS: {0}, BOTTOM: {1}, RIGHT: {2}, TOP: {3} ", currentCrossRoad.sides[0].status, currentCrossRoad.sides[1].status, currentCrossRoad.sides[2].status, currentCrossRoad.sides[3].status);
                 }
             }catch(Exception e) {  }
 
@@ -322,7 +322,7 @@ namespace GreenLight
                 {
                     this.currentCrossRoad.sides[Index].status = false;
                 }
-                Console.WriteLine("WE LEFT THE CROSSROAD");
+                //Console.WriteLine("WE LEFT THE CROSSROAD");
             }
             
             //FORALL CROSSROADS  WHERE I WILL BE IN THE HITBOX IN 30 LANEPOINTS (OR LESS) ,SET SIDE TO TRUE
@@ -450,7 +450,7 @@ namespace GreenLight
             this.lanePointDistance = RoadMath.Distance(vehicle.locationX, vehicle.locationY, goal.cord.X, goal.cord.Y);
             this.vehiclePointDistance = this.lanePointDistance;
 
-            this.SteerWheel(RoadMath.TranslateDegree(RoadMath.CalculateAngle(new Point((int)vehicle.locationX, (int)vehicle.locationY), goal.cord))); //Lanes get switched But wrong way!!!
+            this.SteerWheel(RoadMath.CalculateAngle(new Point((int)vehicle.locationX, (int)vehicle.locationY), goal.cord)); //Lanes get switched But wrong way!!!
 
             this.vehicle.currentLane = _laneToGo;
             DistanceToCars();
@@ -518,7 +518,7 @@ namespace GreenLight
             this.vehiclePointDistance = this.lanePointDistance;
 
             this.currentLaneIndex = 0;
-            this.SteerWheel(RoadMath.TranslateDegree(goal.degree));
+            this.SteerWheel(origin.degree);
 
             //this.locationGoal = _path.Last().Drivinglanes.First().points.Last().cord; //TEMP
             this.locationGoal = new Point(-1000, -1000);
@@ -566,12 +566,17 @@ namespace GreenLight
             this.nextRoad = this.drivingRoads[_nextIndex];
 
             this.origin = this.goal;
-            this.goal = this.vehicle.currentLane.points.First();
+            this.goal = this.vehicle.currentLane.points[1];
 
-            this.lanePointDistance = RoadMath.Distance(origin.cord, goal.cord);
+            this.lanePointDistance = RoadMath.Distance(vehicle.locationX, vehicle.locationY, goal.cord.X, goal.cord.Y);
             this.vehiclePointDistance = this.lanePointDistance;
 
-            this.SteerWheel(RoadMath.TranslateDegree(RoadMath.CalculateAngle(origin.cord,goal.cord)));
+            float angle = RoadMath.CalculateAngle((float)vehicle.locationX, (float)vehicle.locationY, goal.cord.X, goal.cord.Y);
+
+            Console.WriteLine("LOCATION: {0} - {1}, GOAL: {2} - {3}", (float)vehicle.locationX, (float)vehicle.locationY, goal.cord.X, goal.cord.Y);
+            Console.WriteLine("THE ANGLE OF THE SWITCH IS: {0}", angle);
+
+            this.SteerWheel(goal.degree);
         }
     }
 }

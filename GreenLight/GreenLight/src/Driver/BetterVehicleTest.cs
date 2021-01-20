@@ -43,7 +43,7 @@ namespace GreenLight
 
             this.Size = new Size(1000, 1000);
 
-            Point start = new Point(100, 100);
+            Point start = new Point(50, 50);
             Point end = new Point(700, 700);
 
             /*
@@ -90,7 +90,7 @@ namespace GreenLight
             testVehicle2.vehicleAI.SetPath(roads, 0);
 
             testVehicle.vehicleAI.targetspeed = 3 ;
-            testVehicle2.vehicleAI.targetspeed = 3;
+            testVehicle2.vehicleAI.targetspeed = 5;
             //testVehicle2.SetPath(roads, 0);
             //testVehicle2.vehicleAI.targetspeed = 6;
 

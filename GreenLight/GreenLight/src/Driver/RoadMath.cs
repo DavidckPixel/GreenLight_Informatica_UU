@@ -35,7 +35,24 @@ namespace GreenLight
 
             double _raddegree = Math.Atan2(_deltaY, _deltaX);
 
-            int _degree = (int)(_raddegree * (180 / Math.PI));
+            float _degree = (float)(_raddegree * (180 / Math.PI)) - 90;
+            if (_degree < 0)
+            {
+                _degree = 360 + _degree;
+            }
+
+            return _degree;
+        }
+
+        public static float CalculateAngle(float _point1X, float _point1Y, float _point2X, float _point2Y) //Copied van roads
+        {
+            //calculateAngle
+            float _deltaX = _point1X - _point2X;
+            float _deltaY = _point1Y - _point2Y;
+
+            double _raddegree = Math.Atan2(_deltaY, _deltaX);
+
+            float _degree = (float)(_raddegree * (180 / Math.PI)) - 90;
             if (_degree < 0)
             {
                 _degree = 360 + _degree;
@@ -52,23 +69,6 @@ namespace GreenLight
 
             double _raddegree = Math.Atan2(_deltaX, _deltaY);
 
-            int _degree = (int)(_raddegree * (180 / Math.PI));
-            if (_degree < 0)
-            {
-                _degree = 360 + _degree;
-            }
-
-            return _degree % 360;
-        }
-
-        public static float CalculateAngle(float _point1X, float _point1Y, float _point2X, float _point2Y) //Copied van roads
-        {
-            //calculateAngle
-            float _deltaX = _point1X - _point2X;
-            float _deltaY = _point1Y - _point2Y;
-
-            double _raddegree = Math.Atan2(_deltaY, _deltaX);
-
             float _degree = (float)(_raddegree * (180 / Math.PI));
             if (_degree < 0)
             {
@@ -77,6 +77,7 @@ namespace GreenLight
 
             return _degree % 360;
         }
+
 
         public static void CalculateDistanceLanePoints(ref List<LanePoints> _points)
         {
