@@ -155,11 +155,13 @@ namespace GreenLight
             {
                 RectHitbox box = (RectHitbox)_h;
                 _temp = (this.Contains(box.topright) || this.Contains(box.topleft) || this.Contains(box.bottomright) || this.Contains(box.bottomleft));
+                Console.WriteLine(_h.Type);
             }
             else if(_h.Type == "Curved")
             {
                 CurvedHitbox box = (CurvedHitbox)_h;
                 _temp = (this.Contains(box.max_start) || this.Contains(box.max_end) || this.Contains(box.min_end) || this.Contains(box.min_start));
+                Console.WriteLine(_h.Type);
             }
             
             return _temp;

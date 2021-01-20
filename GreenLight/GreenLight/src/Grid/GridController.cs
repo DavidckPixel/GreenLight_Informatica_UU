@@ -83,6 +83,7 @@ namespace GreenLight
 
             if (_type == "X" || _type == "D" || _point == null)
             {
+
                 return;
             }
 
@@ -118,7 +119,7 @@ namespace GreenLight
                     Console.WriteLine("Second PointClick!");
                     Console.WriteLine(_point.Cords);
                     this.secondPoint = _point;
-
+                   
                     builder.BuildRoad(this.firstPoint.Cords, this.secondPoint.Cords);
                     this.ResetPoints();
                 }
@@ -173,7 +174,22 @@ namespace GreenLight
                 {
                     return;
                 }
-
+                if (Gridpoints.Find(x => x.Collision(mousecords)) != null)  // If the cursor hovers over a gridpoint on the secondclick
+                {
+                    RectHitbox temp = new RectHitbox(new Point(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Max(firstPoint.Cords.Y, mousecords.Y)), new Point(Math.Max(firstPoint.Cords.X, mousecords.X), Math.Max(firstPoint.Cords.Y, mousecords.Y)), //creating hitbox
+                    new Point(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y)), new Point(Math.Max(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y)), Color.Red);
+                    Rectangle rectemp = new Rectangle(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y), Math.Abs(firstPoint.Cords.X - mousecords.X), Math.Abs(firstPoint.Cords.Y - mousecords.Y));
+                    Console.WriteLine(temp.topleft + " " + temp.topright + " " + temp.bottomleft + " " + temp.bottomright); //this is just to check the cords of the rectangle that is created.
+                    foreach (AbstractRoad road in builder.roadBuilder.roads) // loops through all roads
+                    {
+                        if (temp.Collide(road.hitbox)) // this always returns false for some reason...
+                        {
+                            g.FillRectangle(Brushes.Red, rectemp); 
+                            Console.WriteLine("Overlap!");
+                            // ... code to not let the user place the road has to be written here...
+                        }
+                    }
+                }
                 Rectangle rec = new Rectangle(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y), Math.Abs(firstPoint.Cords.X - mousecords.X), Math.Abs(firstPoint.Cords.Y - mousecords.Y));
                 g.FillRectangle(Notsolid, rec);
             }
