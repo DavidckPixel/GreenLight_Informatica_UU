@@ -1,4 +1,4 @@
-﻿namespace GreenLight.src.Driver
+﻿namespace GreenLight
 {
     partial class BetterVehicleTest
     {

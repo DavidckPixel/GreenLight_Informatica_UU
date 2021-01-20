@@ -23,12 +23,18 @@ namespace GreenLight
         public int Extra;
         
 
+        public CrossRoadSide[] sides = new CrossRoadSide[4];
+
+        //public RectHitbox[] sideHitboxes = new RectHitbox[4];
+        //public bool[] sideStatus = new bool[4] { false, false, false, false };
+
         public CrossRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, _roadtype, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
-            Extra = Roads.Config.crossroadExtra;
-            hitbox = CreateHitbox(hitBoxPoints(_point1, _point1, _lanes, Roads.Config.laneWidth));
 
-            
+            Extra = Roads.Config.crossroadExtra;
+            Point[] _points = hitBoxPoints(_point1, _point1, _lanes, Roads.Config.laneWidth);
+            hitbox = CreateHitbox(_points);
+
             int _width = (_lanes) * this.laneWidth + Roads.Config.scaleOffset * 2 + 2 * Extra;
             Scale = 500 / (double)_width;
             this.Type = _roadtype;
@@ -38,6 +44,12 @@ namespace GreenLight
 
             createConnectionPoints();
             SwitchSelectedPoint(connectPoints.First());
+
+            double lanewidth = (double)this.lanes * 20;
+            this.sides[0] = new CrossRoadSide(new RectHitbox(_points[0], new Point(_points[0].X + 20, _points[0].Y), _points[2], new Point(_points[2].X + 20, _points[2].Y), Color.Green));
+            this.sides[1] = new CrossRoadSide(new RectHitbox(new Point(_points[2].X, _points[2].Y - 20), new Point(_points[3].X, _points[3].Y - 20), _points[2], _points[3],Color.Green));
+            this.sides[2] = new CrossRoadSide(new RectHitbox(new Point(point1.X + (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2)), new Point(point1.X + (int)(lanewidth / 2) + 20, point1.Y - (int)(lanewidth / 2)), new Point(point1.X + (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2) + (int)(lanewidth)), new Point(point1.X + (int)(lanewidth / 2) + 20, point1.Y - (int)(lanewidth / 2) + (int)lanewidth), Color.Green));
+            this.sides[3] = new CrossRoadSide(new RectHitbox(_points[0], _points[1], new Point(_points[0].X, _points[0].Y + 20), new Point(_points[1].X, _points[1].Y + 20), Color.Green));
         }
 
         public override Hitbox CreateHitbox(Point[] _array)
@@ -123,6 +135,11 @@ namespace GreenLight
 
             DrawLine(g);
             this.hitbox.Draw(g);
+
+            for(int x = 0; x < 4; x++)
+            {
+                this.sides[x].hitbox.Draw(g);
+            }
         }
 
         public void DrawSides(Graphics g, string _side, Point _topleft, Size _size, Brush _b)

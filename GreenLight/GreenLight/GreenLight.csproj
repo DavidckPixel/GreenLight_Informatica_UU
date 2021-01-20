@@ -74,8 +74,12 @@
     <Compile Include="src\Driver\GPS.cs" />
     <Compile Include="src\Driver\RoadMath.cs" />
     <Compile Include="src\OriginPointController.cs" />
+
+    <Compile Include="src\Roads\CrossRoadSide.cs" />
+
     <Compile Include="src\Roads\Roads.cs" />
     <Compile Include="src\Roads\RoadsConfig.cs" />
+
     <Compile Include="src\VehicleOriginPoint.cs" />
     <Compile Include="src\DrawData.cs" />
     <Compile Include="src\Driver\DriverStats.cs" />
@@ -261,6 +265,7 @@
     <Content Include="Documentation\BugReport Document.txt" />
     <Content Include="Documentation\CodingConvention.txt" />
     <Content Include="Documentation\Touchup Document.txt" />
+    <Content Include="Images\BetterCar.png" />
     <Content Include="Images\BigCar.png" />
     <Content Include="Images\Car.png" />
     <Content Include="User Interface Recources\CurveButton.png" />

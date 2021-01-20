@@ -22,6 +22,9 @@ namespace GreenLight
         public abstract void Draw(Graphics g);
         public abstract void DrawoffsetHitbox(Graphics g);
 
+        public int thisLane = 0;
+        public bool flipped = false;
+
         public void DrawLine(Graphics g)
         {
             Point _old = points.First().cord;

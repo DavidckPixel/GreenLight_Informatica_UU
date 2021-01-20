@@ -74,7 +74,9 @@ namespace GreenLight
 
         public void DrawLine(Graphics g)
         {
-            if (!General_Form.Main.BuildScreen.builder.roadBuilder.visualizeLanePoints)
+            bool draw = General_Form.Main == null ? true : General_Form.Main.BuildScreen.builder.roadBuilder.visualizeLanePoints;
+
+            if (!draw)
             {
                 return;
             }

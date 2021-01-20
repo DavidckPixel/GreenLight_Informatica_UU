@@ -463,7 +463,7 @@ namespace GreenLight
 
 
 
-                int Graden = RoadMath.CalculateAngle(_one, _two);
+                float Graden = RoadMath.OldCalculateAngle(_one, _two);
 
                 if (selectedRoad.hitbox.Size.Width >= selectedRoad.hitbox.Size.Height)
                 {

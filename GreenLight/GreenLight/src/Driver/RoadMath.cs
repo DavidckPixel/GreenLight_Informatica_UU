@@ -20,20 +20,56 @@ namespace GreenLight
             return Math.Sqrt(Math.Pow(_oneX - _twoX, 2) + Math.Pow(_oneY - _twoY, 2));
         }
 
-        public static int TranslateDegree(int _degree)
+        /*
+        public static float TranslateDegree(float _degree)
         {
-            return (Math.Abs(_degree - 270)) % 360;
-        }
+            _degree = _degree - 90 < 0 ? 360 : _degree - 90;
+            return _degree % 360;
+        } */
 
-        public static int CalculateAngle(Point _point1, Point _point2) //Copied van roads
+        public static float CalculateAngle(Point _point1, Point _point2) //Copied van roads
         {
             //calculateAngle
-            int _deltaX = _point1.X - _point2.X;
-            int _deltaY = _point1.Y - _point2.Y;
+            float _deltaX = _point1.X - _point2.X;
+            float _deltaY = _point1.Y - _point2.Y;
+
+            double _raddegree = Math.Atan2(_deltaY, _deltaX);
+
+            float _degree = (float)(_raddegree * (180 / Math.PI)) - 90;
+            if (_degree < 0)
+            {
+                _degree = 360 + _degree;
+            }
+
+            return _degree;
+        }
+
+        public static float CalculateAngle(float _point1X, float _point1Y, float _point2X, float _point2Y) //Copied van roads
+        {
+            //calculateAngle
+            float _deltaX = _point1X - _point2X;
+            float _deltaY = _point1Y - _point2Y;
+
+            double _raddegree = Math.Atan2(_deltaY, _deltaX);
+
+            float _degree = (float)(_raddegree * (180 / Math.PI)) - 90;
+            if (_degree < 0)
+            {
+                _degree = 360 + _degree;
+            }
+
+            return _degree;
+        }
+
+        public static float OldCalculateAngle(Point _point1, Point _point2) //Copied van roads
+        {
+            //calculateAngle
+            float _deltaX = _point1.X - _point2.X;
+            float _deltaY = _point1.Y - _point2.Y;
 
             double _raddegree = Math.Atan2(_deltaX, _deltaY);
 
-            int _degree = (int)(_raddegree * (180 / Math.PI));
+            float _degree = (float)(_raddegree * (180 / Math.PI));
             if (_degree < 0)
             {
                 _degree = 360 + _degree;
@@ -41,6 +77,7 @@ namespace GreenLight
 
             return _degree % 360;
         }
+
 
         public static void CalculateDistanceLanePoints(ref List<LanePoints> _points)
         {

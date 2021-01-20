@@ -14,10 +14,10 @@ namespace GreenLight
         //and angle itself accordingly between the 2 to create a smooth illusion of driving.
 
         public Point cord { get; set; }
-        public int degree;
+        public float degree;
         public Tuple<double, double> distance;
 
-        public LanePoints(Point _cord, int _degree)
+        public LanePoints(Point _cord, float _degree)
         {
             this.cord = _cord;
             this.degree = _degree;
@@ -67,6 +67,9 @@ namespace GreenLight
             Point _prev = _normpoint1;
             Point _nulpoint;
 
+            double _prevXtemp = _prev.X;
+            double _prevYtemp = _prev.Y;
+
             if (Dir == "NE")
             {
                 _nulpoint = new Point(Math.Max(_point1.X, _point2.X), Math.Min(_point1.Y, _point2.Y));
@@ -84,58 +87,66 @@ namespace GreenLight
                 _nulpoint = new Point(Math.Max(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y)); //Aangepast
             }
 
-            int _deltaX = Math.Abs(_point1.X - _point2.X);
-            int _deltaY = Math.Abs(_point1.Y - _point2.Y);
-            int _Ytemp = 0;
-            int _Xtemp = 0;
-            int _ytemp = 0;
-            int _xtemp = 0;
+            double _deltaX = Math.Abs(_point1.X - _point2.X);
+            double _deltaY = Math.Abs(_point1.Y - _point2.Y);
+            double _Ytemp = 0;
+            double _Xtemp = 0;
+            double _ytemp = 0;
+            double _xtemp = 0;
 
 
-            for (int x = 0, y = 0; x <= _deltaX || y <= _deltaY; x++, y++)
+            for (double x = 0, y = 0; x <= _deltaX || y <= _deltaY; x += 0.50, y += 0.50)
             {
+                
                 if ((x > _deltaX && y > _deltaY) || _prev == _point2)
                     break;
 
                 _Xtemp = _point1.X + x * _dir.Item1;
                 _ytemp = _point1.Y + y * _dir.Item2;
 
+                
+
 
                 if ((Dir == "NE" || Dir == "NW") && x <= _deltaX)
                 {
-                    _Ytemp = _nulpoint.Y + (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
+                    _Ytemp = (double)_nulpoint.Y + Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - (double)_nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
                 }
                 else if ((Dir == "SE" || Dir == "SW") && x <= _deltaX)
                 {
-                    _Ytemp = _nulpoint.Y - (int)Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - _nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
+                    _Ytemp = (double)_nulpoint.Y - Math.Sqrt(Math.Pow(_deltaY, 2) * (1 - (Math.Pow(_Xtemp - (double)_nulpoint.X, 2) / Math.Pow(_deltaX, 2))));
                 }
 
                 if ((Dir == "NE" || Dir == "NW") && y <= _deltaY)
                 {
-                    _xtemp = _nulpoint.X + (int)Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - _nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
+                    _xtemp = (double)_nulpoint.X + Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - (double)_nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
                 }
                 else if ((Dir == "SE" || Dir == "SW") && y <= _deltaY)
                 {
-                    _xtemp = _nulpoint.X - (int)Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - _nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
+                    _xtemp = (double)_nulpoint.X - Math.Sqrt(Math.Pow(_deltaX, 2) * (1 - (Math.Pow(_ytemp - (double)_nulpoint.Y, 2) / Math.Pow(_deltaY, 2))));
                 }
 
                 if (Math.Sqrt(Math.Pow(Math.Abs(_prev.X - _Xtemp), 2) + Math.Pow(Math.Abs(_prev.Y - _Ytemp), 2)) <= Math.Sqrt(Math.Pow(Math.Abs(_prev.X - _xtemp), 2) + Math.Pow(Math.Abs(_prev.Y - _ytemp), 2)))
                 {
-                    _normpoint1 = new Point(_Xtemp, _Ytemp);
+                    _normpoint1 = new Point((int)_Xtemp, (int)_Ytemp);
                 }
                 else
                 {
-                    _normpoint1 = new Point(_xtemp, _ytemp);
+                    _normpoint1 = new Point((int)_xtemp, (int)_ytemp);
                 }
                 //Console.WriteLine("normpoint: " + _normpoint1 + " prev: " + _prev);
 
-                _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle(_prev, _normpoint1)));
-                //Console.WriteLine("ANGLE NOW: " + RoadMath.CalculateAngle(_prev, _normpoint1));
+
+                
+                _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle((float)_prevXtemp,(float)_prevYtemp, (float)_Xtemp,(float) _Ytemp)));
+
 
                 _prev = _normpoint1;
+                _prevXtemp = _Xtemp;
+                _prevYtemp = _Ytemp;
             }
             //Console.WriteLine("test for first point: "+_lanePoints.First());
             RoadMath.CalculateDistanceLanePoints(ref _lanePoints);
+
             return _lanePoints;
         }
 
@@ -194,7 +205,7 @@ namespace GreenLight
             for (int x = 0; x <= Math.Abs(_point1.X - _point2.X) && !divByZero; x++)
             {
                 _normpoint1 = new Point(_point1.X + x * _dir, (int)(_point1.Y + x * _slp * _dir));
-                _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle(_prev, _normpoint1)));
+                _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle(_point1, _point2)));
 
                 _prev = _normpoint1;
             }

@@ -129,7 +129,10 @@ namespace GreenLight
 
         public void ShowSettingScreen(CrossRoad _road)
         {
-            General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "D";
+            if (General_Form.Main != null)
+            {
+                General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "D";
+            }
 
             this.selectedRoad = _road;
             this.settingScreen.Show();
@@ -240,7 +243,10 @@ namespace GreenLight
 
         private void DeleteCrossroad(AbstractRoad _deletedroad)
         {
-            General_Form.Main.BuildScreen.builder.roadBuilder.roads.Remove(_deletedroad);
+            if (General_Form.Main != null)
+            {
+                General_Form.Main.BuildScreen.builder.roadBuilder.roads.Remove(_deletedroad);
+            }
 
             if (_deletedroad == this.selectedRoad)
             {
@@ -251,7 +257,10 @@ namespace GreenLight
 
         private void DisableSettingScreen()
         {
-            General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "X";
+            if (General_Form.Main != null)
+            {
+                General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "X";
+            }
             this.settingScreen.Hide();
 
             this.Screen.Invalidate();
@@ -284,6 +293,8 @@ namespace GreenLight
                     {
                         //omgedraaid
                         _temp = LanePoints.CalculateCurveLane(_end, _begin, "NW");
+                        _temp.Reverse();
+                        _temp.ForEach(x => x.Flip());
 
                     }
                     else if (_link.begin.Side == "Top" && _link.end.Side == "Left")
@@ -296,6 +307,8 @@ namespace GreenLight
                     {
                         //omgedraaid
                         _temp = LanePoints.CalculateCurveLane(_end, _begin, "SE");
+                        _temp.Reverse();
+                        _temp.ForEach(x => x.Flip());
 
                     }
                     else if (_link.begin.Side == "Bottom" && _link.end.Side == "Right")
@@ -308,6 +321,8 @@ namespace GreenLight
                     {
                         //omgedraaid
                         _temp = LanePoints.CalculateCurveLane(_end, _begin, "SW");
+                        _temp.Reverse();
+                        _temp.ForEach(x => x.Flip());
 
                     }
                     else if (_link.begin.Side == "Left" && _link.end.Side == "Bottom")
@@ -320,6 +335,8 @@ namespace GreenLight
                     {
                         //omgedraaid
                         _temp = LanePoints.CalculateCurveLane(_end, _begin, "NE");
+                        _temp.Reverse();
+                        _temp.ForEach(x => x.Flip());
 
                     }
                     else if (_link.begin.Side == "Right" && _link.end.Side == "Top")

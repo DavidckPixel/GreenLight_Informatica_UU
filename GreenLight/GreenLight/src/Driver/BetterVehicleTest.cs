@@ -28,18 +28,36 @@ namespace GreenLight
         BetterAI testAI2;
         PictureBox pictureboxTemp;
 
+        CrossRoadController controller;
+
         public BetterVehicleTest()
         {
+
             pictureboxTemp = new PictureBox();
             pictureboxTemp.Size = new Size(1000, 1000);
             pictureboxTemp.Location = new Point(0, 0);
 
             this.Controls.Add(pictureboxTemp);
 
+            this.controller = new CrossRoadController(pictureboxTemp);
+
             this.Size = new Size(1000, 1000);
 
-            Point start = new Point(100, 100);
+            Point start = new Point(50, 50);
             Point end = new Point(700, 700);
+
+            /*
+            testRoad = controller.newCrossRoad(start, 2, "David");
+            testRoad2 = new DiagonalRoad(new Point(300, 450), new Point(300, 350), 2, "N", "Diagonal", false, false, null, null);
+            testRoad3 = new DiagonalRoad(new Point(300, 550), new Point(300, 450), 2, "N", "Diagonal", false, false, null, null);
+
+            roads.Add(testRoad3);
+            roads.Add(testRoad2);
+            roads.Add(testRoad);
+
+            CrossRoad testRoadc = (CrossRoad)testRoad;
+            */
+            
 
             testRoad = new CurvedRoad(start, new Point(400, 400), 1, "NE", "Curved", false, false, null, null);
             testRoad2 = new DiagonalRoad(new Point(400,400), end, 1, "S", "Diagonal", false, false, null, null);
@@ -57,28 +75,35 @@ namespace GreenLight
             testRoad3 = new DiagonalRoad(new Point(100, 800), new Point(800, 900), 2, "E", "Diagonal", false, false, null, null);
             roads2.Add(testRoad3);
 
+             
+
             VehicleStats vehicleStats = new VehicleStats("test", 1352, (float)4.77, 61, 4223, (float)2.65, (float)0.35);
             DriverStats driverStats = new DriverStats("David", 2.0f, 2.0f, 2, 2.0f);
 
-            testVehicle = new BetterVehicle(vehicleStats, start);
+            testVehicle = new BetterVehicle(vehicleStats, new Point(300,450));
             testAI = new BetterAI(driverStats, testVehicle);
 
-            testVehicle2 = new BetterVehicle(vehicleStats, start);
+            testVehicle2 = new BetterVehicle(vehicleStats, new Point(300, 550));
             testAI2 = new BetterAI(driverStats, testVehicle2);
 
-            testVehicle.SetPath(roads, 2);
-            testVehicle2.SetPath(roads, 0);
-            testVehicle2.vehicleAI.targetspeed = 6;
+            testVehicle.vehicleAI.SetPath(roads, 1);
+            testVehicle2.vehicleAI.SetPath(roads, 0);
 
-            BetterVehicle testVehicle3 = new BetterVehicle(vehicleStats, testRoad3.Drivinglanes.Last().points.First().cord);
-            BetterAI testAI3 = new BetterAI(driverStats, testVehicle3);
+            testVehicle.vehicleAI.targetspeed = 3 ;
+            testVehicle2.vehicleAI.targetspeed = 5;
+            //testVehicle2.SetPath(roads, 0);
+            //testVehicle2.vehicleAI.targetspeed = 6;
 
-            testVehicle3.SetPath(roads2, 0);
+            //BetterVehicle testVehicle3 = new BetterVehicle(vehicleStats, testRoad3.Drivinglanes.Last().points.First().cord);
+            //BetterAI testAI3 = new BetterAI(driverStats, testVehicle3);
+
+            //testVehicle3.SetPath(roads2, 0);
             //testVehicle3.vehicleAI.wantsToSwitch = true;
 
             vehiclelist.Add(testVehicle);
-            vehiclelist.Add(testVehicle3);
             vehiclelist.Add(testVehicle2);
+            //vehiclelist.Add(testVehicle3);
+            //vehiclelist.Add(testVehicle2);
             //testAI.locationGoal = start;
 
             //-----------------------------------
@@ -95,7 +120,8 @@ namespace GreenLight
 
         private void click(object sender, MouseEventArgs e)
         {
-            simulate = !simulate;
+            Console.WriteLine("set the targetspeed!!");
+
         }
 
         private void simulation()
@@ -134,38 +160,9 @@ namespace GreenLight
         {
             Graphics g = pea.Graphics;
 
-            
-
             foreach(AbstractRoad z in roads)
             {
                 z.Draw(g);
-
-                foreach (DrivingLane x in z.Drivinglanes)
-                {
-
-                    Point old = x.points.First().cord;
-                    foreach (LanePoints y in x.points)
-                    {
-                        g.DrawLine(Pens.Red, y.cord, old);
-                        old = y.cord;
-                    }
-                }
-            }
-
-            foreach (AbstractRoad z in roads2)
-            {
-                z.Draw(g);
-
-                foreach (DrivingLane x in z.Drivinglanes)
-                {
-
-                    Point old = x.points.First().cord;
-                    foreach (LanePoints y in x.points)
-                    {
-                        g.DrawLine(Pens.Red, y.cord, old);
-                        old = y.cord;
-                    }
-                }
             }
 
             foreach (BetterVehicle car in vehiclelist)
