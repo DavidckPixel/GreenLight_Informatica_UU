@@ -43,9 +43,10 @@ namespace GreenLight
 
             this.Size = new Size(1000, 1000);
 
-            Point start = new Point(300, 300);
+            Point start = new Point(100, 100);
             Point end = new Point(700, 700);
 
+            /*
             testRoad = controller.newCrossRoad(start, 2, "David");
             testRoad2 = new DiagonalRoad(new Point(300, 450), new Point(300, 350), 2, "N", "Diagonal", false, false, null, null);
             testRoad3 = new DiagonalRoad(new Point(300, 550), new Point(300, 450), 2, "N", "Diagonal", false, false, null, null);
@@ -55,8 +56,8 @@ namespace GreenLight
             roads.Add(testRoad);
 
             CrossRoad testRoadc = (CrossRoad)testRoad;
-            testRoadc.sideStatus[2] = true;
-            /*
+            */
+            
 
             testRoad = new CurvedRoad(start, new Point(400, 400), 1, "NE", "Curved", false, false, null, null);
             testRoad2 = new DiagonalRoad(new Point(400,400), end, 1, "S", "Diagonal", false, false, null, null);
@@ -74,7 +75,7 @@ namespace GreenLight
             testRoad3 = new DiagonalRoad(new Point(100, 800), new Point(800, 900), 2, "E", "Diagonal", false, false, null, null);
             roads2.Add(testRoad3);
 
-             */
+             
 
             VehicleStats vehicleStats = new VehicleStats("test", 1352, (float)4.77, 61, 4223, (float)2.65, (float)0.35);
             DriverStats driverStats = new DriverStats("David", 2.0f, 2.0f, 2, 2.0f);
@@ -85,11 +86,11 @@ namespace GreenLight
             testVehicle2 = new BetterVehicle(vehicleStats, new Point(300, 550));
             testAI2 = new BetterAI(driverStats, testVehicle2);
 
-            testVehicle.SetPath(roads, 1);
-            testVehicle2.SetPath(roads, 1);
+            testVehicle.vehicleAI.SetPath(roads, 1);
+            testVehicle2.vehicleAI.SetPath(roads, 0);
 
-            testVehicle.vehicleAI.targetspeed = 0.5 ;
-            testVehicle2.vehicleAI.targetspeed = 0.3;
+            testVehicle.vehicleAI.targetspeed = 3 ;
+            testVehicle2.vehicleAI.targetspeed = 3;
             //testVehicle2.SetPath(roads, 0);
             //testVehicle2.vehicleAI.targetspeed = 6;
 
@@ -121,7 +122,6 @@ namespace GreenLight
         {
             Console.WriteLine("set the targetspeed!!");
 
-            testVehicle.vehicleAI.targetspeed = 2;
         }
 
         private void simulation()

@@ -19,7 +19,7 @@ namespace GreenLight
         private LanePoints middle;
 
         public Hitbox hitbox;
-        public int AngleDir;
+        public float AngleDir;
 
         public DrivingLane(List<LanePoints> _points, string _dir, int _roadLanes, int _thisLane, Hitbox _hitbox)
         {
@@ -234,9 +234,11 @@ namespace GreenLight
 
             Image _image = Image.FromFile("../../User Interface Recources/Arrow.png");
             Bitmap _bitmap = new Bitmap(_image);
-            _bitmap = RotateImage(_bitmap, AngleDir);  //HIER MOET NOG NAAR GEKEKEN WORDEN!!!!
-            _bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
-            g.DrawImage(_bitmap, new Rectangle(middle.cord, new Size(15,15)));
+            _bitmap = DrawData.RotateImage(_bitmap, RoadMath.TranslateDegree(AngleDir));  //HIER MOET NOG NAAR GEKEKEN WORDEN!!!!
+
+            Console.WriteLine("ANGLE DIR: {0}", RoadMath.TranslateDegree(AngleDir));
+
+            g.DrawImage(_bitmap, new Rectangle(new Point(middle.cord.X - 7, middle.cord.Y - 7), new Size(15, 15)));
 
             //Console.WriteLine(AngleDir);
         }
@@ -247,19 +249,6 @@ namespace GreenLight
             {
                 offsetHitbox.Draw(g);
             }
-        }
-
-        public static Bitmap RotateImage(Bitmap b, float angle)
-        {
-            Bitmap returnBitmap = new Bitmap(b.Width, b.Height);
-            using (Graphics g = Graphics.FromImage(returnBitmap))
-            {
-                g.TranslateTransform((float)b.Width / 2, (float)b.Height / 2);
-                g.RotateTransform(angle);
-                g.TranslateTransform(-(float)b.Width / 2, -(float)b.Height / 2);
-                g.DrawImage(b, new Point(0, 0));
-            }
-            return returnBitmap;
         }
 
         public void LogPoints()

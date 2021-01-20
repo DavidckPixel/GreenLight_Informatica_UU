@@ -23,12 +23,14 @@ namespace GreenLight
         public double speed;
         public double brakeDistance; //Distance until car is completely still;
 
-        public int currentAngel = 90;
+        public float currentAngel = 90;
 
         public AbstractRoad currentRoad;
         public Lane currentLane;
 
         public double locationX, locationY;
+
+        public float drawDegree;
 
         public BetterVehicle(VehicleStats _stat, Point _startPoint) : base(_startPoint)
         {
@@ -63,8 +65,8 @@ namespace GreenLight
                 this.speed -= abrake;
                 this.speed = this.speed < 0 ? 0 : this.speed;
             }
-            else if (vehicleAI.isAccelerating == true)
-            {
+            else if (vehicleAI.isAccelerating == true && !vehicleAI.handBreakOn)
+            { 
                 double rollingResistance = (float)(physics.slip * this.weight * physics.Gravity);
                 double a = (this.motorpwr - (airResistance + rollingResistance)) / this.weight;
 
@@ -72,6 +74,8 @@ namespace GreenLight
                 {
                     speed += a * vehicleAI.accelerate;
                 }
+
+                Console.WriteLine("Accelerating!!! - {0}", this.speed);
             }
 
             brakeDistance = weight * speed * speed / (physics.Brakepwr * 2);
@@ -99,6 +103,13 @@ namespace GreenLight
         public override void Draw(Graphics g)
         {
             g.FillRectangle(Brushes.Red, new Rectangle(new Point((int)this.locationX, (int)this.locationY), new Size(5, 5)));
+
+            Image _image = Image.FromFile("../../Images/BetterCar.png");
+            Bitmap _bitmap = new Bitmap(_image);
+
+            _image = DrawData.BetterRotateImage(_image, this.currentAngel);  //HIER MOET NOG NAAR GEKEKEN WORDEN!!!!
+
+            g.DrawImage(_image, new Point((int)this.locationX - 10, (int)this.locationY - 10));
         }
 
         private void WriteCarData()
@@ -111,23 +122,13 @@ namespace GreenLight
             Console.WriteLine("Distance to Point: {0}", vehicleAI.vehiclePointDistance);
         }
 
-        public void SetPath(List<AbstractRoad> _path, int startIndex) //Need namechange
+        public void SwitchRoad(AbstractRoad _road, int _laneIndex)
         {
-            startIndex = startIndex > _path.Count() - 1 ? 0 : startIndex;
+            this.currentRoad = _road;
 
-            this.vehicleAI.drivingRoads = _path;
+            Console.WriteLine("LANE INDEX IS: " + _laneIndex);
 
-            this.currentRoad = _path[startIndex];
-            this.currentLane = this.currentRoad.Drivinglanes.First();
-
-            this.vehicleAI.nextRoad = _path[startIndex + 1];
-            this.vehicleAI.SetPath(startIndex);
-        }
-
-        public void SwitchRoad()
-        {
-            this.currentRoad = this.vehicleAI.nextRoad;
-            this.currentLane = this.currentRoad.Drivinglanes.First();
+            this.currentLane = this.currentRoad.Drivinglanes[_laneIndex];
         }
 
         private void StayOnLane(double _localspeed)
@@ -146,7 +147,5 @@ namespace GreenLight
                 ChangeLocation(_localspeed);
             }
         }
-
-
     }
 }
