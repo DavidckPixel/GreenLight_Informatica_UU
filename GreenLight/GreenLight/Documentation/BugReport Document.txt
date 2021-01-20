@@ -20,3 +20,20 @@ DISCRIPTION		(give a general discription with maybe some possible fixes and addi
 @@--------------------------------------------@@
 
 //--------------------------------REPORTS-----------------------------------------------------//
+
+@@-----------------001---------------@@
+NAME:			Laura Holtus
+DATE:			19-1-2021
+PRIORITY:		LOW
+
+STATUS:			OPEN
+SOLVER:			/
+
+ERRORNAME:		Empty Lanepointslist curved road
+DUPLICATION:		With curvedroad tool, with 3 or 5 lanes, trying to make a road 1 up/down and 1 left/right
+			or with curvedroad tool with 5 lanes trying make a road 2 up/down and 2 left/right.
+DISCRIPTION		It does seem to calculate normpoint1, but the angle is often 0 or 315. The first of the list can be written in
+			a console writeline, and will have a point, but no angle or distance, and an exception will be thrown:
+			"System.InvalidOperationException: 'Reeks bevat geen elementen'".
+
+@@-----------------------------------@@

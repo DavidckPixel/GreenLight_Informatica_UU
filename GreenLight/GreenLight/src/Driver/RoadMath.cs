@@ -81,7 +81,7 @@ namespace GreenLight
 
         public static void CalculateDistanceLanePoints(ref List<LanePoints> _points)
         {
-            LanePoints _before = _points.First();
+            LanePoints _before = _points.First(); //See bug 001 in bug report
             LanePoints _after;
             int x = 0;
 

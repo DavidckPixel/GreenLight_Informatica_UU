@@ -175,7 +175,7 @@ namespace GreenLight
         private Point[] hitBoxPoints(Point one, Point two)
         {
             Point _one, _two;
-            int _laneWidth = 40;
+            int _laneWidth = Roads.Config.laneWidth;
             int _roadWidth = (_laneWidth * this.lanes) / 2;
 
             if (one.Y <= two.Y)
@@ -229,7 +229,7 @@ namespace GreenLight
             return _points;
         }
 
-        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 40)
+        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth)
         {
             throw new NotImplementedException();
         }

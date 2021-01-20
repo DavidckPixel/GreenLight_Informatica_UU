@@ -358,7 +358,7 @@ namespace GreenLight
 
         private void TranslatePoints(ref Point _begin, ref Point _end, CrossRoad _road)
         {
-            double _lanes = 0.5 * 20;
+            double _lanes = 0.5 * Roads.Config.crossroadExtra;
 
             double _beginX = _begin.X / _road.Scale + _road.hitbox.Topcord.X - _lanes;
             double _beginY = _begin.Y / _road.Scale + _road.hitbox.Topcord.Y - _lanes;

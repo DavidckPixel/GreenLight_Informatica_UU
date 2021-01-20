@@ -20,6 +20,8 @@ namespace GreenLight
 
         public ConnectionPoint selectedPoint;
         public double Scale;
+        public int Extra;
+        
 
         public CrossRoadSide[] sides = new CrossRoadSide[4];
 
@@ -28,12 +30,17 @@ namespace GreenLight
 
         public CrossRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, _roadtype, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
-            Point[] _points = hitBoxPoints(_point1, _point1, _lanes + 2);
+
+            Extra = Roads.Config.crossroadExtra;
+            Point[] _points = hitBoxPoints(_point1, _point1, _lanes, Roads.Config.laneWidth);
             hitbox = CreateHitbox(_points);
 
-            int _width = (_lanes + 2) * 20 + 20;
+            int _width = (_lanes) * this.laneWidth + Roads.Config.scaleOffset * 2 + 2 * Extra;
             Scale = 500 / (double)_width;
             this.Type = _roadtype;
+            
+
+
 
             createConnectionPoints();
             SwitchSelectedPoint(connectPoints.First());
@@ -75,12 +82,13 @@ namespace GreenLight
 
         }
 
-        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20)
+        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth)
         {
             Point[] _points = new Point[4];
 
             Rectangle _rec = new Rectangle(one, new Size(1, 1));
-            int _inflate = _lanes * 20 / 2;
+            int _inflate = _lanes * this.laneWidth / 2 + Extra;
+
             _rec.Inflate(_inflate, _inflate);
 
             _points[0] = _rec.Location;
@@ -93,34 +101,37 @@ namespace GreenLight
 
         private void createConnectionPoints()
         {
-            int Width = (int)((500 - ((this.lanes + 2) * 20) * this.Scale));
+            int Width = (int)((500 - ((this.lanes * this.laneWidth) + 2 * Extra) * this.Scale));
+            Console.WriteLine(Width);
+            Console.WriteLine(this.Scale);
+            Console.WriteLine(this.laneWidth);
 
-            createConnectionPointSide(new Point((int)(Width + 20 * this.Scale), (int)(Width)), 1, 0, "Top");
-            createConnectionPointSide(new Point((int)(Width + 20 * this.Scale), (int)(Width+ ((lanes + 1) * 20 * this.Scale))), 1, 0, "Bottom");
+            createConnectionPointSide(new Point((int)(Width + (Extra + this.laneWidth) / 2 * this.Scale), (int)(Width)), 1, 0, "Top");
+            createConnectionPointSide(new Point((int)(Width + (Extra + this.laneWidth) / 2 * this.Scale), (int)(Width+ ((lanes * this.laneWidth + Extra) * this.Scale))), 1, 0, "Bottom");
 
-            createConnectionPointSide(new Point((int)(Width), (int)(Width + 20 * this.Scale)), 0, 1, "Left");
-            createConnectionPointSide(new Point((int)(Width + ((lanes + 1) * 20 * this.Scale)), (int)(Width + 20 * this.Scale)), 0, 1, "Right");
+            createConnectionPointSide(new Point((int)(Width), (int)(Width + (Extra + this.laneWidth) / 2 * this.Scale)), 0, 1, "Left");
+            createConnectionPointSide(new Point((int)(Width + ((lanes * this.laneWidth + Extra) * this.Scale)), (int)(Width + (Extra + this.laneWidth) / 2 * this.Scale)), 0, 1, "Right");
         }
 
         private void createConnectionPointSide(Point _loc, int _X, int _Y, string _side)
         {
             for(int x = 0; x < this.lanes; x++)
             {
-                connectPoints.Add(new ConnectionPoint(new Point(_loc.X + (int)(20 * this.Scale) * x * _X, _loc.Y + (int)(20 * this.Scale) * x * _Y), _side, this.Scale));
+                connectPoints.Add(new ConnectionPoint(new Point(_loc.X + (int)(this.laneWidth * this.Scale) * x * _X, _loc.Y + (int)(this.laneWidth * this.Scale) * x * _Y), _side, this.Scale));
             }
         }
 
         public override void Draw(Graphics g)
         {
             Brush _b = new SolidBrush(Color.FromArgb(21, 21, 21));
+            
+            double roadWidth = (double)this.lanes * this.laneWidth;
 
-            double lanewidth = (double)this.lanes * 20;
-
-            g.FillRectangle(_b, new Rectangle(new Point(point1.X - (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2)), new Size(this.lanes * 20, this.lanes * 20)));
-            DrawSides(g, "Top", new Point(point1.X - (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2 ) - 20), new Size((int)lanewidth, 20), _b );
-            DrawSides(g, "Right", new Point(point1.X + (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2)), new Size(20, (int)(lanewidth)), _b);
-            DrawSides(g, "Left", new Point(point1.X - (int)(lanewidth / 2) - 20, point1.Y - (int)(lanewidth / 2)), new Size(20, (int)(lanewidth)), _b);
-            DrawSides(g, "Bottom", new Point(point1.X - (int)(lanewidth / 2), point1.Y + (int)(lanewidth / 2)), new Size((int)lanewidth, 20), _b);
+            g.FillRectangle(_b, new Rectangle(new Point(point1.X - (int)(roadWidth / 2), point1.Y - (int)(roadWidth / 2)), new Size(this.lanes * this.laneWidth, this.lanes * this.laneWidth)));
+            DrawSides(g, "Top", new Point(point1.X - (int)(roadWidth / 2), point1.Y - (int)(roadWidth / 2 ) - Extra), new Size((int)roadWidth, Extra), _b );
+            DrawSides(g, "Right", new Point(point1.X + (int)(roadWidth / 2), point1.Y - (int)(roadWidth / 2)), new Size(Extra, (int)(roadWidth)), _b);
+            DrawSides(g, "Left", new Point(point1.X - (int)(roadWidth / 2) - Extra, point1.Y - (int)(roadWidth / 2)), new Size(Extra, (int)(roadWidth)), _b);
+            DrawSides(g, "Bottom", new Point(point1.X - (int)(roadWidth / 2), point1.Y + (int)(roadWidth / 2)), new Size((int)roadWidth, Extra), _b);
 
             DrawLine(g);
             this.hitbox.Draw(g);

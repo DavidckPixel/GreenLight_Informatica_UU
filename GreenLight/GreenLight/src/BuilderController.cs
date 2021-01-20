@@ -80,7 +80,7 @@ namespace GreenLight
                     if (_point1 != _point2 && _point1.X != _point2.X && _point1.Y != _point2.Y)
                     {
                         if (Math.Abs(_point1.X - _point2.X) / Math.Abs(_point1.Y - _point2.Y) < 8 && Math.Abs(_point1.Y - _point2.Y) / Math.Abs(_point1.X - _point2.X) < 8)
-                            roadBuilder.BuildCurvedRoad(_point1, _point2, _lanes, "Curved", false, false, null, null);
+                            roadBuilder.BuildCurvedRoad(_point1, _point2, _lanes, "Curved2", false, false, null, null);
                         else
                             Console.WriteLine("This is to steep for a curved road");
                     }

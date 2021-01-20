@@ -22,7 +22,7 @@ namespace GreenLight
             this.Dir = _dir;
             this.Type = _type;
 
-            Point[] _points = hitBoxPoints(_point1, _point2, lanes);
+            Point[] _points = hitBoxPoints(_point1, _point2, lanes, this.laneWidth);
             this.hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
 
             for (int x = 1; x <= this.lanes; x++)
@@ -41,14 +41,14 @@ namespace GreenLight
 
             this.slp = _slp;
         
-            Point[] _points = hitBoxPoints(_point1, _point2, 1);
+            Point[] _points = hitBoxPoints(_point1, _point2, 1, this.laneWidth);
             Hitbox _temp = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Green);
             return new DrivingLane(LanePoints.CalculateDiagonalLane(_point1,_point2), this.Dir, this.lanes, _thisLane, _temp);
         }
 
         public DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
-            int drivingLaneDistance = 20;
+            int drivingLaneDistance = this.laneWidth;
             double slp;
 
             if (_firstPoint.X != _secondPoint.X && _firstPoint.Y != _secondPoint.Y)
@@ -182,10 +182,10 @@ namespace GreenLight
             return CreateDrivingLane(_firstPoint, _secondPoint, t);
         }
 
-        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20)
+        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _lanewidth)
         {
             Point _one, _two;
-            int _roadWidth = (_laneWidth * _lanes) / 2;
+            int _roadWidth = (_lanewidth * _lanes) / 2;
 
             if (one.Y <= two.Y)
             {
@@ -206,9 +206,9 @@ namespace GreenLight
             _angle = (int)(Math.Atan2(yDiff, xDiff) * (180 / Math.PI));
             _angle = Math.Abs(_angle);
 
-            //Console.WriteLine("Angle: {0}", _angle);
+            Console.WriteLine("Angle: {0}", _angle);
 
-            if (_angle >= 45 && (_angle < 135 || _angle > 180)) 
+            if (_angle >= 45 && (_angle <= 135 || _angle > 180)) 
             {
                 _points[0] = new Point(_one.X + _roadWidth, _one.Y);
                 _points[1] = new Point(_one.X - _roadWidth, _one.Y); //Hoogste punt Altijd
