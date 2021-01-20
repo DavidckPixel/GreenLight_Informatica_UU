@@ -15,11 +15,11 @@ namespace GreenLight
 
     public class CrossRoad : AbstractRoad
     {
-        public List<ConnectionPoint> connectPoints = new List<ConnectionPoint>();
-        public List<ConnectionLink> connectLinks = new List<ConnectionLink>();
+        //public List<ConnectionPoint> connectPoints = new List<ConnectionPoint>();
 
         public ConnectionPoint selectedPoint;
         public double Scale;
+        public List<ConnectionPoint> connectPoints = new List<ConnectionPoint>();
 
         public CrossRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, _roadtype, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {

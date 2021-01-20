@@ -257,7 +257,7 @@ namespace GreenLight
             this.Screen.Invalidate();
         }
 
-        private void CreateDrivingLanes()
+        public void CreateDrivingLanes()
         {
             List<LanePoints> _temp = null;
             selectedRoad.Drivinglanes.Clear();

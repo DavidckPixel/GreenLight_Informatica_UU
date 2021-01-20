@@ -33,7 +33,7 @@ namespace GreenLight
 
         Start_sub_menu SSM;
         Start_main_menu SMM;
-        Build_sub_menu BSM;
+        public Build_sub_menu BSM;
         Build_main_menu BMM;
         Simulation_sub_menu SimSM;
         Simulation_main_menu SimMM;
@@ -45,19 +45,24 @@ namespace GreenLight
         Elements_sub_lights_menu ElemSLM;
         public Elements_sub_roads_menu ElemSRM;
         Elements_sub_signs_menu ElemSSM;
+        public Start_sub_recent_projects_menu SSRPM;
 
         int Sub_menu_width = 250;
         FontFamily Dosis_font_family;
-        string[] Recent_projects = new string[3] { "project 1", "project 2", "project 3" };
+        
+        string[] Recent_projects = File.ReadAllLines(General_Form.Main.recent_project);
+       
 
         public InterfaceController(Form _form)
         {
             this.MainForm = _form;
+            Recent_projects.Count();
         }
 
 
         public override void Initialize()
         {
+
             MainForm.FormBorderStyle = FormBorderStyle.None;
             MainForm.StartPosition = FormStartPosition.CenterScreen;
             MainForm.Size = new Size(1200, 600);
@@ -71,7 +76,8 @@ namespace GreenLight
 
             MainForm.SizeChanged += (object o, EventArgs EA) => { Size_adjust(); };
 
-            SSM = new Start_sub_menu(Sub_menu_width, MainForm, Dosis_font_family, Recent_projects);
+            SSM = new Start_sub_menu(Sub_menu_width, MainForm, Dosis_font_family);
+            SSRPM = new Start_sub_recent_projects_menu(Sub_menu_width, MainForm, Dosis_font_family);
             SMM = new Start_main_menu(MainForm.Width - Sub_menu_width, MainForm, Dosis_font_family);
 
             BSM = new Build_sub_menu(Sub_menu_width, MainForm, Dosis_font_family);
@@ -91,6 +97,7 @@ namespace GreenLight
             ElemSSM = new Elements_sub_signs_menu(Sub_menu_width, MainForm, Dosis_font_family);
 
             MainForm.Controls.Add(SMM);
+            MainForm.Controls.Add(SSRPM);
             MainForm.Controls.Add(SSM);
             MainForm.Controls.Add(BMM);
             MainForm.Controls.Add(BSM);
@@ -117,7 +124,8 @@ namespace GreenLight
         public void Size_adjust()
         {
             SMM.Size_adjust(MainForm, Sub_menu_width);
-            SSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family, Recent_projects);
+            SSRPM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
+            SSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
             BMM.Size_adjust(MainForm, Sub_menu_width);
             BSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
             SimDataM.Size_adjust(MainForm, Sub_menu_width, 30);
@@ -131,15 +139,25 @@ namespace GreenLight
             ElemSBM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
             ElemSSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
         }
+
+        public void Size_adjust_SSRPM()
+        {
+            SSRPM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
+        }
+
         public void Open(string File_name)
         {
             StreamReader Open = new StreamReader(File_name);
         }
+
         public void Menu_to_start() 
         {
             Hide_all_menus();
+            SSRPM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
             SSM.Show();
             SMM.Show();
+            SSRPM.Show();
+            SSRPM.BringToFront();
         }
         public void Menu_to_build() 
         {
@@ -213,6 +231,7 @@ namespace GreenLight
         private void Hide_all_menus()
         {
             SSM.Hide();
+            SSRPM.Hide();
             SMM.Hide();
             BSM.Hide();
             BMM.Hide();

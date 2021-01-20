@@ -20,8 +20,8 @@ namespace GreenLight
         public BuilderController builder;
         int i = 0;
         int j = 0;
-
         public bool Toggle;
+
 
         public BuildScreenController(Form _tempform)
         {
@@ -35,8 +35,8 @@ namespace GreenLight
             this.Screen.Image = new System.Drawing.Bitmap(Screen.Width, Screen.Height);
 
             _tempform.Resize += (object o, EventArgs ea) => { this.resize(_tempform); };
-           
-            
+
+
             this.Screen.Paint += DrawPictureBox;
             builder = new BuilderController(this.Screen, _tempform);
 
@@ -45,7 +45,7 @@ namespace GreenLight
             Console.WriteLine("BuildController made!");
         }
 
-        private void resize(Form _tempform) 
+        private void resize(Form _tempform)
         {
             i++;
             this.Screen.Width = _tempform.Width - 250;
@@ -93,16 +93,16 @@ namespace GreenLight
             switch (_menu)
             {
                 case "Roads":
-                    RoadsMenu();                    
+                    RoadsMenu();
                     break;
                 case "Signs":
-                    SignsMenu();                    
+                    SignsMenu();
                     break;
                 case "Lights":
-                    LightsMenu();                    
+                    LightsMenu();
                     break;
                 case "Buildings":
-                    BuildingsMenu();                    
+                    BuildingsMenu();
                     break;
                 default:
                     Log.Write("Switch Failed, Returning back to " + _old);
@@ -133,18 +133,22 @@ namespace GreenLight
             General_Form.Main.SwitchControllers(General_Form.Main.SimulationScreen);
         }
 
-        
+
         public void DrawPictureBox(object o, PaintEventArgs pea)
         {
             Graphics g = pea.Graphics;
             builder.gridController.DrawGridPoints(g);
+            _DrawPictureBox(g);
+        }
 
-            foreach(AbstractRoad _road in builder.roadBuilder.roads)
+        public void _DrawPictureBox(Graphics g)
+        {
+            foreach (AbstractRoad _road in builder.roadBuilder.roads)
             {
                 _road.Draw(g);
             }
-        }
-
+        }  
+    
         public bool ToggleHitbox()
         {
             if (j % 2 == 0)

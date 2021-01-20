@@ -40,6 +40,7 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -74,6 +75,9 @@
     <Compile Include="src\Driver\GPS.cs" />
     <Compile Include="src\Driver\RoadMath.cs" />
     <Compile Include="src\OriginPointController.cs" />
+    <Compile Include="src\UserControls\Start_sub_recent_projects_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="src\VehicleOriginPoint.cs" />
     <Compile Include="src\DrawData.cs" />
     <Compile Include="src\Driver\DriverStats.cs" />
@@ -253,6 +257,7 @@
   <ItemGroup>
     <Folder Include="Fonts\" />
     <Folder Include="Logs\" />
+    <Folder Include="Recent_projects\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documentation\BugReport Document.txt" />
@@ -260,6 +265,7 @@
     <Content Include="Documentation\Touchup Document.txt" />
     <Content Include="Images\BigCar.png" />
     <Content Include="Images\Car.png" />
+    <Content Include="Recent_projects\Recent_projects.txt" />
     <Content Include="User Interface Recources\CurveButton.png" />
     <Content Include="User Interface Recources\CurveButton_On_Hover.png" />
     <Content Include="User Interface Recources\CurveHollowButton.png" />
