@@ -101,9 +101,9 @@ namespace GreenLight
         public override void Draw(Graphics g)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            Pen p = new Pen(Color.FromArgb(21,21,21), 20);
+            Pen p = new Pen(Color.FromArgb(21,21,21), Roads.Config.laneWidth);
             Brush b = new SolidBrush(Color.FromArgb(21, 21, 21));
-            int drivingLaneDistance = 20; 
+            int drivingLaneDistance = Roads.Config.laneWidth; 
             double slp, slpPer, oneX, amountX;
             int startAngle = 0, sweepAngle = 90;
             Rectangle rect = new Rectangle();
@@ -169,7 +169,7 @@ namespace GreenLight
             }
             else
             {
-                g.DrawLine(p, points[0].cord, points[points.Count - 1].cord);
+                //g.DrawLine(p, points[0].cord, points[points.Count - 1].cord);
 
                 if (dir == "D")  //DiagonalRoad
                 {

@@ -27,7 +27,7 @@ namespace GreenLight
 
             if (Dir == "SE" || Dir == "SW" || Dir == "NE" || Dir == "NW")
             {
-                Point[] _points = hitBoxPoints(_point1, _point2, this.lanes);
+                Point[] _points = hitBoxPoints(_point1, _point2, this.lanes, this.laneWidth);
                 this.hitbox = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], _dir, Color.Yellow);
 
                 for (int x = 1; x <= lanes; x++)
@@ -38,14 +38,14 @@ namespace GreenLight
         }
         private DrivingLane CreateDrivingLane(Point _point1, Point _point2, int _thisLane)
         {
-            Point[] _points = this.hitBoxPoints(_point1, _point2, 1);
+            Point[] _points = this.hitBoxPoints(_point1, _point2, 1, this.laneWidth);
             Hitbox _temp = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], Dir, Color.Green);
             return new DrivingLane(LanePoints.CalculateCurveLane(_point1, _point2, this.Dir), this.Dir, this.lanes, _thisLane, _temp);
         }
         
         private DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
-        int drivingLaneDistance = 20;
+        int drivingLaneDistance = this.laneWidth;
         Console.WriteLine("TEST: {0} -- {1}", _firstPoint, _secondPoint);
         string _Direction = this.Dir;
 
@@ -110,7 +110,7 @@ namespace GreenLight
             return CreateDrivingLane(_firstPoint, _secondPoint, t);
         }
 
-        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20)
+        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth)
         {
             Point _one, _two;
             int _roadWidth = (_laneWidth * _lanes) / 2;
