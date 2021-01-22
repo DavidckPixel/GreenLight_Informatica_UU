@@ -145,26 +145,16 @@ namespace GreenLight
         {
             RoadController _controller = General_Form.Main.BuildScreen.builder.roadBuilder;
             List<OriginPoints> OriginPointsList = General_Form.Main.BuildScreen.builder.roadBuilder.OPC.OriginPointsList;
-            //Console.WriteLine("Road1 P1 X: " + _roadOne.point1.X + " Road1 P2 X: " + _roadOne.point2.X + " Road2 P1 X: " + _roadTwo.point1.X + " Road2 P2 X: " + _roadTwo.point2.X);
+            for (int o = 0; o < OriginPointsList.Count; o++)
             for (int o = 0; o < OriginPointsList.Count; o++)
             {
-                int Xop = OriginPointsList[o].X;
-                int Yop = OriginPointsList[o].Y;
-                Point r1p1 = _roadOne.point1;
-                Point r1p2 = _roadOne.point2;
-                Point r2p1 = _roadTwo.point1;
-                Point r2p2 = _roadTwo.point2;
-                /*Console.WriteLine("Totaal aantal OPs: " + OriginPointsList.Count);
-                Console.WriteLine("Check OP nummer: " + o);*/
-                if ((Xop < r1p1.X + 4 && Xop > r1p1.X - 4 && Yop < r1p1.Y + 4 && Yop > r1p1.Y - 4) || (Xop < r1p2.X + 4 && Xop > r1p2.X - 4 && Yop < r1p2.Y + 4 && Yop > r1p2.Y - 4) || (Xop < r2p1.X + 4 && Xop > r2p1.X - 4 && Yop < r2p1.Y + 4 && Yop > r2p1.Y - 4) || (Xop < r2p2.X + 4 && Xop > r2p2.X - 4 && Yop < r2p2.Y + 4 && Yop > r2p2.Y - 4))
+                if (OriginPointsList[o].X < _roadOne.point1.X + 4 && OriginPointsList[o].X > _roadOne.point1.X - 4 && OriginPointsList[o].Y < _roadOne.point1.Y + 4 && OriginPointsList[o].Y > _roadOne.point1.Y - 4)
                 {
-                    //Console.WriteLine("Verwijder OP nummer: " + o);
                     OriginPointsList.RemoveAt(o);
-                    o--;
+                    Console.WriteLine(OriginPointsList[o]);
                 }
             }
-            //Console.WriteLine("Grootte van OPlist: "+ OriginPointsList.Count;
-            _controller.roads.Remove(_roadOne);
+_controller.roads.Remove(_roadOne);
             _controller.roads.Remove(_roadTwo);
 
 

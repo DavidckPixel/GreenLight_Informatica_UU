@@ -46,7 +46,6 @@ namespace GreenLight
             Timer.Interval = 1;
             Timer.Tick += new EventHandler(Set_time);
             Timer.Enabled = true;
-            GPS bo = new GPS();
         }
 
         public void Stop_timer()

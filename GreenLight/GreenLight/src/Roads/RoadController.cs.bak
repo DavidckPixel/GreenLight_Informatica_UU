@@ -119,6 +119,7 @@ namespace GreenLight
             AbstractRoad _temp = crossRoadController.newCrossRoad(_point1, _lanes, "CrossRoad");
             this.roads.Add(_temp);
 			OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point1);
+			OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point2);
         }
         
         public void BuildCurvedRoad(Point _point1, Point _point2, int _lanes, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
@@ -161,10 +162,8 @@ namespace GreenLight
             AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, "Curved", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
-			OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point1);
-			OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point2); 
-			}
-			
+        }
+
         public void Connection(Point _point1, Point _point2, int _lanes, string _dir, AbstractRoad _road, bool _beginconnection, bool _endconnection)
         {
             Console.WriteLine(_beginconnection + "Builder" + _endconnection);
