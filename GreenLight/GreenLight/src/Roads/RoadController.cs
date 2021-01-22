@@ -242,6 +242,7 @@ namespace GreenLight
                         {
                             if (_beginconnection == false)
                             {
+                                ///test
                                 //Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Dir, _road, x);
                             }
                             else
