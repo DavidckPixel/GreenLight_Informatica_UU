@@ -12,8 +12,9 @@ namespace GreenLight
     public class VehicleController : EntityController
     {
 
-        public List<Vehicle> vehicleList = new List<Vehicle>();
-        private static List<VehicleStats> vehicles = new List<VehicleStats>();
+        public List<BetterVehicle> vehicleList = new List<BetterVehicle>();
+        
+        public VehicleStats selectedVehicle;
 
         public override void Initialize()
         {
@@ -29,8 +30,8 @@ namespace GreenLight
             if (_stats == null)
             {
                 Random ran = new Random();
-                int _index = ran.Next(0, vehicles.Count() - 1);
-                _stats = vehicles[_index];
+                int _index = ran.Next(0, VehicleTypeConfig.vehicles.Count() - 1);
+                _stats = VehicleTypeConfig.vehicles[_index];
             }
 
             return new Vehicle(_stats, _x, _y);
@@ -41,30 +42,12 @@ namespace GreenLight
             return null;
         }
 
-        static private void initVehicleStats()
+        static public void addVehicleStats(string _name, int _weight, float _length, int _topspeed, int _motorpwr, int _surface, float _cw, float _occurance)
         {
-            try
+            VehicleStats _temp = new VehicleStats(_name, _weight, _length, _topspeed, _motorpwr, _surface, _cw, true, _occurance);
+            if (VehicleTypeConfig.vehicles.Find(x => x == _temp) == null)
             {
-                string file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Vehicle\\VehicleType.json";
-
-                using (StreamReader sr = new StreamReader(file))
-                {
-                    string json = sr.ReadToEnd();
-                    vehicles = JsonConvert.DeserializeObject<List<VehicleStats>>(json);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
-
-        static public void addVehicleStats(string _name, int _weight, float _length, int _topspeed, int _motorpwr, int _surface, float _cw)
-        {
-            VehicleStats _temp = new VehicleStats(_name, _weight, _length, _topspeed, _motorpwr, _surface, _cw);
-            if (vehicles.Find(x => x == _temp) == null)
-            {
-                vehicles.Add(_temp);
+                VehicleTypeConfig.vehicles.Add(_temp);
             }
 
             General_Form.Main.UserInterface.SimSVM.Selection_box.Add_Element(_temp.Name);
@@ -72,17 +55,17 @@ namespace GreenLight
 
         static public VehicleStats getVehicleStat(string _name)
         {
-            VehicleStats _temp = vehicles.Find(x => x.Name == _name);
+            VehicleStats _temp = VehicleTypeConfig.vehicles.Find(x => x.Name == _name);
 
             if (_temp == null)
             {
                 try
                 {
-                    _temp = vehicles[0];
+                    _temp = VehicleTypeConfig.vehicles[0];
                 }
                 catch (Exception)
                 {
-                    _temp = new VehicleStats("", 1, 1, 1, 1, 1, 1);
+                    _temp = new VehicleStats("", 1, 1, 1, 1, 1, 1, true,1);
                 }
             }
 
@@ -91,28 +74,149 @@ namespace GreenLight
 
         static public List<string> getStringVehicleStats()
         {
-            if (!vehicles.Any())
-            {   
-                initVehicleStats();
-            }
-            Console.WriteLine(vehicles.Count());
-
             List<string> _temp = new List<string>();
-            vehicles.ForEach(x => _temp.Add(x.Name));
+            VehicleTypeConfig.vehicles.ForEach(x => _temp.Add(x.Name));
             return _temp;
         }
 
-        static public void SaveJson()
+        public void DeleteVehicle(VehicleStats _stats)
         {
-            string json = JsonConvert.SerializeObject(vehicles);
-            Console.WriteLine(json);
-
-            string file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Vehicle\\VehicleType.json";
-
-            using (StreamWriter sr = new StreamWriter(file))
-            {
-                sr.Write(json);
-            }
+            VehicleTypeConfig.vehicles.Remove(_stats);
         }
+
+        public void SelectVehicle(VehicleStats _stats)
+        {
+            this.selectedVehicle = _stats;
+        }
+
+        private bool AllowEdit()
+        {
+            if (this.selectedVehicle.canEdit)
+            {
+                //ERROR MESSAGE HERE!
+
+                return (true);
+            }
+            return (false);
+        }
+
+        public void ChangeWeight(int _weight, Slider o)
+        {
+            if(this.selectedVehicle  == null)
+            {
+                //NO VEHICLE SELECTED;
+                return;
+            }
+
+            if (AllowEdit())
+            {
+                o.Value = this.selectedVehicle.Weight;
+                return;
+            }
+            this.selectedVehicle.Weight = _weight;
+        }
+
+        public void ChangeLength(float _length, Slider o)
+        {
+            if (this.selectedVehicle == null)
+            {
+                //NO VEHICLE SELECTED;
+                return;
+            }
+            if (AllowEdit())
+            {
+                o.Value = (int)this.selectedVehicle.Length * 10;
+                return;
+            }
+            this.selectedVehicle.Length = _length / 10;
+        }
+
+        public void ChangeTopspeed(int _topSpeed, Slider o)
+        {
+            if (this.selectedVehicle == null)
+            {
+                //NO VEHICLE SELECTED;
+                return;
+            }
+            if (AllowEdit())
+            {
+                o.Value = this.selectedVehicle.Topspeed;
+                return;
+            }
+            this.selectedVehicle.Topspeed = _topSpeed;
+        }
+
+        public void ChangeMotorpwr(int _motorpwr, Slider o)
+        {
+            if (this.selectedVehicle == null)
+            {
+                //NO VEHICLE SELECTED;
+                return;
+            }
+            if (AllowEdit())
+            {
+                o.Value = this.selectedVehicle.Motorpwr;
+                return;
+            }
+            this.selectedVehicle.Motorpwr = _motorpwr;
+        }
+
+        public void ChangeSurface(float _surface, Slider o)
+        {
+            if (this.selectedVehicle == null)
+            {
+                //NO VEHICLE SELECTED;
+                return;
+            }
+            if (AllowEdit())
+            {
+                o.Value = (int)this.selectedVehicle.Surface * 10;
+                return;
+            }
+            this.selectedVehicle.Surface = _surface / 10;
+        }
+
+        public void ChangeCw(float _cw, Slider o)
+        {
+            if (this.selectedVehicle == null)
+            {
+                //NO VEHICLE SELECTED;
+                return;
+            }
+            if (AllowEdit())
+            {
+                o.Value = (int)this.selectedVehicle.Cw * 10;
+                return;
+            }
+            this.selectedVehicle.Cw = _cw / 10;
+        }
+
+
+        public void ChangeOccurance(float _occurance, Slider o)
+        {
+            if (this.selectedVehicle == null)
+            {
+                //NO VEHICLE SELECTED;
+                return;
+            }
+
+            this.selectedVehicle.Occurance = _occurance;
+        }
+
+        /*     public int Weight;
+    public float Length;
+    public int Topspeed;
+    public int Motorpwr;
+    public float Surface;
+    public float Cw;
+
+    "Weight": 1353,
+    "Length": 4.77,
+    "Topspeed": 61,
+    "Motorpwr": 111900,
+    "Surface": 2.65,
+    "Cw": 0.3,
+    */
     }
 }
+ 

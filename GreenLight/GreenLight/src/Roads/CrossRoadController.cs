@@ -220,6 +220,12 @@ namespace GreenLight
                 return;
             }
 
+            if (_begin.end)
+            {
+                DisplayError("This Roadpoint is marked as an end");
+                return;
+            }
+
             _links.Add(new ConnectionLink(_begin, _end));
         }
 
@@ -350,6 +356,16 @@ namespace GreenLight
                 {   
                 this.selectedRoad.Drivinglanes.Add(new CrossLane(_temp, _link));  
                 }
+            }
+
+            this.selectedRoad.CreateArrowImages();
+
+            foreach(ConnectionPoint _point in this.selectedRoad.connectPoints)
+            {
+                Point _transLocation = _point.Location;
+                Point _trash = new Point();
+                this.TranslatePoints(ref _transLocation,ref _trash, this.selectedRoad);
+                _point.transLocation = _transLocation;
             }
 
             this.Screen.Invalidate();

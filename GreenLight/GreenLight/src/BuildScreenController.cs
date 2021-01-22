@@ -136,6 +136,7 @@ namespace GreenLight
         
         public void DrawPictureBox(object o, PaintEventArgs pea)
         {
+
             Graphics g = pea.Graphics;
             builder.gridController.DrawGridPoints(g);
 

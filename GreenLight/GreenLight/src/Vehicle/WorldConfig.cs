@@ -38,5 +38,32 @@ namespace GreenLight
                 Console.WriteLine(e);
             }
         }
+
+        public static void WriteJson()
+        {
+            string _file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Vehicle\\Earth.json";
+
+            try
+            {
+                using (StreamWriter r = new StreamWriter(_file))
+                {
+                    string _datastream = JsonConvert.SerializeObject(physics);
+                    r.Write(_datastream);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public static bool CheckDuplicateName(string _name)
+        {
+            if(physics.Any(x => x.name == _name))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

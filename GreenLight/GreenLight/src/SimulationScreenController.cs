@@ -14,6 +14,7 @@ namespace GreenLight
     {
         public string ActiveSubMenu;
         public SimulationController Simulator;
+        Form mainForm;
 
         public SimulationScreenController(Form _tempform)
         {
@@ -24,11 +25,16 @@ namespace GreenLight
             this.Screen.BackColor = Color.FromArgb(196, 196, 198);
             this.Screen.Paint += DrawPictureBox;
 
-            _tempform.Controls.Add(this.Screen);
+            this.mainForm = _tempform;
+            this.mainForm.SizeChanged += ChangeSize;
 
-            this.Simulator = new SimulationController(this.Screen);
+            this.Screen.Image = new System.Drawing.Bitmap(Screen.Width, Screen.Height);
 
+            this.Simulator = new SimulationController();
             Log.Write("Created the Simulation Screen Controller");
+
+            this.mainForm.Controls.Add(this.Screen);
+
         }
 
         public override void Initialize()
@@ -40,8 +46,7 @@ namespace GreenLight
         {
             General_Form.Main.UserInterface.Menu_to_simulation();
             SwitchSubMenus("Weather");
-            Screen.Invalidate();
-
+            this.Screen.Invalidate();
             Log.Write("Set Active Submenu to Weather");
         }
 
@@ -98,14 +103,22 @@ namespace GreenLight
         public void DrawPictureBox(object o, PaintEventArgs pea)
         {
             Graphics g = pea.Graphics;
-            
-            //Console.WriteLine("Drawing the Picturebox of simulator!");
 
+            g.DrawImage(DriverProfileData.faces.First().backImg, 0,0, this.Screen.Width, this.Screen.Height);
+   
             foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
             {
                 _road.Draw(g);
             }
             Log.Write("Completed drawing the roads on the simulation screen");
+        }
+
+        private void ChangeSize(object o, EventArgs ea)
+        {
+            Console.WriteLine("Size changed!!");
+            this.Screen.Width = mainForm.Width - 250;
+            this.Screen.Height = mainForm.Height;
+            this.Screen.Invalidate();
         }
     }
 

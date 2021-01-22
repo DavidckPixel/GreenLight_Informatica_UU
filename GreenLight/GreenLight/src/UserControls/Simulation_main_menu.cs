@@ -15,13 +15,15 @@ namespace GreenLight
         public Simulation_main_menu(int Width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(196, 196, 198);
-            this.Size = new Size(Width, Form.Height);
-            Initialize(Form, Width);
+            this.Size = new Size(50, 50);
+            this.Location = new Point(0, Form.Height - 50);
+            Initialize(Form, 50);
         }
 
         public void Size_adjust(Form Form, int Sub_menu_width)
         {
-            this.Size = new Size(Form.Width - Sub_menu_width, Form.Height);
+            this.Size = new Size(50, 50);
+            this.Location = new Point(0, Form.Height - 50);
             this.Controls.Clear();
             Initialize(Form, Sub_menu_width);
         }
@@ -43,9 +45,31 @@ namespace GreenLight
         private void Initialize(Form Form, int Sub_menu_width)
         {
             int _ButtonSize = User_Controls.Config.standardMainMenu["infobuttonsize"];
-            RoundButtons Info_button = new RoundButtons(new Size(_ButtonSize, _ButtonSize), new Point(User_Controls.Config.standardMainMenu["infoX"], Form.Height - User_Controls.Config.standardMainMenu["infoYfromtop"]), "../../User Interface Recources/Info_Button.png");
+            RoundButtons Info_button = new RoundButtons(new Size(_ButtonSize, _ButtonSize), new Point(0, 0), "../../User Interface Recources/Info_Button.png");    
             this.Controls.Add(Info_button);
-            BitmapController.bitmapController = new BitmapController();
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x00000020;
+                return cp;
+            }
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            // dont code anything here. Just leave blank
+        }
+
+        protected void InvalidateEx()
+        {
+            if (Parent == null)
+                return;
+            Rectangle rc = new Rectangle(this.Location, this.Size);
+            Parent.Invalidate(rc, true);
         }
     }
 }

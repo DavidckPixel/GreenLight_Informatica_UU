@@ -39,8 +39,6 @@ namespace GreenLight
 
         public bool visualizeLanePoints = true; //Boolean whether or not the lanePoints are visualised
 
-        PrivateFontCollection Font_collection = new PrivateFontCollection();
-
         public RoadController(PictureBox _screen)
         {
             this.Screen = _screen;
@@ -80,14 +78,10 @@ namespace GreenLight
             settingScreenImage.Location = new Point(menu["offset"], menu["offset"]);
             settingScreenImage.BackColor = Color.Black;
 
-            //TEMP HERE
-            Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");
-            FontFamily Dosis_font_family = Font_collection.Families[0];
-
-            doneButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Save", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            doneButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             doneButton.Click += (object o, EventArgs ea) => { DoneSettingScreen(); };
 
-            deleteButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Delete", Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            deleteButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             deleteButton.Click += (object o, EventArgs ea) => { DeleteRoad(this.selectedRoad); };
 
             Move_panel move_panel = new Move_panel(settingScreen);
@@ -157,7 +151,7 @@ namespace GreenLight
                 }
             }
             
-            AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, "Curved", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
+            AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, _type, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
         }
@@ -470,7 +464,7 @@ namespace GreenLight
                     if ((Graden >= 315 && Graden < 360) || (Graden >= 0 && Graden < 45) || (Graden >= 135 && Graden < 225))
                     {
 
-                        if (selectedRoad.Type == "Curved")
+                        if (selectedRoad.Type == "Curved" || selectedRoad.Type == "Curved2")
                         {
                             offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.hitbox.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
                         }
@@ -486,7 +480,7 @@ namespace GreenLight
                     else
                     {
 
-                        if (selectedRoad.Type == "Curved")
+                        if (selectedRoad.Type == "Curved" || selectedRoad.Type == "Curved2")
                         {
                             offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.hitbox.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
                         }
@@ -505,7 +499,7 @@ namespace GreenLight
                     if ((Graden >= 315 && Graden < 360) || (Graden >= 0 && Graden < 45) || (Graden >= 135 && Graden < 225))
                     {
 
-                        if (selectedRoad.Type == "Curved")
+                        if (selectedRoad.Type == "Curved" || selectedRoad.Type == "Curved2")
                         {
                             offset = (double)this.settingScreenImage.Width / 2 - selectedRoad.hitbox.Size.Width / 2 * _scale; //WERKT VOOR CIRCLE
                         }
@@ -522,7 +516,7 @@ namespace GreenLight
                     else
                     {
 
-                        if (selectedRoad.Type == "Curved")
+                        if (selectedRoad.Type == "Curved" || selectedRoad.Type == "Curved2")
                         {
                             offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.hitbox.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
                         }

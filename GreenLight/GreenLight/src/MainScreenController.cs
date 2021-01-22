@@ -41,6 +41,7 @@ namespace GreenLight
             Log.Write("Initializing the MainController..");
 
             UserInterface = new InterfaceController(this.form);
+
             UserInterface.Initialize();
 
             BuildScreen = new BuildScreenController(this.form);
@@ -66,6 +67,7 @@ namespace GreenLight
             this.Active.DeActivate();
             this.Active = _controller;
             this.Active.Activate();
+            this.Active.Screen.Invalidate();
             this.form.Invalidate();
 
             Console.WriteLine("Switched and invalidated!");
@@ -89,10 +91,6 @@ namespace GreenLight
             {
                 this.Active.Screen.Show();
                 this.Active.Screen.Invalidate();
-                if (this.Active != SimulationScreen)
-                {
-                    this.Active.Screen.BringToFront();
-                }
             }
         }
         

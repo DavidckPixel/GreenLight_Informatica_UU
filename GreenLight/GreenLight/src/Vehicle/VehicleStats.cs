@@ -15,8 +15,10 @@ namespace GreenLight
         public int Motorpwr;
         public float Surface;
         public float Cw;
+        public float Occurance;
+        public bool canEdit;
 
-        public VehicleStats(string Name, int Weight, float Length, int Topspeed, int Motorpwr, float Cw, float Surface)
+        public VehicleStats(string Name, int Weight, float Length, int Topspeed, int Motorpwr, float Cw, float Surface, bool canEdit, float Occurance)
         {
             this.Name = Name;
             this.Weight = Weight;
@@ -25,6 +27,8 @@ namespace GreenLight
             this.Motorpwr = Motorpwr;
             this.Surface = Surface;
             this.Cw = Cw;
+            this.Occurance = Occurance;
+            this.canEdit = canEdit;
         }
     }
 }

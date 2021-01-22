@@ -63,6 +63,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\CurvedHitbox.cs" />
+    <Compile Include="src\Driver\AITypeConfig.cs" />
     <Compile Include="src\Driver\BetterAI.cs" />
     <Compile Include="src\Driver\BetterVehicle.cs" />
     <Compile Include="src\Driver\BetterVehicleTest.cs">
@@ -71,15 +72,16 @@
     <Compile Include="src\Driver\BetterVehicleTest.Designer.cs">
       <DependentUpon>BetterVehicleTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Driver\DriverProfile\DriverProfile.cs" />
+    <Compile Include="src\Driver\DriverProfile\DriverProfileController.cs" />
+    <Compile Include="src\Driver\DriverProfile\DriverProfileData.cs" />
+    <Compile Include="src\Driver\DriverProfile\DriverProfileFace.cs" />
     <Compile Include="src\Driver\GPS.cs" />
     <Compile Include="src\Driver\RoadMath.cs" />
     <Compile Include="src\OriginPointController.cs" />
-
     <Compile Include="src\Roads\CrossRoadSide.cs" />
-
     <Compile Include="src\Roads\Roads.cs" />
     <Compile Include="src\Roads\RoadsConfig.cs" />
-
     <Compile Include="src\VehicleOriginPoint.cs" />
     <Compile Include="src\DrawData.cs" />
     <Compile Include="src\Driver\DriverStats.cs" />
@@ -161,6 +163,7 @@
     <Compile Include="src\Vehicle\VehicleTypeConfig.cs" />
     <Compile Include="src\Vehicle\World.cs" />
     <Compile Include="src\Vehicle\WorldConfig.cs" />
+    <Compile Include="src\Vehicle\WorldController.cs" />
     <Compile Include="Startup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -247,6 +250,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="src\Driver\DriverType.json" />
+    <None Include="src\Driver\DriverProfile\faces.json" />
     <None Include="src\Grid\GridConfig.json" />
     <None Include="src\Logs\LogConfig.json" />
     <None Include="src\Roads\RoadsConfig.json" />
@@ -260,6 +264,7 @@
   <ItemGroup>
     <Folder Include="Fonts\" />
     <Folder Include="Logs\" />
+    <Folder Include="src\Driver\DriverProfile\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documentation\BugReport Document.txt" />

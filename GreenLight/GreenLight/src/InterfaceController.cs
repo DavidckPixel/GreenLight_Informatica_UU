@@ -113,7 +113,6 @@ namespace GreenLight
             else Form.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, MainForm.ClientSize.Width, MainForm.ClientSize.Height, 0, 0));
         }
 
-
         public void Size_adjust()
         {
             SMM.Size_adjust(MainForm, Sub_menu_width);
