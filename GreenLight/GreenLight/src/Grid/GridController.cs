@@ -99,8 +99,7 @@ namespace GreenLight
             {
                 this.ResetPoints();
             }
-
-            if (firstClick)
+            else if (firstClick)
             {
                 if (_point != null)
                 {
@@ -156,7 +155,8 @@ namespace GreenLight
                 x.DrawGrid(g);
                 }
 
-                Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.DarkRed));
+                Brush Notsolidred = new SolidBrush(Color.FromArgb(100, Color.DarkRed));
+                Brush Notsolidgreen = new SolidBrush(Color.FromArgb(100, Color.Green));
 
                 if (General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "Cross")
                 {
@@ -164,18 +164,34 @@ namespace GreenLight
                     int _lanes = int.Parse(General_Form.Main.UserInterface.ElemSRM.LaneAmount.Text);
                     int _inflate = _lanes * 20 / 2;
                     _rec.Inflate(_inflate,_inflate);
-                    g.FillRectangle(Notsolid, _rec);
+
+                    if (Gridpoints.Find(x => x.Collision(mousecords)) != null)
+                    {
+                        g.FillRectangle(Notsolidgreen, _rec);
+                    }
+                    else
+                    {
+                        g.FillRectangle(Notsolidred, _rec);
+                    }
+                    
 
                     return;
                 }
-
+                
                 if (firstClick == true)
                 {
                     return;
                 }
 
                 Rectangle rec = new Rectangle(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y), Math.Abs(firstPoint.Cords.X - mousecords.X), Math.Abs(firstPoint.Cords.Y - mousecords.Y));
-                g.FillRectangle(Notsolid, rec);
+                if (Gridpoints.Find(x => x.Collision(mousecords)) != null)
+                {
+                    g.FillRectangle(Notsolidgreen, rec);
+                }
+                else
+                {
+                    g.FillRectangle(Notsolidred, rec);
+                }
             }
         }
 
