@@ -18,7 +18,7 @@ namespace GreenLight
         double max_radiusX, max_radiusY;
         double min_radiusX, min_radiusY;
         int start_angle;
-        int mid_startX, mid_startY, mid_endX, mid_endY;
+        public int mid_startX, mid_startY, mid_endX, mid_endY;
         Rectangle rect;
         
 

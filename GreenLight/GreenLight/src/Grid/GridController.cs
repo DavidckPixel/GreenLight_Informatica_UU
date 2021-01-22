@@ -140,10 +140,14 @@ namespace GreenLight
                 return;
             }
 
+            mousecords = mea.Location;
+
+            
+
             //Gridpoints.Find(x => x.Cords);
             //Gridpoint X = Gridpoints.Aggregate((x, y) => Math.Abs(x.Cords.X - mea.Location.X) > Math.Abs(y.Cords.X - mea.Location.X) && Math.Abs(x.Cords.Y - mea.Location.Y) > Math.Abs(y.Cords.Y - mea.Location.Y) ? x : y);
 
-            mousecords = mea.Location;
+            
             canvas.Invalidate();
         }
 
@@ -173,6 +177,27 @@ namespace GreenLight
                 {
                     return;
                 }
+
+                /*if (Gridpoints.Find(x => x.Collision(mousecords)) != null)  // If the cursor hovers over a gridpoint on the secondclick
+                {*/ //met deze regel niet gebruikt zie je nog iets beter direct wanneer het niet kan, moet het wel extra berekeningen maken, maar het is nog niet traag, dus is wel oke denk ik.
+                    RectHitbox temp = new RectHitbox(new Point(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y)),
+                                                    new Point(Math.Max(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y)),
+                                                    new Point(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Max(firstPoint.Cords.Y, mousecords.Y)),
+                                                    new Point(Math.Max(firstPoint.Cords.X, mousecords.X), Math.Max(firstPoint.Cords.Y, mousecords.Y)), Color.Red); //Recthitbox
+                    Rectangle rectemp = new Rectangle(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y), Math.Abs(firstPoint.Cords.X - mousecords.X), Math.Abs(firstPoint.Cords.Y - mousecords.Y));
+
+                    Console.WriteLine(temp.topleft + " " + temp.topright + " " + temp.bottomleft + " " + temp.bottomright); //this is just to check the cords of the rectangle that is created.
+                    foreach (AbstractRoad road in builder.roadBuilder.roads) // loops through all roads
+                    {
+                        Console.WriteLine("Collides: " + temp.Collide(road.hitbox));
+                        if (temp.Collide(road.hitbox)) // this always returns false for some reason...
+                        {
+                            g.FillRectangle(Brushes.Red, rectemp);
+                            Console.WriteLine("Overlap!");
+                            // ... code to not let the user place the road has to be written here...
+                        }
+                    }
+                //}
 
                 Rectangle rec = new Rectangle(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y), Math.Abs(firstPoint.Cords.X - mousecords.X), Math.Abs(firstPoint.Cords.Y - mousecords.Y));
                 g.FillRectangle(Notsolid, rec);
