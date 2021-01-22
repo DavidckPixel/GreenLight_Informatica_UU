@@ -17,7 +17,7 @@ namespace GreenLight
         public List<LanePoints> points;
         public string dir;
         public Hitbox offsetHitbox;
-        public int AngleDir;
+        public float AngleDir;
 
         public abstract void Draw(Graphics g);
         public abstract void DrawoffsetHitbox(Graphics g);

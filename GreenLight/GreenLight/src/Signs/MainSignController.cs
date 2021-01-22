@@ -89,7 +89,7 @@ namespace GreenLight
 
             int _outerLane = 0;
             int _lanes = this.selectedRoad.getLanes();
-            int _dir = this.selectedRoad.Drivinglanes.First().AngleDir;
+            int _dir = (int) this.selectedRoad.Drivinglanes.First().AngleDir;
 
             if(_dir >= 0 && _dir < 180  && _lanes != 1)
             {
@@ -105,7 +105,9 @@ namespace GreenLight
                 float _shortDistance = 2000;
                 foreach (LanePoints _lanepoint in _lanepoints)
                 {
-                    float _distance = (float)Math.Sqrt((mea.Location.X - _lanepoint.cord.X) * (mea.Location.X - _lanepoint.cord.X) + (mea.Location.Y - _lanepoint.cord.Y) * (mea.Location.Y - _lanepoint.cord.Y));
+                    int Xsign = mea.X - 10;
+                    int Ysign = mea.Y - 10;
+                    float _distance = (float)Math.Sqrt((Xsign - _lanepoint.cord.X) * (Xsign - _lanepoint.cord.X) + (Ysign - _lanepoint.cord.Y) * (Ysign - _lanepoint.cord.Y));
 
                     if (_shortDistance > _distance)
                     {
