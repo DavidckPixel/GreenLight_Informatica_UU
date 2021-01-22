@@ -9,6 +9,8 @@ namespace GreenLight
 {
     public class BetterAI
     {
+        public DriverProfile profile;
+
         float reactionSpeed;
         public float followInterval;
         int speedRelativeToLimit;
@@ -50,7 +52,6 @@ namespace GreenLight
         CrossRoad currentCrossRoad = null;
         int crossRoadTimer = 0;
 
-        bool crossroadPriority = false;
         bool needsToStop = false;
 
         
@@ -66,10 +67,16 @@ namespace GreenLight
             vehicle.vehicleAI = this;
 
             navigator = new GPS();
+            profile = new DriverProfile(this.vehicle.physics);
         }
 
         public void Update()
         {
+            if (vehicle.hardStop)
+            {
+                return;
+            }
+
             DistanceToCars();
 
             if (wantsToSwitch)
@@ -81,6 +88,17 @@ namespace GreenLight
             crossRoadRules();
             NeedToBrake();
             CalculateAcceleration();
+
+            UpdateProfile();
+        }
+
+        private void UpdateProfile()
+        {
+            if (this.isBraking)
+            {
+                profile.AddBreakTick();
+            }
+            profile.CalculateFuel(this.vehicle.speed);
         }
 
         public void DistanceToCars()

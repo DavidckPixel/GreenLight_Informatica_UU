@@ -38,5 +38,18 @@ namespace GreenLight
             }
         }
 
+        static public void SaveJson()
+        {
+            string json = JsonConvert.SerializeObject(VehicleController.vehicles);
+            Console.WriteLine(json);
+
+            string file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Vehicle\\VehicleType.json";
+
+            using (StreamWriter sr = new StreamWriter(file))
+            {
+                sr.Write(json);
+            }
+        }
+
     }
 }

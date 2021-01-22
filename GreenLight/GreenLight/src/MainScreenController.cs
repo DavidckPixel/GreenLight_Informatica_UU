@@ -41,11 +41,14 @@ namespace GreenLight
             Log.Write("Initializing the MainController..");
 
             UserInterface = new InterfaceController(this.form);
+
             UserInterface.Initialize();
 
             BuildScreen = new BuildScreenController(this.form);
             SimulationScreen = new SimulationScreenController(this.form);
             MenuController = new MenuController(this.Screen);
+
+
 
             BuildScreen.Initialize();
             SimulationScreen.Initialize();

@@ -9,7 +9,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace GreenLight
 {
-    class Slider : TrackBar
+    public class Slider : TrackBar
     {
         public Slider(Point location, int min, int max)
         {

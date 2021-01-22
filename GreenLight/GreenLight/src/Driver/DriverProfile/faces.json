@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Normal",
+    "fileName": "../../src/Driver/DriverProfile/Images/faces_one.jpg",
+    "sizeX": 1996,
+    "sizeY": 1995,
+    "indexX": 5,
+    "indexY": 5,
+    "speech": [
+      [
+        "I need to hurry! im late for work!",
+        "Quickerr! my wife is in the hospital!"
+      ],
+      [
+        "Man im not excited for work",
+        "I wonder when my package will arrive"
+      ],
+      [
+        "Driving is really terrifying!",
+        "Such a nice day for a relaxing cardrive"
+      ]
+    ]
+  },
+  {
+    "name": "Alien",
+    "fileName": "../../src/Driver/DriverProfile/Images/faces_two.jpg",
+    "sizeX": 3750,
+    "sizeY": 4000,
+    "indexX": 5,
+    "indexY": 4,
+    "speech": [
+      [
+        "I need to hurry! im late for work!",
+        "Quickerr! my wife is in the hospital!"
+      ],
+      [
+        "Man im not excited for work",
+        "I wonder when my package will arrive"
+      ],
+      [
+        "Driving is really terrifying!",
+        "Such a nice day for a relaxing cardrive"
+      ]
+    ]
+  },
+  {
+    "name": "Cat",
+    "fileName": "../../src/Driver/DriverProfile/Images/faces_three.jpg",
+    "sizeX": 1024,
+    "sizeY": 1024,
+    "indexX": 4,
+    "indexY": 4,
+    "speech": [
+      [
+        "MEEEW HUNGRRRRRRY",
+        "MOUSE MOUSE GOTTA CHASE MOUSE",
+        "ME ANGWY ME NO TALKY"
+      ],
+      [
+        "Meow",
+        "PstPstPstPst"
+      ],
+      [
+        "PURPURPURPURPUR",
+        "ZzzZzZzzZzz..."
+      ]
+    ]
+  },
+  {
+    "name": "Robot",
+    "fileName": "../../src/Driver/DriverProfile/Images/faces_four.jpg",
+    "sizeX": 800,
+    "sizeY": 800,
+    "indexX": 3,
+    "indexY": 3,
+    "speech": [
+      [
+        "I need to hurry! im late for work!",
+        "Quickerr! my wife is in the hospital!"
+      ],
+      [
+        "Man im not excited for work",
+        "I wonder when my package will arrive"
+      ],
+      [
+        "Driving is really terrifying!",
+        "Such a nice day for a relaxing cardrive"
+      ]
+    ]
+  }
+]
+

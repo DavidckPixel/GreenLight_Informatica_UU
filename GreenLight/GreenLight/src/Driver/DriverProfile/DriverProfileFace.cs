@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GreenLight
+{
+    public class DriverProfileFace
+    {
+        public string name {get;}
+        public string fileName { get; }
+        Tuple<int, int> fullSize { get; }
+        public Tuple<int, int> index { get; }
+        public Tuple<int,int> imgSize { get; }
+        public List<string>[] speech { get; }
+
+        public DriverProfileFace(string name, string fileName, int sizeX, int sizeY,int indexX,int indexY, List<string>[] speech)
+        {
+            this.name = name;
+            this.fileName = fileName;
+            this.fullSize = new Tuple<int, int>(sizeX, sizeY);
+            this.index = new Tuple<int, int>(indexX, indexY);
+            this.speech = speech;
+
+            try
+            {
+                this.imgSize = new Tuple<int, int>(sizeX / indexX, sizeY / indexY);
+            }
+            catch (Exception)
+            {
+                this.imgSize = new Tuple<int, int>(sizeX, sizeY);
+            }
+        }
+    }
+}

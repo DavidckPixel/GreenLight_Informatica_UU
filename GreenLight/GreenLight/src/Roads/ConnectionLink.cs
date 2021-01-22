@@ -12,6 +12,8 @@ namespace GreenLight
         {
             this.begin = _begin;
             this.end = _end;
+
+            _end.end = true;
         }
 
         public ConnectionPoint begin;

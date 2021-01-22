@@ -172,7 +172,7 @@ namespace GreenLight
                 if (dir == "D")  //DiagonalRoad
                 {
                     Point[] polygon = new Point[4];
-                    Console.WriteLine("tekentest");
+                    //Console.WriteLine("tekentest");
 
                     if (points[0].cord.X != points[points.Count - 1].cord.X && points[0].cord.Y != points[points.Count - 1].cord.Y)
                     {

@@ -44,7 +44,7 @@ namespace GreenLight
             List<string> _temp = AIController.getStringDriverStats();
             Dictionary<string, int> DriverMenu = User_Controls.Config.simDriver;
 
-            Selection_box = new Selection_box(Form, Dosis_font_family, _temp);
+            Selection_box = new Selection_box(Form, Dosis_font_family, _temp, null);
             if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxMaxX"], User_Controls.Config.standardSubMenu["selectionBoxMaxY"]);
             else Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxX"], User_Controls.Config.standardSubMenu["selectionBoxY"]);
             this.Controls.Add(Selection_box);

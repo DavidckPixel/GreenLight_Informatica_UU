@@ -10,9 +10,12 @@ namespace GreenLight
     public class ConnectionPoint
     {
         public Point Location;
+        public Point transLocation;
         public RectHitbox Hitbox;
         public string Side;
         public bool Active;
+        public bool end;
+        public Bitmap arrowImg = new Bitmap(1, 1);
 
         public ConnectionPoint(Point _loc, string _side, double _scale)
         {
