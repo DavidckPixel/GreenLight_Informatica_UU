@@ -169,7 +169,7 @@ namespace GreenLight
             }
             else
             {
-                g.DrawLine(p, points[0].cord, points[points.Count - 1].cord);
+               // g.DrawLine(p, points[0].cord, points[points.Count - 1].cord);
 
                 if (dir == "D")  //DiagonalRoad
                 {

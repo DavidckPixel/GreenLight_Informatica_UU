@@ -50,6 +50,10 @@ namespace GreenLight
         public override string ToString()
         {
             string signString = "Sign" + " " + this.Location.X.ToString() + " " + this.Location.Y.ToString() + " " + this.signType;
+            if (this.signType == "speedSign")
+            {
+                signString += " " + Sign.speed.ToString(); 
+            }
             return signString;
         }
     }

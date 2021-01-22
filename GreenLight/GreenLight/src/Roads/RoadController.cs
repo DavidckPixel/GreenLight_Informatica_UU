@@ -162,17 +162,15 @@ namespace GreenLight
         public void Connection(Point _point1, Point _point2, int _lanes, string _dir, AbstractRoad _road, bool _beginconnection, bool _endconnection)
         {
             Console.WriteLine(_beginconnection + "Builder" + _endconnection);
-            Point _temp1, _temp2;
-            int _count = 0;
             try
             {
                 foreach (AbstractRoad x in roads)
                 {
-                    if (x != _road)
+                    if (x != _road && (_road.Type != "Cross" || x.Type != "Cross"))
                     {
+                        Point _temp1, _temp2;
                         _temp1 = x.getPoint1();
                         _temp2 = x.getPoint2();
-
 
                         if (x.getLanes() == _lanes)
                         {
@@ -180,9 +178,9 @@ namespace GreenLight
                             {
                                 if (_beginconnection == false)
                                 {
-                                    Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Dir, _road, x, _count);
+                                    Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Dir, _road, x);
                                 }
-                                else
+                                else 
                                 {
                                     Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.beginconnection = true;
@@ -194,9 +192,9 @@ namespace GreenLight
                             {
                                 if (_beginconnection == false)
                                 {
-                                    Connection _connection = new Connection(_point1, _temp2, _lanes, _dir, x.Drivinglanes[0].dir, _road, x, _count);
+                                    Connection _connection = new Connection(_point1, _temp2, _lanes, _dir, x.Drivinglanes[0].dir, _road, x);
                                 }
-                                else
+                                else 
                                 {
                                     Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.endconnection = true;
@@ -208,9 +206,9 @@ namespace GreenLight
                             {
                                 if (_endconnection == false)
                                 {
-                                    Connection connection = new Connection(_point2, _temp1, _lanes, _dir, x.Drivinglanes[0].dir, _road, x, _count);
+                                    Connection connection = new Connection(_point2, _temp1, _lanes, _dir, x.Drivinglanes[0].dir, _road, x);
                                 }
-                                else
+                                else 
                                 {
                                     Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.beginconnection = true;
@@ -223,7 +221,7 @@ namespace GreenLight
                             {
                                 if (_endconnection == false)
                                 {
-                                    Connection _connection = new Connection(_point2, _temp2, _lanes, _dir, x.Drivinglanes[0].dir, _road, x, _count);
+                                    Connection _connection = new Connection(_point2, _temp2, _lanes, _dir, x.Drivinglanes[0].dir, _road, x);
                                 }
                                 else
                                 {
@@ -235,7 +233,26 @@ namespace GreenLight
                             }
                         }
                     }
-                    _count++;
+                    foreach(CrossLane c in x.Drivinglanes)
+                    {
+                        Point _temp1 = c.points.First().cord;
+                        Point _temp2 = c.points.Last().cord;
+
+                        if (_point1 == _temp1 || Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) <= 21)
+                        {
+                            if (_beginconnection == false)
+                            {
+                                //Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Dir, _road, x);
+                            }
+                            else
+                            {
+                                Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
+                                x.beginconnection = true;
+                                x.beginConnectedTo = _road;
+                                _road.beginConnectedTo = x;
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception e) { };

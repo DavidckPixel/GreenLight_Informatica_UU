@@ -241,6 +241,7 @@ namespace GreenLight
                 case "speedSign":
                     _sign_image = Image.FromFile("../../User Interface Recources/Speed_Sign.png");
                     _temp = new SpeedSign(speedSign);
+                    _temp.speed = int.Parse(_signWords[4]);
                     break;
                 case "yieldSign":
                     _sign_image = Image.FromFile("../../User Interface Recources/Yield_Sign.png");

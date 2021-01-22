@@ -15,11 +15,8 @@ namespace GreenLight
 
     public class CrossRoad : AbstractRoad
     {
-        //public List<ConnectionPoint> connectPoints = new List<ConnectionPoint>();
-
         public ConnectionPoint selectedPoint;
         public double Scale;
-        public List<ConnectionPoint> connectPoints = new List<ConnectionPoint>();
 
         public CrossRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, _roadtype, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
@@ -103,22 +100,31 @@ namespace GreenLight
             Brush _b = new SolidBrush(Color.FromArgb(21, 21, 21));
 
             double lanewidth = (double)this.lanes * 20;
-
             g.FillRectangle(_b, new Rectangle(new Point(point1.X - (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2)), new Size(this.lanes * 20, this.lanes * 20)));
-            DrawSides(g, "Top", new Point(point1.X - (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2 ) - 20), new Size((int)lanewidth, 20), _b );
+
+            DrawSides(g, "Top", new Point(point1.X - (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2) - 20), new Size((int)lanewidth, 20), _b);
             DrawSides(g, "Right", new Point(point1.X + (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2)), new Size(20, (int)(lanewidth)), _b);
             DrawSides(g, "Left", new Point(point1.X - (int)(lanewidth / 2) - 20, point1.Y - (int)(lanewidth / 2)), new Size(20, (int)(lanewidth)), _b);
             DrawSides(g, "Bottom", new Point(point1.X - (int)(lanewidth / 2), point1.Y + (int)(lanewidth / 2)), new Size((int)lanewidth, 20), _b);
 
             DrawLine(g);
             this.hitbox.Draw(g);
+
+            foreach (ConnectionPoint x in connectPoints)
+            {
+                if (x.Active)
+                {
+                   // g.FillRectangle(Brushes.Red, x.Location.X, x.Location.Y, 10, 10);
+                }
+            }
         }
 
         public void DrawSides(Graphics g, string _side, Point _topleft, Size _size, Brush _b)
         {
+            g.FillRectangle(_b, new Rectangle(_topleft, _size));
             if (!this.connectPoints.Any(x => x.Side == _side && x.Active == false))
             {
-                g.FillRectangle(_b, new Rectangle(_topleft, _size));
+               //g.FillRectangle(_b, new Rectangle(_topleft, _size));
             }
         }
     }

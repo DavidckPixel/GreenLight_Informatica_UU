@@ -204,63 +204,57 @@ namespace GreenLight
                 }
                 else
                 {
-                    try
+                    string[] save_text = new string[this.BuildScreen.builder.roadBuilder.roads.Count() + this.BuildScreen.builder.signController.Signs.Count()];
+                    int _count = 0;
+                    foreach (AbstractRoad x in this.BuildScreen.builder.roadBuilder.roads)
                     {
-                        //StreamWriter writer = new StreamWriter(fileName);
-
-                        string[] save_text = new string[this.BuildScreen.builder.roadBuilder.roads.Count() + this.BuildScreen.builder.signController.Signs.Count()];
-                        int _count = 0;
-                        foreach (AbstractRoad x in this.BuildScreen.builder.roadBuilder.roads)
+                        save_text[_count] = x.ToString();
+                        //writer.WriteLine(x.ToString());
+                        _count++;
+                        foreach (PlacedSign y in x.Signs)
                         {
-                            save_text[_count] = x.ToString();
-                            //writer.WriteLine(x.ToString());
+                            save_text[_count] = y.ToString();
                             _count++;
-                            foreach (PlacedSign y in x.Signs)
-                            {
-                                save_text[_count] = y.ToString();
-                                _count++;
-                            }
                         }
-                        File.WriteAllLines(pathName, save_text);
-
-                        imagePath = "../../Recent_projects/Images/" + fileName + ".png";
-                        Bitmap pic = new Bitmap(BuildScreen.Screen.ClientSize.Width, BuildScreen.Screen.ClientSize.Height);
-
-                        if (File.Exists(imagePath))
-                        {
-                            UserInterface.SSRPM.Controls.Clear();
-                            File.Delete(imagePath);
-                        }
-
-                        using (Graphics g = Graphics.FromImage(pic))
-                        {
-                            Color c = Color.FromArgb(142, 140, 144);
-                            Brush b = new SolidBrush(c);
-                            g.FillRectangle(b, 0, 0, pic.Width, pic.Height);
-                            BuildScreen._DrawPictureBox(g);
-                            pic.Save(imagePath, ImageFormat.Png);
-                        }
-
-                        string recent = fileName + " " + pathName + " " + imagePath + Environment.NewLine;
-                        string[] text = File.ReadAllLines(recent_project);
-
-                        for (int t = 0; t < text.Count(); t++)
-                        {
-                            if (text[t] == fileName + " " + pathName + " " + imagePath)
-                            {
-                                text[t] = text[t].Remove(0, text[t].Length);
-                                //text[t] = text[t].Replace(fileName + " " + pathName + " " + imagePath, null);
-                                Console.WriteLine(text[t].Length);
-                            }
-                        }
-
-                        string[] test = text.Where(s => s.Trim() != string.Empty).ToArray();
-                        File.WriteAllLines(recent_project, test);
-                        File.AppendAllText(recent_project, recent);
-
-                        UserInterface.Size_adjust_SSRPM();
                     }
-                    catch { SaveAs(); }
+                    File.WriteAllLines(pathName, save_text);
+
+                    imagePath = "../../Recent_projects/Images/" + fileName + ".png";
+                    Bitmap pic = new Bitmap(BuildScreen.Screen.ClientSize.Width, BuildScreen.Screen.ClientSize.Height);
+
+                    if (File.Exists(imagePath))
+                    {
+                        UserInterface.SSRPM.Controls.Clear();
+                        File.Delete(imagePath);
+                    }
+
+                    using (Graphics g = Graphics.FromImage(pic))
+                    {
+                        Color c = Color.FromArgb(142, 140, 144);
+                        Brush b = new SolidBrush(c);
+                        g.FillRectangle(b, 0, 0, pic.Width, pic.Height);
+                        BuildScreen._DrawPictureBox(g);
+                        pic.Save(imagePath, ImageFormat.Png);
+                    }
+
+                    string recent = fileName + " " + pathName + " " + imagePath + Environment.NewLine;
+                    string[] text = File.ReadAllLines(recent_project);
+
+                    for (int t = 0; t < text.Count(); t++)
+                    {
+                        if (text[t] == fileName + " " + pathName + " " + imagePath)
+                        {
+                            text[t] = text[t].Remove(0, text[t].Length);
+                            //text[t] = text[t].Replace(fileName + " " + pathName + " " + imagePath, null);
+                            Console.WriteLine(text[t].Length);
+                        }
+                    }
+
+                    string[] test = text.Where(s => s.Trim() != string.Empty).ToArray();
+                    File.WriteAllLines(recent_project, test);
+                    File.AppendAllText(recent_project, recent);
+
+                    UserInterface.Size_adjust_SSRPM();
                 }
             }
             else

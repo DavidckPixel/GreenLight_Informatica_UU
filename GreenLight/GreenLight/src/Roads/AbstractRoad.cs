@@ -26,6 +26,8 @@ namespace GreenLight
         public List<Lane> Drivinglanes=  new List<Lane>();
         public List<PlacedSign> Signs = new List<PlacedSign>();
         public List<ConnectionLink> connectLinks = new List<ConnectionLink>();
+        public List<ConnectionPoint> connectPoints = new List<ConnectionPoint>();
+        public int Top = 0, Right = 0, Left = 0, Bottom = 0;
 
         public string roadtype;
         public double slp;

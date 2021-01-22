@@ -75,6 +75,7 @@
     <Compile Include="src\Driver\GPS.cs" />
     <Compile Include="src\Driver\RoadMath.cs" />
     <Compile Include="src\OriginPointController.cs" />
+    <Compile Include="src\Roads\CrossConnection.cs" />
     <Compile Include="src\UserControls\Start_sub_recent_projects_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -20,7 +20,7 @@ namespace GreenLight
         private int _shift = 20;
 
         // The constructor method sees what kind of roads have to be connected and calls another method accordingly. 
-        public Connection(Point _point1, Point _point2, int _lanes, string _dir, string _dir2, AbstractRoad _roadOne, AbstractRoad _roadTwo, int _count)
+        public Connection(Point _point1, Point _point2, int _lanes, string _dir, string _dir2, AbstractRoad _roadOne, AbstractRoad _roadTwo)
         {
             
             Console.WriteLine("-- Connection --");
@@ -136,6 +136,10 @@ namespace GreenLight
                 }
 
                 DiagonalandCurved(_point1, _point2, _lanes, _temp1, _temp2, _temp3, _temp4, _roadOne, _roadTwo, _roadOneEnds, _roadTwoEnds, _dir, _dir2);
+            }
+            else if(_roadOne.Type == "Cross" || _roadTwo.Type == "Cross")
+            {
+                CrossConnection crossConnection = new CrossConnection(_point1, _point2, _dir, _dir2, _roadOne, _roadTwo);
             }
         }
 
