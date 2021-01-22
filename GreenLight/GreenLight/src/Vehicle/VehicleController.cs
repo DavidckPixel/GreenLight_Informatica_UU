@@ -44,7 +44,7 @@ namespace GreenLight
 
         static public void addVehicleStats(string _name, int _weight, float _length, int _topspeed, int _motorpwr, int _surface, float _cw, float _occurance)
         {
-            VehicleStats _temp = new VehicleStats(_name, _weight, _length, _topspeed, _motorpwr, _surface, _cw, true, _occurance);
+            VehicleStats _temp = new VehicleStats(_name, _weight, _length, _topspeed, _motorpwr, _surface, _cw, false, _occurance);
             if (VehicleTypeConfig.vehicles.Find(x => x == _temp) == null)
             {
                 VehicleTypeConfig.vehicles.Add(_temp);
@@ -65,7 +65,7 @@ namespace GreenLight
                 }
                 catch (Exception)
                 {
-                    _temp = new VehicleStats("", 1, 1, 1, 1, 1, 1, true,1);
+                    _temp = new VehicleStats("", 1, 1, 1, 1, 1, 1, false,1);
                 }
             }
 

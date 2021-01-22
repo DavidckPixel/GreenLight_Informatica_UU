@@ -209,6 +209,10 @@ namespace GreenLight
             {
                 return;
             }
+            if(name == "")
+            {
+                return;
+            }
 
             Console.WriteLine("Vehicle Created With name : {0}", name);
 
