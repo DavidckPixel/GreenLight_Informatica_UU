@@ -61,26 +61,27 @@ namespace GreenLight
 
         private void initSettingScreen()
         {
-            this.settingScreen = new Form();
+            Dictionary<string, int> menu = Roads.Config.settingsScreen;
 
+            this.settingScreen = new Form();
             this.settingScreen.Hide();
 
-            this.settingScreen.Size = new Size(520, 700);
+            this.settingScreen.Size = new Size(menu["width"], menu["length"] + menu["crossextralength"]);
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
             this.settingScreenImage = new PictureBox();
             this.settingScreenImage.Paint += SettingBoxDraw;
             this.settingScreenImage.MouseClick += SettingBoxClick;
-            this.settingScreenImage.Size = new Size(500, 500);
-            this.settingScreenImage.Location = new Point(10, 10);
+            this.settingScreenImage.Size = new Size(menu["width"] - 2 * menu["offset"], menu["width"] - 2 * menu["offset"]);
+            this.settingScreenImage.Location = new Point(menu["offset"], menu["offset"]);
             this.settingScreenImage.BackColor = Color.Black;
             //TEMP
 
-            selectButton = new CurvedButtons(new Size(80, 40), new Point(10, 500), 25, "../../User Interface Recources/Custom_Small_Button.png", "Select", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            selectButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Select", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             selectButton.Click += (object o, EventArgs ea) => { this.Button = "Select";  };
 
-            linkButton = new CurvedButtons(new Size(80, 40), new Point(100, 500), 25, "../../User Interface Recources/Custom_Small_Button.png", "Link", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            linkButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Link", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             linkButton.Click += (object o, EventArgs ea) => 
             {
                 if(selectedRoad.selectedPoint == null)
@@ -90,27 +91,27 @@ namespace GreenLight
                 this.Button = "Link";
             };
 
-            disableButton = new CurvedButtons(new Size(80, 40), new Point(190, 500), 25, "../../User Interface Recources/Custom_Small_Button.png", "Disable", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            disableButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + 2 * menu["buttonWidth"] + 2 * menu["betweenButtons"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Disable", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             disableButton.Click += (object o, EventArgs ea) => 
             {
                 this.Button = "Disable";
                 this.selectedRoad.SwitchSelectedPoint(null);
             };
 
-            saveButton = new CurvedButtons(new Size(80, 40), new Point(10, 600), 25, "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            saveButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] - 2 * menu["offset"] + menu["buttonHeight"] + menu["betweenButtons"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             saveButton.Click += (object o, EventArgs ea) => { CreateDrivingLanes(); this.settingScreenImage.Invalidate(); };
 
-            deleteButton = new CurvedButtons(new Size(80, 40), new Point(100, 600), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            deleteButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"] - 2 * menu["offset"] + menu["buttonHeight"] + menu["betweenButtons"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             deleteButton.Click += (object o, EventArgs ea) => { DeleteCrossroad(this.selectedRoad); };
 
             error = new Label();
             error.Text = "";
             error.ForeColor = Color.Red;
-            error.Location = new Point(10,650);
-            error.Size = new Size(390, 50);
+            error.Location = new Point(menu["offset"], menu["width"] - 2 * menu["offset"] + 2 * menu["buttonHeight"] + 2 * menu["betweenButtons"]);
+            error.Size = new Size(menu["errorwidth"], menu["errorheight"]);
             error.Hide();
 
-            errorButton = new CurvedButtons(new Size(40, 40), new Point(400, 650), 25, "../../User Interface Recources/Custom_Small_Button.png", "Oke!", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            errorButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["errorwidth"] + menu["offset"], menu["width"] - 2 * menu["offset"] + 2 * menu["buttonHeight"] + 2 * menu["betweenButtons"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Oke!", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             errorButton.Click += HideError;
             errorButton.Hide();
 

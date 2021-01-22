@@ -78,6 +78,7 @@
     <Compile Include="src\Driver\DriverProfile\DriverProfileFace.cs" />
     <Compile Include="src\Driver\GPS.cs" />
     <Compile Include="src\Driver\RoadMath.cs" />
+    <Compile Include="src\Grid\Grid.cs" />
     <Compile Include="src\OriginPointController.cs" />
     <Compile Include="src\Roads\CrossRoadSide.cs" />
     <Compile Include="src\Roads\Roads.cs" />
