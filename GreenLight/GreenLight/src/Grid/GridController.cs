@@ -83,6 +83,7 @@ namespace GreenLight
 
             if (_type == "X" || _type == "D" || _point == null)
             {
+
                 return;
             }
 
@@ -118,7 +119,7 @@ namespace GreenLight
                     Console.WriteLine("Second PointClick!");
                     Console.WriteLine(_point.Cords);
                     this.secondPoint = _point;
-
+                   
                     builder.BuildRoad(this.firstPoint.Cords, this.secondPoint.Cords);
                     this.ResetPoints();
                 }

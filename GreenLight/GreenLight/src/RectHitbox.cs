@@ -218,6 +218,7 @@ namespace GreenLight
                     }
                 }
                 _temp = (this.Contains(box.max_start) || this.Contains(box.max_end) || this.Contains(box.min_end) || this.Contains(box.min_start));
+                Console.WriteLine(_h.Type);
             }
             
             return _temp;
