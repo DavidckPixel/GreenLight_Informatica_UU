@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 using System.Threading.Tasks;
 
 namespace GreenLight
@@ -14,8 +15,9 @@ namespace GreenLight
         public Tuple<int, int> index { get; }
         public Tuple<int,int> imgSize { get; }
         public List<string>[] speech { get; }
+        public Bitmap backImg { get; }
 
-        public DriverProfileFace(string name, string fileName, int sizeX, int sizeY,int indexX,int indexY, List<string>[] speech)
+        public DriverProfileFace(string name, string fileName, int sizeX, int sizeY,int indexX,int indexY, List<string>[] speech, string backImg)
         {
             this.name = name;
             this.fileName = fileName;
@@ -31,6 +33,8 @@ namespace GreenLight
             {
                 this.imgSize = new Tuple<int, int>(sizeX, sizeY);
             }
+
+            this.backImg = new Bitmap(backImg);
         }
     }
 }

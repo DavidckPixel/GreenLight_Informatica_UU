@@ -12,7 +12,7 @@ namespace GreenLight
     public class AIController : EntityController
     {
         public List<AI> driverlist = new List<AI>();
-        private static List<DriverStats> drivertypes = new List<DriverStats>();
+        public DriverStats selectedAI;
 
         public override void Initialize()
         {
@@ -39,38 +39,20 @@ namespace GreenLight
             if (_stats == null)
             {
                 Random ran = new Random();
-                int _index = ran.Next(0, drivertypes.Count() - 1);
-                _stats = drivertypes[_index];
+                int _index = ran.Next(0, AITypeConfig.aiTypes.Count() - 1);
+                _stats = AITypeConfig.aiTypes[_index];
             }
 
             return _stats;
         }
 
-        static private void initDriverStats()
+        static public void addDriverStats(string _name, int _reactionTime, float _followInterval, int _speedRelativeToLimit, float _ruleBreakingChance, int _occurance, bool _locked)
         {
-            try
-            {
-                string file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Driver\\DriverType.json";
+            DriverStats _temp = new DriverStats(_name, _reactionTime, _followInterval, _speedRelativeToLimit, _ruleBreakingChance, _occurance, _locked);
 
-                using (StreamReader sr = new StreamReader(file))
-                {
-                    string json = sr.ReadToEnd();
-                    drivertypes = JsonConvert.DeserializeObject<List<DriverStats>>(json);
-                }
-            }
-            catch (Exception e)
+            if (AITypeConfig.aiTypes.Find(x => x == _temp) == null)
             {
-                Console.WriteLine(e);
-            }
-        }
-
-        static public void addDriverStats(string _name, int _reactionTime, float _followInterval, int _speedRelativeToLimit, float _ruleBreakingChance)
-        {
-            DriverStats _temp = new DriverStats(_name, _reactionTime, _followInterval, _speedRelativeToLimit, _ruleBreakingChance);
-
-            if (drivertypes.Find(x => x == _temp) == null)
-            {
-                drivertypes.Add(_temp);
+                AITypeConfig.aiTypes.Add(_temp);
             }
 
             General_Form.Main.UserInterface.SimSDM.Selection_box.Add_Element(_temp.Name);
@@ -79,17 +61,17 @@ namespace GreenLight
 
         static public DriverStats getDriverStat(string _name)
         {
-            DriverStats _temp = drivertypes.Find(x => x.Name == _name);
+            DriverStats _temp = AITypeConfig.aiTypes.Find(x => x.Name == _name);
 
             if (_temp == null)
             {
                 try
                 {
-                    _temp = drivertypes[0];
+                    _temp = AITypeConfig.aiTypes[0];
                 }
                 catch (Exception)
                 {
-                    _temp = new DriverStats("", 1, 1, 1, 1);
+                    _temp = new DriverStats("", 1, 1, 1, 1,1,false);
                 }
             }
 
@@ -98,28 +80,105 @@ namespace GreenLight
 
         static public List<string> getStringDriverStats()
         {
-            if (!drivertypes.Any())
-            {
-                initDriverStats();
-            }
-            //Console.WriteLine(drivertypes.Count());
-
             List<string> _temp = new List<string>();
-            drivertypes.ForEach(x => _temp.Add(x.Name));
+            AITypeConfig.aiTypes.ForEach(x => _temp.Add(x.Name));
             return _temp;
         }
 
-        static public void SaveJson()
+        public void DeleteAI(DriverStats _stats)
         {
-            string json = JsonConvert.SerializeObject(drivertypes);
-            //Console.WriteLine(json);
+            AITypeConfig.aiTypes.Remove(_stats);
+        }
 
-            string file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Driver\\DriverType.json";
+        public void SelectAI(DriverStats _stats)
+        {
+            this.selectedAI = _stats;
+        }
 
-            using (StreamWriter sr = new StreamWriter(file))
+        private bool AllowEdit()
+        {
+            if (this.selectedAI.Locked)
             {
-                sr.Write(json);
+                //ERROR MESSAGE HERE!
+
+                return (true);
             }
+            return (false);
+        }
+
+        public void ChangeReactionTime(Slider o)
+        {
+            if (this.selectedAI == null)
+            {
+                //NO VEHICLE SELECTED;
+                return;
+            }
+
+            if (AllowEdit())
+            {
+                o.Value = (int)(this.selectedAI.ReactionTime * 10);
+                return;
+            }
+            this.selectedAI.ReactionTime = (float)o.Value / 10;
+        }
+
+        public void ChangeFollowInterval(Slider o)
+        {
+            if (this.selectedAI == null)
+            {
+                //NO VEHICLE SELECTED;
+                return;
+            }
+
+            if (AllowEdit())
+            {
+                o.Value = (int)(this.selectedAI.ReactionTime * 10);
+                return;
+            }
+            this.selectedAI.ReactionTime = (float)o.Value / 10;
+        }
+
+        public void ChangeSpeedRelativeToLimit(Slider o)
+        {
+            if (this.selectedAI == null)
+            {
+                //NO VEHICLE SELECTED;
+                return;
+            }
+
+            if (AllowEdit())
+            {
+                o.Value = this.selectedAI.SpeedRelativeToLimit;
+                return;
+            }
+            this.selectedAI.SpeedRelativeToLimit = o.Value;
+        }
+
+        public void ChangeRuleBreakingChance(Slider o)
+        {
+            if (this.selectedAI == null)
+            {
+                //NO VEHICLE SELECTED;
+                return;
+            }
+
+            if (AllowEdit())
+            {
+                o.Value = (int)this.selectedAI.RuleBreakingChance;
+                return;
+            }
+            this.selectedAI.RuleBreakingChance = o.Value;
+        }
+
+        public void ChangeOccurance(Slider o)
+        {
+            if (this.selectedAI == null)
+            {
+                //NO VEHICLE SELECTED;
+                return;
+            }
+
+            this.selectedAI.Occurance = o.Value;
         }
     }
 }

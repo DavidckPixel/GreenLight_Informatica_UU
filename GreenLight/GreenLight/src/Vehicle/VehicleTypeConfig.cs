@@ -13,7 +13,8 @@ namespace GreenLight
         //This class initializes and holds the Config data for Vehicles
         //It uses the newtonsoft json deserializer.
 
-        public static List<Vehicle> types;
+        public static List<VehicleStats> vehicles = new List<VehicleStats>();
+
 
         static VehicleTypeConfig()
         {
@@ -22,14 +23,14 @@ namespace GreenLight
 
         private static void ReadJson()
         {
-            string _file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Vehicle\\VehicleType.json";
-
             try
             {
-                using (StreamReader r = new StreamReader(_file))
+                string file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Vehicle\\VehicleType.json";
+
+                using (StreamReader sr = new StreamReader(file))
                 {
-                    string Json = r.ReadToEnd();
-                    types = JsonConvert.DeserializeObject<List<Vehicle>>(Json);
+                    string json = sr.ReadToEnd();
+                    vehicles = JsonConvert.DeserializeObject<List<VehicleStats>>(json);
                 }
             }
             catch (Exception e)
@@ -40,7 +41,7 @@ namespace GreenLight
 
         static public void SaveJson()
         {
-            string json = JsonConvert.SerializeObject(VehicleController.vehicles);
+            string json = JsonConvert.SerializeObject(vehicles);
             Console.WriteLine(json);
 
             string file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Vehicle\\VehicleType.json";

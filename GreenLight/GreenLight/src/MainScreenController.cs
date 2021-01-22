@@ -48,8 +48,6 @@ namespace GreenLight
             SimulationScreen = new SimulationScreenController(this.form);
             MenuController = new MenuController(this.Screen);
 
-
-
             BuildScreen.Initialize();
             SimulationScreen.Initialize();
             MenuController.Initialize();
@@ -69,6 +67,7 @@ namespace GreenLight
             this.Active.DeActivate();
             this.Active = _controller;
             this.Active.Activate();
+            this.Active.Screen.Invalidate();
             this.form.Invalidate();
 
             Console.WriteLine("Switched and invalidated!");
@@ -92,10 +91,6 @@ namespace GreenLight
             {
                 this.Active.Screen.Show();
                 this.Active.Screen.Invalidate();
-                if (this.Active != SimulationScreen)
-                {
-                    this.Active.Screen.BringToFront();
-                }
             }
         }
         

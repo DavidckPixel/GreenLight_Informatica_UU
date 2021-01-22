@@ -12,17 +12,15 @@ namespace GreenLight
 {
     public class SimulationController : AbstractController
     {
-        public PictureBox Screen;
         public VehicleController vehicleController;
         public AIController aiController;
         public WorldController worldController;
 
-        public SimulationController(PictureBox _screen)
+        public SimulationController()
         {
-            this.Screen = _screen;
             this.vehicleController = new VehicleController();
             this.aiController = new AIController();
-            this.worldController = new WorldController(_screen);
+            this.worldController = new WorldController();
             this.worldController.Initialize();
         }
 

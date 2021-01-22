@@ -38,7 +38,7 @@ namespace GreenLight
             for (int n = 0; simulate && n < 1; n++)
             {
                 Vehicle v = new Vehicle(new VehicleStats("Auto", 1353, 4.77f, 100, 4223, 0.3f, 2.65f, false, 1), 10, 10);
-                AI driver = new AI(v, new DriverStats("new driver", 250, 2, 0, 0));
+                AI driver = new AI(v, new DriverStats("new driver", 250, 2, 0, 0, 50, false));
                 driverList.Add(driver);
                 listchoice.Add(true);
                 Thread.Sleep(1000);

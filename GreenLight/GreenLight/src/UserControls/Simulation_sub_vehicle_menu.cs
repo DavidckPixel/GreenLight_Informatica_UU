@@ -47,22 +47,22 @@ namespace GreenLight
             //VehicleController controller = General_Form.Main.SimulationScreen.Simulator.vehicleController;
             
 
-            Selection_box = new Selection_box(Form, Dosis_font_family, _temp, new Action(this.SetValues));
+            Selection_box = new Selection_box(Form, Dosis_font_family, _temp, new Action(this.SetValues), new Action(this.AddVehicle), new Action(this.DeleteVehicle));
             if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxMaxX"], User_Controls.Config.standardSubMenu["selectionBoxMaxY"]);
             else Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxX"], User_Controls.Config.standardSubMenu["selectionBoxY"]);
 
             this.Controls.Add(Selection_box);
 
             Dictionary<string, int> vehiclemenu = User_Controls.Config.simVehicle;
-            SliderText name_label = new SliderText(Dosis_font_family, new Point(_sliderX, _startY + 3 * _diffY), "Vehicle Name: ");
+            /*SliderText name_label = new SliderText(Dosis_font_family, new Point(_sliderX, _startY + 3 * _diffY), "Vehicle Name: ");
             this.Controls.Add(name_label);
 
             TextBox name = new TextBox();
             name.Location = new Point(_sliderX, _startY + 3 * _diffY);
-            this.Controls.Add(name);
+            this.Controls.Add(name);*/
 
-            CurvedButtons saveButton = new CurvedButtons(new Size(80, 40), new Point(_sliderX, _startY + 4 * _diffY), 25, "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, null, this.BackColor);
-            saveButton.Click += (object o, EventArgs ea) => { };
+            CurvedButtons saveButton = new CurvedButtons(new Size(80, 40), new Point(_sliderX, _startY + 3 * _diffY), 25, "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, null, this.BackColor);
+            saveButton.Click += (object o, EventArgs ea) => { VehicleTypeConfig.SaveJson(); };
             this.Controls.Add(saveButton);
 
             Cw = new Slider(new Point(_sliderX, _startY + 2 * _diffY), vehiclemenu["surfaceMin"], vehiclemenu["surfaceMax"]);
@@ -182,19 +182,16 @@ namespace GreenLight
         {
             VehicleController controller = General_Form.Main.SimulationScreen.Simulator.vehicleController;
 
-            int index = Selection_box.Selected_index;
-
-            Console.WriteLine(index);
-
-            if (index >= Selection_box.Elements_selected.Count)
+            VehicleStats _stats = FindVehicle();
+            if(_stats == null)
             {
-                Console.WriteLine(Selection_box.Elements_available.Count());
-                Console.WriteLine("Click!");
                 return;
             }
+
+            controller.SelectVehicle(_stats);
+
             Console.WriteLine("Je bent erdoor!!");
 
-            controller.SelectVehicle(VehicleController.getVehicleStat(Selection_box.Elements_selected[Selection_box.Selected_index]));
             Cw.Value = (int)(controller.selectedVehicle.Cw * 10);
             Surface.Value = (int)(controller.selectedVehicle.Surface * 10);
             Length.Value = (int)(controller.selectedVehicle.Length * 10);
@@ -206,16 +203,80 @@ namespace GreenLight
 
         private void AddVehicle()
         {
-            string name = Interaction.InputBox("Enter Name: ", "Driver", "no name", 100, 100);
+            string name = Interaction.InputBox("Enter Name: ", "Vehicle", "no name", 100, 100);
 
             if(name == "no name")
             {
                 return;
             }
 
-            VehicleController.addVehicleStats(name, 50, 5, 100, 10, 5, 1, 50);
+            Console.WriteLine("Vehicle Created With name : {0}", name);
 
-            Selection_box.Elements_available.Find(x => x.)
+            VehicleController.addVehicleStats(name, 5000, 5, 100, 100, 5, 1, 50); //WEIGHT (1000,40000) //LENGTH 3,12 // TOPSPEED 30,300 // HORSEPWR 40,1500 // SURFACE 1,20//CW = 1 //OCCU = 0-100
+            SetValues();
         }
+
+        private void DeleteVehicle()
+        {
+            VehicleController controller = General_Form.Main.SimulationScreen.Simulator.vehicleController;
+
+            VehicleStats _stats = FindVehicle();
+            if (_stats == null)
+            {
+                return;
+            }
+
+            if (_stats.canEdit == true) //if cna edit = true it cannot be edited nor deleted, so is returned
+            {
+                return;
+            }
+
+            controller.DeleteVehicle(_stats);
+            Selection_box.Remove_Element(_stats.Name);
+        }
+
+        private VehicleStats FindVehicle()
+        {
+            int index = Selection_box.Selected_index;
+
+            if (Selection_box.Selected_left_bool)
+            {
+                if (index < Selection_box.Elements_selected.Count)
+                {
+                    return VehicleController.getVehicleStat(Selection_box.Elements_selected[Selection_box.Selected_index]);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                if (index < Selection_box.Elements_available.Count)
+                {
+                    return VehicleController.getVehicleStat(Selection_box.Elements_available[Selection_box.Selected_index]);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+        /*
+         "topSpeedMin": 30,
+        "topSpeedMax": 300,
+        "occurenceMin": 0,
+        "occurenceMax": 100,
+        "horsepwrMin": 40,
+        "horsepwrMax": 1500,
+        "lengthMin": 30,
+        "lengthMax": 120,
+        "weightMin": 1000,
+        "weightMax": 40000,
+        "surfaceMin": 10,
+        "surfaceMax": 200,
+        "cwMin": 0,
+        "cwMax": 10
+        */
     }
 }

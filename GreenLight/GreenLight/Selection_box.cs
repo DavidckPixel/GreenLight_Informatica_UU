@@ -12,15 +12,19 @@ namespace GreenLight
     public class Selection_box : Panel
     {
         public int Selected_index = 0;
-        bool Selected_left_bool = true;
+        public bool Selected_left_bool = true;
 
         public List<string> Elements_available = new List<string>();
         public List<string> Elements_selected = new List<string>();
 
         public List<string> allElement = new List<string>();
         private Action functionClick;
+        private Action functionAdd;
+        private Action functionRemove;
 
-        public Selection_box(Form Form, FontFamily Dosis_font_family, List<string> _available, Action _functionClick)
+        private Form Form;
+
+        public Selection_box(Form _Form, FontFamily Dosis_font_family, List<string> _available, Action _functionClick, Action _functionAdd, Action _functionRemove)
         {
             Elements_selected = _available;
 
@@ -35,8 +39,15 @@ namespace GreenLight
             this.BackgroundImage = Image.FromFile("../../User Interface Recources/Selection_Box.png");
             this.Size = new Size(225, 117);
             this.BackgroundImageLayout = ImageLayout.Zoom;
-            Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family);
+            this.Form = _Form;
+            Elements_draw(Elements_selected, Elements_available, this.Form, Dosis_font_family);
+
+            this.Selected_index = 0;
+            this.Selected_left_bool = false;
+
             this.functionClick = _functionClick;
+            this.functionAdd = _functionAdd;
+            this.functionRemove = _functionRemove;
         }
 
         public void Update_Selection_box(List<string> Elements_selected, List<string> Elements_available, Form Form, FontFamily Dosis_font_family)
@@ -71,7 +82,8 @@ namespace GreenLight
                 PB_label.MouseEnter += (object o, EventArgs EA) => { PB.BackColor = Hover_Color; };
                 PB_label.MouseLeave += (object o, EventArgs EA) => { PB.BackColor = Prime_Color; };
                 PB_label.Click += (object o, EventArgs EA) => 
-                { Selected_index = Elements_selected.IndexOf(element); Selected_left_bool = true;
+                { Selected_index = Elements_selected.IndexOf(element);
+                    Selected_left_bool = true;
                     Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family);
                     this.functionClick();
                 };
@@ -111,17 +123,17 @@ namespace GreenLight
 
             CurvedButtons Remove = new CurvedButtons(new Size(17, 17), new Point(104, 52), 10,
                "../../User Interface Recources/Selection_Box_Remove_Button.png", Color.FromArgb(255, 255, 255));
-            Remove.Click += (object o, EventArgs EA) => { if (Selected_left_bool) Elements_selected.RemoveAt(Selected_index); else Elements_available.RemoveAt(Selected_index) ; Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family); };
+            Remove.Click += (object o, EventArgs EA) => {
+                this.functionRemove();
+            };
             this.Controls.Add(Remove);
             Remove.BringToFront();
 
-            /*
             CurvedButtons Add = new CurvedButtons(new Size(17, 17), new Point(104, 66), 10,
                 "../../User Interface Recources/Selection_Box_Add_Button.png", Color.FromArgb(255, 255, 255));
-            Add.Click += (object o, EventArgs EA) => { string name = Interaction.InputBox("Enter Name: ", "Driver", "no name", 100, 100); Elements_selected.Add(name); Elements_draw(Elements_selected, Elements_available, Form, Dosis_font_family); };
+            Add.Click += (object o, EventArgs EA) => { this.functionAdd(); };
             this.Controls.Add(Add);
             Add.BringToFront();
-            */
 
             CurvedButtons To_left = new CurvedButtons(new Size(17, 17), new Point(104, 80), 10,
                 "../../User Interface Recources/Selection_Box_To_Left_Button.png", Color.FromArgb(255, 255, 255));
@@ -153,8 +165,38 @@ namespace GreenLight
 
         public void Add_Element(string element)
         {
-            Elements_available.Add(element);
+            Console.WriteLine("ADDED: " + element);
+            Elements_selected.Add(element);
+            this.Selected_index = this.Elements_selected.IndexOf(element);
+            this.Selected_left_bool = true;
+            Elements_draw(Elements_selected, Elements_available, Form, DrawData.Dosis_font_family);
+        }
+
+        public void Remove_Element(string element)
+        {
+            Elements_selected.Remove(element);
+            Elements_available.Remove(element);
+
+            Selected_index = 0;
+            Selected_left_bool = true;
+
+            if(Elements_selected.Count < 1)
+            {
+                if(Elements_available.Count > 0)
+                {
+                    Selected_left_bool = false;
+                }
+                else
+                {
+                    this.functionAdd();
+                    return;
+                }
+            }
+
+            this.functionClick();
+
+            Elements_draw(Elements_selected, Elements_available, Form, DrawData.Dosis_font_family);
         }
 
     }
-    }
+}

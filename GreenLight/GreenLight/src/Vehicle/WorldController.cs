@@ -10,8 +10,6 @@ namespace GreenLight
 {
     public class WorldController : AbstractController
     {
-        PictureBox screen;
-
         Form settingScreen;
         TextBox name, brakePwr, density, gravity, slip;
         Label nameLabel, brakePwrLabel, densityLabel, gravityLabel, slipLabel, entityTypeLabel;
@@ -24,9 +22,8 @@ namespace GreenLight
 
         World selectedWorld;
 
-        public WorldController(PictureBox _screen)
+        public WorldController()
         {
-            this.screen = _screen;
         }
 
         public override void Initialize()

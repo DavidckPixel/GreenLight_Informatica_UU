@@ -19,7 +19,8 @@
         "Driving is really terrifying!",
         "Such a nice day for a relaxing cardrive"
       ]
-    ]
+    ],
+    "backImg": "../../src/Driver/DriverProfile/Images/BackImgOne.jpg"
   },
   {
     "name": "Alien",
@@ -41,7 +42,8 @@
         "Driving is really terrifying!",
         "Such a nice day for a relaxing cardrive"
       ]
-    ]
+    ],
+    "backImg": "../../src/Driver/DriverProfile/Images/BackImgTwo.jpg"
   },
   {
     "name": "Cat",
@@ -64,7 +66,8 @@
         "PURPURPURPURPUR",
         "ZzzZzZzzZzz..."
       ]
-    ]
+    ],
+    "backImg": "../../src/Driver/DriverProfile/Images/BackImgOne.jpg"
   },
   {
     "name": "Robot",
@@ -86,7 +89,8 @@
         "Driving is really terrifying!",
         "Such a nice day for a relaxing cardrive"
       ]
-    ]
+    ],
+    "backImg": "../../src/Driver/DriverProfile/Images/BackImgOne.jpg"
   }
 ]
 

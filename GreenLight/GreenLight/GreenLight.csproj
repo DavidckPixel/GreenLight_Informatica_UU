@@ -63,6 +63,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\CurvedHitbox.cs" />
+    <Compile Include="src\Driver\AITypeConfig.cs" />
     <Compile Include="src\Driver\BetterAI.cs" />
     <Compile Include="src\Driver\BetterVehicle.cs" />
     <Compile Include="src\Driver\BetterVehicleTest.cs">
