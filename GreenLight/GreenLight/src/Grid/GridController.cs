@@ -17,8 +17,7 @@ namespace GreenLight
         //Every Gridpoint object contains a rectangle Hitbox, to see if the user has clicked on a point this class returns a bool
         //whether or not the point is in the Hitbox.
 
-        public List<Gridpoint> Gridpoints = new List<Gridpoint>();
-        public GridConfig config;
+        public List<Gridpoint> Gridpoints = new List<Gridpoint>();        
         bool firstClick;
         PictureBox canvas;
         private bool _points_visible = true;
@@ -32,8 +31,7 @@ namespace GreenLight
 
         public GridController(PictureBox _bitmap, BuilderController _builder)
         {
-            this.canvas = _bitmap;
-            GridConfig.Init(ref this.config);
+            this.canvas = _bitmap;            
             CreateGridPoints();
             this.canvas.MouseClick += OnClick;
             this.canvas.MouseMove += moveMouse;
@@ -62,15 +60,15 @@ namespace GreenLight
 
         public void CreateGridPoints()
         {
-            int _amountX = canvas.Width / config.SpacingWidth;
-            int _amountY = canvas.Height / config.SpacingHeight;
+            int _amountX = canvas.Width / Grid.Config.SpacingWidth;
+            int _amountY = canvas.Height / Grid.Config.SpacingHeight;
 
             for (int y = 0; y < _amountY; y++)
             { 
                 for (int x = 0; x < _amountX; x++)
                 {
                     
-                    Gridpoints.Add(new Gridpoint(new Point(x * config.SpacingWidth, y * config.SpacingHeight), 5));
+                    Gridpoints.Add(new Gridpoint(new Point(x * Grid.Config.SpacingWidth, y * Grid.Config.SpacingHeight), 5));
                 }
             }
         }

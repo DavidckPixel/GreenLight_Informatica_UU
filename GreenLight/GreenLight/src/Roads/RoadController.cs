@@ -37,6 +37,8 @@ namespace GreenLight
 
         public CrossRoadController crossRoadController;
 
+        
+
         public bool visualizeLanePoints = true; //Boolean whether or not the lanePoints are visualised
 
         public RoadController(PictureBox _screen)
@@ -47,6 +49,8 @@ namespace GreenLight
             crossRoadController = new CrossRoadController(this.Screen);
 
             initSettingScreen();
+
+            
         }
 
 
@@ -173,7 +177,7 @@ namespace GreenLight
 
                         if (x.getLanes() == _lanes)
                         {
-                            if (_point1 == _temp1 || Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) <= 21)
+                            if (_point1 == _temp1 || Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1)
                             {
                                 if (_beginconnection == false)
                                 {
@@ -187,7 +191,7 @@ namespace GreenLight
                                     _road.beginConnectedTo = x;
                                 }
                             }
-                            else if (_point1 == _temp2 || Math.Sqrt(Math.Pow(_point1.X - _temp2.X, 2) + Math.Pow(_point1.Y - _temp2.Y, 2)) <= 21)
+                            else if (_point1 == _temp2 || Math.Sqrt(Math.Pow(_point1.X - _temp2.X, 2) + Math.Pow(_point1.Y - _temp2.Y, 2)) <= Grid.Config.SpacingWidth + 1)
                             {
                                 if (_beginconnection == false)
                                 {
@@ -201,7 +205,7 @@ namespace GreenLight
                                     _road.beginConnectedTo = x;
                                 }
                             }
-                            else if (_point2 == _temp1 || Math.Sqrt(Math.Pow(_point2.X - _temp1.X, 2) + Math.Pow(_point2.Y - _temp1.Y, 2)) <= 21)
+                            else if (_point2 == _temp1 || Math.Sqrt(Math.Pow(_point2.X - _temp1.X, 2) + Math.Pow(_point2.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1)
                             {
                                 if (_endconnection == false)
                                 {
@@ -216,7 +220,7 @@ namespace GreenLight
 
                                 }
                             }
-                            else if (_point2 == _temp2 || Math.Sqrt(Math.Pow(_point2.X - _temp2.X, 2) + Math.Pow(_point2.Y - _temp2.Y, 2)) <= 21)
+                            else if (_point2 == _temp2 || Math.Sqrt(Math.Pow(_point2.X - _temp2.X, 2) + Math.Pow(_point2.Y - _temp2.Y, 2)) <= Grid.Config.SpacingWidth + 1)
                             {
                                 if (_endconnection == false)
                                 {
@@ -266,19 +270,7 @@ namespace GreenLight
                     {
                         RoadDirection = "D";
                     }
-                    break;
-                /*case "StraightRoad":
-                    {
-                        if (_firstPoint.X < _secondPoint.X)
-                            RoadDirection = "E";
-                        else if (_secondPoint.X < _firstPoint.X)
-                            RoadDirection = "W";
-                        else if (_firstPoint.Y < _secondPoint.Y)
-                            RoadDirection = "S";
-                        else if (_firstPoint.Y > _secondPoint.Y)
-                            RoadDirection = "N";
-                    }
-                    break;*/
+                    break;                
 
             }
             return RoadDirection;
@@ -309,7 +301,7 @@ namespace GreenLight
                 this.selectedRoad = roads.Find(x => x.hitbox.Contains(mea.Location));
             if (this.selectedRoad == null)
             {
-                Console.Write("No Road Clicked!");
+                //Console.Write("No Road Clicked!");
                 return;
             }
 
