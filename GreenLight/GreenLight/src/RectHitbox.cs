@@ -26,7 +26,7 @@ namespace GreenLight
             bottomright = _bottomright;
             topleft = _topleft;
             topright = _topright;
-            
+
 
             Topcord = new Point(BetterMin(_topleft.X, _topright.X, _bottomleft.X, _bottomright.X), BetterMin(_topleft.Y, _topright.Y, _bottomleft.Y, _bottomright.Y));
 
@@ -49,7 +49,7 @@ namespace GreenLight
             this.Type = "Rect";
             //----------------------------------------------------------------
 
-            
+
 
             //----------------------------------------------------------------
 
@@ -121,7 +121,7 @@ namespace GreenLight
                     }
 
                 }
-                else if(rcTop == null || rcBottom == null)
+                else if (rcTop == null || rcBottom == null)
                 {
                     int _maxX = Math.Max(this.topleft.X, this.bottomleft.X);
                     int _minX = Math.Min(this.topleft.X, this.bottomleft.X);
@@ -156,13 +156,13 @@ namespace GreenLight
         public override bool Collide(Hitbox _h)
         {
             bool _temp = false;
-            if(_h.Type == "Rect")
+            if (_h.Type == "Rect")
             {
                 Console.WriteLine("Is checking for a Recthitbox");
                 RectHitbox box = (RectHitbox)_h;
 
-                Point boxmidTop = new Point((box.topright.X + box.topleft.X) / 2, (box.topright.Y + box.topleft.Y) / 2);                
-                Point boxmidTopLeft = new Point((box.topleft.X + boxmidTop.X)/2, (box.topleft.Y + boxmidTop.Y) / 2);
+                Point boxmidTop = new Point((box.topright.X + box.topleft.X) / 2, (box.topright.Y + box.topleft.Y) / 2);
+                Point boxmidTopLeft = new Point((box.topleft.X + boxmidTop.X) / 2, (box.topleft.Y + boxmidTop.Y) / 2);
                 Point boxmidTopRight = new Point((box.topright.X + boxmidTop.X) / 2, (box.topright.Y + boxmidTop.Y) / 2);
 
                 bool top = (this.Contains(boxmidTop) || this.Contains(boxmidTopLeft) || this.Contains(boxmidTopRight));
@@ -203,7 +203,7 @@ namespace GreenLight
 
                 _temp = (top || bottom || left || right || mid || midmid || corners);
             }
-            else if(_h.Type == "Curved")
+            else if (_h.Type == "Curved")
             {
                 Console.WriteLine("Is checking for a Curvedhitbox");
                 CurvedHitbox box = (CurvedHitbox)_h;
@@ -220,7 +220,7 @@ namespace GreenLight
                 _temp = (this.Contains(box.max_start) || this.Contains(box.max_end) || this.Contains(box.min_end) || this.Contains(box.min_start));
                 Console.WriteLine(_h.Type);
             }
-            
+
             return _temp;
         }
 
@@ -251,6 +251,16 @@ namespace GreenLight
 
                 g.FillPolygon(Notsolid, _points);
             }
+        }
+
+        public void ShowOverlap(Graphics g)
+        {
+            Point[] _points = new Point[]
+            {
+                topleft, topright, bottomright, bottomleft
+            };
+
+            g.FillPolygon(Brushes.Red, _points);
         }
     }
 }
