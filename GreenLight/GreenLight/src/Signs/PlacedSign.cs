@@ -13,13 +13,13 @@ namespace GreenLight
     public struct PlacedSign
     {
         public RectHitbox Hitbox;
-        public Point Location;
+        public Point Location, Hitboxoffset;
         public string Direction;
         public AbstractSign Sign;
         public Image Sign_image;
         public AbstractRoad Road;
 
-        public PlacedSign(Point _location, string _direction, AbstractSign _sign, Image _Sign_image, AbstractRoad _road)
+        public PlacedSign(Point _location, string _direction, AbstractSign _sign, Image _Sign_image, AbstractRoad _road, Point _hitboxoffset)
         {
             this.Location = _location;
             this.Direction = _direction;
@@ -27,7 +27,8 @@ namespace GreenLight
             this.Sign_image = _Sign_image;
             this.Road = _road;
             int _dir = (int)Road.Drivinglanes[0].AngleDir;
-            this.Hitbox = new RectHitbox(new Point(Location.X - 5, Location.Y - 5), new Point(Location.X + 15, Location.Y - 5), new Point(Location.X - 5, Location.Y + 15), new Point(Location.X + 15, Location.Y + 15), Color.Red);
+            this.Hitboxoffset = _hitboxoffset;
+            this.Hitbox = new RectHitbox(new Point(Location.X - 15, Location.Y - 15), new Point(Location.X + 15, Location.Y - 15), new Point(Location.X - 15, Location.Y + 15), new Point(Location.X + 15, Location.Y + 15), Color.Red);
         }
 
         public void draw(Graphics g)
@@ -40,25 +41,29 @@ namespace GreenLight
             int Y1 = Location.Y + 3;
             int Y2 = Location.Y - (_dir - 180) / 9 * 2;
             int Y3 = Location.Y - (20 - (_dir - 270) / 9 * 2);
+            if (_dir >= 0 && _dir <= 20)
+            {
+                this.Hitbox = new RectHitbox(new Point(Location.X - 15, Location.Y + 5), new Point(Location.X + 15, Location.Y + 5), new Point(Location.X - 15, Location.Y + 35), new Point(Location.X + 5, Location.Y + 35), Color.Red);
+            }
+            if (_dir > 20 && _dir <= 45 || _dir >= 270)
+            {
+                this.Hitbox = new RectHitbox(new Point(Hitboxoffset.X - 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X - 15, Hitboxoffset.Y + 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y + 15), Color.Red);
+            }
             if (_dir >= 0 && _dir <= 90)
             {
                 g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
-                this.Hitbox = new RectHitbox(new Point(Location.X - 15, Location.Y - 15), new Point(Location.X + 15, Location.Y - 15), new Point(Location.X - 15, Location.Y + 15), new Point(Location.X + 15, Location.Y + 15), Color.Red);
             }
             else if (_dir > 90 && _dir < 180)
             {
                 g.DrawImage(Sign_image, X1, Y1, 20, 20);
-                this.Hitbox = new RectHitbox(new Point(X1 - 15, Y1 - 15), new Point(X1 + 15, Y1 - 15), new Point(X1 - 15, Y1 + 15), new Point(X1 + 15, Y1 + 15), Color.Red);
             }
             else if (_dir >= 180 && _dir < 270)
             {
                 g.DrawImage(Sign_image, X2, Y2, 20, 20);
-                this.Hitbox = new RectHitbox(new Point(X2 - 15, Y2 - 15), new Point(X2 + 15, Y2 - 15), new Point(X2 - 15, Y2 + 15), new Point(X2 + 15, Y2 + 15), Color.Red);
             }
             else
             {
                 g.DrawImage(Sign_image, Location.X, Y3, 20, 20);
-                this.Hitbox = new RectHitbox(new Point(Location.X - 15, Y3 - 15), new Point(Location.X + 15, Y3 - 15), new Point(Location.X - 15, Y3 + 15), new Point(Location.X + 15, Y3 + 15), Color.Red);
             }
             this.Hitbox.Draw(g);
             //g.FillRectangle(Notsolid, this.Hitbox);

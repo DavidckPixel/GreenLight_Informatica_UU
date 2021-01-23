@@ -26,6 +26,7 @@ namespace GreenLight
         public AbstractRoad selectedRoad;
         public bool dragMode;
         private LanePoints closest;
+        private LanePoints hitboxoffset;
 
         public int SignCount = 0;
 
@@ -103,16 +104,23 @@ namespace GreenLight
             {
                 List<LanePoints> _lanepoints = this.selectedRoad.Drivinglanes[_outerLane].points;
                 float _shortDistance = 2000;
-                foreach (LanePoints _lanepoint in _lanepoints)
+                for (int i = 0; i < _lanepoints.Count; i++)
                 {
                     int Xsign = mea.X - 10;
                     int Ysign = mea.Y - 10;
-                    float _distance = (float)Math.Sqrt((Xsign - _lanepoint.cord.X) * (Xsign - _lanepoint.cord.X) + (Ysign - _lanepoint.cord.Y) * (Ysign - _lanepoint.cord.Y));
+                    Console.WriteLine("i: " + i);
+                    float _distance = (float)Math.Sqrt((Xsign - _lanepoints[i].cord.X) * (Xsign - _lanepoints[i].cord.X) + (Ysign - _lanepoints[i].cord.Y) * (Ysign - _lanepoints[i].cord.Y));
 
                     if (_shortDistance > _distance)
                     {
                         _shortDistance = _distance;
-                        closest = _lanepoint;
+                        closest = _lanepoints[i];
+                        if (i - 10 >= 0)
+                            hitboxoffset = _lanepoints[i - 10];
+                        if (i - 20 >= 0)
+                            hitboxoffset = _lanepoints[i - 20];
+                        else
+                            hitboxoffset = _lanepoints[i];
                     }
                 }
 
@@ -198,7 +206,7 @@ namespace GreenLight
                     break;
             }
 
-            this.selectedRoad.Signs.Add(new PlacedSign(closest.cord, "", _temp, _sign_image, _selectedRoad));
+            this.selectedRoad.Signs.Add(new PlacedSign(closest.cord, "", _temp, _sign_image, _selectedRoad, hitboxoffset.cord));
             SignCount++;
             closeDragMode();
         }
