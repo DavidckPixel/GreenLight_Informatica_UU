@@ -13,12 +13,14 @@ namespace GreenLight
         public RectHitbox Hitbox;
         public string Side;
         public bool Active;
+        public int Place;
 
-        public ConnectionPoint(Point _loc, string _side, double _scale)
+        public ConnectionPoint(Point _loc, string _side, double _scale, int _place)
         {
             this.Location = _loc;
             this.Side = _side;
             this.Active = true;
+            this.Place = _place;
 
             if (_scale != 0)
             {

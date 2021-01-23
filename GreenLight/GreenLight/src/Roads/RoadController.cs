@@ -113,8 +113,14 @@ namespace GreenLight
 
         public void BuildCrossRoad(Point _point1, int _lanes, bool _beginconnection, bool _endconnection)
         {
+            if (_lanes % 2 == 0)
+            {
+                _point1.X -= 10;
+                _point1.Y += 10;
+            }
             AbstractRoad _temp = crossRoadController.newCrossRoad(_point1, _lanes, "CrossRoad");
             this.roads.Add(_temp);
+            Connection(_point1, _point1, _lanes, "X", _temp, _beginconnection, _endconnection);
         }
 
         public void BuildCurvedRoad(Point _point1, Point _point2, int _lanes, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
@@ -166,6 +172,7 @@ namespace GreenLight
             {
                 foreach (AbstractRoad x in roads)
                 {
+                    // if neither of the two roads are CrossRoads
                     if (x != _road && (_road.Type != "Cross" || x.Type != "Cross"))
                     {
                         Point _temp1, _temp2;
@@ -234,30 +241,97 @@ namespace GreenLight
                             }
                         }
                     } 
-                }
+                    // if one or both of the roads are CrossRoads
+                    else if (x != _road)
+                    {
+                        Point _temp1;
+                        Point _temp2;
 
-                foreach (CrossRoad x in roads)
-                {
-                    Point _ctemp1 = new Point(-2000, -2000);
-                    Point _ctemp2 = new Point(-2000, -2000);
-                    ConnectionPoint _point;
+                        _temp1 = x.getPoint1();
+                        _temp2 = x.getPoint2();
 
-                    foreach (ConnectionPoint c in x.translatedconnectPoints)
-                    { 
-                           
-                            switch (c.Side)
+                        if (x.Type == "Cross" && _road.Type != "Cross")
+                        {
+                            foreach (ConnectionPoint _cp in x.translatedconnectPoints)
                             {
-                                case ("Top"):
-                                    break;
-                                case ("Right"):
-                                    break;
-                                case ("Left"):
-                                    break;
-                                case ("Bottom"):
-                                    break;
+                                if (_cp.Side == "Top" || _cp.Side == "Bottom")
+                                {
+                                    if(_point1 == _cp.Location || Math.Abs(_point1.Y - _cp.Location.Y) <= 21)
+                                    {
+                                        CrossConnection _connection = new CrossConnection(_point1, _cp.Location, _dir, x.Dir, _road, x);
+                                    }
+                                    else if(_point2 == _cp.Location || Math.Abs(_point2.Y - _cp.Location.Y) <= 21)
+                                    {
+                                        CrossConnection _connection = new CrossConnection(_point2, _cp.Location, _dir, x.Dir, _road, x);
+                                    }
+                                }
+                                else
+                                {
+                                    if (_point1 == _cp.Location || Math.Abs(_point1.X - _cp.Location.X) <= 21)
+                                    {
+                                        CrossConnection _connection = new CrossConnection(_point1, _cp.Location, _dir, x.Dir, _road, x);
+                                    }
+                                    else if (_point2 == _cp.Location || Math.Abs(_point2.X - _cp.Location.X) <= 21)
+                                    {
+                                        CrossConnection _connection = new CrossConnection(_point2, _cp.Location, _dir, x.Dir, _road, x);
+                                    }
+                                }
                             }
+                        }
+
+                        else if (x.Type != "Cross" && _road.Type == "Cross")
+                        {
+                            foreach (ConnectionPoint _cp in _road.translatedconnectPoints)
+                            {
+                                if (_cp.Side == "Top" || _cp.Side == "Bottom")
+                                {
+                                    if (_temp1 == _cp.Location || Math.Abs(_temp1.Y - _cp.Location.Y) <= 21)
+                                    {
+                                        CrossConnection _connection = new CrossConnection(_cp.Location, _temp1, _dir, x.Dir, _road, x);
+                                    }
+                                    else if (_temp2 == _cp.Location || Math.Abs(_temp2.Y - _cp.Location.Y) <= 21)
+                                    {
+                                        CrossConnection _connection = new CrossConnection(_cp.Location, _temp2, _dir, x.Dir, _road, x);
+                                    }
+                                }
+                                else
+                                {
+                                    if (_temp1 == _cp.Location || Math.Abs(_temp1.X - _cp.Location.X) <= 21)
+                                    {
+                                        CrossConnection _connection = new CrossConnection(_cp.Location, _temp1, _dir, x.Dir, _road, x);
+                                    }
+                                    else if (_temp2 == _cp.Location || Math.Abs(_temp2.X - _cp.Location.X) <= 21)
+                                    {
+                                        CrossConnection _connection = new CrossConnection(_cp.Location, _temp2, _dir, x.Dir, _road, x);
+                                    }
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            foreach (ConnectionPoint _cp in _road.translatedconnectPoints)
+                            {
+                                foreach (ConnectionPoint _cp2 in x.translatedconnectPoints)
+                                {
+                                    if ((_cp.Side == "Top" || _cp.Side == "Bottom") && (_cp2.Side == "Top" || _cp2.Side == "Bottom"))
+                                    {
+                                        if (_cp.Location == _cp2.Location || Math.Abs(_cp.Location.Y - _cp2.Location.Y) <= 21)
+                                        {
+                                            CrossConnection _connection = new CrossConnection(_cp.Location, _cp2.Location, _dir, x.Dir, _road, x);
+                                        }
+                                    }
+                                    else if ((_cp.Side == "Left" || _cp.Side == "Right") && (_cp2.Side == "Left" || _cp2.Side == "Right"))
+                                    {
+                                        if (_cp.Location == _cp2.Location || Math.Abs(_cp.Location.X - _cp2.Location.X) <= 21)
+                                        {
+                                            CrossConnection _connection = new CrossConnection(_cp.Location, _cp2.Location, _dir, x.Dir, _road, x);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                    
                 }
             }
             catch (Exception e) { };

@@ -18,6 +18,7 @@ namespace GreenLight
         public string dir;
         public Hitbox offsetHitbox;
         public int AngleDir;
+        public Lane beginConnectedTo, endConnectedTo;
 
         public abstract void Draw(Graphics g);
         public abstract void DrawoffsetHitbox(Graphics g);

@@ -12,6 +12,7 @@ namespace GreenLight
 {
     class CrossConnection
     {
+        RoadController controller = General_Form.Main.BuildScreen.builder.roadBuilder;
         Point point1;
         Point point2;
         string dir1;
@@ -57,7 +58,100 @@ namespace GreenLight
 
         public void CrossandCross()
         {
+            ConnectionPoint _cp = null;
+            ConnectionPoint _cp2 = null;
+            ConnectionPoint _cpLink = null;
+            ConnectionPoint _cpLink2 = null;
+            Point _diagonalbegin = new Point(0,0);
+            Point _diagonalend = new Point(0, 0);
+            bool _buildroad = true;
 
+            foreach (ConnectionPoint x in roadOne.translatedconnectPoints)
+            {
+                if(point1 == x.Location)
+                {
+                    _cp = x;
+                    foreach (ConnectionPoint y in roadOne.connectPoints)
+                    {
+                        if (_cp.Side == y.Side && _cp.Place == y.Place)
+                        {
+                            _cpLink = y;
+                        }
+                    }
+                }
+            }
+            foreach (ConnectionPoint x in roadTwo.translatedconnectPoints)
+            {
+                if (point2 == x.Location)
+                {
+                    _cp2 = x;
+                    foreach (ConnectionPoint y in roadTwo.connectPoints)
+                    {
+                        if (_cp2.Side == y.Side && _cp2.Place == y.Place)
+                        {
+                            _cpLink2 = y;
+                        }
+                    }
+                }
+            }
+
+            int _place, _place2, _dir, _side, _side2;
+            if (_cp.Side == "Top")
+            {
+                _side = 0;
+                _side2 = roadTwo.lanes;
+            }
+            else if (_cp.Side == "Bottom")
+            {
+                _side = roadOne.lanes;
+                _side2 = 0;
+            }
+            else if (_cp.Side == "Left")
+            {
+                _side = roadOne.lanes * 2;
+                _side2 = roadTwo.lanes * 3;
+            }
+            else
+            {
+                _side = roadOne.lanes * 3;
+                _side2 = roadTwo.lanes * 2;
+            }
+
+            for (int t = 0; t < Math.Max(roadOne.lanes, roadTwo.lanes) - 1 && _buildroad; t++)
+            {
+                for (int x = 0; x <= 1; x++)
+                {
+                    if (x == 0)
+                        _dir = -1;
+                    else
+                        _dir = 1;
+
+                    _place = _cp.Place + t * _dir;
+                    _place2 = _cp2.Place + t * _dir;
+
+                    if (_place >= 1 && _place2 >= 1 && _place <= roadOne.lanes && _place2 <= roadTwo.lanes)
+                    {
+                        if (!(roadOne.connectPoints[_place - 1 + _side].Active && roadTwo.connectPoints[_place - 1 + _side2].Active))
+                        {
+                            _buildroad = false;
+                        }
+                    }
+                    else if (_place >= 1 && _place <= roadOne.lanes)
+                    {
+                        if(roadOne.connectPoints[_place - 1 + _side].Active)
+                        {
+                            _buildroad = false;
+                        }
+                    }
+                    else if (_place2 >= 1 && _place2 <= roadTwo.lanes)
+                    {
+                        if (roadTwo.connectPoints[_place - 1 + _side].Active)
+                        {
+                            _buildroad = false;
+                        }
+                    }
+                }
+            }
         }
 
         public void CrossandStraight()

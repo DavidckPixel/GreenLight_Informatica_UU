@@ -137,10 +137,6 @@ namespace GreenLight
 
                 DiagonalandCurved(_point1, _point2, _lanes, _temp1, _temp2, _temp3, _temp4, _roadOne, _roadTwo, _roadOneEnds, _roadTwoEnds, _dir, _dir2);
             }
-            else if(_roadOne.Type == "Cross" || _roadTwo.Type == "Cross")
-            {
-                CrossConnection crossConnection = new CrossConnection(_point1, _point2, _dir, _dir2, _roadOne, _roadTwo);
-            }
         }
 
         // This method connects two straight roads, either both horizontal, both vertical or one of each.

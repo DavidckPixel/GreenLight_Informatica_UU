@@ -354,11 +354,11 @@ namespace GreenLight
                 
                 TranslatePoints(ref _begin, ref _end, selectedRoad);
 
-                bool _change = false;
+                //bool _change = false;
 
                 ConnectionPoint _cpoint;
                 Point _point;
-
+                
                 for (int t = 0; t < 2; t++)
                 {
                     if (t == 0)
@@ -372,7 +372,7 @@ namespace GreenLight
                         _point = _end;
                         _cpoint = _link.end;
                     }
-
+                /*
                     // _point = _cpoint.Location;
 
                     if (_cpoint.Active)
@@ -500,11 +500,12 @@ namespace GreenLight
                             Console.WriteLine("Cpoint after change" + _point);
                         }
                     }
+                    */
 
-                    ConnectionPoint cp = new ConnectionPoint(_point, _cpoint.Side, 0);
+                    ConnectionPoint cp = new ConnectionPoint(_point, _cpoint.Side, 0, _cpoint.Place);
                     selectedRoad.translatedconnectPoints.Add(cp);
 
-                    if (t == 0)
+                    /*if (t == 0)
                     {
                         _begin = _point;
                     }
@@ -512,7 +513,7 @@ namespace GreenLight
                     {
                         _end = _point;
                     }
-
+                    */
                 }
 
                 Console.WriteLine("Crossroad: {0} - {1},", _begin, _end);
