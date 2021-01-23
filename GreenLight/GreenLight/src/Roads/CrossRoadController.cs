@@ -501,11 +501,17 @@ namespace GreenLight
                         }
                     }
 
+                    ConnectionPoint cp = new ConnectionPoint(_point, _cpoint.Side, 0);
+                    selectedRoad.translatedconnectPoints.Add(cp);
 
                     if (t == 0)
+                    {
                         _begin = _point;
+                    }
                     else
+                    {
                         _end = _point;
+                    }
 
                 }
 

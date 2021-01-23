@@ -169,11 +169,12 @@ namespace GreenLight
                     if (x != _road && (_road.Type != "Cross" || x.Type != "Cross"))
                     {
                         Point _temp1, _temp2;
-                        _temp1 = x.getPoint1();
-                        _temp2 = x.getPoint2();
 
                         if (x.getLanes() == _lanes)
                         {
+                            _temp1 = x.getPoint1();
+                            _temp2 = x.getPoint2();
+
                             if (_point1 == _temp1 || Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) <= 21)
                             {
                                 if (_beginconnection == false)
@@ -232,28 +233,31 @@ namespace GreenLight
                                 }
                             }
                         }
-                    }
-                    foreach(CrossLane c in x.Drivinglanes)
-                    {
-                        Point _temp1 = c.points.First().cord;
-                        Point _temp2 = c.points.Last().cord;
+                    } 
+                }
 
-                        if (_point1 == _temp1 || Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) <= 21)
-                        {
-                            if (_beginconnection == false)
+                foreach (CrossRoad x in roads)
+                {
+                    Point _ctemp1 = new Point(-2000, -2000);
+                    Point _ctemp2 = new Point(-2000, -2000);
+                    ConnectionPoint _point;
+
+                    foreach (ConnectionPoint c in x.translatedconnectPoints)
+                    { 
+                           
+                            switch (c.Side)
                             {
-                                ///test
-                                //Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Dir, _road, x);
+                                case ("Top"):
+                                    break;
+                                case ("Right"):
+                                    break;
+                                case ("Left"):
+                                    break;
+                                case ("Bottom"):
+                                    break;
                             }
-                            else
-                            {
-                                Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
-                                x.beginconnection = true;
-                                x.beginConnectedTo = _road;
-                                _road.beginConnectedTo = x;
-                            }
-                        }
                     }
+                    
                 }
             }
             catch (Exception e) { };

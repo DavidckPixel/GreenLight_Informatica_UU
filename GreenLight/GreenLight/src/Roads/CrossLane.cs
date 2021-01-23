@@ -9,6 +9,7 @@ namespace GreenLight
 {
     public class CrossLane : Lane
     {
+
         public CrossLane(List<LanePoints> _points, ConnectionLink _link)
         {
             this.points = _points;
