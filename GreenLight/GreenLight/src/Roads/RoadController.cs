@@ -314,10 +314,13 @@ namespace GreenLight
                             {
                                 foreach (ConnectionPoint _cp2 in x.translatedconnectPoints)
                                 {
+                                    Console.WriteLine(_cp.Side);
+                                    Console.WriteLine(_cp2.Side);
                                     if ((_cp.Side == "Top" || _cp.Side == "Bottom") && (_cp2.Side == "Top" || _cp2.Side == "Bottom"))
                                     {
-                                        if (_cp.Location == _cp2.Location || Math.Abs(_cp.Location.Y - _cp2.Location.Y) <= 21)
+                                        if (_cp.Location == _cp2.Location || Math.Abs(_cp.Location.Y - _cp2.Location.Y) <= 25)
                                         {
+                                            Console.WriteLine("Make CrossConnection");
                                             CrossConnection _connection = new CrossConnection(_cp.Location, _cp2.Location, _dir, x.Dir, _road, x);
                                         }
                                     }
@@ -325,6 +328,7 @@ namespace GreenLight
                                     {
                                         if (_cp.Location == _cp2.Location || Math.Abs(_cp.Location.X - _cp2.Location.X) <= 21)
                                         {
+                                            Console.WriteLine("Make CrossConnection");
                                             CrossConnection _connection = new CrossConnection(_cp.Location, _cp2.Location, _dir, x.Dir, _road, x);
                                         }
                                     }

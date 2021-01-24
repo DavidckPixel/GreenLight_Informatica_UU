@@ -102,10 +102,10 @@ namespace GreenLight
             double lanewidth = (double)this.lanes * 20;
             g.FillRectangle(_b, new Rectangle(new Point(point1.X - (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2)), new Size(this.lanes * 20, this.lanes * 20)));
 
-            DrawSides(g, "Top", new Point(point1.X - (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2) - 20), new Size((int)lanewidth, 20), _b);
-            DrawSides(g, "Right", new Point(point1.X + (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2)), new Size(20, (int)(lanewidth)), _b);
-            DrawSides(g, "Left", new Point(point1.X - (int)(lanewidth / 2) - 20, point1.Y - (int)(lanewidth / 2)), new Size(20, (int)(lanewidth)), _b);
-            DrawSides(g, "Bottom", new Point(point1.X - (int)(lanewidth / 2), point1.Y + (int)(lanewidth / 2)), new Size((int)lanewidth, 20), _b);
+            DrawSides(g, "Top", new Point(point1.X - (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2) - 10), new Size((int)lanewidth, 10), _b);
+            DrawSides(g, "Right", new Point(point1.X + (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2)), new Size(10, (int)(lanewidth)), _b);
+            DrawSides(g, "Left", new Point(point1.X - (int)(lanewidth / 2) - 10, point1.Y - (int)(lanewidth / 2)), new Size(10, (int)(lanewidth)), _b);
+            DrawSides(g, "Bottom", new Point(point1.X - (int)(lanewidth / 2), point1.Y + (int)(lanewidth / 2)), new Size((int)lanewidth, 10), _b);
 
             DrawLine(g);
             this.hitbox.Draw(g);

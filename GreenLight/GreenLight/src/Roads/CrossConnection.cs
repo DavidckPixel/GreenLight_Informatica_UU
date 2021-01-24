@@ -65,6 +65,7 @@ namespace GreenLight
             Point _diagonalbegin = new Point(0,0);
             Point _diagonalend = new Point(0, 0);
             bool _buildroad = true;
+            List<ConnectionPoint> _connectedLanes = new List<ConnectionPoint>();
 
             foreach (ConnectionPoint x in roadOne.translatedconnectPoints)
             {
@@ -135,6 +136,11 @@ namespace GreenLight
                         {
                             _buildroad = false;
                         }
+                        else
+                        {
+                            _connectedLanes.Add(roadOne.connectPoints[_place - 1 + _side]);
+                            _connectedLanes.Add(roadTwo.connectPoints[_place - 1 + _side2]);
+                        }
                     }
                     else if (_place >= 1 && _place <= roadOne.lanes)
                     {
@@ -149,6 +155,129 @@ namespace GreenLight
                         {
                             _buildroad = false;
                         }
+                    }
+                }
+            }
+
+            if(_buildroad)
+            {
+                if(_cp.Side == "Top" || _cp.Side == "Bottom")
+                {
+                    int _middleX = 0;
+                    for(int t = 0; t < _connectedLanes.Count; t++)
+                    {
+                        _middleX += _connectedLanes[t].Location.X;
+                    }
+                    _middleX = _middleX / _connectedLanes.Count;
+
+                    controller.BuildDiagonalRoad(new Point(_middleX, _cp.Location.Y), new Point(_middleX, _cp2.Location.Y), _connectedLanes.Count / 2, true, true, roadOne, roadTwo);
+                }
+                else
+                {
+                    int _middleY = 0;
+                    for(int t = 0; t < _connectedLanes.Count; t++)
+                    {
+                        _middleY += _connectedLanes[t].Location.Y;
+                    }
+                    _middleY = _middleY / _connectedLanes.Count;
+
+                    controller.BuildDiagonalRoad(new Point(_cp.Location.X, _middleY), new Point(_cp2.Location.X, _middleY), _connectedLanes.Count / 2, true, true, roadOne, roadTwo);
+                }
+
+                int _OuterInner = 0;
+                for (int t = controller.roads[controller.roads.Count - 1].lanes; t > 0 && _connectedLanes.Count > 0; t--)
+                {
+                    int _tracker = 0;
+                    if ((_OuterInner % 2 == 0 && controller.roads[controller.roads.Count - 1].lanes % 2 == 0) || (_OuterInner % 2 == 1 && controller.roads[controller.roads.Count - 1].lanes % 2 == 1))
+                    {
+                        ConnectionPoint _highest = null;
+                        int x = -1;
+                        foreach(ConnectionPoint c in _connectedLanes)
+                        {
+                            t++;
+                            if (_highest == null || c.Place > _highest.Place)
+                            {
+                                _highest = c;
+                                _tracker = x;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ConnectionPoint _lowest = null;
+                        int x = -1;
+                        foreach (ConnectionPoint c in _connectedLanes)
+                        {
+                            t++;
+                            if (_lowest == null || c.Place < _lowest.Place)
+                            {
+                                _lowest = c;
+                                _tracker = x;
+                            }
+                        }
+                    }
+
+                    if (_tracker % 2 == 0)
+                    {
+                        foreach (CrossLane c in roadOne.Drivinglanes)
+                        {
+                            if (c.link.begin == _connectedLanes[_tracker])
+                            {
+                                controller.roads[controller.roads.Count - 1].Drivinglanes[t].endConnectedTo.Add(c);
+                                c.beginConnectedTo.Add(controller.roads[controller.roads.Count - 1].Drivinglanes[t]);
+                            }
+                            else if (c.link.end == _connectedLanes[_tracker])
+                            {
+                                controller.roads[controller.roads.Count - 1].Drivinglanes[t].beginConnectedTo.Add(c);
+                                c.endConnectedTo.Add(controller.roads[controller.roads.Count - 1].Drivinglanes[t]);
+                            }
+                        }
+                        foreach (CrossLane c in roadTwo.Drivinglanes)
+                        {
+                            if (c.link.begin == _connectedLanes[_tracker + 1])
+                            {
+                                controller.roads[controller.roads.Count - 1].Drivinglanes[t].endConnectedTo.Add(c);
+                                c.beginConnectedTo.Add(controller.roads[controller.roads.Count - 1].Drivinglanes[t]);
+                            }
+                            else if (c.link.end == _connectedLanes[_tracker + 1])
+                            {
+                                controller.roads[controller.roads.Count - 1].Drivinglanes[t].beginConnectedTo.Add(c);
+                                c.endConnectedTo.Add(controller.roads[controller.roads.Count - 1].Drivinglanes[t]);
+                            }
+                        }
+                        _connectedLanes.RemoveAt(_tracker + 1);
+                        _connectedLanes.RemoveAt(_tracker);
+                    }
+                    else
+                    {
+                        foreach (CrossLane c in roadOne.Drivinglanes)
+                        {
+                            if (c.link.begin == _connectedLanes[_tracker - 1])
+                            {
+                                controller.roads[controller.roads.Count - 1].Drivinglanes[t].endConnectedTo.Add(c);
+                                c.beginConnectedTo.Add(controller.roads[controller.roads.Count - 1].Drivinglanes[t]);
+                            }
+                            else if (c.link.end == _connectedLanes[_tracker - 1])
+                            {
+                                controller.roads[controller.roads.Count - 1].Drivinglanes[t].beginConnectedTo.Add(c);
+                                c.endConnectedTo.Add(controller.roads[controller.roads.Count - 1].Drivinglanes[t]);
+                            }
+                        }
+                        foreach (CrossLane c in roadTwo.Drivinglanes)
+                        {
+                            if (c.link.begin == _connectedLanes[_tracker])
+                            {
+                                controller.roads[controller.roads.Count - 1].Drivinglanes[t].endConnectedTo.Add(c);
+                                c.beginConnectedTo.Add(controller.roads[controller.roads.Count - 1].Drivinglanes[t]);
+                            }
+                            else if (c.link.end == _connectedLanes[_tracker])
+                            {
+                                controller.roads[controller.roads.Count - 1].Drivinglanes[t].beginConnectedTo.Add(c);
+                                c.endConnectedTo.Add(controller.roads[controller.roads.Count - 1].Drivinglanes[t]);
+                            }
+                        }
+                        _connectedLanes.RemoveAt(_tracker);
+                        _connectedLanes.RemoveAt(_tracker - 1);
                     }
                 }
             }
