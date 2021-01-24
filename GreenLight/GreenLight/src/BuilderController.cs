@@ -22,7 +22,7 @@ namespace GreenLight
         public RoadController roadBuilder;
         public MainSignController signController;
 
-        PictureBox Screen;
+        public PictureBox Screen;
         //public string roadType = "X";
         //public string signType = "X";
 

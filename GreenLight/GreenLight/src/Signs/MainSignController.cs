@@ -93,12 +93,13 @@ namespace GreenLight
 
             if(_dir >= 0 && _dir < 180  && _lanes != 1)
             {
-                _outerLane = _lanes;   
+                _outerLane = _lanes - 1;   
             }
             else if (_dir >= 180 && _dir < 360 && _lanes != 1)
             {
-                _outerLane = _lanes - 1;
+                _outerLane = _lanes - 2;
             }
+
             try
             {
                 List<LanePoints> _lanepoints = this.selectedRoad.Drivinglanes[_outerLane].points;
@@ -196,7 +197,7 @@ namespace GreenLight
                     break;
             }
 
-            this.selectedRoad.Signs.Add(new PlacedSign(closest.cord, "", _temp, _sign_image, _selectedRoad));
+            this.selectedRoad.Signs.Add(new PlacedSign(closest.cord, "", _temp, _sign_image, _selectedRoad, signType));
             SignCount++;
             closeDragMode();
         }
@@ -234,5 +235,40 @@ namespace GreenLight
             this.screen.Invalidate();
         }
 
+        public void loadSigns(string[] _signWords, AbstractRoad _selectedRoad)
+        {
+            this.selectedRoad = _selectedRoad;
+            Point _tempPoint = new Point(int.Parse(_signWords[1]), int.Parse(_signWords[2]));
+            string _signType = _signWords[3];
+            AbstractSign _temp = null;
+
+            Image _sign_image = null;
+            switch (_signType)
+            {
+                case "X":
+                    break;
+                case "speedSign":
+                    _sign_image = Image.FromFile("../../User Interface Recources/Speed_Sign.png");
+                    _temp = new SpeedSign(speedSign);
+                    _temp.speed = int.Parse(_signWords[4]);
+                    break;
+                case "yieldSign":
+                    _sign_image = Image.FromFile("../../User Interface Recources/Yield_Sign.png");
+                    _temp = new YieldSign(yieldSignC);
+                    break;
+                case "prioritySign":
+                    _sign_image = Image.FromFile("../../User Interface Recources/Priority_Sign.png");
+                    _temp = new PrioritySign(prioritySignC);
+                    break;
+                case "stopSign":
+                    _sign_image = Image.FromFile("../../User Interface Recources/Stop_Sign.png");
+                    _temp = new StopSign(stopSign);
+                    break;
+            }
+
+            Signs.Add(_temp);
+            this.selectedRoad.Signs.Add(new PlacedSign(_tempPoint, "", _temp, _sign_image, _selectedRoad, _signType));
+            SignCount++;
+        }
     }
 }

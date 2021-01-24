@@ -12,7 +12,7 @@ namespace GreenLight
 {
     public abstract class AbstractSign
     {
-
+        public int speed;
         public AbstractSign()
         {
             ID = General_Form.Main.BuildScreen.builder.signController.SignCount;

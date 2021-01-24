@@ -9,9 +9,9 @@ namespace GreenLight
 {
     public class OriginPointController
     {
-        List<VehicleOriginPoint<Point>> OriginPoints = new List<VehicleOriginPoint<Point>>{};
-        List<VehicleOriginPoint<Point>> converted;
-        VehicleOriginPoint<Point> selected;
+        public List<VehicleOriginPoint<Point>> OriginPoints = new List<VehicleOriginPoint<Point>>{};
+        public List<VehicleOriginPoint<Point>> converted;
+        public VehicleOriginPoint<Point> selected;
         int sum;
         Random rnd;
 

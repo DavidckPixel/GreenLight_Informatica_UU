@@ -22,8 +22,14 @@ namespace GreenLight
         public Point point2;
 
         public int lanes;
+
         public List<Lane> Drivinglanes=  new List<Lane>();
         public List<PlacedSign> Signs = new List<PlacedSign>();
+        public List<ConnectionLink> connectLinks = new List<ConnectionLink>();
+        public List<ConnectionPoint> connectPoints = new List<ConnectionPoint>();
+        public List<ConnectionPoint> translatedconnectPoints = new List<ConnectionPoint>();
+        public int Top = 0, Right = 0, Left = 0, Bottom = 0;
+
         public string roadtype;
         public double slp;
         public bool beginconnection, endconnection;
@@ -32,6 +38,7 @@ namespace GreenLight
         public string Dir;
         public AbstractRoad beginConnectedTo, endConnectedTo;
         public int laneWidth = Roads.Config.laneWidth;
+        public AbstractRoad CrossRoad
 
         //Basic Road Constructor, every road calls this constructor during initialzation
         public AbstractRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(new Point(Math.Min(_point1.X, _point2.X),Math.Min(_point1.Y, _point2.Y)))
@@ -68,13 +75,8 @@ namespace GreenLight
 
         //protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
         
-
-        public abstract Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth);
-
-        
-
+        public abstract Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _RoadHitBox);
         public abstract Hitbox CreateHitbox(Point[] _array);
-
 
         public virtual void Draw(Graphics g)
         {
@@ -116,8 +118,18 @@ namespace GreenLight
 
         public override string ToString()
         {
-            string _temp = point1.ToString() + " - " + point2.ToString();
-            return _temp;
+            string _roadString = "Road " + Type + " " + point1.X.ToString() + " " + point1.Y.ToString() + " " + point2.X.ToString() + " " + point2.Y.ToString() + " " + lanes.ToString() + " " + beginconnection.ToString() + " " + endconnection.ToString();
+
+            if (roadtype == "Cross")
+            {
+                _roadString += " " + connectLinks.Count.ToString();
+                foreach (ConnectionLink x in connectLinks)
+                {
+                    _roadString += " " + x.begin.Location.X.ToString() + " " + x.begin.Location.Y.ToString() + " " + x.end.Location.X.ToString() + " " + x.end.Location.Y.ToString();
+                }
+            }
+
+            return _roadString;
         }
     }
 }

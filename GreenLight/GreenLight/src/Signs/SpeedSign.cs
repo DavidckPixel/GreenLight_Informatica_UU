@@ -8,8 +8,6 @@ namespace GreenLight
 {
     public class SpeedSign : AbstractSign
     {
-        int speed;
-
         public SpeedSign(AbstractSignController _controller)
         {
             this.speed = 50; //BaseSPEED

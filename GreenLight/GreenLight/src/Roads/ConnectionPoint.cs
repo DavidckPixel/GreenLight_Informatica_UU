@@ -16,8 +16,9 @@ namespace GreenLight
         public bool Active;
         public bool end;
         public Bitmap arrowImg = new Bitmap(1, 1);
+        public int Place;
 
-        public ConnectionPoint(Point _loc, string _side, double _scale)
+        public ConnectionPoint(Point _loc, string _side, double _scale, int _place)
         {
             this.Location = _loc;
             this.Side = _side;
@@ -25,15 +26,23 @@ namespace GreenLight
             double _unscaledSize = Math.Max(Math.Min(Roads.Config.laneWidth / 4, Roads.Config.crossroadExtra), Math.Min(Roads.Config.laneWidth, Roads.Config.crossroadExtra/4));
 
             int _size = (int)(_unscaledSize * _scale);
+            this.Place = _place;
 
-            Point[] _points = new Point[4];
+            if (_scale != 0)
+            {
+                int _size = (int)(5 * _scale);
 
-            _points[0] = new Point(this.Location.X - _size, this.Location.Y - _size);
-            _points[1] = new Point(this.Location.X + _size, this.Location.Y - _size);
-            _points[2] = new Point(this.Location.X - _size, this.Location.Y + _size);
-            _points[3] = new Point(this.Location.X + _size, this.Location.Y + _size);
+                Point[] _points = new Point[4];
 
-            Hitbox = new RectHitbox(_points[0], _points[1], _points[2], _points[3], Color.Green);
+                _points[0] = new Point(this.Location.X - _size, this.Location.Y - _size);
+                _points[1] = new Point(this.Location.X + _size, this.Location.Y - _size);
+                _points[2] = new Point(this.Location.X - _size, this.Location.Y + _size);
+                _points[3] = new Point(this.Location.X + _size, this.Location.Y + _size);
+
+                Hitbox = new RectHitbox(_points[0], _points[1], _points[2], _points[3], Color.Green);
+            }
+            else
+                Hitbox = null;
         }
 
         public void setActive(bool _active)
@@ -41,9 +50,10 @@ namespace GreenLight
             this.Active = _active;
         }
 
-        public void Draw(Graphics g)
+        public virtual void Draw(Graphics g)
         {
-            Hitbox.Draw(g);
+            if (Hitbox != null) 
+                 Hitbox.Draw(g);
         }
 
     }

@@ -81,6 +81,15 @@ namespace GreenLight.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Recent_projects {
+            get {
+                return ResourceManager.GetString("Recent_projects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Road_Verticaal {

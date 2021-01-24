@@ -20,7 +20,7 @@ namespace GreenLight
         private int _shift = 20;
 
         // The constructor method sees what kind of roads have to be connected and calls another method accordingly. 
-        public Connection(Point _point1, Point _point2, int _lanes, string _dir, string _dir2, AbstractRoad _roadOne, AbstractRoad _roadTwo, int _count)
+        public Connection(Point _point1, Point _point2, int _lanes, string _dir, string _dir2, AbstractRoad _roadOne, AbstractRoad _roadTwo)
         {
             
             //Console.WriteLine("-- Connection --");
