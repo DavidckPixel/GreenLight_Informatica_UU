@@ -19,6 +19,7 @@ namespace GreenLight
 
         public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "DiagonalRoad", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
+            Console.WriteLine("Diagonal Road");
             this.Dir = _dir;
             this.Type = _type;
 
@@ -189,12 +190,12 @@ namespace GreenLight
 
             if (lanes % 2 == 0 && _Roadhitbox)
             {
-                if (slp != 0)
+                if (this.slp != 0)
                 {
-                    if (slp <= -1 || slp >= 1)
+                    if (this.slp <= -1 || this.slp >= 1)
                     {
-                        one.X -= 10;
-                        two.X -= 10;
+                       one.X += 10;
+                       two.X += 10;
                     }
                     else
                     {

@@ -371,11 +371,14 @@ namespace GreenLight
                     bool _exists = false;
                     foreach(ConnectionPoint c in selectedRoad.translatedconnectPoints)
                     {
-                        if (c.Side == cp.Side && c.Place == cp.Place)
+                        if (c.Side == _cpoint.Side && c.Place == _cpoint.Place)
                             _exists = true;
                     }
-                    if(!_exists)
+                    if (!_exists)
+                    {
                         selectedRoad.translatedconnectPoints.Add(cp);
+                        Console.WriteLine("TranslatedconnectPoints");
+                    }
                 }
 
                 Console.WriteLine("Crossroad: {0} - {1},", _begin, _end);

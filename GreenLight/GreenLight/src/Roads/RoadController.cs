@@ -101,6 +101,7 @@ namespace GreenLight
 
         public void BuildDiagonalRoad(Point _point1, Point _point2, int _lanes, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
         {
+            Console.WriteLine("Build diagonal");
             string _dir = Direction(_point1, _point2, "DiagonalRoad");
             //Console.WriteLine("build" + _beginconnection + "-----" + _endconnection);
             AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, "Diagonal", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
@@ -273,7 +274,7 @@ namespace GreenLight
                                         {
                                             CrossConnection _connection = new CrossConnection(_point1, _cp.Location, _dir, x.Dir, _road, x);
                                         }
-                                        else if (_point2 == _cp.Location || (Math.Abs(_point2.X - _cp.Location.X) <= 25 && _point2.Y == _cp.Location.X))
+                                        else if (_point2 == _cp.Location || (Math.Abs(_point2.X - _cp.Location.X) <= 25 && _point2.Y == _cp.Location.Y))
                                         {
                                             CrossConnection _connection = new CrossConnection(_point2, _cp.Location, _dir, x.Dir, _road, x);
                                         }
@@ -323,14 +324,14 @@ namespace GreenLight
                                 {
                                     if ((_cp.Side == "Top" && _cp2.Side == "Bottom") || (_cp2.Side == "Top" && _cp.Side == "Bottom"))
                                     {
-                                        if (_cp.Location == _cp2.Location || Math.Abs(_cp.Location.Y - _cp2.Location.Y) <= 25)
+                                        if (_cp.Location == _cp2.Location || (Math.Abs(_cp.Location.Y - _cp2.Location.Y) <= 25 && _cp.Location.X == _cp2.Location.X))
                                         {
                                             CrossConnection _connection = new CrossConnection(_cp.Location, _cp2.Location, _dir, x.Dir, _road, x);
                                         }
                                     }
                                     else if ((_cp.Side == "Left" || _cp.Side == "Right") && (_cp2.Side == "Left" || _cp2.Side == "Right"))
                                     {
-                                        if (_cp.Location == _cp2.Location || Math.Abs(_cp.Location.X - _cp2.Location.X) <= 21)
+                                        if (_cp.Location == _cp2.Location || Math.Abs(_cp.Location.X - _cp2.Location.X) <= 25 && _cp.Location.Y == _cp2.Location.Y)
                                         {
                                             Console.WriteLine("Make CrossConnection");
                                             CrossConnection _connection = new CrossConnection(_cp.Location, _cp2.Location, _dir, x.Dir, _road, x);
