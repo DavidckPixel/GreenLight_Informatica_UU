@@ -30,8 +30,6 @@ namespace GreenLight
 
             if (_scale != 0)
             {
-                int _size = (int)(5 * _scale);
-
                 Point[] _points = new Point[4];
 
                 _points[0] = new Point(this.Location.X - _size, this.Location.Y - _size);

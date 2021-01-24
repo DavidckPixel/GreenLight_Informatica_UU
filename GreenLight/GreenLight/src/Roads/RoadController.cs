@@ -182,12 +182,13 @@ namespace GreenLight
                     if (x != _road && (_road.Type != "Cross" && x.Type != "Cross"))
                     {
                         Point _temp1, _temp2;
+                        _temp1 = x.getPoint1();
+                        _temp2 = x.getPoint2();
 
                         if (x.getLanes() == _lanes)
                         {
                             if (_point1 == _temp1 || Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1)
-                            _temp1 = x.getPoint1();
-                            _temp2 = x.getPoint2();
+                            
                             {
                                 if (_beginconnection == false)
                                 {
@@ -645,7 +646,7 @@ namespace GreenLight
                         _twooffset = new Point((int)(((_twooffset.X) * _scale) + offset), (int)((_twooffset.Y + Roads.Config.scaleOffset) * _scale));
                     }
                 }
-                Point[] _points = selectedRoad.hitBoxPoints(_oneoffset, _twooffset, 1, (int)(Roads.Config.laneWidth * _scale, false));
+                Point[] _points = selectedRoad.hitBoxPoints(_oneoffset, _twooffset, 1, (int)(Roads.Config.laneWidth * _scale), false);
 
                 Hitbox _hitbox = selectedRoad.CreateHitbox(_points);
 

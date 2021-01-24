@@ -186,7 +186,7 @@ namespace GreenLight
         public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox)
         {
             Point _one, _two;
-            int _roadWidth = (_lanewidth * _lanes) / 2;
+            int _roadWidth = (_laneWidth * _lanes) / 2;
 
             if (lanes % 2 == 0 && _Roadhitbox)
             {

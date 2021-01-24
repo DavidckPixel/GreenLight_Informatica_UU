@@ -20,14 +20,14 @@ namespace GreenLight
         public AbstractRoad Road;
         public string signType;
 
-        public PlacedSign(Point _location, string _direction, AbstractSign _sign, Image _Sign_image, AbstractRoad _road, Point _hitboxoffset)
+        public PlacedSign(Point _location, string _direction, AbstractSign _sign, Image _Sign_image, AbstractRoad _road, string _signType, Point _hitboxoffset)
         {
             this.Location = _location;
             this.Direction = _direction;
             this.Sign = _sign;
             this.Sign_image = _Sign_image;
             this.Road = _road;
-            this.signType = _sign.Type;
+            this.signType = _signType;
             int _dir = (int)Road.Drivinglanes[0].AngleDir;
             this.Hitboxoffset = _hitboxoffset;
             this.Hitbox = new RectHitbox(new Point(Location.X - 15, Location.Y - 15), new Point(Location.X + 15, Location.Y - 15), new Point(Location.X - 15, Location.Y + 15), new Point(Location.X + 15, Location.Y + 15), Color.Red);
@@ -35,7 +35,6 @@ namespace GreenLight
 
         public void draw(Graphics g)
         {
-            int _dir = Road.Drivinglanes[0].AngleDir;
             int _dir = (int)Road.Drivinglanes[0].AngleDir;
             int offset = Math.Abs((_dir - 180) - 45) / 45 * 2;
             int X1 = Location.X - ((_dir - 90) / 9) * 2;
@@ -74,7 +73,7 @@ namespace GreenLight
 
         public override string ToString()
         {
-            string signString = "Sign" + " " + this.Location.X.ToString() + " " + this.Location.Y.ToString() + " " + this.signType;
+            string signString = "Sign" + " " + this.Location.X.ToString() + " " + this.Location.Y.ToString() + " " + this.signType + " " +  Hitboxoffset.X.ToString() + " " + Hitboxoffset.Y.ToString();
             if (this.signType == "speedSign")
             {
                 signString += " " + Sign.speed.ToString(); 

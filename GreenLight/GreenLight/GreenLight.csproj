@@ -109,6 +109,7 @@
     <Compile Include="src\Driver\VehicleProfile.cs" />
     <Compile Include="src\Grid\Grid.cs" />
     <Compile Include="src\OriginPointController.cs" />
+    <Compile Include="src\Roads\CrossConnection.cs" />
     <Compile Include="src\Roads\CrossRoadSide.cs" />
     <Compile Include="src\Roads\Roads.cs" />
     <Compile Include="src\Roads\RoadsConfig.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="src\UserControls\Data_sub_menu.Designer.cs">
       <DependentUpon>Data_sub_menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\UserControls\Start_sub_recent_projects_menu.cs" />
     <Compile Include="src\VehicleOriginPoint.cs" />
     <Compile Include="src\DrawData.cs" />
     <Compile Include="src\Driver\DriverStats.cs" />

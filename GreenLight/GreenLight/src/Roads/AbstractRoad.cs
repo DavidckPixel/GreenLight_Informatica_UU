@@ -38,7 +38,7 @@ namespace GreenLight
         public string Dir;
         public AbstractRoad beginConnectedTo, endConnectedTo;
         public int laneWidth = Roads.Config.laneWidth;
-        public AbstractRoad CrossRoad
+        public AbstractRoad CrossRoad;
 
         //Basic Road Constructor, every road calls this constructor during initialzation
         public AbstractRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(new Point(Math.Min(_point1.X, _point2.X),Math.Min(_point1.Y, _point2.Y)))

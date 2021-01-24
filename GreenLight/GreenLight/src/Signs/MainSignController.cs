@@ -208,7 +208,7 @@ namespace GreenLight
             }
 
             //this.selectedRoad.Signs.Add(new PlacedSign(closest.cord, "", _temp, _sign_image, _selectedRoad, signType));
-            this.selectedRoad.Signs.Add(new PlacedSign(closest.cord, "", _temp, _sign_image, _selectedRoad, hitboxoffset.cord));
+            this.selectedRoad.Signs.Add(new PlacedSign(closest.cord, "", _temp, _sign_image, _selectedRoad, signType, hitboxoffset.cord));
 
             SignCount++;
             closeDragMode();
@@ -253,6 +253,7 @@ namespace GreenLight
             Point _tempPoint = new Point(int.Parse(_signWords[1]), int.Parse(_signWords[2]));
             string _signType = _signWords[3];
             AbstractSign _temp = null;
+            Point Hitboxoffset = new Point(int.Parse(_signWords[4]), int.Parse(_signWords[5]));
 
             Image _sign_image = null;
             switch (_signType)
@@ -262,7 +263,7 @@ namespace GreenLight
                 case "speedSign":
                     _sign_image = Image.FromFile("../../User Interface Recources/Speed_Sign.png");
                     _temp = new SpeedSign(speedSign);
-                    _temp.speed = int.Parse(_signWords[4]);
+                    _temp.speed = int.Parse(_signWords[6]);
                     break;
                 case "yieldSign":
                     _sign_image = Image.FromFile("../../User Interface Recources/Yield_Sign.png");
@@ -279,7 +280,7 @@ namespace GreenLight
             }
 
             Signs.Add(_temp);
-            this.selectedRoad.Signs.Add(new PlacedSign(_tempPoint, "", _temp, _sign_image, _selectedRoad, _signType));
+            this.selectedRoad.Signs.Add(new PlacedSign(_tempPoint, "", _temp, _sign_image, _selectedRoad, _signType, Hitboxoffset));
             SignCount++;
         }
     }

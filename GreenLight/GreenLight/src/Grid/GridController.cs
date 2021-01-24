@@ -174,7 +174,7 @@ namespace GreenLight
                     int _lanes = int.Parse(General_Form.Main.UserInterface.ElemSRM.LaneAmount.Text);
                     int _inflate = _lanes * 20 / 2;
                     _rec.Inflate(_inflate,_inflate);
-                    g.FillRectangle(Notsolid, _rec);
+                    g.FillRectangle(Notsolidgreen, _rec);
                     if (Gridpoints.Find(x => x.Collision(mousecords)) != null)
                     {
                         RectHitbox temp2 = calculateRect(mousecords, new Point(0,0));
@@ -217,7 +217,7 @@ namespace GreenLight
                 //}
 
                 Rectangle rec = new Rectangle(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y), Math.Abs(firstPoint.Cords.X - mousecords.X), Math.Abs(firstPoint.Cords.Y - mousecords.Y));
-                g.FillRectangle(Notsolid, rec);
+                g.FillRectangle(Notsolidgreen, rec);
                 
             }
         }

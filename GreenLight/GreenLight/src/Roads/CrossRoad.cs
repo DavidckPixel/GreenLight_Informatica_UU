@@ -27,9 +27,8 @@ namespace GreenLight
 
         public CrossRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, _roadtype, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
-            hitbox = CreateHitbox(hitBoxPoints(_point1, _point1, _lanes + 2, 20, false));
             Extra = Roads.Config.crossroadExtra;
-            Point[] _points = hitBoxPoints(_point1, _point1, _lanes, Roads.Config.laneWidth);
+            Point[] _points = hitBoxPoints(_point1, _point1, _lanes, Roads.Config.laneWidth, false);
             hitbox = CreateHitbox(_points);
 
             int _width = (_lanes) * this.laneWidth + Roads.Config.scaleOffset * 2 + 2 * Extra;
@@ -179,8 +178,7 @@ namespace GreenLight
         {
             for(int x = 0; x < this.lanes; x++)
             {
-                connectPoints.Add(new ConnectionPoint(new Point(_loc.X + (int)(this.laneWidth * this.Scale) * x * _X, _loc.Y + (int)(this.laneWidth * this.Scale) * x * _Y), _side, this.Scale))
-               // connectPoints.Add(new ConnectionPoint(new Point(_loc.X + (int)(20 * this.Scale) * x * _X, _loc.Y + (int)(20 * this.Scale) * x * _Y), _side, this.Scale, x + 1));
+                connectPoints.Add(new ConnectionPoint(new Point(_loc.X + (int)(20 * this.Scale) * x * _X, _loc.Y + (int)(20 * this.Scale) * x * _Y), _side, this.Scale, x + 1));
             }
         }
 
