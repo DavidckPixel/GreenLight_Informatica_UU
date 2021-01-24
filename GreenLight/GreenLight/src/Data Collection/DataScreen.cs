@@ -9,11 +9,11 @@ using System.Windows.Forms;
 
 namespace GreenLight.src.Data_Collection
 {
-    class DataScreen : ScreenController
+    public class DataScreen : ScreenController
     {
         Form main;
-        DataController dataController;
-
+        public DataController dataController;
+        
         public DataScreen(Form _main)
         {
             this.main = _main;
@@ -34,7 +34,7 @@ namespace GreenLight.src.Data_Collection
 
         public override void Activate()
         {
-            //General_Form.Main.UserInterface.Menu_to_simulation();
+            General_Form.Main.UserInterface.Menu_to_data();
             Console.WriteLine("Activating DataScreen");
             this.Screen.Show();
             this.Screen.Invalidate();

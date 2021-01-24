@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using GreenLight.src.Data_Collection;
 
 //This controller is arguably the most important and base controller. This is the controller that is at the top and handles everything
 //It keeps track of which ScreenController is currently selected and draws/ updates is accordingly
@@ -21,6 +22,7 @@ namespace GreenLight
         public SimulationScreenController SimulationScreen;
         public MenuController MenuController;
         public ScreenController Active;
+        public DataScreen DataScreen;
 
         public InterfaceController UserInterface;
 
@@ -47,10 +49,12 @@ namespace GreenLight
             BuildScreen = new BuildScreenController(this.form);
             SimulationScreen = new SimulationScreenController(this.form);
             MenuController = new MenuController(this.Screen);
+            DataScreen = new DataScreen(this.form);
 
             BuildScreen.Initialize();
             SimulationScreen.Initialize();
             MenuController.Initialize();
+            DataScreen.Initialize();
 
             Log.Write("Setting Active Controller to MenuController");
 

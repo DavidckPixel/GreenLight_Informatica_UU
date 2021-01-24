@@ -157,5 +157,10 @@ namespace GreenLight
         {
             hitbox = new RectHitbox(new Point((int)this.locationX - 10, (int)this.locationY - 10), new Point((int)this.locationX + 10, (int)this.locationY - 10), new Point((int)this.locationX - 10, (int)this.locationY + 10),new Point((int)this.locationX + 10, (int)this.locationY + 10), Color.Pink);
         }
+
+        public void DeleteVehicle(bool _dumpData)
+        {
+            //Code to delete the vehicle -> call the data Collector.removeVehicle();
+        }
     }
 }

@@ -45,6 +45,8 @@ namespace GreenLight
         Elements_sub_lights_menu ElemSLM;
         public Elements_sub_roads_menu ElemSRM;
         Elements_sub_signs_menu ElemSSM;
+        Data_sub_menu DataSM;
+
 
         int Sub_menu_width = 250;
         FontFamily Dosis_font_family;
@@ -90,6 +92,8 @@ namespace GreenLight
             ElemSRM = new Elements_sub_roads_menu(Sub_menu_width, MainForm, Dosis_font_family);
             ElemSSM = new Elements_sub_signs_menu(Sub_menu_width, MainForm, Dosis_font_family);
 
+            DataSM = new Data_sub_menu(Sub_menu_width, MainForm);
+
             MainForm.Controls.Add(SMM);
             MainForm.Controls.Add(SSM);
             MainForm.Controls.Add(BMM);
@@ -104,6 +108,7 @@ namespace GreenLight
             MainForm.Controls.Add(ElemSLM);
             MainForm.Controls.Add(ElemSRM);
             MainForm.Controls.Add(ElemSSM);
+            MainForm.Controls.Add(DataSM);
         }
 
         public void Refresh_region(Form Form)
@@ -129,6 +134,7 @@ namespace GreenLight
             ElemSLM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
             ElemSBM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
             ElemSSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
+            DataSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
         }
         public void Open(string File_name)
         {
@@ -155,6 +161,7 @@ namespace GreenLight
             SimMM.Show();
             SimDataM.Show();
             SimDataM.BringToFront();
+            
         }
         public void Menu_to_simulation_weather() 
         {
@@ -209,6 +216,16 @@ namespace GreenLight
             ElemSBM.Show();
             ElemSBM.BringToFront();
         }
+        public void Menu_to_data()
+        {
+            Hide_all_menus();
+            DataSM.Show();
+            SimMM.Show();
+            SimDataM.Show();
+            SimDataM.BringToFront();
+            DataSM.BringToFront();
+
+        }
         private void Hide_all_menus()
         {
             SSM.Hide();
@@ -225,6 +242,7 @@ namespace GreenLight
             ElemSSM.Hide();
             ElemSRM.Hide();
             ElemSBM.Hide();
+            DataSM.Hide();
         }
 
         public void Reset_All_Buttons(CurvedButtons Selected, string Filepath)

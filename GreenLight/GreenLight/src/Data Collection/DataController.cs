@@ -7,10 +7,13 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Data;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Drawing.Imaging;
+using System.IO;
+using System.IO.Compression;
 
 namespace GreenLight.src.Data_Collection
 {
-    class DataController : AbstractController
+    public class DataController : AbstractController
     {
         public DataCollector collector;
         Chart brakeChart, averageSpeed;
@@ -125,6 +128,47 @@ namespace GreenLight.src.Data_Collection
         public void DrawCharts(Graphics g)
         {
             Console.WriteLine("Drawing Charts!");
+        }
+
+        public void ExportData(string BeginName)
+        {
+            string _folderLocation = ".../.../DataDump/";
+            string Name = BeginName;
+
+            int x = 1;
+            while(File.Exists(_folderLocation + Name + ".zip"))
+            {
+                Name = BeginName + "(" + x.ToString() + ")";
+                x++;
+            }
+
+
+            Data _data = collector.data;
+            Bitmap _brakeChart = new Bitmap(500,500);
+            Bitmap _averageSpeedChart = new Bitmap(500, 500);
+            string _dataDump = _data.ToString();
+
+            System.IO.Directory.CreateDirectory(_folderLocation + "temp");
+
+            this.brakeChart.DrawToBitmap(_brakeChart, new Rectangle(0, 0, 500, 500));
+            this.averageSpeed.DrawToBitmap(_averageSpeedChart, new Rectangle(0, 0, 500, 500));
+
+            this.brakeChart.SaveImage(".../.../DataDump/temp/BrakeChart.png", ImageFormat.Png);
+            this.averageSpeed.SaveImage(".../.../DataDump/temp/AverageSpeedChart.png", ImageFormat.Png);
+
+            using (StreamWriter sr = new StreamWriter(_folderLocation + "temp/DataDump.txt"))
+            {
+                sr.Write(_dataDump);
+            }
+
+            try
+            {
+                ZipFile.CreateFromDirectory(".../.../DataDump/temp", ".../.../DataDump/" + Name + ".zip");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

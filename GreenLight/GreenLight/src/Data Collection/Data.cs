@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenLight.src.Data_Collection
 {
-    class Data
+    public class Data
     {
         string dataName = "test";
 

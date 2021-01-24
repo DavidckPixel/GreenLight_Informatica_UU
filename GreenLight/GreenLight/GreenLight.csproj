@@ -57,6 +57,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -109,6 +111,12 @@
     <Compile Include="src\Roads\CrossRoadSide.cs" />
     <Compile Include="src\Roads\Roads.cs" />
     <Compile Include="src\Roads\RoadsConfig.cs" />
+    <Compile Include="src\UserControls\Data_sub_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\UserControls\Data_sub_menu.Designer.cs">
+      <DependentUpon>Data_sub_menu.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\VehicleOriginPoint.cs" />
     <Compile Include="src\DrawData.cs" />
     <Compile Include="src\Driver\DriverStats.cs" />
@@ -289,6 +297,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DataDump\" />
     <Folder Include="Fonts\" />
     <Folder Include="Logs\" />
     <Folder Include="src\Driver\DriverProfile\Images\" />

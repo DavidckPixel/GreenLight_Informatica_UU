@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using GreenLight.src.Data_Collection;
+
 namespace GreenLight
 {
     public partial class BetterVehicleTest : Form
@@ -177,6 +178,7 @@ namespace GreenLight
         private void click(object sender, MouseEventArgs e)
         {
             profileController.OnClick(e.Location);
+            dataController.ExportData("Test1");
 
             if (!profileController.simulationPaused)
             {
@@ -184,7 +186,7 @@ namespace GreenLight
                 testVehicle2.hardStop = true;
 
                 profileController.PauseSimulation();
-                dataController.UpdateBrakePerTickChart();
+                //dataController.UpdateBrakePerTickChart();
                 this.Invalidate();
             }
 

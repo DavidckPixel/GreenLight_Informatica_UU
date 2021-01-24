@@ -8,7 +8,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace GreenLight.src.Data_Collection
 {
-    class DataCollector
+    public class DataCollector
     {
         public Data data;
         public DataController controller;
