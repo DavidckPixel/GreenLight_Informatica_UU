@@ -5,6 +5,7 @@
 
     "settingsScreen": {
         "length": 570,
+        "crossextralength": 130,
         "width": 520,
         "offset": 10,
         "buttonHeight": 40,
@@ -14,7 +15,10 @@
         "mpX": 200,
         "mpY": 510,
         "mpWidth": 400,
-        "mpHeight": 80
+        "mpHeight": 80,
+        "errorwidth": 390,
+        "errorheight": 50
+
     },
 
     "opStandardWeight": 80,

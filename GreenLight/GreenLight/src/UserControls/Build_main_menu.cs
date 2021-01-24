@@ -41,6 +41,7 @@ namespace GreenLight
             this.Size = new Size(Form.Width-Sub_menu_width, Form.Height);
             int _ButtonSize = User_Controls.Config.standardMainMenu["infobuttonsize"];
             RoundButtons Info_button = new RoundButtons(new Size(_ButtonSize, _ButtonSize), new Point(0,0), "../../User Interface Recources/Info_Button.png");
+            Info_button.Click += (object o, EventArgs ea) => { System.Diagnostics.Process.Start("https://github.com/DavidckPixel/GreenLight_Informatica_UU"); };
 
             this.Controls.Add(Info_button);
         }

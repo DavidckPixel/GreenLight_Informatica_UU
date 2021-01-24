@@ -34,7 +34,7 @@ namespace GreenLight
             AngleDir = middle.degree;
         }
 
-        public void FlipPoints()
+        public override void FlipPoints()
         {
             List<LanePoints> _templist = new List<LanePoints>();
 

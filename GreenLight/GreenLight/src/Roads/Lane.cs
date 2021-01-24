@@ -22,6 +22,8 @@ namespace GreenLight
         public abstract void Draw(Graphics g);
         public abstract void DrawoffsetHitbox(Graphics g);
 
+        public abstract void FlipPoints();
+
         public int thisLane = 0;
         public bool flipped = false;
 

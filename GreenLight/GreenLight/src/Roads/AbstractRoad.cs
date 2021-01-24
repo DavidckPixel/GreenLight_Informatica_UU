@@ -43,7 +43,27 @@ namespace GreenLight
             this.beginconnection = _beginconnection;
             this.endconnection = _endconnection;
             this.beginConnectedTo = _beginConnectedTo;
-            this.endConnectedTo = _endConnectedTo; 
+            this.endConnectedTo = _endConnectedTo;
+
+            Console.WriteLine("this road: " + _point1 + " ------- " + _point2);
+            if(beginConnectedTo != null)
+            {
+                Console.WriteLine("begin connected to: " + beginConnectedTo.point1 + " ------- " + beginConnectedTo.point2);
+            }
+            else 
+            {
+                Console.WriteLine("begin connection is null");
+            }
+
+            if (endConnectedTo != null)
+            {
+                Console.WriteLine("end connected to: " + endConnectedTo.point1 + " ------- " + endConnectedTo.point2);
+            }
+            else
+            {
+                Console.WriteLine("end connection is null");
+            }
+
         }
 
         //protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);

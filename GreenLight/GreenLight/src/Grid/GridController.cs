@@ -17,8 +17,7 @@ namespace GreenLight
         //Every Gridpoint object contains a rectangle Hitbox, to see if the user has clicked on a point this class returns a bool
         //whether or not the point is in the Hitbox.
 
-        public List<Gridpoint> Gridpoints = new List<Gridpoint>();
-        public GridConfig config;
+        public List<Gridpoint> Gridpoints = new List<Gridpoint>();        
         bool firstClick;
         PictureBox canvas;
         private bool _points_visible = true;
@@ -32,8 +31,7 @@ namespace GreenLight
 
         public GridController(PictureBox _bitmap, BuilderController _builder)
         {
-            this.canvas = _bitmap;
-            GridConfig.Init(ref this.config);
+            this.canvas = _bitmap;            
             CreateGridPoints();
             this.canvas.MouseClick += OnClick;
             this.canvas.MouseMove += moveMouse;
@@ -62,15 +60,15 @@ namespace GreenLight
 
         public void CreateGridPoints()
         {
-            int _amountX = canvas.Width / config.SpacingWidth;
-            int _amountY = canvas.Height / config.SpacingHeight;
+            int _amountX = canvas.Width / Grid.Config.SpacingWidth;
+            int _amountY = canvas.Height / Grid.Config.SpacingHeight;
 
             for (int y = 0; y < _amountY; y++)
             { 
                 for (int x = 0; x < _amountX; x++)
                 {
                     
-                    Gridpoints.Add(new Gridpoint(new Point(x * config.SpacingWidth, y * config.SpacingHeight), 5));
+                    Gridpoints.Add(new Gridpoint(new Point(x * Grid.Config.SpacingWidth, y * Grid.Config.SpacingHeight), 5));
                 }
             }
         }
@@ -99,8 +97,7 @@ namespace GreenLight
             {
                 this.ResetPoints();
             }
-
-            if (firstClick)
+            else if (firstClick)
             {
                 if (_point != null)
                 {
@@ -156,7 +153,8 @@ namespace GreenLight
                 x.DrawGrid(g);
                 }
 
-                Brush Notsolid = new SolidBrush(Color.FromArgb(100, Color.DarkRed));
+                Brush Notsolidred = new SolidBrush(Color.FromArgb(100, Color.DarkRed));
+                Brush Notsolidgreen = new SolidBrush(Color.FromArgb(100, Color.Green));
 
                 if (General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "Cross")
                 {
@@ -164,18 +162,34 @@ namespace GreenLight
                     int _lanes = int.Parse(General_Form.Main.UserInterface.ElemSRM.LaneAmount.Text);
                     int _inflate = _lanes * 20 / 2;
                     _rec.Inflate(_inflate,_inflate);
-                    g.FillRectangle(Notsolid, _rec);
+
+                    if (Gridpoints.Find(x => x.Collision(mousecords)) != null)
+                    {
+                        g.FillRectangle(Notsolidgreen, _rec);
+                    }
+                    else
+                    {
+                        g.FillRectangle(Notsolidred, _rec);
+                    }
+                    
 
                     return;
                 }
-
+                
                 if (firstClick == true)
                 {
                     return;
                 }
 
                 Rectangle rec = new Rectangle(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y), Math.Abs(firstPoint.Cords.X - mousecords.X), Math.Abs(firstPoint.Cords.Y - mousecords.Y));
-                g.FillRectangle(Notsolid, rec);
+                if (Gridpoints.Find(x => x.Collision(mousecords)) != null)
+                {
+                    g.FillRectangle(Notsolidgreen, rec);
+                }
+                else
+                {
+                    g.FillRectangle(Notsolidred, rec);
+                }
             }
         }
 
