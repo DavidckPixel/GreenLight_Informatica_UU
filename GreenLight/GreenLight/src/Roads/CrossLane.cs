@@ -24,5 +24,10 @@ namespace GreenLight
         {
             throw new NotImplementedException();
         }
+
+        public override void FlipPoints()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
