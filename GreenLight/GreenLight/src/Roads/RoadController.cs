@@ -109,6 +109,8 @@ namespace GreenLight
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
 			OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point1);
             OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point2);
+
+            CheckLaneDirections(_road, 0);
             //Console.WriteLine(OPC.GetSpawnPoint);
         }
 
@@ -158,6 +160,7 @@ namespace GreenLight
             AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, _type, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
+            CheckLaneDirections(_road, 0);
         }
 
         public void Connection(Point _point1, Point _point2, int _lanes, string _dir, AbstractRoad _road, bool _beginconnection, bool _endconnection)
@@ -377,6 +380,7 @@ namespace GreenLight
 
             _lane.FlipPoints();
 
+            CheckLaneDirections(selectedRoad, 0);
             Screen.Invalidate();
             settingScreen.Invalidate();
             settingScreenImage.Invalidate();
@@ -534,6 +538,92 @@ namespace GreenLight
                 _drivinglane.offsetHitbox = _hitbox;
             }
         }
+
+        private void CheckLaneDirections(AbstractRoad _thisroad, int _count)
+        {
+            if (_thisroad.Type == "Cross")
+            {
+                return;
+            }
+            //Console.WriteLine("COUNT: " + _count);
+            if(_count < roads.Count())
+            {
+                if (_thisroad.Type == "Cross")
+                {
+                    return;
+                }
+                CheckConnectionDirections(_thisroad, _thisroad.beginConnectedTo, "Begin", _count);
+                CheckConnectionDirections(_thisroad, _thisroad.endConnectedTo, "End", _count);
+                General_Form.Main.BuildScreen.Screen.Invalidate();
+            }            
+        }
+
+        public void CheckConnectionDirections(AbstractRoad _thisroad, AbstractRoad _connectionroad, string _connectionpoint, int _count)
+        {
+            
+            if (_connectionroad != null && _connectionroad.Type != "Cross")
+            {
+                bool _flipped = false;
+                foreach (Lane _thislane in _thisroad.Drivinglanes)
+                {
+                    double _mindistance = 50;
+                    bool needsflipped = false;
+                    int _indexmatchinglane = -1;
+
+                    foreach (Lane _beginlane in _connectionroad.Drivinglanes)
+                    {
+                        //Find the closest lane
+                        //distance between this.first & _begin.fist/_begin.last
+                        double _distanceFirst = RoadMath.Distance(_thislane.points.First().cord, _beginlane.points.First().cord);
+                        double _distanceLast = RoadMath.Distance(_thislane.points.Last().cord, _beginlane.points.Last().cord);
+                        double _distanceDiff1 = RoadMath.Distance(_thislane.points.First().cord, _beginlane.points.Last().cord);
+                        double _distanceDiff2 = RoadMath.Distance(_thislane.points.Last().cord, _beginlane.points.First().cord);
+
+                        if (_distanceFirst < _mindistance && _distanceFirst < _distanceDiff1 && _distanceFirst < _distanceDiff2 && _distanceFirst < _distanceLast)
+                        {
+                            _indexmatchinglane = _connectionroad.Drivinglanes.IndexOf(_beginlane);
+                            needsflipped = true;
+                            _mindistance = _distanceFirst;
+                            //Console.WriteLine(_connectionpoint + " needs flipped");
+                        }
+                        else if (_distanceLast < _mindistance && _distanceLast < _distanceDiff1 && _distanceLast < _distanceDiff2 && _distanceLast < _distanceFirst)
+                        {
+                            _indexmatchinglane = _connectionroad.Drivinglanes.IndexOf(_beginlane);
+                            needsflipped = true;
+                            _mindistance = _distanceLast;
+                            //Console.WriteLine(_connectionpoint + " needs flipped");
+                        }
+                        else if (_distanceDiff1 < _mindistance && _distanceDiff1 < _distanceFirst && _distanceDiff1 < _distanceLast && _distanceDiff1 < _distanceDiff2)
+                        {
+                            _indexmatchinglane = _connectionroad.Drivinglanes.IndexOf(_beginlane);
+                            needsflipped = false;
+                            _mindistance = _distanceDiff1;
+                            //Console.WriteLine(_connectionpoint + " is allright");
+                        }
+                        else if (_distanceDiff2 < _mindistance && _distanceDiff2 < _distanceFirst && _distanceDiff2 < _distanceLast && _distanceDiff2 < _distanceDiff1)
+                        {
+                            _indexmatchinglane = _connectionroad.Drivinglanes.IndexOf(_beginlane);
+                            needsflipped = false;
+                            _mindistance = _distanceDiff2;
+                            //Console.WriteLine(_connectionpoint + " is allright");
+                        }
+
+                    }
+                    //Console.WriteLine("distance between roads: " + _mindistance);
+                    if (needsflipped && _mindistance <= 2 && _indexmatchinglane >= 0 && _indexmatchinglane < _connectionroad.Drivinglanes.Count)
+                    {
+                        _connectionroad.Drivinglanes[_indexmatchinglane].FlipPoints();                        
+                        _flipped = true;
+                        //Console.WriteLine(_connectionpoint + " FLIPPED!!!");
+                        
+                    }
+                }
+                if(_flipped)
+                {
+                    CheckLaneDirections(_connectionroad, _count + 1);
+                }                
+            }
+            }
 
         }
     }
