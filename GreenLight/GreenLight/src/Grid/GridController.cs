@@ -89,7 +89,10 @@ namespace GreenLight
 
             if (_type == "Cross")
             {
-                builder.BuildRoad(_point.Cords, _point.Cords);
+                if (legal)
+                {
+                    builder.BuildRoad(_point.Cords, _point.Cords);
+                }
                 return;
             }
 
@@ -103,9 +106,9 @@ namespace GreenLight
 
             if (firstClick)
             {
+                legal = true;
                 if (_point != null)
                 {
-                    legal = true;
                     Console.WriteLine("First PointClick!");
                     Console.WriteLine(_point.Cords);
                     this.firstClick = false;
@@ -174,6 +177,23 @@ namespace GreenLight
                     int _inflate = _lanes * 20 / 2;
                     _rec.Inflate(_inflate,_inflate);
                     g.FillRectangle(Notsolid, _rec);
+                    if (Gridpoints.Find(x => x.Collision(mousecords)) != null)
+                    {
+                        RectHitbox temp2 = calculateRect(mousecords, new Point(0,0));
+                        foreach (AbstractRoad road in builder.roadBuilder.roads) // loops through all roads
+                        {
+                            if (temp2.Collide(road.hitbox))
+                            {
+                                temp2.ShowOverlap(g);
+                                Console.WriteLine("Overlap!");
+                                legal = false;
+                            }
+                            else
+                            {
+                                legal = true;
+                            }
+                        }
+                    }
 
                     return;
                 }
@@ -246,7 +266,6 @@ namespace GreenLight
 
                     if (90 < angle && angle < 180) //SW 
                     {
-                        Console.WriteLine("Here?");
                         topleft = new Point((int)(firstpoint.X + ((20 * lanes) / 2) * Math.Cos(angle + 90)), (int)(firstpoint.Y + ((20 * lanes) / 2) * Math.Sin(angle + 90)));
                         topright = new Point((int)(firstpoint.X + ((20 * lanes) / 2) * Math.Cos(angle - 90)), (int)(firstpoint.Y + ((20 * lanes) / 2) * Math.Sin(angle - 90)));
                         bottomleft = new Point((int)(mousecords.X + ((20 * lanes) / 2) * Math.Cos(angle + 90)), (int)(mousecords.Y + ((20 * lanes) / 2) * Math.Sin(angle + 90)));
@@ -256,7 +275,6 @@ namespace GreenLight
 
                     if (-180 < angle && angle < -90) //NW
                     {
-                        Console.WriteLine("Here?2?");
                         topleft = new Point((int)(mousecords.X + ((20 * lanes) / 2) * Math.Cos(angle - 90)), (int)(mousecords.Y + ((20 * lanes) / 2) * Math.Sin(angle - 90)));
                         topright = new Point((int)(mousecords.X + ((20 * lanes) / 2) * Math.Cos(angle + 90)), (int)(mousecords.Y + ((20 * lanes) / 2) * Math.Sin(angle + 90)));
                         bottomleft = new Point((int)(firstpoint.X + ((20 * lanes) / 2) * Math.Cos(angle - 90)), (int)(firstpoint.Y + ((20 * lanes) / 2) * Math.Sin(angle - 90)));
@@ -266,7 +284,6 @@ namespace GreenLight
 
                     if (-90 < angle && angle < 0) //NE
                     {
-                        Console.WriteLine("Here?2442");
                         topleft = new Point((int)(mousecords.X + ((20 * lanes) / 2) * Math.Cos(angle - 90)), (int)(mousecords.Y + ((20 * lanes) / 2) * Math.Sin(angle - 90)));
                         topright = new Point((int)(mousecords.X + ((20 * lanes) / 2) * Math.Cos(angle + 90)), (int)(mousecords.Y + ((20 * lanes) / 2) * Math.Sin(angle + 90)));
                         bottomleft = new Point((int)(firstpoint.X + ((20 * lanes) / 2) * Math.Cos(angle - 90)), (int)(firstpoint.Y + ((20 * lanes) / 2) * Math.Sin(angle - 90)));
@@ -277,12 +294,29 @@ namespace GreenLight
             }
             else if (General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "Curved") // Type = Curved
             {
-
+                topleft = new Point(Math.Min(firstpoint.X, mousecords.X) - (20 * lanes) / 2, Math.Min(firstpoint.Y, mousecords.Y));
+                topright = new Point(Math.Max(firstpoint.X, mousecords.X) + (20 * lanes) / 2, Math.Min(firstpoint.Y, mousecords.Y));
+                bottomleft = new Point(Math.Min(firstpoint.X, mousecords.X) - (20 * lanes) / 2, Math.Max(firstpoint.Y, mousecords.Y));
+                bottomright = new Point(Math.Max(firstpoint.X, mousecords.X) + (20 * lanes) / 2, Math.Max(firstpoint.Y, mousecords.Y));
+                return new RectHitbox(topleft, topright, bottomleft, bottomright, Color.Red);
             }
 
-            else if (General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "Curved2") // Type = Curved
+            else if (General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "Curved2") // Type = Curved2
             {
+                topleft = new Point(Math.Min(firstpoint.X, mousecords.X) - (20 * lanes) / 2, Math.Min(firstpoint.Y, mousecords.Y));
+                topright = new Point(Math.Max(firstpoint.X, mousecords.X) + (20 * lanes) / 2, Math.Min(firstpoint.Y, mousecords.Y));
+                bottomleft = new Point(Math.Min(firstpoint.X, mousecords.X) - (20 * lanes) / 2, Math.Max(firstpoint.Y, mousecords.Y));
+                bottomright = new Point(Math.Max(firstpoint.X, mousecords.X) + (20 * lanes) / 2, Math.Max(firstpoint.Y, mousecords.Y));
+                return new RectHitbox(topleft, topright, bottomleft, bottomright, Color.Red);
+            }
 
+            else if (General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "Cross")
+            {
+                topleft = new Point(firstpoint.X - ((lanes + 2) * 20 + 20) / 2, firstpoint.Y - ((lanes + 2) * 20 + 20) / 2);
+                topright = new Point(firstpoint.X + ((lanes + 2) * 20 + 20) / 2, firstpoint.Y - ((lanes + 2) * 20 + 20) / 2);
+                bottomleft = new Point(firstpoint.X - ((lanes + 2) * 20 + 20) / 2, firstpoint.Y + ((lanes + 2) * 20 + 20) / 2);
+                bottomright = new Point(firstpoint.X + ((lanes + 2) * 20 + 20) / 2, firstpoint.Y + ((lanes + 2) * 20 + 20) / 2);
+                return new RectHitbox(topleft, topright, bottomleft, bottomright, Color.Red);
             }
             return null;
         }
