@@ -27,7 +27,7 @@ namespace GreenLight
 
             if (Dir == "SE" || Dir == "SW" || Dir == "NE" || Dir == "NW")
             {
-                Point[] _points = hitBoxPoints(_point1, _point2, this.lanes);
+                Point[] _points = hitBoxPoints(_point1, _point2, this.lanes, 20, true);
                 this.hitbox = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], _dir, Color.Yellow);
 
                 for (int x = 1; x <= lanes; x++)
@@ -38,7 +38,7 @@ namespace GreenLight
         }
         private DrivingLane CreateDrivingLane(Point _point1, Point _point2, int _thisLane)
         {
-            Point[] _points = this.hitBoxPoints(_point1, _point2, 1);
+            Point[] _points = this.hitBoxPoints(_point1, _point2, 1, 20, false);
             Hitbox _temp = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], Dir, Color.Green);
             return new DrivingLane(LanePoints.CalculateCurveLane(_point1, _point2, this.Dir), this.Dir, this.lanes, _thisLane, _temp);
         }
@@ -55,13 +55,13 @@ namespace GreenLight
                 {
                     if (t % 2 == 0)
                     {
-                        _firstPoint.X -= (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
-                        _secondPoint.Y -= (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
+                        _firstPoint.X -= (t / 2) * drivingLaneDistance;
+                        _secondPoint.Y -= (t / 2) * drivingLaneDistance;
                     }
                     else
                     {
-                        _firstPoint.X += (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
-                        _secondPoint.Y += (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
+                        _firstPoint.X += (t - 1) / 2 * drivingLaneDistance;
+                        _secondPoint.Y += (t - 1) / 2 * drivingLaneDistance;
                     }
                 }
                 else // (lanes % 2 == 1)
@@ -84,13 +84,13 @@ namespace GreenLight
                 {
                     if (t % 2 == 0)
                     {
-                        _firstPoint.X -= (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
-                        _secondPoint.Y += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
+                        _firstPoint.X -= (t / 2) * drivingLaneDistance;
+                        _secondPoint.Y += (t / 2) * drivingLaneDistance;
                     }
                     else
                     {
-                        _firstPoint.X += (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
-                        _secondPoint.Y -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
+                        _firstPoint.X += (t - 1) / 2 * drivingLaneDistance;
+                        _secondPoint.Y -= (t - 1) / 2 * drivingLaneDistance;
                     }
                 }
                 else // (lanes % 2 == 1)
@@ -110,13 +110,27 @@ namespace GreenLight
             return CreateDrivingLane(_firstPoint, _secondPoint, t);
         }
 
-        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20)
+        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox)
         {
             Point _one, _two;
             int _roadWidth = (_laneWidth * _lanes) / 2;
             Point[] _points = new Point[4];
 
-            if(Dir == "NW" || Dir == "NE")
+            if (lanes % 2 == 0 && _Roadhitbox)
+            {
+                if (Dir == "SE" || Dir == "NW")
+                {
+                    one.X -= 10;
+                    two.Y -= 10;
+                }
+                else if (Dir == "SW" || Dir == "NE")
+                {
+                    one.X -= 10;
+                    two.Y += 10;
+                }
+            }
+
+            if (Dir == "NW" || Dir == "NE")
             {
                 if (one.X < two.X)
                 {

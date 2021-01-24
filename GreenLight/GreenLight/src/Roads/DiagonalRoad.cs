@@ -22,7 +22,7 @@ namespace GreenLight
             this.Dir = _dir;
             this.Type = _type;
 
-            Point[] _points = hitBoxPoints(_point1, _point2, lanes);
+            Point[] _points = hitBoxPoints(_point1, _point2, lanes, 20, true);
             this.hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
 
             for (int x = 1; x <= this.lanes; x++)
@@ -41,7 +41,7 @@ namespace GreenLight
 
             this.slp = _slp;
         
-            Point[] _points = hitBoxPoints(_point1, _point2, 1);
+            Point[] _points = hitBoxPoints(_point1, _point2, 1, 20, false);
             Hitbox _temp = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Green);
             return new DrivingLane(LanePoints.CalculateDiagonalLane(_point1,_point2), this.Dir, this.lanes, _thisLane, _temp);
         }
@@ -65,26 +65,26 @@ namespace GreenLight
                     {
                         if (slp <= -1 || slp >= 1)
                         {
-                            _firstPoint.X += (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t / 2 - 1));
-                            _secondPoint.X += (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t / 2 - 1));
+                            _firstPoint.X += (int)( drivingLaneDistance * (t / 2));
+                            _secondPoint.X += (int)(drivingLaneDistance * (t / 2));
                         }
                         else
                         {
-                            _firstPoint.Y += (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t / 2 - 1));
-                            _secondPoint.Y += (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t / 2 - 1));
+                            _firstPoint.Y += (int)(drivingLaneDistance * (t / 2));
+                            _secondPoint.Y += (int)(drivingLaneDistance * (t / 2));
                         }
                     }
                     else
                     {
                         if (slp <= -1 || slp >= 1)
                         {
-                            _firstPoint.X -= (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t - 1) / 2);
-                            _secondPoint.X -= (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t - 1) / 2);
+                            _firstPoint.X -= (int)(drivingLaneDistance * (t - 1) / 2);
+                            _secondPoint.X -= (int)(drivingLaneDistance * (t - 1) / 2);
                         }
                         else
                         {
-                            _firstPoint.Y -= (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t - 1) / 2);
-                            _secondPoint.Y -= (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t - 1) / 2);
+                            _firstPoint.Y -= (int)(drivingLaneDistance * (t - 1) / 2);
+                            _secondPoint.Y -= (int)(drivingLaneDistance * (t - 1) / 2);
                         }
                     }
                 }
@@ -125,13 +125,13 @@ namespace GreenLight
                 {
                     if (t % 2 == 0)
                     {
-                        _firstPoint.X += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
-                        _secondPoint.X += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
+                        _firstPoint.X += (t / 2) * drivingLaneDistance;
+                        _secondPoint.X += (t / 2) * drivingLaneDistance;
                     }
                     else
                     {
-                        _firstPoint.X -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
-                        _secondPoint.X -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
+                        _firstPoint.X -= (t - 1) / 2 * drivingLaneDistance;
+                        _secondPoint.X -= (t - 1) / 2 * drivingLaneDistance;
                     }
                 }
                 else //if (lanes%2 !=0)
@@ -154,13 +154,13 @@ namespace GreenLight
                 {
                     if (t % 2 == 0)
                     {
-                        _firstPoint.Y += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
-                        _secondPoint.Y += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
+                        _firstPoint.Y += (t / 2) * drivingLaneDistance;
+                        _secondPoint.Y += (t / 2) * drivingLaneDistance;
                     }
                     else
                     {
-                        _firstPoint.Y -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
-                        _secondPoint.Y -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
+                        _firstPoint.Y -= (t - 1) / 2 * drivingLaneDistance;
+                        _secondPoint.Y -= (t - 1) / 2 * drivingLaneDistance;
                     }
 
                 }
@@ -182,10 +182,40 @@ namespace GreenLight
             return CreateDrivingLane(_firstPoint, _secondPoint, t);
         }
 
-        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20)
+        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox)
         {
             Point _one, _two;
             int _roadWidth = (_laneWidth * _lanes) / 2;
+
+            if (lanes % 2 == 0 && _Roadhitbox)
+            {
+                if (slp != 0)
+                {
+                    if (slp <= -1 || slp >= 1)
+                    {
+                        one.X -= 10;
+                        two.X -= 10;
+                    }
+                    else
+                    {
+                        one.Y += 10;
+                        two.Y += 10;
+                    }
+                }
+                else
+                {
+                    if (one.X == two.X)
+                    {
+                        one.X += 10;
+                        two.X += 10;
+                    }
+                    else
+                    {
+                        one.Y += 10;
+                        two.Y += 10;
+                    }
+                }
+            }
 
             if (one.Y <= two.Y)
             {

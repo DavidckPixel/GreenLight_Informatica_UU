@@ -279,69 +279,63 @@ namespace GreenLight
             Point _tempTop = p, _tempRight = p, _tempLeft = p, _tempBottom = p;
             int _top = 0, _right = 0, _left = 0, _bottom = 0;
             
-            foreach (ConnectionLink _link in selectedRoad.connectLinks)
+            foreach (ConnectionPoint _point in selectedRoad.connectPoints)
             {
-                ConnectionPoint _point;
-                for (int t = 0; t < 2; t++)
+                //ConnectionPoint _point;
+                
+                Console.WriteLine(_point.Side);
+
+                if (_point.Active)
                 {
-                    if (t == 0)
-                        _point = _link.begin;
-                    else
-                        _point = _link.end;
-
-                    Console.WriteLine(_point.Side);
-
-                    if (_point.Active)
+                    switch (_point.Side)
                     {
-                        switch (_point.Side)
-                        {
-                            case ("Top"):
-                                if (_tempTop == _point.Location)
-                                    break;
-                                else
-                                {
-                                    _top++;
-                                    _tempTop = _point.Location;
-                                    if (_firstTop == p)
-                                        _firstTop = _point.Location;
-                                }
+                        case ("Top"):
+                            if (_tempTop == _point.Location)
                                 break;
-                            case ("Right"):
-                                if (_tempRight == _point.Location)
-                                    break;
-                                else
-                                {
-                                    _right++;
-                                    _tempRight = _point.Location;
-                                    if (_firstRight == p)
-                                        _firstRight = _point.Location;
-                                }
+                            else
+                            {
+                                _top++;
+                                _tempTop = _point.Location;
+                                if (_firstTop == p)
+                                    _firstTop = _point.Location;
+                            }
+                            break;
+                        case ("Right"):
+                            if (_tempRight == _point.Location)
                                 break;
-                            case ("Left"):
-                                if (_tempLeft == _point.Location)
-                                    break;
-                                else
-                                {
-                                    _left++;
-                                    _tempLeft = _point.Location;
-                                    if (_firstLeft == p)
-                                        _firstLeft = _point.Location;
-                                }
+                            else
+                            {
+                                _right++;
+                                _tempRight = _point.Location;
+                                if (_firstRight == p)
+                                    _firstRight = _point.Location;
+                            }
+                            break;
+                        case ("Left"):
+                            if (_tempLeft == _point.Location)
                                 break;
-                            case ("Bottom"):
-                                if (_tempBottom == _point.Location)
-                                    break;
-                                else
-                                {
-                                    _tempBottom = _point.Location;
-                                    _bottom++;
-                                    if (_firstBottom == p)
-                                        _firstBottom = _point.Location;
-                                }
+                            else
+                            {
+                                _left++;
+                                _tempLeft = _point.Location;
+                                if (_firstLeft == p)
+                                    _firstLeft = _point.Location;
+                            }
+                            break;
+                        case ("Bottom"):
+                            if (_tempBottom == _point.Location)
                                 break;
-                        }
+                            else
+                            {
+                                _tempBottom = _point.Location;
+                                _bottom++;
+                                if (_firstBottom == p)
+                                    _firstBottom = _point.Location;
+                            }
+                            break;
                     }
                 }
+                
             }
 
             Console.WriteLine("top :" + _top); Console.WriteLine("Right :" + _right); Console.WriteLine("left :" + _left); Console.WriteLine("bottom :" + _bottom);
@@ -372,148 +366,16 @@ namespace GreenLight
                         _point = _end;
                         _cpoint = _link.end;
                     }
-                /*
-                    // _point = _cpoint.Location;
-
-                    if (_cpoint.Active)
-                    {
-                        switch (_cpoint.Side)
-                        {
-                            case ("Top"):
-                                if (_top == selectedRoad.Top)
-                                    break;
-                                else
-                                {
-                                    if (selectedRoad.lanes % 2 == 0)
-                                    {
-                                        if (_top % 2 == 1)
-                                            _change = true;
-                                        else
-                                            _change = false;
-                                    }
-                                    else
-                                    {
-                                        if (_top % 2 == 0)
-                                            _change = true;
-                                        else
-                                            _change = false;
-                                    }
-                                }
-                                break;
-                            case ("Right"):
-                                if (_right == selectedRoad.Right)
-                                    break;
-                                else
-                                {
-                                    if (selectedRoad.lanes % 2 == 0)
-                                    {
-                                        if (_right % 2 == 1)
-                                            _change = true;
-                                        else
-                                            _change = false;
-                                    }
-                                    else
-                                    {
-                                        if (_right % 2 == 0)
-                                            _change = true;
-                                        else
-                                            _change = false;
-                                    }
-                                }
-                                break;
-                            case ("Left"):
-                                if (_left == selectedRoad.Left)
-                                    break;
-                                else
-                                {
-                                    if (selectedRoad.lanes % 2 == 0)
-                                    {
-                                        if (_left % 2 == 1)
-                                            _change = true;
-                                        else
-                                            _change = false;
-                                    }
-                                    else
-                                    {
-                                        if (_left % 2 == 0)
-                                            _change = true;
-                                        else
-                                            _change = false;
-                                    }
-                                }
-                                break;
-                            case ("Bottom"):
-                                if (_bottom == selectedRoad.Bottom)
-                                    break;
-                                else
-                                {
-                                    if (selectedRoad.lanes % 2 == 0)
-                                    {
-                                        if (_bottom % 2 == 1)
-                                            _change = true;
-                                        else
-                                            _change = false;
-                                    }
-                                    else
-                                    {
-                                        if (_bottom % 2 == 0)
-                                            _change = true;
-                                        else
-                                            _change = false;
-                                    }
-                                }
-                                break;
-                        }
-
-                        Console.WriteLine("Cpoint before change" + _point);
-
-                        if (_change && selectedRoad.lanes != 1)
-                        {
-                            switch (_cpoint.Side)
-                            {
-                                case ("Top"):
-                                    if (_firstTop.X < selectedRoad.point1.X)
-                                        _point = new Point(_point.X + 10, _point.Y);
-                                    else
-                                        _point = new Point(_point.X - 10, _point.Y);
-                                    break;
-                                case ("Right"):
-                                    if (_firstRight.Y < selectedRoad.point1.Y)
-                                        _point = new Point(_point.X, _point.Y + 10);
-                                    else
-                                        _point = new Point(_point.X, _point.Y - 10);
-                                    break;
-                                case ("Left"):
-                                    if (_firstLeft.Y < selectedRoad.point1.Y)
-                                        _point = new Point(_point.X, _point.Y + 10);
-                                    else
-                                        _point = new Point(_point.X, _point.Y - 10);
-                                    break;
-                                case ("Bottom"):
-                                    if (_firstBottom.X < selectedRoad.point1.X)
-                                        _point = new Point(_point.X + 10, _point.Y);
-                                    else
-                                        _point = new Point(_point.X - 10, _point.Y);
-                                    break;
-                            }
-
-                            Console.WriteLine("Cpoint after change" + _point);
-                        }
-                    }
-                    */
 
                     ConnectionPoint cp = new ConnectionPoint(_point, _cpoint.Side, 0, _cpoint.Place);
-                    selectedRoad.translatedconnectPoints.Add(cp);
-
-                    /*if (t == 0)
+                    bool _exists = false;
+                    foreach(ConnectionPoint c in selectedRoad.translatedconnectPoints)
                     {
-                        _begin = _point;
+                        if (c.Side == cp.Side && c.Place == cp.Place)
+                            _exists = true;
                     }
-                    else
-                    {
-                        _end = _point;
-                    }
-                    */
+                    if(!_exists)
+                        selectedRoad.translatedconnectPoints.Add(cp);
                 }
 
                 Console.WriteLine("Crossroad: {0} - {1},", _begin, _end);
@@ -587,6 +449,7 @@ namespace GreenLight
 
             this.Screen.Invalidate();
             this.DisableSettingScreen();
+            General_Form.Main.BuildScreen.builder.roadBuilder.Connection(selectedRoad.point1, selectedRoad.point1, selectedRoad.lanes, selectedRoad.Dir, selectedRoad, selectedRoad.beginconnection, selectedRoad.endconnection);
         }
 
         private void TranslatePoints(ref Point _begin, ref Point _end, CrossRoad _road)

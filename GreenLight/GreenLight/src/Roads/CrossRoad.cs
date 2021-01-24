@@ -20,7 +20,7 @@ namespace GreenLight
 
         public CrossRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, _roadtype, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
-            hitbox = CreateHitbox(hitBoxPoints(_point1, _point1, _lanes + 2));
+            hitbox = CreateHitbox(hitBoxPoints(_point1, _point1, _lanes + 2, 20, false));
 
             int _width = (_lanes + 2) * 20 + 20;
             Scale = 500 / (double)_width;
@@ -60,7 +60,7 @@ namespace GreenLight
 
         }
 
-        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth = 20)
+        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _RoadhitBox)
         {
             Point[] _points = new Point[4];
 
@@ -91,7 +91,7 @@ namespace GreenLight
         {
             for(int x = 0; x < this.lanes; x++)
             {
-                connectPoints.Add(new ConnectionPoint(new Point(_loc.X + (int)(20 * this.Scale) * x * _X, _loc.Y + (int)(20 * this.Scale) * x * _Y), _side, this.Scale, x));
+                connectPoints.Add(new ConnectionPoint(new Point(_loc.X + (int)(20 * this.Scale) * x * _X, _loc.Y + (int)(20 * this.Scale) * x * _Y), _side, this.Scale, x + 1));
             }
         }
 

@@ -35,20 +35,15 @@ namespace GreenLight
             temp3 = _roadTwo.getPoint1();
             temp4 = _roadTwo.getPoint2();
 
+            Console.WriteLine(" ---- CrossConnection ---- ");
+
             if (_roadOne.Type == "Cross" && _roadTwo.Type == "Cross")
             {
                 CrossandCross();
             }
             else if ((_roadOne.Type == "Cross" && _roadTwo.Type == "Diagonal") || (_roadOne.Type == "Diagonal" && _roadTwo.Type == "Cross"))
             {
-                if((_roadTwo.Type == "Diagonal" && _roadTwo.slp == 0) || (_roadOne.Type == "Diagonal" && _roadOne.slp == 0))
-                {
-                    CrossandStraight();
-                }
-                else
-                {
-                    CrossandDiagonal();
-                }
+                CrossandDiagonal();
             }
             else if ((_roadOne.Type == "Cross" && (_roadTwo.Type == "Curved" || _roadTwo.Type == "Curved2")) || ((_roadOne.Type == "Curved" || _roadOne.Type == "Curved2") && _roadTwo.Type == "Cross"))
             {
@@ -66,6 +61,7 @@ namespace GreenLight
             Point _diagonalend = new Point(0, 0);
             bool _buildroad = true;
             List<ConnectionPoint> _connectedLanes = new List<ConnectionPoint>();
+            int _isEven = 0;
 
             foreach (ConnectionPoint x in roadOne.translatedconnectPoints)
             {
@@ -118,18 +114,23 @@ namespace GreenLight
                 _side2 = roadTwo.lanes * 2;
             }
 
-            for (int t = 0; t < Math.Max(roadOne.lanes, roadTwo.lanes) - 1 && _buildroad; t++)
+            Console.WriteLine(_side + " " + _side2);
+            for (int t = 0; t < Math.Max(roadOne.lanes, roadTwo.lanes) && _buildroad; t++)
             {
                 for (int x = 0; x <= 1; x++)
                 {
+                    if (t == 0 && x == 1)
+                        break;
+
                     if (x == 0)
                         _dir = -1;
                     else
                         _dir = 1;
+                    
 
                     _place = _cp.Place + t * _dir;
                     _place2 = _cp2.Place + t * _dir;
-
+                    Console.WriteLine(_place + " " + _place2);
                     if (_place >= 1 && _place2 >= 1 && _place <= roadOne.lanes && _place2 <= roadTwo.lanes)
                     {
                         if (!(roadOne.connectPoints[_place - 1 + _side].Active && roadTwo.connectPoints[_place - 1 + _side2].Active))
@@ -161,25 +162,84 @@ namespace GreenLight
 
             if(_buildroad)
             {
-                if(_cp.Side == "Top" || _cp.Side == "Bottom")
+                if((_connectedLanes.Count / 2) % 2 == 0)
+                {
+                    _isEven = -10;
+                }
+                else
+                {
+                    _isEven = 0;
+                }
+
+                if(_cp.Side == "Top")
                 {
                     int _middleX = 0;
                     for(int t = 0; t < _connectedLanes.Count; t++)
                     {
-                        _middleX += _connectedLanes[t].Location.X;
+                        foreach(ConnectionPoint c in roadOne.translatedconnectPoints)
+                        {
+                            if (c.Side == _connectedLanes[t].Side && c.Place == _connectedLanes[t].Place && c.Side == "Top")
+                            {
+                                _middleX += c.Location.X;
+                            }
+                        }
                     }
-                    _middleX = _middleX / _connectedLanes.Count;
+                    _middleX = _middleX / (_connectedLanes.Count / 2) + _isEven;
+                    Console.WriteLine(_middleX + " " + _connectedLanes.Count);
 
                     controller.BuildDiagonalRoad(new Point(_middleX, _cp.Location.Y), new Point(_middleX, _cp2.Location.Y), _connectedLanes.Count / 2, true, true, roadOne, roadTwo);
                 }
-                else
+                else if (_cp.Side == "Bottom")
+                {
+                    int _middleX = 0;
+                    for (int t = 0; t < _connectedLanes.Count; t++)
+                    {
+                        foreach (ConnectionPoint c in roadOne.translatedconnectPoints)
+                        {
+                            if (c.Side == _connectedLanes[t].Side && c.Place == _connectedLanes[t].Place && c.Side == "Bottom")
+                            {
+                                _middleX += c.Location.X;
+                            }
+                        }
+                    }
+                    _middleX = _middleX / (_connectedLanes.Count / 2) + _isEven;
+                    Console.WriteLine(_middleX + " " + _connectedLanes.Count);
+
+                    controller.BuildDiagonalRoad(new Point(_middleX, _cp.Location.Y), new Point(_middleX, _cp2.Location.Y), _connectedLanes.Count / 2, true, true, roadOne, roadTwo);
+                }
+                else if (_cp.Side == "Left")
                 {
                     int _middleY = 0;
                     for(int t = 0; t < _connectedLanes.Count; t++)
                     {
+                        foreach (ConnectionPoint c in roadOne.translatedconnectPoints)
+                        {
+                            if (c.Side == _connectedLanes[t].Side && c.Place == _connectedLanes[t].Place && c.Side == "Left")
+                            {
+                                _middleY += c.Location.Y;
+                            }
+                        }
                         _middleY += _connectedLanes[t].Location.Y;
                     }
-                    _middleY = _middleY / _connectedLanes.Count;
+                    _middleY = _middleY / (_connectedLanes.Count / 2) + _isEven;
+
+                    controller.BuildDiagonalRoad(new Point(_cp.Location.X, _middleY), new Point(_cp2.Location.X, _middleY), _connectedLanes.Count / 2, true, true, roadOne, roadTwo);
+                }
+                else
+                {
+                    int _middleY = 0;
+                    for (int t = 0; t < _connectedLanes.Count; t++)
+                    {
+                        foreach (ConnectionPoint c in roadOne.translatedconnectPoints)
+                        {
+                            if (c.Side == _connectedLanes[t].Side && c.Place == _connectedLanes[t].Place && c.Side == "Right")
+                            {
+                                _middleY += c.Location.Y;
+                            }
+                        }
+                        _middleY += _connectedLanes[t].Location.Y;
+                    }
+                    _middleY = _middleY / (_connectedLanes.Count / 2) + _isEven;
 
                     controller.BuildDiagonalRoad(new Point(_cp.Location.X, _middleY), new Point(_cp2.Location.X, _middleY), _connectedLanes.Count / 2, true, true, roadOne, roadTwo);
                 }
@@ -194,7 +254,7 @@ namespace GreenLight
                         int x = -1;
                         foreach(ConnectionPoint c in _connectedLanes)
                         {
-                            t++;
+                            x++;
                             if (_highest == null || c.Place > _highest.Place)
                             {
                                 _highest = c;
@@ -208,7 +268,7 @@ namespace GreenLight
                         int x = -1;
                         foreach (ConnectionPoint c in _connectedLanes)
                         {
-                            t++;
+                            x++;
                             if (_lowest == null || c.Place < _lowest.Place)
                             {
                                 _lowest = c;
@@ -283,34 +343,36 @@ namespace GreenLight
             }
         }
 
-        public void CrossandStraight()
-        {
-            char _diagonalEnds;
-
-            if (roadOne.Type == "Diagonal" && temp1.Y == temp2.Y)
-            {
-                _diagonalEnds = 'h';
-            }
-            else if (roadOne.Type == "Diagonal" && temp1.X == temp2.X)
-            {
-                _diagonalEnds = 'v';
-            }
-            else if (roadTwo.Type == "Diagonal" && temp3.Y == temp4.Y)
-            {
-                _diagonalEnds = 'h';
-            }
-            else // if (roadTwo.Type == "Diagonal" && temp3.X == temp4.X)
-            {
-                _diagonalEnds = 'v';
-            }
-
-
-        }
-
         public void CrossandDiagonal()
         {
+            Console.WriteLine("Cross and Diagonal");
             char _diagonalEnds;
-            if (roadOne.Type == "Diagonal" && roadOne.slp < 1 && roadOne.slp > -1)
+            ConnectionPoint _cp = null;
+            ConnectionPoint _cpLink = null;
+            bool _buildroad = true;
+            List<ConnectionPoint> _connectedLanes = new List<ConnectionPoint>();
+            int _isEven = 0;
+            AbstractRoad _Crossroad, _Diaroad;
+            Point _Crosspoint, _Diapoint;
+
+            
+            if (roadOne.Type == "Diagonal" && temp1.Y == temp2.Y && roadOne.slp == 0)
+            {
+                _diagonalEnds = 'v';
+            }
+            else if (roadOne.Type == "Diagonal" && temp1.X == temp2.X && roadOne.slp == 0)
+            {
+                _diagonalEnds = 'h';
+            }
+            else if (roadTwo.Type == "Diagonal" && temp3.Y == temp4.Y && roadTwo.slp == 0)
+            {
+                _diagonalEnds = 'v';
+            }
+            else if (roadTwo.Type == "Diagonal" && temp3.X == temp4.X && roadTwo.slp == 0)
+            {
+                _diagonalEnds = 'h';
+            }
+            else if (roadOne.Type == "Diagonal" && roadOne.slp < 1 && roadOne.slp > -1)
             {
                 _diagonalEnds = 'v';
             }
@@ -325,6 +387,321 @@ namespace GreenLight
             else // if (roadTwo.Type == "Diagonal" && (roadTwo.slp >= 1 || roadTwo.slp <= -1))
             {
                 _diagonalEnds = 'h';
+            }
+
+            Console.WriteLine(_diagonalEnds);
+
+            if (roadOne.Type == "Cross")
+            {
+                _Crossroad = roadOne;
+                _Crosspoint = point1;
+                _Diaroad = roadTwo;
+                _Diapoint = point2;
+            }
+            else
+            {
+                _Crossroad = roadTwo;
+                _Crosspoint = point2;
+                _Diaroad = roadOne;
+                _Diapoint = point1;
+            }
+
+            foreach (ConnectionPoint x in _Crossroad.translatedconnectPoints)
+            {
+                if (_Crosspoint == x.Location)
+                {
+                    _cp = x;
+                    foreach (ConnectionPoint y in _Crossroad.connectPoints)
+                    {
+                        if (_cp.Side == y.Side && _cp.Place == y.Place)
+                        {
+                            _cpLink = y;
+                        }
+                    }
+                }
+            }
+            
+            if (((_cp.Side == "Top" || _cp.Side == "Bottom") && _diagonalEnds == 'v') || ((_cp.Side == "Left" || _cp.Side == "Right") && _diagonalEnds == 'h'))
+                return;
+
+            Console.WriteLine("CrossConnection with the same ending");
+
+            int _place, _dir, _side;
+
+            if (_cp.Side == "Top")
+            {
+                _side = 0;
+            }
+            else if (_cp.Side == "Bottom")
+            {
+                _side = _Crossroad.lanes;
+            }
+            else if (_cp.Side == "Left")
+            {
+                _side = _Crossroad.lanes * 2;
+            }
+            else
+            {
+                _side = _Crossroad.lanes * 3;
+            }
+
+            for (int t = 0; t < _Crossroad.lanes && _buildroad; t++)
+            {
+                for (int x = 0; x <= 1; x++)
+                {
+                    if (t == 0 && x == 1)
+                        break;
+
+                    if (x == 0)
+                        _dir = -1;
+                    else
+                        _dir = 1;
+
+
+                    _place = _cp.Place + t * _dir;
+                    if (_place >= 1 && _place <= _Crossroad.lanes)
+                    {
+                        if (_Crossroad.connectPoints[_place - 1 + _side].Active)
+                        {
+                            foreach(ConnectionPoint c in _Crossroad.translatedconnectPoints)
+                            {
+                                bool _found = false;
+                                if (c.Side == _Crossroad.connectPoints[_place - 1 + _side].Side && c.Place == _Crossroad.connectPoints[_place - 1 + _side].Place)
+                                {
+                                    foreach(DrivingLane d in _Diaroad.Drivinglanes)
+                                    {
+                                        if (_cp.Side == "Top" || _cp.Side == "Bottom")
+                                        {
+                                            if (Math.Abs(d.points.First().cord.Y - _Diapoint.Y) < Math.Abs(d.points.Last().cord.Y - _Diapoint.Y))
+                                            {
+                                                if (c.Location.X == d.points.First().cord.X)
+                                                {
+                                                    _connectedLanes.Add(_Crossroad.connectPoints[_place - 1 + _side]);
+                                                    foreach(CrossLane crosslane in _Crossroad.Drivinglanes)
+                                                    {
+                                                        if(crosslane.link.begin == _Crossroad.connectPoints[_place - 1 + _side])
+                                                        {
+                                                            crosslane.beginConnectedTo.Add(d);
+                                                            d.beginConnectedTo.Add(crosslane);
+                                                        }
+                                                        else if(crosslane.link.end == _Crossroad.connectPoints[_place - 1 + _side])
+                                                        {
+                                                            crosslane.endConnectedTo.Add(d);
+                                                            d.beginConnectedTo.Add(crosslane);
+                                                        }
+                                                    }
+                                                    _found = true;
+                                                    Console.WriteLine("Found for " + c.Place);
+                                                }
+                                            }
+                                            else 
+                                            {
+                                                if (c.Location.X == d.points.Last().cord.X)
+                                                {
+                                                    _connectedLanes.Add(_Crossroad.connectPoints[_place - 1 + _side]);
+                                                    foreach (CrossLane crosslane in _Crossroad.Drivinglanes)
+                                                    {
+                                                        if (crosslane.link.begin == _Crossroad.connectPoints[_place - 1 + _side])
+                                                        {
+                                                            crosslane.beginConnectedTo.Add(d);
+                                                            d.endConnectedTo.Add(crosslane);
+                                                        }
+                                                        else if (crosslane.link.end == _Crossroad.connectPoints[_place - 1 + _side])
+                                                        {
+                                                            crosslane.endConnectedTo.Add(d);
+                                                            d.endConnectedTo.Add(crosslane);
+                                                        }
+                                                    }
+                                                    _found = true;
+                                                    Console.WriteLine("Found for " + c.Place);
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (Math.Abs(d.points.First().cord.X - _Diapoint.X) < Math.Abs(d.points.Last().cord.X - _Diapoint.X))
+                                            {
+                                                if (c.Location.Y == d.points.First().cord.Y)
+                                                {
+                                                    _connectedLanes.Add(_Crossroad.connectPoints[_place - 1 + _side]);
+                                                    foreach (CrossLane crosslane in _Crossroad.Drivinglanes)
+                                                    {
+                                                        if (crosslane.link.begin == _Crossroad.connectPoints[_place - 1 + _side])
+                                                        {
+                                                            crosslane.beginConnectedTo.Add(d);
+                                                            d.beginConnectedTo.Add(crosslane);
+                                                        }
+                                                        else if (crosslane.link.end == _Crossroad.connectPoints[_place - 1 + _side])
+                                                        {
+                                                            crosslane.endConnectedTo.Add(d);
+                                                            d.beginConnectedTo.Add(crosslane);
+                                                        }
+                                                    }
+                                                    _found = true;
+                                                    Console.WriteLine("Found for " + c.Place);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (c.Location.Y == d.points.Last().cord.Y)
+                                                {
+                                                    _connectedLanes.Add(_Crossroad.connectPoints[_place - 1 + _side]);
+                                                    foreach (CrossLane crosslane in _Crossroad.Drivinglanes)
+                                                    {
+                                                        if (crosslane.link.begin == _Crossroad.connectPoints[_place - 1 + _side])
+                                                        {
+                                                            crosslane.beginConnectedTo.Add(d);
+                                                            d.endConnectedTo.Add(crosslane);
+                                                        }
+                                                        else if (crosslane.link.end == _Crossroad.connectPoints[_place - 1 + _side])
+                                                        {
+                                                            crosslane.endConnectedTo.Add(d);
+                                                            d.endConnectedTo.Add(crosslane);
+                                                        }
+                                                    }
+                                                    _found = true;
+                                                    Console.WriteLine("Found for " + c.Place);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                if (!_found)
+                                {
+                                    _buildroad = false;
+                                }
+                            }
+                        }
+                    }
+                    
+                    foreach(DrivingLane d in _Diaroad.Drivinglanes)
+                    {
+                        if (_cp.Side == "Top" || _cp.Side == "Bottom")
+                        {
+                            if (Math.Abs(d.points.First().cord.Y - _Diapoint.Y) < Math.Abs(d.points.Last().cord.Y - _Diapoint.Y))
+                            {
+                                if (d.beginConnectedTo.Count == 0)
+                                    _buildroad = false;
+                            }
+                            else
+                            {
+                                if (d.endConnectedTo.Count == 0)
+                                    _buildroad = false;
+                            }
+                        }
+                        else
+                        {
+                            if (Math.Abs(d.points.First().cord.X - _Diapoint.X) < Math.Abs(d.points.Last().cord.X - _Diapoint.X))
+                            {
+                                if (d.beginConnectedTo.Count == 0)
+                                    _buildroad = false;
+                            }
+                            else
+                            {
+                                if (d.endConnectedTo.Count == 0)
+                                    _buildroad = false;
+                            }
+                        }
+                    }
+
+                    if(_buildroad)
+                    {
+                        if (_connectedLanes.Count % 2 == 0)
+                        {
+                            _isEven = -10;
+                        }
+                        else
+                        {
+                            _isEven = 0;
+                        }
+
+                        controller.roads.Remove(_Diaroad);
+
+                        if (_cp.Side == "Top" || _cp.Side == "Bottom")
+                        {
+                            int _middleX = 0;
+                            foreach(ConnectionPoint c in _connectedLanes)
+                            {
+                                foreach (ConnectionPoint transcp in _Crossroad.translatedconnectPoints)
+                                {
+                                    if(transcp.Side == c.Side && transcp.Place == c.Place)
+                                        _middleX += transcp.Location.X;
+                                }
+                            }
+                            _middleX = (_middleX / _connectedLanes.Count) + _isEven;
+                            Console.WriteLine(_middleX + " " + _connectedLanes.Count);
+
+                            if (_Diapoint == _Diaroad.point1)
+                            {
+                                controller.BuildDiagonalRoad(new Point(_middleX, _Crosspoint.Y), _Diaroad.point2, _connectedLanes.Count, true, _Diaroad.endconnection, _Crossroad, _Diaroad.endConnectedTo);
+                            }
+                            else
+                            {
+                                controller.BuildDiagonalRoad(_Diaroad.point1, new Point(_middleX, _Crosspoint.Y), _connectedLanes.Count, _Diaroad.beginconnection, true, _Diaroad.beginConnectedTo, _Crossroad);
+                            }
+                        }
+                        else
+                        {
+                            int _middleY = 0;
+                            foreach (ConnectionPoint c in _connectedLanes)
+                            {
+                                foreach (ConnectionPoint transcp in _Crossroad.translatedconnectPoints)
+                                {
+                                    if (transcp.Side == c.Side && transcp.Place == c.Place)
+                                        _middleY += transcp.Location.Y;
+                                }
+                            }
+                            _middleY = _middleY / _connectedLanes.Count + _isEven;
+
+                            if (_Diapoint == _Diaroad.point1)
+                            {
+                                controller.BuildDiagonalRoad(new Point(_Crosspoint.X, _middleY), _Diaroad.point2, _connectedLanes.Count, true, _Diaroad.endconnection, _Crossroad, _Diaroad.endConnectedTo);
+                            }
+                            else
+                            {
+                                controller.BuildDiagonalRoad(_Diaroad.point1, new Point(_Crosspoint.Y, _middleY), _connectedLanes.Count, _Diaroad.beginconnection, true, _Diaroad.beginConnectedTo, _Crossroad);
+                            }
+                        }
+                    }
+
+                    else 
+                    {
+                        if (_Diapoint == _Diaroad.point1)
+                        {
+                            foreach (DrivingLane d in _Diaroad.Drivinglanes)
+                            {
+                                d.beginConnectedTo.Clear();
+                            }
+                            foreach(CrossLane crosslane in _Crossroad.Drivinglanes)
+                            {
+                                foreach(ConnectionPoint c in _connectedLanes)
+                                {
+                                    if (crosslane.link.begin.Side == c.Side && crosslane.link.begin.Place == c.Place)
+                                        crosslane.beginConnectedTo.Clear();
+                                    else if (crosslane.link.end.Side == c.Side && crosslane.link.end.Place == c.Place)
+                                        crosslane.endConnectedTo.Clear();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (DrivingLane d in _Diaroad.Drivinglanes)
+                            {
+                                d.endConnectedTo.Clear();
+                            }
+                            foreach (CrossLane crosslane in _Crossroad.Drivinglanes)
+                            {
+                                foreach (ConnectionPoint c in _connectedLanes)
+                                {
+                                    if (crosslane.link.begin.Side == c.Side && crosslane.link.begin.Place == c.Place)
+                                        crosslane.beginConnectedTo.Clear();
+                                    else if (crosslane.link.end.Side == c.Side && crosslane.link.end.Place == c.Place)
+                                        crosslane.endConnectedTo.Clear();
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
         }
