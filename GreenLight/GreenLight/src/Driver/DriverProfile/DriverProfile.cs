@@ -14,6 +14,7 @@ namespace GreenLight
         public double fuelUsed = 0;
         public int ticksStationary = 0;
 
+        public bool isBraking;
         public string imageFile;
         public Tuple<int, int> imageIndex;
 

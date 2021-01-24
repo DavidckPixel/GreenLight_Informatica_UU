@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
-
+using GreenLight.src.Data_Collection;
 namespace GreenLight
 {
     public partial class BetterVehicleTest : Form
@@ -36,6 +36,7 @@ namespace GreenLight
         CurvedButtons Newbutton;
 
         WorldController worldController;
+        DataController dataController;
 
         public BetterVehicleTest()
         {
@@ -51,6 +52,9 @@ namespace GreenLight
             worlds.Location = new Point(10, 10);
             worlds.Size = new Size(100, 20);
             worlds.GotFocus += UpdateWorldsList;
+
+            dataController = new DataController(pictureboxTemp);
+            dataController.Initialize();
 
             Editbutton = new CurvedButtons(new Size(70, 30), new Point(10, 100), 25, "../../User Interface Recources/Custom_Small_Button.png", "Edit", DrawData.Dosis_font_family, this, this.BackColor);
             Newbutton = new CurvedButtons(new Size(70, 30), new Point(10, 200), 25, "../../User Interface Recources/Custom_Small_Button.png", "New", DrawData.Dosis_font_family, this, this.BackColor);
@@ -135,6 +139,13 @@ namespace GreenLight
             //vehiclelist.Add(testVehicle2);
             //testAI.locationGoal = start;
 
+            dataController.collector.addVehicleToCollect(vehiclelist);
+            dataController.collector.AddBrakeData(200);
+            dataController.collector.AddBrakeData(200);
+            dataController.collector.AddBrakeData(200);
+            dataController.collector.AddBrakeData(300);
+            dataController.collector.AddBrakeData(400);
+
             //-----------------------------------
 
             pictureboxTemp.Paint += Draw;
@@ -173,6 +184,7 @@ namespace GreenLight
                 testVehicle2.hardStop = true;
 
                 profileController.PauseSimulation();
+                dataController.UpdateBrakePerTickChart();
                 this.Invalidate();
             }
 
@@ -194,6 +206,8 @@ namespace GreenLight
             }
         }
 
+        public delegate void UpdateTextCallback();
+
         private void update()
         {
             int x = 0;
@@ -201,16 +215,26 @@ namespace GreenLight
             {
                 Thread.Sleep(16);
 
+
+
                 foreach(BetterVehicle car in vehiclelist)
                 {
                     car.vehicleAI.Update();
                     car.Update();
                 }
 
+
+                if (x % 30 == 0)
+                {
+
+                    //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakeChart));
+                    //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakePerTickChart));
+                }
+
                 if (x % 60 == 0)
                 {
-                    //Console.WriteLine("SWITCH!");
                     //testVehicle2.vehicleAI.wantsToSwitch = true;
+                    this.BeginInvoke(new UpdateTextCallback(dataController.collector.CollectAllData));
                 }
 
                 x++;

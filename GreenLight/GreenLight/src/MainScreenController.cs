@@ -67,7 +67,6 @@ namespace GreenLight
             this.Active.DeActivate();
             this.Active = _controller;
             this.Active.Activate();
-            this.Active.Screen.Invalidate();
             this.form.Invalidate();
 
             Console.WriteLine("Switched and invalidated!");

@@ -76,7 +76,6 @@ namespace GreenLight
             {
                 return;
             }
-
             DistanceToCars();
 
             if (wantsToSwitch)
@@ -350,15 +349,9 @@ namespace GreenLight
         {
             double _distance = RoadMath.Distance(this.locationGoal.X, this.locationGoal.Y, this.vehicle.locationX, this.vehicle.locationY);
 
-           
             double _distanceToRoadSwitch = RoadMath.DistanceToLastLanePoint(this.currentLaneIndex, vehicle.currentLane.points);
 
             double _brakeDistance = vehicle.brakeDistance + vehicle.speed;
-
-            if (this.needsToStop)
-            {
-                //this.isBraking = true;
-            }
 
             if (_distance < _brakeDistance)
             {
@@ -539,7 +532,7 @@ namespace GreenLight
             this.SteerWheel(origin.degree);
 
             //this.locationGoal = _path.Last().Drivinglanes.First().points.Last().cord; //TEMP
-            this.locationGoal = new Point(-1000, -1000);
+            this.locationGoal = new Point(-5000, -5000);
 
             //Console.WriteLine("Origin Degreee: {0}", RoadMath.TranslateDegree(origin.degree));
             //Console.WriteLine("LanePointDistance: {0}", this.lanePointDistance);
