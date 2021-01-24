@@ -87,6 +87,13 @@ namespace GreenLight
 
             carSpawn.ValueChanged += (object o, EventArgs EA) => { carSpawn_value.Text = carSpawn.Value.ToString() + " %"; };
 
+            CurvedButtons graphWindow = new CurvedButtons(new Size(70, 30), new Point(10, 180), 25, "../../User Interface Recources/Custom_Small_Button.png", "Graph", DrawData.Dosis_font_family, null, this.BackColor);
+            graphWindow.Click += (object o, EventArgs ea) => 
+            {
+                General_Form.Main.SwitchControllers(General_Form.Main.DataScreen);
+            };
+            this.Controls.Add(graphWindow);
+
 
             /*
 
