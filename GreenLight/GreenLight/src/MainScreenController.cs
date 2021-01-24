@@ -19,13 +19,16 @@ namespace GreenLight
 {
     public class MainScreenController : ScreenController
     {
+        //public SettingScreenController SettingScreen;
         public BuildScreenController BuildScreen;
         public SimulationScreenController SimulationScreen;
         public MenuController MenuController;
         public ScreenController Active;
         public InterfaceController UserInterface;
+        
+        public static MainScreenController_Config Config;
 
-       // StreamWriter recentProjects = new StreamWriter("../../Recent_projects/Recent_projects.txt");
+        // StreamWriter recentProjects = new StreamWriter("../../Recent_projects/Recent_projects.txt");
 
         string fileName = null;
         string pathName = null;

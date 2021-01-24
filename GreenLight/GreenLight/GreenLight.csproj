@@ -75,6 +75,7 @@
     <Compile Include="src\Driver\GPS.cs" />
     <Compile Include="src\Driver\RoadMath.cs" />
     <Compile Include="src\OriginPointController.cs" />
+    <Compile Include="src\MainScreenController_Config.cs" />
     <Compile Include="src\UserControls\Start_sub_recent_projects_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -203,7 +204,7 @@
     <Compile Include="src\UserControls\Elements_sub_lights_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Elements_sub_buildings_menu.cs">
+    <Compile Include="src\UserControls\Elements_sub_settings_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <EmbeddedResource Include="HitBox_form.resx">

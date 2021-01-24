@@ -70,7 +70,7 @@ namespace GreenLight
                 for (int x = 0; x < _amountX; x++)
                 {
                     
-                    Gridpoints.Add(new Gridpoint(new Point(x * config.SpacingWidth, y * config.SpacingHeight), 5));
+                    Gridpoints.Add(new Gridpoint(new Point(x * config.SpacingWidth, y * config.SpacingHeight), config.BoxSize, config.HitSize));
                 }
             }
         }
