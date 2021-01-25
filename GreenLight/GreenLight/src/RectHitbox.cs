@@ -60,7 +60,7 @@ namespace GreenLight
             }
             else
             {
-                Console.WriteLine("??");
+                //Console.WriteLine("??");
                 rcTop = null;
                 bTop = topleftX;
             }
@@ -72,7 +72,7 @@ namespace GreenLight
             }
             else
             {
-                Console.WriteLine("??");
+                //Console.WriteLine("??");
                 rcBottom = null;
                 bBottom = bottomleftX;
             }
@@ -84,7 +84,7 @@ namespace GreenLight
             }
             else
             {
-                Console.WriteLine("??");
+                //Console.WriteLine("??");
                 rcLeft = null;
                 bLeft = bottomleftX;
             }
@@ -96,7 +96,7 @@ namespace GreenLight
             }
             else
             {
-                Console.WriteLine("??");
+                //Console.WriteLine("??");
                 rcRight = null;
                 bRight = toprightX;
             }
@@ -160,8 +160,33 @@ namespace GreenLight
             {
                 Console.WriteLine("Is checking for a Recthitbox");
                 RectHitbox box = (RectHitbox)_h;
+                List<LanePoints> _lanepoints = new List<LanePoints>();
 
-                Point boxmidTop = new Point((box.topright.X + box.topleft.X) / 2, (box.topright.Y + box.topleft.Y) / 2);
+                if(box.topleft.Y == box.topright.Y)
+                {
+                    Point boxmidTop = new Point((box.topright.X + box.topleft.X) / 2, (box.topright.Y + box.topleft.Y) / 2);
+                    Point boxmidBottom = new Point((box.bottomright.X + box.bottomleft.X) / 2, (box.bottomright.Y + box.bottomleft.Y) / 2);
+                     _lanepoints = LanePoints.CalculateDiagonalLane(boxmidTop, boxmidBottom);
+                    
+                }
+                else if (box.topleft.X == box.bottomleft.X)
+                {
+                    Point boxmidLeft = new Point((box.topleft.X + box.bottomleft.X) / 2, (box.bottomleft.Y + box.topleft.Y) / 2);
+                    Point boxmidRight = new Point((box.topright.X + box.bottomright.X) / 2, (box.bottomright.Y + box.topright.Y) / 2);
+                    _lanepoints = LanePoints.CalculateDiagonalLane(boxmidLeft, boxmidRight);
+                }
+                for (int x = 5; x < _lanepoints.Count() - 10; x += 4)
+                {
+                    _temp = this.Contains(_lanepoints[x].cord);
+
+                    if (_temp == true)
+                    {
+                        return _temp;
+                    }
+                }
+                
+
+                /*Point boxmidTop = new Point((box.topright.X + box.topleft.X) / 2, (box.topright.Y + box.topleft.Y) / 2);
                 Point boxmidTopLeft = new Point((box.topleft.X + boxmidTop.X) / 2, (box.topleft.Y + boxmidTop.Y) / 2);
                 Point boxmidTopRight = new Point((box.topright.X + boxmidTop.X) / 2, (box.topright.Y + boxmidTop.Y) / 2);
 
@@ -201,14 +226,14 @@ namespace GreenLight
                 bool midmid = (this.Contains(boxmidTopLeftMid) || this.Contains(boxmidTopRightMid) || this.Contains(boxmidBottomLeftMid) || this.Contains(boxmidBottomRightMid));
                 bool corners = (this.Contains(box.topright) || this.Contains(box.topleft) || this.Contains(box.bottomright) || this.Contains(box.bottomleft));
 
-                _temp = (top || bottom || left || right || mid || midmid || corners);
+                _temp = (top || bottom || left || right || mid || midmid || corners);*/
             }
             else if (_h.Type == "Curved")
             {
                 Console.WriteLine("Is checking for a Curvedhitbox");
                 CurvedHitbox box = (CurvedHitbox)_h;
                 List<LanePoints> _lanepoints = LanePoints.CalculateCurveLane(new Point(box.mid_startX, box.mid_startY), new Point(box.mid_endX, box.mid_endY), box.dir);
-                for (int x = 0; x < _lanepoints.Count() - 1; x += 4)
+                for (int x = 5; x < _lanepoints.Count() - 10; x += 4)
                 {
                     _temp = this.Contains(_lanepoints[x].cord);
 
@@ -218,7 +243,7 @@ namespace GreenLight
                     }
                 }
                 _temp = (this.Contains(box.max_start) || this.Contains(box.max_end) || this.Contains(box.min_end) || this.Contains(box.min_start));
-                Console.WriteLine(_h.Type);
+                //Console.WriteLine(_h.Type);
             }
 
             return _temp;
@@ -262,7 +287,7 @@ namespace GreenLight
                 topleft, topright, bottomright, bottomleft
             };
 
-            g.FillPolygon(Brushes.Red, _points);
+            g.FillPolygon(new SolidBrush(Color.FromArgb(150, Color.Red)), _points);
         }
     }
 }
