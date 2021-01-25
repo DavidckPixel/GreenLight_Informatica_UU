@@ -54,6 +54,7 @@ namespace GreenLight
         int crossRoadTimer = 0;
 
         bool needsToStop = false;
+        List<PlacedSign> signsOnRoadRead = new List<PlacedSign>();
 
         
 
@@ -86,6 +87,7 @@ namespace GreenLight
 
             InCrossRoadRange();
             crossRoadRules();
+
             NeedToBrake();
             CalculateAcceleration();
 
@@ -346,6 +348,21 @@ namespace GreenLight
             //FORALL CROSSROADS  WHERE I WILL BE IN THE HITBOX IN 30 LANEPOINTS (OR LESS) ,SET SIDE TO TRUE
         }
 
+        private void CheckForSigns()
+        {
+            List<PlacedSign> _signsOnRoad = this.vehicle.currentRoad.Signs;
+            List<PlacedSign> _inHitbox = _signsOnRoad.FindAll(x => x.Hitbox.Contains(goal.cord));
+
+            foreach(PlacedSign _selectedSign in _inHitbox)
+            {
+                if (!this.signsOnRoadRead.Contains(_selectedSign))
+                {
+                    _selectedSign.Sign.Read(this);
+                    this.signsOnRoadRead.Add(_selectedSign);
+                }
+            }
+        }
+
         public void NeedToBrake()
         {
             double _distance = RoadMath.Distance(this.locationGoal.X, this.locationGoal.Y, this.vehicle.locationX, this.vehicle.locationY);
@@ -503,6 +520,7 @@ namespace GreenLight
                 crossRoadTimer--;
             }
 
+            this.CheckForSigns();
             this.SteerWheel(origin.degree); // + 180 % 360 ?
         }
 
@@ -588,6 +606,7 @@ namespace GreenLight
             Console.WriteLine("LOCATION: {0} - {1}, GOAL: {2} - {3}", (float)vehicle.locationX, (float)vehicle.locationY, goal.cord.X, goal.cord.Y);
             Console.WriteLine("THE ANGLE OF THE SWITCH IS: {0}", angle);
 
+            this.signsOnRoadRead.Clear();
             this.SteerWheel(goal.degree);
         }
     }
