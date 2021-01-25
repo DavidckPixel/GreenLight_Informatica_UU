@@ -49,6 +49,38 @@ namespace GreenLight
 
             middle = this.points[this.points.Count() / 2]; //THIS LINE GIVES PROBLEMS WHEN MAKING CURVED ROAD 2 up or down and 2 right or left..
             AngleDir = middle.degree;
+
+            if(beginConnectedTo.Count != 0 && endConnectedTo.Count != 0)
+            {
+                List<Lane> _tempconnections = new List<Lane>();
+
+                foreach (Lane _l in beginConnectedTo)
+                    _tempconnections.Add(_l);
+
+                beginConnectedTo.Clear();
+
+                foreach (Lane _l in endConnectedTo)
+                    beginConnectedTo.Add(_l);
+
+                endConnectedTo.Clear();
+
+                foreach (Lane _l in _tempconnections)
+                    endConnectedTo.Add(_l);
+            }
+            else if(beginConnectedTo.Count != 0)
+            {
+                foreach (Lane _l in beginConnectedTo)
+                    endConnectedTo.Add(_l);
+
+                beginConnectedTo.Clear();
+            }
+            else if(endConnectedTo.Count != 0)
+            {
+                foreach (Lane _l in endConnectedTo)
+                    beginConnectedTo.Add(_l);
+
+                endConnectedTo.Clear();
+            }
         }
 
         public Pen getPen(int _side)
