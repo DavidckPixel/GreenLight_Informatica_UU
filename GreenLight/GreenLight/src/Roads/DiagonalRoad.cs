@@ -188,11 +188,18 @@ namespace GreenLight
             Point _one, _two;
             int _roadWidth = (_laneWidth * _lanes) / 2;
 
+
             if (lanes % 2 == 0 && _Roadhitbox)
             {
-                if (this.slp != 0)
+                double _slp;
+                if (one.X == two.X)
+                    _slp = 0;
+                else
+                    _slp = (double)(two.Y - one.Y) / (double)(two.X - one.X);
+
+                if (_slp != 0)
                 {
-                    if (this.slp <= -1 || this.slp >= 1)
+                    if (_slp <= -1 || _slp >= 1)
                     {
                        one.X += 10;
                        two.X += 10;
@@ -200,7 +207,7 @@ namespace GreenLight
                     else
                     {
                         one.Y += 10;
-                        two.Y += 10;
+                        two.Y += 10; 
                     }
                 }
                 else
