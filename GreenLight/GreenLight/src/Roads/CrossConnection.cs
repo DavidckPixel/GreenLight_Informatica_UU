@@ -651,7 +651,10 @@ namespace GreenLight
                             _isEven = 0;
                         }
 
-                        controller.DeleteRoad(_road);
+
+                        //controller.DeleteRoad(_road);
+
+                        controller.roads.Remove(_road);
 
                         if (_cp.Side == "Top" || _cp.Side == "Bottom")
                         {

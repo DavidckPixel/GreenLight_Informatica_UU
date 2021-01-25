@@ -107,9 +107,12 @@ namespace GreenLight
             //Console.WriteLine("build" + _beginconnection + "-----" + _endconnection);
             AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, "Diagonal", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
+
             OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point1);
             OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point2);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
+
+
             CheckLaneDirections(_road, 0);
             //Console.WriteLine(OPC.GetSpawnPoint);
         }
@@ -123,7 +126,9 @@ namespace GreenLight
             }
             AbstractRoad _temp = crossRoadController.newCrossRoad(_point1, _lanes, "CrossRoad");
             this.roads.Add(_temp);
+
 			OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point1);
+
         }
 
         public void BuildCurvedRoad(Point _point1, Point _point2, int _lanes, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
@@ -193,7 +198,9 @@ namespace GreenLight
                                 if (_beginconnection == false)
                                 {
                                     Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Dir, _road, x);
-                                 }
+
+                                }
+
                                 else 
                                 {
                                     Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
@@ -471,6 +478,7 @@ namespace GreenLight
             DisableSettingScreen();
         }
 
+
         public void DeleteRoad(AbstractRoad _deletedroad) //made public so it can be used for deleting originpoints
         {
             List<OriginPoints> OriginPointsList = General_Form.Main.BuildScreen.builder.roadBuilder.OPC.OriginPointsList;
@@ -493,6 +501,7 @@ namespace GreenLight
                     OriginPointsList.RemoveAt(o);
                 }
             }
+
 
             if (_deletedroad == this.selectedRoad)
             {
