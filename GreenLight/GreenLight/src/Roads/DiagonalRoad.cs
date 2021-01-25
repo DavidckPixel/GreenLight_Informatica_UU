@@ -191,7 +191,7 @@ namespace GreenLight
             return CreateDrivingLane(_firstPoint, _secondPoint, t);
         }
 
-        
+
 
 
         public override Hitbox CreateHitbox(Point[] _points)

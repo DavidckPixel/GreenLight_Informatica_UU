@@ -322,8 +322,10 @@ namespace GreenLight
             {
                 if (BuildScreen.builder.roadBuilder.roads != null) BuildScreen.builder.roadBuilder.roads.Clear();
                 if (BuildScreen.builder.roadBuilder.crossRoadController.roads != null) BuildScreen.builder.roadBuilder.crossRoadController.roads.Clear();
-                if (BuildScreen.builder.roadBuilder.OPC.OriginPoints != null) BuildScreen.builder.roadBuilder.OPC.OriginPoints.Clear();
-                if(BuildScreen.builder.roadBuilder.OPC.converted != null) BuildScreen.builder.roadBuilder.OPC.converted.Clear();
+
+                //if (BuildScreen.builder.roadBuilder.OPC.OriginPoints != null) BuildScreen.builder.roadBuilder.OPC.OriginPoints.Clear();
+                //if(BuildScreen.builder.roadBuilder.OPC.converted != null) BuildScreen.builder.roadBuilder.OPC.converted.Clear();
+
                 if (BuildScreen.builder.signController.Signs != null) BuildScreen.builder.signController.Signs.Clear();
             }
             catch (Exception e) { }

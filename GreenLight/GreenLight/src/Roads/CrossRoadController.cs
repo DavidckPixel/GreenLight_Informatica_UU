@@ -253,7 +253,7 @@ namespace GreenLight
         {
             if (General_Form.Main != null)
             {
-                General_Form.Main.BuildScreen.builder.roadBuilder.roads.Remove(_deletedroad);
+                General_Form.Main.BuildScreen.builder.roadBuilder.DeleteRoad(_deletedroad);
             }
 
             if (_deletedroad == this.selectedRoad)

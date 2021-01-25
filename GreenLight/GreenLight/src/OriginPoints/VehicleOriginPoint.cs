@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace GreenLight
 {
-    public class VehicleOriginPoint<Point>
+    class VehicleOriginPoint<Point>
     {
         public int Weight { get; set; }
         public Point Location { get; set; }

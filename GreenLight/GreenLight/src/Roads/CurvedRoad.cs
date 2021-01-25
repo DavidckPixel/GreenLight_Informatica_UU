@@ -55,13 +55,13 @@ namespace GreenLight
                 {
                     if (t % 2 == 0)
                     {
-                        _firstPoint.X -= (t / 2) * drivingLaneDistance;
-                        _secondPoint.Y -= (t / 2) * drivingLaneDistance;
+                        _firstPoint.X += (t / 2) * drivingLaneDistance;
+                        _secondPoint.Y += (t / 2) * drivingLaneDistance;
                     }
                     else
                     {
-                        _firstPoint.X += (t - 1) / 2 * drivingLaneDistance;
-                        _secondPoint.Y += (t - 1) / 2 * drivingLaneDistance;
+                        _firstPoint.X -= (t - 1) / 2 * drivingLaneDistance;
+                        _secondPoint.Y -= (t - 1) / 2 * drivingLaneDistance;
                     }
                 }
                 else // (lanes % 2 == 1)
@@ -84,13 +84,13 @@ namespace GreenLight
                 {
                     if (t % 2 == 0)
                     {
-                        _firstPoint.X -= (t / 2) * drivingLaneDistance;
-                        _secondPoint.Y += (t / 2) * drivingLaneDistance;
+                        _firstPoint.X += (t / 2) * drivingLaneDistance;
+                        _secondPoint.Y -= (t / 2) * drivingLaneDistance;
                     }
                     else
                     {
-                        _firstPoint.X += (t - 1) / 2 * drivingLaneDistance;
-                        _secondPoint.Y -= (t - 1) / 2 * drivingLaneDistance;
+                        _firstPoint.X -= (t - 1) / 2 * drivingLaneDistance;
+                        _secondPoint.Y += (t - 1) / 2 * drivingLaneDistance;
                     }
                 }
                 else // (lanes % 2 == 1)
