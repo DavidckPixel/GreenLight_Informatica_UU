@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using GreenLight.src.Data_Collection;
 
 namespace GreenLight
 {
     public class BetterAI
     {
+        public DriverProfile profile;
+
         float reactionSpeed;
         public float followInterval;
         int speedRelativeToLimit;
@@ -50,7 +53,6 @@ namespace GreenLight
         CrossRoad currentCrossRoad = null;
         int crossRoadTimer = 0;
 
-        bool crossroadPriority = false;
         bool needsToStop = false;
 
         
@@ -66,10 +68,15 @@ namespace GreenLight
             vehicle.vehicleAI = this;
 
             navigator = new GPS();
+            profile = new DriverProfile(this.vehicle.physics);
         }
 
         public void Update()
         {
+            if (vehicle.hardStop)
+            {
+                return;
+            }
             DistanceToCars();
 
             if (wantsToSwitch)
@@ -81,6 +88,17 @@ namespace GreenLight
             crossRoadRules();
             NeedToBrake();
             CalculateAcceleration();
+
+            UpdateProfile();
+        }
+
+        private void UpdateProfile()
+        {
+            if (this.isBraking)
+            {
+                profile.AddBreakTick();
+            }
+            profile.CalculateFuel(this.vehicle.speed);
         }
 
         public void DistanceToCars()
@@ -332,15 +350,9 @@ namespace GreenLight
         {
             double _distance = RoadMath.Distance(this.locationGoal.X, this.locationGoal.Y, this.vehicle.locationX, this.vehicle.locationY);
 
-           
             double _distanceToRoadSwitch = RoadMath.DistanceToLastLanePoint(this.currentLaneIndex, vehicle.currentLane.points);
 
             double _brakeDistance = vehicle.brakeDistance + vehicle.speed;
-
-            if (this.needsToStop)
-            {
-                //this.isBraking = true;
-            }
 
             if (_distance < _brakeDistance)
             {
@@ -521,7 +533,7 @@ namespace GreenLight
             this.SteerWheel(origin.degree);
 
             //this.locationGoal = _path.Last().Drivinglanes.First().points.Last().cord; //TEMP
-            this.locationGoal = new Point(-1000, -1000);
+            this.locationGoal = new Point(-5000, -5000);
 
             //Console.WriteLine("Origin Degreee: {0}", RoadMath.TranslateDegree(origin.degree));
             //Console.WriteLine("LanePointDistance: {0}", this.lanePointDistance);

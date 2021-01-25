@@ -20,7 +20,7 @@ namespace GreenLight
         private int _shift = 20;
 
         // The constructor method sees what kind of roads have to be connected and calls another method accordingly. 
-        public Connection(Point _point1, Point _point2, int _lanes, string _dir, string _dir2, AbstractRoad _roadOne, AbstractRoad _roadTwo, int _count)
+        public Connection(Point _point1, Point _point2, int _lanes, string _dir, string _dir2, AbstractRoad _roadOne, AbstractRoad _roadTwo)
         {
             
             //Console.WriteLine("-- Connection --");
@@ -144,8 +144,9 @@ namespace GreenLight
         public void StraightandStraight(Point _point1, Point _point2, int _lanes, Point _temp1, Point _temp2, Point _temp3, Point _temp4, AbstractRoad _roadOne, AbstractRoad _roadTwo, char _roadOneEnds, char _roadTwoEnds)
         {
             RoadController _controller = General_Form.Main.BuildScreen.builder.roadBuilder;
-            _controller.roads.Remove(_roadOne);
-            _controller.roads.Remove(_roadTwo);
+            
+            _controller.DeleteRoad(_roadOne);
+            _controller.DeleteRoad(_roadTwo);                       
 
             string _curvedType = "Curved";
             if (_roadOne.slp == _roadTwo.slp && _roadOne.slp == 0)
@@ -345,7 +346,7 @@ namespace GreenLight
                     _beginConnectedTo = _roadTwo;
                     _endConnectedTo = _roadOne.endConnectedTo;
                     //Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    _controller.roads.Remove(_roadOne);
+                    _controller.DeleteRoad(_roadOne);
                     _controller.BuildDiagonalRoad(new Point(_temp1.X + _distance * _direction, _temp1.Y), _temp2, _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
 
                 }
@@ -367,7 +368,7 @@ namespace GreenLight
                     _beginConnectedTo = _roadOne.beginConnectedTo;
                     _endConnectedTo = _roadTwo;
                     //Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    _controller.roads.Remove(_roadOne);
+                    _controller.DeleteRoad(_roadOne);
                     _controller.BuildDiagonalRoad(_temp1, new Point(_temp2.X + _distance * _direction, _temp2.Y), _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
 
                 }
@@ -389,7 +390,7 @@ namespace GreenLight
                     _beginConnectedTo = _roadOne;
                     _endConnectedTo = _roadTwo.endConnectedTo;
                     //Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    _controller.roads.Remove(_roadTwo);
+                    _controller.DeleteRoad(_roadTwo);
                     _controller.BuildDiagonalRoad(new Point(_temp3.X + _distance * _direction, _temp3.Y), _temp4, _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                 }
                 else
@@ -410,7 +411,7 @@ namespace GreenLight
                     _beginConnectedTo = _roadTwo.beginConnectedTo;
                     _endConnectedTo = _roadOne;
                     //Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    _controller.roads.Remove(_roadTwo);
+                    _controller.DeleteRoad(_roadTwo);
                     _controller.BuildDiagonalRoad(_temp3, new Point(_temp4.X + _distance * _direction, _temp4.Y), _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                 }
             }
@@ -439,7 +440,7 @@ namespace GreenLight
                     _beginConnectedTo = _roadTwo;
                     _endConnectedTo = _roadOne.endConnectedTo;
                     //Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    _controller.roads.Remove(_roadOne);
+                    _controller.DeleteRoad(_roadOne);
                     _controller.BuildDiagonalRoad(new Point(_temp1.X, _temp1.Y + _distance * _direction), _temp2, _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                 }
                 else if (_roadOne.slp == 0 && Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) > Math.Sqrt(Math.Pow(_point1.X - _temp2.X, 2) + Math.Pow(_point1.Y - _temp2.Y, 2)))
@@ -460,7 +461,7 @@ namespace GreenLight
                     _beginConnectedTo = _roadOne.beginConnectedTo;
                     _endConnectedTo = _roadTwo;
                     //Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    _controller.roads.Remove(_roadOne);
+                    _controller.DeleteRoad(_roadOne);
                     _controller.BuildDiagonalRoad(_temp1, new Point(_temp2.X, _temp2.Y + _distance * _direction), _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                 }
                 else if (_roadTwo.slp == 0 && Math.Sqrt(Math.Pow(_point2.X - _temp3.X, 2) + Math.Pow(_point2.Y - _temp3.Y, 2)) < Math.Sqrt(Math.Pow(_point2.X - _temp4.X, 2) + Math.Pow(_point2.Y - _temp4.Y, 2)))
@@ -481,7 +482,7 @@ namespace GreenLight
                     _beginConnectedTo = _roadOne;
                     _endConnectedTo = _roadTwo.endConnectedTo;
                     //Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    _controller.roads.Remove(_roadTwo);
+                    _controller.DeleteRoad(_roadTwo);
                     _controller.BuildDiagonalRoad(new Point(_temp3.X, _temp3.Y + _distance * _direction), _temp4, _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                 }
                 else
@@ -502,7 +503,7 @@ namespace GreenLight
                     _beginConnectedTo = _roadTwo.beginConnectedTo;
                     _endConnectedTo = _roadOne;
                     //Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                    _controller.roads.Remove(_roadTwo);
+                    _controller.DeleteRoad(_roadTwo);
                     _controller.BuildDiagonalRoad(_temp3, new Point(_temp4.X, _temp4.Y + _distance * _direction), _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                 }
             }
@@ -511,8 +512,8 @@ namespace GreenLight
 
             else if (_roadOneEnds == 'h' && _roadTwoEnds == 'v')
             {
-                _controller.roads.Remove(_roadOne);
-                _controller.roads.Remove(_roadTwo);
+                _controller.DeleteRoad(_roadOne);
+                _controller.DeleteRoad(_roadTwo);
                 Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
 
                 if (_roadOne.slp == 0)
@@ -657,8 +658,8 @@ namespace GreenLight
 
             else if (_roadOneEnds == 'v' && _roadTwoEnds == 'h')
             {
-                _controller.roads.Remove(_roadOne);
-                _controller.roads.Remove(_roadTwo);
+                _controller.DeleteRoad(_roadOne);
+                _controller.DeleteRoad(_roadTwo);
                 Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
 
                 if (_roadTwo.slp == 0)
@@ -830,7 +831,7 @@ namespace GreenLight
 
                     //Console.WriteLine(_beginconnection + "---------" + _endconnection);
 
-                    _controller.roads.Remove(_roadOne);
+                    _controller.DeleteRoad(_roadOne);
                     _controller.BuildDiagonalRoad(new Point(_point2.X + _direction, _point2.Y), _temp2, _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                 }
                 else
@@ -848,7 +849,7 @@ namespace GreenLight
 
                     //Console.WriteLine(_beginconnection + "---------" + _endconnection);
 
-                    _controller.roads.Remove(_roadOne);
+                    _controller.DeleteRoad(_roadOne);
                     _controller.BuildDiagonalRoad(_temp1, new Point(_point2.X + _direction, _point2.Y), _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                 }
             }
@@ -870,7 +871,7 @@ namespace GreenLight
 
                     //Console.WriteLine(_beginconnection + "---------" + _endconnection);
 
-                    _controller.roads.Remove(_roadOne);
+                    _controller.DeleteRoad(_roadOne);
                     _controller.BuildDiagonalRoad(new Point(_point2.X, _point2.Y + _direction), _temp2, _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                 }
                 else
@@ -888,7 +889,7 @@ namespace GreenLight
 
                     //Console.WriteLine(_beginconnection + "---------" + _endconnection);
 
-                    _controller.roads.Remove(_roadOne);
+                    _controller.DeleteRoad(_roadOne);
                     _controller.BuildDiagonalRoad(_temp1, new Point(_point2.X, _point2.Y + _direction), _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                 }
             }
@@ -898,8 +899,8 @@ namespace GreenLight
 
             else if (_roadOneEnds == 'v' && _roadTwoEnds == 'h')
             {
-                _controller.roads.Remove(_roadOne);
-                _controller.roads.Remove(_roadTwo);
+                _controller.DeleteRoad(_roadOne);
+                _controller.DeleteRoad(_roadTwo);
                 Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
                 string _curveType = "Curved";
 
@@ -1041,8 +1042,8 @@ namespace GreenLight
 
             else if (_roadOneEnds == 'h' && _roadTwoEnds == 'v')
             {
-                _controller.roads.Remove(_roadOne);
-                _controller.roads.Remove(_roadTwo);
+                _controller.DeleteRoad(_roadOne);
+                _controller.DeleteRoad(_roadTwo);
                 Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
                 string _curveType = "Curved";
 
@@ -1223,7 +1224,7 @@ namespace GreenLight
                             _endConnectedTo = _roadOne.endConnectedTo;
 
                             //Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                            _controller.roads.Remove(_roadOne);
+                            _controller.DeleteRoad(_roadOne);
                             _controller.BuildCurvedRoad(new Point(_temp1.X + (int)(_distance * _direction), _temp1.Y), _temp2, _lanes, _roadOne.Type, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                         }
                         else if (Math.Abs(_temp1.X - _point1.X) > Math.Abs(_temp2.X - _point1.X))
@@ -1240,7 +1241,7 @@ namespace GreenLight
                             _endConnectedTo = _roadTwo;
 
                             //Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                            _controller.roads.Remove(_roadOne);
+                            _controller.DeleteRoad(_roadOne);
                             _controller.BuildCurvedRoad(_temp1, new Point(_temp2.X + (int)(_distance * _direction), _temp2.Y), _lanes, _roadOne.Type, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                         }
                     }
@@ -1266,7 +1267,7 @@ namespace GreenLight
                             _endConnectedTo = _roadOne.endConnectedTo;
 
                             //Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                            _controller.roads.Remove(_roadOne);
+                            _controller.DeleteRoad(_roadOne);
                             _controller.BuildCurvedRoad(new Point(_temp1.X, _temp1.Y + (int)(_distance * _direction)), _temp2, _lanes, _roadOne.Type, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                         }
                         else if (Math.Abs(_temp1.Y - _point1.Y) > Math.Abs(_temp2.Y - _point1.Y))
@@ -1283,7 +1284,7 @@ namespace GreenLight
                             _endConnectedTo = _roadTwo;
 
                             //Console.WriteLine(_beginconnection + "---------" + _endconnection);
-                            _controller.roads.Remove(_roadOne);
+                            _controller.DeleteRoad(_roadOne);
                             _controller.BuildCurvedRoad(_temp1, new Point(_temp2.X, _temp2.Y + (int)(_distance * _direction)), _lanes, _roadOne.Type, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                         }
                     }
@@ -1296,8 +1297,8 @@ namespace GreenLight
             {
                 if (_roadOneEnds == 'v' && _roadTwoEnds == 'h')
                 {
-                    _controller.roads.Remove(_roadOne);
-                    _controller.roads.Remove(_roadTwo);
+                    _controller.DeleteRoad(_roadOne);
+                    _controller.DeleteRoad(_roadTwo);
                     Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
                     string _curveType = "Curved";
 
@@ -1376,8 +1377,8 @@ namespace GreenLight
                 }
                 else if (_roadOneEnds == 'h' && _roadTwoEnds == 'v')
                 {
-                    _controller.roads.Remove(_roadOne);
-                    _controller.roads.Remove(_roadTwo);
+                    _controller.DeleteRoad(_roadOne);
+                    _controller.DeleteRoad(_roadTwo);
                     Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
                     string _curveType = "Curved";
 
@@ -1488,7 +1489,7 @@ namespace GreenLight
 
                         //Console.WriteLine(_beginconnection + "---------" + _endconnection);
 
-                        _controller.roads.Remove(_roadOne);
+                        _controller.DeleteRoad(_roadOne);
                         _controller.BuildDiagonalRoad(new Point(_point2.X + _direction, _point2.Y), _temp2, _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                     }
                     else
@@ -1506,7 +1507,7 @@ namespace GreenLight
 
                         //Console.WriteLine(_beginconnection + "---------" + _endconnection);
 
-                        _controller.roads.Remove(_roadOne);
+                        _controller.DeleteRoad(_roadOne);
                         _controller.BuildDiagonalRoad(_temp1, new Point(_point2.X + _direction, _point2.Y), _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                     }
                 }
@@ -1528,7 +1529,7 @@ namespace GreenLight
 
                         //Console.WriteLine(_beginconnection + "---------" + _endconnection);
 
-                        _controller.roads.Remove(_roadOne);
+                        _controller.DeleteRoad(_roadOne);
                         _controller.BuildDiagonalRoad(new Point(_point2.X, _point2.Y + _direction), _temp2, _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                     }
                     else
@@ -1546,7 +1547,7 @@ namespace GreenLight
 
                         //Console.WriteLine(_beginconnection + "---------" + _endconnection);
 
-                        _controller.roads.Remove(_roadOne);
+                        _controller.DeleteRoad(_roadOne);
                         _controller.BuildDiagonalRoad(_temp1, new Point(_point2.X, _point2.Y + _direction), _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                     }
                 }
@@ -1555,8 +1556,8 @@ namespace GreenLight
 
                 else if (_roadOneEnds == 'v' && _roadTwoEnds == 'h')
                 {
-                    _controller.roads.Remove(_roadOne);
-                    _controller.roads.Remove(_roadTwo);
+                    _controller.DeleteRoad(_roadOne);
+                    _controller.DeleteRoad(_roadTwo);
                     Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
                     string _curveType = "Curved";
 
@@ -1668,8 +1669,8 @@ namespace GreenLight
 
                 else if (_roadOneEnds == 'h' && _roadTwoEnds == 'v')
                 {
-                    _controller.roads.Remove(_roadOne);
-                    _controller.roads.Remove(_roadTwo);
+                    _controller.DeleteRoad(_roadOne);
+                    _controller.DeleteRoad(_roadTwo);
                     Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
                     string _curveType = "Curved";
 
@@ -1809,7 +1810,7 @@ namespace GreenLight
 
                         //Console.WriteLine(_beginconnection + "---------" + _endconnection);
 
-                        _controller.roads.Remove(_roadTwo);
+                        _controller.DeleteRoad(_roadTwo);
                         _controller.BuildDiagonalRoad(new Point(_point1.X + _direction, _point1.Y), _temp4, _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                     }
                     else
@@ -1827,7 +1828,7 @@ namespace GreenLight
 
                         //Console.WriteLine(_beginconnection + "---------" + _endconnection);
 
-                        _controller.roads.Remove(_roadTwo);
+                        _controller.DeleteRoad(_roadTwo);
                         _controller.BuildDiagonalRoad(_temp3, new Point(_point1.X + _direction, _point1.Y), _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                     }
                 }
@@ -1849,7 +1850,7 @@ namespace GreenLight
 
                         //Console.WriteLine(_beginconnection + "---------" + _endconnection);
 
-                        _controller.roads.Remove(_roadTwo);
+                        _controller.DeleteRoad(_roadTwo);
                         _controller.BuildDiagonalRoad(new Point(_point1.X, _point1.Y + _direction), _temp4, _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                     }
                     else
@@ -1867,7 +1868,7 @@ namespace GreenLight
 
                         //Console.WriteLine(_beginconnection + "---------" + _endconnection);
 
-                        _controller.roads.Remove(_roadTwo);
+                        _controller.DeleteRoad(_roadTwo);
                         _controller.BuildDiagonalRoad(_temp3, new Point(_point1.X, _point1.Y + _direction), _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                     }
                 }
@@ -1876,8 +1877,8 @@ namespace GreenLight
 
                 else if (_roadOneEnds == 'v' && _roadTwoEnds == 'h')
                 {
-                    _controller.roads.Remove(_roadOne);
-                    _controller.roads.Remove(_roadTwo);
+                    _controller.DeleteRoad(_roadOne);
+                    _controller.DeleteRoad(_roadTwo);
                     Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
                     string _curveType = "Curved";
 
@@ -1988,8 +1989,8 @@ namespace GreenLight
 
                 else if (_roadOneEnds == 'h' && _roadTwoEnds == 'v')
                 {
-                    _controller.roads.Remove(_roadOne);
-                    _controller.roads.Remove(_roadTwo);
+                    _controller.DeleteRoad(_roadOne);
+                    _controller.DeleteRoad(_roadTwo);
                     Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
                     string _curveType = "Curved";
 

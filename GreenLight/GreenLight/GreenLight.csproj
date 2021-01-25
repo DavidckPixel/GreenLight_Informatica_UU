@@ -12,6 +12,21 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -42,6 +57,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,6 +81,17 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\CurvedHitbox.cs" />
+    <Compile Include="src\Data Collection\Data.cs" />
+    <Compile Include="src\Data Collection\DataCollector.cs" />
+    <Compile Include="src\Data Collection\DataController.cs" />
+    <Compile Include="src\Data Collection\DataScreen.cs" />
+    <Compile Include="src\Data Collection\DataTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Data Collection\DataTestForm.Designer.cs">
+      <DependentUpon>DataTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Driver\AITypeConfig.cs" />
     <Compile Include="src\Driver\BetterAI.cs" />
     <Compile Include="src\Driver\BetterVehicle.cs" />
     <Compile Include="src\Driver\BetterVehicleTest.cs">
@@ -71,16 +100,34 @@
     <Compile Include="src\Driver\BetterVehicleTest.Designer.cs">
       <DependentUpon>BetterVehicleTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Driver\Dijkstra.cs" />
+    <Compile Include="src\Driver\DriverProfile\DriverProfile.cs" />
+    <Compile Include="src\Driver\DriverProfile\DriverProfileController.cs" />
+    <Compile Include="src\Driver\DriverProfile\DriverProfileData.cs" />
+    <Compile Include="src\Driver\DriverProfile\DriverProfileFace.cs" />
     <Compile Include="src\Driver\GPS.cs" />
     <Compile Include="src\Driver\RoadMath.cs" />
-    <Compile Include="src\OriginPointController.cs" />
-
+    <Compile Include="src\Driver\VehicleProfile.cs" />
+    <Compile Include="src\Grid\Grid.cs" />
+    <Compile Include="src\Roads\CrossConnection.cs" />
+    <Compile Include="src\OriginPoints\OriginPointController.cs" />
+    <Compile Include="src\OriginPoints\OriginPoints.cs" />
+    <Compile Include="src\OriginPoints\OriginPointsConfig.cs" />
+    <Compile Include="src\OriginPoints\VehicleOriginPoint.cs" />
     <Compile Include="src\Roads\CrossRoadSide.cs" />
-
     <Compile Include="src\Roads\Roads.cs" />
     <Compile Include="src\Roads\RoadsConfig.cs" />
-
-    <Compile Include="src\VehicleOriginPoint.cs" />
+    <Compile Include="src\UserControls\Data_sub_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\MainScreenController_Config.cs" />
+    <Compile Include="src\UserControls\Start_sub_recent_projects_menu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\UserControls\Data_sub_menu.Designer.cs">
+      <DependentUpon>Data_sub_menu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\UserControls\Start_sub_recent_projects_menu.cs" />
     <Compile Include="src\DrawData.cs" />
     <Compile Include="src\Driver\DriverStats.cs" />
     <Compile Include="src\Hitbox.cs" />
@@ -161,6 +208,7 @@
     <Compile Include="src\Vehicle\VehicleTypeConfig.cs" />
     <Compile Include="src\Vehicle\World.cs" />
     <Compile Include="src\Vehicle\WorldConfig.cs" />
+    <Compile Include="src\Vehicle\WorldController.cs" />
     <Compile Include="Startup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -205,7 +253,7 @@
     <Compile Include="src\UserControls\Elements_sub_lights_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Elements_sub_buildings_menu.cs">
+    <Compile Include="src\UserControls\Elements_sub_settings_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <EmbeddedResource Include="HitBox_form.resx">
@@ -247,8 +295,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="src\Driver\DriverType.json" />
+    <None Include="src\Driver\DriverProfile\faces.json" />
     <None Include="src\Grid\GridConfig.json" />
     <None Include="src\Logs\LogConfig.json" />
+    <None Include="src\OriginPoints\OriginPoints.json" />
     <None Include="src\Roads\RoadsConfig.json" />
     <None Include="src\UserControls\UserControlsConfig.json" />
     <None Include="src\Vehicle\Earth.json" />
@@ -258,8 +308,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DataDump\" />
     <Folder Include="Fonts\" />
     <Folder Include="Logs\" />
+    <Folder Include="src\Driver\DriverProfile\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documentation\BugReport Document.txt" />
@@ -268,6 +320,8 @@
     <Content Include="Images\BetterCar.png" />
     <Content Include="Images\BigCar.png" />
     <Content Include="Images\Car.png" />
+    <Content Include="Recent_projects\Images\Cross.png" />
+    <Content Include="Recent_projects\Recent_projects.txt" />
     <Content Include="User Interface Recources\CurveButton.png" />
     <Content Include="User Interface Recources\CurveButton_On_Hover.png" />
     <Content Include="User Interface Recources\CurveHollowButton.png" />
@@ -280,6 +334,18 @@
     <None Include="Images\Road_Verticaal.png" />
     <None Include="Images\Transparent-Lane.png" />
     <None Include="Images\Lane.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

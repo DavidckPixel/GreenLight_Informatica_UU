@@ -15,9 +15,6 @@ namespace GreenLight
 
     public class CrossRoad : AbstractRoad
     {
-        public List<ConnectionPoint> connectPoints = new List<ConnectionPoint>();
-        public List<ConnectionLink> connectLinks = new List<ConnectionLink>();
-
         public ConnectionPoint selectedPoint;
         public double Scale;
         public int Extra;
@@ -30,17 +27,13 @@ namespace GreenLight
 
         public CrossRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, _roadtype, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
-
             Extra = Roads.Config.crossroadExtra;
-            Point[] _points = hitBoxPoints(_point1, _point1, _lanes, Roads.Config.laneWidth);
+            Point[] _points = hitBoxPoints(_point1, _point1, _lanes, Roads.Config.laneWidth, false);
             hitbox = CreateHitbox(_points);
 
             int _width = (_lanes) * this.laneWidth + Roads.Config.scaleOffset * 2 + 2 * Extra;
             Scale = 500 / (double)_width;
             this.Type = _roadtype;
-            
-
-
 
             createConnectionPoints();
             SwitchSelectedPoint(connectPoints.First());
@@ -50,6 +43,75 @@ namespace GreenLight
             this.sides[1] = new CrossRoadSide(new RectHitbox(new Point(_points[2].X, _points[2].Y - 20), new Point(_points[3].X, _points[3].Y - 20), _points[2], _points[3],Color.Green));
             this.sides[2] = new CrossRoadSide(new RectHitbox(new Point(point1.X + (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2)), new Point(point1.X + (int)(lanewidth / 2) + 20, point1.Y - (int)(lanewidth / 2)), new Point(point1.X + (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2) + (int)(lanewidth)), new Point(point1.X + (int)(lanewidth / 2) + 20, point1.Y - (int)(lanewidth / 2) + (int)lanewidth), Color.Green));
             this.sides[3] = new CrossRoadSide(new RectHitbox(_points[0], _points[1], new Point(_points[0].X, _points[0].Y + 20), new Point(_points[1].X, _points[1].Y + 20), Color.Green));
+        }
+
+        public void CreateArrowImages()
+        {
+            foreach (ConnectionPoint _point in this.connectPoints) //MOVE TO A MORE SENSICAL PLACE
+            {
+                Bitmap _combined = new Bitmap(20, 20);
+
+                bool[] roads = new bool[4] { false, false, false, false };
+                string[] dir = new string[4] { "Top", "Right", "Bottom", "Left" };
+                List<ConnectionLink> _connectedlinks = this.connectLinks.FindAll(x => x.begin == _point);
+
+                int _curIndex = dir.ToList().IndexOf(_point.Side);
+
+                foreach (ConnectionLink _link in _connectedlinks)
+                {
+                    int _linkIndex = dir.ToList().IndexOf(_link.end.Side);
+                    int _diffIndex = _linkIndex - _curIndex;
+
+                    if (Math.Abs(_diffIndex) == 2)
+                    {
+                        roads[2] = true;
+                    }
+                    else if (_diffIndex == -1 || _diffIndex == 3)
+                    {
+                        roads[1] = true;
+                    }
+                    else if (_diffIndex == 1 || _diffIndex == -3)
+                    {
+                        roads[3] = true;
+                    }
+                }
+
+                using (Graphics g = Graphics.FromImage(_combined))
+                {
+                    if (roads[3])
+                    {
+                        g.DrawImage(new Bitmap("../../Images/Left.png"), Point.Empty);
+                    }
+                    if (roads[2])
+                    {
+                        g.DrawImage(new Bitmap("../../Images/Up.png"), Point.Empty);
+                    }
+                    if (roads[1])
+                    {
+                        g.DrawImage(new Bitmap("../../Images/Right.png"), Point.Empty);
+                    }
+                    if (_point.end)
+                    {
+                        _point.arrowImg = new Bitmap("../../Images/non.png");
+                    }
+                }
+
+                switch (_point.Side)
+                {
+                    case "Top":
+                        _combined = DrawData.RotateImage(_combined, 180);
+                        break;
+                    case "Left":
+                        _combined = DrawData.RotateImage(_combined, 90);
+                        break;
+                    case "Right":
+                        _combined = DrawData.RotateImage(_combined, 270);
+                        break;
+                }
+
+                _point.arrowImg = _combined;
+
+            }
         }
 
         public override Hitbox CreateHitbox(Point[] _array)
@@ -81,8 +143,7 @@ namespace GreenLight
             }
 
         }
-
-        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth)
+        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _RoadhitBox)
         {
             Point[] _points = new Point[4];
 
@@ -102,9 +163,9 @@ namespace GreenLight
         private void createConnectionPoints()
         {
             int Width = (int)((500 - ((this.lanes * this.laneWidth) + 2 * Extra) * this.Scale));
-            Console.WriteLine(Width);
-            Console.WriteLine(this.Scale);
-            Console.WriteLine(this.laneWidth);
+            //Console.WriteLine(Width);
+            //Console.WriteLine(this.Scale);
+            //Console.WriteLine(this.laneWidth);
 
             createConnectionPointSide(new Point((int)(Width + (Extra + this.laneWidth) / 2 * this.Scale), (int)(Width)), 1, 0, "Top");
             createConnectionPointSide(new Point((int)(Width + (Extra + this.laneWidth) / 2 * this.Scale), (int)(Width+ ((lanes * this.laneWidth + Extra) * this.Scale))), 1, 0, "Bottom");
@@ -117,13 +178,13 @@ namespace GreenLight
         {
             for(int x = 0; x < this.lanes; x++)
             {
-                connectPoints.Add(new ConnectionPoint(new Point(_loc.X + (int)(this.laneWidth * this.Scale) * x * _X, _loc.Y + (int)(this.laneWidth * this.Scale) * x * _Y), _side, this.Scale));
+                connectPoints.Add(new ConnectionPoint(new Point(_loc.X + (int)(20 * this.Scale) * x * _X, _loc.Y + (int)(20 * this.Scale) * x * _Y), _side, this.Scale, x + 1));
             }
         }
 
         public override void Draw(Graphics g)
         {
-            Brush _b = new SolidBrush(Color.FromArgb(21, 21, 21));
+            Brush _b = new SolidBrush(Color.FromArgb(100, 100, 100));
             
             double roadWidth = (double)this.lanes * this.laneWidth;
 
@@ -132,22 +193,34 @@ namespace GreenLight
             DrawSides(g, "Right", new Point(point1.X + (int)(roadWidth / 2), point1.Y - (int)(roadWidth / 2)), new Size(Extra, (int)(roadWidth)), _b);
             DrawSides(g, "Left", new Point(point1.X - (int)(roadWidth / 2) - Extra, point1.Y - (int)(roadWidth / 2)), new Size(Extra, (int)(roadWidth)), _b);
             DrawSides(g, "Bottom", new Point(point1.X - (int)(roadWidth / 2), point1.Y + (int)(roadWidth / 2)), new Size((int)roadWidth, Extra), _b);
-
             DrawLine(g);
             this.hitbox.Draw(g);
 
+            foreach(ConnectionPoint _point in this.connectPoints)
+            {
+                g.DrawImage(_point.arrowImg, new Point(_point.transLocation.X - 10, _point.transLocation.Y - 10));
+            }
+
+            /*
             for(int x = 0; x < 4; x++)
             {
                 this.sides[x].hitbox.Draw(g);
+            }
+            */
+            foreach (ConnectionPoint x in connectPoints)
+            {
+                if (x.Active)
+                {
+                   // g.FillRectangle(Brushes.Red, x.Location.X, x.Location.Y, 10, 10);
+                }
             }
         }
 
         public void DrawSides(Graphics g, string _side, Point _topleft, Size _size, Brush _b)
         {
-            if (!this.connectPoints.Any(x => x.Side == _side && x.Active == false))
-            {
-                g.FillRectangle(_b, new Rectangle(_topleft, _size));
-            }
+            List<ConnectionPoint> _pointOnSide = this.connectPoints.FindAll(x => x.Side == _side);
+            if (!_pointOnSide.All(x => x.Active == false))
+                 g.FillRectangle(_b, new Rectangle(_topleft, _size));
         }
     }
 }

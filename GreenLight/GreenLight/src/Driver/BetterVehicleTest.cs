@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using GreenLight.src.Data_Collection;
 
 namespace GreenLight
 {
@@ -29,17 +30,50 @@ namespace GreenLight
         PictureBox pictureboxTemp;
 
         CrossRoadController controller;
+        DriverProfileController profileController;
+
+        ListBox worlds;
+        CurvedButtons Editbutton;
+        CurvedButtons Newbutton;
+
+        WorldController worldController;
+        DataController dataController;
 
         public BetterVehicleTest()
         {
-
             pictureboxTemp = new PictureBox();
             pictureboxTemp.Size = new Size(1000, 1000);
             pictureboxTemp.Location = new Point(0, 0);
 
+            worldController = new WorldController();
+            worldController.Initialize();
+
+            worlds = new ListBox();
+            WorldConfig.physics.ForEach(x => worlds.Items.Add(x));
+            worlds.Location = new Point(10, 10);
+            worlds.Size = new Size(100, 20);
+            worlds.GotFocus += UpdateWorldsList;
+
+            dataController = new DataController(pictureboxTemp);
+            dataController.Initialize();
+
+            Editbutton = new CurvedButtons(new Size(70, 30), new Point(10, 100), 25, "../../User Interface Recources/Custom_Small_Button.png", "Edit", DrawData.Dosis_font_family, this, this.BackColor);
+            Newbutton = new CurvedButtons(new Size(70, 30), new Point(10, 200), 25, "../../User Interface Recources/Custom_Small_Button.png", "New", DrawData.Dosis_font_family, this, this.BackColor);
+
+            Editbutton.Click += EditClick;
+            Newbutton.Click += NewClick;
+
+            pictureboxTemp.Controls.Add(worlds);
+            pictureboxTemp.Controls.Add(Editbutton);
+            pictureboxTemp.Controls.Add(Newbutton);
+
             this.Controls.Add(pictureboxTemp);
 
             this.controller = new CrossRoadController(pictureboxTemp);
+            this.profileController = new DriverProfileController(pictureboxTemp);
+
+            this.profileController.Initialize();
+
 
             this.Size = new Size(1000, 1000);
 
@@ -77,8 +111,8 @@ namespace GreenLight
 
              
 
-            VehicleStats vehicleStats = new VehicleStats("test", 1352, (float)4.77, 61, 4223, (float)2.65, (float)0.35);
-            DriverStats driverStats = new DriverStats("David", 2.0f, 2.0f, 2, 2.0f);
+            VehicleStats vehicleStats = new VehicleStats("test", 1352, (float)4.77, 61, 4223, (float)2.65, (float)0.35, false, 1);
+            DriverStats driverStats = new DriverStats("David", 2.0f, 2.0f, 2, 2.0f, 50, false);
 
             testVehicle = new BetterVehicle(vehicleStats, new Point(300,450));
             testAI = new BetterAI(driverStats, testVehicle);
@@ -106,6 +140,13 @@ namespace GreenLight
             //vehiclelist.Add(testVehicle2);
             //testAI.locationGoal = start;
 
+            dataController.collector.addVehicleToCollect(vehiclelist);
+            dataController.collector.AddBrakeData(200);
+            dataController.collector.AddBrakeData(200);
+            dataController.collector.AddBrakeData(200);
+            dataController.collector.AddBrakeData(300);
+            dataController.collector.AddBrakeData(400);
+
             //-----------------------------------
 
             pictureboxTemp.Paint += Draw;
@@ -118,10 +159,44 @@ namespace GreenLight
             _update.Start();
         }
 
+        private void UpdateWorldsList(object o, EventArgs ea)
+        {
+            worlds.Items.Clear();
+            WorldConfig.physics.ForEach(x => worlds.Items.Add(x));
+        }
+
+        private void EditClick(object o, EventArgs ea)
+        {
+            worldController.EditWorld((World)worlds.SelectedItem);
+        }
+
+        private void NewClick(object o, EventArgs ea)
+        {
+            worldController.CreateNewWorld();
+        }
+
         private void click(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("set the targetspeed!!");
+            profileController.OnClick(e.Location);
+            dataController.ExportData("Test1");
 
+            if (!profileController.simulationPaused)
+            {
+                testVehicle.hardStop = true;
+                testVehicle2.hardStop = true;
+
+                profileController.PauseSimulation();
+                //dataController.UpdateBrakePerTickChart();
+                this.Invalidate();
+            }
+
+            if(e.Button == MouseButtons.Right)
+            {
+                testVehicle.hardStop = false;
+                testVehicle2.hardStop = false;
+
+                profileController.UnPauseSimulation();
+            }
         }
 
         private void simulation()
@@ -133,6 +208,8 @@ namespace GreenLight
             }
         }
 
+        public delegate void UpdateTextCallback();
+
         private void update()
         {
             int x = 0;
@@ -140,16 +217,26 @@ namespace GreenLight
             {
                 Thread.Sleep(16);
 
+
+
                 foreach(BetterVehicle car in vehiclelist)
                 {
                     car.vehicleAI.Update();
                     car.Update();
                 }
 
+
+                if (x % 30 == 0)
+                {
+
+                    //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakeChart));
+                    //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakePerTickChart));
+                }
+
                 if (x % 60 == 0)
                 {
-                    //Console.WriteLine("SWITCH!");
                     //testVehicle2.vehicleAI.wantsToSwitch = true;
+                    this.BeginInvoke(new UpdateTextCallback(dataController.collector.CollectAllData));
                 }
 
                 x++;
@@ -168,6 +255,10 @@ namespace GreenLight
             foreach (BetterVehicle car in vehiclelist)
             {
                 car.Draw(g);
+                if (profileController.simulationPaused)
+                {
+                    car.hitbox.Draw(g);
+                }
             }
 
         }

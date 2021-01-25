@@ -17,11 +17,12 @@ namespace GreenLight
 {
     public class BuilderController : AbstractController
     {
-        public RoadController roadBuilder;
+        
         public GridController gridController;
+        public RoadController roadBuilder;
         public MainSignController signController;
 
-        PictureBox Screen;
+        public PictureBox Screen;
         //public string roadType = "X";
         //public string signType = "X";
 

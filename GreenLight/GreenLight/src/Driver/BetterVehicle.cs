@@ -10,7 +10,7 @@ namespace GreenLight
     public class BetterVehicle : ScreenObject
     {
         public BetterAI vehicleAI;
-        private World physics = WorldConfig.physics.First();
+        public World physics = WorldConfig.physics.First();
 
         string name;
         int weight;
@@ -31,6 +31,9 @@ namespace GreenLight
         public double locationX, locationY;
 
         public float drawDegree;
+        public bool hardStop;
+
+        public RectHitbox hitbox;
 
         public BetterVehicle(VehicleStats _stat, Point _startPoint) : base(_startPoint)
         {
@@ -48,6 +51,11 @@ namespace GreenLight
 
         public void Update()
         {
+            if (hardStop)
+            {
+                return;
+            }
+
             ChangeSpeed();
             StayOnLane(this.speed);
             //WriteCarData();
@@ -65,7 +73,7 @@ namespace GreenLight
                 this.speed -= abrake;
                 this.speed = this.speed < 0 ? 0 : this.speed;
             }
-            else if (vehicleAI.isAccelerating == true && !vehicleAI.handBreakOn)
+            else if (vehicleAI.isAccelerating == true && !vehicleAI.handBreakOn && !this.hardStop)
             { 
                 double rollingResistance = (float)(physics.slip * this.weight * physics.Gravity);
                 double a = (this.motorpwr - (airResistance + rollingResistance)) / this.weight;
@@ -143,6 +151,16 @@ namespace GreenLight
             {
                 ChangeLocation(_localspeed);
             }
+        }
+
+        public void CreateHitbox()
+        {
+            hitbox = new RectHitbox(new Point((int)this.locationX - 10, (int)this.locationY - 10), new Point((int)this.locationX + 10, (int)this.locationY - 10), new Point((int)this.locationX - 10, (int)this.locationY + 10),new Point((int)this.locationX + 10, (int)this.locationY + 10), Color.Pink);
+        }
+
+        public void DeleteVehicle(bool _dumpData)
+        {
+            //Code to delete the vehicle -> call the data Collector.removeVehicle();
         }
     }
 }

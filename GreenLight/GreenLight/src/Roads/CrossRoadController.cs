@@ -61,26 +61,27 @@ namespace GreenLight
 
         private void initSettingScreen()
         {
-            this.settingScreen = new Form();
+            Dictionary<string, int> menu = Roads.Config.settingsScreen;
 
+            this.settingScreen = new Form();
             this.settingScreen.Hide();
 
-            this.settingScreen.Size = new Size(520, 700);
+            this.settingScreen.Size = new Size(menu["width"], menu["length"] + menu["crossextralength"]);
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
             this.settingScreenImage = new PictureBox();
             this.settingScreenImage.Paint += SettingBoxDraw;
             this.settingScreenImage.MouseClick += SettingBoxClick;
-            this.settingScreenImage.Size = new Size(500, 500);
-            this.settingScreenImage.Location = new Point(10, 10);
+            this.settingScreenImage.Size = new Size(menu["width"] - 2 * menu["offset"], menu["width"] - 2 * menu["offset"]);
+            this.settingScreenImage.Location = new Point(menu["offset"], menu["offset"]);
             this.settingScreenImage.BackColor = Color.Black;
             //TEMP
 
-            selectButton = new CurvedButtons(new Size(80, 40), new Point(10, 500), 25, "../../User Interface Recources/Custom_Small_Button.png", "Select", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            selectButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Select", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             selectButton.Click += (object o, EventArgs ea) => { this.Button = "Select";  };
 
-            linkButton = new CurvedButtons(new Size(80, 40), new Point(100, 500), 25, "../../User Interface Recources/Custom_Small_Button.png", "Link", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            linkButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Link", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             linkButton.Click += (object o, EventArgs ea) => 
             {
                 if(selectedRoad.selectedPoint == null)
@@ -90,27 +91,28 @@ namespace GreenLight
                 this.Button = "Link";
             };
 
-            disableButton = new CurvedButtons(new Size(80, 40), new Point(190, 500), 25, "../../User Interface Recources/Custom_Small_Button.png", "Disable", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            disableButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + 2 * menu["buttonWidth"] + 2 * menu["betweenButtons"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Disable", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             disableButton.Click += (object o, EventArgs ea) => 
             {
                 this.Button = "Disable";
                 this.selectedRoad.SwitchSelectedPoint(null);
             };
 
-            saveButton = new CurvedButtons(new Size(80, 40), new Point(10, 600), 25, "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            saveButton.Click += (object o, EventArgs ea) => { CreateDrivingLanes(); this.settingScreenImage.Invalidate(); };
+            saveButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] - 2 * menu["offset"] + menu["buttonHeight"] + menu["betweenButtons"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            saveButton.Click += (object o, EventArgs ea) => { 
+                if(selectedRoad.connectLinks.Count() != 0) CreateDrivingLanes(); else DeleteCrossroad(this.selectedRoad); this.settingScreenImage.Invalidate(); };
 
-            deleteButton = new CurvedButtons(new Size(80, 40), new Point(100, 600), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            deleteButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"] - 2 * menu["offset"] + menu["buttonHeight"] + menu["betweenButtons"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             deleteButton.Click += (object o, EventArgs ea) => { DeleteCrossroad(this.selectedRoad); };
 
             error = new Label();
             error.Text = "";
             error.ForeColor = Color.Red;
-            error.Location = new Point(10,650);
-            error.Size = new Size(390, 50);
+            error.Location = new Point(menu["offset"], menu["width"] - 2 * menu["offset"] + 2 * menu["buttonHeight"] + 2 * menu["betweenButtons"]);
+            error.Size = new Size(menu["errorwidth"], menu["errorheight"]);
             error.Hide();
 
-            errorButton = new CurvedButtons(new Size(40, 40), new Point(400, 650), 25, "../../User Interface Recources/Custom_Small_Button.png", "Oke!", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            errorButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["errorwidth"] + menu["offset"], menu["width"] - 2 * menu["offset"] + 2 * menu["buttonHeight"] + 2 * menu["betweenButtons"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Oke!", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             errorButton.Click += HideError;
             errorButton.Hide();
 
@@ -164,11 +166,11 @@ namespace GreenLight
                     _conpoint.Hitbox.color = Color.Green;
                 }
             }
-            else if (this.Button == "Select" && _conpoint.Active == true)
+            else if (this.Button == "Select") // && _conpoint.Active == true)
             {
                 selectedRoad.SwitchSelectedPoint(_conpoint);
             }
-            else if (this.Button == "Link" && _conpoint.Active == true)
+            else if (this.Button == "Link") // && _conpoint.Active == true)
             {
                 MakeLink(selectedRoad.selectedPoint, _conpoint);
             }
@@ -220,6 +222,12 @@ namespace GreenLight
                 return;
             }
 
+            if (_begin.end)
+            {
+                DisplayError("This Roadpoint is marked as an end");
+                return;
+            }
+
             _links.Add(new ConnectionLink(_begin, _end));
         }
 
@@ -245,7 +253,7 @@ namespace GreenLight
         {
             if (General_Form.Main != null)
             {
-                General_Form.Main.BuildScreen.builder.roadBuilder.roads.Remove(_deletedroad);
+                General_Form.Main.BuildScreen.builder.roadBuilder.DeleteRoad(_deletedroad);
             }
 
             if (_deletedroad == this.selectedRoad)
@@ -266,19 +274,128 @@ namespace GreenLight
             this.Screen.Invalidate();
         }
 
-        private void CreateDrivingLanes()
+        public void CreateDrivingLanes()
         {
             List<LanePoints> _temp = null;
             selectedRoad.Drivinglanes.Clear();
             Point _end, _begin;
-
-            foreach(ConnectionLink _link in selectedRoad.connectLinks)
+            foreach (ConnectionPoint _point in selectedRoad.connectPoints)
             {
+                _point.setActive(false);
+            }
 
+            foreach (ConnectionLink _link in selectedRoad.connectLinks)
+            {
+                _link.end.setActive(true);
+                _link.begin.setActive(true);
+            }
+            
+            Point p = new Point(-1000, -1000);
+            Point _firstTop = p, _firstRight = p, _firstLeft = p, _firstBottom = p;
+            Point _tempTop = p, _tempRight = p, _tempLeft = p, _tempBottom = p;
+            int _top = 0, _right = 0, _left = 0, _bottom = 0;
+            
+            foreach (ConnectionPoint _point in selectedRoad.connectPoints)
+            {
+                //ConnectionPoint _point;
+                
+                Console.WriteLine(_point.Side);
+
+                if (_point.Active)
+                {
+                    switch (_point.Side)
+                    {
+                        case ("Top"):
+                            if (_tempTop == _point.Location)
+                                break;
+                            else
+                            {
+                                _top++;
+                                _tempTop = _point.Location;
+                                if (_firstTop == p)
+                                    _firstTop = _point.Location;
+                            }
+                            break;
+                        case ("Right"):
+                            if (_tempRight == _point.Location)
+                                break;
+                            else
+                            {
+                                _right++;
+                                _tempRight = _point.Location;
+                                if (_firstRight == p)
+                                    _firstRight = _point.Location;
+                            }
+                            break;
+                        case ("Left"):
+                            if (_tempLeft == _point.Location)
+                                break;
+                            else
+                            {
+                                _left++;
+                                _tempLeft = _point.Location;
+                                if (_firstLeft == p)
+                                    _firstLeft = _point.Location;
+                            }
+                            break;
+                        case ("Bottom"):
+                            if (_tempBottom == _point.Location)
+                                break;
+                            else
+                            {
+                                _tempBottom = _point.Location;
+                                _bottom++;
+                                if (_firstBottom == p)
+                                    _firstBottom = _point.Location;
+                            }
+                            break;
+                    }
+                }
+                
+            }
+
+            Console.WriteLine("top :" + _top); Console.WriteLine("Right :" + _right); Console.WriteLine("left :" + _left); Console.WriteLine("bottom :" + _bottom);
+
+           
+            foreach (ConnectionLink _link in selectedRoad.connectLinks)
+            {
                 _end = _link.end.Location;
                 _begin = _link.begin.Location;
-
+                
                 TranslatePoints(ref _begin, ref _end, selectedRoad);
+
+                //bool _change = false;
+
+                ConnectionPoint _cpoint;
+                Point _point;
+                
+                for (int t = 0; t < 2; t++)
+                {
+                    if (t == 0)
+                    {
+                        _point = _begin;
+                        _cpoint = _link.begin;
+                    }
+
+                    else
+                    { 
+                        _point = _end;
+                        _cpoint = _link.end;
+                    }
+
+                    ConnectionPoint cp = new ConnectionPoint(_point, _cpoint.Side, 0, _cpoint.Place);
+                    bool _exists = false;
+                    foreach(ConnectionPoint c in selectedRoad.translatedconnectPoints)
+                    {
+                        if (c.Side == _cpoint.Side && c.Place == _cpoint.Place)
+                            _exists = true;
+                    }
+                    if (!_exists)
+                    {
+                        selectedRoad.translatedconnectPoints.Add(cp);
+                        Console.WriteLine("TranslatedconnectPoints");
+                    }
+                }
 
                 Console.WriteLine("Crossroad: {0} - {1},", _begin, _end);
 
@@ -352,8 +469,24 @@ namespace GreenLight
                 }
             }
 
+            this.selectedRoad.CreateArrowImages();
+
+            foreach(ConnectionPoint _point in this.selectedRoad.connectPoints)
+            {
+                Point _transLocation = _point.Location;
+                Point _trash = new Point();
+                this.TranslatePoints(ref _transLocation,ref _trash, this.selectedRoad);
+                _point.transLocation = _transLocation;
+            }
+
+            selectedRoad.Top = _top;
+            selectedRoad.Right = _right;
+            selectedRoad.Left = _left;
+            selectedRoad.Bottom = _bottom;
+
             this.Screen.Invalidate();
             this.DisableSettingScreen();
+            General_Form.Main.BuildScreen.builder.roadBuilder.Connection(selectedRoad.point1, selectedRoad.point1, selectedRoad.lanes, selectedRoad.Dir, selectedRoad, selectedRoad.beginconnection, selectedRoad.endconnection);
         }
 
         private void TranslatePoints(ref Point _begin, ref Point _end, CrossRoad _road)

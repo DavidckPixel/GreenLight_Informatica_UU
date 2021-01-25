@@ -33,6 +33,7 @@ namespace GreenLight
         public List<Point> location = new List<Point>();
         public List<Point> location2 = new List<Point>();
         List<Point> locationlocal = new List<Point>();
+        public int maxSpeed;
 
         
         public AI(Vehicle v, DriverStats _stats)

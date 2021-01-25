@@ -17,9 +17,7 @@ namespace GreenLight
 
         int roadLanes;
         private LanePoints middle;
-
         public Hitbox hitbox;
-        public float AngleDir;
 
         public DrivingLane(List<LanePoints> _points, string _dir, int _roadLanes, int _thisLane, Hitbox _hitbox)
         {
@@ -34,7 +32,7 @@ namespace GreenLight
             AngleDir = middle.degree;
         }
 
-        public void FlipPoints()
+        public override void FlipPoints()
         {
             List<LanePoints> _templist = new List<LanePoints>();
 
@@ -118,32 +116,32 @@ namespace GreenLight
                         {
                             startAngle = 180;
                             rect = new Rectangle(new Point(Math.Min(points[0].cord.X, points[points.Count - 1].cord.X), Math.Min(points[0].cord.Y, points[points.Count - 1].cord.Y)), size);
-                            side1 = 2;
-                            side2 = 1;
+                            side1 = 1;
+                            side2 = 2;
                         }
                         break;
                     case "SW":
                         {
                             startAngle = 270;
                             rect = new Rectangle(new Point(Math.Max(points[0].cord.X, points[points.Count - 1].cord.X) - size.Width, Math.Min(points[0].cord.Y, points[points.Count - 1].cord.Y)), size);
-                            side1 = 1;
-                            side2 = 2;
+                            side1 = 2;
+                            side2 = 1;
                         }
                         break;
                     case "NW":
                         {
                             startAngle = 0;
                             rect = new Rectangle(new Point(Math.Max(points[0].cord.X, points[points.Count - 1].cord.X) - size.Width, Math.Max(points[0].cord.Y, points[points.Count - 1].cord.Y) - size.Height), size);
-                            side1 = 1;
-                            side2 = 2;
+                            side1 = 2;
+                            side2 = 1;
                         }
                         break;
                     case "NE":
                         {
                             startAngle = 90;
                             rect = new Rectangle(new Point(Math.Min(points[0].cord.X, points[points.Count - 1].cord.X), Math.Max(points[0].cord.Y, points[points.Count - 1].cord.Y) - size.Height), size);
-                            side1 = 2;
-                            side2 = 1;
+                            side1 = 1;
+                            side2 = 2;
                         }
                         break;
                 }
@@ -172,7 +170,7 @@ namespace GreenLight
                 if (dir == "D")  //DiagonalRoad
                 {
                     Point[] polygon = new Point[4];
-                    Console.WriteLine("tekentest");
+                    //Console.WriteLine("tekentest");
 
                     if (points[0].cord.X != points[points.Count - 1].cord.X && points[0].cord.Y != points[points.Count - 1].cord.Y)
                     {

@@ -24,7 +24,7 @@ namespace GreenLight
             this.Location = new Point(0, 0);
             Dosis_font_family = Dosis_font_family_in;
             this.BackColor = Color.DarkGray;
-            this.Size = new Size(Form.Width - Sub_menu_width, Height);
+            this.Size = new Size(Form.Width - Sub_menu_width, 60);
             Initialize();
             Last_Simulation_time = new TimeSpan(00, 00, 00);
         }
@@ -46,6 +46,7 @@ namespace GreenLight
             Timer.Interval = 1;
             Timer.Tick += new EventHandler(Set_time);
             Timer.Enabled = true;
+            GPS bo = new GPS();
         }
 
         public void Stop_timer()

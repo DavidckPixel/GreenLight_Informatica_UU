@@ -115,10 +115,45 @@ namespace GreenLight
             this.Controls.Add(label);
         }
 
+        public CurvedButtons(Size Button_size, Point Location, int Curve, string FilePath, string Text, FontFamily Dosis_font_family, Form Form, Color BackColor, int t)
+        {
+            curve = Curve;
+            Backcolor = Color.FromArgb(142, 140, 144);
+            this.Cursor = Cursors.Hand;
+            this.Location = Location;
+            this.Size = Button_size;
+            this.Image = LoadBitmap(FilePath);
+            this.SizeMode = PictureBoxSizeMode.StretchImage;
+            //this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 10) + "Select.png"); };
+            ///this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
+
+            System.Windows.Forms.Label label = new System.Windows.Forms.Label();
+            label.Font = new Font(Dosis_font_family, 15, FontStyle.Bold);
+            label.Text = Text;
+           // label.BackColor = Color.FromArgb(142, 140, 144); 
+           // label.ForeColor = Color.FromArgb(142, 140, 144);
+            //label.Size = new Size (150, 32);
+            //label.TextAlign = ContentAlignment.MiddleCenter;
+            label.Location = new Point(Location.X + 2, Location.Y + Button_size.Height + 10 );
+            //label.Parent = this;
+            label.Click += (object o, EventArgs EA) => { this.OnClick(EA); };
+            //label.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 10) + "Select.png"); };
+           // label.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath); };
+            this.Controls.Add(label);
+        }
+
         public void Set_Image(string File_path)
         {
             Image_path = File_path;
         }
-            
+
+        private Bitmap LoadBitmap(string file_name)
+        {
+            using (Bitmap bm = new Bitmap(file_name))
+            {
+                return new Bitmap(bm);
+            }
+        }
+
     }
 }

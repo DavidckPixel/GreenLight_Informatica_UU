@@ -12,14 +12,15 @@ namespace GreenLight
 {
     class CurvedHitbox : Hitbox
     {
-        Point max_start, min_start, max_end, min_end;
+        public Point max_start, min_start, max_end, min_end;
         public string dir;
         public double midX, midY;
         double max_radiusX, max_radiusY;
         double min_radiusX, min_radiusY;
         int start_angle;
-        int mid_startX, mid_startY, mid_endX, mid_endY;
+        public int mid_startX, mid_startY, mid_endX, mid_endY;
         Rectangle rect;
+        
 
         int PenWidth;
 
@@ -32,6 +33,8 @@ namespace GreenLight
             dir = _dir;
 
             this.color = _color;
+
+            this.Type = "Curved";
 
             //----------------------------------------------- 
             // TYPE CASTING TO DOUBLE
@@ -181,9 +184,21 @@ namespace GreenLight
             return false;
         }
 
-        public override bool Collide(RectHitbox _h)
+        public override bool Collide(Hitbox _h)
         {
-            throw new NotImplementedException();
+            bool _temp = false;
+            if (_h.Type == "Rect")
+            {
+                RectHitbox box = (RectHitbox)_h;
+                _temp = (this.Contains(box.topright) || this.Contains(box.topleft) || this.Contains(box.bottomright) || this.Contains(box.bottomleft));
+            }
+            else if (_h.Type == "Curved")
+            {
+                CurvedHitbox box = (CurvedHitbox)_h;
+                _temp = (this.Contains(box.max_start) || this.Contains(box.max_end) || this.Contains(box.min_end) || this.Contains(box.min_start));
+            }
+
+            return _temp;
         }
 
         public override void Draw(Graphics g)

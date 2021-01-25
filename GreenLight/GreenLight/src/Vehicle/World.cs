@@ -6,23 +6,32 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
-    class World
+    public class World
     {
         //This class stores variables that all cars/roads take into their calculations
 
+        public string name;
         public int Brakepwr;
         public double Density;
         public double Gravity;
-
+        public string entityTypes;
         public float slip;
+        public bool canDelete;
 
-        public World(int _Brakepwr, double _Density, double _Gravity)
+        public World(string _name ,int _Brakepwr, double _Density, double _Gravity, string _entityTypes, float _slip, bool _canDelete = true)
         {
             this.Brakepwr = _Brakepwr;
             this.Density = _Density;
             this.Gravity = _Gravity;
+            this.entityTypes = _entityTypes;
+            this.slip = _slip;//0.012f; TEMP
+            this.name = _name;
+            this.canDelete = _canDelete;
+        }
 
-            this.slip = 0.012f; //TEMP
+        public override string ToString()
+        {
+            return this.name;
         }
     }
 }

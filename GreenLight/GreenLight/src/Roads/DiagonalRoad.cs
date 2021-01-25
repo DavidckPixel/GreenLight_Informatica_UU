@@ -19,10 +19,11 @@ namespace GreenLight
 
         public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "DiagonalRoad", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
+            Console.WriteLine("Diagonal Road");
             this.Dir = _dir;
             this.Type = _type;
 
-            Point[] _points = hitBoxPoints(_point1, _point2, lanes, this.laneWidth);
+            Point[] _points = hitBoxPoints(_point1, _point2, lanes, this.laneWidth, true);
             this.hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
 
             for (int x = 1; x <= this.lanes; x++)
@@ -41,7 +42,7 @@ namespace GreenLight
 
             this.slp = _slp;
         
-            Point[] _points = hitBoxPoints(_point1, _point2, 1, this.laneWidth);
+            Point[] _points = hitBoxPoints(_point1, _point2, 1, this.laneWidth, false);
             Hitbox _temp = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Green);
             return new DrivingLane(LanePoints.CalculateDiagonalLane(_point1,_point2), this.Dir, this.lanes, _thisLane, _temp);
         }
@@ -65,26 +66,26 @@ namespace GreenLight
                     {
                         if (slp <= -1 || slp >= 1)
                         {
-                            _firstPoint.X += (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t / 2 - 1));
-                            _secondPoint.X += (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t / 2 - 1));
+                            _firstPoint.X += (int)( drivingLaneDistance * (t / 2));
+                            _secondPoint.X += (int)(drivingLaneDistance * (t / 2));
                         }
                         else
                         {
-                            _firstPoint.Y += (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t / 2 - 1));
-                            _secondPoint.Y += (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t / 2 - 1));
+                            _firstPoint.Y += (int)(drivingLaneDistance * (t / 2));
+                            _secondPoint.Y += (int)(drivingLaneDistance * (t / 2));
                         }
                     }
                     else
                     {
                         if (slp <= -1 || slp >= 1)
                         {
-                            _firstPoint.X -= (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t - 1) / 2);
-                            _secondPoint.X -= (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t - 1) / 2);
+                            _firstPoint.X -= (int)(drivingLaneDistance * (t - 1) / 2);
+                            _secondPoint.X -= (int)(drivingLaneDistance * (t - 1) / 2);
                         }
                         else
                         {
-                            _firstPoint.Y -= (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t - 1) / 2);
-                            _secondPoint.Y -= (int)(drivingLaneDistance / 2 + drivingLaneDistance * (t - 1) / 2);
+                            _firstPoint.Y -= (int)(drivingLaneDistance * (t - 1) / 2);
+                            _secondPoint.Y -= (int)(drivingLaneDistance * (t - 1) / 2);
                         }
                     }
                 }
@@ -125,13 +126,13 @@ namespace GreenLight
                 {
                     if (t % 2 == 0)
                     {
-                        _firstPoint.X += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
-                        _secondPoint.X += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
+                        _firstPoint.X += (t / 2) * drivingLaneDistance;
+                        _secondPoint.X += (t / 2) * drivingLaneDistance;
                     }
                     else
                     {
-                        _firstPoint.X -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
-                        _secondPoint.X -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
+                        _firstPoint.X -= (t - 1) / 2 * drivingLaneDistance;
+                        _secondPoint.X -= (t - 1) / 2 * drivingLaneDistance;
                     }
                 }
                 else //if (lanes%2 !=0)
@@ -154,13 +155,13 @@ namespace GreenLight
                 {
                     if (t % 2 == 0)
                     {
-                        _firstPoint.Y += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
-                        _secondPoint.Y += (t / 2 - 1) * drivingLaneDistance + drivingLaneDistance / 2;
+                        _firstPoint.Y += (t / 2) * drivingLaneDistance;
+                        _secondPoint.Y += (t / 2) * drivingLaneDistance;
                     }
                     else
                     {
-                        _firstPoint.Y -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
-                        _secondPoint.Y -= (t - 1) / 2 * drivingLaneDistance + drivingLaneDistance / 2;
+                        _firstPoint.Y -= (t - 1) / 2 * drivingLaneDistance;
+                        _secondPoint.Y -= (t - 1) / 2 * drivingLaneDistance;
                     }
 
                 }
@@ -182,10 +183,47 @@ namespace GreenLight
             return CreateDrivingLane(_firstPoint, _secondPoint, t);
         }
 
-        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _lanewidth)
+        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox)
         {
             Point _one, _two;
-            int _roadWidth = (_lanewidth * _lanes) / 2;
+            int _roadWidth = (_laneWidth * _lanes) / 2;
+
+
+            if (lanes % 2 == 0 && _Roadhitbox)
+            {
+                double _slp;
+                if (one.X == two.X)
+                    _slp = 0;
+                else
+                    _slp = (double)(two.Y - one.Y) / (double)(two.X - one.X);
+
+                if (_slp != 0)
+                {
+                    if (_slp <= -1 || _slp >= 1)
+                    {
+                       one.X += 10;
+                       two.X += 10;
+                    }
+                    else
+                    {
+                        one.Y += 10;
+                        two.Y += 10; 
+                    }
+                }
+                else
+                {
+                    if (one.X == two.X)
+                    {
+                        one.X += 10;
+                        two.X += 10;
+                    }
+                    else
+                    {
+                        one.Y += 10;
+                        two.Y += 10;
+                    }
+                }
+            }
 
             if (one.Y <= two.Y)
             {
