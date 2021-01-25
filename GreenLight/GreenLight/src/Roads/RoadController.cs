@@ -45,9 +45,8 @@ namespace GreenLight
         {
             this.Screen = _screen;
             this.Screen.MouseClick += RoadClick;
-
+            //this.Screen.Image = new Bitmap(Screen.Width, Screen.Height);
             crossRoadController = new CrossRoadController(this.Screen);
-
             initSettingScreen();
 
             
@@ -89,6 +88,7 @@ namespace GreenLight
             deleteButton.Click += (object o, EventArgs ea) => { DeleteRoad(this.selectedRoad); };
 
             Move_panel move_panel = new Move_panel(settingScreen);
+
             move_panel.Location = new Point(menu["mpX"], menu["mpY"]);
             move_panel.Size = new Size(menu["mpWidth"], menu["mpHeight"]);
             settingScreen.Controls.Add(move_panel);
@@ -96,17 +96,19 @@ namespace GreenLight
 
             settingScreen.Controls.Add(doneButton);
             settingScreen.Controls.Add(deleteButton);
-            
+
             this.settingScreen.Controls.Add(settingScreenImage);
         }
 
         public void BuildDiagonalRoad(Point _point1, Point _point2, int _lanes, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
         {
+            Console.WriteLine("Build diagonal");
             string _dir = Direction(_point1, _point2, "DiagonalRoad");
             //Console.WriteLine("build" + _beginconnection + "-----" + _endconnection);
             AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, "Diagonal", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
+
 			OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point1);
             OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point2);
 
@@ -116,10 +118,16 @@ namespace GreenLight
 
         public void BuildCrossRoad(Point _point1, int _lanes, bool _beginconnection, bool _endconnection)
         {
+            if (_lanes % 2 == 0)
+            {
+                _point1.X -= 10;
+                _point1.Y += 10;
+            }
             AbstractRoad _temp = crossRoadController.newCrossRoad(_point1, _lanes, "CrossRoad");
             this.roads.Add(_temp);
+            
         }
-        
+
         public void BuildCurvedRoad(Point _point1, Point _point2, int _lanes, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
         {
             string _dir = Direction(_point1, _point2, "CurvedRoad");
@@ -156,7 +164,7 @@ namespace GreenLight
                     _point2 = _temp1;
                 }
             }
-            
+
             AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, _type, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
@@ -166,27 +174,27 @@ namespace GreenLight
         public void Connection(Point _point1, Point _point2, int _lanes, string _dir, AbstractRoad _road, bool _beginconnection, bool _endconnection)
         {
             Console.WriteLine(_beginconnection + "Builder" + _endconnection);
-            Point _temp1, _temp2;
-            int _count = 0;
             try
             {
                 foreach (AbstractRoad x in roads)
                 {
-                    if (x != _road)
+                    // if neither of the two roads are CrossRoads
+                    if (x != _road && (_road.Type != "Cross" && x.Type != "Cross"))
                     {
+                        Point _temp1, _temp2;
                         _temp1 = x.getPoint1();
                         _temp2 = x.getPoint2();
-
 
                         if (x.getLanes() == _lanes)
                         {
                             if (_point1 == _temp1 || Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1)
+                            
                             {
                                 if (_beginconnection == false)
                                 {
-                                    Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Dir, _road, x, _count);
+                                    Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Dir, _road, x);
                                 }
-                                else
+                                else 
                                 {
                                     Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.beginconnection = true;
@@ -198,9 +206,9 @@ namespace GreenLight
                             {
                                 if (_beginconnection == false)
                                 {
-                                    Connection _connection = new Connection(_point1, _temp2, _lanes, _dir, x.Drivinglanes[0].dir, _road, x, _count);
+                                    Connection _connection = new Connection(_point1, _temp2, _lanes, _dir, x.Drivinglanes[0].dir, _road, x);
                                 }
-                                else
+                                else 
                                 {
                                     Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.endconnection = true;
@@ -212,9 +220,9 @@ namespace GreenLight
                             {
                                 if (_endconnection == false)
                                 {
-                                    Connection connection = new Connection(_point2, _temp1, _lanes, _dir, x.Drivinglanes[0].dir, _road, x, _count);
+                                    Connection connection = new Connection(_point2, _temp1, _lanes, _dir, x.Drivinglanes[0].dir, _road, x);
                                 }
-                                else
+                                else 
                                 {
                                     Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.beginconnection = true;
@@ -227,7 +235,7 @@ namespace GreenLight
                             {
                                 if (_endconnection == false)
                                 {
-                                    Connection _connection = new Connection(_point2, _temp2, _lanes, _dir, x.Drivinglanes[0].dir, _road, x, _count);
+                                    Connection _connection = new Connection(_point2, _temp2, _lanes, _dir, x.Drivinglanes[0].dir, _road, x);
                                 }
                                 else
                                 {
@@ -238,8 +246,106 @@ namespace GreenLight
                                 }
                             }
                         }
+                    } 
+                    // if one or both of the roads are CrossRoads
+                    else if (x != _road)
+                    {
+                        Point _temp1;
+                        Point _temp2;
+
+                        _temp1 = x.getPoint1();
+                        _temp2 = x.getPoint2();
+
+                        if (x.Type == "Cross" && _road.Type != "Cross")
+                        {
+                            foreach (ConnectionPoint _cp in x.translatedconnectPoints)
+                            {
+                                if (!(_road.beginConnectedTo == x || _road.endConnectedTo == x))
+                                {
+                                    if (_cp.Side == "Top" || _cp.Side == "Bottom")
+                                    {
+                                        if (_point1 == _cp.Location || (Math.Abs(_point1.Y - _cp.Location.Y) <= 25 && _point1.X == _cp.Location.X))
+                                        {
+                                            CrossConnection _connection = new CrossConnection(_point1, _cp.Location, _dir, x.Dir, _road, x);
+                                        }
+                                        else if (_point2 == _cp.Location || (Math.Abs(_point2.Y - _cp.Location.Y) <= 25 && _point2.X == _cp.Location.X))
+                                        {
+                                            CrossConnection _connection = new CrossConnection(_point2, _cp.Location, _dir, x.Dir, _road, x);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (_point1 == _cp.Location || (Math.Abs(_point1.X - _cp.Location.X) <= 25 && _point1.Y == _cp.Location.Y))
+                                        {
+                                            CrossConnection _connection = new CrossConnection(_point1, _cp.Location, _dir, x.Dir, _road, x);
+                                        }
+                                        else if (_point2 == _cp.Location || (Math.Abs(_point2.X - _cp.Location.X) <= 25 && _point2.Y == _cp.Location.Y))
+                                        {
+                                            CrossConnection _connection = new CrossConnection(_point2, _cp.Location, _dir, x.Dir, _road, x);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        else if (x.Type != "Cross" && _road.Type == "Cross")
+                        {
+                            foreach (ConnectionPoint _cp in _road.translatedconnectPoints)
+                            {
+                                if (!(x.beginConnectedTo == _road || x.endConnectedTo == _road))
+                                {
+                                    if (_cp.Side == "Top" || _cp.Side == "Bottom")
+                                    {
+                                        if (_temp1 == _cp.Location || (Math.Abs(_temp1.Y - _cp.Location.Y) <= 25 && _temp1.X == _cp.Location.X))
+                                        {
+                                            CrossConnection _connection = new CrossConnection(_cp.Location, _temp1, _dir, x.Dir, _road, x);
+                                        }
+                                        else if (_temp2 == _cp.Location || (Math.Abs(_temp2.Y - _cp.Location.Y) <= 25 && _temp2.X == _cp.Location.X))
+                                        {
+                                            CrossConnection _connection = new CrossConnection(_cp.Location, _temp2, _dir, x.Dir, _road, x);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (_temp1 == _cp.Location || (Math.Abs(_temp1.X - _cp.Location.X) <= 25 && _temp1.Y == _cp.Location.Y))
+                                        {
+                                            CrossConnection _connection = new CrossConnection(_cp.Location, _temp1, _dir, x.Dir, _road, x);
+                                        }
+                                        else if (_temp2 == _cp.Location || (Math.Abs(_temp2.X - _cp.Location.X) <= 25 && _temp2.Y == _cp.Location.Y))
+                                        {
+                                            CrossConnection _connection = new CrossConnection(_cp.Location, _temp2, _dir, x.Dir, _road, x);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            Console.WriteLine("CrossandCross roadcontroller");
+                            foreach (ConnectionPoint _cp in _road.translatedconnectPoints)
+                            {
+                                foreach (ConnectionPoint _cp2 in x.translatedconnectPoints)
+                                {
+                                    if ((_cp.Side == "Top" && _cp2.Side == "Bottom") || (_cp2.Side == "Top" && _cp.Side == "Bottom"))
+                                    {
+                                        if (_cp.Location == _cp2.Location || (Math.Abs(_cp.Location.Y - _cp2.Location.Y) <= 25 && _cp.Location.X == _cp2.Location.X))
+                                        {
+                                            CrossConnection _connection = new CrossConnection(_cp.Location, _cp2.Location, _dir, x.Dir, _road, x);
+                                        }
+                                    }
+                                    else if ((_cp.Side == "Left" || _cp.Side == "Right") && (_cp2.Side == "Left" || _cp2.Side == "Right"))
+                                    {
+                                        if (_cp.Location == _cp2.Location || Math.Abs(_cp.Location.X - _cp2.Location.X) <= 25 && _cp.Location.Y == _cp2.Location.Y)
+                                        {
+                                            Console.WriteLine("Make CrossConnection");
+                                            CrossConnection _connection = new CrossConnection(_cp.Location, _cp2.Location, _dir, x.Dir, _road, x);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                    _count++;
                 }
             }
             catch (Exception e) { };
@@ -273,11 +379,23 @@ namespace GreenLight
                     {
                         RoadDirection = "D";
                     }
-                    break;                
-
+                    break;      
+                    /*case "StraightRoad":
+                        {
+                            if (_firstPoint.X < _secondPoint.X)
+                                RoadDirection = "E";
+                            else if (_secondPoint.X < _firstPoint.X)
+                                RoadDirection = "W";
+                            else if (_firstPoint.Y < _secondPoint.Y)
+                                RoadDirection = "S";
+                            else if (_firstPoint.Y > _secondPoint.Y)
+                                RoadDirection = "N";
+                        }
+                        break;*/
             }
             return RoadDirection;
         }
+        
         public void UndoRoad()
         {
             if (roads.Count != 0)
@@ -302,17 +420,18 @@ namespace GreenLight
             try
             {
                 this.selectedRoad = roads.Find(x => x.hitbox.Contains(mea.Location));
-            if (this.selectedRoad == null)
-            {
-                //Console.Write("No Road Clicked!");
-                return;
-            }
+                if (this.selectedRoad == null)
+                {
+                    //Console.Write("No Road Clicked!");
+                    return;
+                }
 
-            if (this.roadType == "X")
-            {
-                EnableSettingScreen();
-            }
-            }catch(Exception e)
+                if (this.roadType == "X")
+                {
+                    EnableSettingScreen();
+                }
+                }
+            catch (Exception e)
             {
 
             }
@@ -322,7 +441,7 @@ namespace GreenLight
         {
             Console.WriteLine(selectedRoad.Type);
 
-            if(selectedRoad.Type == "Cross")
+            if (selectedRoad.Type == "Cross")
             {
                 crossRoadController.ShowSettingScreen((CrossRoad)selectedRoad);
                 return;
@@ -330,12 +449,12 @@ namespace GreenLight
 
             selectedRoad.hitbox.color = Color.Pink;
 
-            if(selectedRoad.Drivinglanes.All(x => x.offsetHitbox == null))
+            if (selectedRoad.Drivinglanes.All(x => x.offsetHitbox == null))
             {
                 DrivingLaneHitbox();
             }
 
-            settingScreen.Show();
+            settingScreen.ShowDialog();
             settingScreen.BringToFront();
             settingScreen.Invalidate();
         }
@@ -353,7 +472,7 @@ namespace GreenLight
         }
 
         private void DeleteRoad(AbstractRoad _deletedroad)
-            {
+        {
             roads.Remove(_deletedroad);
 
             if (_deletedroad == this.selectedRoad)
@@ -400,11 +519,11 @@ namespace GreenLight
 
             Rectangle _rec;
 
-            if(_hitbox.Size.Width > _hitbox.Size.Height)
+            if (_hitbox.Size.Width > _hitbox.Size.Height)
             {
                 _rec = new Rectangle(_hitbox.Topcord.X - Roads.Config.scaleOffset, _hitbox.Topcord.Y - Roads.Config.scaleOffset - _diff, _maxSize, _maxSize);
             }
-            else if(_hitbox.Size.Width == _hitbox.Size.Height)
+            else if (_hitbox.Size.Width == _hitbox.Size.Height)
             {
                 _rec = new Rectangle(_hitbox.Topcord.X - Roads.Config.scaleOffset, _hitbox.Topcord.Y - Roads.Config.scaleOffset, _maxSize, _maxSize);
             }
@@ -414,7 +533,7 @@ namespace GreenLight
             }
 
 
-            
+
             Rectangle _des = new Rectangle(0, 0, this.settingScreenImage.Width, this.settingScreenImage.Height);
 
             g.DrawImage(b, _des, _rec, GraphicsUnit.Pixel);
@@ -475,7 +594,6 @@ namespace GreenLight
                     }
                     else
                     {
-
                         if (selectedRoad.Type == "Curved" || selectedRoad.Type == "Curved2")
                         {
                             offset = (double)this.settingScreenImage.Height / 2 - selectedRoad.hitbox.Size.Height / 2 * _scale; //WERKT VOOR CIRCLE
@@ -528,8 +646,7 @@ namespace GreenLight
                         _twooffset = new Point((int)(((_twooffset.X) * _scale) + offset), (int)((_twooffset.Y + Roads.Config.scaleOffset) * _scale));
                     }
                 }
-
-                Point[] _points = selectedRoad.hitBoxPoints(_oneoffset, _twooffset, 1, (int)(Roads.Config.laneWidth * _scale));
+                Point[] _points = selectedRoad.hitBoxPoints(_oneoffset, _twooffset, 1, (int)(Roads.Config.laneWidth * _scale), false);
 
                 Hitbox _hitbox = selectedRoad.CreateHitbox(_points);
 
@@ -623,7 +740,42 @@ namespace GreenLight
                     CheckLaneDirections(_connectionroad, _count + 1);
                 }                
             }
+        }
+        public void loadRoads(string[] _roadWords)
+        {
+            if (_roadWords[1] == "Diagonal")
+            {
+                Console.WriteLine("LoadDiagonal Road");
+                BuildDiagonalRoad(new Point(int.Parse(_roadWords[2]), int.Parse(_roadWords[3])), new Point(int.Parse(_roadWords[4]), int.Parse(_roadWords[5])), int.Parse(_roadWords[6]), bool.Parse(_roadWords[7]), bool.Parse(_roadWords[8]), null, null);
             }
-
+            else if (_roadWords[1] == "Curved" || _roadWords[1] == "Curved2")
+            {
+                Console.WriteLine("LoadCurved Road");
+                BuildCurvedRoad(new Point(int.Parse(_roadWords[2]), int.Parse(_roadWords[3])), new Point(int.Parse(_roadWords[4]), int.Parse(_roadWords[5])), int.Parse(_roadWords[6]), _roadWords[1], bool.Parse(_roadWords[7]), bool.Parse(_roadWords[8]), null, null);
+            }
+            else if (_roadWords[1] == "Cross")
+            {
+                Console.WriteLine("LoadCross Road");
+                CrossRoad _new = new CrossRoad(new Point(int.Parse(_roadWords[2]), int.Parse(_roadWords[3])), new Point(int.Parse(_roadWords[2]), int.Parse(_roadWords[3])), int.Parse(_roadWords[6]), _roadWords[1], bool.Parse(_roadWords[7]), bool.Parse(_roadWords[8]), null, null);
+                
+                for (int t = 0; t < int.Parse(_roadWords[9]); t++)
+                {
+                    foreach (ConnectionPoint x in _new.connectPoints)
+                    {
+                        if (x.Location.X == int.Parse(_roadWords[10 + t * 4]) && x.Location.Y == int.Parse(_roadWords[11 + t * 4]))
+                            foreach (ConnectionPoint y in _new.connectPoints)
+                            {
+                                if (y.Location.X == int.Parse(_roadWords[12 + t * 4]) && y.Location.Y == int.Parse(_roadWords[13 + t * 4]))
+                                     _new.connectLinks.Add(new ConnectionLink(x, y));
+                            }
+                    }
+                }
+                roads.Add(_new);
+                crossRoadController.roads.Add(_new);
+                crossRoadController.selectedRoad = _new;
+                crossRoadController.CreateDrivingLanes();
+            }
+            General_Form.Main.BuildScreen.Screen.Invalidate();
         }
     }
+}

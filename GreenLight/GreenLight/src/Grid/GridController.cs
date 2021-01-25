@@ -68,7 +68,7 @@ namespace GreenLight
                 for (int x = 0; x < _amountX; x++)
                 {
                     
-                    Gridpoints.Add(new Gridpoint(new Point(x * Grid.Config.SpacingWidth, y * Grid.Config.SpacingHeight), 5));
+                    Gridpoints.Add(new Gridpoint(new Point(x * Grid.Config.SpacingWidth, y * Grid.Config.SpacingHeight), Grid.Config.BoxSize, Grid.Config.HitSize));
                 }
             }
         }
@@ -176,7 +176,6 @@ namespace GreenLight
                     int _inflate = _lanes * 20 / 2;
                     _rec.Inflate(_inflate,_inflate);
 
-                    
                     if (Gridpoints.Find(x => x.Collision(mousecords)) != null)
                     {
                         
@@ -233,6 +232,7 @@ namespace GreenLight
                 //}
 
                 Rectangle rec = new Rectangle(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y), Math.Abs(firstPoint.Cords.X - mousecords.X), Math.Abs(firstPoint.Cords.Y - mousecords.Y));
+
                 if (Gridpoints.Find(x => x.Collision(mousecords)) != null && legal)
                 {
                     g.FillRectangle(Notsolidgreen, rec);
@@ -246,6 +246,7 @@ namespace GreenLight
                     g.FillRectangle(Notsolidorange, rec);
                 }
                     
+
                 
             }
         }

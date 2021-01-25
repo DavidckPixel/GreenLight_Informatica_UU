@@ -65,15 +65,7 @@ namespace GreenLight
 
             New_project_button.Click += (object o, EventArgs EA) => { General_Form.Main.MenuController.SwitchToBuild(); };
             Choose_preset_button.Click += (object o, EventArgs EA) => { };
-            Browse_directory_button.Click += (object o, EventArgs EA) => {
-                OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "*.txt|*.*";
-                open.Title = "Open file";
-                if (open.ShowDialog() == DialogResult.OK)
-                {
-                    General_Form.Main.UserInterface.Open(open.FileName);
-                }
-            };
+            Browse_directory_button.Click += (object o, EventArgs EA) => { General_Form.Main.MenuController.SwitchToBuild(); General_Form.Main.LoadDialog(); };
         }
     }
 }

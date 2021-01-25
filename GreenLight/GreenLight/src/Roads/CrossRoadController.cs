@@ -99,7 +99,8 @@ namespace GreenLight
             };
 
             saveButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] - 2 * menu["offset"] + menu["buttonHeight"] + menu["betweenButtons"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            saveButton.Click += (object o, EventArgs ea) => { CreateDrivingLanes(); this.settingScreenImage.Invalidate(); };
+            saveButton.Click += (object o, EventArgs ea) => { 
+                if(selectedRoad.connectLinks.Count() != 0) CreateDrivingLanes(); else DeleteCrossroad(this.selectedRoad); this.settingScreenImage.Invalidate(); };
 
             deleteButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"] - 2 * menu["offset"] + menu["buttonHeight"] + menu["betweenButtons"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             deleteButton.Click += (object o, EventArgs ea) => { DeleteCrossroad(this.selectedRoad); };
@@ -165,11 +166,11 @@ namespace GreenLight
                     _conpoint.Hitbox.color = Color.Green;
                 }
             }
-            else if (this.Button == "Select" && _conpoint.Active == true)
+            else if (this.Button == "Select") // && _conpoint.Active == true)
             {
                 selectedRoad.SwitchSelectedPoint(_conpoint);
             }
-            else if (this.Button == "Link" && _conpoint.Active == true)
+            else if (this.Button == "Link") // && _conpoint.Active == true)
             {
                 MakeLink(selectedRoad.selectedPoint, _conpoint);
             }
@@ -273,19 +274,128 @@ namespace GreenLight
             this.Screen.Invalidate();
         }
 
-        private void CreateDrivingLanes()
+        public void CreateDrivingLanes()
         {
             List<LanePoints> _temp = null;
             selectedRoad.Drivinglanes.Clear();
             Point _end, _begin;
-
-            foreach(ConnectionLink _link in selectedRoad.connectLinks)
+            foreach (ConnectionPoint _point in selectedRoad.connectPoints)
             {
+                _point.setActive(false);
+            }
 
+            foreach (ConnectionLink _link in selectedRoad.connectLinks)
+            {
+                _link.end.setActive(true);
+                _link.begin.setActive(true);
+            }
+            
+            Point p = new Point(-1000, -1000);
+            Point _firstTop = p, _firstRight = p, _firstLeft = p, _firstBottom = p;
+            Point _tempTop = p, _tempRight = p, _tempLeft = p, _tempBottom = p;
+            int _top = 0, _right = 0, _left = 0, _bottom = 0;
+            
+            foreach (ConnectionPoint _point in selectedRoad.connectPoints)
+            {
+                //ConnectionPoint _point;
+                
+                Console.WriteLine(_point.Side);
+
+                if (_point.Active)
+                {
+                    switch (_point.Side)
+                    {
+                        case ("Top"):
+                            if (_tempTop == _point.Location)
+                                break;
+                            else
+                            {
+                                _top++;
+                                _tempTop = _point.Location;
+                                if (_firstTop == p)
+                                    _firstTop = _point.Location;
+                            }
+                            break;
+                        case ("Right"):
+                            if (_tempRight == _point.Location)
+                                break;
+                            else
+                            {
+                                _right++;
+                                _tempRight = _point.Location;
+                                if (_firstRight == p)
+                                    _firstRight = _point.Location;
+                            }
+                            break;
+                        case ("Left"):
+                            if (_tempLeft == _point.Location)
+                                break;
+                            else
+                            {
+                                _left++;
+                                _tempLeft = _point.Location;
+                                if (_firstLeft == p)
+                                    _firstLeft = _point.Location;
+                            }
+                            break;
+                        case ("Bottom"):
+                            if (_tempBottom == _point.Location)
+                                break;
+                            else
+                            {
+                                _tempBottom = _point.Location;
+                                _bottom++;
+                                if (_firstBottom == p)
+                                    _firstBottom = _point.Location;
+                            }
+                            break;
+                    }
+                }
+                
+            }
+
+            Console.WriteLine("top :" + _top); Console.WriteLine("Right :" + _right); Console.WriteLine("left :" + _left); Console.WriteLine("bottom :" + _bottom);
+
+           
+            foreach (ConnectionLink _link in selectedRoad.connectLinks)
+            {
                 _end = _link.end.Location;
                 _begin = _link.begin.Location;
-
+                
                 TranslatePoints(ref _begin, ref _end, selectedRoad);
+
+                //bool _change = false;
+
+                ConnectionPoint _cpoint;
+                Point _point;
+                
+                for (int t = 0; t < 2; t++)
+                {
+                    if (t == 0)
+                    {
+                        _point = _begin;
+                        _cpoint = _link.begin;
+                    }
+
+                    else
+                    { 
+                        _point = _end;
+                        _cpoint = _link.end;
+                    }
+
+                    ConnectionPoint cp = new ConnectionPoint(_point, _cpoint.Side, 0, _cpoint.Place);
+                    bool _exists = false;
+                    foreach(ConnectionPoint c in selectedRoad.translatedconnectPoints)
+                    {
+                        if (c.Side == _cpoint.Side && c.Place == _cpoint.Place)
+                            _exists = true;
+                    }
+                    if (!_exists)
+                    {
+                        selectedRoad.translatedconnectPoints.Add(cp);
+                        Console.WriteLine("TranslatedconnectPoints");
+                    }
+                }
 
                 Console.WriteLine("Crossroad: {0} - {1},", _begin, _end);
 
@@ -369,8 +479,14 @@ namespace GreenLight
                 _point.transLocation = _transLocation;
             }
 
+            selectedRoad.Top = _top;
+            selectedRoad.Right = _right;
+            selectedRoad.Left = _left;
+            selectedRoad.Bottom = _bottom;
+
             this.Screen.Invalidate();
             this.DisableSettingScreen();
+            General_Form.Main.BuildScreen.builder.roadBuilder.Connection(selectedRoad.point1, selectedRoad.point1, selectedRoad.lanes, selectedRoad.Dir, selectedRoad, selectedRoad.beginconnection, selectedRoad.endconnection);
         }
 
         private void TranslatePoints(ref Point _begin, ref Point _end, CrossRoad _road)

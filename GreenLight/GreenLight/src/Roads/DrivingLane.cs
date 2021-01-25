@@ -17,9 +17,7 @@ namespace GreenLight
 
         int roadLanes;
         private LanePoints middle;
-
         public Hitbox hitbox;
-        public float AngleDir;
 
         public DrivingLane(List<LanePoints> _points, string _dir, int _roadLanes, int _thisLane, Hitbox _hitbox)
         {

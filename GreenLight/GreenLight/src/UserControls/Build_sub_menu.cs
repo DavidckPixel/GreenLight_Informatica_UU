@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Timers;
 
 namespace GreenLight
 {
@@ -14,6 +15,7 @@ namespace GreenLight
     {
         public List<CurvedButtons> BSM_Buttons = new List<CurvedButtons>();
         public CurvedButtons Road_button;
+        public CheckBox AutoSave;
         public Build_sub_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255,255,255);
@@ -50,7 +52,6 @@ namespace GreenLight
         {
             Dictionary<string, int> menu = User_Controls.Config.buildSubMenu;
 
-            
 
             CurvedButtons Logo = new CurvedButtons(Form, 1);
             Logo.Location = new Point(User_Controls.Config.standardSubMenu["logoX"], User_Controls.Config.standardSubMenu["logoY"]);
@@ -77,8 +78,38 @@ namespace GreenLight
             this.Controls.Add(Home_button);
 
             CurvedButtons Save_button = new CurvedButtons(new Size(menu["buttonSizeL"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 + menu["buttonSave"], menu["buttonL"]), 25, "../../User Interface Recources/Custom_Small_Button.png", "Save", Dosis_font_family, Form, this.BackColor);
-            Save_button.Click += (object o, EventArgs EA) => { };
+            Save_button.Click += (object o, EventArgs EA) => { General_Form.Main.Save(); };
             this.Controls.Add(Save_button);
+
+            System.Timers.Timer t = new System.Timers.Timer(TimeSpan.FromMinutes(5).TotalMilliseconds);
+            t.AutoReset = true;
+            t.Elapsed += (object to, ElapsedEventArgs EEA) => { General_Form.Main.Save();
+                Console.WriteLine("AutoSaved");
+            };
+
+            Label Auto_save_label = new Label();
+            Auto_save_label.Text = "Autosave:";
+            Auto_save_label.Font = new Font(Dosis_font_family, 11, FontStyle.Bold);
+            Auto_save_label.ForeColor = Color.FromArgb(142, 140, 144);
+            Auto_save_label.Location = new Point(menu["autosavelabelX"], menu["autosaveY"]);
+            this.Controls.Add(Auto_save_label);
+
+            AutoSave = new CheckBox();
+            AutoSave.Checked = false;
+            AutoSave.Location = new Point(menu["autosaveboxX"], menu["autosaveY"]+menu["autosavediff"]);
+            AutoSave.Size = new Size(25, 25);
+            AutoSave.Click += (object o, EventArgs EA) => { 
+                if (AutoSave.Checked)
+                {
+                    General_Form.Main.Save();
+                    t.Start();
+                }
+                else 
+                {
+                    t.Stop();
+                }
+            };
+            this.Controls.Add(AutoSave);
 
             Road_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 - menu["buttonRoad"], menu["buttonS"]), 25, "../../User Interface Recources/Road_Button.png", this.BackColor);
             Road_button.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Reset_All_Buttons(Road_button, Road_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Roads");};
@@ -95,10 +126,10 @@ namespace GreenLight
             this.Controls.Add(Sign_button);
             BSM_Buttons.Add(Sign_button);
 
-            CurvedButtons Building_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 + menu["buttonBuilding"], menu["buttonS"]), 25, "../../User Interface Recources/Building_Button.png", this.BackColor);
-            Building_button.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Reset_All_Buttons(Building_button, Building_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Buildings"); };
-            this.Controls.Add(Building_button);
-            BSM_Buttons.Add(Building_button);
+            CurvedButtons Settings_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 + menu["buttonBuilding"], menu["buttonS"]), 25, "../../User Interface Recources/Setting_Button.png", this.BackColor);
+            Settings_button.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Reset_All_Buttons(Settings_button, Settings_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Buildings"); };
+            this.Controls.Add(Settings_button);
+            BSM_Buttons.Add(Settings_button);
 
             CurvedButtons Divider2 = new CurvedButtons();
             Divider2.Location = new Point(0, menu["divider2"]); //divider2
@@ -122,7 +153,6 @@ namespace GreenLight
             Start_sim_button.Click += (object o, EventArgs EA) => { General_Form.Main.MenuController.SwitchToSimulation();  };
             this.Controls.Add(Start_sim_button);
            
-
             CurvedButtons Divider3 = new CurvedButtons();
             Divider3.Location = new Point(0, menu["divider3"]); //divider3
             this.Controls.Add(Divider3);
