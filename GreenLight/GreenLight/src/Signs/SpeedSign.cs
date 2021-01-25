@@ -19,9 +19,9 @@ namespace GreenLight
             this.speed = _speed;
         }
 
-        public override void Read(AI _ai)
+        public override void Read(BetterAI _ai)
         {
-            //_ai.maxSpeed = speed;
+            _ai.ChangeTargetSpeed(this.speed / 10);
         }
 
         public int getSpeed()

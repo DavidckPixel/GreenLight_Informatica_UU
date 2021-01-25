@@ -106,6 +106,10 @@
     <Compile Include="src\Driver\DriverProfile\DriverProfileData.cs" />
     <Compile Include="src\Driver\DriverProfile\DriverProfileFace.cs" />
     <Compile Include="src\Driver\GPS.cs" />
+    <Compile Include="src\Driver\GPS\GPSData.cs" />
+    <Compile Include="src\Driver\GPS\Link.cs" />
+    <Compile Include="src\Driver\GPS\Knot.cs" />
+    <Compile Include="src\Driver\GPS\Node.cs" />
     <Compile Include="src\Driver\RoadMath.cs" />
     <Compile Include="src\Driver\VehicleProfile.cs" />
     <Compile Include="src\Grid\Grid.cs" />

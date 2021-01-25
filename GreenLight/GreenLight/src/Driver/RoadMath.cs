@@ -306,7 +306,7 @@ namespace GreenLight
             _angle = (int)(Math.Atan2(yDiff, xDiff) * (180 / Math.PI));
             _angle = Math.Abs(_angle);
 
-            Console.WriteLine("Angle: {0}", _angle);
+            //Console.WriteLine("Angle: {0}", _angle);
 
             if (_angle >= 45 && (_angle <= 135 || _angle > 180))
             {

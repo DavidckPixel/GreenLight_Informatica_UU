@@ -43,7 +43,7 @@ namespace GreenLight
             int Y2 = Location.Y - (_dir - 180) / 9 * 2;
             int Y3 = Location.Y - (20 - (_dir - 270) / 9 * 2);
 
-            if (_dir >= 0 && _dir <= 20)
+            if (_dir >= 0 && _dir <= 20) 
             {
                 this.Hitbox = new RectHitbox(new Point(Location.X - 15, Location.Y + 5), new Point(Location.X + 15, Location.Y + 5), new Point(Location.X - 15, Location.Y + 35), new Point(Location.X + 5, Location.Y + 35), Color.Red);
             }
@@ -69,6 +69,11 @@ namespace GreenLight
             }
             this.Hitbox.Draw(g);
             //g.FillRectangle(Notsolid, this.Hitbox);
+        }
+
+        public void SignFlip()
+        {
+            this.Hitbox = new RectHitbox(new Point(Hitboxoffset.X - 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X - 15, Hitboxoffset.Y + 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y + 15), Color.Red);
         }
 
         public override string ToString()

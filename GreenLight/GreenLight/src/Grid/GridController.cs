@@ -95,7 +95,7 @@ namespace GreenLight
             }
 
 
-            Console.WriteLine("MouseClick Button: " + mea.Button);
+            //Console.WriteLine("MouseClick Button: " + mea.Button);
 
             if (mea.Button == MouseButtons.Right)
             {
@@ -106,8 +106,8 @@ namespace GreenLight
                 legal = true;
                 if (_point != null)
                 {
-                    Console.WriteLine("First PointClick!");
-                    Console.WriteLine(_point.Cords);
+                    //Console.WriteLine("First PointClick!");
+                    //Console.WriteLine(_point.Cords);
                     this.firstClick = false;
                     this.firstPoint = _point;
                 }
@@ -117,8 +117,8 @@ namespace GreenLight
                 this.secondPoint = Gridpoints.Find(x => x.Collision(mea.Location));
                 if (this.secondPoint != null && this.secondPoint != this.firstPoint && legal)
                 {
-                    Console.WriteLine("Second PointClick!");
-                    Console.WriteLine(_point.Cords);
+                    //Console.WriteLine("Second PointClick!");
+                    //Console.WriteLine(_point.Cords);
                     this.secondPoint = _point;
                     builder.BuildRoad(this.firstPoint.Cords, this.secondPoint.Cords);
                     this.ResetPoints();
@@ -185,7 +185,7 @@ namespace GreenLight
                             if (temp2.Collide(road.hitbox, g))
                             {
                                 temp2.ShowOverlap(g);
-                                Console.WriteLine("Overlap!");
+                                //Console.WriteLine("Overlap!");
                                 legal = false;
                                 g.FillRectangle(Notsolidred, _rec);
                             }
@@ -213,14 +213,14 @@ namespace GreenLight
                 //{ //met deze regel niet gebruikt zie je nog iets beter direct wanneer het niet kan, moet het wel extra berekeningen maken, maar het is nog niet traag, dus is wel oke denk ik.
                 Hitbox temp = calculateRect(firstPoint.Cords, mousecords);
                 legal = true;
-                Console.WriteLine(builder.roadBuilder.roads.Count());
+                //Console.WriteLine(builder.roadBuilder.roads.Count());
                 foreach (AbstractRoad road in builder.roadBuilder.roads) // loops through all roads
                 {
                     
                     if (temp.Collide(road.hitbox, g))
                     {
                         temp.ShowOverlap(g);
-                        Console.WriteLine("Overlap!");
+                        //Console.WriteLine("Overlap!");
                         legal = false;
                         break;
                         
@@ -253,7 +253,7 @@ namespace GreenLight
             if (General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "Diagonal") //Type = Diagonal
             {
                 Point[] _points = RoadMath.hitBoxPointsDiagonal(firstpoint, mousecords, lanes, 20, true, RoadMath.calculateSlope(firstpoint, mousecords));
-                Console.WriteLine(_points[0] + " " + _points[1] + " " + _points[2] + " " + _points[3]);
+                //Console.WriteLine(_points[0] + " " + _points[1] + " " + _points[2] + " " + _points[3]);
                 return new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Red);
                 /*if (Math.Max(firstpoint.X, mousecords.X) - Math.Min(firstpoint.X, mousecords.X) < 10) //Vertical 
                 {

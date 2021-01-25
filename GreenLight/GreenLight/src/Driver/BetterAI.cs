@@ -25,6 +25,7 @@ namespace GreenLight
         public bool isAccelerating = true;
         public float accelerate = 0.016f;
         public bool handBreakOn = false;
+        public bool brakeToZero = false;
 
         private BetterVehicle vehicle;
 
@@ -92,6 +93,42 @@ namespace GreenLight
             CalculateAcceleration();
 
             UpdateProfile();
+        }
+
+        public void ChangeTargetSpeed(double _speed)
+        {
+            this.targetspeed = _speed + this.speedRelativeToLimit;
+        }
+
+        public void ChangePriority(int priority)
+        {
+            if (BrakeRule())
+            {
+                priority++;
+            }
+            if (BrakeRule(2))
+            {
+                priority++;
+            }
+
+            this.priority = priority;
+        }
+
+        public bool BrakeRule(double multiplier = 1)
+        {
+            Random ran = new Random();
+            int ranValue = ran.Next(0, 100);
+
+            if(multiplier == 0)
+            {
+                return false;
+            }
+
+            if(ranValue / multiplier < this.ruleBreakingChance)
+            {
+                return true;
+            }
+            return false;
         }
 
         private void UpdateProfile()
@@ -342,6 +379,8 @@ namespace GreenLight
                 {
                     this.currentCrossRoad.sides[Index].status = false;
                 }
+
+                this.currentCrossRoad.sides[Index].priorityLevel = this.currentCrossRoad.sides[Index].aiOnSide.Max(x => x.priority);
                 //Console.WriteLine("WE LEFT THE CROSSROAD");
             }
             
@@ -371,11 +410,19 @@ namespace GreenLight
 
             double _brakeDistance = vehicle.brakeDistance + vehicle.speed;
 
+
+            if (this.vehicle.speed == 0)
+            {
+                this.brakeToZero = false;
+            }
             if (_distance < _brakeDistance)
             {
                 this.isBraking = true;
             }
-
+            if (this.brakeToZero)
+            {
+                this.isBraking = true;
+            }
             if(_distanceToRoadSwitch < _brakeDistance && navigator.ForcedLane != null && vehicle.currentLane.thisLane != navigator.ForcedLane)
             {
                 this.isBraking = true;
