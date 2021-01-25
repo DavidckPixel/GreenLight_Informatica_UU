@@ -17,14 +17,13 @@ namespace GreenLight
 
         Size Size;
         public Point Cords;
-        Rectangle Visual_hitbox;
         Rectangle Hitbox;
 
-        public Gridpoint(Point _Cords, int _Size, int HitSize)
+        public Gridpoint(Point _Cords, int _Size)
         {
             this.Cords = _Cords;
-            Visual_hitbox = new Rectangle(this.Cords, new Size(_Size, _Size));
-            Hitbox = new Rectangle(new Point(this.Cords.X+(int)(_Size*0.5)-(int)(0.5*HitSize), this.Cords.Y+(int)(_Size*0.5)-(int)(0.5*HitSize)), new Size(HitSize, HitSize));
+
+            Hitbox = new Rectangle(this.Cords, new Size(_Size, _Size));
         }
 
         public bool Collision(Point _p)
@@ -34,7 +33,7 @@ namespace GreenLight
 
         public void DrawGrid(Graphics g)
         {
-            g.FillEllipse(Brushes.Black, this.Visual_hitbox);
+            g.FillEllipse(Brushes.Black, this.Hitbox);
         }
 
         public override string ToString()

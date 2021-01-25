@@ -8,10 +8,10 @@
         "elementHeaderSizeX": 114,
         "elementHeaderSizeY": 30,
         "elementHeaderX": 68,
-        "elementHeaderY": 190,
+        "elementHeaderY": 180,
         "buttonSizeL": 80,
         "buttonSizeS": 40,
-        "divider2": 185,
+        "divider2": 165,
         "divider3": 280,
         "divider4": 75,
         "simStartSizeX": 160,
@@ -19,17 +19,13 @@
         "simStartX": 80,
         "simStartY": 55,
         "buttonL": 115,
-        "buttonS": 230,
+        "buttonS": 220,
         "buttonHome": 90,
         "buttonSave": 10,
         "buttonRoad": 107,
         "buttonLight": 49,
         "buttonSign": 9,
-        "buttonBuilding": 67,
-        "autosavelabelX": 65,
-        "autosaveY": 155,
-        "autosavediff" : 3,
-        "autosaveboxX": 165
+        "buttonBuilding": 67
     },
 
     "simSubMenu": {

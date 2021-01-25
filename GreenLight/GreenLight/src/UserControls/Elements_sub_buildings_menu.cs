@@ -41,6 +41,21 @@ namespace GreenLight
 
             //-------------------------------------------------------------
 
+            CurvedButtons Hand = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 0, _ButtonYbase), _ButtonCurve, "../../User Interface Recources/Hand_Button.png", this.BackColor);
+            Hand.Click += (object o, EventArgs EA) => { ResetButtons(Hand, Hand.Image_path); };
+            this.Controls.Add(Hand);
+            ESBM_Buttons.Add(Hand);
+
+            CurvedButtons Fence = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 1, _ButtonYbase), _ButtonCurve, "../../User Interface Recources/Fence_Button.png", this.BackColor);
+            Fence.Click += (object o, EventArgs EA) => { ResetButtons(Fence, Fence.Image_path); };
+            this.Controls.Add(Fence);
+            ESBM_Buttons.Add(Fence);
+
+            CurvedButtons Building = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase), _ButtonCurve, "../../User Interface Recources/Building_Button.png", this.BackColor);
+            Building.Click += (object o, EventArgs EA) => { ResetButtons(Building, Building.Image_path); };
+            this.Controls.Add(Building);
+            ESBM_Buttons.Add(Building);
+
         }
         private void ResetButtons(CurvedButtons Selected, string Filepath)
         {

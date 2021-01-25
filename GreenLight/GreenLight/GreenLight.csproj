@@ -114,8 +114,6 @@
     <Compile Include="src\Roads\Roads.cs" />
     <Compile Include="src\Roads\RoadsConfig.cs" />
     <Compile Include="src\UserControls\Data_sub_menu.cs">
-    <Compile Include="src\MainScreenController_Config.cs" />
-    <Compile Include="src\UserControls\Start_sub_recent_projects_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="src\UserControls\Data_sub_menu.Designer.cs">
@@ -248,7 +246,7 @@
     <Compile Include="src\UserControls\Elements_sub_lights_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Elements_sub_settings_menu.cs">
+    <Compile Include="src\UserControls\Elements_sub_buildings_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <EmbeddedResource Include="HitBox_form.resx">

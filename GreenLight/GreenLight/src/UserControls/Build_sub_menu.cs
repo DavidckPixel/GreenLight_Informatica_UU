@@ -87,16 +87,9 @@ namespace GreenLight
                 Console.WriteLine("AutoSaved");
             };
 
-            Label Auto_save_label = new Label();
-            Auto_save_label.Text = "Autosave:";
-            Auto_save_label.Font = new Font(Dosis_font_family, 11, FontStyle.Bold);
-            Auto_save_label.ForeColor = Color.FromArgb(142, 140, 144);
-            Auto_save_label.Location = new Point(menu["autosavelabelX"], menu["autosaveY"]);
-            this.Controls.Add(Auto_save_label);
-
             AutoSave = new CheckBox();
             AutoSave.Checked = false;
-            AutoSave.Location = new Point(menu["autosaveboxX"], menu["autosaveY"]+menu["autosavediff"]);
+            AutoSave.Location = new Point(Sub_menu_width / 2 + menu["buttonSave"] + menu["buttonSizeL"], menu["buttonL"]);
             AutoSave.Size = new Size(25, 25);
             AutoSave.Click += (object o, EventArgs EA) => { 
                 if (AutoSave.Checked)
@@ -126,10 +119,10 @@ namespace GreenLight
             this.Controls.Add(Sign_button);
             BSM_Buttons.Add(Sign_button);
 
-            CurvedButtons Settings_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 + menu["buttonBuilding"], menu["buttonS"]), 25, "../../User Interface Recources/Setting_Button.png", this.BackColor);
-            Settings_button.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Reset_All_Buttons(Settings_button, Settings_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Buildings"); };
-            this.Controls.Add(Settings_button);
-            BSM_Buttons.Add(Settings_button);
+            CurvedButtons Building_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 + menu["buttonBuilding"], menu["buttonS"]), 25, "../../User Interface Recources/Building_Button.png", this.BackColor);
+            Building_button.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Reset_All_Buttons(Building_button, Building_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Buildings"); };
+            this.Controls.Add(Building_button);
+            BSM_Buttons.Add(Building_button);
 
             CurvedButtons Divider2 = new CurvedButtons();
             Divider2.Location = new Point(0, menu["divider2"]); //divider2

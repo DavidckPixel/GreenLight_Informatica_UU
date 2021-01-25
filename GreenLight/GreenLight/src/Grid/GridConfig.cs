@@ -14,8 +14,6 @@ namespace GreenLight
         
         public int SpacingWidth;
         public int SpacingHeight;
-        public int BoxSize;
-        public int HitSize;
 
     }
 }

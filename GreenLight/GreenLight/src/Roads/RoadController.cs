@@ -454,7 +454,7 @@ namespace GreenLight
                 DrivingLaneHitbox();
             }
 
-            settingScreen.ShowDialog();
+            settingScreen.Show();
             settingScreen.BringToFront();
             settingScreen.Invalidate();
         }
