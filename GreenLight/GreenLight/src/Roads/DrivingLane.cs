@@ -116,32 +116,64 @@ namespace GreenLight
                         {
                             startAngle = 180;
                             rect = new Rectangle(new Point(Math.Min(points[0].cord.X, points[points.Count - 1].cord.X), Math.Min(points[0].cord.Y, points[points.Count - 1].cord.Y)), size);
-                            side1 = 1;
-                            side2 = 2;
+                            if (roadLanes % 2 == 0)
+                            {
+                                side1 = 1;
+                                side2 = 2;
+                            }
+                            else
+                            {
+                                side1 = 2;
+                                side2 = 1;
+                            }
                         }
                         break;
                     case "SW":
                         {
                             startAngle = 270;
                             rect = new Rectangle(new Point(Math.Max(points[0].cord.X, points[points.Count - 1].cord.X) - size.Width, Math.Min(points[0].cord.Y, points[points.Count - 1].cord.Y)), size);
-                            side1 = 2;
-                            side2 = 1;
+                            if (roadLanes % 2 == 0)
+                            {
+                                side1 = 2;
+                                side2 = 1;
+                            }
+                            else
+                            {
+                                side1 = 1;
+                                side2 = 2;
+                            }
                         }
                         break;
                     case "NW":
                         {
                             startAngle = 0;
                             rect = new Rectangle(new Point(Math.Max(points[0].cord.X, points[points.Count - 1].cord.X) - size.Width, Math.Max(points[0].cord.Y, points[points.Count - 1].cord.Y) - size.Height), size);
-                            side1 = 2;
-                            side2 = 1;
+                            if (roadLanes % 2 == 0)
+                            {
+                                side1 = 2;
+                                side2 = 1;
+                            }
+                            else
+                            {
+                                side1 = 1;
+                                side2 = 2;
+                            }
                         }
                         break;
                     case "NE":
                         {
                             startAngle = 90;
                             rect = new Rectangle(new Point(Math.Min(points[0].cord.X, points[points.Count - 1].cord.X), Math.Max(points[0].cord.Y, points[points.Count - 1].cord.Y) - size.Height), size);
-                            side1 = 1;
-                            side2 = 2;
+                            if (roadLanes % 2 == 0)
+                            {
+                                side1 = 1;
+                                side2 = 2;
+                            }
+                            else
+                            {
+                                side1 = 2;
+                                side2 = 1;
+                            }
                         }
                         break;
                 }
