@@ -68,7 +68,7 @@ namespace GreenLight
                 for (int x = 0; x < _amountX; x++)
                 {
                     
-                    Gridpoints.Add(new Gridpoint(new Point(x * config.SpacingWidth, y * config.SpacingHeight), config.BoxSize, config.HitSize));
+                    Gridpoints.Add(new Gridpoint(new Point(x * Grid.Config.SpacingWidth, y * Grid.Config.SpacingHeight), Grid.Config.BoxSize, Grid.Config.HitSize));
                 }
             }
         }
