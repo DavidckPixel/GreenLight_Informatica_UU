@@ -100,9 +100,7 @@
     <Compile Include="src\Driver\BetterVehicleTest.Designer.cs">
       <DependentUpon>BetterVehicleTest.cs</DependentUpon>
     </Compile>
-
     <Compile Include="src\Driver\Dijkstra.cs" />
-
     <Compile Include="src\Driver\DriverProfile\DriverProfile.cs" />
     <Compile Include="src\Driver\DriverProfile\DriverProfileController.cs" />
     <Compile Include="src\Driver\DriverProfile\DriverProfileData.cs" />
@@ -111,7 +109,6 @@
     <Compile Include="src\Driver\RoadMath.cs" />
     <Compile Include="src\Driver\VehicleProfile.cs" />
     <Compile Include="src\Grid\Grid.cs" />
-
     <Compile Include="src\Roads\CrossConnection.cs" />
     <Compile Include="src\OriginPoints\OriginPointController.cs" />
     <Compile Include="src\OriginPoints\OriginPoints.cs" />
@@ -123,14 +120,11 @@
     <Compile Include="src\UserControls\Data_sub_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-
-    <Compile Include="src\OriginPointController.cs" />
     <Compile Include="src\Roads\CrossConnection.cs" />
     <Compile Include="src\Roads\CrossRoadSide.cs" />
     <Compile Include="src\Roads\Roads.cs" />
     <Compile Include="src\Roads\RoadsConfig.cs" />
-    <Compile Include="src\UserControls\Data_sub_menu.cs"/>
-
+    <Compile Include="src\UserControls\Data_sub_menu.cs" />
     <Compile Include="src\MainScreenController_Config.cs" />
     <Compile Include="src\UserControls\Start_sub_recent_projects_menu.cs">
       <SubType>UserControl</SubType>
@@ -139,9 +133,6 @@
       <DependentUpon>Data_sub_menu.cs</DependentUpon>
     </Compile>
     <Compile Include="src\UserControls\Start_sub_recent_projects_menu.cs" />
-
-    <Compile Include="src\VehicleOriginPoint.cs" />
-
     <Compile Include="src\DrawData.cs" />
     <Compile Include="src\Driver\DriverStats.cs" />
     <Compile Include="src\Hitbox.cs" />
