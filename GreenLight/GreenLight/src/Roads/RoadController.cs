@@ -103,7 +103,7 @@ namespace GreenLight
         public void BuildDiagonalRoad(Point _point1, Point _point2, int _lanes, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
         {
             Console.WriteLine("Build diagonal");
-            string _dir = Direction(_point1, _point2, "DiagonalRoad");
+            string _dir = RoadMath.Direction(_point1, _point2, "DiagonalRoad");
             //Console.WriteLine("build" + _beginconnection + "-----" + _endconnection);
             AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, "Diagonal", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
@@ -133,7 +133,7 @@ namespace GreenLight
 
         public void BuildCurvedRoad(Point _point1, Point _point2, int _lanes, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
         {
-            string _dir = Direction(_point1, _point2, "CurvedRoad");
+            string _dir = RoadMath.Direction(_point1, _point2, _type);
             Point _temp1 = _point1;
             Point _temp2 = _point2;
 
@@ -358,50 +358,7 @@ namespace GreenLight
             catch (Exception e) { };
         }
 
-        public static string Direction(Point _firstPoint, Point _secondPoint, string _Roadtype)
-        {
-            string RoadDirection = "x";
-            string RoadType = _Roadtype;
-            switch (RoadType)
-            {
-                case "CurvedRoad":
-                    {
-                        if (_firstPoint.X < _secondPoint.X)
-                        {
-                            if (_firstPoint.Y < _secondPoint.Y)
-                                RoadDirection = "NE";
-                            else
-                                RoadDirection = "SE";
-                        }
-                        else
-                        {
-                            if (_firstPoint.Y < _secondPoint.Y)
-                                RoadDirection = "NW";
-                            else
-                                RoadDirection = "SW";
-                        }
-                    }
-                    break;
-                case "DiagonalRoad":
-                    {
-                        RoadDirection = "D";
-                    }
-                    break;      
-                    /*case "StraightRoad":
-                        {
-                            if (_firstPoint.X < _secondPoint.X)
-                                RoadDirection = "E";
-                            else if (_secondPoint.X < _firstPoint.X)
-                                RoadDirection = "W";
-                            else if (_firstPoint.Y < _secondPoint.Y)
-                                RoadDirection = "S";
-                            else if (_firstPoint.Y > _secondPoint.Y)
-                                RoadDirection = "N";
-                        }
-                        break;*/
-            }
-            return RoadDirection;
-        }
+        
         
         public void UndoRoad()
         {
@@ -675,9 +632,20 @@ namespace GreenLight
                         _twooffset = new Point((int)(((_twooffset.X) * _scale) + offset), (int)((_twooffset.Y + Roads.Config.scaleOffset) * _scale));
                     }
                 }
-                Point[] _points = selectedRoad.hitBoxPoints(_oneoffset, _twooffset, 1, (int)(Roads.Config.laneWidth * _scale), false);
 
+                Point[] _points = new Point[4];
+                if (selectedRoad.Type == "Curved" || selectedRoad.Type == "Curved2")
+                {
+                     _points = RoadMath.hitBoxPointsCurved(_oneoffset, _twooffset, 1, (int)(Roads.Config.laneWidth * _scale), false, RoadMath.Direction(_oneoffset, _twooffset, selectedRoad.Type) );
+                    
+                }
+                else if (selectedRoad.Type == "Diagonal" )
+                {
+                    _points = RoadMath.hitBoxPointsDiagonal(_oneoffset, _twooffset, 1, (int)(Roads.Config.laneWidth * _scale), false, RoadMath.calculateSlope(_oneoffset, _twooffset));
+                    
+                }
                 Hitbox _hitbox = selectedRoad.CreateHitbox(_points);
+
 
                 //Console.WriteLine("HITBOX CREATED!!!");
 

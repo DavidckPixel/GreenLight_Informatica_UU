@@ -184,18 +184,38 @@ namespace GreenLight
             return false;
         }
 
-        public override bool Collide(Hitbox _h)
+        public override bool Collide(Hitbox _h, Graphics g)
         {
             bool _temp = false;
             if (_h.Type == "Rect")
             {
-                RectHitbox box = (RectHitbox)_h;
-                _temp = (this.Contains(box.topright) || this.Contains(box.topleft) || this.Contains(box.bottomright) || this.Contains(box.bottomleft));
+                for (int x = 5; x < _h.lanepoints.Count() - 10; x += 4)
+                {
+                    _temp = this.Contains(_h.lanepoints[x].cord);
+
+                    if (_temp == true)
+                    {
+                        return _temp;
+                    }
+                }
+                /*RectHitbox box = (RectHitbox)_h;
+                _temp = (this.Contains(box.topright) || this.Contains(box.topleft) || this.Contains(box.bottomright) || this.Contains(box.bottomleft));*/
             }
             else if (_h.Type == "Curved")
             {
                 CurvedHitbox box = (CurvedHitbox)_h;
-                _temp = (this.Contains(box.max_start) || this.Contains(box.max_end) || this.Contains(box.min_end) || this.Contains(box.min_start));
+                List<LanePoints> _lanepoints = LanePoints.CalculateCurveLane(new Point(box.mid_startX, box.mid_startY), new Point(box.mid_endX, box.mid_endY), box.dir);
+                for (int x = 5; x < _lanepoints.Count() - 10; x += 12)
+                {
+                    _temp = this.Contains(_lanepoints[x].cord);
+
+                    if (_temp == true)
+                    {
+                        return _temp;
+                    }
+                }
+                /*CurvedHitbox box = (CurvedHitbox)_h;
+                _temp = (this.Contains(box.max_start) || this.Contains(box.max_end) || this.Contains(box.min_end) || this.Contains(box.min_start));*/
             }
 
             return _temp;
@@ -214,15 +234,21 @@ namespace GreenLight
                 g.DrawArc(_pen, rect, start_angle, 90);
 
                 //g.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.Red)), rect);
-                g.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.Blue)), new Rectangle(new Point((int)midX, (int)midY), new Size(5, 5)));
+                //g.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.Blue)), new Rectangle(new Point((int)midX, (int)midY), new Size(5, 5)));
 
 
-                g.FillRectangle(_brush, new Rectangle(max_start, new Size(5, 5)));
-                g.FillRectangle(_brush, new Rectangle(min_start, new Size(5, 5)));
-                g.FillRectangle(_brush, new Rectangle(max_end, new Size(5, 5)));
-                g.FillRectangle(_brush, new Rectangle(min_end, new Size(5, 5)));
+                //g.FillRectangle(_brush, new Rectangle(max_start, new Size(5, 5)));
+                //g.FillRectangle(_brush, new Rectangle(min_start, new Size(5, 5)));
+                //g.FillRectangle(_brush, new Rectangle(max_end, new Size(5, 5)));
+                //g.FillRectangle(_brush, new Rectangle(min_end, new Size(5, 5)));
             }
 
+        }
+
+        public override void ShowOverlap(Graphics g)
+        {
+            Pen _pen = new Pen(new SolidBrush(Color.FromArgb(100, this.color)), PenWidth);
+            g.DrawArc(_pen, rect, start_angle, 90);
         }
 
         /*public override bool Contains(RectHitbox _h)

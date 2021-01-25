@@ -21,6 +21,8 @@ namespace GreenLight
 
         public Color color;
 
+        public List<LanePoints> lanepoints = new List<LanePoints>();
+
         public Hitbox(Point _one, Point _two, Point _three, Point _four)
         {
             Topcord = new Point(BetterMin(_one.X, _two.X, _three.X, _four.X), BetterMin(_one.Y, _two.Y, _three.Y, _four.Y));
@@ -31,9 +33,11 @@ namespace GreenLight
         public abstract bool Contains(Point _p);
         //public abstract bool Contains(RectHitbox _h);
 
-        public abstract bool Collide(Hitbox _h);
+        public abstract bool Collide(Hitbox _h, Graphics g);
 
         public abstract void Draw(Graphics g);
+
+        public abstract void ShowOverlap(Graphics g);
 
         public static int BetterMin(int _one, int _two, int _three, int _four)
         {

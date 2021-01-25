@@ -19,6 +19,7 @@ namespace GreenLight
 
         public double? rcTop, rcBottom, rcLeft, rcRight;
         public double? bTop, bBottom, bLeft, bRight;
+        
 
         public RectHitbox(Point _topleft, Point _topright, Point _bottomleft, Point _bottomright, Color _color) : base(_topleft, _topright, _bottomleft, _bottomright)
         {
@@ -47,6 +48,8 @@ namespace GreenLight
             this.color = _color;
 
             this.Type = "Rect";
+
+            this.lanepoints = CalculateLanePoints();
             //----------------------------------------------------------------
 
 
@@ -153,31 +156,15 @@ namespace GreenLight
             return false;
         }
 
-        public override bool Collide(Hitbox _h)
+        public override bool Collide(Hitbox _h, Graphics g)
         {
             bool _temp = false;
             if (_h.Type == "Rect")
             {
-                Console.WriteLine("Is checking for a Recthitbox");
-                RectHitbox box = (RectHitbox)_h;
-                List<LanePoints> _lanepoints = new List<LanePoints>();
-
-                if(box.topleft.Y == box.topright.Y)
+                
+                for (int x = 5; x < _h.lanepoints.Count() - 10; x += 4)
                 {
-                    Point boxmidTop = new Point((box.topright.X + box.topleft.X) / 2, (box.topright.Y + box.topleft.Y) / 2);
-                    Point boxmidBottom = new Point((box.bottomright.X + box.bottomleft.X) / 2, (box.bottomright.Y + box.bottomleft.Y) / 2);
-                     _lanepoints = LanePoints.CalculateDiagonalLane(boxmidTop, boxmidBottom);
-                    
-                }
-                else if (box.topleft.X == box.bottomleft.X)
-                {
-                    Point boxmidLeft = new Point((box.topleft.X + box.bottomleft.X) / 2, (box.bottomleft.Y + box.topleft.Y) / 2);
-                    Point boxmidRight = new Point((box.topright.X + box.bottomright.X) / 2, (box.bottomright.Y + box.topright.Y) / 2);
-                    _lanepoints = LanePoints.CalculateDiagonalLane(boxmidLeft, boxmidRight);
-                }
-                for (int x = 5; x < _lanepoints.Count() - 10; x += 4)
-                {
-                    _temp = this.Contains(_lanepoints[x].cord);
+                    _temp = this.Contains(_h.lanepoints[x].cord);
 
                     if (_temp == true)
                     {
@@ -233,7 +220,7 @@ namespace GreenLight
                 Console.WriteLine("Is checking for a Curvedhitbox");
                 CurvedHitbox box = (CurvedHitbox)_h;
                 List<LanePoints> _lanepoints = LanePoints.CalculateCurveLane(new Point(box.mid_startX, box.mid_startY), new Point(box.mid_endX, box.mid_endY), box.dir);
-                for (int x = 5; x < _lanepoints.Count() - 10; x += 4)
+                for (int x = 5; x < _lanepoints.Count() - 10; x += 12)
                 {
                     _temp = this.Contains(_lanepoints[x].cord);
 
@@ -242,7 +229,7 @@ namespace GreenLight
                         return _temp;
                     }
                 }
-                _temp = (this.Contains(box.max_start) || this.Contains(box.max_end) || this.Contains(box.min_end) || this.Contains(box.min_start));
+                //_temp = (this.Contains(box.max_start) || this.Contains(box.max_end) || this.Contains(box.min_end) || this.Contains(box.min_start));
                 //Console.WriteLine(_h.Type);
             }
 
@@ -280,7 +267,7 @@ namespace GreenLight
             }
         }
 
-        public void ShowOverlap(Graphics g)
+        public override void ShowOverlap(Graphics g)
         {
             Point[] _points = new Point[]
             {
@@ -288,6 +275,46 @@ namespace GreenLight
             };
 
             g.FillPolygon(new SolidBrush(Color.FromArgb(150, Color.Red)), _points);
+        }
+
+        public List<LanePoints> CalculateLanePoints()
+        {
+                        
+            List<LanePoints> _lanepoints = new List<LanePoints>();
+
+            if ((Math.Abs(topleft.Y - topright.Y) < 5 || Math.Abs(topleft.X - topright.X) < 5) && (Math.Abs(topleft.X - bottomleft.X) < 5 || Math.Abs(topleft.Y - bottomleft.Y) < 5))
+            {
+
+                if (RoadMath.Distance(topleft, topright) < RoadMath.Distance(topleft, bottomleft))
+                {
+
+                    Point boxmidTop = new Point((topright.X + topleft.X) / 2, (topright.Y + topleft.Y) / 2);
+                    Point boxmidBottom = new Point((bottomright.X + bottomleft.X) / 2, (bottomright.Y + bottomleft.Y) / 2);
+                    _lanepoints = LanePoints.CalculateDiagonalLane(boxmidTop, boxmidBottom);
+                }
+                else
+                {
+                    Point boxmidLeft = new Point((topleft.X + bottomleft.X) / 2, (bottomleft.Y + topleft.Y) / 2);
+                    Point boxmidRight = new Point((topright.X + bottomright.X) / 2, (bottomright.Y + topright.Y) / 2);
+                    _lanepoints = LanePoints.CalculateDiagonalLane(boxmidLeft, boxmidRight);
+
+                }
+            }
+            else if (Math.Abs(topleft.Y - topright.Y) < 5 || Math.Abs(topleft.X - topright.X) < 5)
+            {
+
+                Point boxmidTop = new Point((topright.X + topleft.X) / 2, (topright.Y + topleft.Y) / 2);
+                Point boxmidBottom = new Point((bottomright.X + bottomleft.X) / 2, (bottomright.Y + bottomleft.Y) / 2);
+                _lanepoints = LanePoints.CalculateDiagonalLane(boxmidTop, boxmidBottom);
+            }
+            else if (Math.Abs(topleft.X - bottomleft.X) < 5 || Math.Abs(topleft.Y - bottomleft.Y) < 5)
+            {
+
+                Point boxmidLeft = new Point((topleft.X + bottomleft.X) / 2, (bottomleft.Y + topleft.Y) / 2);
+                Point boxmidRight = new Point((topright.X + bottomright.X) / 2, (bottomright.Y + topright.Y) / 2);
+                _lanepoints = LanePoints.CalculateDiagonalLane(boxmidLeft, boxmidRight);
+            }
+            return _lanepoints;
         }
     }
 }

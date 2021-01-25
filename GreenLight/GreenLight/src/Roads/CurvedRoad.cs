@@ -20,14 +20,14 @@ namespace GreenLight
 
         
 
-        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "CurvedRoad", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
+        public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "Curved", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
             this.Dir = _dir;
             this.Type = _type;
 
             if (Dir == "SE" || Dir == "SW" || Dir == "NE" || Dir == "NW")
             {
-                Point[] _points = hitBoxPoints(_point1, _point2, this.lanes, this.laneWidth, true);
+                Point[] _points = RoadMath.hitBoxPointsCurved(_point1, _point2, this.lanes, this.laneWidth, true, _dir);
                 this.hitbox = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], _dir, Color.Yellow);
 
                 for (int x = 1; x <= lanes; x++)
@@ -38,7 +38,7 @@ namespace GreenLight
         }
         private DrivingLane CreateDrivingLane(Point _point1, Point _point2, int _thisLane)
         {
-            Point[] _points = this.hitBoxPoints(_point1, _point2, 1, this.laneWidth, false);
+            Point[] _points = RoadMath.hitBoxPointsCurved(_point1, _point2, 1, this.laneWidth, false, Dir);
             Hitbox _temp = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], Dir, Color.Green);
             return new DrivingLane(LanePoints.CalculateCurveLane(_point1, _point2, this.Dir), this.Dir, this.lanes, _thisLane, _temp);
         }
@@ -109,88 +109,7 @@ namespace GreenLight
             }
             return CreateDrivingLane(_firstPoint, _secondPoint, t);
         }
-        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox)
-        {
-            Point _one, _two;
-            int _roadWidth = (_laneWidth * _lanes) / 2;
-            Point[] _points = new Point[4];
-
-            if (lanes % 2 == 0 && _Roadhitbox)
-            {
-                if (Dir == "SE" || Dir == "NW")
-                {
-                    one.X -= 10;
-                    two.Y -= 10;
-                }
-                else if (Dir == "SW" || Dir == "NE")
-                {
-                    one.X -= 10;
-                    two.Y += 10;
-                }
-            }
-
-            if (Dir == "NW" || Dir == "NE")
-            {
-                if (one.X < two.X)
-                {
-                    _one = two;
-                    _two = one;
-                }
-                else
-                {
-                    _one = one;
-                    _two = two;
-                }
-
-                if(Dir == "NW")
-                {
-                    _points[0] = new Point(_one.X + _roadWidth, _one.Y);
-                    _points[1] = new Point(_one.X - _roadWidth, _one.Y);
-                    _points[2] = new Point(_two.X, _two.Y + _roadWidth);
-                    _points[3] = new Point(_two.X, _two.Y - _roadWidth);
-                }
-                else
-                {
-                    _points[0] = new Point(_one.X, _one.Y + _roadWidth);
-                    _points[1] = new Point(_one.X, _one.Y - _roadWidth);
-                    _points[2] = new Point(_two.X - _roadWidth, _two.Y);
-                    _points[3] = new Point(_two.X + _roadWidth, _two.Y);
-                }
-            }
-            else
-            {
-                if (one.X < two.X)
-                {
-                    _one = one;
-                    _two = two;
-                }
-                else
-                {
-                    _one = two;
-                    _two = one;
-                }
-
-                if(Dir == "SE")
-                {
-                    //
-                    _points[0] = new Point(_one.X - _roadWidth, _one.Y);
-                    _points[1] = new Point(_one.X + _roadWidth, _one.Y);
-                    _points[2] = new Point(_two.X, _two.Y - _roadWidth);
-                    _points[3] = new Point(_two.X, _two.Y + _roadWidth);
-
-                }
-                else
-                {
-                    //
-                    _points[0] = new Point(_one.X, _one.Y - _roadWidth);
-                    _points[1] = new Point(_one.X, _one.Y + _roadWidth);
-                    _points[2] = new Point(_two.X + _roadWidth, _two.Y);
-                    _points[3] = new Point(_two.X - _roadWidth, _two.Y);
-                }
-            }
-
-            return _points;
-        }
+        
 
         public override Hitbox CreateHitbox(Point[] _points)
         {
