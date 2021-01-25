@@ -37,3 +37,15 @@ DISCRIPTION		It does seem to calculate normpoint1, but the angle is often 0 or 3
 			"System.InvalidOperationException: 'Reeks bevat geen elementen'".
 
 @@-----------------------------------@@
+
+@@-----------------002---------------@@
+NAME:			David
+DATE:			25-1-2021
+PRIORITY:		MEDIUM
+
+STATUS:			OPEN
+SOLVER:			/
+
+ERRORNAME:		DrivingLaneHitboxes get messed up
+DUPLICATION:		Create a curved road, have it automaticly connect with another curved road, doing this will have a chance of completely messing up the hitbox 			      of the lanepointsHItboxes in the road
+DISCRIPTION		I have no clue why on earth this is happening, when a road is changed during the connection, something goes wrong with the recalibrating
