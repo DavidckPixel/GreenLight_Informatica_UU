@@ -182,7 +182,7 @@ namespace GreenLight
                         RectHitbox temp2 = calculateRect(mousecords, new Point(0,0));
                         foreach (AbstractRoad road in builder.roadBuilder.roads) // loops through all roads
                         {
-                            if (temp2.Collide(road.hitbox))
+                            if (temp2.Collide(road.hitbox, g))
                             {
                                 temp2.ShowOverlap(g);
                                 Console.WriteLine("Overlap!");
@@ -212,42 +212,37 @@ namespace GreenLight
                 //if (Gridpoints.Find(x => x.Collision(mousecords)) != null)  // If the cursor hovers over a gridpoint on the secondclick
                 //{ //met deze regel niet gebruikt zie je nog iets beter direct wanneer het niet kan, moet het wel extra berekeningen maken, maar het is nog niet traag, dus is wel oke denk ik.
                 RectHitbox temp = calculateRect(firstPoint.Cords, mousecords);
-                
-
-                    foreach (AbstractRoad road in builder.roadBuilder.roads) // loops through all roads
+                legal = true;
+                Console.WriteLine(builder.roadBuilder.roads.Count());
+                foreach (AbstractRoad road in builder.roadBuilder.roads) // loops through all roads
+                {
+                    temp.ShowOverlap(g);
+                    if (temp.Collide(road.hitbox, g))
                     {
-                    if (temp.Collide(road.hitbox))
-                    {
-                        temp.ShowOverlap(g);
+                        
                         Console.WriteLine("Overlap!");
                         legal = false;
+                        break;
+                        
                     }
-                    else 
-                    {
-                        legal = true;
-
-                    }
-
-                    }
-                //}
-
+                    
+                }
                 Rectangle rec = new Rectangle(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y), Math.Abs(firstPoint.Cords.X - mousecords.X), Math.Abs(firstPoint.Cords.Y - mousecords.Y));
 
-                if (Gridpoints.Find(x => x.Collision(mousecords)) != null && legal)
-                {
-                    g.FillRectangle(Notsolidgreen, rec);
-                }
-                else if(!legal)
+                if(!legal)
                 {
                     g.FillRectangle(Notsolidred, rec);
                 }
-                else
+                else if (Gridpoints.Find(x => x.Collision(mousecords)) == null)
                 {
                     g.FillRectangle(Notsolidorange, rec);
                 }
-                    
+                else
+                {
+                    g.FillRectangle(Notsolidgreen, rec);
+                }
 
-                
+
             }
         }
 

@@ -184,7 +184,7 @@ namespace GreenLight
             return false;
         }
 
-        public override bool Collide(Hitbox _h)
+        public override bool Collide(Hitbox _h, Graphics g)
         {
             bool _temp = false;
             if (_h.Type == "Rect")
