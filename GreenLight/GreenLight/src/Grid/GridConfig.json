@@ -1,4 +1,6 @@
 {
   "SpacingWidth": 20,
-  "SpacingHeight": 20
+  "SpacingHeight": 20,
+  "BoxSize": 5,
+  "HitSize":  14
 }
