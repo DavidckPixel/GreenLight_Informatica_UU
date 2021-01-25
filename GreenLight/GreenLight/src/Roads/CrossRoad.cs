@@ -28,7 +28,7 @@ namespace GreenLight
         public CrossRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, _roadtype, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
             Extra = Roads.Config.crossroadExtra;
-            Point[] _points = hitBoxPoints(_point1, _point1, _lanes, Roads.Config.laneWidth, false);
+            Point[] _points = RoadMath.hitBoxPointsCross(_point1, _point1, _lanes, Roads.Config.laneWidth, false);
             hitbox = CreateHitbox(_points);
 
             int _width = (_lanes) * this.laneWidth + Roads.Config.scaleOffset * 2 + 2 * Extra;
@@ -143,22 +143,7 @@ namespace GreenLight
             }
 
         }
-        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _RoadhitBox)
-        {
-            Point[] _points = new Point[4];
-
-            Rectangle _rec = new Rectangle(one, new Size(1, 1));
-            int _inflate = _lanes * this.laneWidth / 2 + Extra;
-
-            _rec.Inflate(_inflate, _inflate);
-
-            _points[0] = _rec.Location;
-            _points[1] = new Point(_rec.Right, _rec.Top);
-            _points[2] = new Point(_rec.Left, _rec.Bottom);
-            _points[3] = new Point(_rec.Right, _rec.Bottom);
-
-            return _points;
-        }
+        
 
         private void createConnectionPoints()
         {

@@ -229,7 +229,7 @@ namespace GreenLight
                         return _temp;
                     }
                 }
-                _temp = (this.Contains(box.max_start) || this.Contains(box.max_end) || this.Contains(box.min_end) || this.Contains(box.min_start));
+                //_temp = (this.Contains(box.max_start) || this.Contains(box.max_end) || this.Contains(box.min_end) || this.Contains(box.min_start));
                 //Console.WriteLine(_h.Type);
             }
 
@@ -267,7 +267,7 @@ namespace GreenLight
             }
         }
 
-        public void ShowOverlap(Graphics g)
+        public override void ShowOverlap(Graphics g)
         {
             Point[] _points = new Point[]
             {

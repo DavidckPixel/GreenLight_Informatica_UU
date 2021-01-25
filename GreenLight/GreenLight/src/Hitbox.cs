@@ -37,6 +37,8 @@ namespace GreenLight
 
         public abstract void Draw(Graphics g);
 
+        public abstract void ShowOverlap(Graphics g);
+
         public static int BetterMin(int _one, int _two, int _three, int _four)
         {
             int _firstround = Math.Min(_one, _two);

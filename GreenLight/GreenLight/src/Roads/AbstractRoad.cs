@@ -75,7 +75,7 @@ namespace GreenLight
 
         //protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
         
-        public abstract Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _RoadHitBox);
+        //public abstract Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _RoadHitBox);
         public abstract Hitbox CreateHitbox(Point[] _array);
 
         public virtual void Draw(Graphics g)

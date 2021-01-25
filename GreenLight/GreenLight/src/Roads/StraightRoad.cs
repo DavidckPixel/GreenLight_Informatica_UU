@@ -229,10 +229,7 @@ namespace GreenLight
             return _points;
         }
 
-        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public override Hitbox CreateHitbox(Point[] _array)
         {

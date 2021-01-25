@@ -168,5 +168,275 @@ namespace GreenLight
 
             return _addIndex;
         }
+
+        public static Point[] hitBoxPointsCurved(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox, string _dir)
+        {
+            Point _one, _two;
+            int _roadWidth = (_laneWidth * _lanes) / 2;
+            Point[] _points = new Point[4];
+
+            if (_lanes % 2 == 0 && _Roadhitbox)
+            {
+                if (_dir == "SE" || _dir == "NW")
+                {
+                    one.X -= 10;
+                    two.Y -= 10;
+                }
+                else if (_dir == "SW" || _dir == "NE")
+                {
+                    one.X -= 10;
+                    two.Y += 10;
+                }
+            }
+
+            if (_dir == "NW" || _dir == "NE")
+            {
+                if (one.X < two.X)
+                {
+                    _one = two;
+                    _two = one;
+                }
+                else
+                {
+                    _one = one;
+                    _two = two;
+                }
+
+                if (_dir == "NW")
+                {
+                    _points[0] = new Point(_one.X + _roadWidth, _one.Y);
+                    _points[1] = new Point(_one.X - _roadWidth, _one.Y);
+                    _points[2] = new Point(_two.X, _two.Y + _roadWidth);
+                    _points[3] = new Point(_two.X, _two.Y - _roadWidth);
+                }
+                else
+                {
+                    _points[0] = new Point(_one.X, _one.Y + _roadWidth);
+                    _points[1] = new Point(_one.X, _one.Y - _roadWidth);
+                    _points[2] = new Point(_two.X - _roadWidth, _two.Y);
+                    _points[3] = new Point(_two.X + _roadWidth, _two.Y);
+                }
+            }
+            else
+            {
+                if (one.X < two.X)
+                {
+                    _one = one;
+                    _two = two;
+                }
+                else
+                {
+                    _one = two;
+                    _two = one;
+                }
+
+                if (_dir == "SE")
+                {
+                    //
+                    _points[0] = new Point(_one.X - _roadWidth, _one.Y);
+                    _points[1] = new Point(_one.X + _roadWidth, _one.Y);
+                    _points[2] = new Point(_two.X, _two.Y - _roadWidth);
+                    _points[3] = new Point(_two.X, _two.Y + _roadWidth);
+
+                }
+                else
+                {
+                    //
+                    _points[0] = new Point(_one.X, _one.Y - _roadWidth);
+                    _points[1] = new Point(_one.X, _one.Y + _roadWidth);
+                    _points[2] = new Point(_two.X + _roadWidth, _two.Y);
+                    _points[3] = new Point(_two.X - _roadWidth, _two.Y);
+                }
+            }
+
+            return _points;
+        }
+
+        public static Point[] hitBoxPointsDiagonal(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox, double _slp)
+        {
+            Point _one, _two;
+            int _roadWidth = (_laneWidth * _lanes) / 2;
+
+            if (_lanes % 2 == 0 && _Roadhitbox)
+            {
+                if (_slp != 0)
+                {
+                    if (_slp <= -1 || _slp >= 1)
+                    {
+                        one.X += 10;
+                        two.X += 10;
+                    }
+                    else
+                    {
+                        one.Y += 10;
+                        two.Y += 10;
+                    }
+                }
+                else
+                {
+                    if (one.X == two.X)
+                    {
+                        one.X += 10;
+                        two.X += 10;
+                    }
+                    else
+                    {
+                        one.Y += 10;
+                        two.Y += 10;
+                    }
+                }
+            }
+
+            if (one.Y <= two.Y)
+            {
+                _one = one;
+                _two = two;
+            }
+            else
+            {
+                _two = one;
+                _one = two;
+            }
+
+            Point[] _points = new Point[4];
+            int _angle;
+
+            float xDiff = _one.X - _two.X;
+            float yDiff = _one.Y - _two.Y;
+            _angle = (int)(Math.Atan2(yDiff, xDiff) * (180 / Math.PI));
+            _angle = Math.Abs(_angle);
+
+            Console.WriteLine("Angle: {0}", _angle);
+
+            if (_angle >= 45 && (_angle <= 135 || _angle > 180))
+            {
+                _points[0] = new Point(_one.X + _roadWidth, _one.Y);
+                _points[1] = new Point(_one.X - _roadWidth, _one.Y); //Hoogste punt Altijd
+                _points[2] = new Point(_two.X + _roadWidth, _two.Y); //Laagste Punt
+                _points[3] = new Point(_two.X - _roadWidth, _two.Y);
+            }
+            else if (_angle >= 0 && _angle < 45)
+            {
+                _points[1] = new Point(_two.X, _two.Y - _roadWidth);
+                _points[2] = new Point(_one.X, _one.Y + _roadWidth);
+                _points[0] = new Point(_one.X, _one.Y - _roadWidth);
+                _points[3] = new Point(_two.X, _two.Y + _roadWidth);
+            }
+            else
+            {
+
+                _points[1] = new Point(_one.X, _one.Y - _roadWidth); //Hoogste punt, altijd
+                _points[2] = new Point(_two.X, _two.Y + _roadWidth); // Laagste Punt
+
+                if (_one.Y + _roadWidth <= _two.Y - _roadWidth)
+                {
+                    _points[0] = new Point(_one.X, _one.Y + _roadWidth);
+                    _points[3] = new Point(_two.X, _two.Y - _roadWidth);
+                }
+                else
+                {
+                    _points[3] = new Point(_one.X, _one.Y + _roadWidth);
+                    _points[0] = new Point(_two.X, _two.Y - _roadWidth);
+                }
+            }
+
+            return _points;
+        }
+
+        public static Point[] hitBoxPointsCross(Point one, Point two, int _lanes, int _laneWidth, bool _RoadhitBox)
+        {
+            int Extra = Roads.Config.crossroadExtra;
+            Point[] _points = new Point[4];
+
+            Rectangle _rec = new Rectangle(one, new Size(1, 1));
+            int _inflate = _lanes * _laneWidth / 2 + Extra;
+
+            _rec.Inflate(_inflate, _inflate);
+
+            _points[0] = _rec.Location;
+            _points[1] = new Point(_rec.Right, _rec.Top);
+            _points[2] = new Point(_rec.Left, _rec.Bottom);
+            _points[3] = new Point(_rec.Right, _rec.Bottom);
+
+            return _points;
+        }
+        public static string Direction(Point _firstPoint, Point _secondPoint, string _Roadtype)
+        {
+            string RoadDirection = "x";
+            string RoadType = _Roadtype;
+            switch (RoadType)
+            {
+                case "Curved":
+                    {
+                        if (_firstPoint.X < _secondPoint.X)
+                        {
+                            if (_firstPoint.Y < _secondPoint.Y)
+                                RoadDirection = "NE";
+                            else
+                                RoadDirection = "SE";
+                        }
+                        else
+                        {
+                            if (_firstPoint.Y < _secondPoint.Y)
+                                RoadDirection = "NW";
+                            else
+                                RoadDirection = "SW";
+                        }
+                        
+                    }
+                    break;
+                case "Curved2":
+                    {
+                        if (_firstPoint.X < _secondPoint.X)
+                        {
+                            if (_firstPoint.Y < _secondPoint.Y)
+                                RoadDirection = "NE";
+                            else
+                                RoadDirection = "SE";
+                        }
+                        else
+                        {
+                            if (_firstPoint.Y < _secondPoint.Y)
+                                RoadDirection = "NW";
+                            else
+                                RoadDirection = "SW";
+                        }
+                        
+
+
+                    }
+                    break;
+                case "DiagonalRoad":
+                    {
+                        RoadDirection = "D";
+                    }
+                    break;
+                    /*case "StraightRoad":
+                        {
+                            if (_firstPoint.X < _secondPoint.X)
+                                RoadDirection = "E";
+                            else if (_secondPoint.X < _firstPoint.X)
+                                RoadDirection = "W";
+                            else if (_firstPoint.Y < _secondPoint.Y)
+                                RoadDirection = "S";
+                            else if (_firstPoint.Y > _secondPoint.Y)
+                                RoadDirection = "N";
+                        }
+                        break;*/
+            }
+            return RoadDirection;
+        }
+
+        public static double calculateSlope(Point one, Point two)
+        {
+            double _slp = (double)(two.Y - one.Y) / (double)(two.X - one.X); 
+            if (two.X - one.X == 0)
+            {
+                _slp = 0;
+            }
+
+            return _slp;
+        }
+
     }
 }

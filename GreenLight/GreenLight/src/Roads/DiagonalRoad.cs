@@ -23,7 +23,15 @@ namespace GreenLight
             this.Dir = _dir;
             this.Type = _type;
 
-            Point[] _points = hitBoxPoints(_point1, _point2, lanes, this.laneWidth, true);
+            double _slp = (double)(_point2.Y - _point1.Y) / (double)(_point2.X - _point1.X); //This code was borrow from the CalculateLanePoints since apperantly the slp is calculated in there
+            if (_point2.X - _point1.X == 0)
+            {
+                _slp = 0;
+            }
+
+            this.slp = _slp;
+
+            Point[] _points = RoadMath.hitBoxPointsDiagonal(_point1, _point2, lanes, this.laneWidth, true, this.slp);
             this.hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
 
             for (int x = 1; x <= this.lanes; x++)
@@ -42,7 +50,7 @@ namespace GreenLight
 
             this.slp = _slp;
         
-            Point[] _points = hitBoxPoints(_point1, _point2, 1, this.laneWidth, false);
+            Point[] _points = RoadMath.hitBoxPointsDiagonal(_point1, _point2, 1, this.laneWidth, false, this.slp);
             Hitbox _temp = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Green);
             return new DrivingLane(LanePoints.CalculateDiagonalLane(_point1,_point2), this.Dir, this.lanes, _thisLane, _temp);
         }
@@ -183,96 +191,7 @@ namespace GreenLight
             return CreateDrivingLane(_firstPoint, _secondPoint, t);
         }
 
-        public override Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox)
-        {
-            Point _one, _two;
-            int _roadWidth = (_laneWidth * _lanes) / 2;
-
-            if (lanes % 2 == 0 && _Roadhitbox)
-            {
-                if (this.slp != 0)
-                {
-                    if (this.slp <= -1 || this.slp >= 1)
-                    {
-                       one.X += 10;
-                       two.X += 10;
-                    }
-                    else
-                    {
-                        one.Y += 10;
-                        two.Y += 10;
-                    }
-                }
-                else
-                {
-                    if (one.X == two.X)
-                    {
-                        one.X += 10;
-                        two.X += 10;
-                    }
-                    else
-                    {
-                        one.Y += 10;
-                        two.Y += 10;
-                    }
-                }
-            }
-
-            if (one.Y <= two.Y)
-            {
-                _one = one;
-                _two = two;
-            }
-            else
-            {
-                _two = one;
-                _one = two;
-            }
-
-            Point[] _points = new Point[4];
-            int _angle;
-
-            float xDiff = _one.X - _two.X;
-            float yDiff = _one.Y - _two.Y;
-            _angle = (int)(Math.Atan2(yDiff, xDiff) * (180 / Math.PI));
-            _angle = Math.Abs(_angle);
-
-            Console.WriteLine("Angle: {0}", _angle);
-
-            if (_angle >= 45 && (_angle <= 135 || _angle > 180)) 
-            {
-                _points[0] = new Point(_one.X + _roadWidth, _one.Y);
-                _points[1] = new Point(_one.X - _roadWidth, _one.Y); //Hoogste punt Altijd
-                _points[2] = new Point(_two.X + _roadWidth, _two.Y); //Laagste Punt
-                _points[3] = new Point(_two.X - _roadWidth, _two.Y); 
-            }
-            else if(_angle >= 0 && _angle < 45)
-            {
-                _points[1] = new Point(_two.X, _two.Y - _roadWidth);
-                _points[2] = new Point(_one.X, _one.Y + _roadWidth);
-                _points[0] = new Point(_one.X, _one.Y - _roadWidth);
-                _points[3] = new Point(_two.X, _two.Y + _roadWidth);
-            }
-            else
-            {
-
-                _points[1] = new Point(_one.X, _one.Y - _roadWidth); //Hoogste punt, altijd
-                _points[2] = new Point(_two.X, _two.Y + _roadWidth); // Laagste Punt
-
-                if (_one.Y + _roadWidth <= _two.Y - _roadWidth)
-                {
-                    _points[0] = new Point(_one.X, _one.Y + _roadWidth);
-                    _points[3] = new Point(_two.X, _two.Y - _roadWidth);
-                }
-                else
-                {
-                    _points[3] = new Point(_one.X, _one.Y + _roadWidth);
-                    _points[0] = new Point(_two.X, _two.Y - _roadWidth);
-                }
-            }
-
-            return _points;
-        }
+        
 
 
         public override Hitbox CreateHitbox(Point[] _points)
