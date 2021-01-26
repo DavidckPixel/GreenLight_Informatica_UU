@@ -119,8 +119,9 @@ namespace GreenLight
                 _knot.Draw(g);
             }
 
-            Console.WriteLine("IK BEN NU AN HET TEKENENENENENEN");
-            gpsData.Draw(g, gpsData.nodePaths[2]);
+            Console.WriteLine("IK BEN NU AN HET TEKENENENENENEN, Count: " + gpsData.nodePaths.Count);
+            
+            gpsData.Draw(g, gpsData.nodePaths[0]);
         }
 
         private void ChangeSize(object o, EventArgs ea)
