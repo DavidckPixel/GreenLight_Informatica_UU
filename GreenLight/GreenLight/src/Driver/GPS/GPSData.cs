@@ -243,9 +243,14 @@ namespace GreenLight.src.Driver.GPS
                 }
                 else
                 {
+                    
                     Console.WriteLine("NEXTLANE INDEX: " + _linkPath.NextLaneIndex.First());
                     Console.WriteLine("DrivingLanes: " + _linkPath.road.Drivinglanes.Count);
-                    _linkPath.road.Drivinglanes[_linkPath.NextLaneIndex.First()].DrawLine(g, Pens.Green);
+                    foreach(int _possiblelane in _linkPath.NextLaneIndex.First())
+                    {
+                        _linkPath.road.Drivinglanes[_possiblelane].DrawLine(g, Pens.Green);
+                    }
+                    //_linkPath.road.Drivinglanes[_linkPath.NextLaneIndex.First()].DrawLine(g, Pens.Green);
                 }
                 Console.WriteLine(_linkPath.road.point1);
             }
