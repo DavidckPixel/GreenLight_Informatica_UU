@@ -24,28 +24,33 @@ namespace GreenLight
 
         public override void initSettingScreen()
         {
-            this.settingScreen = new Form();
+            this.settingScreen = new Pop_Up_Form(new Size(400, 100));
 
-            this.settingScreen.Size = new Size(400, 400);
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
             QuestionLabel = new Label();
             QuestionLabel.Text = "Place Priority Sign?";
             QuestionLabel.Location = new Point(20, 10);
+            QuestionLabel.Width = 150;
             this.settingScreen.Controls.Add(QuestionLabel);
 
             errorMess = new Label();
-            errorMess.Location = new Point(20, 60);
+            errorMess.Location = new Point(200, 10);
             errorMess.Text = "";
             errorMess.ForeColor = Color.Red;
             this.settingScreen.Controls.Add(errorMess);
 
-            YesButton = new CurvedButtons(new Size(80, 40), new Point(10, 150), 25, "../../User Interface Recources/Custom_Small_Button.png", "Place Sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            Move_panel Move = new Move_panel(this.settingScreen);
+            Move.Location = new Point(200, 40);
+            Move.Size = new Size(200, 100);
+            this.settingScreen.Controls.Add(Move);
+
+            YesButton = new CurvedButtons(new Size(80, 40), new Point(10, 40), 25, "../../User Interface Recources/Custom_Small_Button.png", "Place Sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             YesButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.prioritySignC.placeSign(); };
             this.settingScreen.Controls.Add(YesButton);
 
-            NoButton = new CurvedButtons(new Size(80, 40), new Point(110, 150), 25, "../../User Interface Recources/Custom_Small_Button.png", "Don't Place", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            NoButton = new CurvedButtons(new Size(80, 40), new Point(110, 40), 25, "../../User Interface Recources/Custom_Small_Button.png", "Don't Place", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             NoButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.prioritySignC.deleteSign(); };
             this.settingScreen.Controls.Add(NoButton);
 
@@ -70,7 +75,7 @@ namespace GreenLight
 
             this.errorMess.Text = "";            
 
-            this.settingScreen.Show();
+            this.settingScreen.ShowDialog();
             this.settingScreen.BringToFront();
 
         }

@@ -27,38 +27,43 @@ namespace GreenLight
 
         public override void initSettingScreen()
         {
-            this.settingScreen = new Form();
+            this.settingScreen = new Pop_Up_Form(new Size(400, 135));
 
-            this.settingScreen.Size = new Size(400, 400);
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
             QuestionLabel = new Label();
             QuestionLabel.Text = "Location for Sign?";
             QuestionLabel.Location = new Point(20, 10);
+            QuestionLabel.Width = 140;
             this.settingScreen.Controls.Add(QuestionLabel);
 
             errorMess = new Label();
-            errorMess.Location = new Point(20, 60);
+            errorMess.Location = new Point(160, 10);
             errorMess.Text = "";
             errorMess.ForeColor = Color.Red;
             this.settingScreen.Controls.Add(errorMess);
 
             BeginLabel = new Label();
-            BeginLabel.Location = new Point(20, 100);
+            BeginLabel.Location = new Point(20, 50);
             BeginLabel.Text = "should be cords";
             this.settingScreen.Controls.Add(BeginLabel);
 
             EndLabel = new Label();
-            EndLabel.Location = new Point(120, 100);
+            EndLabel.Location = new Point(120, 50);
             EndLabel.Text = "should be cords";
             this.settingScreen.Controls.Add(EndLabel);
 
-            SaveButton = new CurvedButtons(new Size(80, 40), new Point(10, 300), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            Move_panel Move = new Move_panel(this.settingScreen);
+            Move.Location = new Point(220, 40);
+            Move.Size = new Size(180, 100);
+            this.settingScreen.Controls.Add(Move);
+
+            SaveButton = new CurvedButtons(new Size(80, 40), new Point(10, 80), 25, "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             SaveButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.stopSign.placeSign(); };
             this.settingScreen.Controls.Add(SaveButton);
 
-            CancelButton = new CurvedButtons(new Size(80, 40), new Point(60 , 300), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            CancelButton = new CurvedButtons(new Size(90, 40), new Point(100 , 80), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             CancelButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.stopSign.deleteSign(); };
             this.settingScreen.Controls.Add(CancelButton);
 
@@ -94,7 +99,7 @@ namespace GreenLight
 
             Console.WriteLine(this.settingScreen.Visible.ToString());
 
-            this.settingScreen.Show();
+            this.settingScreen.ShowDialog();
             this.settingScreen.BringToFront();
 
         }

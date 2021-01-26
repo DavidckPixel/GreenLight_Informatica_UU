@@ -28,12 +28,11 @@ namespace GreenLight
 
         public override void Initialize()
         {
-            this.settingScreen = new Form();
+            this.settingScreen = new Pop_Up_Form(new Size(400, 600));
             this.settingScreen.Hide();
 
-            this.settingScreen.Size = new Size(500, 500);
             this.settingScreen.Location = new Point(100, 100);
-            this.settingScreen.BackColor = Color.FromArgb(100, 100, 100);
+            this.settingScreen.BackColor = Color.FromArgb(255,255,255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
             this.locked = new PictureBox();
@@ -41,6 +40,11 @@ namespace GreenLight
             this.locked.Location = new Point(400, 50);
             this.locked.Image = new Bitmap(Image.FromFile("../../Images/Lock.png"), 50,50);
             this.settingScreen.Controls.Add(this.locked);
+
+            Move_panel Move = new Move_panel(this.settingScreen);
+            Move.Location = new Point(350, 0);
+            Move.Size = new Size(100, 600);
+            this.settingScreen.Controls.Add(Move);
 
             CreateTextBox(new Point(10, 10), new Size(200, 30), ref name, ref nameLabel, "Worldname:", "");
             CreateTextBox(new Point(10, 50), new Size(200, 30), ref brakePwr, ref brakePwrLabel, "Brake Power:", "");
@@ -57,8 +61,8 @@ namespace GreenLight
 
             entityType = new ListBox();
             DriverProfileData.FacesToString().ForEach(x => entityType.Items.Add(x));
-            entityType.Size = new Size(100, 20);
-            entityType.Location = new Point(210, 300);
+            entityType.Size = new Size(90, 80);
+            entityType.Location = new Point(210, 250);
             entityType.SelectionMode = SelectionMode.One;
             this.settingScreen.Controls.Add(entityType);
 
@@ -67,9 +71,9 @@ namespace GreenLight
             entityTypeLabel.Location =  new Point(10, 300);
             this.settingScreen.Controls.Add(entityTypeLabel);
 
-            this.doneButton = new CurvedButtons(new Size(70, 30), new Point(200, 400), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            this.returnButton = new CurvedButtons(new Size(70, 30), new Point(300, 400), 25, "../../User Interface Recources/Custom_Small_Button.png", "Return", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            this.deleteButton = new CurvedButtons(new Size(70, 30), new Point(400, 400), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            this.doneButton = new CurvedButtons(new Size(80, 40), new Point(10, 550), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            this.returnButton = new CurvedButtons(new Size(100, 40), new Point(100, 550), 25, "../../User Interface Recources/Custom_Small_Button.png", "Return", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            this.deleteButton = new CurvedButtons(new Size(90, 40), new Point(210, 550), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
 
             this.doneButton.Click += DoneClick;
             this.returnButton.Click += ReturnClick;
@@ -82,8 +86,9 @@ namespace GreenLight
             errorText = new Label();
             errorText.Text = "";
             errorText.ForeColor = Color.Red;
-            errorText.Location = new Point(10, 450);
+            errorText.Location = new Point(10, 500);
             errorText.Size = new Size(390, 60);
+            errorText.BringToFront();
             errorText.Hide();
 
             errorButton = new CurvedButtons(new Size(40, 30), new Point(400, 450), 25, "../../User Interface Recources/Custom_Small_Button.png", "Oke!", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
@@ -128,7 +133,7 @@ namespace GreenLight
                 this.locked.Show();
             }
 
-            this.settingScreen.Show();
+            this.settingScreen.ShowDialog();
             this.settingScreen.BringToFront();
             this.settingScreen.Invalidate();
         }
