@@ -11,7 +11,7 @@ namespace GreenLight
 {
     public class SpeedSignController : AbstractSignController
     {
-        public Label label1, label2;
+        public Label label1, label2, FlipLabel;
         public ComboBox Combobox1;
         public PictureBox pb1;
         public CurvedButtons Button1;
@@ -36,24 +36,27 @@ namespace GreenLight
 
             this.settingScreen.Controls.Add(label2);
 
-            /*pb1 = new PictureBox();
-            pb1.Image = Image.FromFile("../../User Interface Recources/Empty_Speed_Sign.png");
-            pb1.Location = new Point(190, 60);
-            pb1.Size = new Size(75, 75);
-            pb1.SizeMode = PictureBoxSizeMode.Zoom;
-            pb1.BringToFront();
-            this.settingScreen.Controls.Add(pb1);*/
+            FlipLabel = new Label();
+            FlipLabel.Text = "The sign has to be on the right side of the road.";
+            FlipLabel.Location = new Point(30, 140);
+            FlipLabel.Size = new Size(230, 20);
+            FlipLabel.TextAlign = ContentAlignment.MiddleCenter;
+            this.settingScreen.Controls.Add(FlipLabel);
+
+            CurvedButtons FlipButton = new CurvedButtons(new Size(250, 40), new Point(30, 170), 25, "../../User Interface Recources/Custom_Button.png", "Flip sign to the other side", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            FlipButton.Click += (object o, EventArgs ea) => { };// General_Form.Main.BuildScreen.builder.signController.stopSign.flipSign(); };
+            this.settingScreen.Controls.Add(FlipButton);
 
             label1 = new Label();
             label1.Text = "Change the speedlimit on this road to: ";
-            label1.Location = new Point(30, 80);
+            label1.Location = new Point(30, 45);
             label1.Size = new Size(150, 40);
             label1.TextAlign = ContentAlignment.MiddleCenter;
 
             this.settingScreen.Controls.Add(label1);
 
             errorMess = new Label();
-            errorMess.Location = new Point(80, 100);
+            errorMess.Location = new Point(80, 85);
             errorMess.Text = "";
             errorMess.ForeColor = Color.Red;
 
@@ -63,24 +66,24 @@ namespace GreenLight
             Combobox1.Items.AddRange(new object[] { "30", "40", "50", "60", "70", "80", "90", "100", "110", "120", "130" });
             Combobox1.DropDownWidth = 75;
             Combobox1.Text = "50";
-            Combobox1.Location = new Point(100, 160);
+            Combobox1.Location = new Point(100, 115);
 
             this.settingScreen.Controls.Add(Combobox1);
 
 
-            ss = new Speedsign(new Size(75, 75), new Point(190, 60));
+            ss = new Speedsign(new Size(75, 75), new Point(190, 30));
             ss.speed = 0;
             this.settingScreen.Controls.Add(ss);
 
             CurvedButtons Divider1 = new CurvedButtons();
-            Divider1.Location = new Point(20, 200);
+            Divider1.Location = new Point(20, 220);
             this.settingScreen.Controls.Add(Divider1);
 
-            Button1 = new CurvedButtons(new Size(80, 40), new Point(55, 230), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            Button1 = new CurvedButtons(new Size(80, 40), new Point(55, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             Button1.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.speedSign.saveButton(); };
             this.settingScreen.Controls.Add(Button1);
 
-            Button2 = new CurvedButtons(new Size(80, 40), new Point(165, 230), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            Button2 = new CurvedButtons(new Size(80, 40), new Point(165, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             Button2.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.speedSign.deleteSign(); };
             this.settingScreen.Controls.Add(Button2);
         }
@@ -138,8 +141,8 @@ namespace GreenLight
 
             Console.WriteLine(this.settingScreen.Visible.ToString());
             this.ss.Invalidate();
-            this.settingScreen.Show();
-            this.settingScreen.BringToFront();
+            settingScreen.ShowDialog();
+            settingScreen.BringToFront();
 
         }
 
