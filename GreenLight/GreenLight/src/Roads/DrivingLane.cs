@@ -85,9 +85,10 @@ namespace GreenLight
 
         public Pen getPen(int _side)
         {
+            Console.WriteLine("roadlane? " + thisLane);
             Pen p = new Pen(Color.FromArgb(248, 185, 0), 3);
 
-            if (thisLane <= roadLanes - 2)
+            if (thisLane > 1 && thisLane < roadLanes)
             {
                 p.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             }
@@ -97,7 +98,7 @@ namespace GreenLight
                 p.Width = 5;
                 p.Color = Color.White;
             }
-            else if (thisLane == roadLanes - 1)
+            else if (thisLane == 1)
             {
                 if (_side == 1)
                 {
@@ -150,16 +151,9 @@ namespace GreenLight
                         {
                             startAngle = 180;
                             rect = new Rectangle(new Point(Math.Min(points[0].cord.X, points[points.Count - 1].cord.X), Math.Min(points[0].cord.Y, points[points.Count - 1].cord.Y)), size);
-                            if (roadLanes % 2 == 0)
-                            {
-                                side1 = 1;
-                                side2 = 2;
-                            }
-                            else
-                            {
-                                side1 = 2;
-                                side2 = 1;
-                            }
+
+                            side1 = 1;
+                            side2 = 2;
                         }
                         break;
                     case "SW":
@@ -167,24 +161,17 @@ namespace GreenLight
                             startAngle = 270;
                             rect = new Rectangle(new Point(Math.Max(points[0].cord.X, points[points.Count - 1].cord.X) - size.Width, Math.Min(points[0].cord.Y, points[points.Count - 1].cord.Y)), size);
 
-                            side1 = 1;
-                            side2 = 2;
+                            side1 = 2;
+                            side2 = 1;
                         }
                         break;
                     case "NW":
                         {
                             startAngle = 0;
                             rect = new Rectangle(new Point(Math.Max(points[0].cord.X, points[points.Count - 1].cord.X) - size.Width, Math.Max(points[0].cord.Y, points[points.Count - 1].cord.Y) - size.Height), size);
-                            if (roadLanes % 2 == 0)
-                            {
-                                side1 = 2;
-                                side2 = 1;
-                            }
-                            else
-                            {
-                                side1 = 1;
-                                side2 = 2;
-                            }
+                            
+                            side1 = 2;
+                            side2 = 1;
                         }
                         break;
                     case "NE":
@@ -192,8 +179,8 @@ namespace GreenLight
                             startAngle = 90;
                             rect = new Rectangle(new Point(Math.Min(points[0].cord.X, points[points.Count - 1].cord.X), Math.Max(points[0].cord.Y, points[points.Count - 1].cord.Y) - size.Height), size);
 
-                            side1 = 2;
-                            side2 = 1;
+                            side1 = 1;
+                            side2 = 2;
                         }
                         break;
                 }
