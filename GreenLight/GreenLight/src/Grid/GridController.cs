@@ -97,7 +97,7 @@ namespace GreenLight
             }
 
 
-            Console.WriteLine("MouseClick Button: " + mea.Button);
+            //Console.WriteLine("MouseClick Button: " + mea.Button);
 
             if (mea.Button == MouseButtons.Right)
             {
@@ -108,8 +108,8 @@ namespace GreenLight
                 legal = true;
                 if (_point != null)
                 {
-                    Console.WriteLine("First PointClick!");
-                    Console.WriteLine(_point.Cords);
+                    //Console.WriteLine("First PointClick!");
+                    //Console.WriteLine(_point.Cords);
                     this.firstClick = false;
                     this.firstPoint = _point;
                 }
@@ -119,8 +119,8 @@ namespace GreenLight
                 this.secondPoint = Gridpoints.Find(x => x.Collision(mea.Location));
                 if (this.secondPoint != null && this.secondPoint != this.firstPoint)// && legal)
                 {
-                    Console.WriteLine("Second PointClick!");
-                    Console.WriteLine(_point.Cords);
+                    //Console.WriteLine("Second PointClick!");
+                    //Console.WriteLine(_point.Cords);
                     this.secondPoint = _point;
                     builder.BuildRoad(this.firstPoint.Cords, this.secondPoint.Cords);
                     Hitbox temp3 = calculateRect(firstPoint.Cords, secondPoint.Cords);

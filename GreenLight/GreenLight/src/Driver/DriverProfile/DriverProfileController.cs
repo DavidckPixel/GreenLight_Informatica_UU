@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace GreenLight
 {
@@ -14,7 +11,7 @@ namespace GreenLight
 
         Form settingScreen;
         PictureBox settingScreenImage;
-        Label fuelUsed, brakeTime, stopTime, mood, braking;
+        Label fuelUsed, brakeTime, stopTime, mood, braking, wantsToSwitch, brakeWatch;
         CurvedButtons doneButton;
 
         public bool simulationPaused;
@@ -68,6 +65,16 @@ namespace GreenLight
             this.braking.Size = new Size(200, 30);
             this.settingScreen.Controls.Add(this.braking);
 
+            this.wantsToSwitch = new Label();
+            this.wantsToSwitch.Location = new Point(300, 300);
+            this.wantsToSwitch.Size = new Size(200, 30);
+            this.settingScreen.Controls.Add(this.wantsToSwitch);
+
+            this.brakeWatch = new Label();
+            this.brakeWatch.Location = new Point(300, 400);
+            this.brakeWatch.Size = new Size(200, 30);
+            this.settingScreen.Controls.Add(this.brakeWatch);
+
             this.doneButton = new CurvedButtons(new Size(100, 30), new Point(10, 450), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             this.doneButton.Click += HideScreen;
             this.settingScreen.Controls.Add(this.doneButton);
@@ -79,10 +86,10 @@ namespace GreenLight
             g.DrawImage(this.displayImage, 0, 0 , this.settingScreenImage.Width, this.settingScreenImage.Height);
         }
 
-        public void PauseSimulation()
+        public void PauseSimulation(List<BetterVehicle> _vehicleList)
         {
             simulationPaused = true;
-            BetterVehicleTest.vehiclelist.ForEach(x => x.CreateHitbox());
+            _vehicleList.ForEach(x => x.CreateHitbox());
         }
 
         public void UnPauseSimulation()
@@ -92,17 +99,19 @@ namespace GreenLight
             this.selectedVehicle = null;
         }
 
-        public void OnClick(Point _location)
+        public void OnClick(Point _location, List<BetterVehicle> _vehicleList)
         {
             if (!simulationPaused || this.settingScreen.Visible)
             {
+                Console.WriteLine("Simulation Not paused || Screen not visable");
                 return;
             }
 
-            this.selectedVehicle = BetterVehicleTest.vehiclelist.Find(x => x.hitbox.Contains(_location));
+            this.selectedVehicle = _vehicleList.Find(x => x.hitbox.Contains(_location));
 
             if(this.selectedVehicle == null)
             {
+                Console.WriteLine("No hitbox found");
                 return;
             }
 
@@ -120,6 +129,9 @@ namespace GreenLight
             this.mood.Text = _profile.mood;
             this.braking.Text = _ai.isBraking.ToString();
             this.displayImage = _profile.imgFace;
+            this.wantsToSwitch.Text = _ai.wantsToSwitch.ToString();
+            string _brakeText = "TOP " + _ai.status[0] + "RIGHT " + _ai.status[1] + "BOTTOM " + _ai.status[2] + "LEFT " + _ai.status[3];
+            this.brakeWatch.Text = _brakeText;
 
             this.settingScreen.Show();
             this.settingScreen.BringToFront();

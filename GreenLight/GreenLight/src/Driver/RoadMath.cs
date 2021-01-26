@@ -111,7 +111,7 @@ namespace GreenLight
                 return 0;
             }
 
-            List<LanePoints> _partialpoints = _points.GetRange(_index1, _index2 - _index1);
+            List<LanePoints> _partialpoints = _points.GetRange(_index1, Math.Abs(_index2 - _index1));
             return _partialpoints.Sum(x => x.distance.Item1);
         }
 

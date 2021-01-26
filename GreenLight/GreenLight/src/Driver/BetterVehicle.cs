@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using GreenLight.src.Driver.GPS;
 
 namespace GreenLight
 {
@@ -32,10 +33,12 @@ namespace GreenLight
 
         public float drawDegree;
         public bool hardStop;
+        public bool toDelete;
 
         public RectHitbox hitbox;
 
-        public BetterVehicle(VehicleStats _stat, Point _startPoint) : base(_startPoint)
+
+        public BetterVehicle(VehicleStats _stat, Node _startPoint, BetterAI _ai) : base(_startPoint.knot.Cord)
         {
             this.weight = _stat.Weight;
             this.length = _stat.Length;
@@ -45,12 +48,20 @@ namespace GreenLight
             this.cw = _stat.Cw;
             this.surface = _stat.Surface;
 
-            this.locationX = _startPoint.X;
-            this.locationY = _startPoint.Y;
+            this.locationX = _startPoint.knot.Cord.X;
+            this.locationY = _startPoint.knot.Cord.Y;
+
+            this.vehicleAI = _ai;
+            this.vehicleAI.setVehicle(this, _startPoint);
         }
 
         public void Update()
         {
+            if (toDelete)
+            {
+                return;
+            }
+
             if (hardStop)
             {
                 return;
@@ -88,7 +99,7 @@ namespace GreenLight
 
             brakeDistance = weight * speed * speed / (physics.Brakepwr * 2);
 
-            this.vehicleAI.lanePointsMovePerTick = RoadMath.LanePointsInDistance(this.speed * this.vehicleAI.followInterval, vehicleAI.currentLaneIndex, this.currentLane.points);
+            this.vehicleAI.lanePointsMovePerTick = RoadMath.LanePointsInDistance(this.speed * this.vehicleAI.followInterval, vehicleAI.currentLanePointIndex, this.currentLane.points);
         }
 
         public void ChangeLocation(double _speed)
@@ -133,7 +144,7 @@ namespace GreenLight
         public void SwitchRoad(AbstractRoad _road, int _laneIndex)
         {
             this.currentRoad = _road;
-            this.currentLane = this.currentRoad.Drivinglanes[_laneIndex];
+            this.currentLane = this.currentRoad.Drivinglanes[_laneIndex - 1];
         }
 
         private void StayOnLane(double _localspeed)
@@ -155,12 +166,14 @@ namespace GreenLight
 
         public void CreateHitbox()
         {
+            Console.WriteLine("Vehicle Hitbox created!");
             hitbox = new RectHitbox(new Point((int)this.locationX - 10, (int)this.locationY - 10), new Point((int)this.locationX + 10, (int)this.locationY - 10), new Point((int)this.locationX - 10, (int)this.locationY + 10),new Point((int)this.locationX + 10, (int)this.locationY + 10), Color.Pink);
         }
 
         public void DeleteVehicle(bool _dumpData)
         {
-            //Code to delete the vehicle -> call the data Collector.removeVehicle();
+            this.toDelete = true;
+            General_Form.Main.SimulationScreen.Simulator.vehicleController.toDelete.Add(this);
         }
     }
 }

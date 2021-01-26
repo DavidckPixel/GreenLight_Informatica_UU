@@ -23,12 +23,12 @@ namespace GreenLight
         }
         public void AddOriginPoint(int weight, Point location) //Adds an OriginPoint to the list of OriginPoints
         {
-            Console.WriteLine("making an originpoint");
+            //Console.WriteLine("making an originpoint");
             foreach (OriginPoints _op in OriginPointsList)
             {
                 if (_op.X < location.X + 4 && _op.X > location.X - 4 && _op.Y < location.Y + 4 && _op.Y > location.Y - 4)
                 {
-                    Console.WriteLine("returned on point" + _op);
+                    //Console.WriteLine("returned on point" + _op);
                     return;
                 }
             }
@@ -60,7 +60,7 @@ namespace GreenLight
                 }
                 catch
                 {
-                    Console.WriteLine("No spawnpoints available.");
+                    //Console.WriteLine("No spawnpoints available.");
                 }
                 return new Point (0,0);
             }

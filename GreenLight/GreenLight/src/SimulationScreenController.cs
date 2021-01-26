@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using GreenLight.src.Driver.GPS;
 
 //This is very similar to the build controller but instead is called when switching to the simulation screen.
 
@@ -14,7 +15,8 @@ namespace GreenLight
     {
         public string ActiveSubMenu;
         public SimulationController Simulator;
-        Form mainForm;
+        public Form mainForm;
+        public GPSData gpsData;
 
         public SimulationScreenController(Form _tempform)
         {
@@ -24,17 +26,17 @@ namespace GreenLight
             this.Screen.Location = new Point(0, 0);
             this.Screen.BackColor = Color.FromArgb(196, 196, 198);
             this.Screen.Paint += DrawPictureBox;
+            this.Screen.MouseClick += ClickPictureBox;
 
             this.mainForm = _tempform;
             this.mainForm.SizeChanged += ChangeSize;
 
             this.Screen.Image = new System.Drawing.Bitmap(Screen.Width, Screen.Height);
 
-            this.Simulator = new SimulationController();
+            this.Simulator = new SimulationController(this);
             Log.Write("Created the Simulation Screen Controller");
 
             this.mainForm.Controls.Add(this.Screen);
-
         }
 
         public override void Initialize()
@@ -46,6 +48,7 @@ namespace GreenLight
         {
             General_Form.Main.UserInterface.Menu_to_simulation();
             SwitchSubMenus("Weather");
+            this.gpsData = new GPSData(General_Form.Main.BuildScreen.builder.roadBuilder.roads);
             this.Screen.Invalidate();
             Log.Write("Set Active Submenu to Weather");
         }
@@ -111,6 +114,35 @@ namespace GreenLight
                 _road.Draw(g);
             }
             Log.Write("Completed drawing the roads on the simulation screen");
+
+            for(int x = 0; x < this.Simulator.vehicleController.vehicleList.Count(); x++)
+            {
+                this.Simulator.vehicleController.vehicleList[x].Draw(g);
+                if (this.Simulator.SimulationPaused)
+                {
+                    if (this.Simulator.vehicleController.vehicleList[x].hitbox != null)
+                    {
+                        this.Simulator.vehicleController.vehicleList[x].hitbox.Draw(g);
+                    }
+                }
+            }
+
+            foreach(Knot _knot in gpsData._allKnots)
+            {
+                //_knot.Draw(g);
+            }
+            //gpsData.Draw(g, gpsData.nodePaths[0]);
+
+        }
+
+        public void ClickPictureBox(object o, MouseEventArgs mea)
+        {
+            Console.WriteLine("CLICK!");
+
+            if (this.Simulator.SimulationPaused)
+            {
+                this.Simulator.profileController.OnClick(mea.Location, this.Simulator.vehicleController.vehicleList);
+            }
         }
 
         private void ChangeSize(object o, EventArgs ea)

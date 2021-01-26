@@ -24,14 +24,13 @@ namespace GreenLight
 
         }
 
-        public void AddDriver(int _x, int _y)
+        public BetterAI GetDriver()
         {
             //Hier dingen die waardes van menu halen ofzo, of bereken voor welke stats etc.
 
             DriverStats _stats = getDriverStats();
-            Vehicle _vehicle = General_Form.Main.SimulationScreen.Simulator.vehicleController.getVehicle(_x,_y);
 
-            driverlist.Add(new AI(_vehicle, _stats));
+            return new BetterAI(_stats);
         }
 
         public DriverStats getDriverStats(DriverStats _stats = null)

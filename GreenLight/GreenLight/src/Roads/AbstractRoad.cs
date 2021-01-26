@@ -105,7 +105,7 @@ namespace GreenLight
 
             foreach(Lane _lane in Drivinglanes)
             {
-                _lane.DrawLine(g);
+                _lane.DrawLine(g, Pens.DarkGoldenrod);
             }
         }
 
