@@ -133,7 +133,7 @@ namespace GreenLight
         {
             if (General_Form.Main != null)
             {
-                General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "D";
+                General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross";
             }
 
             this.selectedRoad = _road;
@@ -267,7 +267,7 @@ namespace GreenLight
         {
             if (General_Form.Main != null)
             {
-                General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "X";
+                General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross";
             }
             this.settingScreen.Hide();
 

@@ -87,10 +87,10 @@ namespace GreenLight
 
             if (_type == "Cross")
             {
-                if (legal)
+                if (legal && _point != null)
                 {
                     builder.BuildRoad(_point.Cords, _point.Cords);
-                    Hitbox temp4 = calculateRect(firstPoint.Cords, secondPoint.Cords);
+                    Hitbox temp4 = calculateRect(_point.Cords, _point.Cords);
                     flipGridpoints(temp4);
                 }
                 return;

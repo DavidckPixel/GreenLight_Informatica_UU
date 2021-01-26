@@ -63,7 +63,7 @@ namespace GreenLight
 
 
             CurvedButtons Crossroad = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/CrossRoad_Button.png", this.BackColor);
-            Crossroad.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross"; };
+            Crossroad.Click += (object o, EventArgs EA) => { ResetButtons(Crossroad, Crossroad.Image_path); General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross"; };
             this.Controls.Add(Crossroad);
             ESRM.Add(Crossroad);
 
