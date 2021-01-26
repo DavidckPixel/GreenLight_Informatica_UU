@@ -117,7 +117,7 @@ namespace GreenLight
             else
             {
                 this.secondPoint = Gridpoints.Find(x => x.Collision(mea.Location));
-                if (this.secondPoint != null && this.secondPoint != this.firstPoint && legal)
+                if (this.secondPoint != null && this.secondPoint != this.firstPoint)// && legal)
                 {
                     Console.WriteLine("Second PointClick!");
                     Console.WriteLine(_point.Cords);
@@ -173,6 +173,7 @@ namespace GreenLight
                 Brush Notsolidgreen = new SolidBrush(Color.FromArgb(100, Color.Green));
                 Brush Notsolidorange = new SolidBrush(Color.FromArgb(100, Color.Orange));
 
+                /* 
                 if (General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "Cross")
                 {
                     Rectangle _rec = new Rectangle(mousecords, new Size(1, 1));
@@ -235,7 +236,7 @@ namespace GreenLight
                     g.FillRectangle(Notsolidgreen, rec);
                 }
 
-
+                */
             }
         }
 

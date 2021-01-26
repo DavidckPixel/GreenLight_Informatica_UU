@@ -20,6 +20,7 @@ namespace GreenLight
         public int SizeX, SizeY;
 
         public Color color;
+        public int _lanes = 0;
 
         public List<LanePoints> lanepoints = new List<LanePoints>();
 
