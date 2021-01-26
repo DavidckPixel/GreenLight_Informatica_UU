@@ -12,6 +12,7 @@ namespace GreenLight
         public RectHitbox hitbox;
         public int priorityLevel;
         public string side;
+        public bool driving;
 
         public List<BetterAI> aiOnSide= new List<BetterAI>();
 

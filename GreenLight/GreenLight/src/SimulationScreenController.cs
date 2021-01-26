@@ -26,6 +26,7 @@ namespace GreenLight
             this.Screen.Location = new Point(0, 0);
             this.Screen.BackColor = Color.FromArgb(196, 196, 198);
             this.Screen.Paint += DrawPictureBox;
+            this.Screen.MouseClick += ClickPictureBox;
 
             this.mainForm = _tempform;
             this.mainForm.SizeChanged += ChangeSize;
@@ -117,6 +118,13 @@ namespace GreenLight
             for(int x = 0; x < this.Simulator.vehicleController.vehicleList.Count(); x++)
             {
                 this.Simulator.vehicleController.vehicleList[x].Draw(g);
+                if (this.Simulator.SimulationPaused)
+                {
+                    if (this.Simulator.vehicleController.vehicleList[x].hitbox != null)
+                    {
+                        this.Simulator.vehicleController.vehicleList[x].hitbox.Draw(g);
+                    }
+                }
             }
 
             foreach(Knot _knot in gpsData._allKnots)
@@ -124,6 +132,17 @@ namespace GreenLight
                 //_knot.Draw(g);
             }
             //gpsData.Draw(g, gpsData.nodePaths[0]);
+
+        }
+
+        public void ClickPictureBox(object o, MouseEventArgs mea)
+        {
+            Console.WriteLine("CLICK!");
+
+            if (this.Simulator.SimulationPaused)
+            {
+                this.Simulator.profileController.OnClick(mea.Location, this.Simulator.vehicleController.vehicleList);
+            }
         }
 
         private void ChangeSize(object o, EventArgs ea)

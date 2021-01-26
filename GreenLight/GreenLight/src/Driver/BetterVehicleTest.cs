@@ -183,7 +183,7 @@ namespace GreenLight
 
         private void click(object sender, MouseEventArgs e)
         {
-            profileController.OnClick(e.Location);
+            profileController.OnClick(e.Location, null);
             dataController.ExportData("Test1");
 
             if (!profileController.simulationPaused)
@@ -191,7 +191,7 @@ namespace GreenLight
                 testVehicle.hardStop = true;
                 testVehicle2.hardStop = true;
 
-                profileController.PauseSimulation();
+                profileController.PauseSimulation(null);
                 //dataController.UpdateBrakePerTickChart();
                 this.Invalidate();
             }

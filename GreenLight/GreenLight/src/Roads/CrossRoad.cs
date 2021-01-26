@@ -18,6 +18,8 @@ namespace GreenLight
         public ConnectionPoint selectedPoint;
         public double Scale;
         public int Extra;
+
+        public BetterAI onCross = null;
         
 
         public CrossRoadSide[] sides = new CrossRoadSide[4];
@@ -212,6 +214,7 @@ namespace GreenLight
         {
             foreach (CrossRoadSide _side in sides) {
                 Console.WriteLine(_side.side + " -- " + _side.status + "Amount of cars: " + _side.aiOnSide.Count());
+                Console.WriteLine("Occupied? " + _side.driving);
             }
             Console.WriteLine();
         }

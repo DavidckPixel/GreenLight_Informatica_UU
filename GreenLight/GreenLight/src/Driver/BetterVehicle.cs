@@ -166,6 +166,7 @@ namespace GreenLight
 
         public void CreateHitbox()
         {
+            Console.WriteLine("Vehicle Hitbox created!");
             hitbox = new RectHitbox(new Point((int)this.locationX - 10, (int)this.locationY - 10), new Point((int)this.locationX + 10, (int)this.locationY - 10), new Point((int)this.locationX - 10, (int)this.locationY + 10),new Point((int)this.locationX + 10, (int)this.locationY + 10), Color.Pink);
         }
 

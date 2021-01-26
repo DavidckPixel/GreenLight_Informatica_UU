@@ -39,13 +39,15 @@ namespace GreenLight
         public Point locationGoal;
 
         public AbstractRoad nextRoad = null;
-        public Lane nextLane = null; 
+        public Lane nextLane = null;
+        public bool[] status = new bool[4] { false, false, false, false };
 
         public List<AbstractRoad> drivingRoads = new List<AbstractRoad>();
         public int index;
 
         public bool wantsToSwitch;
         public bool closeToCars;
+        public bool crossRoadOccupied;
         private BetterGPS navigator;
 
         public int lanePointsMovePerTick;
@@ -54,8 +56,8 @@ namespace GreenLight
         public int CurrentLaneIndex;
 
         RectHitbox foundHitbox = null;
-        CrossRoad currentCrossRoad = null;
-        CrossRoadSide currentCrossRoadSide = null;
+        public CrossRoad currentCrossRoad = null;
+        public CrossRoadSide currentCrossRoadSide = null;
         int crossRoadTimer = 0;
 
         bool needsToStop = false;
@@ -161,8 +163,8 @@ namespace GreenLight
         {
             closeToCars = false;
 
-            List<BetterVehicle> allVehicles = BetterVehicleTest.vehiclelist;
-            List<BetterVehicle> vehiclesOnLane = allVehicles.FindAll(x => x.currentLane == this.vehicle.currentLane && x.currentRoad == this.vehicle.currentRoad);
+            List<BetterVehicle> allVehicles = General_Form.Main.SimulationScreen.Simulator.vehicleController.vehicleList;
+            List<BetterVehicle> vehiclesOnLane = allVehicles.FindAll((x => x.currentLane == this.vehicle.currentLane && x.currentRoad == this.vehicle.currentRoad));
 
             int _distance = RoadMath.LanePointsInDistance(this.vehicle.brakeDistance + 8, this.currentLanePointIndex, this.vehicle.currentLane.points);
 
@@ -182,19 +184,25 @@ namespace GreenLight
 
         private void crossRoadRules()
         {
-            if (this.nextRoad.Type != "Cross")
+            if (this.nextRoad.roadtype != "Cross" || this.currentCrossRoadSide == null)
             {
+                if (this.crossRoadOccupied)
+                {
+                    Console.WriteLine("WARNING - you should never be here!");
+                }
+                this.crossRoadOccupied = false;
                 return; //NEXT ROAD IS NOT A CROSSROAD, WE DO NOT CARE HERE;
             }
 
             int Num = RoadMath.LanePointsInDistance(vehicle.brakeDistance, this.currentLanePointIndex, this.vehicle.currentLane.points);
 
-            if (vehicle.currentLane.points.Count() - this.currentLanePointIndex > Num + 2) 
+            if (vehicle.currentLane.points.Count() - this.currentLanePointIndex > Num + 2 && this.vehicle.speed > 1) 
             {
                 return; //ENOUGH TIME TO BRAKE, NO NEED OT CHEKC NOW
             }
 
             CrossRoad _nextRoad = (CrossRoad)this.nextRoad;
+           
 
             int _index = _nextRoad.sides.ToList().IndexOf(this.currentCrossRoadSide);
 
@@ -204,68 +212,72 @@ namespace GreenLight
             int _indexdiff = _index - _indexEnd;
             int _checkIndex1 = 0;
             int _checkIndex2 = 0;
-
+            // 0 = top // 1 = left // 2 = bottom // 3 = right
             bool[] status = new bool[4] { false, false, false, false };
 
             if (Math.Abs(_indexdiff) == 2)
             {
                 dir = "STRAIGHT";
-                _index = _index + 1 > 3 ? 0 : _index + 1;
+                _index = _index + 1 > 3 ? 0 : _index + 1; //Right
 
-                if (_nextRoad.sides[_index].priorityLevel >= this.priority)
+                if (_nextRoad.sides[_index].priorityLevel >= this.priority) // If same Priority or lower priority
                 {
-                    status[_index] = true;
 
-                    _index = _index - 1 < 0 ? 0 : _index - 1;
-                    if (_nextRoad.sides[_index].priorityLevel > this.priority)
+                    status[_index] = true; // Look at right
+
+
+                    _index = _index + 2 > 3 ? _index - 2 : _index + 2; // Left
+                    if (_nextRoad.sides[_index].priorityLevel > this.priority) // If lower priority
                     {
-                        status[_index] = true;
+                        status[_index] = true; //Look at left
                     }
                 }
             }
             else if( _indexdiff == 1 || _indexdiff == -3)
             {
                 dir = "LEFT";
-                _checkIndex1 = _index + 1 > 3 ? 0 : _index + 1;
-                _checkIndex2 = _index + 2 > 3 ? _index - 2 : _index + 2;
-                status[_checkIndex2] = true;
+                _checkIndex1 = _index + 1 > 3 ? 0 : _index + 1; // Right
+                _checkIndex2 = _index + 2 > 3 ? _index - 2 : _index + 2; //Top
+                status[_checkIndex2] = true; //Look at top
 
-                if (_nextRoad.sides[_index].priorityLevel >= this.priority)
+                if (_nextRoad.sides[_checkIndex1].priorityLevel >= this.priority) // If same Priority or lower priority
                 {
-                    status[_checkIndex1] = true;
 
-                    _index = _index - 1 < 0 ? 0 : _index - 1;
+                    status[_checkIndex1] = true; //Look at right
+
+                    _index = _index - 1 < 0 ? 0 : _index - 1; // Left
                     if (_nextRoad.sides[_index].priorityLevel > this.priority)
                     {
-                        status[_index] = true;
+                        status[_index] = true; //Look at left
                     }
                 }
             }
             else if(_indexdiff == -1 || _indexdiff == 3)
             {
                 dir = "RIGHT";
-                _index = _index - 1 < 0 ? 0 : _index - 1;
+                _index = _index - 1 < 0 ? 0 : _index - 1; //Left
                 if (_nextRoad.sides[_index].priorityLevel > this.priority)
                 {
-                    status[_index] = true;
+                    status[_index] = true; //Look at left
                 }
 
             }
 
-            CrossRoadSide _side1 = _nextRoad.sides[_checkIndex1];
-            CrossRoadSide _side2 = _nextRoad.sides[_checkIndex2];
-
-                //if ((_side1.status && _side1.priorityLevel > this.priority)|| (_side2.status && _side2.priorityLevel > this.priority) || )
-                if((_nextRoad.sides[0].status && status[0])
-                    || (_nextRoad.sides[1].status && status[1])
-                    || (_nextRoad.sides[2].status && status[2])
-                   || (_nextRoad.sides[3].status && status[3])) 
+            //if ((_side1.status && _side1.priorityLevel > this.priority)|| (_side2.status && _side2.priorityLevel > this.priority) || )
+            if (((_nextRoad.sides[0].status && status[0])
+                || (_nextRoad.sides[1].status && status[1])
+                || (_nextRoad.sides[2].status && status[2])
+               || (_nextRoad.sides[3].status && status[3])))
                 {
-                    this.isBraking = true; //THERE IS A CAR IN THE WAY;
-                //this.handBreakOn = true;
+                this.crossRoadOccupied = true; //THERE IS A CAR IN THE WAY;
+                    //this.handBreakOn = true;
                 }
+            else
+            {
+                this.crossRoadOccupied = false;
+            }
 
-
+            this.status = status;
             //CHECK FIRST AND LAST LANEPOINT, SEE IF THEY ARE ON ONE LINE = STRAIGHT AHEAD;
             //
         }
@@ -279,7 +291,7 @@ namespace GreenLight
             }
             int pointsTillEnd = this.vehicle.currentLane.points.Count() - 1 - this.currentLanePointIndex;
 
-            if(pointsTillEnd >= 30)
+            if(pointsTillEnd >= 60)
             {
                 return;
             }
@@ -289,13 +301,10 @@ namespace GreenLight
                 CrossRoad _temproad = (CrossRoad)nextRoad;
                 CrossRoadSide _crossRoadSide = _temproad.sides.ToList().Find(x => x.hitbox.Contains(this.vehicle.currentLane.points.Last().cord));
 
-                if(_crossRoadSide != null)
-                {
-                    Console.WriteLine("CROSSROAD SIDE: {0}", _crossRoadSide.side);
-                }
-
                 _crossRoadSide.status = true;
                 _crossRoadSide.aiOnSide.Add(this);
+
+                this.currentCrossRoad = _temproad;
 
                 this.currentCrossRoadSide = _crossRoadSide;
             }
@@ -315,9 +324,8 @@ namespace GreenLight
             {
                 this.currentCrossRoadSide.priorityLevel = this.currentCrossRoadSide.aiOnSide.Max(x => x.priority);
             }
-
+            this.currentCrossRoadSide.driving = false;
             this.currentCrossRoadSide = null;
-
         }
         
 
@@ -361,6 +369,10 @@ namespace GreenLight
             {
                 this.isBraking = true;
             }
+            if (this.crossRoadOccupied)
+            {
+                this.isBraking = true;
+            }
 
             if (closeToCars)
             {
@@ -375,23 +387,24 @@ namespace GreenLight
 
             Lane _selectedLane = null;
 
-            if(_road.getLanes() == 1)
-            {
-                return null;
-            }
-
             int _laneNum = _drivinglane.thisLane;
 
             if (navigator.currentPath.NextLaneIndex != null)
             {
                 if (navigator.currentPath.NextLaneIndex.Any())
                 {
-                    if (!navigator.currentPath.NextLaneIndex.Contains(_laneNum))
+                    if (!navigator.currentPath.NextLaneIndex.Any(x => x == _laneNum))
                     {
                         this.wantsToSwitch = true;
                     }
                 }
             }
+
+            if (_road.getLanes() == 1)
+            {
+                return null;
+            }
+
 
             bool _leftAvailable = LaneSideAvailable(-1);
             bool _rightAvailable = LaneSideAvailable(1);
@@ -415,25 +428,29 @@ namespace GreenLight
 
             if (navigator.currentPath.NextLaneIndex != null)
             {
-
-                if (navigator.currentPath.NextLaneIndex.Any())
-                {
-                    int _indexDiff = Math.Abs(this.currentLanePointIndex - navigator.currentPath.NextLaneIndex.First());
-                    int _indexDiffSide = Math.Abs(this.currentLanePointIndex - navigator.currentPath.NextLaneIndex.First() + _side);
-
-                    if (_indexDiff < _indexDiffSide)
+                    if (navigator.currentPath.NextLaneIndex.TrueForAll(x => x < (this.CurrentLaneIndex)))
                     {
-                        return false;
+                        if(_side == 1)
+                        {
+                            return false;
+                        }
                     }
-                }
 
-                if (navigator.currentPath.NextLaneIndex.Any())
-                {
+                //navigator.currentPath.NextLaneIndex.ForEach(x => Console.WriteLine("ALL THE LANE INDEX: " + x));
+
+                    if (navigator.currentPath.NextLaneIndex.TrueForAll(x => x > (this.CurrentLaneIndex)))
+                    {
+                        if(_side == -1)
+                        {
+                            return false;
+                        }
+                    }
+
                     if (!navigator.currentPath.NextLaneIndex.Contains(_goalLaneIndex) && navigator.currentPath.NextLaneIndex.Contains(this.currentLanePointIndex))
                     {
                         return false; //YOU ARE NOT MOVING CORRECTLY
                     }
-                }
+                
             }
 
             if(_goalLaneIndex < 0 || _goalLaneIndex > this.vehicle.currentRoad.Drivinglanes.Count() - 1)
@@ -473,13 +490,22 @@ namespace GreenLight
         private void SwitchLanes()
         {
             this.currentLanePointIndex = this.vehicle.currentLane.points.FindIndex(x => x.cord == this.goal.cord);
-            this.wantsToSwitch = false;
             Lane _laneToGo = CheckSwitchLane();
 
             if(_laneToGo == null)
             {
                 //Nolanes to switch too
                 return;
+            }
+
+            this.wantsToSwitch = false;
+
+            if (navigator.currentPath.NextLaneIndex.Any())
+            {
+                if (!navigator.currentPath.NextLaneIndex.Any(x => x == _laneToGo.thisLane))
+                {
+                    wantsToSwitch = true;
+                }
             }
 
             this.origin = this.goal;
@@ -588,8 +614,10 @@ namespace GreenLight
 
             if (_laneSwap == null)
             {
-                SignalDone();
-                return;
+                //navigator.currentPath.LaneSwap.ForEach(x => Console.WriteLine("SWITCH INDEX: {0} - {1}", x.Item1, x.Item2));
+                //Console.WriteLine("CurrentIndex: " + this.CurrentLaneIndex);
+
+                _laneSwap = navigator.currentPath.LaneSwap.First();
             }        
 
             this.CurrentLaneIndex = _laneSwap.Item2;

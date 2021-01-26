@@ -128,6 +128,7 @@ namespace GreenLight
             Pause.Hide();
             this.Controls.Add(Pause);
             Pause.BringToFront();
+            Pause.Click += (object o, EventArgs EA) => { General_Form.Main.SimulationScreen.Simulator.PauseSimulation(); };
             Pause.Click += (object o, EventArgs EA) => { Pause.Hide(); Start.Show(); General_Form.Main.UserInterface.SimDataM.Stop_timer(); };
             Start.Click += (object o, EventArgs EA) => { Start.Hide(); Pause.Show(); General_Form.Main.UserInterface.SimDataM.Start_timer(); };
 

@@ -15,12 +15,15 @@ namespace GreenLight
 {
     public class SimulationController : AbstractController
     {
-        bool SimulationRunning;
+        public bool SimulationRunning;
+        public bool SimulationPaused;
 
         public SimulationScreenController screenController;
         public VehicleController vehicleController;
         public AIController aiController;
         public WorldController worldController;
+        public DriverProfileController profileController;
+
 
         Thread Simulation;
 
@@ -32,6 +35,8 @@ namespace GreenLight
             this.worldController.Initialize();
 
             this.screenController = _screenController;
+            this.profileController = new DriverProfileController(this.screenController.Screen);
+            this.profileController.Initialize();
 
             Simulation = new Thread(this.update);
         }
@@ -43,13 +48,23 @@ namespace GreenLight
 
         public void StartSimulation()
         {
-            SimulationRunning = true;
-            Simulation.Start();
+            if (!SimulationRunning)
+            {
+                SimulationRunning = true;
+                Simulation.Start();
+            }
+            else
+            {
+                this.profileController.UnPauseSimulation();
+                this.SimulationPaused = false;
+            }
         }
 
         public void PauseSimulation()
         {
-            Simulation.Suspend();
+            this.SimulationPaused = true;
+            this.profileController.PauseSimulation(vehicleController.vehicleList);
+            this.screenController.Screen.Invalidate();
         }
 
         private void update()
@@ -59,43 +74,53 @@ namespace GreenLight
             {
                 Thread.Sleep(32);
 
-                foreach (BetterVehicle car in vehicleController.vehicleList)
-                {
-                    car.vehicleAI.Update();
-                    car.Update();
-                }
-
-
-
-                if (x % 30 == 0)
+                if (!this.SimulationPaused)
                 {
 
-                    foreach (BetterVehicle car in vehicleController.toDelete)
+                    foreach (BetterVehicle car in vehicleController.vehicleList)
                     {
-                        vehicleController.vehicleList.Remove(car);
+                        car.vehicleAI.Update();
+                        car.Update();
                     }
 
-                    vehicleController.toDelete.Clear();
-                    //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakeChart));
-                    //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakePerTickChart));
-                }
 
-                if (x % 60 == 0)
-                {
-                    vehicleController.getVehicle(this.screenController.gpsData.getRandomStartNode());
-                    foreach(AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
+
+                    if (x % 30 == 0)
                     {
-                        if(_road.roadtype == "Cross")
+
+                        foreach (BetterVehicle car in vehicleController.toDelete)
                         {
-                            CrossRoad _temproad = (CrossRoad)_road;
-                            _temproad.ConsoleDump();
+                            vehicleController.vehicleList.Remove(car);
                         }
 
+                        vehicleController.toDelete.Clear();
+                        //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakeChart));
+                        //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakePerTickChart));
                     }
-                }
 
-                this.screenController.Screen.Invalidate();
-                x++;
+                    if (x % 30 == 0 && x < 900)
+                    {
+                        vehicleController.getVehicle(this.screenController.gpsData.getRandomStartNode());
+                        
+                        foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
+                        {
+                            if (_road.roadtype == "Cross")
+                            {
+                                CrossRoad _temproad = (CrossRoad)_road;
+                                _temproad.ConsoleDump();
+                            }
+
+                        } 
+                    }
+
+                    if (x % 600 == 0)
+                    {
+                        Console.WriteLine(x);
+                    }
+
+                    this.screenController.Screen.Invalidate();
+                    x++;
+                }
             }
         }
     }
