@@ -231,8 +231,10 @@ namespace GreenLight.src.Driver.GPS
 
         public void Draw(Graphics g, NodePath _path)
         {
+            Console.WriteLine("pathlink count: " + _path.linkPath.Count);
             foreach(Path _linkPath in _path.linkPath)
             {
+                Console.WriteLine("current index: " + _path.linkPath.IndexOf(_linkPath));
                 _linkPath.laneIndex.ForEach(x => Console.WriteLine(x));
 
                 if (_linkPath.NextLaneIndex == null)
@@ -242,7 +244,8 @@ namespace GreenLight.src.Driver.GPS
                 else
                 {
                     Console.WriteLine("NEXTLANE INDEX: " + _linkPath.NextLaneIndex.First());
-                    _linkPath.road.Drivinglanes[_linkPath.NextLaneIndex.First() - 1].DrawLine(g, Pens.Blue);
+                    Console.WriteLine("DrivingLanes: " + _linkPath.road.Drivinglanes.Count);
+                    _linkPath.road.Drivinglanes[_linkPath.NextLaneIndex.First()].DrawLine(g, Pens.Green);
                 }
                 Console.WriteLine(_linkPath.road.point1);
             }
