@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using GreenLight.src.Data_Collection;
+using GreenLight.src.Driver.GPS;
 
 namespace GreenLight
 {
@@ -39,6 +40,8 @@ namespace GreenLight
         WorldController worldController;
         DataController dataController;
 
+        GPSData gpsData;
+
         public BetterVehicleTest()
         {
             pictureboxTemp = new PictureBox();
@@ -54,8 +57,8 @@ namespace GreenLight
             worlds.Size = new Size(100, 20);
             worlds.GotFocus += UpdateWorldsList;
 
-            dataController = new DataController(pictureboxTemp);
-            dataController.Initialize();
+            //dataController = new DataController(pictureboxTemp);
+            //dataController.Initialize();
 
             Editbutton = new CurvedButtons(new Size(70, 30), new Point(10, 100), 25, "../../User Interface Recources/Custom_Small_Button.png", "Edit", DrawData.Dosis_font_family, this, this.BackColor);
             Newbutton = new CurvedButtons(new Size(70, 30), new Point(10, 200), 25, "../../User Interface Recources/Custom_Small_Button.png", "New", DrawData.Dosis_font_family, this, this.BackColor);
@@ -114,17 +117,17 @@ namespace GreenLight
             VehicleStats vehicleStats = new VehicleStats("test", 1352, (float)4.77, 61, 4223, (float)2.65, (float)0.35, false, 1);
             DriverStats driverStats = new DriverStats("David", 2.0f, 2.0f, 2, 2.0f, 50, false);
 
-            testVehicle = new BetterVehicle(vehicleStats, new Point(300,450));
-            testAI = new BetterAI(driverStats, testVehicle);
+            //testVehicle = new BetterVehicle(vehicleStats, new Point(300,450));
+            //testAI = new BetterAI(driverStats, testVehicle);
 
-            testVehicle2 = new BetterVehicle(vehicleStats, new Point(300, 550));
-            testAI2 = new BetterAI(driverStats, testVehicle2);
+            //testVehicle2 = new BetterVehicle(vehicleStats, new Point(300, 550));
+            //testAI2 = new BetterAI(driverStats, testVehicle2);
 
-            testVehicle.vehicleAI.SetPath(roads, 1);
-            testVehicle2.vehicleAI.SetPath(roads, 0);
+            //testVehicle.vehicleAI.SetPath(roads, 1);
+            //testVehicle2.vehicleAI.SetPath(roads, 0);
 
-            testVehicle.vehicleAI.targetspeed = 3 ;
-            testVehicle2.vehicleAI.targetspeed = 5;
+            //testVehicle.vehicleAI.targetspeed = 3 ;
+            //testVehicle2.vehicleAI.targetspeed = 5;
             //testVehicle2.SetPath(roads, 0);
             //testVehicle2.vehicleAI.targetspeed = 6;
 
@@ -140,23 +143,26 @@ namespace GreenLight
             //vehiclelist.Add(testVehicle2);
             //testAI.locationGoal = start;
 
+            /*
             dataController.collector.addVehicleToCollect(vehiclelist);
             dataController.collector.AddBrakeData(200);
             dataController.collector.AddBrakeData(200);
             dataController.collector.AddBrakeData(200);
             dataController.collector.AddBrakeData(300);
             dataController.collector.AddBrakeData(400);
-
+            */
             //-----------------------------------
+
+            gpsData = new GPSData(this.roads);
 
             pictureboxTemp.Paint += Draw;
             pictureboxTemp.MouseClick += click;
 
-            Thread run = new Thread(simulation);
-            Thread _update = new Thread(update);
+            //Thread run = new Thread(simulation);
+            //Thread _update = new Thread(update);
 
-            run.Start();
-            _update.Start();
+           // run.Start();
+           // _update.Start();
         }
 
         private void UpdateWorldsList(object o, EventArgs ea)
@@ -177,7 +183,7 @@ namespace GreenLight
 
         private void click(object sender, MouseEventArgs e)
         {
-            profileController.OnClick(e.Location);
+            profileController.OnClick(e.Location, null);
             dataController.ExportData("Test1");
 
             if (!profileController.simulationPaused)
@@ -185,7 +191,7 @@ namespace GreenLight
                 testVehicle.hardStop = true;
                 testVehicle2.hardStop = true;
 
-                profileController.PauseSimulation();
+                profileController.PauseSimulation(null);
                 //dataController.UpdateBrakePerTickChart();
                 this.Invalidate();
             }
@@ -247,10 +253,17 @@ namespace GreenLight
         {
             Graphics g = pea.Graphics;
 
+            foreach(Knot _knot in gpsData._allKnots)
+            {
+                _knot.Draw(g);
+            }
+
             foreach(AbstractRoad z in roads)
             {
                 z.Draw(g);
             }
+
+            /*
 
             foreach (BetterVehicle car in vehiclelist)
             {
@@ -260,6 +273,7 @@ namespace GreenLight
                     car.hitbox.Draw(g);
                 }
             }
+            */
 
         }
 

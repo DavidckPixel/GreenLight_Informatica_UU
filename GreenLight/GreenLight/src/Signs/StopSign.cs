@@ -16,9 +16,9 @@ namespace GreenLight
             controller = _controller;
         }
 
-        public override void Read(AI _ai)
+        public override void Read(BetterAI _ai)
         {
-            _ai.needToBrake(x, y);
+            //_ai.needToBrake(x, y);
         }
 
         public void editLocation(Point _location)

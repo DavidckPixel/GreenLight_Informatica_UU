@@ -217,7 +217,7 @@ namespace GreenLight
             }
             else if (_h.Type == "Curved")
             {
-                Console.WriteLine("Is checking for a Curvedhitbox");
+                //Console.WriteLine("Is checking for a Curvedhitbox");
                 CurvedHitbox box = (CurvedHitbox)_h;
                 List<LanePoints> _lanepoints = LanePoints.CalculateCurveLane(new Point(box.mid_startX, box.mid_startY), new Point(box.mid_endX, box.mid_endY), box.dir);
                 for (int x = 5; x < _lanepoints.Count() - 10; x += 12)

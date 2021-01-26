@@ -102,7 +102,7 @@ namespace GreenLight
 
         public void BuildDiagonalRoad(Point _point1, Point _point2, int _lanes, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
         {
-            Console.WriteLine("Build diagonal");
+            //Console.WriteLine("Build diagonal");
             string _dir = RoadMath.Direction(_point1, _point2, "DiagonalRoad");
             //Console.WriteLine("build" + _beginconnection + "-----" + _endconnection);
             AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, "Diagonal", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
@@ -179,7 +179,7 @@ namespace GreenLight
 
         public void Connection(Point _point1, Point _point2, int _lanes, string _dir, AbstractRoad _road, bool _beginconnection, bool _endconnection)
         {
-            Console.WriteLine(_beginconnection + "Builder" + _endconnection);
+            //Console.WriteLine(_beginconnection + "Builder" + _endconnection);
             try
             {
                 foreach (AbstractRoad x in roads)
@@ -209,7 +209,7 @@ namespace GreenLight
                                 }
                                 else 
                                 {
-                                    Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
+                                    //Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.beginconnection = true;
                                     x.beginConnectedTo = _road;
                                     _road.beginConnectedTo = x;
@@ -223,7 +223,7 @@ namespace GreenLight
                                 }
                                 else 
                                 {
-                                    Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
+                                    //Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.endconnection = true;
                                     x.endConnectedTo = _road;
                                     _road.beginConnectedTo = x;
@@ -237,7 +237,7 @@ namespace GreenLight
                                 }
                                 else 
                                 {
-                                    Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
+                                    //Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.beginconnection = true;
                                     x.beginConnectedTo = _road;
                                     _road.endConnectedTo = x;
@@ -252,7 +252,7 @@ namespace GreenLight
                                 }
                                 else
                                 {
-                                    Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
+                                    //Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
                                     x.endconnection = true;
                                     x.endConnectedTo = _road;
                                     _road.endConnectedTo = x;
@@ -335,7 +335,7 @@ namespace GreenLight
 
                         else
                         {
-                            Console.WriteLine("CrossandCross roadcontroller");
+                            //Console.WriteLine("CrossandCross roadcontroller");
                             foreach (ConnectionPoint _cp in _road.translatedconnectPoints)
                             {
                                 foreach (ConnectionPoint _cp2 in x.translatedconnectPoints)
@@ -351,7 +351,7 @@ namespace GreenLight
                                     {
                                         if (_cp.Location == _cp2.Location || Math.Abs(_cp.Location.X - _cp2.Location.X) <= 25 && _cp.Location.Y == _cp2.Location.Y)
                                         {
-                                            Console.WriteLine("Make CrossConnection");
+                                            //Console.WriteLine("Make CrossConnection");
                                             CrossConnection _connection = new CrossConnection(_cp.Location, _cp2.Location, _dir, x.Dir, _road, x);
                                         }
                                     }
@@ -414,7 +414,7 @@ namespace GreenLight
 
         private void EnableSettingScreen()
         {
-            Console.WriteLine(selectedRoad.Type);
+            //Console.WriteLine(selectedRoad.Type);
 
             if (selectedRoad.Type == "Cross")
             {
@@ -759,17 +759,17 @@ namespace GreenLight
         {
             if (_roadWords[1] == "Diagonal")
             {
-                Console.WriteLine("LoadDiagonal Road");
+                //Console.WriteLine("LoadDiagonal Road");
                 BuildDiagonalRoad(new Point(int.Parse(_roadWords[2]), int.Parse(_roadWords[3])), new Point(int.Parse(_roadWords[4]), int.Parse(_roadWords[5])), int.Parse(_roadWords[6]), bool.Parse(_roadWords[7]), bool.Parse(_roadWords[8]), null, null);
             }
             else if (_roadWords[1] == "Curved" || _roadWords[1] == "Curved2")
             {
-                Console.WriteLine("LoadCurved Road");
+                //Console.WriteLine("LoadCurved Road");
                 BuildCurvedRoad(new Point(int.Parse(_roadWords[2]), int.Parse(_roadWords[3])), new Point(int.Parse(_roadWords[4]), int.Parse(_roadWords[5])), int.Parse(_roadWords[6]), _roadWords[1], bool.Parse(_roadWords[7]), bool.Parse(_roadWords[8]), null, null);
             }
             else if (_roadWords[1] == "Cross")
             {
-                Console.WriteLine("LoadCross Road");
+                //Console.WriteLine("LoadCross Road");
                 CrossRoad _new = new CrossRoad(new Point(int.Parse(_roadWords[2]), int.Parse(_roadWords[3])), new Point(int.Parse(_roadWords[2]), int.Parse(_roadWords[3])), int.Parse(_roadWords[6]), _roadWords[1], bool.Parse(_roadWords[7]), bool.Parse(_roadWords[8]), null, null);
                 
                 for (int t = 0; t < int.Parse(_roadWords[9]); t++)

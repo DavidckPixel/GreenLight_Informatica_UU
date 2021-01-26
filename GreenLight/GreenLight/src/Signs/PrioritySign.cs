@@ -14,9 +14,9 @@ namespace GreenLight
             this.prioritylevel = 3;
             controller = _controller;
         }
-        public override void Read(AI _ai)
+        public override void Read(BetterAI _ai)
         {
-            _ai.prioritylevel = prioritylevel;
+            _ai.ChangePriority(this.prioritylevel);
         }
     }
     
