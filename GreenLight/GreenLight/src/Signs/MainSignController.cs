@@ -194,7 +194,7 @@ namespace GreenLight
                 case "X":
                     break;
                 case "speedSign":
-                    _sign_image = Image.FromFile("../../User Interface Recources/Speed_Sign.png");
+                    _sign_image = Image.FromFile("../../User Interface Recources/Empty_Speed_Sign.png");
                     break;
                 case "yieldSign":
                     _sign_image = Image.FromFile("../../User Interface Recources/Yield_Sign.png");
