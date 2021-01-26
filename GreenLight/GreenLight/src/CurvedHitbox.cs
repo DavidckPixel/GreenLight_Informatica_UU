@@ -36,8 +36,23 @@ namespace GreenLight
 
             this.Type = "Curved";
 
+            rect = Rect();
+
+            //Console.WriteLine(max_radiusX);
+            //Console.WriteLine(max_radiusY);
+            //Console.WriteLine(min_radiusX);
+            //Console.WriteLine(min_radiusY);
+            //Console.WriteLine();
+
+            this.PenWidth = Math.Abs((int)(max_radiusX - min_radiusX));
+        }
+
+        public Rectangle Rect()
+        {
             //----------------------------------------------- 
             // TYPE CASTING TO DOUBLE
+
+            Rectangle _rect = new Rectangle(-100,-100,1,1);
 
             double max_startX, max_startY, min_startX, min_startY, max_endX, max_endY, min_endX, min_endY;
 
@@ -52,6 +67,15 @@ namespace GreenLight
 
             min_endX = min_end.X;
             min_endY = min_end.Y;
+
+            if (_lanes != 0 && _lanes % 2 == 0 && (dir == "SE" || dir == "NW"))
+            {
+                max_startX += 20;
+                min_startX += 20;
+
+                max_endY += 20;
+                min_endY += 20;
+            }
 
             Console.WriteLine("{0} - {1} - {2} - {3}", max_startX, max_startY, min_startX, min_startY);
             Console.WriteLine("{0} - {1} - {2} - {3}", max_endX, max_endY, min_endX, min_endY);
@@ -71,19 +95,20 @@ namespace GreenLight
             //---------------------------------------------
 
 
-            switch (_dir)
+            switch (dir)
             {
                 case "SE":
                     {
                         midX = max_endX;
                         midY = max_startY;
                         start_angle = 180;
-                        mid_startX = (int)(max_startX + min_startX) / 2;
+                        mid_startX = (int)(max_startX + min_startX) / 2 + 10;
                         mid_startY = (int)max_startY;
                         mid_endX = (int)max_endX;
-                        mid_endY = (int)(max_endY + min_endY) / 2;
+                        mid_endY = (int)(max_endY + min_endY) / 2 + 10;
 
-                        rect = new Rectangle(new Point((int)midX - mid_radiusX, (int)midY - mid_radiusY), new Size(mid_radiusX * 2, mid_radiusY * 2));
+
+                       _rect = new Rectangle(new Point((int)midX - mid_radiusX, (int)midY - mid_radiusY), new Size(mid_radiusX * 2, mid_radiusY * 2));
 
                         //rect = new Rectangle(new Point(Math.Min(points[0].cord.X, points[points.Count - 1].cord.X), Math.Min(points[0].cord.Y, points[points.Count - 1].cord.Y)), size);
 
@@ -91,6 +116,7 @@ namespace GreenLight
                     break;
                 case "SW":
                     {
+
                         midX = max_startX;
                         midY = max_endY;
 
@@ -98,7 +124,7 @@ namespace GreenLight
                         mid_startX = (int)max_startX;
                         mid_startY = (int)(max_startY + min_startY) / 2;
 
-                        rect = new Rectangle(new Point((int)midX - mid_radiusX, (int)midY - mid_radiusY), new Size(mid_radiusX * 2, mid_radiusY * 2));
+                        _rect = new Rectangle(new Point((int)midX - mid_radiusX, (int)midY - mid_radiusY), new Size(mid_radiusX * 2, mid_radiusY * 2));
                     }
                     break;
                 case "NW":
@@ -109,7 +135,7 @@ namespace GreenLight
                         mid_startX = (int)(max_startX + min_startX) / 2;
                         mid_startY = (int)max_startY;
 
-                        rect = new Rectangle(new Point((int)midX - mid_radiusX, (int)midY - mid_radiusY), new Size(mid_radiusX * 2, mid_radiusY * 2));
+                        _rect = new Rectangle(new Point((int)midX - mid_radiusX, (int)midY - mid_radiusY), new Size(mid_radiusX * 2, mid_radiusY * 2));
                     }
                     break;
                 case "NE":
@@ -121,19 +147,12 @@ namespace GreenLight
                         mid_startY = (int)(max_startY + min_startY) / 2;
                         mid_endX = (int)(max_endX + min_endX) / 2;
                         mid_endY = (int)max_endY;
-
-                        rect = new Rectangle(new Point((int)midX - mid_radiusX, (int)midY - mid_radiusY), new Size(mid_radiusX * 2, mid_radiusY * 2));
+                        
+                        _rect = new Rectangle(new Point((int)midX - mid_radiusX, (int)midY - mid_radiusY), new Size(mid_radiusX * 2, mid_radiusY * 2));
                     }
                     break;
             }
-
-            //Console.WriteLine(max_radiusX);
-            //Console.WriteLine(max_radiusY);
-            //Console.WriteLine(min_radiusX);
-            //Console.WriteLine(min_radiusY);
-            //Console.WriteLine();
-
-            this.PenWidth = Math.Abs((int)(max_radiusX - min_radiusX));
+            return _rect;
         }
 
         public override bool Contains(Point _p)
@@ -225,6 +244,9 @@ namespace GreenLight
         {
             Brush _brush = new SolidBrush(Color.FromArgb(100, Color.Black));
             Pen _pen = new Pen(new SolidBrush(Color.FromArgb(100, this.color)), PenWidth);
+
+            if (_lanes != 0 && _lanes % 2 == 0)
+                rect = Rect();
 
             bool draw = General_Form.Main == null ? true : General_Form.Main.BuildScreen.Toggle;
 

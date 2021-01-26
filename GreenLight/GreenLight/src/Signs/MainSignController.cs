@@ -90,11 +90,11 @@ namespace GreenLight
 
             int _outerLane = 0;
             int _lanes = this.selectedRoad.getLanes();
-            int _dir = (int) this.selectedRoad.Drivinglanes.First().AngleDir;
+            int _dir = (int)this.selectedRoad.Drivinglanes.First().AngleDir;
 
-            if(_dir >= 0 && _dir < 180  && _lanes != 1)
+            if (_dir >= 0 && _dir < 180 && _lanes != 1)
             {
-                _outerLane = _lanes - 1;   
+                _outerLane = _lanes - 1;
             }
             else if (_dir >= 180 && _dir < 360 && _lanes != 1)
             {
@@ -127,13 +127,14 @@ namespace GreenLight
 
                 Console.WriteLine(_shortDistance);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
 
             }
 
-           
+
         }
+        
 
         public void mouseClick(object o, MouseEventArgs mea)
         {
@@ -194,7 +195,7 @@ namespace GreenLight
                 case "X":
                     break;
                 case "speedSign":
-                    _sign_image = Image.FromFile("../../User Interface Recources/Speed_Sign.png");
+                    _sign_image = Image.FromFile("../../User Interface Recources/Empty_Speed_Sign.png");
                     break;
                 case "yieldSign":
                     _sign_image = Image.FromFile("../../User Interface Recources/Yield_Sign.png");
@@ -234,6 +235,22 @@ namespace GreenLight
 
             return null;
         }
+
+        public void flipSing(AbstractSign _tempSign)
+        {
+            int _outerLane = 0;
+            int _lanes = this.selectedRoad.getLanes();
+
+            if (_tempSign.flipped)
+            {
+                _outerLane = _lanes - 1;
+            }
+            else
+            {
+                _outerLane = _lanes - 2;
+            }
+        }
+
 
         public void deleteSign(AbstractSign _abstractSign = null)
         {

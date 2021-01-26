@@ -36,8 +36,8 @@ namespace GreenLight
         private AbstractRoad selectedRoad;
 
         public CrossRoadController crossRoadController;
+        public Bitmap ArrowBitmap = new Bitmap(Image.FromFile("../../User Interface Recources/Arrow.png"));
 
-        
 
         public bool visualizeLanePoints = true; //Boolean whether or not the lanePoints are visualised
 
@@ -65,7 +65,7 @@ namespace GreenLight
         {
             Dictionary<string, int> menu = Roads.Config.settingsScreen;
 
-            this.settingScreen = new Form();
+            this.settingScreen = new Pop_Up_Form(new Size(menu["width"], menu["length"]));
             this.settingScreen.Hide();
 
             this.settingScreen.Size = new Size(menu["width"], menu["length"]);
@@ -81,10 +81,10 @@ namespace GreenLight
             settingScreenImage.Location = new Point(menu["offset"], menu["offset"]);
             settingScreenImage.BackColor = Color.Black;
 
-            doneButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            doneButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] ), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             doneButton.Click += (object o, EventArgs ea) => { DoneSettingScreen(); };
 
-            deleteButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            deleteButton = new CurvedButtons(new Size(menu["buttonWidth"]+10, menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             deleteButton.Click += (object o, EventArgs ea) => { DeleteRoad(this.selectedRoad); };
 
             Move_panel move_panel = new Move_panel(settingScreen);
@@ -167,6 +167,7 @@ namespace GreenLight
                     _point2 = _temp1;
                 }
             }
+            Console.WriteLine(_dir);
 
             AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, _type, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
@@ -186,21 +187,26 @@ namespace GreenLight
                     // if neither of the two roads are CrossRoads
                     if (x != _road && (_road.Type != "Cross" && x.Type != "Cross"))
                     {
-                        Point _temp1, _temp2;
+                        Point _temp1, _temp2, _temp3 = new Point(-100, -100), _temp4 = new Point(-100 , -100);
                         _temp1 = x.getPoint1();
                         _temp2 = x.getPoint2();
 
                         if (x.getLanes() == _lanes)
                         {
-                            if (_point1 == _temp1 || Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1)
-                            
+                            if (_lanes % 2 == 0)
+                            {
+                                _temp3 = x.Drivinglanes[1].points.First().cord;
+                                _temp4 = x.Drivinglanes[1].points.Last().cord;
+                            }
+
+                            if ((_point1 == _temp1 || Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1) && ( _point1 != _temp3 && _point1 != _temp4))
                             {
                                 if (_beginconnection == false)
                                 {
+
                                     Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Dir, _road, x);
 
                                 }
-
                                 else 
                                 {
                                     //Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
@@ -209,7 +215,7 @@ namespace GreenLight
                                     _road.beginConnectedTo = x;
                                 }
                             }
-                            else if (_point1 == _temp2 || Math.Sqrt(Math.Pow(_point1.X - _temp2.X, 2) + Math.Pow(_point1.Y - _temp2.Y, 2)) <= Grid.Config.SpacingWidth + 1)
+                            else if ((_point1 == _temp2 || Math.Sqrt(Math.Pow(_point1.X - _temp2.X, 2) + Math.Pow(_point1.Y - _temp2.Y, 2)) <= Grid.Config.SpacingWidth + 1) && (_point1 != _temp3 && _point1 != _temp4))
                             {
                                 if (_beginconnection == false)
                                 {
@@ -223,7 +229,7 @@ namespace GreenLight
                                     _road.beginConnectedTo = x;
                                 }
                             }
-                            else if (_point2 == _temp1 || Math.Sqrt(Math.Pow(_point2.X - _temp1.X, 2) + Math.Pow(_point2.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1)
+                            else if ((_point2 == _temp1 || Math.Sqrt(Math.Pow(_point2.X - _temp1.X, 2) + Math.Pow(_point2.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1) && (_point2 != _temp3 && _point2 != _temp4))
                             {
                                 if (_endconnection == false)
                                 {
@@ -238,7 +244,7 @@ namespace GreenLight
 
                                 }
                             }
-                            else if (_point2 == _temp2 || Math.Sqrt(Math.Pow(_point2.X - _temp2.X, 2) + Math.Pow(_point2.Y - _temp2.Y, 2)) <= Grid.Config.SpacingWidth + 1)
+                            else if ((_point2 == _temp2 || Math.Sqrt(Math.Pow(_point2.X - _temp2.X, 2) + Math.Pow(_point2.Y - _temp2.Y, 2)) <= Grid.Config.SpacingWidth + 1) && (_point1 != _temp3 && _point1 != _temp4))
                             {
                                 if (_endconnection == false)
                                 {
@@ -364,7 +370,12 @@ namespace GreenLight
         {
             if (roads.Count != 0)
             {
+                General_Form.Main.BuildScreen.builder.gridController.undoGridpoints(roads[roads.Count - 1]);
                 DeleteRoad(roads[roads.Count - 1]);
+                if (roads.Count == 0)
+                {
+                    General_Form.Main.BuildScreen.builder.gridController.resetGridpoints();
+                }
                 General_Form.Main.BuildScreen.Screen.Invalidate();
             }
         }
@@ -440,10 +451,10 @@ namespace GreenLight
         {
             List<OriginPoints> OriginPointsList = General_Form.Main.BuildScreen.builder.roadBuilder.OPC.OriginPointsList;
             for (int o = OriginPointsList.Count - 1; o >= 0; o--)
-            {                
+            {
                 int Xop = OriginPointsList[o].X;
                 int Yop = OriginPointsList[o].Y;
-                Point point1 = _deletedroad.point1; 
+                Point point1 = _deletedroad.point1;
                 Point point2 = _deletedroad.point2;
                 int connectedRoads = 0;
                 for (int i = 0; i < roads.Count; i++)
@@ -465,7 +476,13 @@ namespace GreenLight
                 this.selectedRoad = null;
                 DisableSettingScreen();
             }
+            General_Form.Main.BuildScreen.builder.gridController.undoGridpoints(_deletedroad);
             roads.Remove(_deletedroad);
+
+            if (roads.Count == 0)
+            {
+                General_Form.Main.BuildScreen.builder.gridController.resetGridpoints();
+            }
         }
 
         private void SettingBoxClick(object o, MouseEventArgs mea)

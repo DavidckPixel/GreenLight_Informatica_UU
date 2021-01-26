@@ -71,11 +71,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Speedsign.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="HitBox_form.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="HitBox_form.Designer.cs">
       <DependentUpon>HitBox_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pop_Up_Form.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Selection_box.cs">
       <SubType>Component</SubType>
@@ -255,9 +261,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="src\UserControls\Elements_sub_signs_menu.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="src\UserControls\Elements_sub_lights_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="src\UserControls\Elements_sub_settings_menu.cs">

@@ -19,9 +19,11 @@ namespace GreenLight
         public Image Sign_image;
         public AbstractRoad Road;
         public string signType;
+        public Speedsign speedSign;
 
         public PlacedSign(Point _location, string _direction, AbstractSign _sign, Image _Sign_image, AbstractRoad _road, string _signType, Point _hitboxoffset)
         {
+            this.speedSign = new Speedsign(new Size(20, 20), _location);
             this.Location = _location;
             this.Direction = _direction;
             this.Sign = _sign;
@@ -53,21 +55,46 @@ namespace GreenLight
             }
             if (_dir >= 0 && _dir <= 90)
             {
+                if (signType == "speedSign")
+                {
+                    this.speedSign.Location = new Point(Location.X, Location.Y);
+                    this.speedSign.speed = Sign.speed;
+                    this.Sign_image = speedSign.speedImage();
+                }
                 g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
             }
             else if (_dir > 90 && _dir < 180)
             {
+                if (signType == "speedSign")
+                {
+                    this.speedSign.Location = new Point(X1, Y1);
+                    this.speedSign.speed = Sign.speed;
+                    this.Sign_image = speedSign.speedImage();
+                }
                 g.DrawImage(Sign_image, X1, Y1, 20, 20);
             }
             else if (_dir >= 180 && _dir < 270)
             {
+                if (signType == "speedSign")
+                {
+                    this.speedSign.Location = new Point(X2, Y2);
+                    this.speedSign.speed = Sign.speed;
+                    this.Sign_image = speedSign.speedImage();
+                }
                 g.DrawImage(Sign_image, X2, Y2, 20, 20);
             }
             else
             {
+                if (signType == "speedSign")
+                {
+                    this.speedSign.Location = new Point(Location.X, Y3);
+                    this.speedSign.speed = Sign.speed;
+                    this.Sign_image = speedSign.speedImage();
+                }
                 g.DrawImage(Sign_image, Location.X, Y3, 20, 20);
             }
             this.Hitbox.Draw(g);
+            
             //g.FillRectangle(Notsolid, this.Hitbox);
         }
 

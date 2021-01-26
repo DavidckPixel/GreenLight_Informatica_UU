@@ -63,7 +63,7 @@ namespace GreenLight
         {
             Dictionary<string, int> menu = Roads.Config.settingsScreen;
 
-            this.settingScreen = new Form();
+            this.settingScreen = new Pop_Up_Form(new Size(menu["width"], menu["length"] + menu["crossextralength"]));
             this.settingScreen.Hide();
 
             this.settingScreen.Size = new Size(menu["width"], menu["length"] + menu["crossextralength"]);
@@ -78,10 +78,10 @@ namespace GreenLight
             this.settingScreenImage.BackColor = Color.Black;
             //TEMP
 
-            selectButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Select", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            selectButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Select", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             selectButton.Click += (object o, EventArgs ea) => { this.Button = "Select";  };
 
-            linkButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Link", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            linkButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Link", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             linkButton.Click += (object o, EventArgs ea) => 
             {
                 if(selectedRoad.selectedPoint == null)
@@ -91,18 +91,18 @@ namespace GreenLight
                 this.Button = "Link";
             };
 
-            disableButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + 2 * menu["buttonWidth"] + 2 * menu["betweenButtons"], menu["width"] - 2 * menu["offset"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Disable", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            disableButton = new CurvedButtons(new Size(menu["buttonWidth"]+10, menu["buttonHeight"]), new Point(menu["offset"] + 2 * menu["buttonWidth"] + 2 * menu["betweenButtons"], menu["width"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Disable", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             disableButton.Click += (object o, EventArgs ea) => 
             {
                 this.Button = "Disable";
                 this.selectedRoad.SwitchSelectedPoint(null);
             };
 
-            saveButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] - 2 * menu["offset"] + menu["buttonHeight"] + menu["betweenButtons"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            saveButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] + menu["buttonHeight"] + menu["betweenButtons"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             saveButton.Click += (object o, EventArgs ea) => { 
                 if(selectedRoad.connectLinks.Count() != 0) CreateDrivingLanes(); else DeleteCrossroad(this.selectedRoad); this.settingScreenImage.Invalidate(); };
 
-            deleteButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"] - 2 * menu["offset"] + menu["buttonHeight"] + menu["betweenButtons"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            deleteButton = new CurvedButtons(new Size(menu["buttonWidth"]+10, menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"] + menu["buttonHeight"] + menu["betweenButtons"]), menu["buttonCurve"], "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             deleteButton.Click += (object o, EventArgs ea) => { DeleteCrossroad(this.selectedRoad); };
 
             error = new Label();
@@ -116,6 +116,11 @@ namespace GreenLight
             errorButton.Click += HideError;
             errorButton.Hide();
 
+            Move_panel Move = new Move_panel(settingScreen);
+            Move.Size = new Size(400, 100);
+            Move.Location = new Point(menu["offset"] + (int)(3.3* menu["buttonWidth"]+10) + menu["betweenButtons"], menu["width"]);
+
+            this.settingScreen.Controls.Add(Move);
             this.settingScreen.Controls.Add(error);
             this.settingScreen.Controls.Add(errorButton);
 
@@ -133,11 +138,11 @@ namespace GreenLight
         {
             if (General_Form.Main != null)
             {
-                General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "D";
+                General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross";
             }
 
             this.selectedRoad = _road;
-            this.settingScreen.Show();
+            this.settingScreen.ShowDialog();
             this.settingScreen.BringToFront();
             this.settingScreenImage.Invalidate();
         }
@@ -267,7 +272,7 @@ namespace GreenLight
         {
             if (General_Form.Main != null)
             {
-                General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "X";
+                General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross";
             }
             this.settingScreen.Hide();
 

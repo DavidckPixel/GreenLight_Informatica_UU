@@ -41,6 +41,25 @@ namespace GreenLight
 
             //-------------------------------------------------------------
 
+            CheckBox showLanePoints = new CheckBox();
+            showLanePoints.Location = new Point(_ButtonXbase + (int)(1.5 * _ButtonXdiff), _ButtonYbase +3);
+            showLanePoints.Checked = true;
+            showLanePoints.Size = new Size(20, 20);
+            showLanePoints.CheckedChanged += (object o, EventArgs ea) =>
+            {
+                General_Form.Main.BuildScreen.builder.roadBuilder.visualizeLanePoints = showLanePoints.Checked;
+                General_Form.Main.BuildScreen.Screen.Invalidate();
+            };
+            Controls.Add(showLanePoints);
+
+            Label showLanePointsLabel = new Label();
+            showLanePointsLabel.Text = "Visualize Driving Lanes: ";
+            showLanePointsLabel.Font= new Font(Dosis_font_family, 9, FontStyle.Bold);
+            showLanePointsLabel.ForeColor = Color.FromArgb(142, 140, 144);
+            showLanePointsLabel.Location = new Point(_ButtonXbase, _ButtonYbase);
+            showLanePointsLabel.Size = new Size(150, 30);
+            Controls.Add(showLanePointsLabel);
+
         }
         private void ResetButtons(CurvedButtons Selected, string Filepath)
         {

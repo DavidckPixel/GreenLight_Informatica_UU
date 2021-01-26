@@ -695,16 +695,29 @@ namespace GreenLight
                             controller.BuildDiagonalRoad(new Point(_middleX, _Crosspoint.Y), _road.point2, _connectedLanes.Count, true, _road.endconnection, _Crossroad, _road.endConnectedTo);
                         }
                         else
+                        {
+                            if (_road.Dir == "NE" || _road.Dir == "SW")
+                            {
+                                _middleX += 20;
+                            }
                             controller.BuildCurvedRoad(new Point(_middleX, _Crosspoint.Y), _road.point2, _connectedLanes.Count, _road.Type, true, _road.endconnection, _Crossroad, _road.endConnectedTo);
+                        }
                     }
                     else
                     {
                         if (_road.Type == "Diagonal")
                             controller.BuildDiagonalRoad(_road.point1, new Point(_middleX, _Crosspoint.Y), _connectedLanes.Count, _road.beginconnection, true, _road.beginConnectedTo, _Crossroad);
                         else
+                        {
+                            if (_road.Dir == "NE" || _road.Dir == "SW")
+                                {
+                                _middleX += 20;
+                                }
                             controller.BuildCurvedRoad(_road.point1, new Point(_middleX, _Crosspoint.Y), _connectedLanes.Count, _road.Type, _road.beginconnection, true, _road.beginConnectedTo, _Crossroad);
+                        }
                     }
                 }
+                
                 else
                 {
                     int _middleY = 0;

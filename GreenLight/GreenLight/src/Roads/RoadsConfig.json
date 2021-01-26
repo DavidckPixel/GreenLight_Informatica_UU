@@ -5,7 +5,7 @@
 
     "settingsScreen": {
         "length": 570,
-        "crossextralength": 130,
+        "crossextralength": 50,
         "width": 520,
         "offset": 10,
         "buttonHeight": 40,
