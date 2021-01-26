@@ -116,12 +116,7 @@ namespace GreenLight
             this.Controls.Add(Road_button);
             BSM_Buttons.Add(Road_button);
 
-            CurvedButtons Light_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 - menu["buttonLight"], menu["buttonS"]), 25, "../../User Interface Recources/Traffic_Light_Button.png", this.BackColor);
-            Light_button.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Reset_All_Buttons(Light_button, Light_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Lights"); };
-            this.Controls.Add(Light_button);
-            BSM_Buttons.Add(Light_button);
-
-            CurvedButtons Sign_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 + menu["buttonSign"], menu["buttonS"]), 25, "../../User Interface Recources/Speed_Sign_Button.png", this.BackColor);
+            CurvedButtons Sign_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 - menu["buttonSign"], menu["buttonS"]), 25, "../../User Interface Recources/Speed_Sign_Button.png", this.BackColor);
             Sign_button.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Reset_All_Buttons(Sign_button, Sign_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Signs"); };
             this.Controls.Add(Sign_button);
             BSM_Buttons.Add(Sign_button);

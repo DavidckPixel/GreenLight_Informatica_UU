@@ -98,9 +98,6 @@ namespace GreenLight
                 case "Signs":
                     SignsMenu();
                     break;
-                case "Lights":
-                    LightsMenu();
-                    break;
                 case "Buildings":
                     BuildingsMenu();
                     break;
@@ -118,10 +115,6 @@ namespace GreenLight
         private void SignsMenu()
         {
             General_Form.Main.UserInterface.Menu_to_signs();
-        }
-        private void LightsMenu()
-        {
-            General_Form.Main.UserInterface.Menu_to_lights();
         }
         private void BuildingsMenu()
         {

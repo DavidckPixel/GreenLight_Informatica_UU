@@ -60,7 +60,7 @@ namespace GreenLight
             this.Controls.Add(Drag_pad);
 
             CurvedButtons Divider1 = new CurvedButtons();
-            Divider1.Location = new Point(User_Controls.Config.standardSubMenu["deviderX"], User_Controls.Config.standardSubMenu["logoY"]);
+            Divider1.Location = new Point(User_Controls.Config.standardSubMenu["deviderX"], User_Controls.Config.standardSubMenu["deviderY"]);
             this.Controls.Add(Divider1);
 
             CurvedButtons Settings_header = new CurvedButtons(new Size(menu["settingsHeaderSizeX"], menu["settingsHeaderSizeY"]),  //settingsHeaderSizeX //settingsHeaderSizeY

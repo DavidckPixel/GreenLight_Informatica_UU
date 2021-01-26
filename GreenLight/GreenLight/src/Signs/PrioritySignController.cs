@@ -24,8 +24,7 @@ namespace GreenLight
 
         public override void initSettingScreen()
         {
-            this.settingScreen = new Form();
-            this.settingScreen.Size = new Size(300, 300);
+            this.settingScreen = new Pop_Up_Form(new Size(300,300));
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
@@ -56,10 +55,11 @@ namespace GreenLight
             this.settingScreen.Controls.Add(QuestionLabel);
 
             errorMess = new Label();
-            errorMess.Location = new Point(20, 60);
+            errorMess.Location = new Point(200, 10);
             errorMess.Text = "";
             errorMess.ForeColor = Color.Red;
             this.settingScreen.Controls.Add(errorMess);
+
 
             CurvedButtons Divider1 = new CurvedButtons();
             Divider1.Location = new Point(20, 220);
@@ -70,6 +70,7 @@ namespace GreenLight
             this.settingScreen.Controls.Add(YesButton);
 
             NoButton = new CurvedButtons(new Size(80, 40), new Point(165, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "Remove", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+
             NoButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.prioritySignC.deleteSign(); };
             this.settingScreen.Controls.Add(NoButton);
 
@@ -96,6 +97,7 @@ namespace GreenLight
 
             settingScreen.ShowDialog();
             settingScreen.BringToFront();
+
 
         }
         public override void onSignClick(AbstractSign _sign)

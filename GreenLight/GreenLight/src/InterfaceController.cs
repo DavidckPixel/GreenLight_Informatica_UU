@@ -42,7 +42,6 @@ namespace GreenLight
         public Simulation_sub_driver_menu SimSDM;
         public Simulation_data_menu SimDataM;
         Elements_sub_buildings_menu ElemSBM;
-        Elements_sub_lights_menu ElemSLM;
         public Elements_sub_roads_menu ElemSRM;
         Elements_sub_signs_menu ElemSSM;
         Data_sub_menu DataSM;
@@ -93,7 +92,6 @@ namespace GreenLight
             SimSDM = new Simulation_sub_driver_menu(Sub_menu_width, MainForm, Dosis_font_family);
 
             ElemSBM = new Elements_sub_buildings_menu(Sub_menu_width, MainForm, Dosis_font_family);
-            ElemSLM = new Elements_sub_lights_menu(Sub_menu_width, MainForm, Dosis_font_family);
             ElemSRM = new Elements_sub_roads_menu(Sub_menu_width, MainForm, Dosis_font_family);
             ElemSSM = new Elements_sub_signs_menu(Sub_menu_width, MainForm, Dosis_font_family);
 
@@ -111,7 +109,6 @@ namespace GreenLight
             MainForm.Controls.Add(SimSVM);
             MainForm.Controls.Add(SimSDM);
             MainForm.Controls.Add(ElemSBM);
-            MainForm.Controls.Add(ElemSLM);
             MainForm.Controls.Add(ElemSRM);
             MainForm.Controls.Add(ElemSSM);
             MainForm.Controls.Add(DataSM);
@@ -138,7 +135,6 @@ namespace GreenLight
             SimSVM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
             SimSDM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
             ElemSRM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
-            ElemSLM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
             ElemSBM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
             ElemSSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
             DataSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
@@ -203,7 +199,6 @@ namespace GreenLight
         }
         public void Menu_to_roads()
         {
-            ElemSLM.Hide();
             ElemSBM.Hide();
             ElemSSM.Hide();
             ElemSRM.Show();
@@ -211,23 +206,14 @@ namespace GreenLight
         }
         public void Menu_to_signs()
         {
-            ElemSLM.Hide();
             ElemSBM.Hide();
             ElemSRM.Hide();
             ElemSSM.Show();
             ElemSSM.BringToFront();
         }
-        public void Menu_to_lights()
-        {
-            ElemSBM.Hide();
-            ElemSSM.Hide();
-            ElemSRM.Hide();
-            ElemSLM.Show();
-            ElemSLM.BringToFront();
-        }
+
         public void Menu_to_buildings()
         {
-            ElemSLM.Hide();
             ElemSSM.Hide();
             ElemSRM.Hide();
             ElemSBM.Show();
@@ -256,7 +242,6 @@ namespace GreenLight
             SimSWM.Hide();
             SimSVM.Hide();
             SimSDM.Hide();
-            ElemSLM.Hide();
             ElemSSM.Hide();
             ElemSRM.Hide();
             ElemSBM.Hide();
@@ -266,11 +251,6 @@ namespace GreenLight
         public void Reset_All_Buttons(CurvedButtons Selected, string Filepath)
         {
             foreach (CurvedButtons x in BSM.BSM_Buttons)
-            {
-                x.Selected = false;
-                x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
-            }
-            foreach (CurvedButtons x in ElemSLM.ESLM)
             {
                 x.Selected = false;
                 x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");

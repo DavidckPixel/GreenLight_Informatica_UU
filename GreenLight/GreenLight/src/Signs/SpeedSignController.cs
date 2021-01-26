@@ -28,9 +28,8 @@ namespace GreenLight
 
         public override void initSettingScreen()
         {
-            this.settingScreen = new Form();
+            this.settingScreen = new Pop_Up_Form(new Size(300,300));
             //is.settingScreen.MdiParent = this.mainScreen;
-            this.settingScreen.Size = new Size(300, 300);
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
@@ -53,6 +52,7 @@ namespace GreenLight
             label1.Size = new Size(150, 40);
             label1.TextAlign = ContentAlignment.MiddleCenter;
 
+
             this.settingScreen.Controls.Add(label1);
 
             errorMess = new Label();
@@ -70,7 +70,6 @@ namespace GreenLight
 
             this.settingScreen.Controls.Add(Combobox1);
 
-
             ss = new Speedsign(new Size(75, 75), new Point(190, 30));
             ss.speed = 0;
             this.settingScreen.Controls.Add(ss);
@@ -84,6 +83,7 @@ namespace GreenLight
             this.settingScreen.Controls.Add(Button1);
 
             Button2 = new CurvedButtons(new Size(80, 40), new Point(165, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+
             Button2.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.speedSign.deleteSign(); };
             this.settingScreen.Controls.Add(Button2);
         }
@@ -140,6 +140,7 @@ namespace GreenLight
             this.Combobox1.Text = selected.getSpeed().ToString();
 
             Console.WriteLine(this.settingScreen.Visible.ToString());
+
             this.ss.Invalidate();
             settingScreen.ShowDialog();
             settingScreen.BringToFront();
