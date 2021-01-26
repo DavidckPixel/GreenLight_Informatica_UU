@@ -9,17 +9,31 @@ namespace GreenLight.src.Driver.GPS
 {
     class Node
     {
-        Knot knot;
-        List<Link> links;
-        List<Knot> connections;
-        bool canSpawn;
+        public Knot knot;
+        public List<Link> links;
+        public List<Node> connections;
+        public bool canSpawn;
+        public bool isBackLinked;
 
-        public Node(Knot _knot, List<Link> _links, List<Knot> _connections)
+        public Node(Knot _knot, List<Link> _links)
         {
             this.knot = _knot;
-            this.links = _links;            
-            this.connections = _connections;
-            this.canSpawn = this.connections.Count() <= 1 ? true : false;
+            this.links = _links;
+        }
+
+        public void GiveConnectioned(List<Node> _nodes)
+        {
+            this.connections = _nodes;
+        }
+
+        public void spawn()
+        {
+            Console.WriteLine("BACK LINKED: " + isBackLinked);
+
+            if ((this.connections.Count<= 1 && !isBackLinked) || this.connections.Count < 1)
+            {
+                canSpawn = true;
+            }
         }
     }
 }

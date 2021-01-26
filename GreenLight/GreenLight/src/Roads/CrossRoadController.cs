@@ -356,11 +356,14 @@ namespace GreenLight
 
             Console.WriteLine("top :" + _top); Console.WriteLine("Right :" + _right); Console.WriteLine("left :" + _left); Console.WriteLine("bottom :" + _bottom);
 
-           
+            int _index = 0;
+
             foreach (ConnectionLink _link in selectedRoad.connectLinks)
             {
                 _end = _link.end.Location;
                 _begin = _link.begin.Location;
+
+                _index++;
                 
                 TranslatePoints(ref _begin, ref _end, selectedRoad);
 
@@ -465,7 +468,7 @@ namespace GreenLight
 
                 if (_temp != null)
                 {   
-                this.selectedRoad.Drivinglanes.Add(new CrossLane(_temp, _link));  
+                this.selectedRoad.Drivinglanes.Add(new CrossLane(_temp, _link, _index));  
                 }
             }
 

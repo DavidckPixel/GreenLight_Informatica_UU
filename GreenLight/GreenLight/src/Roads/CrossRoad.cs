@@ -39,10 +39,10 @@ namespace GreenLight
             SwitchSelectedPoint(connectPoints.First());
 
             double lanewidth = (double)this.lanes * 20;
-            this.sides[0] = new CrossRoadSide(new RectHitbox(_points[0], new Point(_points[0].X + 20, _points[0].Y), _points[2], new Point(_points[2].X + 20, _points[2].Y), Color.Green));
-            this.sides[1] = new CrossRoadSide(new RectHitbox(new Point(_points[2].X, _points[2].Y - 20), new Point(_points[3].X, _points[3].Y - 20), _points[2], _points[3],Color.Green));
-            this.sides[2] = new CrossRoadSide(new RectHitbox(new Point(point1.X + (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2)), new Point(point1.X + (int)(lanewidth / 2) + 20, point1.Y - (int)(lanewidth / 2)), new Point(point1.X + (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2) + (int)(lanewidth)), new Point(point1.X + (int)(lanewidth / 2) + 20, point1.Y - (int)(lanewidth / 2) + (int)lanewidth), Color.Green));
-            this.sides[3] = new CrossRoadSide(new RectHitbox(_points[0], _points[1], new Point(_points[0].X, _points[0].Y + 20), new Point(_points[1].X, _points[1].Y + 20), Color.Green));
+            this.sides[0] = new CrossRoadSide(new RectHitbox(_points[0], new Point(_points[0].X + 20, _points[0].Y), _points[2], new Point(_points[2].X + 20, _points[2].Y), Color.Green), "Left");
+            this.sides[1] = new CrossRoadSide(new RectHitbox(new Point(_points[2].X, _points[2].Y - 20), new Point(_points[3].X, _points[3].Y - 20), _points[2], _points[3],Color.Green), "Bottom");
+            this.sides[2] = new CrossRoadSide(new RectHitbox(new Point(point1.X + (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2)), new Point(point1.X + (int)(lanewidth / 2) + 20, point1.Y - (int)(lanewidth / 2)), new Point(point1.X + (int)(lanewidth / 2), point1.Y - (int)(lanewidth / 2) + (int)(lanewidth)), new Point(point1.X + (int)(lanewidth / 2) + 20, point1.Y - (int)(lanewidth / 2) + (int)lanewidth), Color.Green), "Right");
+            this.sides[3] = new CrossRoadSide(new RectHitbox(_points[0], _points[1], new Point(_points[0].X, _points[0].Y + 20), new Point(_points[1].X, _points[1].Y + 20), Color.Green), "Top");
         }
 
         public void CreateArrowImages()

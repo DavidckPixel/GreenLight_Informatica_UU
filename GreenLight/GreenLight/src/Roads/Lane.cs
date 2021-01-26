@@ -29,12 +29,12 @@ namespace GreenLight
         public int thisLane = 0;
         public bool flipped = false;
 
-        public void DrawLine(Graphics g)
+        public void DrawLine(Graphics g, Pen pen)
         {
             Point _old = points.First().cord;
                 foreach (LanePoints _point in points)
                 {
-                    g.DrawLine(Pens.DarkGoldenrod, _point.cord, _old);
+                    g.DrawLine(pen, _point.cord, _old);
                     _old = _point.cord;
                 }
             

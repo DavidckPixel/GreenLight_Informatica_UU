@@ -9,9 +9,9 @@ namespace GreenLight.src.Driver.GPS
 {
     class Knot
     {
-        AbstractRoad Road1;
-        AbstractRoad Road2;
-        Point Cord;
+        public AbstractRoad Road1;
+        public AbstractRoad Road2;
+        public Point Cord;
 
         public Knot(AbstractRoad _road1 = null, AbstractRoad _road2 = null, Point _cord = new Point())
         {
@@ -43,7 +43,6 @@ namespace GreenLight.src.Driver.GPS
             {
                 return false;
             }
-            return base.Equals(obj);
         }
     }
 }

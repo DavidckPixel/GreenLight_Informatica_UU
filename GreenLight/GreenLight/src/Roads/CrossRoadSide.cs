@@ -11,14 +11,16 @@ namespace GreenLight
         public bool status;
         public RectHitbox hitbox;
         public int priorityLevel;
+        public string side;
 
         public List<BetterAI> aiOnSide= new List<BetterAI>();
 
-        public CrossRoadSide(RectHitbox _hitbox)
+        public CrossRoadSide(RectHitbox _hitbox, string _side)
         {
             this.priorityLevel = 1;
             this.status = false;
             this.hitbox = _hitbox;
+            this.side = _side;
         }
     }
 }
