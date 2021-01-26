@@ -364,7 +364,12 @@ namespace GreenLight
         {
             if (roads.Count != 0)
             {
+                General_Form.Main.BuildScreen.builder.gridController.undoGridpoints(roads[roads.Count - 1]);
                 DeleteRoad(roads[roads.Count - 1]);
+                if (roads.Count == 0)
+                {
+                    General_Form.Main.BuildScreen.builder.gridController.resetGridpoints();
+                }
                 General_Form.Main.BuildScreen.Screen.Invalidate();
             }
         }
@@ -440,10 +445,10 @@ namespace GreenLight
         {
             List<OriginPoints> OriginPointsList = General_Form.Main.BuildScreen.builder.roadBuilder.OPC.OriginPointsList;
             for (int o = OriginPointsList.Count - 1; o >= 0; o--)
-            {                
+            {
                 int Xop = OriginPointsList[o].X;
                 int Yop = OriginPointsList[o].Y;
-                Point point1 = _deletedroad.point1; 
+                Point point1 = _deletedroad.point1;
                 Point point2 = _deletedroad.point2;
                 int connectedRoads = 0;
                 for (int i = 0; i < roads.Count; i++)
@@ -465,7 +470,13 @@ namespace GreenLight
                 this.selectedRoad = null;
                 DisableSettingScreen();
             }
+            General_Form.Main.BuildScreen.builder.gridController.undoGridpoints(_deletedroad);
             roads.Remove(_deletedroad);
+
+            if (roads.Count == 0)
+            {
+                General_Form.Main.BuildScreen.builder.gridController.resetGridpoints();
+            }
         }
 
         private void SettingBoxClick(object o, MouseEventArgs mea)

@@ -11,8 +11,9 @@ namespace GreenLight
 {
     public class SpeedSignController : AbstractSignController
     {
-        public Label label1;
+        public Label label1, label2;
         public TextBox Textbox1;
+        public PictureBox pb1;
         public CurvedButtons Button1;
         public CurvedButtons Button2;
         public Label errorMess;
@@ -28,14 +29,25 @@ namespace GreenLight
         {
             this.settingScreen = new Form();
             //is.settingScreen.MdiParent = this.mainScreen;
-
-            this.settingScreen.Size = new Size(300, 600);
+            this.settingScreen.Size = new Size(300, 300);
             this.settingScreen.BackColor = Color.FromArgb(255,255,255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
+            this.settingScreen.Controls.Add(label2);
+
+            pb1 = new PictureBox();
+            pb1.Image = Image.FromFile("../../User Interface Recources/Empty_Speed_Sign.png");
+            pb1.Location = new Point(190, 60);
+            pb1.Size = new Size(75, 75);
+            pb1.SizeMode = PictureBoxSizeMode.Zoom;
+            pb1.BringToFront();
+            this.settingScreen.Controls.Add(pb1);
+
             label1 = new Label();
-            label1.Text = "Speed?";
-            label1.Location = new Point(50, 50);
+            label1.Text = "Change the speedlimit on this road to: ";
+            label1.Location = new Point(30, 80);
+            label1.Size = new Size(150, 40);
+            label1.TextAlign = ContentAlignment.MiddleCenter;
 
             this.settingScreen.Controls.Add(label1);
 
@@ -48,17 +60,18 @@ namespace GreenLight
 
             Textbox1 = new TextBox();
             Textbox1.Text = "50";
-            Textbox1.Location = new Point(40, 150);
+            Textbox1.Location = new Point(100, 160);
             this.settingScreen.Controls.Add(Textbox1);
 
+            CurvedButtons Divider1 = new CurvedButtons();
+            Divider1.Location = new Point(20, 200);
+            this.settingScreen.Controls.Add(Divider1);
 
-            //Waarschijnlijk beter om mee te geven aan initSettingScreen zoals in Build_sub_menu.Initialize 
-
-            Button1 = new CurvedButtons(new Size(80, 40), new Point(10, 400), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            Button1 = new CurvedButtons(new Size(80, 40), new Point(55, 230), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             Button1.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.speedSign.saveButton(); };
             this.settingScreen.Controls.Add(Button1); 
 
-            Button2 = new CurvedButtons(new Size(80, 40), new Point(120, 400), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);    
+            Button2 = new CurvedButtons(new Size(80, 40), new Point(165, 230), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);    
             Button2.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.speedSign.deleteSign(); };
             this.settingScreen.Controls.Add(Button2);
         }

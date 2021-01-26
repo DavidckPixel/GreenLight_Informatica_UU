@@ -71,6 +71,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Speedsign.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="HitBox_form.cs">
       <SubType>Form</SubType>
     </Compile>
