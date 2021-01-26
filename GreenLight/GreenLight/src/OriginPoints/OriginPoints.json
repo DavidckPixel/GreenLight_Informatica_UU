@@ -1,7 +1,1 @@
-
-[{"Weight":80,"X":680,"Y":360,"lanes":null,"isConnection":false},{"Weight":80,"X":500,"Y":360,"lanes":null,"isConnection":false},{"Weight":80,"X":460,"Y":360,"lanes":null,"isConnection":false},{"Weight":80,"X":480,"Y":360,"lanes":null,"isConnection":false},{"Weight":80,"X":420,"Y":400,"lanes":null,"isConnection":false},{"Weight":80,"X":560,"Y":440,"lanes":null,"isConnection":false}]
-
-[{"Weight":80,"X":780,"Y":340,"lanes":null,"isConnection":false},{"Weight":80,"X":500,"Y":200,"lanes":null,"isConnection":false}]
-
-[{"Weight":80,"X":300,"Y":240,"lanes":null,"isConnection":false},{"Weight":80,"X":382,"Y":120,"lanes":null,"isConnection":false},{"Weight":80,"X":455,"Y":158,"lanes":null,"isConnection":false},{"Weight":80,"X":400,"Y":220,"lanes":null,"isConnection":false}]
-
+[{"Weight":80,"X":740,"Y":380,"lanes":null,"isConnection":false},{"Weight":80,"X":520,"Y":300,"lanes":null,"isConnection":false},{"Weight":80,"X":580,"Y":400,"lanes":null,"isConnection":false},{"Weight":80,"X":440,"Y":360,"lanes":null,"isConnection":false},{"Weight":80,"X":620,"Y":400,"lanes":null,"isConnection":false},{"Weight":80,"X":600,"Y":400,"lanes":null,"isConnection":false}]
