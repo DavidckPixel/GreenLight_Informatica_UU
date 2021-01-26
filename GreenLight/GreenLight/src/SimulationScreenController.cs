@@ -15,8 +15,8 @@ namespace GreenLight
     {
         public string ActiveSubMenu;
         public SimulationController Simulator;
-        Form mainForm;
-        GPSData gpsData;
+        public Form mainForm;
+        public GPSData gpsData;
 
         public SimulationScreenController(Form _tempform)
         {
@@ -32,7 +32,7 @@ namespace GreenLight
 
             this.Screen.Image = new System.Drawing.Bitmap(Screen.Width, Screen.Height);
 
-            this.Simulator = new SimulationController();
+            this.Simulator = new SimulationController(this);
             Log.Write("Created the Simulation Screen Controller");
 
             this.mainForm.Controls.Add(this.Screen);
@@ -114,14 +114,16 @@ namespace GreenLight
             }
             Log.Write("Completed drawing the roads on the simulation screen");
 
-            foreach(Knot _knot in gpsData._allKnots)
+            for(int x = 0; x < this.Simulator.vehicleController.vehicleList.Count(); x++)
             {
-                _knot.Draw(g);
+                this.Simulator.vehicleController.vehicleList[x].Draw(g);
             }
 
-            Console.WriteLine("IK BEN NU AN HET TEKENENENENENEN, Count: " + gpsData.nodePaths.Count);
-            
-            gpsData.Draw(g, gpsData.nodePaths[0]);
+            foreach(Knot _knot in gpsData._allKnots)
+            {
+                //_knot.Draw(g);
+            }
+            //gpsData.Draw(g, gpsData.nodePaths[0]);
         }
 
         private void ChangeSize(object o, EventArgs ea)

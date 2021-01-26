@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GreenLight.src.Driver.GPS
 {
-    class NodePath
+    public class NodePath
     {
-        Node begin;
+        public Node begin;
         Node end;
         List<Node> path;
 
@@ -56,6 +56,15 @@ namespace GreenLight.src.Driver.GPS
                 _prevNode = _node;
                 x++;
             }
+        }
+
+        public bool CheckMatch(Node _begin, Node _end)
+        {
+            if(_begin == this.begin && _end == this.end)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

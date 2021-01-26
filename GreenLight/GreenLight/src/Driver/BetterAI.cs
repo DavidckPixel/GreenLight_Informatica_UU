@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using GreenLight.src.Data_Collection;
+using GreenLight.src.Driver.GPS;
 
 namespace GreenLight
 {
@@ -18,14 +19,15 @@ namespace GreenLight
         float ruleBreakingChance;
 
         int roadSpeedLimit;
-        public double targetspeed = 4; //TEMPERALY PUBLIC
-        public int priority = 4;
+        public double targetspeed = 2; //TEMPERALY PUBLIC
+        public int priority = 2;
 
         public bool isBraking = false;
         public bool isAccelerating = true;
         public float accelerate = 0.016f;
         public bool handBreakOn = false;
         public bool brakeToZero = false;
+        public bool toDelete = false;
 
         private BetterVehicle vehicle;
 
@@ -44,11 +46,12 @@ namespace GreenLight
 
         public bool wantsToSwitch;
         public bool closeToCars;
-        private GPS navigator;
+        private BetterGPS navigator;
 
         public int lanePointsMovePerTick;
 
-        public int currentLaneIndex;
+        public int currentLanePointIndex;
+        public int CurrentLaneIndex;
 
         RectHitbox foundHitbox = null;
         CrossRoad currentCrossRoad = null;
@@ -59,22 +62,35 @@ namespace GreenLight
 
         
 
-        public BetterAI(DriverStats _stats, BetterVehicle _vehicle)
+        public BetterAI(DriverStats _stats)
         {
             this.reactionSpeed = _stats.ReactionTime;
             this.followInterval = _stats.FollowInterval;
             this.speedRelativeToLimit = _stats.SpeedRelativeToLimit;
             this.ruleBreakingChance = _stats.RuleBreakingChance;
+        }
 
-            vehicle = _vehicle;
-            vehicle.vehicleAI = this;
+        public void initGPS(Node _startNode)
+        {
+            navigator = new BetterGPS(this, _startNode);
+            this.SetPath();
+        }
 
-            navigator = new GPS();
+        public void setVehicle(BetterVehicle _vehicle, Node _startNode)
+        {
+            this.vehicle = _vehicle;
             profile = new DriverProfile(this.vehicle.physics);
+
+            initGPS(_startNode);
         }
 
         public void Update()
         {
+            if (toDelete)
+            {
+                return;
+            }
+
             if (vehicle.hardStop)
             {
                 return;
@@ -147,15 +163,13 @@ namespace GreenLight
             List<BetterVehicle> allVehicles = BetterVehicleTest.vehiclelist;
             List<BetterVehicle> vehiclesOnLane = allVehicles.FindAll(x => x.currentLane == this.vehicle.currentLane && x.currentRoad == this.vehicle.currentRoad);
 
-            int _distance = RoadMath.LanePointsInDistance(this.vehicle.brakeDistance + 8, this.currentLaneIndex, this.vehicle.currentLane.points);
+            int _distance = RoadMath.LanePointsInDistance(this.vehicle.brakeDistance + 8, this.currentLanePointIndex, this.vehicle.currentLane.points);
 
             _distance = _distance == 0 ? 1 : _distance;
 
             //x.vehicleAI.currentLaneIndex - x.vehicleAI.lanePointsMovePerTick - 5 <= this.currentLaneIndex && x.vehicleAI.currentLaneIndex + x.vehicleAI.lanePointsMovePerTick + 5 > this.currentLaneIndex
-            if (vehiclesOnLane.Any(x => x.vehicleAI.currentLaneIndex > this.currentLaneIndex && x.vehicleAI.currentLaneIndex < this.currentLaneIndex  + _distance))
+            if (vehiclesOnLane.Any(x => x.vehicleAI.currentLanePointIndex > this.currentLanePointIndex && x.vehicleAI.currentLanePointIndex < this.currentLanePointIndex  + _distance))
             {
-                Console.WriteLine("TOO CLOSE!!! BRAKE!!!");
-
                 this.wantsToSwitch = true;
                 this.closeToCars = true;
             }
@@ -177,12 +191,12 @@ namespace GreenLight
 
             int _indexfromOther = (int)Math.Ceiling(vehicle.brakeDistance) > Num ? (int)Math.Ceiling(vehicle.brakeDistance) - Num : 0;
 
-            if (vehicle.currentLane.points.Count() - this.currentLaneIndex > _indexfromOther && this.nextRoad.Type == "Cross") 
+            if (vehicle.currentLane.points.Count() - this.currentLanePointIndex > _indexfromOther && this.nextRoad.Type == "Cross") 
             {
                 return; //TOO FAR AWAY
             }            
 
-            if(Num - this.currentLaneIndex >= Math.Ceiling(vehicle.brakeDistance) && _currentRoad.Type == "Cross")
+            if(Num - this.currentLanePointIndex >= Math.Ceiling(vehicle.brakeDistance) && _currentRoad.Type == "Cross")
             {        
                 return;
             }
@@ -275,11 +289,10 @@ namespace GreenLight
 
             if (!(_currentRoad.Type == "Cross" || this.nextRoad.Type == "Cross") || this.crossRoadTimer > 0)
             {
-                //Console.WriteLine("THERE WAS NO CROSSROAD IN SIGHT");
                 return;
 
             }
-            int pointsTillEnd = this.vehicle.currentLane.points.Count() - 1 - this.currentLaneIndex;
+            int pointsTillEnd = this.vehicle.currentLane.points.Count() - 1 - this.currentLanePointIndex;
             int checkPointsAhead = 30;
             int pointsdiff = 30 - pointsTillEnd;
 
@@ -287,7 +300,6 @@ namespace GreenLight
             {
                 return;
             }
-
             RectHitbox _currentFoundHitbox = null;
             Point _location = new Point((int)vehicle.locationX, (int)vehicle.locationY);
             try
@@ -297,11 +309,10 @@ namespace GreenLight
                     //Console.WriteLine("WE ARE CURRENTLY ON THE CROSSROAD!");
 
                     currentCrossRoad = (CrossRoad)_currentRoad;
-                    for (int x = 0; x < 30; x++)
+                    for (int x = 0; x < 10; x++)
                     {
-                        _location = this.vehicle.currentLane.points[this.currentLaneIndex + x].cord;
+                        _location = this.vehicle.currentLane.points[this.currentLanePointIndex + x].cord;
 
-                        int y = 0;
                         foreach (CrossRoadSide _side in currentCrossRoad.sides)
                         {
                             if (_side.hitbox.Contains(_location))
@@ -312,7 +323,6 @@ namespace GreenLight
 
                                 _side.priorityLevel = this.priority > _side.priorityLevel ? this.priority : _side.priorityLevel;
                             }
-                            y++;
                         }
                         if (_currentFoundHitbox != null)
                         {
@@ -369,18 +379,24 @@ namespace GreenLight
 
                 if (this.currentCrossRoad.sides[Index].aiOnSide.Contains(this))
                 {
-                    return;
+                    Console.WriteLine("HOEVAAK KWAM JE HIER DAN??");
+                    //return;
                 }
 
                 this.currentCrossRoad.sides[Index].aiOnSide.Remove(this);
                 this.foundHitbox = null;
+                Console.WriteLine(this.currentCrossRoad.sides[Index].aiOnSide.Count + "AMOUNT OF VEHICLES ON THIS SIDE");
 
-                if(this.currentCrossRoad.sides[Index].aiOnSide.Count <= 0)
+                if(!this.currentCrossRoad.sides[Index].aiOnSide.Any())
                 {
                     this.currentCrossRoad.sides[Index].status = false;
+                    this.currentCrossRoad.sides[Index].priorityLevel = 0;
+                }
+                else 
+                {
+                    this.currentCrossRoad.sides[Index].priorityLevel = this.currentCrossRoad.sides[Index].aiOnSide.Max(x => x.priority);
                 }
 
-                this.currentCrossRoad.sides[Index].priorityLevel = this.currentCrossRoad.sides[Index].aiOnSide.Max(x => x.priority);
                 //Console.WriteLine("WE LEFT THE CROSSROAD");
             }
             
@@ -406,7 +422,7 @@ namespace GreenLight
         {
             double _distance = RoadMath.Distance(this.locationGoal.X, this.locationGoal.Y, this.vehicle.locationX, this.vehicle.locationY);
 
-            double _distanceToRoadSwitch = RoadMath.DistanceToLastLanePoint(this.currentLaneIndex, vehicle.currentLane.points);
+            double _distanceToRoadSwitch = RoadMath.DistanceToLastLanePoint(this.currentLanePointIndex, vehicle.currentLane.points);
 
             double _brakeDistance = vehicle.brakeDistance + vehicle.speed;
 
@@ -423,7 +439,7 @@ namespace GreenLight
             {
                 this.isBraking = true;
             }
-            if(_distanceToRoadSwitch < _brakeDistance && navigator.ForcedLane != null && vehicle.currentLane.thisLane != navigator.ForcedLane)
+            if(_distanceToRoadSwitch < _brakeDistance && navigator.currentPath.NextLaneIndex != null && !navigator.currentPath.NextLaneIndex.Contains(vehicle.currentLane.thisLane))
             {
                 this.isBraking = true;
             }
@@ -448,10 +464,15 @@ namespace GreenLight
 
             int _laneNum = _drivinglane.thisLane;
 
-            if (navigator.ForcedLane == _laneNum)
+            if (navigator.currentPath.NextLaneIndex != null)
             {
-                //CAR must be on this lane
-                return null;
+                if (navigator.currentPath.NextLaneIndex.Any())
+                {
+                    if (!navigator.currentPath.NextLaneIndex.Contains(_laneNum))
+                    {
+                        this.wantsToSwitch = true;
+                    }
+                }
             }
 
             bool _leftAvailable = LaneSideAvailable(-1);
@@ -474,12 +495,35 @@ namespace GreenLight
         {
             int _goalLaneIndex = this.vehicle.currentLane.thisLane + _side - 1;
 
+            if (navigator.currentPath.NextLaneIndex != null)
+            {
+
+                if (navigator.currentPath.NextLaneIndex.Any())
+                {
+                    int _indexDiff = Math.Abs(this.currentLanePointIndex - navigator.currentPath.NextLaneIndex.First());
+                    int _indexDiffSide = Math.Abs(this.currentLanePointIndex - navigator.currentPath.NextLaneIndex.First() + _side);
+
+                    if (_indexDiff < _indexDiffSide)
+                    {
+                        return false;
+                    }
+                }
+
+                if (navigator.currentPath.NextLaneIndex.Any())
+                {
+                    if (!navigator.currentPath.NextLaneIndex.Contains(_goalLaneIndex) && navigator.currentPath.NextLaneIndex.Contains(this.currentLanePointIndex))
+                    {
+                        return false; //YOU ARE NOT MOVING CORRECTLY
+                    }
+                }
+            }
+
             if(_goalLaneIndex < 0 || _goalLaneIndex > this.vehicle.currentRoad.Drivinglanes.Count() - 1)
             {
                 return false; //LANE IS OUT OF INDEX
             }
 
-            if(this.vehicle.currentRoad.Type == "Curved")
+            if(this.vehicle.currentRoad.Type == "Curved" || this.vehicle.currentRoad.Type == "Cross")
             {
                 return false; //CARS CANNOT SWITCH WHILE ON CURVED ROADS
             }
@@ -491,7 +535,7 @@ namespace GreenLight
                 return false; //LANE GOES IN THE OPPOSITE DIRECTION
             }
 
-            if(this.currentLaneIndex < 50)
+            if(this.currentLanePointIndex < 50)
             {
                 return false; //SWITCH IS HAPPENING TOO CLOSE TO BEGINNING OF THE ROAD
             }
@@ -499,9 +543,9 @@ namespace GreenLight
             List<BetterVehicle> allVehicles = BetterVehicleTest.vehiclelist;
             List<BetterVehicle> vehiclesOnLane = allVehicles.FindAll(x => x.currentLane.thisLane == _goalLane.thisLane && x.currentRoad == this.vehicle.currentRoad);
 
-            if (vehiclesOnLane.Any(x => x.vehicleAI.currentLaneIndex - x.vehicleAI.lanePointsMovePerTick - 5 <= this.currentLaneIndex && x.vehicleAI.currentLaneIndex + x.vehicleAI.lanePointsMovePerTick + 5> this.currentLaneIndex))
+            if (vehiclesOnLane.Any(x => x.vehicleAI.currentLanePointIndex - x.vehicleAI.lanePointsMovePerTick - 5 <= this.currentLanePointIndex && x.vehicleAI.currentLanePointIndex + x.vehicleAI.lanePointsMovePerTick + 5> this.currentLanePointIndex))
             {
-                Console.WriteLine("there is a car in the way!"); 
+                //Console.WriteLine("there is a car in the way!"); 
                 return false; //THERE IS A CAR IN THE WAY
             }
 
@@ -510,7 +554,7 @@ namespace GreenLight
 
         private void SwitchLanes()
         {
-            this.currentLaneIndex = this.vehicle.currentLane.points.FindIndex(x => x.cord == this.goal.cord);
+            this.currentLanePointIndex = this.vehicle.currentLane.points.FindIndex(x => x.cord == this.goal.cord);
             this.wantsToSwitch = false;
             Lane _laneToGo = CheckSwitchLane();
 
@@ -521,14 +565,17 @@ namespace GreenLight
             }
 
             this.origin = this.goal;
-            this.goal = _laneToGo.points[this.currentLaneIndex + 1];
+            this.currentLanePointIndex++;
+            this.goal = _laneToGo.points[this.currentLanePointIndex];
 
             this.lanePointDistance = RoadMath.Distance(vehicle.locationX, vehicle.locationY, goal.cord.X, goal.cord.Y);
             this.vehiclePointDistance = this.lanePointDistance;
 
-            this.SteerWheel(RoadMath.CalculateAngle(new Point((int)vehicle.locationX, (int)vehicle.locationY), goal.cord)); //Lanes get switched But wrong way!!!
+            this.CurrentLaneIndex = _laneToGo.thisLane;
 
-            this.vehicle.currentLane = _laneToGo;
+            this.vehicle.currentLane = this.vehicle.currentRoad.Drivinglanes[this.CurrentLaneIndex - 1];
+
+            this.SteerWheel(RoadMath.CalculateAngle(new Point((int)vehicle.locationX, (int)vehicle.locationY), goal.cord)); //Lanes get switched But wrong way!!!
             DistanceToCars();
         }
 
@@ -547,8 +594,8 @@ namespace GreenLight
         public void switchLanePoints()
         {
             List<LanePoints> _points = this.vehicle.currentLane.points;
-            this.currentLaneIndex++;
-            int _index = this.currentLaneIndex;
+            this.currentLanePointIndex++;
+            int _index = this.currentLanePointIndex;
 
             if (_index == _points.Count() - 1)
             {
@@ -576,29 +623,30 @@ namespace GreenLight
             this.vehicle.currentAngel = _angel;
         }
 
-        public void SetPath(List<AbstractRoad> _path, int _startIndex, int _startDrivingLaneIndex = 0, int _startDrivingPointsIndex = 0) //Naam weiziging
+        public void SetPath() //Naam weiziging
         {
-            _startIndex = _startIndex > _path.Count() - 2 ? 0 : _startIndex; //The startindex cannot be higher then the amount of roads in the list;
-            this.index = _startIndex; //Index is set to the start Index;
-            this.drivingRoads = _path;
+            Random ran = new Random();
 
-            vehicle.SwitchRoad(_path[_startIndex], _startDrivingLaneIndex); //Switch the active road
-            this.nextRoad = _path[_startIndex + 1]; //Sets the active road to be the one after the current road;
+            AbstractRoad _currentRoad = navigator.currentPath.road;
+            this.CurrentLaneIndex = navigator.currentPath.laneIndex[ran.Next(0, navigator.currentPath.laneIndex.Count() - 1)];
+            this.vehicle.SwitchRoad(_currentRoad, this.CurrentLaneIndex);
+            this.nextRoad = navigator.nextRoad;
 
-            _startDrivingPointsIndex = _startIndex > this.vehicle.currentLane.points.Count() - 2 ? 0 : _startDrivingPointsIndex; //checks if the startDrivingPointsIndex will not get out of bounds
-
-            this.origin = this.vehicle.currentLane.points[_startDrivingPointsIndex]; //sets the origin point
-            this.goal = this.vehicle.currentLane.points[_startDrivingPointsIndex + 1]; //Dit kan een error krijgen;
+            this.origin = this.vehicle.currentLane.points[0]; //sets the origin point
+            this.goal = this.vehicle.currentLane.points[1]; //Dit kan een error krijgen;
             ForceCarLocation(this.origin.cord);
 
             this.lanePointDistance = RoadMath.Distance(origin.cord, goal.cord);
             this.vehiclePointDistance = this.lanePointDistance;
 
-            this.currentLaneIndex = 0;
+            this.currentLanePointIndex = 0;
+
             this.SteerWheel(origin.degree);
 
             //this.locationGoal = _path.Last().Drivinglanes.First().points.Last().cord; //TEMP
             this.locationGoal = new Point(-5000, -5000);
+
+            CheckSwitchLane();
 
             //Console.WriteLine("Origin Degreee: {0}", RoadMath.TranslateDegree(origin.degree));
             //Console.WriteLine("LanePointDistance: {0}", this.lanePointDistance);
@@ -612,49 +660,49 @@ namespace GreenLight
 
         public void SwitchRoad()
         {
-            this.index += 1;
-            int _nextIndex = this.index + 1; ;
+            Tuple<int, int> _laneSwap = navigator.currentPath.LaneSwap.Find(x => x.Item1 == this.CurrentLaneIndex); // GAAT FOUT
 
-            if(this.drivingRoads.Count() <= index)
+            if(_laneSwap == null)
             {
-                this.index = 0;
-                _nextIndex = 1;
-            }
-            else if(this.drivingRoads.Count() <= _nextIndex)
-            {
-                _nextIndex = 0;
+                SignalDone();
+                return;
             }
 
-            this.currentLaneIndex = 0;
+            this.CurrentLaneIndex = _laneSwap.Item2;
 
-            int _drivingLaneIndex = this.vehicle.currentLane.thisLane - 1;
-            AbstractRoad _currentRoad = this.drivingRoads[this.index];
+            navigator.NextPath();
 
-            if (_currentRoad.Type == "Cross")
-            {
-                _drivingLaneIndex = 0; //Select the correctDrivingLaneIndex
-            }
-            else if (this.vehicle.currentRoad.Type == "Cross")
-            {
-                _drivingLaneIndex = 0; //Select the correctDrivingLaneIndex
-            }
+            AbstractRoad _currentRoad = navigator.currentPath.road;
 
-            this.vehicle.SwitchRoad(_currentRoad, _drivingLaneIndex);
-            this.nextRoad = this.drivingRoads[_nextIndex];
+            this.vehicle.SwitchRoad(_currentRoad, this.CurrentLaneIndex);
+            this.nextRoad = navigator.nextRoad;
 
             this.origin = this.goal;
             this.goal = this.vehicle.currentLane.points[1];
-
+            this.currentLanePointIndex = 0;
             this.lanePointDistance = RoadMath.Distance(vehicle.locationX, vehicle.locationY, goal.cord.X, goal.cord.Y);
             this.vehiclePointDistance = this.lanePointDistance;
 
             float angle = RoadMath.CalculateAngle((float)vehicle.locationX, (float)vehicle.locationY, goal.cord.X, goal.cord.Y);
 
-            Console.WriteLine("LOCATION: {0} - {1}, GOAL: {2} - {3}", (float)vehicle.locationX, (float)vehicle.locationY, goal.cord.X, goal.cord.Y);
-            Console.WriteLine("THE ANGLE OF THE SWITCH IS: {0}", angle);
+            //Console.WriteLine("LOCATION: {0} - {1}, GOAL: {2} - {3}", (float)vehicle.locationX, (float)vehicle.locationY, goal.cord.X, goal.cord.Y);
+            //Console.WriteLine("THE ANGLE OF THE SWITCH IS: {0}", angle);
 
             this.signsOnRoadRead.Clear();
             this.SteerWheel(goal.degree);
+
+            CheckSwitchLane();
+        }
+
+        public void SignalDone()
+        {
+            this.toDelete = true;
+            this.vehicle.DeleteVehicle(false);
+        }
+
+        public void SwitchedPaths()
+        {
+            //TEMP
         }
     }
 }

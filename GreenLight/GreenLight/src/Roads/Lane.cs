@@ -31,13 +31,45 @@ namespace GreenLight
 
         public void DrawLine(Graphics g, Pen pen)
         {
+            g.DrawString(thisLane.ToString(), SystemFonts.DefaultFont, Brushes.Pink, this.points.First().cord);
+
             Point _old = points.First().cord;
-                foreach (LanePoints _point in points)
+            foreach (LanePoints _point in points)
+            {
+                g.DrawLine(pen, _point.cord, _old);
+                _old = _point.cord;
+            }
+
+        }
+
+        public static void OrderDrivingLanes(AbstractRoad _road)
+        {
+            int Xside = _road.Drivinglanes.First().points.First().cord.X;
+            List<Lane> _orderd = new List<Lane>();
+            int count = 1;
+
+            if (_road.Drivinglanes.TrueForAll(x => RoadMath.Distance(Xside, x.points.First().cord.Y, x.points.First().cord.X, x.points.First().cord.Y) < 5))
+            {
+                Console.WriteLine("Ordering the driving Lanes: the lane is laiyng Horizontally");
+                _road.Drivinglanes.Sort(delegate (Lane x, Lane y)
                 {
-                    g.DrawLine(pen, _point.cord, _old);
-                    _old = _point.cord;
-                }
-            
+                    return x.points.First().cord.Y.CompareTo(y.points.First().cord.Y);
+                });
+            }
+            else
+            {
+                Console.WriteLine("Ordering the driving Lanes: the lane is laiyng Vertically");
+                _road.Drivinglanes.Sort(delegate (Lane x, Lane y)
+                {
+                    return x.points.First().cord.X.CompareTo(y.points.First().cord.X);
+                });
+            }
+
+            foreach (Lane _lane in _road.Drivinglanes)
+            {
+                _lane.thisLane = count;
+                count++;
+            }
         }
     }
 }

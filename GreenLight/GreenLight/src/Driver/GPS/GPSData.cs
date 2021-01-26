@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GreenLight.src.Driver.GPS
 {
-    class GPSData
+     public class GPSData
     {
         List<Node> nodes;
         List<AbstractRoad> roads;
@@ -70,7 +70,7 @@ namespace GreenLight.src.Driver.GPS
         private void FindAddRoad(Point _p, AbstractRoad _mainroad)
         {
             AbstractRoad _road = this.roads.Find(x => x.hitbox.Contains(_p) && x.roadtype != "Cross");
-            if(_road == null)
+            if (_road == null)
             {
                 return;
             }
@@ -79,7 +79,7 @@ namespace GreenLight.src.Driver.GPS
 
         private bool TestDuplicateKnot(Knot _knot)
         {
-            foreach(Knot _testKnot in _allKnots)
+            foreach (Knot _testKnot in _allKnots)
             {
                 if (_knot.Equals(_testKnot))
                 {
@@ -91,23 +91,23 @@ namespace GreenLight.src.Driver.GPS
 
         private void CreateConnections()
         {
-           List<Link> _allLinks = new List<Link>();
+            List<Link> _allLinks = new List<Link>();
 
-            foreach(AbstractRoad _road in roads)
+            foreach (AbstractRoad _road in roads)
             {
                 _allLinks.AddRange(CreateConnectionPerRoad(_road));
             }
 
-           foreach(Link _link in _allLinks)
-           {
+            foreach (Link _link in _allLinks)
+            {
                 _link.ConsolePrint();
-           }
+            }
 
-           foreach(Knot _knot in _allKnots)
-           {
+            foreach (Knot _knot in _allKnots)
+            {
                 List<Link> _knotlinks = _allLinks.FindAll(x => x.begin == _knot);
-                nodes.Add(new Node(_knot, _knotlinks));        
-           }
+                nodes.Add(new Node(_knot, _knotlinks));
+            }
 
             foreach (Node _node in nodes)
             {
@@ -116,7 +116,10 @@ namespace GreenLight.src.Driver.GPS
                 foreach (Link _link in _node.links)
                 {
                     Node _tempNode = nodes.Find(x => x.knot == _link.end);
-                    _tempNode.isBackLinked = true;
+                    if(!_tempNode.links.Any(x => x.end == _node.knot))
+                    {
+                        _tempNode.isBackLinked = true;
+                    }
                     if (!_endKnots.Contains(_tempNode))
                     {
                         _endKnots.Add(_tempNode);
@@ -128,7 +131,7 @@ namespace GreenLight.src.Driver.GPS
             nodes.ForEach(x => x.spawn());
             this.spawnNodes = nodes.FindAll(x => x.canSpawn == true);
 
-            foreach(Node _node in this.spawnNodes)
+            foreach (Node _node in this.spawnNodes)
             {
                 if (_node != null)
                 {
@@ -138,7 +141,7 @@ namespace GreenLight.src.Driver.GPS
                         {
                             this.nodePaths.Add(new NodePath(_node, _endNode, OwnDijkstra.GetShortestPath(_node, _endNode)));
                         }
-                    
+
                     }
                 }
             }
@@ -152,7 +155,7 @@ namespace GreenLight.src.Driver.GPS
             List<Knot> _knots = _allKnots.FindAll(x => x.Road1 == _road || x.Road2 == _road);
             List<Link> _links = new List<Link>();
 
-            if(_knots.Count() == 2 && _road.roadtype != "Cross")
+            if (_knots.Count() == 2 && _road.roadtype != "Cross")
             {
                 Knot _firstKnot = _knots.Find(x => RoadMath.Distance(x.Cord, _road.point1) < 20);
                 Knot _secondKnot = _knots.Find(x => RoadMath.Distance(x.Cord, _road.point2) < 20);
@@ -169,8 +172,8 @@ namespace GreenLight.src.Driver.GPS
                     _firstKnot = _knots.First();
                     _secondKnot = _knots[1];
                 }
-                
-                foreach(Lane _lane in _road.Drivinglanes)
+
+                foreach (Lane _lane in _road.Drivinglanes)
                 {
                     if (!_lane.flipped)
                     {
@@ -182,11 +185,11 @@ namespace GreenLight.src.Driver.GPS
                     }
                 }
             }
-            else if(_knots.Count() <= 1)
+            else if (_knots.Count() <= 1)
             {
                 return _links;
             }
-            else if(_road.roadtype == "Cross")
+            else if (_road.roadtype == "Cross")
             {
                 CrossRoad _crossRoad = (CrossRoad)_road;
                 List<ConnectionLink> _crosslinks = _crossRoad.connectLinks;
@@ -194,7 +197,7 @@ namespace GreenLight.src.Driver.GPS
                 foreach (Knot _knot in _knots)
                 {
                     CrossRoadSide _Temp = _crossRoad.sides.ToList().Find(x => x.hitbox.Contains(_knot.Cord));
-                    if(_Temp != null)
+                    if (_Temp != null)
                     {
                         _stringsides.Add(_Temp.side);
                     }
@@ -204,11 +207,11 @@ namespace GreenLight.src.Driver.GPS
                     }
                 }
 
-                foreach(ConnectionLink _connectionLink in _crosslinks)
+                foreach (ConnectionLink _connectionLink in _crosslinks)
                 {
                     int _stringIndex = _stringsides.IndexOf(_connectionLink.begin.Side);
                     int _stringIndex2 = _stringsides.IndexOf(_connectionLink.end.Side);
-                    if (_stringIndex != -1 && _stringIndex2 != -1 )
+                    if (_stringIndex != -1 && _stringIndex2 != -1)
                     {
                         Console.WriteLine("Index Values: {0} , {1}", _stringIndex, _stringIndex2);
 
@@ -232,28 +235,73 @@ namespace GreenLight.src.Driver.GPS
         public void Draw(Graphics g, NodePath _path)
         {
             Console.WriteLine("pathlink count: " + _path.linkPath.Count);
-            foreach(Path _linkPath in _path.linkPath)
+            foreach (Path _linkPath in _path.linkPath)
             {
+
                 Console.WriteLine("current index: " + _path.linkPath.IndexOf(_linkPath));
                 _linkPath.laneIndex.ForEach(x => Console.WriteLine(x));
 
-                if (_linkPath.NextLaneIndex == null)
+                if (_linkPath.NextLaneIndex == null || !_linkPath.NextLaneIndex.Any())
                 {
-                    _linkPath.road.Drivinglanes[_linkPath.laneIndex.First() - 1].DrawLine(g, Pens.Blue);
+                    foreach (int x in _linkPath.laneIndex)
+                    {
+                        _linkPath.road.Drivinglanes[x - 1].DrawLine(g, Pens.Blue);
+                    }
+
                 }
                 else
                 {
-                    
-                    Console.WriteLine("NEXTLANE INDEX: " + _linkPath.NextLaneIndex.First());
-                    Console.WriteLine("DrivingLanes: " + _linkPath.road.Drivinglanes.Count);
-                    foreach(int _possiblelane in _linkPath.NextLaneIndex.First())
+                    foreach (int _possiblelane in _linkPath.NextLaneIndex)
                     {
                         _linkPath.road.Drivinglanes[_possiblelane].DrawLine(g, Pens.Green);
                     }
                     //_linkPath.road.Drivinglanes[_linkPath.NextLaneIndex.First()].DrawLine(g, Pens.Green);
                 }
                 Console.WriteLine(_linkPath.road.point1);
+
             }
+        }
+
+        public List<Path> getPathListFromNode(Node _begin, Node _end)
+        {
+            if (!(_begin.canSpawn || _end.canSpawn))
+            {
+                return null;
+            }
+
+            return this.nodePaths.Find(x => x.CheckMatch(_begin, _end)).linkPath;
+        }
+
+        public static GPSData getGPSData()
+        {
+            return General_Form.Main.SimulationScreen.gpsData;
+        }
+
+        public List<Path> getPathListFromBeginnin(Node _begin)
+        {
+            List<NodePath> _AllPossiblePaths = this.nodePaths.FindAll(x => x.begin == _begin);
+
+            if (!_AllPossiblePaths.Any())
+            {
+                return null;
+            }
+
+            Random ran = new Random();
+            return _AllPossiblePaths[ran.Next(0, _AllPossiblePaths.Count())].linkPath;
+        }
+
+        public Node getRandomStartNode()
+        {
+            Console.WriteLine(this.spawnNodes.Count());
+
+            if (this.spawnNodes.Any())
+            {
+                Random ran = new Random();
+                return this.spawnNodes[ran.Next(0, this.spawnNodes.Count())];
+            }
+
+            Console.WriteLine("NODE PATHS ARE EMPTY??? THIS SHOULD NEVER HAPPEN!");
+            return null;
         }
     }
 }

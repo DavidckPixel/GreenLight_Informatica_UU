@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenLight.src.Driver.GPS
 {
-    static class OwnDijkstra
+    public static class OwnDijkstra
     {
         public static List<Node> GetShortestPath(Node _start, Node _goal)
         {
@@ -60,7 +60,7 @@ namespace GreenLight.src.Driver.GPS
         }
     }
 
-    class DijkstraPaths
+    public class DijkstraPaths
     {
         public List<Node> visited;
         public bool closed;

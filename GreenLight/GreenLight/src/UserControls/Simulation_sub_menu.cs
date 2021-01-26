@@ -119,6 +119,7 @@ namespace GreenLight
                 new Point(menu["buttonStart"], Form.Height - menu["controlsY"]), 35,
                 "../../User Interface Recources/Play_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Start);
+            Start.Click += (object o, EventArgs ea) => { General_Form.Main.SimulationScreen.Simulator.StartSimulation(); };
             Start.BringToFront();
 
             CurvedButtons Pause = new CurvedButtons(new Size(60, 60),

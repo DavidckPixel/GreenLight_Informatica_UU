@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GreenLight.src.Driver.GPS
 {
-    class Knot
+    public class Knot
     {
         public AbstractRoad Road1;
         public AbstractRoad Road2;

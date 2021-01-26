@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using System.Drawing;
+using GreenLight.src.Driver.GPS;
 
 namespace GreenLight
 {
@@ -13,19 +15,23 @@ namespace GreenLight
     {
 
         public List<BetterVehicle> vehicleList = new List<BetterVehicle>();
+        public List<BetterVehicle> toDelete = new List<BetterVehicle>();
         
         public VehicleStats selectedVehicle;
+
+        private SimulationController simController;
 
         public override void Initialize()
         {
             Log.Write("Initializing the VehicleController");
         }
 
-        public VehicleController()
+        public VehicleController(SimulationController _simController)
         {
+            this.simController = _simController;
         }
 
-        public Vehicle getVehicle(int _x, int _y, VehicleStats _stats = null)
+        public void getVehicle(Node _node, VehicleStats _stats = null)
         {
             if (_stats == null)
             {
@@ -34,7 +40,7 @@ namespace GreenLight
                 _stats = VehicleTypeConfig.vehicles[_index];
             }
 
-            return new Vehicle(_stats, _x, _y);
+            vehicleList.Add( new BetterVehicle(_stats, _node, this.simController.aiController.GetDriver()));
         }
 
         private VehicleStats getRandomStats()

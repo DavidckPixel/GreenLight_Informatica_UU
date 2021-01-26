@@ -38,6 +38,8 @@ namespace GreenLight
             {
                 this.Drivinglanes.Add(CalculateLanes(point1, point2, x));
             }
+
+            Lane.OrderDrivingLanes(this);
         }
 
         private DrivingLane CreateDrivingLane(Point _point1, Point _point2, int _thisLane)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenLight.src.Driver.GPS
 {
-    class Link
+    public class Link
     {
         public int laneIndex;
         public Knot begin;
