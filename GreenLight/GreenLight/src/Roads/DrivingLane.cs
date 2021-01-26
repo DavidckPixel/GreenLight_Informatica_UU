@@ -38,8 +38,8 @@ namespace GreenLight
 
             points.Reverse();
             flipped = !flipped;
-            
-            foreach(LanePoints x in points)
+
+            foreach (LanePoints x in points)
             {
                 x.Flip();
                 _templist.Add(x);
@@ -50,7 +50,7 @@ namespace GreenLight
             middle = this.points[this.points.Count() / 2]; //THIS LINE GIVES PROBLEMS WHEN MAKING CURVED ROAD 2 up or down and 2 right or left..
             AngleDir = middle.degree;
 
-            if(beginConnectedTo.Count != 0 && endConnectedTo.Count != 0)
+            if (beginConnectedTo.Count != 0 && endConnectedTo.Count != 0)
             {
                 List<Lane> _tempconnections = new List<Lane>();
 
@@ -67,14 +67,14 @@ namespace GreenLight
                 foreach (Lane _l in _tempconnections)
                     endConnectedTo.Add(_l);
             }
-            else if(beginConnectedTo.Count != 0)
+            else if (beginConnectedTo.Count != 0)
             {
                 foreach (Lane _l in beginConnectedTo)
                     endConnectedTo.Add(_l);
 
                 beginConnectedTo.Clear();
             }
-            else if(endConnectedTo.Count != 0)
+            else if (endConnectedTo.Count != 0)
             {
                 foreach (Lane _l in endConnectedTo)
                     beginConnectedTo.Add(_l);
@@ -85,7 +85,7 @@ namespace GreenLight
 
         public Pen getPen(int _side)
         {
-            Pen p = new Pen(Color.FromArgb(248,185,0), 3);
+            Pen p = new Pen(Color.FromArgb(248, 185, 0), 3);
 
             if (thisLane <= roadLanes - 2)
             {
@@ -129,9 +129,23 @@ namespace GreenLight
         public override void Draw(Graphics g)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            Pen p = new Pen(Color.FromArgb(21,21,21), Roads.Config.laneWidth);
-            Brush b = new SolidBrush(Color.FromArgb(21, 21, 21));
-            int drivingLaneDistance = Roads.Config.laneWidth; 
+            Pen p;
+            if (thisLane == 1)
+                p = new Pen(Color.Red, Roads.Config.laneWidth);
+            else if (thisLane == 2)
+                p = new Pen(Color.Green, Roads.Config.laneWidth);
+            else
+                p = new Pen(Color.FromArgb(21, 21, 21), Roads.Config.laneWidth);
+            Brush b;
+            if (thisLane == 1)
+                b = new SolidBrush(Color.Red);
+            else if (thisLane == 2)
+                b = new SolidBrush(Color.Green);
+            else
+                b = new SolidBrush(Color.FromArgb(21, 21, 21));
+
+
+            int drivingLaneDistance = Roads.Config.laneWidth;
             double slp, slpPer, oneX, amountX;
             int startAngle = 0, sweepAngle = 90;
             Rectangle rect = new Rectangle();
@@ -164,16 +178,9 @@ namespace GreenLight
                         {
                             startAngle = 270;
                             rect = new Rectangle(new Point(Math.Max(points[0].cord.X, points[points.Count - 1].cord.X) - size.Width, Math.Min(points[0].cord.Y, points[points.Count - 1].cord.Y)), size);
-                            if (roadLanes % 2 == 0)
-                            {
-                                side1 = 2;
-                                side2 = 1;
-                            }
-                            else
-                            {
-                                side1 = 1;
-                                side2 = 2;
-                            }
+
+                            side1 = 1;
+                            side2 = 2;
                         }
                         break;
                     case "NW":
@@ -196,21 +203,14 @@ namespace GreenLight
                         {
                             startAngle = 90;
                             rect = new Rectangle(new Point(Math.Min(points[0].cord.X, points[points.Count - 1].cord.X), Math.Max(points[0].cord.Y, points[points.Count - 1].cord.Y) - size.Height), size);
-                            if (roadLanes % 2 == 0)
-                            {
-                                side1 = 1;
-                                side2 = 2;
-                            }
-                            else
-                            {
-                                side1 = 2;
-                                side2 = 1;
-                            }
+
+                            side1 = 2;
+                            side2 = 1;
                         }
                         break;
                 }
                 //Console.WriteLine(" ------ DrivingLane ------- "+ dir);
-               
+
 
                 try
                 {
@@ -230,7 +230,7 @@ namespace GreenLight
             else
             {
                 //g.DrawLine(p, points[0].cord, points[points.Count - 1].cord);
-                
+
                 if (dir == "D")  //DiagonalRoad
                 {
                     Point[] polygon = new Point[4];
@@ -295,13 +295,12 @@ namespace GreenLight
 
             hitbox.Draw(g);
 
-            Image _image = Image.FromFile("../../User Interface Recources/Arrow.png");
-            Bitmap _bitmap = new Bitmap(_image);
-            _bitmap = DrawData.RotateImage(_bitmap, AngleDir);  //HIER MOET NOG NAAR GEKEKEN WORDEN!!!!
-
+            Bitmap _bitmap = DrawData.RotateImage(General_Form.Main.BuildScreen.builder.roadBuilder.ArrowBitmap, AngleDir);  //HIER MOET NOG NAAR GEKEKEN WORDEN!!!!
             g.DrawImage(_bitmap, new Rectangle(new Point(middle.cord.X - 7, middle.cord.Y - 7), new Size(15, 15)));
 
-            //Console.WriteLine(AngleDir);
+            //Console.WriteLine(AngleDir);}
+
+
         }
 
         public override void DrawoffsetHitbox(Graphics g)
@@ -314,10 +313,13 @@ namespace GreenLight
 
         public void LogPoints()
         {
-            foreach(LanePoints _point in this.points)
+            foreach (LanePoints _point in this.points)
             {
                 Console.WriteLine(_point.cord);
             }
         }
     }
 }
+    
+
+

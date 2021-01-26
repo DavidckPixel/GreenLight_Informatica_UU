@@ -36,8 +36,8 @@ namespace GreenLight
         private AbstractRoad selectedRoad;
 
         public CrossRoadController crossRoadController;
+        public Bitmap ArrowBitmap = new Bitmap(Image.FromFile("../../User Interface Recources/Arrow.png"));
 
-        
 
         public bool visualizeLanePoints = true; //Boolean whether or not the lanePoints are visualised
 
@@ -167,6 +167,7 @@ namespace GreenLight
                     _point2 = _temp1;
                 }
             }
+            Console.WriteLine(_dir);
 
             AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, _type, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
@@ -186,21 +187,26 @@ namespace GreenLight
                     // if neither of the two roads are CrossRoads
                     if (x != _road && (_road.Type != "Cross" && x.Type != "Cross"))
                     {
-                        Point _temp1, _temp2;
+                        Point _temp1, _temp2, _temp3 = new Point(-100, -100), _temp4 = new Point(-100 , -100);
                         _temp1 = x.getPoint1();
                         _temp2 = x.getPoint2();
 
                         if (x.getLanes() == _lanes)
                         {
-                            if (_point1 == _temp1 || Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1)
-                            
+                            if (_lanes % 2 == 0)
+                            {
+                                _temp3 = x.Drivinglanes[1].points.First().cord;
+                                _temp4 = x.Drivinglanes[1].points.Last().cord;
+                            }
+
+                            if ((_point1 == _temp1 || Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1) && ( _point1 != _temp3 && _point1 != _temp4))
                             {
                                 if (_beginconnection == false)
                                 {
+
                                     Connection _connection = new Connection(_point1, _temp1, _lanes, _dir, x.Dir, _road, x);
 
                                 }
-
                                 else 
                                 {
                                     Console.WriteLine(x.beginconnection + "Builder" + x.endconnection);
@@ -209,7 +215,7 @@ namespace GreenLight
                                     _road.beginConnectedTo = x;
                                 }
                             }
-                            else if (_point1 == _temp2 || Math.Sqrt(Math.Pow(_point1.X - _temp2.X, 2) + Math.Pow(_point1.Y - _temp2.Y, 2)) <= Grid.Config.SpacingWidth + 1)
+                            else if ((_point1 == _temp2 || Math.Sqrt(Math.Pow(_point1.X - _temp2.X, 2) + Math.Pow(_point1.Y - _temp2.Y, 2)) <= Grid.Config.SpacingWidth + 1) && (_point1 != _temp3 && _point1 != _temp4))
                             {
                                 if (_beginconnection == false)
                                 {
@@ -223,7 +229,7 @@ namespace GreenLight
                                     _road.beginConnectedTo = x;
                                 }
                             }
-                            else if (_point2 == _temp1 || Math.Sqrt(Math.Pow(_point2.X - _temp1.X, 2) + Math.Pow(_point2.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1)
+                            else if ((_point2 == _temp1 || Math.Sqrt(Math.Pow(_point2.X - _temp1.X, 2) + Math.Pow(_point2.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1) && (_point2 != _temp3 && _point2 != _temp4))
                             {
                                 if (_endconnection == false)
                                 {
@@ -238,7 +244,7 @@ namespace GreenLight
 
                                 }
                             }
-                            else if (_point2 == _temp2 || Math.Sqrt(Math.Pow(_point2.X - _temp2.X, 2) + Math.Pow(_point2.Y - _temp2.Y, 2)) <= Grid.Config.SpacingWidth + 1)
+                            else if ((_point2 == _temp2 || Math.Sqrt(Math.Pow(_point2.X - _temp2.X, 2) + Math.Pow(_point2.Y - _temp2.Y, 2)) <= Grid.Config.SpacingWidth + 1) && (_point1 != _temp3 && _point1 != _temp4))
                             {
                                 if (_endconnection == false)
                                 {
