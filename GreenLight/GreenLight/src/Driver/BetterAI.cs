@@ -55,6 +55,7 @@ namespace GreenLight
 
         RectHitbox foundHitbox = null;
         CrossRoad currentCrossRoad = null;
+        CrossRoadSide currentCrossRoadSide = null;
         int crossRoadTimer = 0;
 
         bool needsToStop = false;
@@ -181,37 +182,24 @@ namespace GreenLight
 
         private void crossRoadRules()
         {
-            int Num = RoadMath.LanePointsInDistance(10, 0, this.vehicle.currentLane.points);
-
-            AbstractRoad _currentRoad = vehicle.currentRoad;
-            if (!(_currentRoad.Type == "Cross" || this.nextRoad.Type == "Cross"))
+            if (this.nextRoad.Type != "Cross")
             {
-                return; //THIS OR NEXT ROAD IS NOT CROSSROAD
+                return; //NEXT ROAD IS NOT A CROSSROAD, WE DO NOT CARE HERE;
             }
 
-            int _indexfromOther = (int)Math.Ceiling(vehicle.brakeDistance) > Num ? (int)Math.Ceiling(vehicle.brakeDistance) - Num : 0;
+            int Num = RoadMath.LanePointsInDistance(vehicle.brakeDistance, this.currentLanePointIndex, this.vehicle.currentLane.points);
 
-            if (vehicle.currentLane.points.Count() - this.currentLanePointIndex > _indexfromOther && this.nextRoad.Type == "Cross") 
+            if (vehicle.currentLane.points.Count() - this.currentLanePointIndex > Num + 2) 
             {
-                return; //TOO FAR AWAY
-            }            
-
-            if(Num - this.currentLanePointIndex >= Math.Ceiling(vehicle.brakeDistance) && _currentRoad.Type == "Cross")
-            {        
-                return;
+                return; //ENOUGH TIME TO BRAKE, NO NEED OT CHEKC NOW
             }
 
-            this.handBreakOn = false;
+            CrossRoad _nextRoad = (CrossRoad)this.nextRoad;
 
-            int _index = currentCrossRoad.sides.ToList().FindIndex(x => x.hitbox.Contains(this.vehicle.currentLane.points.First().cord));
+            int _index = _nextRoad.sides.ToList().IndexOf(this.currentCrossRoadSide);
 
             string dir = ""; //STRAIGHT - LEFT - RIGHT
-            int _indexEnd = 0;
-
-            if (_currentRoad.Type == "Cross")
-            {
-                 _indexEnd = currentCrossRoad.sides.ToList().FindIndex(x => x.hitbox.Contains(this.vehicle.currentLane.points.Last().cord));
-            }
+            int _indexEnd = _nextRoad.sides.ToList().FindIndex(x => x.hitbox.Contains(navigator.nextRoad.Drivinglanes[navigator.currentPath.laneIndex.First()].points.Last().cord));
 
             int _indexdiff = _index - _indexEnd;
             int _checkIndex1 = 0;
@@ -224,12 +212,12 @@ namespace GreenLight
                 dir = "STRAIGHT";
                 _index = _index + 1 > 3 ? 0 : _index + 1;
 
-                if (this.currentCrossRoad.sides[_index].priorityLevel >= this.priority)
+                if (_nextRoad.sides[_index].priorityLevel >= this.priority)
                 {
                     status[_index] = true;
 
                     _index = _index - 1 < 0 ? 0 : _index - 1;
-                    if (this.currentCrossRoad.sides[_index].priorityLevel > this.priority)
+                    if (_nextRoad.sides[_index].priorityLevel > this.priority)
                     {
                         status[_index] = true;
                     }
@@ -242,12 +230,12 @@ namespace GreenLight
                 _checkIndex2 = _index + 2 > 3 ? _index - 2 : _index + 2;
                 status[_checkIndex2] = true;
 
-                if (this.currentCrossRoad.sides[_index].priorityLevel >= this.priority)
+                if (_nextRoad.sides[_index].priorityLevel >= this.priority)
                 {
                     status[_checkIndex1] = true;
 
                     _index = _index - 1 < 0 ? 0 : _index - 1;
-                    if (this.currentCrossRoad.sides[_index].priorityLevel > this.priority)
+                    if (_nextRoad.sides[_index].priorityLevel > this.priority)
                     {
                         status[_index] = true;
                     }
@@ -257,24 +245,24 @@ namespace GreenLight
             {
                 dir = "RIGHT";
                 _index = _index - 1 < 0 ? 0 : _index - 1;
-                if (this.currentCrossRoad.sides[_index].priorityLevel > this.priority)
+                if (_nextRoad.sides[_index].priorityLevel > this.priority)
                 {
                     status[_index] = true;
                 }
 
             }
 
-            CrossRoadSide _side1 = currentCrossRoad.sides[_checkIndex1];
-            CrossRoadSide _side2 = currentCrossRoad.sides[_checkIndex2];
+            CrossRoadSide _side1 = _nextRoad.sides[_checkIndex1];
+            CrossRoadSide _side2 = _nextRoad.sides[_checkIndex2];
 
                 //if ((_side1.status && _side1.priorityLevel > this.priority)|| (_side2.status && _side2.priorityLevel > this.priority) || )
-                if((this.currentCrossRoad.sides[0].status && status[0])
-                    || (this.currentCrossRoad.sides[1].status && status[1])
-                    || (this.currentCrossRoad.sides[2].status && status[2])
-                   || (this.currentCrossRoad.sides[3].status && status[3])) 
+                if((_nextRoad.sides[0].status && status[0])
+                    || (_nextRoad.sides[1].status && status[1])
+                    || (_nextRoad.sides[2].status && status[2])
+                   || (_nextRoad.sides[3].status && status[3])) 
                 {
                     this.isBraking = true; //THERE IS A CAR IN THE WAY;
-                this.handBreakOn = true;
+                //this.handBreakOn = true;
                 }
 
 
@@ -284,124 +272,54 @@ namespace GreenLight
 
         private void InCrossRoadRange()
         {
-            //IF CURRENTROAD OR NEXTROAD == CROSSROAD
-            AbstractRoad _currentRoad = vehicle.currentRoad;
-
-            if (!(_currentRoad.Type == "Cross" || this.nextRoad.Type == "Cross") || this.crossRoadTimer > 0)
+            if (this.nextRoad.roadtype != "Cross" || this.currentCrossRoadSide != null)
             {
                 return;
 
             }
             int pointsTillEnd = this.vehicle.currentLane.points.Count() - 1 - this.currentLanePointIndex;
-            int checkPointsAhead = 30;
-            int pointsdiff = 30 - pointsTillEnd;
 
-            if(pointsTillEnd >= 30 && _currentRoad.Type != "Cross")
+            if(pointsTillEnd >= 30)
             {
                 return;
             }
-            RectHitbox _currentFoundHitbox = null;
-            Point _location = new Point((int)vehicle.locationX, (int)vehicle.locationY);
-            try
+
+            if(this.nextRoad.roadtype == "Cross")
             {
-                if (pointsTillEnd >= checkPointsAhead)
+                CrossRoad _temproad = (CrossRoad)nextRoad;
+                CrossRoadSide _crossRoadSide = _temproad.sides.ToList().Find(x => x.hitbox.Contains(this.vehicle.currentLane.points.Last().cord));
+
+                if(_crossRoadSide != null)
                 {
-                    //Console.WriteLine("WE ARE CURRENTLY ON THE CROSSROAD!");
-
-                    currentCrossRoad = (CrossRoad)_currentRoad;
-                    for (int x = 0; x < 10; x++)
-                    {
-                        _location = this.vehicle.currentLane.points[this.currentLanePointIndex + x].cord;
-
-                        foreach (CrossRoadSide _side in currentCrossRoad.sides)
-                        {
-                            if (_side.hitbox.Contains(_location))
-                            {
-                                _currentFoundHitbox = _side.hitbox;
-                                _side.aiOnSide.Add(this);
-                                _side.status = true;
-
-                                _side.priorityLevel = this.priority > _side.priorityLevel ? this.priority : _side.priorityLevel;
-                            }
-                        }
-                        if (_currentFoundHitbox != null)
-                        {
-                            this.crossRoadTimer = 45;
-                            break;
-                        }
-                    }
-
-                    //Console.WriteLine("The SIDES: LINKS: {0}, BOTTOM: {1}, RIGHT: {2}, TOP: {3} ", currentCrossRoad.sideStatus[0], currentCrossRoad.sideStatus[1], currentCrossRoad.sideStatus[2], currentCrossRoad.sideStatus[3]);
+                    Console.WriteLine("CROSSROAD SIDE: {0}", _crossRoadSide.side);
                 }
-                else
-                {
-                    //Console.WriteLine("THE CROSSROAD IS THE NEXT ROAD!");
-                    //Console.WriteLine(pointsdiff);
-                    currentCrossRoad = (CrossRoad)this.nextRoad;
-                    for (int x = 0; x < Math.Abs(pointsdiff); x++)
-                    {
-                        _location = this.nextRoad.Drivinglanes.First().points[x].cord;
 
-                        //Console.WriteLine(_location);
+                _crossRoadSide.status = true;
+                _crossRoadSide.aiOnSide.Add(this);
 
-                        int y = 0;
-                        foreach (CrossRoadSide _side in currentCrossRoad.sides)
-                        {
-                            if (_side.hitbox.Contains(_location))
-                            {
-                                _currentFoundHitbox = _side.hitbox;
-                                _side.aiOnSide.Add(this);
-                                _side.status = true;
-                                //Console.WriteLine("STATUS SET!");
-
-                                _side.priorityLevel = this.priority > _side.priorityLevel ? this.priority : _side.priorityLevel;
-                            }
-                            y++;
-                        }
-                        if (_currentFoundHitbox != null)
-                        {
-                            this.crossRoadTimer = 45;
-                            break;
-                        }
-                    }
-
-                    //Console.WriteLine("The SIDES: LINKS: {0}, BOTTOM: {1}, RIGHT: {2}, TOP: {3} ", currentCrossRoad.sides[0].status, currentCrossRoad.sides[1].status, currentCrossRoad.sides[2].status, currentCrossRoad.sides[3].status);
-                }
-            }catch(Exception e) {  }
-
-            if(_currentFoundHitbox != null)
-            {
-                this.foundHitbox = _currentFoundHitbox;
+                this.currentCrossRoadSide = _crossRoadSide;
             }
-            else if(this.currentCrossRoad != null && this.foundHitbox != null)
-            {
-                int Index = this.currentCrossRoad.sides.ToList().FindIndex(x => x.hitbox == this.foundHitbox);
-
-                if (this.currentCrossRoad.sides[Index].aiOnSide.Contains(this))
-                {
-                    Console.WriteLine("HOEVAAK KWAM JE HIER DAN??");
-                    //return;
-                }
-
-                this.currentCrossRoad.sides[Index].aiOnSide.Remove(this);
-                this.foundHitbox = null;
-                Console.WriteLine(this.currentCrossRoad.sides[Index].aiOnSide.Count + "AMOUNT OF VEHICLES ON THIS SIDE");
-
-                if(!this.currentCrossRoad.sides[Index].aiOnSide.Any())
-                {
-                    this.currentCrossRoad.sides[Index].status = false;
-                    this.currentCrossRoad.sides[Index].priorityLevel = 0;
-                }
-                else 
-                {
-                    this.currentCrossRoad.sides[Index].priorityLevel = this.currentCrossRoad.sides[Index].aiOnSide.Max(x => x.priority);
-                }
-
-                //Console.WriteLine("WE LEFT THE CROSSROAD");
-            }
-            
-            //FORALL CROSSROADS  WHERE I WILL BE IN THE HITBOX IN 30 LANEPOINTS (OR LESS) ,SET SIDE TO TRUE
         }
+
+        private void LeavingCrossRoadSide()
+        {
+
+            this.currentCrossRoadSide.aiOnSide.Remove(this);
+
+            if (!this.currentCrossRoadSide.aiOnSide.Any())
+            {
+                this.currentCrossRoadSide.status = false;
+                this.currentCrossRoadSide.priorityLevel = 0;
+            }
+            else
+            {
+                this.currentCrossRoadSide.priorityLevel = this.currentCrossRoadSide.aiOnSide.Max(x => x.priority);
+            }
+
+            this.currentCrossRoadSide = null;
+
+        }
+        
 
         private void CheckForSigns()
         {
@@ -597,13 +515,14 @@ namespace GreenLight
             this.currentLanePointIndex++;
             int _index = this.currentLanePointIndex;
 
-            if (_index == _points.Count() - 1)
+            if (_index >= _points.Count() - 2)
             {
                 this.SwitchRoad();
                 return;
             }
 
             this.origin = this.goal;
+            //Console.WriteLine("INDEX: {0} -- AMOUNT OF POINTS: {1}",)
             this.goal = _points[_index + 1];
             this.lanePointDistance = RoadMath.Distance(origin.cord, goal.cord);
 
@@ -662,17 +581,23 @@ namespace GreenLight
         {
             Tuple<int, int> _laneSwap = navigator.currentPath.LaneSwap.Find(x => x.Item1 == this.CurrentLaneIndex); // GAAT FOUT
 
-            if(_laneSwap == null)
+            if (this.vehicle.currentRoad.roadtype == "Cross")
+            {
+                this.LeavingCrossRoadSide();
+            }
+
+            if (_laneSwap == null)
             {
                 SignalDone();
                 return;
-            }
+            }        
 
             this.CurrentLaneIndex = _laneSwap.Item2;
 
             navigator.NextPath();
 
             AbstractRoad _currentRoad = navigator.currentPath.road;
+
 
             this.vehicle.SwitchRoad(_currentRoad, this.CurrentLaneIndex);
             this.nextRoad = navigator.nextRoad;

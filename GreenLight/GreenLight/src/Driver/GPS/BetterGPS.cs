@@ -35,20 +35,25 @@ namespace GreenLight.src.Driver.GPS
                 this.roadlist = _data.getPathListFromNode(this.begin, this.goal);
             }
 
-            if(this.roadlist != null || this.roadlist.Any())
+            if(this.roadlist == null)
+            {
+                this.ai.SignalDone();
+                this.Done = true;
+            }
+            else if (!this.roadlist.Any())
+            {
+                this.ai.SignalDone();
+                this.Done = true;
+            }
+            else
             {
                 this.PathIndex = 0;
                 this.currentPath = this.roadlist[this.PathIndex];
 
-                if(this.roadlist.Count() > 1)
+                if (this.roadlist.Count() > 1)
                 {
                     this.nextRoad = this.roadlist[1].road;
                 }
-            }
-            else
-            {
-                this.Done = true;
-                this.ai.SignalDone();
             }
         }
 

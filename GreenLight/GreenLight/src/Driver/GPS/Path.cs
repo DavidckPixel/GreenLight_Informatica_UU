@@ -66,9 +66,9 @@ namespace GreenLight.src.Driver.GPS
 
                         if (_two.knot.Road1.roadtype == "Cross")
                         {
-                            Console.WriteLine("road 1 driving lanes: " + _two.knot.Road1.Drivinglanes.Count);
-                            Console.WriteLine("road 1 nextlink laneindex: " + (_nextlink.laneIndex - 1));
-                            Console.WriteLine("This link has " + this.laneIndex.Count + " lanes");
+                            //Console.WriteLine("road 1 driving lanes: " + _two.knot.Road1.Drivinglanes.Count);
+                            //Console.WriteLine("road 1 nextlink laneindex: " + (_nextlink.laneIndex - 1));
+                            //Console.WriteLine("This link has " + this.laneIndex.Count + " lanes");
                             Lane _crossLane = _two.knot.Road1.Drivinglanes[_nextlink.laneIndex - 1];
                             Lane _forcedlane = null;
                             int _forcedindex = laneIndex.First();
@@ -123,12 +123,12 @@ namespace GreenLight.src.Driver.GPS
                     }
                     if (_allpossiblelanes.Any())
                     {
-                        Console.WriteLine("Added forcedlaneindex to NextLaneIndex");
-                        Console.WriteLine("Possible forcedlanes count: " + _allpossiblelanes.Count);
+                        //Console.WriteLine("Added forcedlaneindex to NextLaneIndex");
+                        //Console.WriteLine("Possible forcedlanes count: " + _allpossiblelanes.Count);
                         //_forcedindex = this.road.Drivinglanes.IndexOf(_forcedlane);
                         this.NextLaneIndex.AddRange(_allpossiblelanes);
                     }
-                    this.NextLaneIndex.ForEach(x => Console.WriteLine("Forced index: " + x));
+                    //this.NextLaneIndex.ForEach(x => Console.WriteLine("Forced index: " + x));
 
                     /*_links.ForEach(x => this.NextLaneIndex.Add(x.laneIndex));
                     this.NextLaneIndex.ForEach(x => Console.WriteLine("Forced index: " + x));*/
@@ -153,7 +153,7 @@ namespace GreenLight.src.Driver.GPS
 
             foreach(Tuple<int,int> _tuple in this.LaneSwap)
             {
-                Console.WriteLine("Lane : {0} is gekoppeld bij de volgende aan lane: {1}", _tuple.Item1, _tuple.Item2);
+                //Console.WriteLine("Lane : {0} is gekoppeld bij de volgende aan lane: {1}", _tuple.Item1, _tuple.Item2);
             }
             
         }

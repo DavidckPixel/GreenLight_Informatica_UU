@@ -55,7 +55,7 @@ namespace GreenLight.src.Driver.GPS
                     Point _top = new Point(_crossRoad.point1.X, _crossRoad.point1.Y - _width);
                     Point _bottom = new Point(_crossRoad.point1.X, _crossRoad.point1.Y + _width);
 
-                    Console.WriteLine("LEFT VALUE: " + _left);
+                    //Console.WriteLine("LEFT VALUE: " + _left);
 
                     FindAddRoad(_left, _crossRoad);
                     FindAddRoad(_right, _crossRoad);
@@ -147,6 +147,7 @@ namespace GreenLight.src.Driver.GPS
             }
 
             this.nodePaths.RemoveAll(x => x.linkPath.Count == 0);
+            Console.WriteLine("AMOUNT OF SPAWN POINTS: {0}", this.nodePaths.Count());
 
         }
 
@@ -160,8 +161,8 @@ namespace GreenLight.src.Driver.GPS
                 Knot _firstKnot = _knots.Find(x => RoadMath.Distance(x.Cord, _road.point1) < 20);
                 Knot _secondKnot = _knots.Find(x => RoadMath.Distance(x.Cord, _road.point2) < 20);
 
-                Console.WriteLine("DISTANCE: " + RoadMath.Distance(_knots[0].Cord, _road.point1));
-                Console.WriteLine("DISTANCE: " + RoadMath.Distance(_knots[1].Cord, _road.point2));
+                //Console.WriteLine("DISTANCE: " + RoadMath.Distance(_knots[0].Cord, _road.point1));
+                //Console.WriteLine("DISTANCE: " + RoadMath.Distance(_knots[1].Cord, _road.point2));
 
                 //Console.WriteLine("Knot Point: {0}, Road Point {1}", _knots[0].Cord, _road.point1);
                 //Console.WriteLine("Knot Point: {0}, Road Point {1}", _knots[1].Cord, _road.point2);
@@ -213,7 +214,7 @@ namespace GreenLight.src.Driver.GPS
                     int _stringIndex2 = _stringsides.IndexOf(_connectionLink.end.Side);
                     if (_stringIndex != -1 && _stringIndex2 != -1)
                     {
-                        Console.WriteLine("Index Values: {0} , {1}", _stringIndex, _stringIndex2);
+                        //Console.WriteLine("Index Values: {0} , {1}", _stringIndex, _stringIndex2);
 
                         Knot _knot1 = _knots[_stringIndex];
                         Knot _knot2 = _knots[_stringIndex2];
@@ -234,11 +235,11 @@ namespace GreenLight.src.Driver.GPS
 
         public void Draw(Graphics g, NodePath _path)
         {
-            Console.WriteLine("pathlink count: " + _path.linkPath.Count);
+            //Console.WriteLine("pathlink count: " + _path.linkPath.Count);
             foreach (Path _linkPath in _path.linkPath)
             {
 
-                Console.WriteLine("current index: " + _path.linkPath.IndexOf(_linkPath));
+                //Console.WriteLine("current index: " + _path.linkPath.IndexOf(_linkPath));
                 _linkPath.laneIndex.ForEach(x => Console.WriteLine(x));
 
                 if (_linkPath.NextLaneIndex == null || !_linkPath.NextLaneIndex.Any())
@@ -257,7 +258,7 @@ namespace GreenLight.src.Driver.GPS
                     }
                     //_linkPath.road.Drivinglanes[_linkPath.NextLaneIndex.First()].DrawLine(g, Pens.Green);
                 }
-                Console.WriteLine(_linkPath.road.point1);
+                //Console.WriteLine(_linkPath.road.point1);
 
             }
         }
@@ -294,10 +295,10 @@ namespace GreenLight.src.Driver.GPS
         {
             Console.WriteLine(this.spawnNodes.Count());
 
-            if (this.spawnNodes.Any())
+            if (this.nodePaths.Any())
             {
                 Random ran = new Random();
-                return this.spawnNodes[ran.Next(0, this.spawnNodes.Count())];
+                return this.nodePaths[ran.Next(0, this.nodePaths.Count()-1)].begin;
             }
 
             Console.WriteLine("NODE PATHS ARE EMPTY??? THIS SHOULD NEVER HAPPEN!");
