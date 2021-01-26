@@ -42,7 +42,7 @@ namespace GreenLight
             FlipLabel.TextAlign = ContentAlignment.MiddleCenter;
             this.settingScreen.Controls.Add(FlipLabel);
 
-            CurvedButtons FlipButton = new CurvedButtons(new Size(250, 40), new Point(30, 170), 25, "../../User Interface Recources/Custom_Button.png", "Flip sign to the other side", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            CurvedButtons FlipButton = new CurvedButtons(new Size(100, 40), new Point(100, 170), 25, "../../User Interface Recources/Custom_Button.png", "Flip sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             FlipButton.Click += (object o, EventArgs ea) => { };// General_Form.Main.BuildScreen.builder.signController.stopSign.flipSign(); };
             this.settingScreen.Controls.Add(FlipButton);
 
@@ -51,6 +51,12 @@ namespace GreenLight
             label1.Location = new Point(30, 45);
             label1.Size = new Size(150, 40);
             label1.TextAlign = ContentAlignment.MiddleCenter;
+
+            Move_panel Move = new Move_panel(this.settingScreen);
+            Move.Location = new Point(0, 0);
+            Move.Size = new Size(300, 35);
+            Move.BackColor = Color.FromArgb(142, 140, 144);
+            this.settingScreen.Controls.Add(Move);
 
 
             this.settingScreen.Controls.Add(label1);
@@ -70,7 +76,7 @@ namespace GreenLight
 
             this.settingScreen.Controls.Add(Combobox1);
 
-            ss = new Speedsign(new Size(75, 75), new Point(190, 30));
+            ss = new Speedsign(new Size(75, 75), new Point(200, 40));
             ss.speed = 0;
             this.settingScreen.Controls.Add(ss);
 
@@ -78,11 +84,11 @@ namespace GreenLight
             Divider1.Location = new Point(20, 220);
             this.settingScreen.Controls.Add(Divider1);
 
-            Button1 = new CurvedButtons(new Size(80, 40), new Point(55, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            Button1 = new CurvedButtons(new Size(80, 40), new Point(45, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             Button1.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.speedSign.saveButton(); };
             this.settingScreen.Controls.Add(Button1);
 
-            Button2 = new CurvedButtons(new Size(80, 40), new Point(165, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            Button2 = new CurvedButtons(new Size(90, 40), new Point(155, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
 
             Button2.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.speedSign.deleteSign(); };
             this.settingScreen.Controls.Add(Button2);

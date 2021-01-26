@@ -30,7 +30,7 @@ namespace GreenLight
 
             pb1 = new PictureBox();
             pb1.Image = Image.FromFile("../../User Interface Recources/Priority_sign.png");
-            pb1.Location = new Point(190, 30);
+            pb1.Location = new Point(190, 35);
             pb1.Size = new Size(75, 75);
             pb1.SizeMode = PictureBoxSizeMode.Zoom;
             pb1.BringToFront();
@@ -43,7 +43,7 @@ namespace GreenLight
             FlipLabel.TextAlign = ContentAlignment.MiddleCenter;
             this.settingScreen.Controls.Add(FlipLabel);
 
-            CurvedButtons FlipButton = new CurvedButtons(new Size(250, 40), new Point(30, 170), 25, "../../User Interface Recources/Custom_Button.png", "Flip sign to the other side", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            CurvedButtons FlipButton = new CurvedButtons(new Size(100, 40), new Point(100, 170), 25, "../../User Interface Recources/Custom_Button.png", "Flip sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             FlipButton.Click += (object o, EventArgs ea) => { };// General_Form.Main.BuildScreen.builder.signController.stopSign.flipSign(); };
             this.settingScreen.Controls.Add(FlipButton);
 
@@ -55,22 +55,27 @@ namespace GreenLight
             this.settingScreen.Controls.Add(QuestionLabel);
 
             errorMess = new Label();
-            errorMess.Location = new Point(200, 10);
+            errorMess.Location = new Point(50, 100);
             errorMess.Text = "";
             errorMess.ForeColor = Color.Red;
             this.settingScreen.Controls.Add(errorMess);
+
+            Move_panel Move = new Move_panel(this.settingScreen);
+            Move.Location = new Point(0, 0);
+            Move.Size = new Size(300, 35);
+            Move.BackColor = Color.FromArgb(142, 140, 144);
+            this.settingScreen.Controls.Add(Move);
 
 
             CurvedButtons Divider1 = new CurvedButtons();
             Divider1.Location = new Point(20, 220);
             this.settingScreen.Controls.Add(Divider1);
 
-            YesButton = new CurvedButtons(new Size(80, 40), new Point(55, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "OK", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            YesButton = new CurvedButtons(new Size(80, 40), new Point(45, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "OK", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             YesButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.prioritySignC.placeSign(); };
             this.settingScreen.Controls.Add(YesButton);
 
-            NoButton = new CurvedButtons(new Size(80, 40), new Point(165, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "Remove", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-
+            NoButton = new CurvedButtons(new Size(100, 40), new Point(155, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "Remove", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             NoButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.prioritySignC.deleteSign(); };
             this.settingScreen.Controls.Add(NoButton);
 

@@ -22,6 +22,8 @@ namespace GreenLight
         {
             this.Size = Form_size;
 
+            this.StartPosition = FormStartPosition.CenterParent;
+
             this.FormBorderStyle = FormBorderStyle.None;
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, 20, 20));
         }
