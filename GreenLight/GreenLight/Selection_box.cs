@@ -69,8 +69,8 @@ namespace GreenLight
 
                 PictureBox PB = new PictureBox();
                 PB.BackColor = Prime_Color;
-                PB.Location = new Point(10, 15 * i + 30);
-                PB.Size = new Size(101, 15);
+                PB.Location = new Point(10, 20 * i + 30);
+                PB.Size = new Size(101, 20);
                 PB.Cursor = Cursors.Hand;
                 this.Controls.Add(PB);
                 Label PB_label = new Label();
@@ -96,12 +96,12 @@ namespace GreenLight
                 Color Hover_Color = Color.FromArgb(109, 109, 109);
                 Color Prime_Color;
                 if (j == Selected_index && !Selected_left_bool) Prime_Color = Color.FromArgb(142, 140, 144);
-                else Prime_Color = Color.FromArgb(142, 140, 144);
+                else Prime_Color = Color.FromArgb(196, 196, 198);
 
                 PictureBox PB = new PictureBox();
                 PB.BackColor = Prime_Color;
-                PB.Location = new Point(114, 15 * j + 30);
-                PB.Size = new Size(100, 15);
+                PB.Location = new Point(114, 20 * j + 30);
+                PB.Size = new Size(100, 20);
                 PB.Cursor = Cursors.Hand;
                 this.Controls.Add(PB);
                 Label PB_label = new Label();
