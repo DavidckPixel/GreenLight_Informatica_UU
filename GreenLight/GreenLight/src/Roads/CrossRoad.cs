@@ -174,10 +174,10 @@ namespace GreenLight
             double roadWidth = (double)this.lanes * this.laneWidth;
 
             g.FillRectangle(_b, new Rectangle(new Point(point1.X - (int)(roadWidth / 2), point1.Y - (int)(roadWidth / 2)), new Size(this.lanes * this.laneWidth, this.lanes * this.laneWidth)));
-            DrawSides(g, "Top", new Point(point1.X - (int)(roadWidth / 2), point1.Y - (int)(roadWidth / 2 ) - Extra), new Size((int)roadWidth, Extra), _b );
-            DrawSides(g, "Right", new Point(point1.X + (int)(roadWidth / 2), point1.Y - (int)(roadWidth / 2)), new Size(Extra, (int)(roadWidth)), _b);
-            DrawSides(g, "Left", new Point(point1.X - (int)(roadWidth / 2) - Extra, point1.Y - (int)(roadWidth / 2)), new Size(Extra, (int)(roadWidth)), _b);
-            DrawSides(g, "Bottom", new Point(point1.X - (int)(roadWidth / 2), point1.Y + (int)(roadWidth / 2)), new Size((int)roadWidth, Extra), _b);
+            DrawSides(g, "Top", new Point(point1.X - (int)(roadWidth / 2), point1.Y - (int)(roadWidth / 2 ) - Extra/2), new Size((int)roadWidth, Extra/2), _b );
+            DrawSides(g, "Right", new Point(point1.X + (int)(roadWidth / 2), point1.Y - (int)(roadWidth / 2)), new Size(Extra/2, (int)(roadWidth)), _b);
+            DrawSides(g, "Left", new Point(point1.X - (int)(roadWidth / 2) - Extra/2, point1.Y - (int)(roadWidth / 2)), new Size(Extra/2, (int)(roadWidth)), _b);
+            DrawSides(g, "Bottom", new Point(point1.X - (int)(roadWidth / 2), point1.Y + (int)(roadWidth / 2)), new Size((int)roadWidth, Extra/2), _b);
             DrawLine(g);
             this.hitbox.Draw(g);
 
@@ -204,8 +204,28 @@ namespace GreenLight
         public void DrawSides(Graphics g, string _side, Point _topleft, Size _size, Brush _b)
         {
             List<ConnectionPoint> _pointOnSide = this.connectPoints.FindAll(x => x.Side == _side);
-            if (!_pointOnSide.All(x => x.Active == false))
-                 g.FillRectangle(_b, new Rectangle(_topleft, _size));
+            foreach (ConnectionPoint p in _pointOnSide)
+            {
+                if(p.Active)
+                {
+                    if (p.Side == "Top" || p.Side == "Bottom")
+                    {
+                        g.FillRectangle(_b, new Rectangle(new Point(_topleft.X + laneWidth * (p.Place - 1), _topleft.Y), new Size(_size.Width / _pointOnSide.Count, _size.Height)));
+                        /*if(p.Place == 1 || !_pointOnSide[p.Place - 2].Active)
+                        {
+
+                        }*/
+                    }
+                    else
+                    {
+                        g.FillRectangle(_b, new Rectangle(new Point(_topleft.X, _topleft.Y + laneWidth * (p.Place - 1)), new Size(_size.Width, _size.Height / _pointOnSide.Count)));
+                    }
+
+
+                }
+            }
+
+
         }
     }
 }

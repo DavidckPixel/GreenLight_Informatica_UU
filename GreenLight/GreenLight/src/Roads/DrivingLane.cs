@@ -129,20 +129,8 @@ namespace GreenLight
         public override void Draw(Graphics g)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            Pen p;
-            if (thisLane == 1)
-                p = new Pen(Color.Red, Roads.Config.laneWidth);
-            else if (thisLane == 2)
-                p = new Pen(Color.Green, Roads.Config.laneWidth);
-            else
-                p = new Pen(Color.FromArgb(21, 21, 21), Roads.Config.laneWidth);
-            Brush b;
-            if (thisLane == 1)
-                b = new SolidBrush(Color.Red);
-            else if (thisLane == 2)
-                b = new SolidBrush(Color.Green);
-            else
-                b = new SolidBrush(Color.FromArgb(21, 21, 21));
+            Pen p = new Pen(Color.FromArgb(21, 21, 21), Roads.Config.laneWidth);
+            Brush b = new SolidBrush(Color.FromArgb(21, 21, 21));
 
 
             int drivingLaneDistance = Roads.Config.laneWidth;
