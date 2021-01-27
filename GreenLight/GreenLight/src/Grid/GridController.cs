@@ -80,12 +80,12 @@ namespace GreenLight
         public void OnClick(Object o, MouseEventArgs mea)
         {
             string _type = General_Form.Main.BuildScreen.builder.roadBuilder.roadType;
+            General_Form.Main.BuildScreen.builder.roadBuilder.lastType = General_Form.Main.BuildScreen.builder.roadBuilder.roadType;
 
             Gridpoint _point = Gridpoints.Find(x => x.Collision(mea.Location));
 
             if (_type == "X" || _type == "D" /*|| _point == null*/)
             {
-
                 return;
             }
 
@@ -148,7 +148,7 @@ namespace GreenLight
 
         public void moveMouse(object o, MouseEventArgs mea)
         {
-            if (firstClick == true && General_Form.Main.BuildScreen.builder.roadBuilder.roadType != "Cross")
+            if (firstClick == true && (General_Form.Main.BuildScreen.builder.roadBuilder.roadType != "Cross") && (General_Form.Main.BuildScreen.builder.roadBuilder.lastType != "Cross"))
             {
                 return;
             }
@@ -177,6 +177,10 @@ namespace GreenLight
                 Brush Notsolidgreen = new SolidBrush(Color.FromArgb(100, Color.Green));
                 Brush Notsolidorange = new SolidBrush(Color.FromArgb(100, Color.Orange));
 
+                if(General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "X")
+                {
+                    return;
+                }
                 
                 if (General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "Cross")
                 {
@@ -209,7 +213,7 @@ namespace GreenLight
                     return;
                 }
 
-                if (firstClick == true)
+                if (firstClick == true || General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "X")
                 {
                     return;
                 }
