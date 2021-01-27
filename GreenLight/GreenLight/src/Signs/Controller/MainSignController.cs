@@ -94,13 +94,21 @@ namespace GreenLight
 
             if (selectedRoad.Type == "Diagonal")
             {
-                if (_dir >= 0 && _dir < 180)
+                if (_dir >= 0 && _dir < 135)
                 {
                     _flipped = false;
                 }
-                else if (_dir >= 180 && _dir < 360)
+                else if (_dir >= 135 && _dir < 225)
                 {
                     _flipped = true;
+                }
+                else if (_dir >= 225 && _dir <= 270)
+                {
+                    _flipped = true;
+                }
+                else
+                {
+                    _flipped = false;
                 }
             }
             else if (selectedRoad.Type == "Curved")
@@ -199,13 +207,10 @@ namespace GreenLight
                     _sign_image = Image.FromFile("../../src/User Interface Recources/Stop_Sign.png");
                     break;
             }
-            this.selectedRoad.Signs.Add(new PlacedSign(new Point(-100, -100), "", _temp, _sign_image, _selectedRoad, signType, new Point(0, 0), MouseClick, true)); //HARD CODE ON TRUE, people from visual signs can fix this if they want;
-            this.selectedSign = this.selectedRoad.Signs.Last();
+             this.selectedSign = this.selectedRoad.Signs.Last();
 
-            this.selectedSign.Sign.controller.onSignClick(this.selectedSign.Sign);
-
-            Console.WriteLine("Created the new sign!");
-
+            PlacedSign _placed = new PlacedSign(new Point(-100, -100), "", _temp, _sign_image, _selectedRoad, signType, new Point(0, 0), MouseClick, _flipped);
+            this.selectedRoad.Signs.Add(_placed);
             SignCount++;
             closeDragMode();
         }
@@ -266,6 +271,13 @@ namespace GreenLight
             Point Hitboxoffset = new Point(int.Parse(_signWords[4]), int.Parse(_signWords[5]));
             Point Mouseclick = new Point(int.Parse(_signWords[6]), int.Parse(_signWords[7]));
             bool Flipped = bool.Parse(_signWords[8]);
+
+            Point[] p = new Point[4];
+            p[0] = new Point(int.Parse(_signWords[9]), int.Parse(_signWords[10]));
+            p[1] = new Point(int.Parse(_signWords[11]), int.Parse(_signWords[12]));
+            p[2] = new Point(int.Parse(_signWords[13]), int.Parse(_signWords[14]));
+            p[3] = new Point(int.Parse(_signWords[15]), int.Parse(_signWords[16]));
+
             Image _sign_image = null;
             switch (_signType)
             {
@@ -274,7 +286,7 @@ namespace GreenLight
                 case "speedSign":
                     _sign_image = Image.FromFile("../../src/User Interface Recources/Speed_Sign.png");
                     _temp = new SpeedSign(speedSign);
-                    _temp.speed = int.Parse(_signWords[9]);
+                    _temp.speed = int.Parse(_signWords[17]);
                     break;
                 case "yieldSign":
                     _sign_image = Image.FromFile("../../src/User Interface Recources/Yield_Sign.png");
@@ -291,7 +303,11 @@ namespace GreenLight
             }
 
             Signs.Add(_temp);
-            this.selectedRoad.Signs.Add(new PlacedSign(_tempPoint, "", _temp, _sign_image, _selectedRoad, _signType, Hitboxoffset, Mouseclick, _flipped));
+
+            PlacedSign _placed = new PlacedSign(_tempPoint, "", _temp, _sign_image, _selectedRoad, _signType, Hitboxoffset, Mouseclick, Flipped);
+            _placed._points = p;
+            this.selectedRoad.Signs.Add(_placed);
+            this.placedSign.Add(_placed);
             SignCount++;
         }
     }

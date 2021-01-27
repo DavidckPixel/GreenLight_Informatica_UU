@@ -90,7 +90,7 @@ namespace GreenLight
             SliderText carSpawn_value = new SliderText(DrawData.Dosis_font_family, new Point(120, 100), carSpawn.Value.ToString() + " %");
             this.Controls.Add(carSpawn_value);
 
-            carSpawn.ValueChanged += (object o, EventArgs EA) => { carSpawn_value.Text = carSpawn.Value.ToString() + " %"; };
+            carSpawn.ValueChanged += (object o, EventArgs EA) => { carSpawn_value.Text = carSpawn.Value.ToString() + " %"; General_Form.Main.SimulationScreen.Simulator.ChangeCarSpawn(carSpawn.Value); };
 
             CurvedButtons graphWindow = new CurvedButtons(new Size(70, 30), new Point(10, 180), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Graph", DrawData.Dosis_font_family, null, this.BackColor);
             graphWindow.Click += (object o, EventArgs ea) => 

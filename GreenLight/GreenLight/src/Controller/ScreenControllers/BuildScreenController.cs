@@ -131,6 +131,7 @@ namespace GreenLight
         {
 
             Graphics g = pea.Graphics;
+ 
             builder.gridController.DrawGridPoints(g);
             _DrawPictureBox(g);
         }
