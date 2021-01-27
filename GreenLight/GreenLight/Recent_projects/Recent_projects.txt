@@ -7,3 +7,4 @@ SingleLaneJunction C:\Users\DaanJ\Documents\GitHub\GreenLight_Informatica_UU\Gre
 SingleLaneJunction C:\Users\DaanJ\Documents\GitHub\GreenLight_Informatica_UU\GreenLight\GreenLight\Presets\SingleLaneJunction.txt ../../Recent_projects/Images/SingleLaneJunction.png
 DefaultOutputName C:\Users\david\Documents\DefaultOutputName.txt ../../Recent_projects/Images/DefaultOutputName.png
 NiceTest2 C:\Users\david\Documents\NiceTest2.txt ../../Recent_projects/Images/NiceTest2.png
+SimpeCrossRoad C:\Users\david\Documents\SimpeCrossRoad.txt ../../Recent_projects/Images/SimpeCrossRoad.png
