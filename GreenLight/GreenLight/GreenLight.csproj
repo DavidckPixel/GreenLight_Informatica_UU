@@ -127,6 +127,7 @@
     <Compile Include="src\OriginPoints\OriginPoints.cs" />
     <Compile Include="src\OriginPoints\OriginPointsConfig.cs" />
     <Compile Include="src\OriginPoints\VehicleOriginPoint.cs" />
+    <Compile Include="src\Roads\CrossArrow.cs" />
     <Compile Include="src\UserControls\Data_sub_menu.cs">
       <SubType>UserControl</SubType>
     </Compile>

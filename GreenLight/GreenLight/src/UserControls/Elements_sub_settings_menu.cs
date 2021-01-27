@@ -54,11 +54,39 @@ namespace GreenLight
 
             Label showLanePointsLabel = new Label();
             showLanePointsLabel.Text = "Visualize Driving Lanes: ";
-            showLanePointsLabel.Font= new Font(Dosis_font_family, 9, FontStyle.Bold);
+            showLanePointsLabel.Font = new Font(Dosis_font_family, 9, FontStyle.Bold);
             showLanePointsLabel.ForeColor = Color.FromArgb(142, 140, 144);
             showLanePointsLabel.Location = new Point(_ButtonXbase, _ButtonYbase);
             showLanePointsLabel.Size = new Size(150, 30);
             Controls.Add(showLanePointsLabel);
+
+            Label Toggle_grid = new Label();
+            Toggle_grid.Text = "Toggle Grid:";
+            Toggle_grid.Font = new Font(Dosis_font_family, 9, FontStyle.Bold);
+            Toggle_grid.ForeColor = Color.FromArgb(142, 140, 144);
+            Toggle_grid.Location = new Point(_ButtonXbase, _ButtonYbase + 35);
+            Toggle_grid.Size = new Size(100, 30);
+            Controls.Add(Toggle_grid);
+
+            CheckBox Toggle_grid_box = new CheckBox();
+            Toggle_grid_box.Location = new Point(_ButtonXbase + (int)(1.5 * _ButtonXdiff), _ButtonYbase + 38);
+            Toggle_grid_box.Checked = true;
+            Toggle_grid_box.Size = new Size(20, 20);
+            Toggle_grid_box.CheckedChanged += (object o, EventArgs ea) =>
+            {
+                if (General_Form.Main.BuildScreen.builder.gridController.Set_visible == true)
+                {
+                    General_Form.Main.BuildScreen.builder.gridController.Set_visible = false;
+                    General_Form.Main.Invalidate();
+                }
+                else
+                {
+                    General_Form.Main.BuildScreen.builder.gridController.Set_visible = true;
+                    General_Form.Main.Invalidate();
+                }
+            };
+            Controls.Add(Toggle_grid_box);
+
 
         }
         private void ResetButtons(CurvedButtons Selected, string Filepath)

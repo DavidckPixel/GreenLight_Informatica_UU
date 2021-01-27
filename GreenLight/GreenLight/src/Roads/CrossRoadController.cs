@@ -254,8 +254,17 @@ namespace GreenLight
             this.settingScreen.Invalidate();
         }
 
-        private void DeleteCrossroad(AbstractRoad _deletedroad)
+        public void DeleteCrossroad(AbstractRoad _deletedroad)
         {
+            foreach(List<CrossArrow> _list in General_Form.Main.BuildScreen.builder.roadBuilder.AllCrossArrows)
+            {
+                if(_list[0].crossroad == _deletedroad)
+                {
+                    General_Form.Main.BuildScreen.builder.roadBuilder.AllCrossArrows.Remove(_list);
+                    break;
+                }
+            }
+            
             if (General_Form.Main != null)
             {
                 General_Form.Main.BuildScreen.builder.roadBuilder.DeleteRoad(_deletedroad);

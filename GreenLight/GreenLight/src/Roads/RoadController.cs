@@ -23,7 +23,6 @@ namespace GreenLight
         //(Not sure it's correct in how curved road direction is calculated a the moment?).
         //There is also a method that manages connections between roads.
 
-
         public List<AbstractRoad> roads = new List<AbstractRoad>();
         public PictureBox Screen;
         public OriginPointController OPC = new OriginPointController();
@@ -37,7 +36,7 @@ namespace GreenLight
 
         public CrossRoadController crossRoadController;
         public Bitmap ArrowBitmap = new Bitmap(Image.FromFile("../../User Interface Recources/Arrow.png"));
-
+        public List<List<CrossArrow>> AllCrossArrows = new List<List<CrossArrow>>();
 
         public bool visualizeLanePoints = true; //Boolean whether or not the lanePoints are visualised
 
@@ -48,8 +47,6 @@ namespace GreenLight
             //this.Screen.Image = new Bitmap(Screen.Width, Screen.Height);
             crossRoadController = new CrossRoadController(this.Screen);
             initSettingScreen();
-
-            
         }
 
 
@@ -193,10 +190,15 @@ namespace GreenLight
 
                         if (x.getLanes() == _lanes)
                         {
-                            if (_lanes % 2 == 0)
+                            if (_lanes % 2 == 0 && _lanes > 2)
                             {
-                                _temp3 = x.Drivinglanes[1].points.First().cord;
-                                _temp4 = x.Drivinglanes[1].points.Last().cord;
+                                _temp3 = x.Drivinglanes[_lanes/2 + 1].points.First().cord;
+                                _temp4 = x.Drivinglanes[_lanes/2 + 1].points.Last().cord;
+                            }
+                            else if(_lanes % 2 == 0)
+                            {
+                                _temp3 = x.Drivinglanes[0].points.First().cord;
+                                _temp4 = x.Drivinglanes[0].points.Last().cord;
                             }
 
                             if ((_point1 == _temp1 || Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1) && ( _point1 != _temp3 && _point1 != _temp4))
@@ -370,13 +372,20 @@ namespace GreenLight
         {
             if (roads.Count != 0)
             {
-                General_Form.Main.BuildScreen.builder.gridController.undoGridpoints(roads[roads.Count - 1]);
-                DeleteRoad(roads[roads.Count - 1]);
-                if (roads.Count == 0)
+                if (roads[roads.Count - 1].Type == "Cross")
                 {
-                    General_Form.Main.BuildScreen.builder.gridController.resetGridpoints();
+                    crossRoadController.DeleteCrossroad(roads[roads.Count - 1]);
                 }
-                General_Form.Main.BuildScreen.Screen.Invalidate();
+                else
+                {
+                    General_Form.Main.BuildScreen.builder.gridController.undoGridpoints(roads[roads.Count - 1]);
+                    DeleteRoad(roads[roads.Count - 1]);
+                    if (roads.Count == 0)
+                    {
+                        General_Form.Main.BuildScreen.builder.gridController.resetGridpoints();
+                    }
+                    General_Form.Main.BuildScreen.Screen.Invalidate();
+                }
             }
         }
 

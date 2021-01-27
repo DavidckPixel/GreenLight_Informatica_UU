@@ -42,6 +42,10 @@ namespace GreenLight
 
         public bool Set_visible
         {
+            get
+            {
+                return _points_visible;
+            }
             set
             {
                 _points_visible = value;

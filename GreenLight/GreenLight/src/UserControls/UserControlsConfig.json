@@ -115,7 +115,7 @@
     "simElementsMenu": {
         "menuSizeY": 135,
         "menuY": 230,
-        "sliderDiffY": 40,
+        "sliderDiffY": 45,
         "sliderStart": 60,
         "sliderX": 25,
         "headerSizeX": 150,

@@ -505,7 +505,50 @@ namespace GreenLight
                     _controller.DeleteRoad(_roadOne);
                     _controller.BuildDiagonalRoad(_temp1, new Point(_temp2.X, _temp2.Y + _distance * _direction), _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                 }
-                
+                else if (_roadTwo.slp == 0 && Math.Sqrt(Math.Pow(_point2.X - _temp3.X, 2) + Math.Pow(_point2.Y - _temp3.Y, 2)) < Math.Sqrt(Math.Pow(_point2.X - _temp4.X, 2) + Math.Pow(_point2.Y - _temp4.Y, 2)))
+                {
+                    if (_temp3.Y < _temp4.Y)
+                    {
+                        _direction = -1;
+                        _beginconnection = true;
+                        _endconnection = _roadTwo.endconnection;
+                    }
+                    else
+                    {
+                        _direction = 1;
+                        _beginconnection = true;
+                        _endconnection = _roadTwo.endconnection;
+                    }
+
+                    _beginConnectedTo = _roadOne;
+                    _endConnectedTo = _roadTwo.endConnectedTo;
+                    //Console.WriteLine(_beginconnection + "---------" + _endconnection);
+                    _controller.DeleteRoad(_roadTwo);
+                    _controller.BuildDiagonalRoad(new Point(_temp3.X, _temp3.Y + _distance * _direction), _temp4, _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
+                }
+                else
+                {
+                    if (_temp4.Y < _temp3.Y)
+                    {
+                        _direction = -1;
+                        _beginconnection = _roadTwo.beginconnection;
+                        _endconnection = true;
+                    }
+                    else
+                    {
+                        _direction = 1;
+                        _beginconnection = _roadTwo.beginconnection;
+                        _endconnection = true;
+                    }
+
+                    _beginConnectedTo = _roadTwo.beginConnectedTo;
+                    _endConnectedTo = _roadOne;
+                    //Console.WriteLine(_beginconnection + "---------" + _endconnection);
+                    _controller.DeleteRoad(_roadTwo);
+                    _controller.BuildDiagonalRoad(_temp3, new Point(_temp4.X, _temp4.Y + _distance * _direction), _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
+                }
+
+
             }
 
             // If they don't have the same ending then we once again have to draw a curved road to connect them, we also have to adjust the original roads a little bit.
@@ -1364,11 +1407,11 @@ namespace GreenLight
 
                     else
                     {
-                        if (!(_dir == "NE" && _dir2 == "SE"))
+                        if (!(_dir == "NE" && _dir2 == "SE") && !(_dir == "SW" && _dir2 == "NW"))
                         {
                             _curveshift = 0;
                         }
-                        if(_dir == "SE" && _dir2 == "NE" && _lanes % 2 == 0)
+                        if(((_dir == "SE" && _dir2 == "NE") || (_dir == "NW" && _dir2 == "SW")) && _lanes % 2 == 0)
                         {
                             _curveshift = -20;
                         }

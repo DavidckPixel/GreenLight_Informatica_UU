@@ -2,6 +2,5 @@ t2 C:\Users\niels\Downloads\t2.txt ../../Recent_projects/Images/t2.png
 Cross C:\Users\niels\Downloads\Cross.txt ../../Recent_projects/Images/Cross.png
 3lanes C:\Users\niels\Downloads\3lanes.txt ../../Recent_projects/Images/3lanes.png
 2lanes C:\Users\niels\Downloads\2lanes.txt ../../Recent_projects/Images/2lanes.png
+hitbox C:\Users\niels\Downloads\hitbox.txt ../../Recent_projects/Images/hitbox.png
 
-BigCrossRoad C:\Users\david\Documents\BigCrossRoad.txt ../../Recent_projects/Images/BigCrossRoad.png
-NiceTest C:\Users\david\Documents\NiceTest.txt ../../Recent_projects/Images/NiceTest.png

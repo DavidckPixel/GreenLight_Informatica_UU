@@ -19,6 +19,7 @@ namespace GreenLight
         public Label errorMess;
         public SpeedSign selected;
         public Speedsign ss;
+        public AbstractSign thisSign;
 
         public SpeedSignController(Form _main, MainSignController _signcontroller)
         {
@@ -43,7 +44,7 @@ namespace GreenLight
             this.settingScreen.Controls.Add(FlipLabel);
 
             CurvedButtons FlipButton = new CurvedButtons(new Size(100, 40), new Point(100, 170), 25, "../../User Interface Recources/Custom_Button.png", "Flip sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            FlipButton.Click += (object o, EventArgs ea) => { };// General_Form.Main.BuildScreen.builder.signController.stopSign.flipSign(); };
+            FlipButton.Click += (object o, EventArgs ea) => {  General_Form.Main.BuildScreen.builder.signController.flipSing(thisSign); };
             this.settingScreen.Controls.Add(FlipButton);
 
             label1 = new Label();
