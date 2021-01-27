@@ -18,17 +18,16 @@ namespace GreenLight
     {
 
         public List<AbstractSign> Signs = new List<AbstractSign>();
+        public List<PlacedSign> placedSign = new List<PlacedSign>();
         public SpeedSignController speedSign;
         public StopSignController stopSign;
         public YieldSignController yieldSignC;
         public PrioritySignController prioritySignC;
 
         public AbstractRoad selectedRoad;
-        public bool dragMode;
-        private LanePoints closest;
-        private LanePoints hitboxoffset;
-
+        public bool dragMode, _flipped = false;
         public int SignCount = 0;
+        private Point MouseClick;
 
         Form main;
         PictureBox screen;
@@ -83,56 +82,23 @@ namespace GreenLight
 
         public void mouseMove(object o, MouseEventArgs mea)
         {
+            MouseClick = mea.Location;
+
             if (!dragMode || selectedRoad == null)
             {
                 return;
             }
 
-            int _outerLane = 0;
-            int _lanes = this.selectedRoad.getLanes();
             int _dir = (int)this.selectedRoad.Drivinglanes.First().AngleDir;
 
-            if (_dir >= 0 && _dir < 180 && _lanes != 1)
+            if (_dir >= 0 && _dir < 180)
             {
-                _outerLane = _lanes - 1;
+                _flipped = true;
             }
-            else if (_dir >= 180 && _dir < 360 && _lanes != 1)
+            else if (_dir >= 180 && _dir < 360)
             {
-                _outerLane = _lanes - 2;
+                _flipped = false;
             }
-
-            try
-            {
-                List<LanePoints> _lanepoints = this.selectedRoad.Drivinglanes[_outerLane].points;
-                float _shortDistance = 2000;
-                for (int i = 0; i < _lanepoints.Count; i++)
-                {
-                    int Xsign = mea.X - 10;
-                    int Ysign = mea.Y - 10;
-                    Console.WriteLine("i: " + i);
-                    float _distance = (float)Math.Sqrt((Xsign - _lanepoints[i].cord.X) * (Xsign - _lanepoints[i].cord.X) + (Ysign - _lanepoints[i].cord.Y) * (Ysign - _lanepoints[i].cord.Y));
-
-                    if (_shortDistance > _distance)
-                    {
-                        _shortDistance = _distance;
-                        closest = _lanepoints[i];
-                        if (i - 10 >= 0)
-                            hitboxoffset = _lanepoints[i - 10];
-                        if (i - 20 >= 0)
-                            hitboxoffset = _lanepoints[i - 20];
-                        else
-                            hitboxoffset = _lanepoints[i];
-                    }
-                }
-
-                Console.WriteLine(_shortDistance);
-            }
-            catch (Exception e)
-            {
-
-            }
-
-
         }
         
 
@@ -155,14 +121,13 @@ namespace GreenLight
                     {
                         return;
                     }
-                    AbstractSign _sign = _selectedRoad.Signs.Find(x => x.Hitbox.Contains(mea.Location)).Sign;
+                    PlacedSign _sign = _selectedRoad.Signs.Find(x => x.Hitbox.Contains(mea.Location));
                     if (_sign == null)
                     {
                         return;
                     }
                     _sign.controller.onSignClick(_sign);
-
-                    return;
+                    AbstractSign _Sign = _sign.Sign;
                 }
                 catch (Exception)
                 {
@@ -207,9 +172,7 @@ namespace GreenLight
                     _sign_image = Image.FromFile("../../User Interface Recources/Stop_Sign.png");
                     break;
             }
-
-            //this.selectedRoad.Signs.Add(new PlacedSign(closest.cord, "", _temp, _sign_image, _selectedRoad, signType));
-            this.selectedRoad.Signs.Add(new PlacedSign(closest.cord, "", _temp, _sign_image, _selectedRoad, signType, hitboxoffset.cord));
+            this.selectedRoad.Signs.Add(new PlacedSign(new Point(-100, -100), "", _temp, _sign_image, _selectedRoad, signType, new Point(0, 0), MouseClick, _flipped));
 
             SignCount++;
             closeDragMode();
@@ -236,18 +199,12 @@ namespace GreenLight
             return null;
         }
 
-        public void flipSing(AbstractSign _tempSign)
+        public void flipSing(AbstractSign _temp)
         {
-            int _outerLane = 0;
-            int _lanes = this.selectedRoad.getLanes();
-
-            if (_tempSign.flipped)
+            foreach(PlacedSign _placed in Signs )
             {
-                _outerLane = _lanes - 1;
-            }
-            else
-            {
-                _outerLane = _lanes - 2;
+                if (_placed.Sign == _temp)
+                    _placed.setFlipped();
             }
         }
 
@@ -271,7 +228,8 @@ namespace GreenLight
             string _signType = _signWords[3];
             AbstractSign _temp = null;
             Point Hitboxoffset = new Point(int.Parse(_signWords[4]), int.Parse(_signWords[5]));
-
+            Point Mouseclick = new Point(int.Parse(_signWords[6]), int.Parse(_signWords[7]));
+            bool Flipped = bool.Parse(_signWords[8]);
             Image _sign_image = null;
             switch (_signType)
             {
@@ -280,7 +238,7 @@ namespace GreenLight
                 case "speedSign":
                     _sign_image = Image.FromFile("../../User Interface Recources/Speed_Sign.png");
                     _temp = new SpeedSign(speedSign);
-                    _temp.speed = int.Parse(_signWords[6]);
+                    _temp.speed = int.Parse(_signWords[9]);
                     break;
                 case "yieldSign":
                     _sign_image = Image.FromFile("../../User Interface Recources/Yield_Sign.png");
@@ -297,7 +255,7 @@ namespace GreenLight
             }
 
             Signs.Add(_temp);
-            this.selectedRoad.Signs.Add(new PlacedSign(_tempPoint, "", _temp, _sign_image, _selectedRoad, _signType, Hitboxoffset));
+            this.selectedRoad.Signs.Add(new PlacedSign(_tempPoint, "", _temp, _sign_image, _selectedRoad, _signType, Hitboxoffset, Mouseclick, Flipped));
             SignCount++;
         }
     }
