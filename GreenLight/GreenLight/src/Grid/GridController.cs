@@ -121,7 +121,7 @@ namespace GreenLight
             else
             {
                 this.secondPoint = Gridpoints.Find(x => x.Collision(mea.Location));
-                if (this.secondPoint != null && this.secondPoint != this.firstPoint)// && legal)
+                if (this.secondPoint != null && this.secondPoint != this.firstPoint && legal)
                 {
                     //Console.WriteLine("Second PointClick!");
                     //Console.WriteLine(_point.Cords);
@@ -129,6 +129,7 @@ namespace GreenLight
                     builder.BuildRoad(this.firstPoint.Cords, this.secondPoint.Cords);
                     Hitbox temp3 = calculateRect(firstPoint.Cords, secondPoint.Cords);
                     flipGridpoints(temp3);
+                    FlipConnectionGridPoint();
                     this.ResetPoints();
                 }
                 else if (!legal)
@@ -417,6 +418,24 @@ namespace GreenLight
             foreach (Gridpoint p in Gridpoints)
             {
                 p.used = false;
+            }
+        }
+
+        public void FlipConnectionGridPoint()
+        {
+            foreach(AbstractRoad _road in builder.roadBuilder.roads)
+            {
+                if (!_road.beginconnection)
+                {
+                    Console.WriteLine("Test");
+                    Gridpoints.Find(x => x.Collision(_road.point1)).used = false;
+                    Console.WriteLine(Gridpoints.Find(x => x.Collision(_road.point1)).used);
+                }
+                if (!_road.endconnection)
+                {
+                    Console.WriteLine("Bool!");
+                    Gridpoints.Find(x => x.Collision(_road.point2)).used = false;
+                }
             }
         }
         //CLICK
