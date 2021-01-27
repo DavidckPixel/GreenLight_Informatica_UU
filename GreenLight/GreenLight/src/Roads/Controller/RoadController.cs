@@ -63,7 +63,7 @@ namespace GreenLight
         {
             Dictionary<string, int> menu = Roads.Config.settingsScreen;
 
-            this.settingScreen = new Pop_Up_Form(new Size(menu["width"], menu["length"]));
+            this.settingScreen = new PopUpForm(new Size(menu["width"], menu["length"]));
             this.settingScreen.Hide();
 
             this.settingScreen.Size = new Size(menu["width"], menu["length"]);
@@ -85,7 +85,7 @@ namespace GreenLight
             deleteButton = new CurvedButtons(new Size(menu["buttonWidth"]+10, menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"]), menu["buttonCurve"], "../../src/User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             deleteButton.Click += (object o, EventArgs ea) => { DeleteRoad(this.selectedRoad); };
 
-            Move_panel move_panel = new Move_panel(settingScreen);
+            MovePanel move_panel = new MovePanel(settingScreen);
 
             move_panel.Location = new Point(menu["mpX"], menu["mpY"]);
             move_panel.Size = new Size(menu["mpWidth"], menu["mpHeight"]);

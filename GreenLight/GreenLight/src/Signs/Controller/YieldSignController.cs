@@ -17,6 +17,7 @@ namespace GreenLight
         public PictureBox pb1;
         public YieldSign selected;
         public AbstractSign thisSign;
+        public AbstractRoad selectedRoad;
 
         public YieldSignController(Form _main, MainSignController _signcontroller)
         {
@@ -27,7 +28,7 @@ namespace GreenLight
         public override void initSettingScreen()
         {
 
-            this.settingScreen = new Pop_Up_Form(new Size(300,300));
+            this.settingScreen = new PopUpForm(new Size(300,300));
 
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
@@ -48,7 +49,8 @@ namespace GreenLight
             this.settingScreen.Controls.Add(FlipLabel);
 
             CurvedButtons FlipButton = new CurvedButtons(new Size(100, 40), new Point(100, 170), 25, "../../src/User Interface Recources/Custom_Button.png", "Flip sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            FlipButton.Click += (object o, EventArgs ea) => {  General_Form.Main.BuildScreen.builder.signController.flipSing(thisSign); };
+
+            FlipButton.Click += (object o, EventArgs ea) => { this.signController.flipSign(); this.settingScreen.Hide();};
             this.settingScreen.Controls.Add(FlipButton);
 
             QuestionLabel = new Label();
@@ -65,7 +67,7 @@ namespace GreenLight
             errorMess.ForeColor = Color.Red;
             this.settingScreen.Controls.Add(errorMess);
 
-            Move_panel Move = new Move_panel(this.settingScreen);
+            MovePanel Move = new MovePanel(this.settingScreen);
             Move.Location = new Point(0, 0);
             Move.Size = new Size(300, 35);
             Move.BackColor = Color.FromArgb(142, 140, 144);
@@ -117,9 +119,7 @@ namespace GreenLight
         {
             YieldSign _temp = new YieldSign(this);
             this.signController.Signs.Add(_temp);
-
             onSignClick(_temp);
-
             return _temp;
         }
 

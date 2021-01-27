@@ -11,31 +11,31 @@ using Microsoft.VisualBasic;
 
 namespace GreenLight
 {
-    public partial class Simulation_sub_vehicle_menu : UserControl
+    public partial class SimulationSubVehicleMenu : UserControl
     {
 
-        public Selection_box Selection_box;
+        public SelectionBox Selection_box;
         Slider Surface, Max_speed, Cw, Length, HorsePower, Weight, Occurunce;
 
-        public Simulation_sub_vehicle_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
+        public SimulationSubVehicleMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(Menu_width, Form.Height - User_Controls.Config.simElementsMenu["menuY"] - User_Controls.Config.simElementsMenu["menuSizeY"]); //menuSizeY
-            this.Location = new Point(Form.Width - Menu_width, User_Controls.Config.simElementsMenu["menuY"]);  //menuY
+            this.Size = new Size(Menu_width, Form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]); //menuSizeY
+            this.Location = new Point(Form.Width - Menu_width, UserControls.Config.simElementsMenu["menuY"]);  //menuY
             this.AutoScroll = true;
             Initialize(Form, Menu_width, Dosis_font_family);
         }
         public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            this.Size = new Size(Sub_menu_width, Form.Height - User_Controls.Config.simElementsMenu["menuY"] - User_Controls.Config.simElementsMenu["menuSizeY"]);
-            this.Location = new Point(Form.Width - Sub_menu_width, User_Controls.Config.simElementsMenu["menuY"]);
+            this.Size = new Size(Sub_menu_width, Form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);
+            this.Location = new Point(Form.Width - Sub_menu_width, UserControls.Config.simElementsMenu["menuY"]);
             this.Controls.Clear();
             Initialize(Form, Sub_menu_width, Dosis_font_family);
         }
 
         private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            Dictionary<string, int> menu = User_Controls.Config.simElementsMenu;
+            Dictionary<string, int> menu = UserControls.Config.simElementsMenu;
             int _sliderX = menu["sliderX"];
             int _startY = menu["sliderStartVehicleY"];
             int _diffY = menu["sliderDiffY"];
@@ -47,13 +47,13 @@ namespace GreenLight
             //VehicleController controller = General_Form.Main.SimulationScreen.Simulator.vehicleController;
             
 
-            Selection_box = new Selection_box(Form, Dosis_font_family, _temp, new Action(this.SetValues), new Action(this.AddVehicle), new Action(this.DeleteVehicle));
-            if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxMaxX"], User_Controls.Config.standardSubMenu["selectionBoxMaxY"]);
-            else Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxX"], User_Controls.Config.standardSubMenu["selectionBoxY"]);
+            Selection_box = new SelectionBox(Form, Dosis_font_family, _temp, new Action(this.SetValues), new Action(this.AddVehicle), new Action(this.DeleteVehicle));
+            if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(UserControls.Config.standardSubMenu["selectionBoxMaxX"], UserControls.Config.standardSubMenu["selectionBoxMaxY"]);
+            else Selection_box.Location = new Point(UserControls.Config.standardSubMenu["selectionBoxX"], UserControls.Config.standardSubMenu["selectionBoxY"]);
 
             this.Controls.Add(Selection_box);
 
-            Dictionary<string, int> vehiclemenu = User_Controls.Config.simVehicle;
+            Dictionary<string, int> vehiclemenu = UserControls.Config.simVehicle;
             /*SliderText name_label = new SliderText(Dosis_font_family, new Point(_sliderX, _startY + 3 * _diffY), "Vehicle Name: ");
             this.Controls.Add(name_label);
 

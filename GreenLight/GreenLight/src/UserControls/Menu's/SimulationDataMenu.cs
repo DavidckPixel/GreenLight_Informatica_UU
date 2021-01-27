@@ -12,14 +12,14 @@ using System.Diagnostics;
 
 namespace GreenLight
 {
-    public partial class Simulation_data_menu : UserControl
+    public partial class SimulationDataMenu : UserControl
     {
         FontFamily Dosis_font_family;
         Label time;
         int _multiplier = 1;
         TimeSpan Last_Simulation_time;
         TimeSpan Simulation_time;
-        public Simulation_data_menu(int Sub_menu_width, Form Form, int Height, FontFamily Dosis_font_family_in)
+        public SimulationDataMenu(int Sub_menu_width, Form Form, int Height, FontFamily Dosis_font_family_in)
         {
             this.Location = new Point(0, 0);
             Dosis_font_family = Dosis_font_family_in;
@@ -78,7 +78,7 @@ namespace GreenLight
 
         private void Initialize()
         {
-            Dictionary<string, int> menu = User_Controls.Config.simDataMenu;
+            Dictionary<string, int> menu = UserControls.Config.simDataMenu;
 
             Label Time_label = new Label();
             Time_label.Text = "Simulation Time:";

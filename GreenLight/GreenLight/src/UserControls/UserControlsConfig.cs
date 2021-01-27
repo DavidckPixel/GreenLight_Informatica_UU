@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
-    class User_Controls_Config
+    class UserControlsConfig
     {
         public string projectName;
         public string projectVersion;

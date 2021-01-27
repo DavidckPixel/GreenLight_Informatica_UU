@@ -32,7 +32,7 @@ namespace GreenLight
 
         public override void Initialize()
         {
-            this.settingScreen = new Pop_Up_Form(new Size(400, 600));
+            this.settingScreen = new PopUpForm(new Size(400, 600));
             this.settingScreen.Hide();
 
             this.settingScreen.Location = new Point(100, 100);
@@ -45,7 +45,7 @@ namespace GreenLight
             this.locked.Image = new Bitmap(Image.FromFile("../../Images/Lock.png"), 50,50);
             this.settingScreen.Controls.Add(this.locked);
 
-            Move_panel Move = new Move_panel(this.settingScreen);
+            MovePanel Move = new MovePanel(this.settingScreen);
             Move.Location = new Point(350, 0);
             Move.Size = new Size(100, 600);
             this.settingScreen.Controls.Add(Move);
