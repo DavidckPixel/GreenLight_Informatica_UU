@@ -80,8 +80,6 @@ namespace GreenLight.src.Driver.GPS
                 this.Done = true;
                 this.ai.SignalDone();
             }
-
-            ai.SwitchedPaths();
         }
     }
 }

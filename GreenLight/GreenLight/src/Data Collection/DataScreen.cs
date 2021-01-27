@@ -26,10 +26,10 @@ namespace GreenLight.src.Data_Collection
             this.Screen.Paint += DrawPictureBox;
 
             this.main.SizeChanged += ChangeSize;
-            this.main.Controls.Add(this.Screen);
 
             dataController = new DataController(this.Screen);
 
+            this.main.Controls.Add(this.Screen);
         }
 
         public override void Activate()
@@ -37,12 +37,24 @@ namespace GreenLight.src.Data_Collection
             General_Form.Main.UserInterface.Menu_to_data();
             Console.WriteLine("Activating DataScreen");
             this.Screen.Show();
-            this.Screen.Invalidate();
             this.dataController.UpdateBrakeChart();
+            this.dataController.UpdateBrakePerTickChart();
+            this.Screen.Invalidate();
+            this.Screen.BringToFront();
+            Console.WriteLine("this.dataController.brakeChart.Location : " + this.dataController.brakeChart.Location);
+            Console.WriteLine("IS VISABLE: " + this.dataController.averageSpeed.Visible);
+
+            this.dataController.brakeChart.Show();
+            this.dataController.averageSpeed.Show();
+
+            this.Screen.Invalidate();
         }
 
         public override void DeActivate()
         {
+            this.dataController.brakeChart.Hide();
+            this.dataController.averageSpeed.Hide();
+
             if (this.Screen != null)
             {
                 this.Screen.Hide();

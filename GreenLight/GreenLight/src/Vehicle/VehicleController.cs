@@ -19,6 +19,8 @@ namespace GreenLight
         
         public VehicleStats selectedVehicle;
 
+        public List<VehicleStats> availableVehicleStats = new List<VehicleStats>();
+
         private SimulationController simController;
 
         public override void Initialize()
@@ -31,16 +33,39 @@ namespace GreenLight
             this.simController = _simController;
         }
 
-        public void getVehicle(Node _node, VehicleStats _stats = null)
+        public void getVehicle(Node _node, bool _collectData, VehicleStats _stats = null)
         {
             if (_stats == null)
             {
                 Random ran = new Random();
-                int _index = ran.Next(0, VehicleTypeConfig.vehicles.Count() - 1);
-                _stats = VehicleTypeConfig.vehicles[_index];
+                int _index = ran.Next(0, availableVehicleStats.Count() - 1);
+                _stats = availableVehicleStats[_index];
             }
 
-            vehicleList.Add( new BetterVehicle(_stats, _node, this.simController.aiController.GetDriver()));
+            BetterVehicle _vehicle = new BetterVehicle(_stats, _node, this.simController.aiController.GetDriver());
+
+            if (true)
+            {
+                General_Form.Main.SimulationScreen.Simulator.dataController.collector.addVehicleToCollect(_vehicle);
+            }
+
+            vehicleList.Add(_vehicle);
+        }
+
+        public void initvehList()
+        {
+            this.availableVehicleStats.Clear();
+
+            List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSVM.Selection_box.Elements_selected;
+            availableVehicleStatsString.ForEach(x => this.availableVehicleStats.Add(getVehicleStat(x)));
+            this.availableVehicleStats.RemoveAll(x => x == null);
+
+            Console.WriteLine("AMOUNT OF STATS VEHICLE: LODED: {0}", this.availableVehicleStats.Count());
+
+            if (!this.availableVehicleStats.Any())
+            {
+                this.availableVehicleStats = VehicleTypeConfig.vehicles;
+            }
         }
 
         private VehicleStats getRandomStats()

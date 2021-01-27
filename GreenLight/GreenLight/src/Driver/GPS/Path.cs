@@ -52,7 +52,7 @@ namespace GreenLight.src.Driver.GPS
                     }
                 }
             }
-            else if (_two.knot.Road1 != null && _two.knot.Road2 != null)
+            else if (_two.knot.Road1 != null && _two.knot.Road2 != null && _next != null)
             {
                 if ((_two.knot.Road1.roadtype == "Cross" || _two.knot.Road2.roadtype == "Cross") && this.road.roadtype != "Cross")
                 {

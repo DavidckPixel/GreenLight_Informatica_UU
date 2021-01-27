@@ -65,6 +65,11 @@ namespace GreenLight
                 worlds.Items.Clear();
                 WorldConfig.physics.ForEach(x => worlds.Items.Add(x));
             };
+
+            worlds.SelectedIndexChanged += (object o, EventArgs ea) =>
+            {
+                General_Form.Main.SimulationScreen.Simulator.worldController.currentSelected = (World)worlds.SelectedItem;
+            };
             this.Controls.Add(worlds);
 
             CurvedButtons Editbutton = new CurvedButtons(new Size(70, 30), new Point(10, 50), 25, "../../User Interface Recources/Custom_Small_Button.png", "Edit", DrawData.Dosis_font_family, null, this.BackColor);

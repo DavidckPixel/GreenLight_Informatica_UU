@@ -63,6 +63,9 @@ namespace GreenLight
         bool needsToStop = false;
         List<PlacedSign> signsOnRoadRead = new List<PlacedSign>();
 
+        public bool isSwitchingLanes;
+        public int switchCount;
+
         
 
         public BetterAI(DriverStats _stats)
@@ -71,6 +74,9 @@ namespace GreenLight
             this.followInterval = _stats.FollowInterval;
             this.speedRelativeToLimit = _stats.SpeedRelativeToLimit;
             this.ruleBreakingChance = _stats.RuleBreakingChance;
+
+            ChangeTargetSpeed(3);
+            ChangePriority(2);
         }
 
         public void initGPS(Node _startNode)
@@ -116,7 +122,7 @@ namespace GreenLight
 
         public void ChangeTargetSpeed(double _speed)
         {
-            this.targetspeed = _speed + this.speedRelativeToLimit;
+            this.targetspeed = Math.Abs(_speed + this.speedRelativeToLimit / 10);
         }
 
         public void ChangePriority(int priority)
@@ -175,6 +181,11 @@ namespace GreenLight
             {
                 this.wantsToSwitch = true;
                 this.closeToCars = true;
+
+                if (this.nextRoad.roadtype == "Cross" && this.vehicle.currentLane.points.Count - this.currentLanePointIndex < 10) ;
+                {
+                    this.wantsToSwitch = false;
+                }
             }
             else
             {
@@ -400,6 +411,11 @@ namespace GreenLight
                 }
             }
 
+            if (this.isSwitchingLanes)
+            {
+                return null;
+            }
+
             if (_road.getLanes() == 1)
             {
                 return null;
@@ -426,34 +442,32 @@ namespace GreenLight
         {
             int _goalLaneIndex = this.vehicle.currentLane.thisLane + _side - 1;
 
-            if (navigator.currentPath.NextLaneIndex != null)
+
+            if (navigator.currentPath.NextLaneIndex.TrueForAll(x => x < (this.CurrentLaneIndex)))
             {
-                    if (navigator.currentPath.NextLaneIndex.TrueForAll(x => x < (this.CurrentLaneIndex)))
-                    {
-                        if(_side == 1)
-                        {
-                            return false;
-                        }
-                    }
-
-                //navigator.currentPath.NextLaneIndex.ForEach(x => Console.WriteLine("ALL THE LANE INDEX: " + x));
-
-                    if (navigator.currentPath.NextLaneIndex.TrueForAll(x => x > (this.CurrentLaneIndex)))
-                    {
-                        if(_side == -1)
-                        {
-                            return false;
-                        }
-                    }
-
-                    if (!navigator.currentPath.NextLaneIndex.Contains(_goalLaneIndex) && navigator.currentPath.NextLaneIndex.Contains(this.currentLanePointIndex))
-                    {
-                        return false; //YOU ARE NOT MOVING CORRECTLY
-                    }
-                
+                if (_side == 1)
+                {
+                    return false;
+                }
             }
 
-            if(_goalLaneIndex < 0 || _goalLaneIndex > this.vehicle.currentRoad.Drivinglanes.Count() - 1)
+            //navigator.currentPath.NextLaneIndex.ForEach(x => Console.WriteLine("ALL THE LANE INDEX: " + x));
+
+            if (navigator.currentPath.NextLaneIndex.TrueForAll(x => x > (this.CurrentLaneIndex)))
+            {
+                if (_side == -1)
+                {
+                    return false;
+                }
+            }
+
+            if (!navigator.currentPath.NextLaneIndex.Contains(_goalLaneIndex) && navigator.currentPath.NextLaneIndex.Contains(this.currentLanePointIndex))
+            {
+                Console.WriteLine("YOU ARE ON THE CORRECT LANE, DO NOT SWITCH!");
+                return false; //YOU ARE NOT MOVING CORRECTLY
+            }
+
+            if (_goalLaneIndex < 0 || _goalLaneIndex > this.vehicle.currentRoad.Drivinglanes.Count() - 1)
             {
                 return false; //LANE IS OUT OF INDEX
             }
@@ -489,6 +503,8 @@ namespace GreenLight
 
         private void SwitchLanes()
         {
+            this.wantsToSwitch = false;
+
             this.currentLanePointIndex = this.vehicle.currentLane.points.FindIndex(x => x.cord == this.goal.cord);
             Lane _laneToGo = CheckSwitchLane();
 
@@ -510,6 +526,13 @@ namespace GreenLight
 
             this.origin = this.goal;
             this.currentLanePointIndex++;
+            if(this.currentLanePointIndex >= _laneToGo.points.Count())
+            {
+                this.currentLanePointIndex = _laneToGo.points.Count() - 1;
+            }
+
+            this.isSwitchingLanes = true;
+
             this.goal = _laneToGo.points[this.currentLanePointIndex];
 
             this.lanePointDistance = RoadMath.Distance(vehicle.locationX, vehicle.locationY, goal.cord.X, goal.cord.Y);
@@ -540,6 +563,8 @@ namespace GreenLight
             List<LanePoints> _points = this.vehicle.currentLane.points;
             this.currentLanePointIndex++;
             int _index = this.currentLanePointIndex;
+
+            this.isSwitchingLanes = false;
 
             if (_index >= _points.Count() - 2)
             {
@@ -605,20 +630,23 @@ namespace GreenLight
 
         public void SwitchRoad()
         {
-            Tuple<int, int> _laneSwap = navigator.currentPath.LaneSwap.Find(x => x.Item1 == this.CurrentLaneIndex); // GAAT FOUT
+            List<Tuple<int, int>> _laneSwapList = navigator.currentPath.LaneSwap.FindAll(x => x.Item1 == this.CurrentLaneIndex); // GAAT FOUT
+            Tuple<int, int> _laneSwap;
+
+            if (_laneSwapList.Any())
+            {
+                Random ran = new Random();
+                _laneSwap = _laneSwapList[ran.Next(0, _laneSwapList.Count())];
+            }
+            else
+            {
+                _laneSwap = navigator.currentPath.LaneSwap.First();
+            }
 
             if (this.vehicle.currentRoad.roadtype == "Cross")
             {
                 this.LeavingCrossRoadSide();
             }
-
-            if (_laneSwap == null)
-            {
-                //navigator.currentPath.LaneSwap.ForEach(x => Console.WriteLine("SWITCH INDEX: {0} - {1}", x.Item1, x.Item2));
-                //Console.WriteLine("CurrentIndex: " + this.CurrentLaneIndex);
-
-                _laneSwap = navigator.currentPath.LaneSwap.First();
-            }        
 
             this.CurrentLaneIndex = _laneSwap.Item2;
 
@@ -651,11 +679,6 @@ namespace GreenLight
         {
             this.toDelete = true;
             this.vehicle.DeleteVehicle(false);
-        }
-
-        public void SwitchedPaths()
-        {
-            //TEMP
         }
     }
 }

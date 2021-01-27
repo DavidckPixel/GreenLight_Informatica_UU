@@ -11,7 +11,7 @@ namespace GreenLight
 
         Form settingScreen;
         PictureBox settingScreenImage;
-        Label fuelUsed, brakeTime, stopTime, mood, braking, wantsToSwitch, brakeWatch;
+        Label fuelUsed, brakeTime, stopTime, mood, braking, wantsToSwitch, Priority, TargetSpeed;
         CurvedButtons doneButton;
 
         public bool simulationPaused;
@@ -70,10 +70,15 @@ namespace GreenLight
             this.wantsToSwitch.Size = new Size(200, 30);
             this.settingScreen.Controls.Add(this.wantsToSwitch);
 
-            this.brakeWatch = new Label();
-            this.brakeWatch.Location = new Point(300, 400);
-            this.brakeWatch.Size = new Size(200, 30);
-            this.settingScreen.Controls.Add(this.brakeWatch);
+            this.Priority = new Label();
+            this.Priority.Location = new Point(300, 400);
+            this.Priority.Size = new Size(200, 30);
+            this.settingScreen.Controls.Add(this.Priority);
+
+            this.TargetSpeed = new Label();
+            this.TargetSpeed.Location = new Point(300, 500);
+            this.TargetSpeed.Size = new Size(200, 30);
+            this.settingScreen.Controls.Add(this.TargetSpeed);
 
             this.doneButton = new CurvedButtons(new Size(100, 30), new Point(10, 450), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             this.doneButton.Click += HideScreen;
@@ -130,8 +135,8 @@ namespace GreenLight
             this.braking.Text = _ai.isBraking.ToString();
             this.displayImage = _profile.imgFace;
             this.wantsToSwitch.Text = _ai.wantsToSwitch.ToString();
-            string _brakeText = "TOP " + _ai.status[0] + "RIGHT " + _ai.status[1] + "BOTTOM " + _ai.status[2] + "LEFT " + _ai.status[3];
-            this.brakeWatch.Text = _brakeText;
+            this.Priority.Text = _ai.priority.ToString();
+            this.TargetSpeed.Text = _ai.targetspeed.ToString();
 
             this.settingScreen.Show();
             this.settingScreen.BringToFront();

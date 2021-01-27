@@ -16,7 +16,7 @@ namespace GreenLight.src.Data_Collection
     public class DataController : AbstractController
     {
         public DataCollector collector;
-        Chart brakeChart, averageSpeed;
+        public Chart brakeChart, averageSpeed;
         PictureBox screen;
 
         public delegate void UpdateData();
@@ -32,18 +32,24 @@ namespace GreenLight.src.Data_Collection
             brakeChart = new Chart();
             this.brakeChart.Palette = ChartColorPalette.EarthTones;
             this.brakeChart.ChartAreas.Add(new ChartArea("Test"));
-            this.brakeChart.Location = new Point(500, 600);
+            this.brakeChart.Location = new Point(100, 100);
 
             averageSpeed = new Chart();
             this.averageSpeed.Palette = ChartColorPalette.EarthTones;
             this.averageSpeed.ChartAreas.Add(new ChartArea("AverageSpeed"));
-            this.averageSpeed.Location = new Point(200, 600);
+            this.averageSpeed.Location = new Point(500, 100);
 
             // Set title
-            this.brakeChart.Titles.Add("Animals");
+            this.brakeChart.Titles.Add("Brake Ticks");
 
             this.screen.Controls.Add(this.averageSpeed);
             this.screen.Controls.Add(this.brakeChart);
+
+            this.brakeChart.Hide();
+            this.averageSpeed.Hide();
+
+            this.collector.AddBrakeData(100);
+            this.screen.Invalidate();
         }
 
         public void UpdateBrakeChart()
