@@ -242,6 +242,7 @@ namespace GreenLight
 
         public override void Draw(Graphics g)
         {
+
             Brush _brush = new SolidBrush(Color.FromArgb(100, Color.Black));
             Pen _pen = new Pen(new SolidBrush(Color.FromArgb(100, this.color)), PenWidth);
 

@@ -16,6 +16,7 @@ namespace GreenLight
         public Point Topcord;
         public string Type;
         public Size Size;
+        public bool Visible = true;
 
         public int SizeX, SizeY;
 

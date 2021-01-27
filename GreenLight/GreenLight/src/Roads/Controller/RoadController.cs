@@ -125,7 +125,10 @@ namespace GreenLight
             AbstractRoad _temp = crossRoadController.newCrossRoad(_point1, _lanes, "CrossRoad");
             this.roads.Add(_temp);
 
-			OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point1);
+            this.Screen.Invalidate();
+            crossRoadController.ShowSettingScreen((CrossRoad)_temp);
+
+            OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point1);
 
         }
 
@@ -376,6 +379,7 @@ namespace GreenLight
                 if (roads[roads.Count - 1].Type == "Cross")
                 {
                     crossRoadController.DeleteCrossroad(roads[roads.Count - 1]);
+                    General_Form.Main.BuildScreen.Screen.Invalidate();
                 }
                 else
                 {
