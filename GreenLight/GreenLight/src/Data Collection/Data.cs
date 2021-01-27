@@ -78,5 +78,17 @@ namespace GreenLight.src.Data_Collection
         {
             return averageSpeedPerTick;
         }
+
+        public override string ToString()
+        {
+            string _temp = " test ";
+            
+            foreach(Tuple<int,double> _speedData in averageSpeedPerTick)
+            {
+                _temp += _speedData.Item1 + " -- " + _speedData.Item2 + "\n";
+            }
+
+            return _temp;
+        }
     }
 }

@@ -22,6 +22,10 @@ namespace GreenLight
 
         World selectedWorld;
 
+        public World SimulationWorld = WorldConfig.physics.First();
+
+        public World currentSelected = WorldConfig.physics.First();
+
         public WorldController()
         {
         }

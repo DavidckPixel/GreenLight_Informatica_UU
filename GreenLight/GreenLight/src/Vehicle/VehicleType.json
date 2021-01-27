@@ -10,14 +10,24 @@
     "Occurance": 50.0,
     "canEdit": true
   },
-
   {
-    "Name": "Test!",
-    "Weight": 10000,
-    "Length": 5.0,
-    "Topspeed": 100,
-    "Motorpwr": 1000,
-    "Surface": 5.0,
+    "Name": "VW Passat ",
+    "Weight": 1353,
+    "Length": 4.77,
+    "Topspeed": 61,
+    "Motorpwr": 1119,
+    "Surface": 2.65,
+    "Cw": 1.0,
+    "Occurance": 50.0,
+    "canEdit": false
+  },
+  {
+    "Name": "Dacia",
+    "Weight": 1353,
+    "Length": 4.77,
+    "Topspeed": 30,
+    "Motorpwr": 500,
+    "Surface": 2.65,
     "Cw": 1.0,
     "Occurance": 50.0,
     "canEdit": false

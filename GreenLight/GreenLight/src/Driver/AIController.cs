@@ -13,6 +13,7 @@ namespace GreenLight
     {
         public List<AI> driverlist = new List<AI>();
         public DriverStats selectedAI;
+        public List<DriverStats> availableDriverStats = new List<DriverStats>();
 
         public override void Initialize()
         {
@@ -33,13 +34,33 @@ namespace GreenLight
             return new BetterAI(_stats);
         }
 
+        public void initDriverList()
+        {
+            this.availableDriverStats.Clear();
+
+            this.driverlist.Clear();
+
+            List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSDM.Selection_box.Elements_selected;
+            availableVehicleStatsString.ForEach(x => this.availableDriverStats.Add(getDriverStat(x)));
+            this.availableDriverStats.RemoveAll(x => x == null);
+
+            Console.WriteLine("AMOUNT OF STATS AI LODED: {0}", this.availableDriverStats.Count());
+
+            if (!this.availableDriverStats.Any())
+            {
+                this.availableDriverStats = AITypeConfig.aiTypes;
+            }
+        }
+
+
         public DriverStats getDriverStats(DriverStats _stats = null)
         {
             if (_stats == null)
             {
                 Random ran = new Random();
-                int _index = ran.Next(0, AITypeConfig.aiTypes.Count() - 1);
-                _stats = AITypeConfig.aiTypes[_index];
+                int _index = ran.Next(0, this.availableDriverStats.Count() - 1);
+                _stats = this.availableDriverStats[_index];
+                Console.WriteLine("selected stats: " + _stats.RuleBreakingChance);
             }
 
             return _stats;

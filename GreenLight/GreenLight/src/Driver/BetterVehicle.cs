@@ -11,7 +11,7 @@ namespace GreenLight
     public class BetterVehicle : ScreenObject
     {
         public BetterAI vehicleAI;
-        public World physics = WorldConfig.physics.First();
+        public World physics;
 
         string name;
         int weight;
@@ -37,9 +37,10 @@ namespace GreenLight
 
         public RectHitbox hitbox;
 
-
         public BetterVehicle(VehicleStats _stat, Node _startPoint, BetterAI _ai) : base(_startPoint.knot.Cord)
         {
+            this.physics = General_Form.Main.SimulationScreen.Simulator.worldController.SimulationWorld;
+
             this.weight = _stat.Weight;
             this.length = _stat.Length;
             this.topspeed = _stat.Topspeed;

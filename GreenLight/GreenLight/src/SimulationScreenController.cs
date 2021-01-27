@@ -18,6 +18,8 @@ namespace GreenLight
         public Form mainForm;
         public GPSData gpsData;
 
+        public Bitmap background;
+
         public SimulationScreenController(Form _tempform)
         {
             this.Screen = new PictureBox();
@@ -32,6 +34,7 @@ namespace GreenLight
             this.mainForm.SizeChanged += ChangeSize;
 
             this.Screen.Image = new System.Drawing.Bitmap(Screen.Width, Screen.Height);
+            this.background = new Bitmap(this.Screen.Width, this.Screen.Height);
 
             this.Simulator = new SimulationController(this);
             Log.Write("Created the Simulation Screen Controller");
@@ -50,6 +53,8 @@ namespace GreenLight
             SwitchSubMenus("Weather");
             this.gpsData = new GPSData(General_Form.Main.BuildScreen.builder.roadBuilder.roads);
             this.Screen.Invalidate();
+            this.CreateBackgroundImage();
+            //this.Simulator.initSimulation();
             Log.Write("Set Active Submenu to Weather");
         }
 
@@ -107,12 +112,15 @@ namespace GreenLight
         {
             Graphics g = pea.Graphics;
 
+            g.DrawImage(this.background, new Point(0, 0));
+            /*
             g.DrawImage(DriverProfileData.faces.First().backImg, 0,0, this.Screen.Width, this.Screen.Height);
    
             foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
             {
                 _road.Draw(g);
             }
+            */
             Log.Write("Completed drawing the roads on the simulation screen");
 
             for(int x = 0; x < this.Simulator.vehicleController.vehicleList.Count(); x++)
@@ -133,6 +141,19 @@ namespace GreenLight
             }
             //gpsData.Draw(g, gpsData.nodePaths[0]);
 
+        }
+
+        public void CreateBackgroundImage()
+        {
+            this.background = new Bitmap(this.Screen.Width, this.Screen.Height);
+
+            Graphics g = Graphics.FromImage(this.background);
+            g.DrawImage(DriverProfileData.faces.First().backImg, 0, 0, this.Screen.Width, this.Screen.Height);
+
+            foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
+            {
+                _road.Draw(g);
+            }
         }
 
         public void ClickPictureBox(object o, MouseEventArgs mea)
