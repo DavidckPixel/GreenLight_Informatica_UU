@@ -9,7 +9,7 @@ using Microsoft.VisualBasic;
 
 namespace GreenLight
 {
-    public class Selection_box : Panel
+    public class SelectionBox : Panel
     {
         public int Selected_index = 0;
         public bool Selected_left_bool = true;
@@ -24,7 +24,7 @@ namespace GreenLight
 
         private Form Form;
 
-        public Selection_box(Form _Form, FontFamily Dosis_font_family, List<string> _available, Action _functionClick, Action _functionAdd, Action _functionRemove)
+        public SelectionBox(Form _Form, FontFamily Dosis_font_family, List<string> _available, Action _functionClick, Action _functionAdd, Action _functionRemove)
         {
             Elements_selected = _available;
 

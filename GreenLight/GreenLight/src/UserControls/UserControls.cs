@@ -9,11 +9,11 @@ using System.IO;
 
 namespace GreenLight
 {
-    static class User_Controls
+    static class UserControls
     {
-        public static User_Controls_Config Config;
+        public static UserControlsConfig Config;
 
-        static User_Controls()
+        static UserControls()
         {
             ReadJson();
 
@@ -33,7 +33,7 @@ namespace GreenLight
                 using (StreamReader sr = new StreamReader(file))
                 {
                     string json = sr.ReadToEnd();
-                    User_Controls.Config = JsonConvert.DeserializeObject<User_Controls_Config>(json);
+                    UserControls.Config = JsonConvert.DeserializeObject<UserControlsConfig>(json);
                 }
 
             }

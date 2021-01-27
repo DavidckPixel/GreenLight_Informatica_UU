@@ -12,23 +12,23 @@ using System.Linq;
 
 namespace GreenLight
 {
-    public partial class Start_sub_recent_projects_menu : UserControl
+    public partial class StartSubRecentProjectsMenu : UserControl
     {
 
         string[] _recentProjects;
 
-        public Start_sub_recent_projects_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
+        public StartSubRecentProjectsMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(Menu_width, Form.Height - User_Controls.Config.standardSubMenu["deviderY"] - (User_Controls.Config.startSubMenu["divider2Y"] - 40));
-            this.Location = new Point(Form.Width - Menu_width, User_Controls.Config.standardSubMenu["deviderY"] + 20);
+            this.Size = new Size(Menu_width, Form.Height - UserControls.Config.standardSubMenu["deviderY"] - (UserControls.Config.startSubMenu["divider2Y"] - 40));
+            this.Location = new Point(Form.Width - Menu_width, UserControls.Config.standardSubMenu["deviderY"] + 20);
             this.AutoScroll = true;
             Initialize(Form, Menu_width, Dosis_font_family);
         }
         public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            this.Size = new Size(Sub_menu_width, Form.Height - User_Controls.Config.standardSubMenu["deviderY"] - User_Controls.Config.startSubMenu["divider2Y"] - 40);
-            this.Location = new Point(Form.Width - Sub_menu_width, User_Controls.Config.standardSubMenu["deviderY"] + 20);
+            this.Size = new Size(Sub_menu_width, Form.Height - UserControls.Config.standardSubMenu["deviderY"] - UserControls.Config.startSubMenu["divider2Y"] - 40);
+            this.Location = new Point(Form.Width - Sub_menu_width, UserControls.Config.standardSubMenu["deviderY"] + 20);
             this.Controls.Clear();
             _recentProjects = File.ReadAllLines(General_Form.Main.recent_project);
             Initialize(Form, Sub_menu_width, Dosis_font_family);
@@ -36,7 +36,7 @@ namespace GreenLight
 
         private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            Dictionary<string, int> startmenu = User_Controls.Config.startSubMenu;
+            Dictionary<string, int> startmenu = UserControls.Config.startSubMenu;
 
             _recentProjects = File.ReadAllLines(General_Form.Main.recent_project);
 

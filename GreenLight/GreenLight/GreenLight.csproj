@@ -74,16 +74,16 @@
     <Compile Include="src\Signs\Speedsign.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\Tests\HitBox_form.cs">
+    <Compile Include="src\Tests\HitboxForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\Tests\HitBox_form.Designer.cs">
-      <DependentUpon>HitBox_form.cs</DependentUpon>
+    <Compile Include="src\Tests\HitboxForm.Designer.cs">
+      <DependentUpon>HitboxForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\UserControls\Pop_Up_Form.cs">
+    <Compile Include="src\UserControls\PopUpForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Selection_box.cs">
+    <Compile Include="src\UserControls\SelectionBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\Hitboxes\CurvedHitbox.cs" />
@@ -128,19 +128,19 @@
     <Compile Include="src\Old Code\OriginPoints\OriginPointsConfig.cs" />
     <Compile Include="src\Old Code\OriginPoints\VehicleOriginPoint.cs" />
     <Compile Include="src\Roads\CrossRoad\CrossArrow.cs" />
-    <Compile Include="src\UserControls\Menu%27s\Data_sub_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\DataSubMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="src\Roads\Connection\CrossConnection.cs" />
     <Compile Include="src\Roads\CrossRoad\CrossRoadSide.cs" />
     <Compile Include="src\Roads\Roads.cs" />
     <Compile Include="src\Roads\RoadsConfig.cs" />
-    <Compile Include="src\Controller\ScreenControllers\MainScreenController_Config.cs" />
-    <Compile Include="src\UserControls\Menu%27s\Start_sub_recent_projects_menu.cs">
+    <Compile Include="src\Controller\ScreenControllers\MainScreenControllerConfig.cs" />
+    <Compile Include="src\UserControls\Menu%27s\StartSubRecentProjectsMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\Data_sub_menu.Designer.cs">
-      <DependentUpon>Data_sub_menu.cs</DependentUpon>
+    <Compile Include="src\UserControls\Menu%27s\DataSubMenu.Designer.cs">
+      <DependentUpon>DataSubMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Visuals\DrawData.cs" />
     <Compile Include="src\Driver\DriverStats.cs" />
@@ -165,7 +165,7 @@
     <Compile Include="src\Signs\Controller\MainSignController.cs" />
     <Compile Include="src\Signs\SignTypes\SpeedSign.cs" />
     <Compile Include="src\Signs\Controller\SpeedSignController.cs" />
-    <Compile Include="src\UserControls\Menu%27s\Simulation_data_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\SimulationDataMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="src\UserControls\SliderText.cs">
@@ -180,7 +180,7 @@
     <Compile Include="src\UserControls\RoundButtons.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Move_panel.cs">
+    <Compile Include="src\UserControls\MovePanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\Controller\AbstractController.cs" />
@@ -214,8 +214,8 @@
     <Compile Include="src\Visuals\ScreenObject.cs" />
     <Compile Include="src\Controller\SimulationController.cs" />
     <Compile Include="src\Controller\ScreenControllers\SimulationScreenController.cs" />
-    <Compile Include="src\UserControls\User_Controls.cs" />
-    <Compile Include="src\UserControls\User_Controls_Config.cs" />
+    <Compile Include="src\UserControls\UserControls.cs" />
+    <Compile Include="src\UserControls\UserControlsConfig.cs" />
     <Compile Include="src\Old Code\Vehicle.cs" />
     <Compile Include="src\Vehicle\VehicleController.cs" />
     <Compile Include="src\Vehicle\VehicleStats.cs" />
@@ -226,7 +226,7 @@
     <Compile Include="src\Old Code\Startup.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\Build_main_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\BuildMainMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="General_form.cs">
@@ -234,41 +234,41 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\UserControls\Menu%27s\Simulation_main_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\SimulationMainMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\Start_main_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\StartMainMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\Simulation_sub_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\SimulationSubMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\Build_sub_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\BuildSubMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\Start_sub_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\StartSubMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\Simulation_sub_weather_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\SimulationSubWeatherMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\Simulation_sub_vehicle_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\SimulationSubVehicleMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\Simulation_sub_driver_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\SimulationSubDriverMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\Elements_sub_roads_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\ElementsSubRoadsMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\Elements_sub_signs_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\ElementsSubSignsMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\Elements_sub_settings_menu.cs">
+    <Compile Include="src\UserControls\Menu%27s\ElementsSubSettingsMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <EmbeddedResource Include="src\Tests\HitBox_form.resx">
-      <DependentUpon>HitBox_form.cs</DependentUpon>
+    <EmbeddedResource Include="src\Tests\HitboxForm.resx">
+      <DependentUpon>HitboxForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -283,8 +283,8 @@
     <EmbeddedResource Include="src\Tests\RoadTestForm.resx">
       <DependentUpon>RoadTestForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\UserControls\Menu%27s\Start_sub_menu.resx">
-      <DependentUpon>Start_sub_menu.cs</DependentUpon>
+    <EmbeddedResource Include="src\UserControls\Menu%27s\StartSubMenu.resx">
+      <DependentUpon>StartSubMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Old Code\Vehicle.resx">
       <DependentUpon>Vehicle.cs</DependentUpon>
@@ -292,8 +292,8 @@
     <EmbeddedResource Include="src\Old Code\Startup.resx">
       <DependentUpon>Startup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\UserControls\Menu%27s\Simulation_main_menu.resx">
-      <DependentUpon>Simulation_main_menu.cs</DependentUpon>
+    <EmbeddedResource Include="src\UserControls\Menu%27s\SimulationMainMenu.resx">
+      <DependentUpon>SimulationMainMenu.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

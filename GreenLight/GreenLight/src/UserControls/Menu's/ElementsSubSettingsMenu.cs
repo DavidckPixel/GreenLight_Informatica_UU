@@ -10,28 +10,28 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
-    public partial class Elements_sub_buildings_menu : UserControl
+    public partial class ElementsSubSettingsMenu : UserControl
     {
         public List<CurvedButtons> ESBM_Buttons = new List<CurvedButtons>();
-        public Elements_sub_buildings_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
+        public ElementsSubSettingsMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(Menu_width, Form.Height - User_Controls.Config.buildElementsMenu["elementsXbase"] - User_Controls.Config.buildElementsMenu["elementsXplus"]);
-            this.Location = new Point(Form.Width - Menu_width, User_Controls.Config.buildElementsMenu["elementsXbase"]);
+            this.Size = new Size(Menu_width, Form.Height - UserControls.Config.buildElementsMenu["elementsXbase"] - UserControls.Config.buildElementsMenu["elementsXplus"]);
+            this.Location = new Point(Form.Width - Menu_width, UserControls.Config.buildElementsMenu["elementsXbase"]);
             this.AutoScroll = true;
             Initialize(Form, Menu_width, Dosis_font_family);
         }
         public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            this.Size = new Size(Sub_menu_width, Form.Height - User_Controls.Config.buildElementsMenu["elementsXbase"] - User_Controls.Config.buildElementsMenu["elementsXplus"]);
-            this.Location = new Point(Form.Width - Sub_menu_width, User_Controls.Config.buildElementsMenu["elementsXbase"]);
+            this.Size = new Size(Sub_menu_width, Form.Height - UserControls.Config.buildElementsMenu["elementsXbase"] - UserControls.Config.buildElementsMenu["elementsXplus"]);
+            this.Location = new Point(Form.Width - Sub_menu_width, UserControls.Config.buildElementsMenu["elementsXbase"]);
             this.Controls.Clear();
             Initialize(Form, Sub_menu_width, Dosis_font_family);
         }
 
         private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            Dictionary<string, int> menu = User_Controls.Config.buildElementsMenu;
+            Dictionary<string, int> menu = UserControls.Config.buildElementsMenu;
             int _ButtonSize = menu["buttonSize"];
             int _ButtonXbase = menu["buttonXbase"];
             int _ButtonXdiff = menu["buttonXdiff"];

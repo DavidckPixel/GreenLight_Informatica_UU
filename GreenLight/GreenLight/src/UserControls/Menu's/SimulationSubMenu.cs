@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
-    public partial class Simulation_sub_menu : UserControl
+    public partial class SimulationSubMenu : UserControl
     {
         public List<CurvedButtons> SSM = new List<CurvedButtons>();
         public CurvedButtons Weather;
-        public Simulation_sub_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
+        public SimulationSubMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255,255,255);
-            this.Size = new Size(User_Controls.Config.standardSubMenu["subMenuWidth"], Form.Height);
+            this.Size = new Size(UserControls.Config.standardSubMenu["subMenuWidth"], Form.Height);
             this.Location = new Point(Form.Width-Menu_width, Form.Height);
             Initialize(Form, Menu_width, Dosis_font_family);
         }
@@ -50,17 +50,17 @@ namespace GreenLight
 
         private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            Dictionary<string, int> menu = User_Controls.Config.simSubMenu;
+            Dictionary<string, int> menu = UserControls.Config.simSubMenu;
 
             CurvedButtons Logo = new CurvedButtons(Form, 1);
-            Logo.Location = new Point(User_Controls.Config.standardSubMenu["logoX"], User_Controls.Config.standardSubMenu["logoY"]);
+            Logo.Location = new Point(UserControls.Config.standardSubMenu["logoX"], UserControls.Config.standardSubMenu["logoY"]);
             this.Controls.Add(Logo);
 
-            Move_panel Drag_pad = new Move_panel(Form);
+            MovePanel Drag_pad = new MovePanel(Form);
             this.Controls.Add(Drag_pad);
 
             CurvedButtons Divider1 = new CurvedButtons();
-            Divider1.Location = new Point(User_Controls.Config.standardSubMenu["deviderX"], User_Controls.Config.standardSubMenu["deviderY"]);
+            Divider1.Location = new Point(UserControls.Config.standardSubMenu["deviderX"], UserControls.Config.standardSubMenu["deviderY"]);
             this.Controls.Add(Divider1);
 
             CurvedButtons Settings_header = new CurvedButtons(new Size(menu["settingsHeaderSizeX"], menu["settingsHeaderSizeY"]),  //settingsHeaderSizeX //settingsHeaderSizeY
