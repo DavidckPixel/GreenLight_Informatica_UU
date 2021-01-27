@@ -37,7 +37,7 @@ namespace GreenLight
             {
                 OriginPointsList.Add(_temp);
             }
-            SaveJson();
+            //SaveJson();
         }
 
         public void draw(Graphics g)        //Has to be called
