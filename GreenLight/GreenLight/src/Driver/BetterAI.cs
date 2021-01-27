@@ -181,10 +181,13 @@ namespace GreenLight
             {
                 this.wantsToSwitch = true;
                 this.closeToCars = true;
-
-                if (this.nextRoad.roadtype == "Cross" && this.vehicle.currentLane.points.Count - this.currentLanePointIndex < 10) ;
+                if (this.nextRoad != null)
                 {
-                    this.wantsToSwitch = false;
+
+                    if (this.nextRoad.roadtype == "Cross" && this.vehicle.currentLane.points.Count - this.currentLanePointIndex < 10) ;
+                    {
+                        this.wantsToSwitch = false;
+                    }
                 }
             }
             else
@@ -195,6 +198,10 @@ namespace GreenLight
 
         private void crossRoadRules()
         {
+            if (this.nextRoad == null)
+            {
+                return;
+            }
             if (this.nextRoad.roadtype != "Cross" || this.currentCrossRoadSide == null)
             {
                 if (this.crossRoadOccupied)
@@ -295,6 +302,10 @@ namespace GreenLight
 
         private void InCrossRoadRange()
         {
+            if (this.nextRoad == null)
+            {
+                return;
+            }
             if (this.nextRoad.roadtype != "Cross" || this.currentCrossRoadSide != null)
             {
                 return;
