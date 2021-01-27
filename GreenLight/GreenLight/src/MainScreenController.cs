@@ -284,6 +284,18 @@ namespace GreenLight
             }
         }
 
+        public void LoadPresets() 
+        {
+            OpenFileDialog _presetDialog = new OpenFileDialog();
+            _presetDialog.Title = "Choose preset";
+            _presetDialog.Filter = "TXT files|*.txt";
+            //_presetDialog.InitialDirectory = @"C:\"; 
+            if (_presetDialog.ShowDialog() == DialogResult.OK)
+            {
+                Load(_presetDialog.FileName);
+            }
+        }
+
         public void Load(string file)
         {
             StreamReader myStream;

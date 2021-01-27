@@ -64,7 +64,7 @@ namespace GreenLight
             this.Controls.Add(Logo);
 
             New_project_button.Click += (object o, EventArgs EA) => { General_Form.Main.MenuController.SwitchToBuild(); };
-            Choose_preset_button.Click += (object o, EventArgs EA) => { };
+            Choose_preset_button.Click += (object o, EventArgs EA) => { General_Form.Main.MenuController.SwitchToBuild(); General_Form.Main.LoadPresets(); };
             Browse_directory_button.Click += (object o, EventArgs EA) => { General_Form.Main.MenuController.SwitchToBuild(); General_Form.Main.LoadDialog(); };
         }
     }
