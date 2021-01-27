@@ -13,41 +13,25 @@ namespace GreenLight
 {
     public partial class SimulationSubWeatherMenu : UserControl
     {
-        public SimulationSubWeatherMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
+        public SimulationSubWeatherMenu(int _menuwidth, Form _form, FontFamily _dosisfontfamily)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(Menu_width, Form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);
-            this.Location = new Point(Form.Width - Menu_width, UserControls.Config.simElementsMenu["menuY"]);
+            this.Size = new Size(_menuwidth, _form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);
+            this.Location = new Point(_form.Width - _menuwidth, UserControls.Config.simElementsMenu["menuY"]);
             this.AutoScroll = true;
-            Initialize(Form, Menu_width, Dosis_font_family);
+            Initialize(_form, _menuwidth, _dosisfontfamily);
         }
 
-        public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        public void AdjustSize(Form _form, int _submenuwidth, FontFamily _dosisfontfamily)
         {
-            this.Size = new Size(Sub_menu_width, Form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);
-            this.Location = new Point(Form.Width - Sub_menu_width, UserControls.Config.simElementsMenu["menuY"]);
+            this.Size = new Size(_submenuwidth, _form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);
+            this.Location = new Point(_form.Width - _submenuwidth, UserControls.Config.simElementsMenu["menuY"]);
             this.Controls.Clear();
-            Initialize(Form, Sub_menu_width, Dosis_font_family);
+            Initialize(_form, _submenuwidth, _dosisfontfamily);
 
         }
 
-        //Cleaner but General_form should be just form
-        /*public Simulation_sub_weather_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family)
-        {
-            this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(Sub_menu_width, General_form.Height - 230 - 135);
-            this.Location = new Point(General_form.Width - Sub_menu_width, 230);
-            this.AutoScroll = true;
-            Initialize(General_form, Sub_menu_width, Dosis_font_family);
-            General_form.SizeChanged += (object o, EventArgs EA) => {
-                this.Size = new Size(Sub_menu_width, General_form.Height - 230 - 135);
-                this.Location = new Point(General_form.Width - Sub_menu_width, 230);
-                this.Controls.Clear();
-                Initialize(General_form, Sub_menu_width, Dosis_font_family);
-            };*/
-        
-
-        private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        private void Initialize(Form _form, int _submenuwidth, FontFamily Dosis_font_family)
         {
             Dictionary<string, int> menu = UserControls.Config.simElementsMenu;
             int _sliderX = menu["sliderX"];
@@ -98,55 +82,6 @@ namespace GreenLight
                 General_Form.Main.SwitchControllers(General_Form.Main.DataScreen);
             };
             this.Controls.Add(graphWindow);
-
-
-            /*
-
-
-            Slider Slippery = new Slider(new Point(_sliderX, _start + _diff * 3), 0, 100);
-            this.Controls.Add(Slippery);
-
-            SliderText Slippery_label = new SliderText(Dosis_font_family, new Point(_sliderX, _startText + _diff * 3), "Slipperiness:"); //startText //textX
-            this.Controls.Add(Slippery_label);
-
-            SliderText Slippery_Value = new SliderText(Dosis_font_family, new Point(_textX, _startText + _diff * 3), Slippery.Value.ToString() + " %");
-            this.Controls.Add(Slippery_Value);
-            Slippery.ValueChanged += (object o, EventArgs EA) => { Slippery_Value.Text = Slippery.Value.ToString() + " %"; };
-
-            Slider Sight = new Slider(new Point(_sliderX, _start + _diff * 2), 0, 100);
-            this.Controls.Add(Sight);
-
-            SliderText Sight_label = new SliderText(Dosis_font_family, new Point(_sliderX, _startText + _diff * 2), "Sight:");
-            this.Controls.Add(Sight_label);
-
-            SliderText Sight_Value = new SliderText(Dosis_font_family, new Point(_textX, _startText + _diff * 2), Sight.Value.ToString() + " m");
-            this.Controls.Add(Sight_Value);
-            Sight.ValueChanged += (object o, EventArgs EA) => { Sight_Value.Text = Sight.Value.ToString() + " m"; };
-
-            Slider Snow = new Slider(new Point(_sliderX, _start + _diff), 0, 50);
-            this.Controls.Add(Snow);
-
-            SliderText Snow_label = new SliderText(Dosis_font_family, new Point(_sliderX, _startText + _diff), "Snow:");
-            this.Controls.Add(Snow_label);
-
-            SliderText Snow_Value = new SliderText(Dosis_font_family, new Point(_textX, _startText + _diff), (Snow.Value / 10).ToString() + " mm");
-            this.Controls.Add(Snow_Value);
-            Snow.ValueChanged += (object o, EventArgs EA) => { Snow_Value.Text = (((double)(Snow.Value)) / 10).ToString() + " mm"; };
-
-            Slider Rainfall = new Slider(new Point(_sliderX, _start), 0, 100);
-            this.Controls.Add(Rainfall);
-
-            SliderText Rainfall_label = new SliderText(Dosis_font_family, new Point(_sliderX, _startText), "Rainfall:");
-            this.Controls.Add(Rainfall_label);
-
-            SliderText Rainfall_Value = new SliderText(Dosis_font_family, new Point(_textX, _startText), (Rainfall.Value / 10).ToString() + " mm/h");
-            this.Controls.Add(Rainfall_Value);
-            Rainfall.ValueChanged += (object o, EventArgs EA) => { Rainfall_Value.Text = (((double)(Rainfall.Value)) / 10).ToString() + " mm/h"; };
-
-            CurvedButtons Weather_header = new CurvedButtons(new Size(menu["headerSizeX"], menu["headerSizeY"]),
-               new Point(menu["headerX"], menu["headerY"]), "../../src/User Interface Recources/Weather_Header.png");
-            this.Controls.Add(Weather_header);
-            */
         }
     }
 }

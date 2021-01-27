@@ -114,24 +114,12 @@ namespace GreenLight
 
                         this.screenController.Screen.BeginInvoke(new UpdateTextCallback(dataController.collector.CollectAllData));
                         vehicleController.toDelete.Clear();
-                        //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakeChart));
-                        //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakePerTickChart));
                     }
 
                     if (x % 30 == 0 && x < 900)
                     {
                         vehicleController.getVehicle(this.screenController.gpsData.getRandomStartNode(), true);
-                        
-                        /*
-                        foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
-                        {
-                            if (_road.roadtype == "Cross")
-                            {
-                                CrossRoad _temproad = (CrossRoad)_road;
-                                _temproad.ConsoleDump();
-                            }
 
-                        } */
                     }
 
                     if (x % 600 == 0)

@@ -11,29 +11,33 @@ using Microsoft.VisualBasic;
 
 namespace GreenLight
 {
+    /* This is the Simulation sub vehicle menu class. This class has a method AdjustSize to fit the size of the users window.
+      This user control is shown when the user is in the simulation screen and has selected the vehicle menu.
+      The user can change properties of the vehicles.
+      Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
     public partial class SimulationSubVehicleMenu : UserControl
     {
+        public SelectionBox selectionBox;
+        public CurvedButtons saveButton;
+        public Slider Surface, maxSpeed, Cw, Length, horsePower, Weight, Occurunce;
 
-        public SelectionBox Selection_box;
-        Slider Surface, Max_speed, Cw, Length, HorsePower, Weight, Occurunce;
-
-        public SimulationSubVehicleMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
+        public SimulationSubVehicleMenu(int _menuwidth, Form _form, FontFamily _dosisfontfamily)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(Menu_width, Form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]); //menuSizeY
-            this.Location = new Point(Form.Width - Menu_width, UserControls.Config.simElementsMenu["menuY"]);  //menuY
+            this.Size = new Size(_menuwidth, _form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]); 
+            this.Location = new Point(_form.Width - _menuwidth, UserControls.Config.simElementsMenu["menuY"]); 
             this.AutoScroll = true;
-            Initialize(Form, Menu_width, Dosis_font_family);
+            Initialize(_form, _menuwidth, _dosisfontfamily);
         }
-        public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        public void AdjustSize(Form _form, int _submenuwidth, FontFamily _dosisfontfamily)
         {
-            this.Size = new Size(Sub_menu_width, Form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);
-            this.Location = new Point(Form.Width - Sub_menu_width, UserControls.Config.simElementsMenu["menuY"]);
+            this.Size = new Size(_submenuwidth, _form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);
+            this.Location = new Point(_form.Width - _submenuwidth, UserControls.Config.simElementsMenu["menuY"]);
             this.Controls.Clear();
-            Initialize(Form, Sub_menu_width, Dosis_font_family);
+            Initialize(_form, _submenuwidth, _dosisfontfamily);
         }
 
-        private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        private void Initialize(Form _form, int _submenuwidth, FontFamily _dosisfontfamily)
         {
             Dictionary<string, int> menu = UserControls.Config.simElementsMenu;
             int _sliderX = menu["sliderX"];
@@ -44,32 +48,27 @@ namespace GreenLight
 
             List<string> _temp = VehicleController.getStringVehicleStats();
 
-            //VehicleController controller = General_Form.Main.SimulationScreen.Simulator.vehicleController;
-            
-
-            Selection_box = new SelectionBox(Form, Dosis_font_family, _temp, new Action(this.SetValues), new Action(this.AddVehicle), new Action(this.DeleteVehicle));
-            if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(UserControls.Config.standardSubMenu["selectionBoxMaxX"], UserControls.Config.standardSubMenu["selectionBoxMaxY"]);
-            else Selection_box.Location = new Point(UserControls.Config.standardSubMenu["selectionBoxX"], UserControls.Config.standardSubMenu["selectionBoxY"]);
-
-            this.Controls.Add(Selection_box);
+            selectionBox = new SelectionBox(_form, _dosisfontfamily, _temp, new Action(this.SetValues), new Action(this.AddVehicle), new Action(this.DeleteVehicle));
+            if (_form.WindowState == FormWindowState.Maximized) selectionBox.Location = new Point(UserControls.Config.standardSubMenu["selectionBoxMaxX"], UserControls.Config.standardSubMenu["selectionBoxMaxY"]);
+            else selectionBox.Location = new Point(UserControls.Config.standardSubMenu["selectionBoxX"], UserControls.Config.standardSubMenu["selectionBoxY"]);
+            this.Controls.Add(selectionBox);
 
             Dictionary<string, int> vehiclemenu = UserControls.Config.simVehicle;
-            /*SliderText name_label = new SliderText(Dosis_font_family, new Point(_sliderX, _startY + 3 * _diffY), "Vehicle Name: ");
-            this.Controls.Add(name_label);
 
-            TextBox name = new TextBox();
-            name.Location = new Point(_sliderX, _startY + 3 * _diffY);
-            this.Controls.Add(name);*/
+            CurvedButtons Vehicles_header = new CurvedButtons(new Size(menu["headerSizeX"], menu["headerSizeY"]), new Point(menu["headerX"], menu["headerY"]), "../../src/User Interface Recources/Edit_Vehicle_Header.png");
+            this.Controls.Add(Vehicles_header);
 
-            CurvedButtons saveButton = new CurvedButtons(new Size(80, 40), new Point(_sliderX, _startY + 3 * _diffY), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, null, this.BackColor);
+            saveButton = new CurvedButtons(new Size(80, 40), new Point(_sliderX, _startY + 3 * _diffY), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, null, this.BackColor);
             saveButton.Click += (object o, EventArgs ea) => { VehicleTypeConfig.SaveJson(); };
             this.Controls.Add(saveButton);
 
+            /*     Sliders    */
+
             Cw = new Slider(new Point(_sliderX, _startY + 2 * _diffY), vehiclemenu["surfaceMin"], vehiclemenu["surfaceMax"]);
             this.Controls.Add(Cw);
-            SliderText Cw_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY + 2 * _diffY), "Drag Co:");
+            SliderText Cw_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textY + 2 * _diffY), "Drag Co:");
             this.Controls.Add(Cw_label);
-            SliderText Cw_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY + 2 * _diffY), (Cw.Value / 10 ).ToString() + " ");
+            SliderText Cw_Value = new SliderText(_dosisfontfamily, new Point(_textX, _textY + 2 * _diffY), (Cw.Value / 10 ).ToString() + " ");
             this.Controls.Add(Cw_Value);
             Cw.ValueChanged += (object o, EventArgs EA) => 
             {
@@ -79,9 +78,9 @@ namespace GreenLight
 
             Surface = new Slider(new Point(_sliderX, _startY + _diffY), vehiclemenu["surfaceMin"], vehiclemenu["surfaceMax"]);
             this.Controls.Add(Surface);
-            SliderText Surface_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY + 1 * _diffY), "Frontal Surface:");
+            SliderText Surface_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textY + 1 * _diffY), "Frontal Surface:");
             this.Controls.Add(Surface_label);
-            SliderText Surface_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY + 1* _diffY), (Surface.Value / 10).ToString() + " m^2");
+            SliderText Surface_Value = new SliderText(_dosisfontfamily, new Point(_textX, _textY + 1* _diffY), (Surface.Value / 10).ToString() + " m^2");
             this.Controls.Add(Surface_Value);
             Surface.ValueChanged += (object o, EventArgs EA) => 
             {
@@ -89,23 +88,23 @@ namespace GreenLight
                 Surface_Value.Text = (((double)(Surface.Value)) / 10).ToString() + " m^2";
             };
 
-            Max_speed = new Slider(new Point(_sliderX, _startY), vehiclemenu["topSpeedMin"], vehiclemenu["topSpeedMax"]);
-            this.Controls.Add(Max_speed);
-            SliderText Max_speed_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY), "Topspeed:");
+            maxSpeed = new Slider(new Point(_sliderX, _startY), vehiclemenu["topSpeedMin"], vehiclemenu["topSpeedMax"]);
+            this.Controls.Add(maxSpeed);
+            SliderText Max_speed_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textY), "Topspeed:");
             this.Controls.Add(Max_speed_label);
-            SliderText Max_speed_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY), Max_speed.Value.ToString() + " km/h");
+            SliderText Max_speed_Value = new SliderText(_dosisfontfamily, new Point(_textX, _textY), maxSpeed.Value.ToString() + " km/h");
             this.Controls.Add(Max_speed_Value);
-            Max_speed.ValueChanged += (object o, EventArgs EA) => 
+            maxSpeed.ValueChanged += (object o, EventArgs EA) => 
             {
-                General_Form.Main.SimulationScreen.Simulator.vehicleController.ChangeTopspeed(Max_speed.Value, (Slider)o);
-                Max_speed_Value.Text = Max_speed.Value.ToString() + " km/h"; 
+                General_Form.Main.SimulationScreen.Simulator.vehicleController.ChangeTopspeed(maxSpeed.Value, (Slider)o);
+                Max_speed_Value.Text = maxSpeed.Value.ToString() + " km/h"; 
             };
 
             Length = new Slider(new Point(_sliderX, _startY - _diffY), vehiclemenu["lengthMin"], vehiclemenu["lengthMax"]);
             this.Controls.Add(Length);
-            SliderText Length_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY - 1 * _diffY), "Length:");
+            SliderText Length_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textY - 1 * _diffY), "Length:");
             this.Controls.Add(Length_label);
-            SliderText Length_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY - 1 * _diffY), (Length.Value / 10).ToString() + " m");
+            SliderText Length_Value = new SliderText(_dosisfontfamily, new Point(_textX, _textY - 1 * _diffY), (Length.Value / 10).ToString() + " m");
             this.Controls.Add(Length_Value);
             Length.ValueChanged += (object o, EventArgs EA) =>
             {
@@ -113,23 +112,23 @@ namespace GreenLight
                 Length_Value.Text = (((double)(Length.Value)) / 10).ToString() + " m";
             };
 
-            HorsePower = new Slider(new Point(_sliderX, _startY - 2* _diffY), vehiclemenu["horsepwrMin"], vehiclemenu["horsepwrMax"]);
-            this.Controls.Add(HorsePower);
-            SliderText HorsePower_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY - 2 * _diffY), "Horsepower:");
+            horsePower = new Slider(new Point(_sliderX, _startY - 2* _diffY), vehiclemenu["horsepwrMin"], vehiclemenu["horsepwrMax"]);
+            this.Controls.Add(horsePower);
+            SliderText HorsePower_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textY - 2 * _diffY), "Horsepower:");
             this.Controls.Add(HorsePower_label);
-            SliderText HorsePower_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY - 2 * _diffY), HorsePower.Value.ToString() + " hp");
+            SliderText HorsePower_Value = new SliderText(_dosisfontfamily, new Point(_textX, _textY - 2 * _diffY), horsePower.Value.ToString() + " hp");
             this.Controls.Add(HorsePower_Value);
-            HorsePower.ValueChanged += (object o, EventArgs EA) => 
+            horsePower.ValueChanged += (object o, EventArgs EA) => 
             {
-                General_Form.Main.SimulationScreen.Simulator.vehicleController.ChangeMotorpwr(HorsePower.Value, (Slider)o);
-                HorsePower_Value.Text = HorsePower.Value.ToString() + " hp";
+                General_Form.Main.SimulationScreen.Simulator.vehicleController.ChangeMotorpwr(horsePower.Value, (Slider)o);
+                HorsePower_Value.Text = horsePower.Value.ToString() + " hp";
             };
 
             Weight = new Slider(new Point(_sliderX, _startY - 3 * _diffY), vehiclemenu["weightMin"], vehiclemenu["weightMax"]);
             this.Controls.Add(Weight);
-            SliderText Weight_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY - 3 * _diffY), "Weight:");
+            SliderText Weight_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textY - 3 * _diffY), "Weight:");
             this.Controls.Add(Weight_label);
-            SliderText Weight_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY - 3 * _diffY), Weight.Value.ToString() + " kg");
+            SliderText Weight_Value = new SliderText(_dosisfontfamily, new Point(_textX, _textY - 3 * _diffY), Weight.Value.ToString() + " kg");
             this.Controls.Add(Weight_Value);
             Weight.ValueChanged += (object o, EventArgs EA) => 
             {
@@ -139,43 +138,15 @@ namespace GreenLight
 
             Occurunce = new Slider(new Point(_sliderX, _startY - 4 * _diffY), vehiclemenu["occurenceMin"], vehiclemenu["occurenceMax"]);
             this.Controls.Add(Occurunce);
-            SliderText Occurunce_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textY - 4 * _diffY), "Occurunce:");
+            SliderText Occurunce_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textY - 4 * _diffY), "Occurunce:");
             this.Controls.Add(Occurunce_label);
-            SliderText Occurunce_Value = new SliderText(Dosis_font_family, new Point(_textX, _textY - 4 * _diffY), Occurunce.Value.ToString() + " %");
+            SliderText Occurunce_Value = new SliderText(_dosisfontfamily, new Point(_textX, _textY - 4 * _diffY), Occurunce.Value.ToString() + " %");
             this.Controls.Add(Occurunce_Value);
             Occurunce.ValueChanged += (object o, EventArgs EA) => 
             {
                 General_Form.Main.SimulationScreen.Simulator.vehicleController.ChangeOccurance(Occurunce.Value, (Slider)o);
                 Occurunce_Value.Text = Occurunce.Value.ToString() + " %"; 
             };
-
-
-
-            CurvedButtons Vehicles_header = new CurvedButtons(new Size(menu["headerSizeX"], menu["headerSizeY"]),
-               new Point(menu["headerX"], menu["headerY"]), "../../src/User Interface Recources/Edit_Vehicle_Header.png");
-            this.Controls.Add(Vehicles_header);
-
-
-
-            /* Slider temp1 = new Slider(new Point(_sliderX, _start + _diff * 4), 0, 100); //sliderDiffY //sliderStart:100 / sliderX:25 //headerSizeX //headerSizeY //headerX //headerY
-            this.Controls.Add(temp1);
-
-            Slider temp2 = new Slider(new Point(_sliderX, _start + _diff * 3), 0, 100);
-            this.Controls.Add(temp2);
-
-            Slider temp3 = new Slider(new Point(_sliderX, _start + _diff * 2), 0, 100);
-            this.Controls.Add(temp3);
-
-            Slider temp4 = new Slider(new Point(_sliderX, _start + _diff), 0, 100);
-            this.Controls.Add(temp4);
-
-            Slider temp5 = new Slider(new Point(_sliderX, _start), 0, 100);
-            this.Controls.Add(temp5);
-
-            CurvedButtons Vehicles_header = new CurvedButtons(new Size(menu["headerSizeX"], menu["headerSizeY"]),
-               new Point(menu["headerX"], menu["headerY"]), "../../src/User Interface Recources/Edit_Vehicle_Header.png");
-            this.Controls.Add(Vehicles_header);*/
-
         }
 
         private void SetValues()
@@ -195,8 +166,8 @@ namespace GreenLight
             Cw.Value = (int)(controller.selectedVehicle.Cw * 10);
             Surface.Value = (int)(controller.selectedVehicle.Surface * 10);
             Length.Value = (int)(controller.selectedVehicle.Length * 10);
-            Max_speed.Value = controller.selectedVehicle.Topspeed;
-            HorsePower.Value = controller.selectedVehicle.Motorpwr;
+            maxSpeed.Value = controller.selectedVehicle.Topspeed;
+            horsePower.Value = controller.selectedVehicle.Motorpwr;
             Weight.Value = controller.selectedVehicle.Weight;
             Occurunce.Value = (int)(controller.selectedVehicle.Occurance);
         }
@@ -236,18 +207,18 @@ namespace GreenLight
             }
 
             controller.DeleteVehicle(_stats);
-            Selection_box.Remove_Element(_stats.Name);
+            selectionBox.RemoveElement(_stats.Name);
         }
 
         private VehicleStats FindVehicle()
         {
-            int index = Selection_box.Selected_index;
+            int index = selectionBox.selectedIndex;
 
-            if (Selection_box.Selected_left_bool)
+            if (selectionBox.selectedLeftBool)
             {
-                if (index < Selection_box.Elements_selected.Count)
+                if (index < selectionBox.elementsSelected.Count)
                 {
-                    return VehicleController.getVehicleStat(Selection_box.Elements_selected[Selection_box.Selected_index]);
+                    return VehicleController.getVehicleStat(selectionBox.elementsSelected[selectionBox.selectedIndex]);
                 }
                 else
                 {
@@ -256,9 +227,9 @@ namespace GreenLight
             }
             else
             {
-                if (index < Selection_box.Elements_available.Count)
+                if (index < selectionBox.elementsAvailable.Count)
                 {
-                    return VehicleController.getVehicleStat(Selection_box.Elements_available[Selection_box.Selected_index]);
+                    return VehicleController.getVehicleStat(selectionBox.elementsAvailable[selectionBox.selectedIndex]);
                 }
                 else
                 {
@@ -266,21 +237,5 @@ namespace GreenLight
                 }
             }
         }
-        /*
-         "topSpeedMin": 30,
-        "topSpeedMax": 300,
-        "occurenceMin": 0,
-        "occurenceMax": 100,
-        "horsepwrMin": 40,
-        "horsepwrMax": 1500,
-        "lengthMin": 30,
-        "lengthMax": 120,
-        "weightMin": 1000,
-        "weightMax": 40000,
-        "surfaceMin": 10,
-        "surfaceMax": 200,
-        "cwMin": 0,
-        "cwMax": 10
-        */
     }
 }
