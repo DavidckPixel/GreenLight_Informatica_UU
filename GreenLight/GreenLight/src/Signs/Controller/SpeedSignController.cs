@@ -44,7 +44,7 @@ namespace GreenLight
             this.settingScreen.Controls.Add(FlipLabel);
 
             CurvedButtons FlipButton = new CurvedButtons(new Size(100, 40), new Point(100, 170), 25, "../../src/User Interface Recources/Custom_Button.png", "Flip sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            FlipButton.Click += (object o, EventArgs ea) => {  General_Form.Main.BuildScreen.builder.signController.flipSing(thisSign); };
+            FlipButton.Click += (object o, EventArgs ea) => { this.signController.flipSign(); };
             this.settingScreen.Controls.Add(FlipButton);
 
             label1 = new Label();
@@ -166,8 +166,6 @@ namespace GreenLight
         {
             SpeedSign _temp = new SpeedSign(this);
             this.signController.Signs.Add(_temp);
-
-            onSignClick(_temp);
 
             return _temp;
         }
