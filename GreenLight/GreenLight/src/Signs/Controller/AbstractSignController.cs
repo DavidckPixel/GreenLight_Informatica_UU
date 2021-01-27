@@ -22,7 +22,7 @@ namespace GreenLight
         public MainSignController signController;
         
 
-        public abstract void onSignClick(AbstractSign _sign, AbstractRoad _selectedRoad);
+        public abstract void onSignClick(AbstractSign _sign);
         public abstract AbstractSign newSign();
         public abstract void openMenu();
         public abstract void initSettingScreen();

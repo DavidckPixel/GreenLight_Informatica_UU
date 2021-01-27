@@ -160,7 +160,7 @@ namespace GreenLight
                     }
 
                     Console.WriteLine("SIGN FOUND!");
-                    _sign.Sign.controller.onSignClick(_sign.Sign, _selectedRoad);
+                    selectedSign.Sign.controller.onSignClick(selectedSign.Sign);
                     return;
                 }
                 catch (Exception e)

@@ -109,7 +109,7 @@ namespace GreenLight
 
         }
 
-        public override void onSignClick(AbstractSign _sign
+        public override void onSignClick(AbstractSign _sign)
         {
             selected = (YieldSign)_sign;
             openMenu();
