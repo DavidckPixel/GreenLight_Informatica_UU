@@ -13,12 +13,12 @@ namespace GreenLight
 
         public StopSign(AbstractSignController _controller) : base()
         {
-            controller = _controller;
+            controller = (StopSignController)_controller;
         }
 
         public override void Read(BetterAI _ai)
         {
-            //_ai.needToBrake(x, y);
+            _ai.brakeToZero = true;
         }
 
         public void editLocation(Point _location)

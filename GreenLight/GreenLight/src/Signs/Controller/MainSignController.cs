@@ -28,6 +28,7 @@ namespace GreenLight
         public bool dragMode, _flipped = false;
         public int SignCount = 0;
         private Point MouseClick;
+        public PlacedSign selectedSign;
 
         Form main;
         PictureBox screen;
@@ -124,6 +125,17 @@ namespace GreenLight
             List<AbstractRoad> _roadlist = General_Form.Main.BuildScreen.builder.roadBuilder.roads;
             AbstractRoad _selectedRoad = _roadlist.Find(x => x.hitbox.Contains(mea.Location));
 
+            if(_selectedRoad == null)
+            {
+                return;
+            }
+
+            if(_selectedRoad.roadtype == "Cross")
+            {
+                MessageBox.Show("You are not allowed to place a sign on a Crossroad!");
+                return;
+            }
+
             if (signType == "X")
             {
                 try
@@ -132,18 +144,15 @@ namespace GreenLight
                     {
                         return;
                     }
-                    PlacedSign _sign = _selectedRoad.Signs.Find(x => x.Hitbox.Contains(mea.Location));
-                    if (_sign == null)
+                    selectedSign = _selectedRoad.Signs.Find(x => x.Hitbox.Contains(mea.Location));
+                    if (selectedSign == null)
                     {
-                        _sign = _selectedRoad.Signs.First();
-                        Console.WriteLine(_sign.Hitbox.Topcord);
-                        Console.WriteLine(mea.Location);
                         Console.WriteLine("No sign could be found");
                         return;
                     }
 
                     Console.WriteLine("SIGN FOUND!");
-                    _sign.Sign.controller.onSignClick(_sign.Sign);
+                    selectedSign.Sign.controller.onSignClick(selectedSign.Sign);
                     return;
                 }
                 catch (Exception e)
@@ -190,7 +199,12 @@ namespace GreenLight
                     _sign_image = Image.FromFile("../../src/User Interface Recources/Stop_Sign.png");
                     break;
             }
-            this.selectedRoad.Signs.Add(new PlacedSign(new Point(-100, -100), "", _temp, _sign_image, _selectedRoad, signType, new Point(0, 0), MouseClick, _flipped));
+            this.selectedRoad.Signs.Add(new PlacedSign(new Point(-100, -100), "", _temp, _sign_image, _selectedRoad, signType, new Point(0, 0), MouseClick, true)); //HARD CODE ON TRUE, people from visual signs can fix this if they want;
+            this.selectedSign = this.selectedRoad.Signs.Last();
+
+            this.selectedSign.Sign.controller.onSignClick(this.selectedSign.Sign);
+
+            Console.WriteLine("Created the new sign!");
 
             SignCount++;
             closeDragMode();
@@ -217,14 +231,17 @@ namespace GreenLight
             return null;
         }
 
-        public void flipSing(AbstractSign _temp)
+        public void flipSign()
         {
-            PlacedSign _placed = this.placedSign.Find(x => x.Sign == _temp);
-            if(_placed == null)
+            Console.WriteLine("try flip sign");
+
+            if (this.selectedSign != null)
             {
-                return;
+                Console.WriteLine("flipping sign!");
+                selectedSign.setFlipped();
             }
-            _placed.SignFlip();
+
+            this.screen.Invalidate();
         }
 
 
@@ -274,7 +291,7 @@ namespace GreenLight
             }
 
             Signs.Add(_temp);
-            this.selectedRoad.Signs.Add(new PlacedSign(_tempPoint, "", _temp, _sign_image, _selectedRoad, _signType, Hitboxoffset, Mouseclick, Flipped));
+            this.selectedRoad.Signs.Add(new PlacedSign(_tempPoint, "", _temp, _sign_image, _selectedRoad, _signType, Hitboxoffset, Mouseclick, _flipped));
             SignCount++;
         }
     }

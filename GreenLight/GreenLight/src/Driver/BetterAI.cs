@@ -347,10 +347,13 @@ namespace GreenLight
 
             foreach(PlacedSign _selectedSign in _inHitbox)
             {
-                if (!this.signsOnRoadRead.Contains(_selectedSign))
+                if (_selectedSign.flipped == this.vehicle.currentLane.flipped)
                 {
-                    _selectedSign.Sign.Read(this);
-                    this.signsOnRoadRead.Add(_selectedSign);
+                    if (!this.signsOnRoadRead.Contains(_selectedSign))
+                    {
+                        _selectedSign.Sign.Read(this);
+                        this.signsOnRoadRead.Add(_selectedSign);
+                    }
                 }
             }
         }

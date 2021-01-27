@@ -161,9 +161,13 @@ namespace GreenLight
             if (_lanes == 1)
                 _outerLane = 0;
 
+            Point hitbox = new Point(-100, -100);
+            Point hitboxoff = new Point(-100, -100);
+
             try
             {
-                List<LanePoints> _lanepoints = this.Road.Drivinglanes[this.Road.lanes / 2].points;
+                List<LanePoints> _lanepoints = this.Road.Drivinglanes[_outerLane].points;
+                List<LanePoints> _midLane = this.Road.Drivinglanes[this.Road.lanes / 2].points;
                 float _shortDistance = 2000;
                 Point l = new Point(-100, -100);
                 Point h = new Point(-100, -100);
@@ -178,48 +182,26 @@ namespace GreenLight
                     {
                         _shortDistance = _distance;
                         l = _lanepoints[i].cord;
-                        if (i - 10 >= 0)
+                        hitbox = _midLane[i].cord;
+                        if (i - 10 >= 0) {
+                            hitboxoff = _midLane[i - 10].cord;
                             h = _lanepoints[i - 10].cord;
+                        }
                         if (i - 20 >= 0)
+                        {
                             h = _lanepoints[i - 20].cord;
+                            hitboxoff = _midLane[i - 20].cord;
+                        }
                         else
+                        {
                             h = _lanepoints[i].cord;
+                            hitboxoff = _midLane[i].cord;
+                        }
                     }
                 }
 
                 this.Location = l;
                 this.Hitboxoffset = h;
-
-                Console.WriteLine(flipped);
-
-                Point _temp1 = Road.getPoint1();
-                Point _temp2 = Road.getPoint2();
-
-                if (Road.Type == "Diagonal")
-                {
-
-                    if (Road.slp == 0)
-                    {
-                        if (_temp1.Y == _temp2.Y)
-                            this.Hitbox = new RectHitbox(new Point(Location.X - (Math.Abs(-1 + _direction) * 15), Location.Y - _direction * 20), new Point(Location.X - (Math.Abs(-1 + _direction) * 15), Location.Y + _direction * (20 * _lanes - 5)), new Point(Location.X + 15 + (Math.Abs(1 + _direction) * 15), Location.Y - _direction * 20), new Point(Location.X + 15 + (Math.Abs(1 + _direction) * 15), Location.Y + _direction * (20 * _lanes - 5)), Color.Red);
-                        else //if(_temp1.X == _temp2.X)
-                            this.Hitbox = new RectHitbox(new Point(Location.X - _direction * 20, Location.Y + (15 + Math.Abs(-1 + _direction) * 15)), new Point(Location.X + _direction * (20 * _lanes - 5), Location.Y + (15 + Math.Abs(-1 + _direction) * 15)), new Point(Location.X - _direction * 20, l.Y - (Math.Abs(1 + _direction) * 15)), new Point(Location.X + _direction * (20 * _lanes - 5), l.Y - (Math.Abs(1 + _direction) * 15)), Color.Red);
-
-                    }
-                    else if (Road.slp <= -1 || Road.slp >= 1)
-                    {
-                        this.Hitbox = new RectHitbox(new Point(Location.X - (Math.Abs(-1 + _direction) * 15), Location.Y - _direction * 20), new Point(Location.X - (Math.Abs(-1 + _direction) * 15), Location.Y + _direction * (20 * _lanes - 5)), new Point(Location.X + 15 + (Math.Abs(1 + _direction) * 15), Location.Y - _direction * 20), new Point(Location.X + 15 + (Math.Abs(1 + _direction) * 15), Location.Y + _direction * (20 * _lanes - 5)), Color.Red);
-                    }
-                    else
-                    {
-                        this.Hitbox = new RectHitbox(new Point(Location.X - _direction * 20, Location.Y + (15 + Math.Abs(-1 + _direction) * 15)), new Point(Location.X + _direction * (20 * _lanes - 5), Location.Y + (15 + Math.Abs(-1 + _direction) * 15)), new Point(Location.X - _direction * 20, l.Y - (Math.Abs(1 + _direction) * 15)), new Point(Location.X + _direction * (20 * _lanes - 5), l.Y - (Math.Abs(1 + _direction) * 15)), Color.Red);
-                    }
-                    Console.WriteLine(_shortDistance);
-                }
-                else
-                {
-                    this.Hitbox = new RectHitbox(new Point(Location.X - 15, Location.Y - 15), new Point(Location.X + 15, Location.Y - 15), new Point(Location.X - 15, Location.Y + 15), new Point(Location.X + 15, Location.Y + 15), Color.Red);
-                }
             }
             catch (Exception e)
             {
@@ -230,18 +212,18 @@ namespace GreenLight
             Point[] _points;
             if (!flipped)
             {
-                _points = RoadMath.hitBoxPointsDiagonal(this.Location, this.Hitboxoffset, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(this.Location, this.Hitboxoffset));
+                _points = RoadMath.hitBoxPointsDiagonal(hitbox, hitboxoff, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(this.Location, this.Hitboxoffset));
             }
             else
             {
-                _points = RoadMath.hitBoxPointsDiagonal(this.Hitboxoffset, this.Location, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(this.Hitboxoffset, this.Location));
+                _points = RoadMath.hitBoxPointsDiagonal(hitbox, hitboxoff, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(this.Hitboxoffset, this.Location));
             }
             this.Hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Red);
         }
 
         public void SignFlip()
         {
-            this.Hitbox = new RectHitbox(new Point(Hitboxoffset.X - 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X - 15, Hitboxoffset.Y + 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y + 15), Color.Red);
+            //this.Hitbox = new RectHitbox(new Point(Hitboxoffset.X - 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X - 15, Hitboxoffset.Y + 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y + 15), Color.Red);
         }
 
         public override string ToString()
