@@ -13,19 +13,18 @@ namespace GreenLight
     public abstract class AbstractSign
     {
         public int speed;
-        public bool flipped;
+        public AbstractSign thisSign;
         public AbstractSign()
         {
             ID = General_Form.Main.BuildScreen.builder.signController.SignCount;
+            thisSign = this;
         }
 
         public abstract void Read(BetterAI _ai);
         private int ID { get; }
         public AbstractSignController controller;
 
-        public void setFlipped()
-        {
-            flipped = !flipped;
-        }
+
+        
     }
 }
