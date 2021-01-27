@@ -21,6 +21,8 @@ namespace GreenLight
         public string signType;
         public Speedsign speedSign;
         public bool flipped;
+        public Point[] _points;
+        int dir;
 
         public PlacedSign(Point _location, string _direction, AbstractSign _sign, Image _Sign_image, AbstractRoad _road, string _signType, Point _hitboxoffset, Point _mea, bool _flipped)
         {
@@ -33,10 +35,13 @@ namespace GreenLight
             this.signType = _signType;
             int _dir = (int)Road.Drivinglanes[0].AngleDir;
             this.Hitboxoffset = _hitboxoffset;
-            this.Hitbox = new RectHitbox(new Point(Location.X - 15, Location.Y - 15), new Point(Location.X + 15, Location.Y - 15), new Point(Location.X - 15, Location.Y + 15), new Point(Location.X + 15, Location.Y + 15), Color.Red);
             this.flipped = _flipped;
             this.Mea = _mea;
 
+            dir = (int)Road.Drivinglanes[0].AngleDir;
+            Console.WriteLine("Dir" + dir);
+
+            if  (this.Location == new Point(-100,  -100))
                 setLocation();
         }
         public override void Read(BetterAI _ai)
@@ -45,7 +50,11 @@ namespace GreenLight
         }
         public void draw(Graphics g)
         {
-            int _dir = (int)Road.Drivinglanes[0].AngleDir;
+
+            this.Hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Red);
+
+            int _dir = dir;
+
             int offset = Math.Abs((_dir - 180) - 45) / 45 * 2;
             int X1 = Location.X - ((_dir - 90) / 9) * 2;
             int X2 = Location.X - (20 - (_dir - 180) / 9 * 2 * Math.Abs((_dir - 225) / 45 * 2));
@@ -53,7 +62,7 @@ namespace GreenLight
             int Y2 = Location.Y - (_dir - 180) / 9 * 2;
             int Y3 = Location.Y - (20 - (_dir - 270) / 9 * 2);
 
-            Console.WriteLine("Dir " +  _dir);
+            Console.WriteLine("Dir draw " + _dir);
 
             // g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
             if (Road.Type == "Diagonal")
@@ -129,15 +138,17 @@ namespace GreenLight
                 g.DrawImage(Sign_image, Location.X - 20, Location.Y, 20, 20);
             }
 
-            
+
             this.Hitbox.Draw(g);
 
             //g.FillRectangle(Notsolid, this.Hitbox);
         }
         public void setFlipped()
         {
-            Console.WriteLine("Flipped!");
+            Console.WriteLine("Flipped!" + dir);
             flipped = !flipped;
+            dir = Math.Abs(360 - dir);
+            Console.WriteLine("After Flipped!" + dir);
             setLocation();
         }
 
@@ -146,6 +157,7 @@ namespace GreenLight
             int _outerLane = 0;
             int _direction = 1;
             int _lanes = this.Road.getLanes();
+            Point _hitboxlocation = new Point(-100, -100), _hitboxoffset = new Point(-100, -100);
 
             if (this.flipped)
             {
@@ -161,96 +173,116 @@ namespace GreenLight
             if (_lanes == 1)
                 _outerLane = 0;
 
-            try
+            for (int t = 0; t < 2; t++)
             {
-                List<LanePoints> _lanepoints = this.Road.Drivinglanes[this.Road.lanes / 2].points;
-                float _shortDistance = 2000;
-                Point l = new Point(-100, -100);
-                Point h = new Point(-100, -100);
-                for (int i = 0; i < _lanepoints.Count; i++)
+                int _lane;
+
+                if (t == 0)
                 {
-                    int Xsign = Mea.X - 10;
-                    int Ysign = Mea.Y - 10;
-                    Console.WriteLine("i: " + i);
-                    float _distance = (float)Math.Sqrt((Xsign - _lanepoints[i].cord.X) * (Xsign - _lanepoints[i].cord.X) + (Ysign - _lanepoints[i].cord.Y) * (Ysign - _lanepoints[i].cord.Y));
-
-                    if (_shortDistance > _distance)
-                    {
-                        _shortDistance = _distance;
-                        l = _lanepoints[i].cord;
-                        if (i - 10 >= 0)
-                            h = _lanepoints[i - 10].cord;
-                        if (i - 20 >= 0)
-                            h = _lanepoints[i - 20].cord;
-                        else
-                            h = _lanepoints[i].cord;
-                    }
-                }
-
-                this.Location = l;
-                this.Hitboxoffset = h;
-
-                Console.WriteLine(flipped);
-
-                Point _temp1 = Road.getPoint1();
-                Point _temp2 = Road.getPoint2();
-
-                if (Road.Type == "Diagonal")
-                {
-
-                    if (Road.slp == 0)
-                    {
-                        if (_temp1.Y == _temp2.Y)
-                            this.Hitbox = new RectHitbox(new Point(Location.X - (Math.Abs(-1 + _direction) * 15), Location.Y - _direction * 20), new Point(Location.X - (Math.Abs(-1 + _direction) * 15), Location.Y + _direction * (20 * _lanes - 5)), new Point(Location.X + 15 + (Math.Abs(1 + _direction) * 15), Location.Y - _direction * 20), new Point(Location.X + 15 + (Math.Abs(1 + _direction) * 15), Location.Y + _direction * (20 * _lanes - 5)), Color.Red);
-                        else //if(_temp1.X == _temp2.X)
-                            this.Hitbox = new RectHitbox(new Point(Location.X - _direction * 20, Location.Y + (15 + Math.Abs(-1 + _direction) * 15)), new Point(Location.X + _direction * (20 * _lanes - 5), Location.Y + (15 + Math.Abs(-1 + _direction) * 15)), new Point(Location.X - _direction * 20, l.Y - (Math.Abs(1 + _direction) * 15)), new Point(Location.X + _direction * (20 * _lanes - 5), l.Y - (Math.Abs(1 + _direction) * 15)), Color.Red);
-
-                    }
-                    else if (Road.slp <= -1 || Road.slp >= 1)
-                    {
-                        this.Hitbox = new RectHitbox(new Point(Location.X - (Math.Abs(-1 + _direction) * 15), Location.Y - _direction * 20), new Point(Location.X - (Math.Abs(-1 + _direction) * 15), Location.Y + _direction * (20 * _lanes - 5)), new Point(Location.X + 15 + (Math.Abs(1 + _direction) * 15), Location.Y - _direction * 20), new Point(Location.X + 15 + (Math.Abs(1 + _direction) * 15), Location.Y + _direction * (20 * _lanes - 5)), Color.Red);
-                    }
-                    else
-                    {
-                        this.Hitbox = new RectHitbox(new Point(Location.X - _direction * 20, Location.Y + (15 + Math.Abs(-1 + _direction) * 15)), new Point(Location.X + _direction * (20 * _lanes - 5), Location.Y + (15 + Math.Abs(-1 + _direction) * 15)), new Point(Location.X - _direction * 20, l.Y - (Math.Abs(1 + _direction) * 15)), new Point(Location.X + _direction * (20 * _lanes - 5), l.Y - (Math.Abs(1 + _direction) * 15)), Color.Red);
-                    }
-                    Console.WriteLine(_shortDistance);
+                    _lane = _outerLane;
                 }
                 else
                 {
-                    this.Hitbox = new RectHitbox(new Point(Location.X - 15, Location.Y - 15), new Point(Location.X + 15, Location.Y - 15), new Point(Location.X - 15, Location.Y + 15), new Point(Location.X + 15, Location.Y + 15), Color.Red);
+                    _lane = this.Road.lanes / 2;
+                }
+
+                try
+                {
+                    List<LanePoints> _lanepoints = this.Road.Drivinglanes[_lane].points;
+                    float _shortDistance = 2000;
+                    Point l = new Point(-100, -100);
+                    Point h = new Point(-100, -100);
+                    for (int i = 0; i < _lanepoints.Count; i++)
+                    {
+                        int Xsign = Mea.X - 10;
+                        int Ysign = Mea.Y - 10;
+                        float _distance = (float)Math.Sqrt((Xsign - _lanepoints[i].cord.X) * (Xsign - _lanepoints[i].cord.X) + (Ysign - _lanepoints[i].cord.Y) * (Ysign - _lanepoints[i].cord.Y));
+
+                        if (_shortDistance > _distance)
+                        {
+                            _shortDistance = _distance;
+                            l = _lanepoints[i].cord;
+                            if (i - 10 >= 0)
+                                h = _lanepoints[i - 10].cord;
+                            if (i - 20 >= 0)
+                                h = _lanepoints[i - 20].cord;
+                            else
+                                h = _lanepoints[i].cord;
+                        }
+                    }
+
+                    if (t == 0)
+                    {
+
+                        this.Location = l;
+                        this.Hitboxoffset = h;
+                    }
+                    else
+                    {
+
+                        _hitboxlocation = l;
+                        _hitboxoffset = h;
+                    }
+                }
+                catch (Exception e)
+                {
+
                 }
             }
-            catch (Exception e)
+
+            Console.WriteLine(flipped);
+
+            Point _temp1 = Road.getPoint1();
+            Point _temp2 = Road.getPoint2();
+
+            /*
+            if (Road.Type == "Diagonal")
             {
 
-            }
+                if (Road.slp == 0)
+                {
+                    if (_temp1.Y == _temp2.Y)
+                        this.Hitbox = new RectHitbox(new Point(Location.X - (Math.Abs(-1 + _direction) * 15), Location.Y - _direction * 20), new Point(Location.X - (Math.Abs(-1 + _direction) * 15), Location.Y + _direction * (20 * _lanes - 5)), new Point(Location.X + 15 + (Math.Abs(1 + _direction) * 15), Location.Y - _direction * 20), new Point(Location.X + 15 + (Math.Abs(1 + _direction) * 15), Location.Y + _direction * (20 * _lanes - 5)), Color.Red);
+                    else //if(_temp1.X == _temp2.X)
+                        this.Hitbox = new RectHitbox(new Point(Location.X - _direction * 20, Location.Y + (15 + Math.Abs(-1 + _direction) * 15)), new Point(Location.X + _direction * (20 * _lanes - 5), Location.Y + (15 + Math.Abs(-1 + _direction) * 15)), new Point(Location.X - _direction * 20, l.Y - (Math.Abs(1 + _direction) * 15)), new Point(Location.X + _direction * (20 * _lanes - 5), l.Y - (Math.Abs(1 + _direction) * 15)), Color.Red);
 
-
-            Point[] _points;
-            if (!flipped)
-            {
-                _points = RoadMath.hitBoxPointsDiagonal(this.Location, this.Hitboxoffset, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(this.Location, this.Hitboxoffset));
+                }
+                else if (Road.slp <= -1 || Road.slp >= 1)
+                {
+                    this.Hitbox = new RectHitbox(new Point(Location.X - (Math.Abs(-1 + _direction) * 15), Location.Y - _direction * 20), new Point(Location.X - (Math.Abs(-1 + _direction) * 15), Location.Y + _direction * (20 * _lanes - 5)), new Point(Location.X + 15 + (Math.Abs(1 + _direction) * 15), Location.Y - _direction * 20), new Point(Location.X + 15 + (Math.Abs(1 + _direction) * 15), Location.Y + _direction * (20 * _lanes - 5)), Color.Red);
+                }
+                else
+                {
+                    this.Hitbox = new RectHitbox(new Point(Location.X - _direction * 20, Location.Y + (15 + Math.Abs(-1 + _direction) * 15)), new Point(Location.X + _direction * (20 * _lanes - 5), Location.Y + (15 + Math.Abs(-1 + _direction) * 15)), new Point(Location.X - _direction * 20, l.Y - (Math.Abs(1 + _direction) * 15)), new Point(Location.X + _direction * (20 * _lanes - 5), l.Y - (Math.Abs(1 + _direction) * 15)), Color.Red);
+                }
             }
             else
             {
-                _points = RoadMath.hitBoxPointsDiagonal(this.Hitboxoffset, this.Location, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(this.Hitboxoffset, this.Location));
+                this.Hitbox = new RectHitbox(new Point(Location.X - 15, Location.Y - 15), new Point(Location.X + 15, Location.Y - 15), new Point(Location.X - 15, Location.Y + 15), new Point(Location.X + 15, Location.Y + 15), Color.Red);
+            } */
+
+
+
+            if (!flipped)
+            {
+                _points = RoadMath.hitBoxPointsDiagonal(_hitboxlocation, _hitboxoffset, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxlocation, _hitboxoffset));
+            }
+            else
+            {
+                _points = RoadMath.hitBoxPointsDiagonal(_hitboxoffset, _hitboxlocation, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxoffset, _hitboxlocation));
             }
             this.Hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Red);
         }
 
-        public void SignFlip()
-        {
-            this.Hitbox = new RectHitbox(new Point(Hitboxoffset.X - 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X - 15, Hitboxoffset.Y + 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y + 15), Color.Red);
-        }
 
         public override string ToString()
         {
             string signString = "Sign" + " " + this.Location.X.ToString() + " " + this.Location.Y.ToString() + " " + this.signType
-                + " " +  Hitboxoffset.X.ToString() + " " + Hitboxoffset.Y.ToString() + " " + this.Mea.X.ToString() + " " + this.Mea.Y.ToString() + " " + this.flipped.ToString();
+                + " " + Hitboxoffset.X.ToString() + " " + Hitboxoffset.Y.ToString() + " " + this.Mea.X.ToString() + " " + this.Mea.Y.ToString() + " " + this.flipped.ToString() 
+                + " " + this._points[0].X.ToString() + " " + this._points[0].Y.ToString() + " " + this._points[1].X.ToString() + " " + this._points[1].Y.ToString() + " " + this._points[2].X.ToString() + " " + this._points[2].Y.ToString() + " " + this._points[3].X.ToString() + " " + this._points[3].Y.ToString();
             if (this.signType == "speedSign")
             {
-                signString += " " + Sign.speed.ToString(); 
+                signString += " " + Sign.speed.ToString();
             }
             return signString;
         }
