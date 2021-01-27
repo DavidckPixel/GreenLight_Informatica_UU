@@ -148,6 +148,13 @@ namespace GreenLight
             {
                 _road.Draw(g);
             }
+            foreach (List<CrossArrow> _list in builder.roadBuilder.AllCrossArrows)
+            {
+                foreach(CrossArrow ca in _list)
+                {
+                    g.DrawImage(ca.bitmap, ca.Location);
+                }
+            }
         }  
     
         public bool ToggleHitbox()

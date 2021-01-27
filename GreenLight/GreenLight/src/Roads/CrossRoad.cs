@@ -18,8 +18,8 @@ namespace GreenLight
         public ConnectionPoint selectedPoint;
         public double Scale;
         public int Extra;
-        
 
+        public List<CrossArrow> CrossRoadArrows = new List<CrossArrow>();
         public CrossRoadSide[] sides = new CrossRoadSide[4];
 
         //public RectHitbox[] sideHitboxes = new RectHitbox[4];
@@ -47,9 +47,10 @@ namespace GreenLight
 
         public void CreateArrowImages()
         {
+            
             foreach (ConnectionPoint _point in this.connectPoints) //MOVE TO A MORE SENSICAL PLACE
             {
-                Bitmap _combined = new Bitmap(20, 20);
+                Bitmap _combined = new Bitmap(25, 25);
 
                 bool[] roads = new bool[4] { false, false, false, false };
                 string[] dir = new string[4] { "Top", "Right", "Bottom", "Left" };
@@ -80,15 +81,15 @@ namespace GreenLight
                 {
                     if (roads[3])
                     {
-                        g.DrawImage(new Bitmap("../../Images/Left.png"), Point.Empty);
+                        g.DrawImage(new Bitmap("../../Images/Left.png"), _point.transLocation);
                     }
                     if (roads[2])
                     {
-                        g.DrawImage(new Bitmap("../../Images/Up.png"), Point.Empty);
+                        g.DrawImage(new Bitmap("../../Images/Up.png"), _point.transLocation);
                     }
                     if (roads[1])
                     {
-                        g.DrawImage(new Bitmap("../../Images/Right.png"), Point.Empty);
+                        g.DrawImage(new Bitmap("../../Images/Right.png"), _point.transLocation);
                     }
                     if (_point.end)
                     {
@@ -169,7 +170,7 @@ namespace GreenLight
 
         public override void Draw(Graphics g)
         {
-            Brush _b = new SolidBrush(Color.FromArgb(100, 100, 100));
+            Brush _b = new SolidBrush(Color.FromArgb(21, 21, 21));
             
             double roadWidth = (double)this.lanes * this.laneWidth;
 
@@ -181,10 +182,26 @@ namespace GreenLight
             DrawLine(g);
             this.hitbox.Draw(g);
 
-            foreach(ConnectionPoint _point in this.connectPoints)
+            foreach(List<CrossArrow> _list in General_Form.Main.BuildScreen.builder.roadBuilder.AllCrossArrows)
             {
-                g.DrawImage(_point.arrowImg, new Point(_point.transLocation.X - 10, _point.transLocation.Y - 10));
+                if (_list[0].crossroad == this)
+                {
+                    General_Form.Main.BuildScreen.builder.roadBuilder.AllCrossArrows.Remove(_list);
+                    break;
+                }
             }
+
+            CrossRoadArrows = new List<CrossArrow>();
+            foreach (ConnectionPoint _point in this.connectPoints)
+            {
+                if (_point.Active)
+                {
+                    CrossArrow _crossArrow = new CrossArrow(new Point(_point.transLocation.X - 10, _point.transLocation.Y - 10), _point.arrowImg, this);
+
+                    CrossRoadArrows.Add(_crossArrow);
+                }
+            }
+            General_Form.Main.BuildScreen.builder.roadBuilder.AllCrossArrows.Add(CrossRoadArrows);
 
             /*
             for(int x = 0; x < 4; x++)
@@ -204,6 +221,10 @@ namespace GreenLight
         public void DrawSides(Graphics g, string _side, Point _topleft, Size _size, Brush _b)
         {
             List<ConnectionPoint> _pointOnSide = this.connectPoints.FindAll(x => x.Side == _side);
+            Pen _white = new Pen(Color.White, 5);
+            Pen _yellow = new Pen(Color.FromArgb(248, 185, 0), 3);
+            _yellow.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+
             foreach (ConnectionPoint p in _pointOnSide)
             {
                 if(p.Active)
@@ -211,21 +232,51 @@ namespace GreenLight
                     if (p.Side == "Top" || p.Side == "Bottom")
                     {
                         g.FillRectangle(_b, new Rectangle(new Point(_topleft.X + laneWidth * (p.Place - 1), _topleft.Y), new Size(_size.Width / _pointOnSide.Count, _size.Height)));
-                        /*if(p.Place == 1 || !_pointOnSide[p.Place - 2].Active)
-                        {
+                        if (p.Place == 1 || !_pointOnSide[p.Place - 2].Active)
+                            g.DrawLine(_white, new Point(_topleft.X + laneWidth * (p.Place - 1), _topleft.Y), new Point(_topleft.X + laneWidth * (p.Place - 1), _topleft.Y + _size.Height));
+                        else
+                            g.DrawLine(_yellow, new Point(_topleft.X + laneWidth * (p.Place - 1), _topleft.Y), new Point(_topleft.X + laneWidth * (p.Place - 1), _topleft.Y + _size.Height));
 
-                        }*/
+                        if(p == _pointOnSide.Last() || !_pointOnSide[p.Place].Active)
+                            g.DrawLine(_white, new Point(_topleft.X + laneWidth * p.Place, _topleft.Y), new Point(_topleft.X + laneWidth * p.Place, _topleft.Y + _size.Height));
+                        else
+                            g.DrawLine(_yellow, new Point(_topleft.X + laneWidth * p.Place, _topleft.Y), new Point(_topleft.X + laneWidth * p.Place, _topleft.Y + _size.Height));
                     }
                     else
                     {
                         g.FillRectangle(_b, new Rectangle(new Point(_topleft.X, _topleft.Y + laneWidth * (p.Place - 1)), new Size(_size.Width, _size.Height / _pointOnSide.Count)));
+                        if (p.Place == 1 || !_pointOnSide[p.Place - 2].Active)
+                            g.DrawLine(_white, new Point(_topleft.X, _topleft.Y + laneWidth * (p.Place - 1)), new Point(_topleft.X + _size.Width, _topleft.Y + laneWidth * (p.Place - 1)));
+                        else
+                            g.DrawLine(_yellow, new Point(_topleft.X, _topleft.Y + laneWidth * (p.Place - 1)), new Point(_topleft.X + _size.Width, _topleft.Y + laneWidth * (p.Place - 1)));
+
+                        if (p == _pointOnSide.Last() || !_pointOnSide[p.Place].Active)
+                            g.DrawLine(_white, new Point(_topleft.X, _topleft.Y + laneWidth * p.Place), new Point(_topleft.X + _size.Width, _topleft.Y + laneWidth * p.Place));
+                        else
+                            g.DrawLine(_yellow, new Point(_topleft.X, _topleft.Y + laneWidth * p.Place), new Point(_topleft.X + _size.Width, _topleft.Y + laneWidth * p.Place));
                     }
-
-
+                }
+                else
+                {
+                    if (p.Side == "Top")
+                    {
+                        g.DrawLine(_white, new Point(_topleft.X + laneWidth * (p.Place - 1), _topleft.Y + _size.Height), new Point(_topleft.X + laneWidth * p.Place, _topleft.Y + _size.Height));
+                    }
+                    else if(p.Side == "Bottom")
+                    {
+                        g.DrawLine(_white, new Point(_topleft.X + laneWidth * (p.Place - 1), _topleft.Y), new Point(_topleft.X + laneWidth * p.Place, _topleft.Y));
+                    }
+                    else if(p.Side == "Right")
+                    {
+                        g.DrawLine(_white, new Point(_topleft.X, _topleft.Y + laneWidth * (p.Place - 1)), new Point(_topleft.X, _topleft.Y + laneWidth * p.Place));
+                    }
+                    else
+                    {
+                        g.DrawLine(_white, new Point(_topleft.X + _size.Width, _topleft.Y + laneWidth * (p.Place - 1)), new Point(_topleft.X + _size.Width, _topleft.Y + laneWidth * p.Place));
+                    }
                 }
             }
-
-
         }
+
     }
 }

@@ -400,7 +400,8 @@ namespace GreenLight
             List<ConnectionPoint> _connectedLanes = new List<ConnectionPoint>();
             List<DrivingLane> _connectedDrivingLanes = new List<DrivingLane>();
             int _isEven = 0;
-            AbstractRoad _Crossroad, _road;
+            CrossRoad _Crossroad;
+            AbstractRoad _road;
             Point _Crosspoint, _roadPoint;
 
             if (roadOne.Type == "Diagonal" && temp1.Y == temp2.Y && roadOne.slp == 0)
@@ -462,14 +463,14 @@ namespace GreenLight
 
             if (roadOne.Type == "Cross")
             {
-                _Crossroad = roadOne;
+                _Crossroad = (CrossRoad)roadOne;
                 _Crosspoint = point1;
                 _road = roadTwo;
                 _roadPoint = point2;
             }
             else
             {
-                _Crossroad = roadTwo;
+                _Crossroad = (CrossRoad)roadTwo;
                 _Crosspoint = point2;
                 _road = roadOne;
                 _roadPoint = point1;
@@ -515,11 +516,15 @@ namespace GreenLight
                 _side = _Crossroad.lanes * 3;
             }
 
+            bool _checkRight = true;
+            bool _checkLeft = true;
             for (int t = 0; t < _Crossroad.lanes && _buildroad; t++)
             {
+                if (!_checkLeft && !_checkRight)
+                    break;
                 for (int x = 0; x <= 1; x++)
                 {
-                    if (t == 0 && x == 1)
+                    if ((t == 0 && x == 1) || (x == 0 && !_checkLeft) || (x == 1 && !_checkRight))
                         break;
 
                     if (x == 0)
@@ -534,28 +539,28 @@ namespace GreenLight
                     {
                         if (_Crossroad.connectPoints[_place - 1 + _side].Active)
                         {
-                            foreach(ConnectionPoint c in _Crossroad.translatedconnectPoints)
+                            foreach (ConnectionPoint c in _Crossroad.translatedconnectPoints)
                             {
                                 bool _found = false;
                                 if (c.Side == _Crossroad.connectPoints[_place - 1 + _side].Side && c.Place == _Crossroad.connectPoints[_place - 1 + _side].Place)
                                 {
                                     int _counter = 0;
-                                    foreach  (DrivingLane d in _road.Drivinglanes)
-                                    { 
+                                    foreach (DrivingLane d in _road.Drivinglanes)
+                                    {
                                         if (_cp.Side == "Top" || _cp.Side == "Bottom")
                                         {
                                             if (Math.Abs(d.points.First().cord.Y - _roadPoint.Y) < Math.Abs(d.points.Last().cord.Y - _roadPoint.Y))
                                             {
                                                 if (c.Location.X == d.points.First().cord.X)
                                                 {
-                                                    foreach  (CrossLane crosslane in _Crossroad.Drivinglanes)
+                                                    foreach (CrossLane crosslane in _Crossroad.Drivinglanes)
                                                     {
-                                                        if  (crosslane.link.begin == _Crossroad.connectPoints[_place - 1 + _side])
+                                                        if (crosslane.link.begin == _Crossroad.connectPoints[_place - 1 + _side])
                                                         {
                                                             _flipLanes[_counter] = true;
                                                             d.beginConnectedTo.Add(crosslane);
                                                         }
-                                                        else if  (crosslane.link.end == _Crossroad.connectPoints[_place - 1 + _side])
+                                                        else if (crosslane.link.end == _Crossroad.connectPoints[_place - 1 + _side])
                                                         {
                                                             _flipLanes[_counter] = false;
                                                             d.beginConnectedTo.Add(crosslane);
@@ -642,7 +647,7 @@ namespace GreenLight
                                         }
                                         _counter++;
                                     }
-                                    
+
                                 }
                                 else
                                     _found = true;
@@ -654,6 +659,10 @@ namespace GreenLight
                                 }
                             }
                         }
+                        else if (x == 1)
+                            _checkRight = false;
+                        else if (x == 0)
+                            _checkLeft = false;
                     }
                 }
             }
@@ -673,7 +682,7 @@ namespace GreenLight
                 }
 
                 controller.roads.Remove(_road);
-
+                int _BottomorRight = 0;
                 if (_cp.Side == "Top" || _cp.Side == "Bottom")
                 {
                     int _middleX = 0;
@@ -688,11 +697,14 @@ namespace GreenLight
                     _middleX = (_middleX / _connectedLanes.Count) + _isEven;
                     Console.WriteLine(_middleX + " " + _connectedLanes.Count);
 
+                    if (_cp.Side == "Bottom")
+                        _BottomorRight = 1;
+
                     if (_roadPoint == _road.point1)
                     {
                         if (_road.Type == "Diagonal")
                         {
-                            controller.BuildDiagonalRoad(new Point(_middleX, _Crosspoint.Y), _road.point2, _connectedLanes.Count, true, _road.endconnection, _Crossroad, _road.endConnectedTo);
+                            controller.BuildDiagonalRoad(new Point(_middleX, _Crosspoint.Y - _BottomorRight), _road.point2, _connectedLanes.Count, true, _road.endconnection, _Crossroad, _road.endConnectedTo);
                         }
                         else
                         {
@@ -700,20 +712,20 @@ namespace GreenLight
                             {
                                 _middleX += 20;
                             }
-                            controller.BuildCurvedRoad(new Point(_middleX, _Crosspoint.Y), _road.point2, _connectedLanes.Count, _road.Type, true, _road.endconnection, _Crossroad, _road.endConnectedTo);
+                            controller.BuildCurvedRoad(new Point(_middleX, _Crosspoint.Y - _BottomorRight), _road.point2, _connectedLanes.Count, _road.Type, true, _road.endconnection, _Crossroad, _road.endConnectedTo);
                         }
                     }
                     else
                     {
                         if (_road.Type == "Diagonal")
-                            controller.BuildDiagonalRoad(_road.point1, new Point(_middleX, _Crosspoint.Y), _connectedLanes.Count, _road.beginconnection, true, _road.beginConnectedTo, _Crossroad);
+                            controller.BuildDiagonalRoad(_road.point1, new Point(_middleX, _Crosspoint.Y - _BottomorRight), _connectedLanes.Count, _road.beginconnection, true, _road.beginConnectedTo, _Crossroad);
                         else
                         {
                             if (_road.Dir == "NE" || _road.Dir == "SW")
                                 {
                                 _middleX += 20;
                                 }
-                            controller.BuildCurvedRoad(_road.point1, new Point(_middleX, _Crosspoint.Y), _connectedLanes.Count, _road.Type, _road.beginconnection, true, _road.beginConnectedTo, _Crossroad);
+                            controller.BuildCurvedRoad(_road.point1, new Point(_middleX, _Crosspoint.Y - _BottomorRight), _connectedLanes.Count, _road.Type, _road.beginconnection, true, _road.beginConnectedTo, _Crossroad);
                         }
                     }
                 }
@@ -731,19 +743,22 @@ namespace GreenLight
                     }
                     _middleY = _middleY / _connectedLanes.Count + _isEven;
 
+                    if (_cp.Side == "Right")
+                        _BottomorRight = 1;
+
                     if (_roadPoint == _road.point1)
                     {
                         if (_road.Type == "Diagonal")
-                            controller.BuildDiagonalRoad(new Point(_Crosspoint.X, _middleY), _road.point2, _connectedLanes.Count, true, _road.endconnection, _Crossroad, _road.endConnectedTo);
+                            controller.BuildDiagonalRoad(new Point(_Crosspoint.X - _BottomorRight, _middleY), _road.point2, _connectedLanes.Count, true, _road.endconnection, _Crossroad, _road.endConnectedTo);
                         else
-                            controller.BuildCurvedRoad(new Point(_Crosspoint.X, _middleY), _road.point2, _connectedLanes.Count, _road.Type, true, _road.endconnection, _Crossroad, _road.endConnectedTo);
+                            controller.BuildCurvedRoad(new Point(_Crosspoint.X - _BottomorRight, _middleY), _road.point2, _connectedLanes.Count, _road.Type, true, _road.endconnection, _Crossroad, _road.endConnectedTo);
                     }
                     else
                     {
                         if (_road.Type == "Diagonal")
-                            controller.BuildDiagonalRoad(_road.point1, new Point(_Crosspoint.X, _middleY), _connectedLanes.Count, _road.beginconnection, true, _road.beginConnectedTo, _Crossroad);
+                            controller.BuildDiagonalRoad(_road.point1, new Point(_Crosspoint.X - _BottomorRight, _middleY), _connectedLanes.Count, _road.beginconnection, true, _road.beginConnectedTo, _Crossroad);
                         else
-                            controller.BuildCurvedRoad(_road.point1, new Point(_Crosspoint.X, _middleY), _connectedLanes.Count, _road.Type, _road.beginconnection, true, _road.beginConnectedTo, _Crossroad);
+                            controller.BuildCurvedRoad(_road.point1, new Point(_Crosspoint.X - _BottomorRight, _middleY), _connectedLanes.Count, _road.Type, _road.beginconnection, true, _road.beginConnectedTo, _Crossroad);
                     }
                 }
 
@@ -781,7 +796,7 @@ namespace GreenLight
                             }
                         }
                     }
-                } 
+                }
             }
 
             else

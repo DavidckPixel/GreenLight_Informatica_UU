@@ -112,6 +112,7 @@
     <Compile Include="src\Driver\RoadMath.cs" />
     <Compile Include="src\Driver\VehicleProfile.cs" />
     <Compile Include="src\Grid\Grid.cs" />
+    <Compile Include="src\Roads\CrossArrow.cs" />
     <Compile Include="src\Roads\CrossConnection.cs" />
     <Compile Include="src\OriginPoints\OriginPointController.cs" />
     <Compile Include="src\OriginPoints\OriginPoints.cs" />
