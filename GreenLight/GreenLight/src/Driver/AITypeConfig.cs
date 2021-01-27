@@ -18,7 +18,7 @@ namespace GreenLight
             ReadJson();
         }
 
-        static private void ReadJson()
+        static public void ReadJson()
         {
             try
             {
