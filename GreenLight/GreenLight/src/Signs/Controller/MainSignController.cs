@@ -18,7 +18,7 @@ namespace GreenLight
     {
 
         public List<AbstractSign> Signs = new List<AbstractSign>();
-        public List<PlacedSign> placedSign = new List<PlacedSign>();
+        public TrafficLightController trafficLight;
         public SpeedSignController speedSign;
         public StopSignController stopSign;
         public YieldSignController yieldSignC;
@@ -48,8 +48,8 @@ namespace GreenLight
             this.stopSign = new StopSignController(_main, this);
             this.stopSign.initSettingScreen();
 
-            this.stopSign = new StopSignController(_main, this);
-            this.stopSign.initSettingScreen();
+            this.trafficLight = new TrafficLightController(_main, this);
+            this.trafficLight.initSettingScreen();
 
             this.prioritySignC = new PrioritySignController(_main, this);
             this.yieldSignC = new YieldSignController(_main, this);
@@ -152,16 +152,18 @@ namespace GreenLight
                     {
                         return;
                     }
-                    selectedSign = _selectedRoad.Signs.Find(x => x.Hitbox.Contains(mea.Location));
-                    if (selectedSign == null)
+
+                    PlacedSign _sign = _selectedRoad.Signs.Find(x => x.Hitbox.Contains(mea.Location));
+
+                    if (_sign == null)
                     {
                         Console.WriteLine("No sign could be found");
                         return;
                     }
 
                     Console.WriteLine("SIGN FOUND!");
-                    selectedSign.Sign.controller.onSignClick(selectedSign.Sign);
-                    return;
+                    AbstractSign _Sign = _sign.Sign;
+                    _sign.Sign.controller.onSignClick(_Sign, _selectedRoad);
                 }
                 catch (Exception e)
                 {
@@ -194,6 +196,9 @@ namespace GreenLight
             {
                 case "X":
                     break;
+                case "trafficLight":
+                    _sign_image = Image.FromFile("../../src/User Interface Recources/Traffic_light.png");
+                    break;
                 case "speedSign":
                     _sign_image = Image.FromFile("../../src/User Interface Recources/Empty_Speed_Sign.png");
                     break;
@@ -207,7 +212,7 @@ namespace GreenLight
                     _sign_image = Image.FromFile("../../src/User Interface Recources/Stop_Sign.png");
                     break;
             }
-             this.selectedSign = this.selectedRoad.Signs.Last();
+             //this.selectedSign = this.selectedRoad.Signs.Last();
 
             PlacedSign _placed = new PlacedSign(new Point(-100, -100), "", _temp, _sign_image, _selectedRoad, signType, new Point(0, 0), MouseClick, _flipped);
             this.selectedRoad.Signs.Add(_placed);
@@ -221,6 +226,8 @@ namespace GreenLight
             {
                 case "X":
                     break;
+                case "trafficLight":
+                    return trafficLight.newSign();
                 case "speedSign":
                     return speedSign.newSign();
                 case "yieldSign":
@@ -236,16 +243,20 @@ namespace GreenLight
             return null;
         }
 
-        public void flipSign()
+        public void flipSign(AbstractSign _temp, AbstractRoad _selectedRoad)
         {
-            Console.WriteLine("try flip sign");
-
-            if (this.selectedSign != null)
+            Console.WriteLine("try to flip");
+            if (_selectedRoad == null)
             {
-                Console.WriteLine("flipping sign!");
-                selectedSign.setFlipped();
+                _selectedRoad = selectedRoad;
             }
 
+            PlacedSign _placed = _selectedRoad.Signs.Find(x => x.Sign == _temp);
+            if (_placed == null)
+            {
+                return;
+            }
+            _placed.setFlipped();
             this.screen.Invalidate();
         }
 
@@ -283,6 +294,10 @@ namespace GreenLight
             {
                 case "X":
                     break;
+                case "trafficLight":
+                    _sign_image = Image.FromFile("../../src/User Interface Recources/Traffic_light.png");
+                    _temp = new TrafficLight(trafficLight);
+                    break;
                 case "speedSign":
                     _sign_image = Image.FromFile("../../src/User Interface Recources/Speed_Sign.png");
                     _temp = new SpeedSign(speedSign);
@@ -307,7 +322,6 @@ namespace GreenLight
             PlacedSign _placed = new PlacedSign(_tempPoint, "", _temp, _sign_image, _selectedRoad, _signType, Hitboxoffset, Mouseclick, Flipped);
             _placed._points = p;
             this.selectedRoad.Signs.Add(_placed);
-            this.placedSign.Add(_placed);
             SignCount++;
         }
     }

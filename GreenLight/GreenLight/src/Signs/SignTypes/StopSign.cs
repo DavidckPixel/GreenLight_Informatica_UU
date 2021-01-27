@@ -31,6 +31,4 @@ namespace GreenLight
             return new Point(x, y);
         }
     }
-
-    
 }

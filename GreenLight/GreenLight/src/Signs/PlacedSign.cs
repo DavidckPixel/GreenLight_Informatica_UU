@@ -78,33 +78,83 @@ namespace GreenLight
                 }
                 if (_dir >= 0 && _dir <= 90)
                 {
-                    if (signType == "speedSign")
+                    if (signType == "trafficLight")
                     {
-                        this.speedSign.Location = new Point(Location.X, Location.Y);
-                        this.speedSign.speed = Sign.speed;
-                        this.Sign_image = speedSign.speedImage();
+                        g.DrawImage(Sign_image, Location.X, Location.Y, 25, 25);
                     }
-                    g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
+                    else
+                    {
+                        if (signType == "speedSign")
+                        {
+                            this.speedSign.Location = new Point(Location.X, Location.Y);
+                            this.speedSign.speed = Sign.speed;
+                            this.Sign_image = speedSign.speedImage();
+                        }
+                        g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
+                    }
+
                 }
                 else if (_dir > 90 && _dir < 180)
                 {
-                    if (signType == "speedSign")
+                    if (signType == "trafficLight")
                     {
-                        this.speedSign.Location = new Point(X1, Y1);
-                        this.speedSign.speed = Sign.speed;
-                        this.Sign_image = speedSign.speedImage();
+                        g.DrawImage(Sign_image, X1, Y1, 25, 25);
                     }
-                    g.DrawImage(Sign_image, X1, Y1, 20, 20);
+                    else
+                    {
+                        if (signType == "speedSign")
+                        {
+                            this.speedSign.Location = new Point(X1, Y1);
+                            this.speedSign.speed = Sign.speed;
+                            this.Sign_image = speedSign.speedImage();
+                        }
+                        g.DrawImage(Sign_image, X1, Y1, 20, 20);
+
+                    }
                 }
                 else if (_dir >= 180 && _dir < 270)
                 {
-                    if (signType == "speedSign")
+                    if (signType == "trafficLight")
                     {
-                        this.speedSign.Location = new Point(X2, Y2);
-                        this.speedSign.speed = Sign.speed;
-                        this.Sign_image = speedSign.speedImage();
+                        g.DrawImage(Sign_image, X2, Y2, 25, 25);
                     }
-                    g.DrawImage(Sign_image, X2, Y2, 20, 20);
+                    else
+                    {
+                        if (signType == "speedSign")
+                        {
+                            this.speedSign.Location = new Point(X2, Y2);
+                            this.speedSign.speed = Sign.speed;
+                            this.Sign_image = speedSign.speedImage();
+                        }
+                        g.DrawImage(Sign_image, X2, Y2, 20, 20);
+                    }
+
+
+                }
+                else
+                {
+                    if (signType == "trafficLight")
+                    {
+                        g.DrawImage(Sign_image, Location.X, Y3, 25, 25);
+                    }
+                    else
+                    {
+                        if (signType == "speedSign")
+                        {
+                            this.speedSign.Location = new Point(Location.X, Y3);
+                            this.speedSign.speed = Sign.speed;
+                            this.Sign_image = speedSign.speedImage();
+                        }
+                        g.DrawImage(Sign_image, Location.X, Y3, 20, 20);
+                    }
+
+                }
+            }
+            else if (Road.Type == "Curved")
+            {
+                if (signType == "trafficLight")
+                {
+                    g.DrawImage(Sign_image, Location.X, Location.Y, 25, 25);
                 }
                 else
                 {
@@ -114,33 +164,29 @@ namespace GreenLight
                         this.speedSign.speed = Sign.speed;
                         this.Sign_image = speedSign.speedImage();
                     }
-                    g.DrawImage(Sign_image, Location.X, Y3, 20, 20);
+                    g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
                 }
-            }
-            else if (Road.Type == "Curved")
-            {
-                if (signType == "speedSign")
-                {
-                    this.speedSign.Location = new Point(Location.X, Y3);
-                    this.speedSign.speed = Sign.speed;
-                    this.Sign_image = speedSign.speedImage();
-                }
-                g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
+
             }
             else if (Road.Type == "Curved2")
             {
-                if (signType == "speedSign")
+                if (signType == "trafficLight")
                 {
-                    this.speedSign.Location = new Point(Location.X, Y3);
-                    this.speedSign.speed = Sign.speed;
-                    this.Sign_image = speedSign.speedImage();
+                    g.DrawImage(Sign_image, Location.X - 20, Location.Y, 25, 25);
                 }
-                g.DrawImage(Sign_image, Location.X - 20, Location.Y, 20, 20);
+                else
+                {
+                    if (signType == "speedSign")
+                    {
+                        this.speedSign.Location = new Point(Location.X, Y3);
+                        this.speedSign.speed = Sign.speed;
+                        this.Sign_image = speedSign.speedImage();
+                    }
+                    g.DrawImage(Sign_image, Location.X - 20, Location.Y, 20, 20);
+                }
             }
 
-
             this.Hitbox.Draw(g);
-
             //g.FillRectangle(Notsolid, this.Hitbox);
         }
         public void setFlipped()

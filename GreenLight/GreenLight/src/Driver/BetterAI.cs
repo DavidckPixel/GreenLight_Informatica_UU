@@ -60,7 +60,7 @@ namespace GreenLight
         public CrossRoadSide currentCrossRoadSide = null;
         int crossRoadTimer = 0;
 
-        bool needsToStop = false;
+        public bool needsToStop = false;
         List<PlacedSign> signsOnRoadRead = new List<PlacedSign>();
 
         public bool isSwitchingLanes;
@@ -387,7 +387,10 @@ namespace GreenLight
             {
                 this.isBraking = true;
             }
-
+            if (this.needsToStop)
+            {
+                this.isBraking = true;
+            }
             if (closeToCars)
             {
                 this.isBraking = true;

@@ -20,9 +20,9 @@ namespace GreenLight
         protected Form settingScreen;
 
         public MainSignController signController;
-        
 
-        public abstract void onSignClick(AbstractSign _sign);
+
+        public abstract void onSignClick(AbstractSign _sign, AbstractRoad _selectedRoad);
         public abstract AbstractSign newSign();
         public abstract void openMenu();
         public abstract void initSettingScreen();

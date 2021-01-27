@@ -11,7 +11,7 @@ namespace GreenLight
 {
     public class YieldSignController : AbstractSignController
     {
-
+        
         public Label QuestionLabel, errorMess, FlipLabel;
         public CurvedButtons YesButton, NoButton;
         public PictureBox pb1;
@@ -50,7 +50,7 @@ namespace GreenLight
 
             CurvedButtons FlipButton = new CurvedButtons(new Size(100, 40), new Point(100, 170), 25, "../../src/User Interface Recources/Custom_Button.png", "Flip sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
 
-            FlipButton.Click += (object o, EventArgs ea) => { this.signController.flipSign(); this.settingScreen.Hide();};
+            FlipButton.Click += (object o, EventArgs ea) => { this.signController.flipSign((AbstractSign)selected, selectedRoad); this.settingScreen.Hide();};
             this.settingScreen.Controls.Add(FlipButton);
 
             QuestionLabel = new Label();
@@ -109,9 +109,13 @@ namespace GreenLight
 
         }
 
-        public override void onSignClick(AbstractSign _sign)
+        public override void onSignClick(AbstractSign _sign, AbstractRoad _selectedRoad)
         {
             selected = (YieldSign)_sign;
+
+            if (_selectedRoad != null)
+                selectedRoad = _selectedRoad;
+
             openMenu();
         }
 
@@ -119,7 +123,7 @@ namespace GreenLight
         {
             YieldSign _temp = new YieldSign(this);
             this.signController.Signs.Add(_temp);
-            onSignClick(_temp);
+            onSignClick(_temp, selectedRoad);
             return _temp;
         }
 

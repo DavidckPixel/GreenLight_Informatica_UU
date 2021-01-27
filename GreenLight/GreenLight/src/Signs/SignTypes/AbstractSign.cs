@@ -23,8 +23,5 @@ namespace GreenLight
         public abstract void Read(BetterAI _ai);
         private int ID { get; }
         public AbstractSignController controller;
-
-
-        
     }
 }
