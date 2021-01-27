@@ -337,13 +337,22 @@ namespace GreenLight
         {
             try
             {
-                if (BuildScreen.builder.roadBuilder.roads != null) BuildScreen.builder.roadBuilder.roads.Clear();
+                if (BuildScreen.builder.roadBuilder.roads != null)
+                {
+                    int count = BuildScreen.builder.roadBuilder.roads.Count;
+                    for (int t = 0; t < count; t++)
+                    {
+                        BuildScreen.builder.roadBuilder.DeleteRoad(BuildScreen.builder.roadBuilder.roads.First());
+                    }
+                }
+                
                 if (BuildScreen.builder.roadBuilder.crossRoadController.roads != null) BuildScreen.builder.roadBuilder.crossRoadController.roads.Clear();
 
-                //if (BuildScreen.builder.roadBuilder.OPC.OriginPoints != null) BuildScreen.builder.roadBuilder.OPC.OriginPoints.Clear();
+                //if (BuildScreen.builder.roadBuilder.OPC.OriginPointsList != null) BuildScreen.builder.roadBuilder.OPC.OriginPointsList.Clear();
                 //if(BuildScreen.builder.roadBuilder.OPC.converted != null) BuildScreen.builder.roadBuilder.OPC.converted.Clear();
 
                 if (BuildScreen.builder.signController.Signs != null) BuildScreen.builder.signController.Signs.Clear();
+                if (BuildScreen.builder.roadBuilder.AllCrossArrows != null) BuildScreen.builder.roadBuilder.AllCrossArrows.Clear();
             }
             catch (Exception e) { }
         }
