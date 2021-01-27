@@ -17,7 +17,7 @@ namespace GreenLight
         //This class also manages clicking on crossroads.
         //It contains a method to calculate drivinglanes out of links, and crosslanes out of those. 
 
-
+        public bool TempDraw;
 
         public PictureBox Screen;
 
@@ -63,7 +63,7 @@ namespace GreenLight
         {
             Dictionary<string, int> menu = Roads.Config.settingsScreen;
 
-            this.settingScreen = new Pop_Up_Form(new Size(menu["width"], menu["length"] + menu["crossextralength"]));
+            this.settingScreen = new PopUpForm(new Size(menu["width"], menu["length"] + menu["crossextralength"]));
             this.settingScreen.Hide();
 
             this.settingScreen.Size = new Size(menu["width"], menu["length"] + menu["crossextralength"]);
@@ -116,7 +116,7 @@ namespace GreenLight
             errorButton.Click += HideError;
             errorButton.Hide();
 
-            Move_panel Move = new Move_panel(settingScreen);
+            MovePanel Move = new MovePanel(settingScreen);
             Move.Size = new Size(400, 100);
             Move.Location = new Point(menu["offset"] + (int)(3.3* menu["buttonWidth"]+10) + menu["betweenButtons"], menu["width"]);
 
@@ -139,7 +139,9 @@ namespace GreenLight
             if (General_Form.Main != null)
             {
                 General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross";
-            }
+                TempDraw = General_Form.Main.BuildScreen.Toggle;
+                General_Form.Main.BuildScreen.Toggle = true;
+            }            
 
             this.selectedRoad = _road;
             this.settingScreen.ShowDialog();
@@ -186,6 +188,9 @@ namespace GreenLight
         private void SettingBoxDraw(object o, PaintEventArgs pea)
         {
             Graphics g = pea.Graphics;
+
+            
+            
 
             this.selectedRoad.connectPoints.ForEach(x => x.Draw(g));
 
@@ -282,7 +287,9 @@ namespace GreenLight
             if (General_Form.Main != null)
             {
                 General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross";
+                General_Form.Main.BuildScreen.Toggle = TempDraw;
             }
+
             this.settingScreen.Hide();
 
             this.Screen.Invalidate();

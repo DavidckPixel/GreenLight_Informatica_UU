@@ -31,21 +31,21 @@ namespace GreenLight
                 int height
                 );
 
-        Start_sub_menu SSM;
-        Start_main_menu SMM;
-        public Build_sub_menu BSM;
-        Build_main_menu BMM;
-        Simulation_sub_menu SimSM;
-        Simulation_main_menu SimMM;
-        Simulation_sub_weather_menu SimSWM;
-        public Simulation_sub_vehicle_menu SimSVM;
-        public Simulation_sub_driver_menu SimSDM;
-        public Simulation_data_menu SimDataM;
-        Elements_sub_buildings_menu ElemSBM;
-        public Elements_sub_roads_menu ElemSRM;
-        Elements_sub_signs_menu ElemSSM;
-        Data_sub_menu DataSM;
-        public Start_sub_recent_projects_menu SSRPM;
+        StartSubMenu SSM;
+        StartMainMenu SMM;
+        public BuildSubMenu BSM;
+        BuildMainMenu BMM;
+        SimulationSubMenu SimSM;
+        SimulationMainMenu SimMM;
+        SimulationSubWeatherMenu SimSWM;
+        public SimulationSubVehicleMenu SimSVM;
+        public SimulationSubDriverMenu SimSDM;
+        public SimulationDataMenu SimDataM;
+        ElementsSubSettingsMenu ElemSBM;
+        public ElementsSubRoadsMenu ElemSRM;
+        ElementsSubSignsMenu ElemSSM;
+        DataSubMenu DataSM;
+        public StartSubRecentProjectsMenu SSRPM;
 
         int Sub_menu_width = 250;
         FontFamily Dosis_font_family;
@@ -76,26 +76,26 @@ namespace GreenLight
 
             MainForm.SizeChanged += (object o, EventArgs EA) => { Size_adjust(); };
 
-            SSM = new Start_sub_menu(Sub_menu_width, MainForm, Dosis_font_family);
-            SSRPM = new Start_sub_recent_projects_menu(Sub_menu_width, MainForm, Dosis_font_family);
-            SMM = new Start_main_menu(MainForm.Width - Sub_menu_width, MainForm, Dosis_font_family);
+            SSM = new StartSubMenu(Sub_menu_width, MainForm, Dosis_font_family);
+            SSRPM = new StartSubRecentProjectsMenu(Sub_menu_width, MainForm, Dosis_font_family);
+            SMM = new StartMainMenu(MainForm.Width - Sub_menu_width, MainForm, Dosis_font_family);
 
-            BSM = new Build_sub_menu(Sub_menu_width, MainForm, Dosis_font_family);
-            BMM = new Build_main_menu(Sub_menu_width, MainForm, Dosis_font_family);
+            BSM = new BuildSubMenu(Sub_menu_width, MainForm, Dosis_font_family);
+            BMM = new BuildMainMenu(Sub_menu_width, MainForm, Dosis_font_family);
 
-            SimDataM = new Simulation_data_menu(Sub_menu_width, MainForm, 30, Dosis_font_family);
+            SimDataM = new SimulationDataMenu(Sub_menu_width, MainForm, 30, Dosis_font_family);
 
-            SimSM = new Simulation_sub_menu(Sub_menu_width, MainForm, Dosis_font_family);
-            SimMM = new Simulation_main_menu(MainForm.Width - Sub_menu_width, MainForm, Dosis_font_family);
-            SimSWM = new Simulation_sub_weather_menu(Sub_menu_width, MainForm, Dosis_font_family);
-            SimSVM = new Simulation_sub_vehicle_menu(Sub_menu_width, MainForm, Dosis_font_family);
-            SimSDM = new Simulation_sub_driver_menu(Sub_menu_width, MainForm, Dosis_font_family);
+            SimSM = new SimulationSubMenu(Sub_menu_width, MainForm, Dosis_font_family);
+            SimMM = new SimulationMainMenu(MainForm.Width - Sub_menu_width, MainForm, Dosis_font_family);
+            SimSWM = new SimulationSubWeatherMenu(Sub_menu_width, MainForm, Dosis_font_family);
+            SimSVM = new SimulationSubVehicleMenu(Sub_menu_width, MainForm, Dosis_font_family);
+            SimSDM = new SimulationSubDriverMenu(Sub_menu_width, MainForm, Dosis_font_family);
 
-            ElemSBM = new Elements_sub_buildings_menu(Sub_menu_width, MainForm, Dosis_font_family);
-            ElemSRM = new Elements_sub_roads_menu(Sub_menu_width, MainForm, Dosis_font_family);
-            ElemSSM = new Elements_sub_signs_menu(Sub_menu_width, MainForm, Dosis_font_family);
+            ElemSBM = new ElementsSubSettingsMenu(Sub_menu_width, MainForm, Dosis_font_family);
+            ElemSRM = new ElementsSubRoadsMenu(Sub_menu_width, MainForm, Dosis_font_family);
+            ElemSSM = new ElementsSubSignsMenu(Sub_menu_width, MainForm, Dosis_font_family);
 
-            DataSM = new Data_sub_menu(Sub_menu_width, MainForm);
+            DataSM = new DataSubMenu(Sub_menu_width, MainForm);
 
             MainForm.Controls.Add(SMM);
             MainForm.Controls.Add(SSRPM);

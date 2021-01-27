@@ -10,30 +10,30 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 namespace GreenLight
 {
-    public partial class Simulation_sub_driver_menu : UserControl
+    public partial class SimulationSubDriverMenu : UserControl
     {
-        public Selection_box Selection_box;
+        public SelectionBox Selection_box;
         Slider Reaction_time, Follow_interval, Speeding, Rulebreaking, Occurance;
 
-        public Simulation_sub_driver_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
+        public SimulationSubDriverMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(Menu_width, Form.Height - User_Controls.Config.simElementsMenu["menuY"] - User_Controls.Config.simElementsMenu["menuSizeY"]);
-            this.Location = new Point(Form.Width - Menu_width, User_Controls.Config.simElementsMenu["menuY"]);
+            this.Size = new Size(Menu_width, Form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);
+            this.Location = new Point(Form.Width - Menu_width, UserControls.Config.simElementsMenu["menuY"]);
             this.AutoScroll = true;
             Initialize(Form, Menu_width, Dosis_font_family);
         }
         public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            this.Size = new Size(Sub_menu_width, Form.Height - User_Controls.Config.simElementsMenu["menuY"] - User_Controls.Config.simElementsMenu["menuSizeY"]);
-            this.Location = new Point(Form.Width - Sub_menu_width, User_Controls.Config.simElementsMenu["menuY"]);
+            this.Size = new Size(Sub_menu_width, Form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);
+            this.Location = new Point(Form.Width - Sub_menu_width, UserControls.Config.simElementsMenu["menuY"]);
             this.Controls.Clear();
             Initialize(Form, Sub_menu_width, Dosis_font_family);
         }
 
         private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            Dictionary<string, int> menu = User_Controls.Config.simElementsMenu;
+            Dictionary<string, int> menu = UserControls.Config.simElementsMenu;
             int _sliderX = menu["sliderX"];
             int _start = menu["sliderStartDriver"];
             int _diff = menu["sliderDiffY"];
@@ -43,11 +43,11 @@ namespace GreenLight
             
 
             List<string> _temp = AIController.getStringDriverStats();
-            Dictionary<string, int> DriverMenu = User_Controls.Config.simDriver;
+            Dictionary<string, int> DriverMenu = UserControls.Config.simDriver;
 
-            Selection_box = new Selection_box(Form, Dosis_font_family, _temp, new Action(this.SetValues), new Action(this.AddAI), new Action(this.DeleteAI));
-            if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxMaxX"], User_Controls.Config.standardSubMenu["selectionBoxMaxY"]);
-            else Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxX"], User_Controls.Config.standardSubMenu["selectionBoxY"]);
+            Selection_box = new SelectionBox(Form, Dosis_font_family, _temp, new Action(this.SetValues), new Action(this.AddAI), new Action(this.DeleteAI));
+            if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(UserControls.Config.standardSubMenu["selectionBoxMaxX"], UserControls.Config.standardSubMenu["selectionBoxMaxY"]);
+            else Selection_box.Location = new Point(UserControls.Config.standardSubMenu["selectionBoxX"], UserControls.Config.standardSubMenu["selectionBoxY"]);
             this.Controls.Add(Selection_box);
 
             CurvedButtons saveButton = new CurvedButtons(new Size(80, 40), new Point(_sliderX, _start + _diff * 5), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, null, this.BackColor);

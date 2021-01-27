@@ -11,19 +11,19 @@ namespace GreenLight
 {
     class RoundButtons : PictureBox
     {
-        protected override void OnPaint(PaintEventArgs pe)
+        protected override void OnPaint(PaintEventArgs pea)
         {
             GraphicsPath p = new GraphicsPath();
             p.AddEllipse(0, 0, Size.Width-1, Size.Height-1);
             this.Region = new Region(p);
-            base.OnPaint(pe);
+            base.OnPaint(pea);
         }
         //HelpButton
-        public RoundButtons(Size Button_size, Point Location, string FilePath)
+        public RoundButtons(Size _buttonsize, Point Location, string FilePath)
         {
             this.Cursor = Cursors.Hand;
             this.Location = Location;
-            this.Size = Button_size;
+            this.Size = _buttonsize;
             this.Image = Image.FromFile(FilePath);
             this.SizeMode = PictureBoxSizeMode.Zoom;
             this.MouseHover += (object o, EventArgs EA) => { this.Image = Image.FromFile(FilePath.Remove(FilePath.Length - 10) + "Select.png"); };

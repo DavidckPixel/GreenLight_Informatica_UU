@@ -5,7 +5,8 @@ using System.Drawing;
 
 namespace GreenLight
 {
-    public partial class Pop_Up_Form : Form
+    /* This is the Pop-up form that shows up when the user opens a settingmenu */
+    public partial class PopUpForm : Form
     {
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn
@@ -18,12 +19,10 @@ namespace GreenLight
             int nHeightEllipse // height of ellipse
         );
 
-        public Pop_Up_Form(Size Form_size)
+        public PopUpForm(Size _size)
         {
-            this.Size = Form_size;
-
+            this.Size = _size;
             this.StartPosition = FormStartPosition.CenterParent;
-
             this.FormBorderStyle = FormBorderStyle.None;
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, 20, 20));
         }

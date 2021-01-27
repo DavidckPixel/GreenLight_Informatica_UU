@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
-    public class MainScreenController_Config
+    public class MainScreenControllerConfig
     {
         //all general (adjustable) screen settings will be saved and changed here
 
