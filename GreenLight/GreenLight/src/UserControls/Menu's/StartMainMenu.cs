@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
-    public partial class Start_main_menu : UserControl
+    public partial class StartMainMenu : UserControl
     {
-        public Start_main_menu(int Width, Form Form, FontFamily Dosis_font_family)
+        public StartMainMenu(int Width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(196, 196, 198);
             this.Size = new Size(Width, Form.Height);
@@ -44,18 +44,18 @@ namespace GreenLight
         }
         private void Initialize(General_form General_form, int Sub_menu_width) */
         {
-            int _ButtonSize = User_Controls.Config.startMainMenu["buttonSize"];
-            int _ButtonXdiff = User_Controls.Config.startMainMenu["buttonXdiff"];
-            int _ButtonYdiff = User_Controls.Config.startMainMenu["buttonYdiff"];
-            int _ButtonCurve = User_Controls.Config.startMainMenu["buttonCurve"];
+            int _ButtonSize = UserControls.Config.startMainMenu["buttonSize"];
+            int _ButtonXdiff = UserControls.Config.startMainMenu["buttonXdiff"];
+            int _ButtonYdiff = UserControls.Config.startMainMenu["buttonYdiff"];
+            int _ButtonCurve = UserControls.Config.startMainMenu["buttonCurve"];
             CurvedButtons New_project_button = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point((Form.Width - Sub_menu_width) / 2 - _ButtonXdiff * 2  - (int) (0.1*Form.Width), (Form.Height / 3) * 2 - _ButtonYdiff), _ButtonCurve, "../../src/User Interface Recources/New_Project_Button.png", this.BackColor);
             CurvedButtons Choose_preset_button = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point((Form.Width-Sub_menu_width)/2 - _ButtonXdiff, (Form.Height/3)*2 - _ButtonYdiff), _ButtonCurve, "../../src/User Interface Recources/Choose_Preset_Button.png", this.BackColor);
             CurvedButtons Browse_directory_button = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point((Form.Width - Sub_menu_width) / 2 + (int)(0.1 * Form.Width), (Form.Height / 3) * 2 - _ButtonYdiff), _ButtonCurve, "../../src/User Interface Recources/Browse_Directory_Button.png", this.BackColor);
 
             PictureBox Logo = new PictureBox();
-            Logo.Size = new Size(User_Controls.Config.startMainMenu["logoXsize"], User_Controls.Config.startMainMenu["logoYsize"]);
+            Logo.Size = new Size(UserControls.Config.startMainMenu["logoXsize"], UserControls.Config.startMainMenu["logoYsize"]);
             Logo.SizeMode = PictureBoxSizeMode.Zoom;
-            Logo.Location = new Point((Form.Width-Sub_menu_width) / 2 - User_Controls.Config.startMainMenu["logoXfromMiddle"], Form.Height / 2 - User_Controls.Config.startMainMenu["logoYfromMiddle"]);
+            Logo.Location = new Point((Form.Width-Sub_menu_width) / 2 - UserControls.Config.startMainMenu["logoXfromMiddle"], Form.Height / 2 - UserControls.Config.startMainMenu["logoYfromMiddle"]);
             Logo.Image = Image.FromFile("../../src/User Interface Recources/Logo.png");
 
             this.Controls.Add(New_project_button);

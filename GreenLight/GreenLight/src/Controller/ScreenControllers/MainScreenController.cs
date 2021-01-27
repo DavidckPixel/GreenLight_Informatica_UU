@@ -28,7 +28,7 @@ namespace GreenLight
         public DataScreen DataScreen;
         public InterfaceController UserInterface;
         
-        public static MainScreenController_Config Config;
+        public static MainScreenControllerConfig Config;
 
         // StreamWriter recentProjects = new StreamWriter("../../Recent_projects/Recent_projects.txt");
 

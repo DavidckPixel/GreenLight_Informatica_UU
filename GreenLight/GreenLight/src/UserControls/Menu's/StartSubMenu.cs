@@ -7,12 +7,12 @@ using System.Linq;
 
 namespace GreenLight
 {
-    public partial class Start_sub_menu : UserControl
+    public partial class StartSubMenu : UserControl
     {
-        public Start_sub_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
+        public StartSubMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(User_Controls.Config.standardSubMenu["subMenuWidth"], Form.Height);
+            this.Size = new Size(UserControls.Config.standardSubMenu["subMenuWidth"], Form.Height);
             this.Location = new Point(Form.Width - Menu_width, 0);
 
             Initialize(Form, Menu_width, Dosis_font_family);
@@ -44,8 +44,8 @@ namespace GreenLight
 
         private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            Dictionary<string, int> menu = User_Controls.Config.standardSubMenu;
-            Dictionary<string, int> startmenu = User_Controls.Config.startSubMenu;
+            Dictionary<string, int> menu = UserControls.Config.standardSubMenu;
+            Dictionary<string, int> startmenu = UserControls.Config.startSubMenu;
 
 
             CurvedButtons Logo = new CurvedButtons(Form, 1);
@@ -56,7 +56,7 @@ namespace GreenLight
             Divider1.Location = new Point(menu["deviderX"], menu["deviderY"]);
             this.Controls.Add(Divider1);
 
-            Move_panel Drag_pad = new Move_panel(Form);
+            MovePanel Drag_pad = new MovePanel(Form);
             this.Controls.Add(Drag_pad);
 
 

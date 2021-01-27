@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
-    public partial class HitBox_form : Form
+    public partial class HitboxForm : Form
     {
 
         Hitbox test1, test2, test3, test4, test5, test6,test7,test8,test9,test10, test11, test12, test13, test14;
@@ -71,7 +71,7 @@ namespace GreenLight
             public int x;
             public int y;
         }
-        public HitBox_form()
+        public HitboxForm()
         {
             this.Size = new Size(1000, 1000);
 

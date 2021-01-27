@@ -11,15 +11,15 @@ using System.Timers;
 
 namespace GreenLight
 {
-    public partial class Build_sub_menu : UserControl
+    public partial class BuildSubMenu : UserControl
     {
         public List<CurvedButtons> BSM_Buttons = new List<CurvedButtons>();
         public CurvedButtons Road_button;
         public CheckBox AutoSave;
-        public Build_sub_menu(int Menu_width, Form Form, FontFamily Dosis_font_family)
+        public BuildSubMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255,255,255);
-            this.Size = new Size(User_Controls.Config.standardSubMenu["subMenuWidth"], Form.Height); //Size in Width
+            this.Size = new Size(UserControls.Config.standardSubMenu["subMenuWidth"], Form.Height); //Size in Width
             this.Location = new Point(Form.Width - Menu_width, 0);
 
             Initialize(Form, Menu_width, Dosis_font_family);
@@ -50,18 +50,18 @@ namespace GreenLight
 
         private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
-            Dictionary<string, int> menu = User_Controls.Config.buildSubMenu;
+            Dictionary<string, int> menu = UserControls.Config.buildSubMenu;
 
 
             CurvedButtons Logo = new CurvedButtons(Form, 1);
-            Logo.Location = new Point(User_Controls.Config.standardSubMenu["logoX"], User_Controls.Config.standardSubMenu["logoY"]);
+            Logo.Location = new Point(UserControls.Config.standardSubMenu["logoX"], UserControls.Config.standardSubMenu["logoY"]);
             this.Controls.Add(Logo);
 
             CurvedButtons Divider1 = new CurvedButtons();
-            Divider1.Location = new Point(User_Controls.Config.standardSubMenu["deviderX"], User_Controls.Config.standardSubMenu["deviderY"]);
+            Divider1.Location = new Point(UserControls.Config.standardSubMenu["deviderX"], UserControls.Config.standardSubMenu["deviderY"]);
             this.Controls.Add(Divider1);
 
-            Move_panel Drag_pad = new Move_panel(Form);
+            MovePanel Drag_pad = new MovePanel(Form);
             this.Controls.Add(Drag_pad);
 
             PictureBox Elements_header = new PictureBox();

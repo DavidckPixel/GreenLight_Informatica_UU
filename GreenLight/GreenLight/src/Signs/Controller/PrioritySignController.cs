@@ -25,7 +25,7 @@ namespace GreenLight
 
         public override void initSettingScreen()
         {
-            this.settingScreen = new Pop_Up_Form(new Size(300,300));
+            this.settingScreen = new PopUpForm(new Size(300,300));
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
@@ -61,7 +61,7 @@ namespace GreenLight
             errorMess.ForeColor = Color.Red;
             this.settingScreen.Controls.Add(errorMess);
 
-            Move_panel Move = new Move_panel(this.settingScreen);
+            MovePanel Move = new MovePanel(this.settingScreen);
             Move.Location = new Point(0, 0);
             Move.Size = new Size(300, 35);
             Move.BackColor = Color.FromArgb(142, 140, 144);

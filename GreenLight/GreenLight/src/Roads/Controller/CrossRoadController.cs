@@ -63,7 +63,7 @@ namespace GreenLight
         {
             Dictionary<string, int> menu = Roads.Config.settingsScreen;
 
-            this.settingScreen = new Pop_Up_Form(new Size(menu["width"], menu["length"] + menu["crossextralength"]));
+            this.settingScreen = new PopUpForm(new Size(menu["width"], menu["length"] + menu["crossextralength"]));
             this.settingScreen.Hide();
 
             this.settingScreen.Size = new Size(menu["width"], menu["length"] + menu["crossextralength"]);
@@ -116,7 +116,7 @@ namespace GreenLight
             errorButton.Click += HideError;
             errorButton.Hide();
 
-            Move_panel Move = new Move_panel(settingScreen);
+            MovePanel Move = new MovePanel(settingScreen);
             Move.Size = new Size(400, 100);
             Move.Location = new Point(menu["offset"] + (int)(3.3* menu["buttonWidth"]+10) + menu["betweenButtons"], menu["width"]);
 
