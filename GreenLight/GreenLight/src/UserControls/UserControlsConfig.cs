@@ -13,30 +13,26 @@ namespace GreenLight
 
         public int subMenuWidth;
 
-        public Dictionary<string, int> standardSubMenu; // submenu width //LogoMenu //Devider //Logo
+        public Dictionary<string, int> standardSubMenu;
 
-        public Dictionary<string, int> standardMainMenu; //InfoButton 
+        public Dictionary<string, int> standardMainMenu;
 
-        public Dictionary<string, int> startMainMenu; //done
+        public Dictionary<string, int> startMainMenu;
 
-        public Dictionary<string, int> startSubMenu; //done
+        public Dictionary<string, int> startSubMenu; 
 
-        public Dictionary<string, int> buildSubMenu; //done
+        public Dictionary<string, int> buildSubMenu; 
 
-        public Dictionary<string, int> simSubMenu; //done
+        public Dictionary<string, int> simSubMenu; 
 
-        public Dictionary<string, int> buildElementsMenu; //done
+        public Dictionary<string, int> buildElementsMenu; 
 
-        public Dictionary<string, int> simElementsMenu; //done
+        public Dictionary<string, int> simElementsMenu; 
 
-        public Dictionary<string, int> simDriver; //Daan bezig
+        public Dictionary<string, int> simDriver; 
 
-        public Dictionary<string, int> simVehicle; //LauraBezig
+        public Dictionary<string, int> simVehicle; 
 
-        public Dictionary<string, int> simDataMenu; //done
-       
-
-
-
+        public Dictionary<string, int> simDataMenu;
     }
 }

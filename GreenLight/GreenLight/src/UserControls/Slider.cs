@@ -9,18 +9,22 @@ using System.Windows.Forms.VisualStyles;
 
 namespace GreenLight
 {
+    /* This is the Slider class. This class is used to create a Trackbar
+       with on a location with a minimumvalue and maximumvalue           */
     public class Slider : TrackBar
     {
-        public Slider(Point location, int min, int max)
+        public Slider(Point _location, int _minvalue, int _maxvalue)
         {
-            this.Location = location;
+            this.Width = 200;
+            this.Location = _location;
+            
             this.TickStyle = TickStyle.None;
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            this.BackColor = Color.Transparent;
-            this.Width = 200;
-            this.Minimum = min;
-            this.Maximum = max;
-            this.Value = (max - min) / 2 + min;
+
+            this.Minimum = _minvalue;
+            this.Maximum = _maxvalue;
+            this.Value = (_maxvalue - _minvalue) / 2 + _minvalue;
+
             this.MouseWheel += (object o, MouseEventArgs MEA) => { ((HandledMouseEventArgs)MEA).Handled = true; };
         }
     }

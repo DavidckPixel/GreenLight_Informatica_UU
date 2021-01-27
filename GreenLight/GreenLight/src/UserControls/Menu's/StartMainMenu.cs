@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
+    /*This is the Start main menu class. This class has a method AdjustSize to fit the size of the users window.
+      This user control is the first screen shown when the program starts.
+      Switching from this user control to other user controls happens in the UserInterfaceController class. */
     public partial class StartMainMenu : UserControl
     {
         public StartMainMenu(int Width, Form Form, FontFamily Dosis_font_family)

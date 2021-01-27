@@ -89,7 +89,7 @@ namespace GreenLight
             if (this.Active.GetType().ToString() == "GreenLight.BuildScreenController" && _controller.GetType().ToString() == "GreenLight.MenuController")
             {
                 Save();
-                UserInterface.BSM.AutoSave.Checked = false;
+                UserInterface.BSM.autoSave.Checked = false;
                 pathName = null;
                 fileName = null;
                 imagePath = null;

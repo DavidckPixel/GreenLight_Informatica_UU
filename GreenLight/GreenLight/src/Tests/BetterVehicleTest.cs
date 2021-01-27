@@ -117,7 +117,7 @@ namespace GreenLight
             VehicleStats vehicleStats = new VehicleStats("test", 1352, (float)4.77, 61, 4223, (float)2.65, (float)0.35, false, 1);
             DriverStats driverStats = new DriverStats("David", 2.0f, 2.0f, 2, 2.0f, 50, false);
 
-            //testVehicle = new BetterVehicle(vehicleStats, new Point(300,450));
+            //testVehicle = new <<(vehicleStats, new Point(300,450));
             //testAI = new BetterAI(driverStats, testVehicle);
 
             //testVehicle2 = new BetterVehicle(vehicleStats, new Point(300, 550));

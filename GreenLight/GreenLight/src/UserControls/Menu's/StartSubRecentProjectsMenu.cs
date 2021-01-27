@@ -12,50 +12,45 @@ using System.Linq;
 
 namespace GreenLight
 {
+    /*This is the StartSubRecentProjectMenu class. This class has a method AdjustSize to fit the size of the users window.
+      This user control is shown when the program starts and shows your recent projects.
+      Switching from this user control to other user controls happens in the UserInterfaceController class. */
     public partial class StartSubRecentProjectsMenu : UserControl
     {
-
+        PictureBox projectHeader;
         string[] _recentProjects;
 
-        public StartSubRecentProjectsMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
+        public StartSubRecentProjectsMenu(int _menuwidth, Form _form, FontFamily _dosisfontfamily)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(Menu_width, Form.Height - UserControls.Config.standardSubMenu["deviderY"] - (UserControls.Config.startSubMenu["divider2Y"] - 40));
-            this.Location = new Point(Form.Width - Menu_width, UserControls.Config.standardSubMenu["deviderY"] + 20);
+            this.Size = new Size(_menuwidth, _form.Height - UserControls.Config.standardSubMenu["deviderY"] - (UserControls.Config.startSubMenu["divider2Y"] - 40));
+            this.Location = new Point(_form.Width - _menuwidth, UserControls.Config.standardSubMenu["deviderY"] + 20);
             this.AutoScroll = true;
-            Initialize(Form, Menu_width, Dosis_font_family);
+            Initialize(_form, _menuwidth, _dosisfontfamily);
         }
-        public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        public void AdjustSize(Form _form, int _submenuwidth, FontFamily _dosisfontfamily)
         {
-            this.Size = new Size(Sub_menu_width, Form.Height - UserControls.Config.standardSubMenu["deviderY"] - UserControls.Config.startSubMenu["divider2Y"] - 40);
-            this.Location = new Point(Form.Width - Sub_menu_width, UserControls.Config.standardSubMenu["deviderY"] + 20);
+            this.Size = new Size(_submenuwidth, _form.Height - UserControls.Config.standardSubMenu["deviderY"] - UserControls.Config.startSubMenu["divider2Y"] - 40);
+            this.Location = new Point(_form.Width - _submenuwidth, UserControls.Config.standardSubMenu["deviderY"] + 20);
             this.Controls.Clear();
             _recentProjects = File.ReadAllLines(General_Form.Main.recent_project);
-            Initialize(Form, Sub_menu_width, Dosis_font_family);
+            Initialize(_form, _submenuwidth, _dosisfontfamily);
         }
 
-        private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        private void Initialize(Form _form, int _submenuwidth, FontFamily _dosisfontfamily)
         {
             Dictionary<string, int> startmenu = UserControls.Config.startSubMenu;
 
             _recentProjects = File.ReadAllLines(General_Form.Main.recent_project);
 
-            PictureBox Project_header = new PictureBox();
-            Project_header.Size = new Size(startmenu["headerXsize"], startmenu["headerYsize"]);
-            Project_header.SizeMode = PictureBoxSizeMode.StretchImage;
-            Project_header.Location = new Point(startmenu["headerX"], startmenu["headerY"]);
-            Project_header.Image = Image.FromFile("../../src/User Interface Recources/Recent_Project_Header.png");
-            this.Controls.Add(Project_header);
+            projectHeader = new PictureBox();
+            projectHeader.Size = new Size(startmenu["headerXsize"], startmenu["headerYsize"]);
+            projectHeader.SizeMode = PictureBoxSizeMode.StretchImage;
+            projectHeader.Location = new Point(startmenu["headerX"], startmenu["headerY"]);
+            projectHeader.Image = Image.FromFile("../../src/User Interface Recources/Recent_Project_Header.png");
+            this.Controls.Add(projectHeader);
 
-
-            //string[] _temp = File.ReadAllLines(General_Form.Main.recent_project);
-            /* for (int t = 0; t < _temp.Count() - 1; t++)
-             {
-                 string[] _temp2 = _temp[t].Split(' ');
-                 _temp[t] = _temp2[0];
-             }*/
-
-            int i = 0;
+            int _counter = 0;
             if (_recentProjects != null)
             {
                 
@@ -65,11 +60,11 @@ namespace GreenLight
                     {
                         string[] _temp = _recentProjects[t].Split(' ');
 
-                        CurvedButtons Project = new CurvedButtons(new Size(startmenu["projectXsize"], startmenu["projectYsize"]), new Point(Sub_menu_width / 2 - startmenu["projectX"], startmenu["projectYbase"] + i * startmenu["projectYdiff"]), startmenu["projectButtonCurve"], _temp[2], _temp[0], Dosis_font_family, Form, Color.White, 1);
-                        Project.Location = new Point(Sub_menu_width / 2 - startmenu["projectX"], startmenu["projectYbase"] + i * startmenu["projectYdiff"]);
+                        CurvedButtons Project = new CurvedButtons(new Size(startmenu["projectXsize"], startmenu["projectYsize"]), new Point(_submenuwidth / 2 - startmenu["projectX"], startmenu["projectYbase"] + _counter * startmenu["projectYdiff"]), startmenu["projectButtonCurve"], _temp[2], _temp[0], _dosisfontfamily, _form, Color.White, 1);
+                        Project.Location = new Point(_submenuwidth / 2 - startmenu["projectX"], startmenu["projectYbase"] + _counter * startmenu["projectYdiff"]);
                         Project.Click += (object o, EventArgs ea) => { General_Form.Main.MenuController.SwitchToBuild(); General_Form.Main.Load(_temp[1]); };
                         this.Controls.Add(Project);
-                        i++;
+                        _counter++;
                     }
 
                     catch (Exception e) { }
