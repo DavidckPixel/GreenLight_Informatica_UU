@@ -17,7 +17,7 @@ namespace GreenLight
         //This class also manages clicking on crossroads.
         //It contains a method to calculate drivinglanes out of links, and crosslanes out of those. 
 
-
+        public bool TempDraw;
 
         public PictureBox Screen;
 
@@ -139,7 +139,9 @@ namespace GreenLight
             if (General_Form.Main != null)
             {
                 General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross";
-            }
+                TempDraw = General_Form.Main.BuildScreen.Toggle;
+                General_Form.Main.BuildScreen.Toggle = true;
+            }            
 
             this.selectedRoad = _road;
             this.settingScreen.ShowDialog();
@@ -187,34 +189,8 @@ namespace GreenLight
         {
             Graphics g = pea.Graphics;
 
-            Bitmap b = new Bitmap(Screen.Width, Screen.Height);
-            Screen.DrawToBitmap(b, new Rectangle(new Point(0, 0), Screen.Size));
-
-            Hitbox _hitbox = selectedRoad.hitbox;
-
-            int _maxSize = Math.Max(_hitbox.Size.Width, _hitbox.Size.Height) + Roads.Config.scaleOffset * 2;
-            int _diff = Math.Abs(_hitbox.Size.Width - _hitbox.Size.Height) / 2;
-
-            Rectangle _rec;
-
-            if (_hitbox.Size.Width > _hitbox.Size.Height)
-            {
-                _rec = new Rectangle(_hitbox.Topcord.X - Roads.Config.scaleOffset, _hitbox.Topcord.Y - Roads.Config.scaleOffset - _diff, _maxSize, _maxSize);
-            }
-            else if (_hitbox.Size.Width == _hitbox.Size.Height)
-            {
-                _rec = new Rectangle(_hitbox.Topcord.X - Roads.Config.scaleOffset, _hitbox.Topcord.Y - Roads.Config.scaleOffset, _maxSize, _maxSize);
-            }
-            else
-            {
-                _rec = new Rectangle(_hitbox.Topcord.X - Roads.Config.scaleOffset - _diff, _hitbox.Topcord.Y - Roads.Config.scaleOffset, _maxSize, _maxSize);
-            }
-
-
-
-            Rectangle _des = new Rectangle(0, 0, this.settingScreenImage.Width, this.settingScreenImage.Height);
-
-            g.DrawImage(b, _des, _rec, GraphicsUnit.Pixel);
+            
+            
 
             this.selectedRoad.connectPoints.ForEach(x => x.Draw(g));
 
@@ -311,7 +287,9 @@ namespace GreenLight
             if (General_Form.Main != null)
             {
                 General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross";
+                General_Form.Main.BuildScreen.Toggle = TempDraw;
             }
+
             this.settingScreen.Hide();
 
             this.Screen.Invalidate();
