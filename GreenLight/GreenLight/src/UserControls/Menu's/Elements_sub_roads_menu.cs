@@ -41,34 +41,34 @@ namespace GreenLight
             int _ButtonYdiff = menu["buttonYdiff"];
             int _ButtonCurve = menu["buttonCurve"];
 
-            CurvedButtons Hand = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Hand_Button.png", this.BackColor);
+            CurvedButtons Hand = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Hand_Button.png", this.BackColor);
             Hand.Click += (object o, EventArgs EA) => { ResetButtons(Hand, Hand.Image_path); General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "X"; };
             this.Controls.Add(Hand);
             ESRM.Add(Hand);
 
-            CurvedButtons Diagonal_Road = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Road_Button.png", this.BackColor);
+            CurvedButtons Diagonal_Road = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Road_Button.png", this.BackColor);
             Diagonal_Road.Click += (object o, EventArgs EA) => { ResetButtons(Diagonal_Road, Diagonal_Road.Image_path); General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Diagonal"; };
             this.Controls.Add(Diagonal_Road);
             ESRM.Add(Diagonal_Road);
 
-            CurvedButtons Curved_Road = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase), menu["buttonCurve"], "../../User Interface Recources/Curved_Road_Button.png", this.BackColor);
+            CurvedButtons Curved_Road = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Curved_Road_Button.png", this.BackColor);
             Curved_Road.Click += (object o, EventArgs EA) => { ResetButtons(Curved_Road, Curved_Road.Image_path); General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Curved"; };
             this.Controls.Add(Curved_Road);
             ESRM.Add(Curved_Road);
 
-            CurvedButtons Curved_Road2 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/CurveHollow_Button.png", this.BackColor);
+            CurvedButtons Curved_Road2 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../src/User Interface Recources/CurveHollow_Button.png", this.BackColor);
             Curved_Road2.Click += (object o, EventArgs EA) => { ResetButtons(Curved_Road2, Curved_Road2.Image_path); General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Curved2"; };
             this.Controls.Add(Curved_Road2);
             ESRM.Add(Curved_Road2);
 
 
-            CurvedButtons Crossroad = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../User Interface Recources/CrossRoad_Button.png", this.BackColor);
+            CurvedButtons Crossroad = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../src/User Interface Recources/CrossRoad_Button.png", this.BackColor);
             Crossroad.Click += (object o, EventArgs EA) => { ResetButtons(Crossroad, Crossroad.Image_path); General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross"; };
             this.Controls.Add(Crossroad);
             ESRM.Add(Crossroad);
 
             PictureBox LaneAmount_background = new PictureBox();
-            LaneAmount_background.Image = Image.FromFile("../../User Interface Recources/Lane_Amount_Border.png");
+            LaneAmount_background.Image = Image.FromFile("../../src/User Interface Recources/Lane_Amount_Border.png");
             LaneAmount_background.Location = new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase+_ButtonYdiff*1);
             LaneAmount_background.SizeMode = PictureBoxSizeMode.Zoom;
             LaneAmount_background.Size = new Size(_ButtonSize, _ButtonSize);

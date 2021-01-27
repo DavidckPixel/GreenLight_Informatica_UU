@@ -46,14 +46,14 @@ namespace GreenLight
             this.Controls.Add(Divider1);
 
             CurvedButtons Settings_header = new CurvedButtons(new Size(menu["settingsHeaderSizeX"], menu["settingsHeaderSizeY"]),  //settingsHeaderSizeX //settingsHeaderSizeY
-               new Point(menu["settingsHeaderX"], menu["settingsHeaderY"]), "../../User Interface Recources/Settings_Header.png"); //settingsHeaderX //settingsHeaderY
+               new Point(menu["settingsHeaderX"], menu["settingsHeaderY"]), "../../src/User Interface Recources/Settings_Header.png"); //settingsHeaderX //settingsHeaderY
             this.Controls.Add(Settings_header);
 
-            CurvedButtons ReturnButton = new CurvedButtons(new Size(200, 50), new Point(10, 500), 25, "../../User Interface Recources/Custom_Small_Button.png", "Return to Simulation", DrawData.Dosis_font_family, null, this.BackColor);
+            CurvedButtons ReturnButton = new CurvedButtons(new Size(200, 50), new Point(10, 500), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Return to Simulation", DrawData.Dosis_font_family, null, this.BackColor);
             ReturnButton.Click += (object o, EventArgs ea) => { General_Form.Main.SwitchControllers(General_Form.Main.SimulationScreen); };
             this.Controls.Add(ReturnButton);
 
-            CurvedButtons ExportButton = new CurvedButtons(new Size(200, 50), new Point(10, 300), 25, "../../User Interface Recources/Custom_Small_Button.png", "Export Data", DrawData.Dosis_font_family, null, this.BackColor);
+            CurvedButtons ExportButton = new CurvedButtons(new Size(200, 50), new Point(10, 300), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Export Data", DrawData.Dosis_font_family, null, this.BackColor);
             ExportButton.Click += (object o, EventArgs ea) =>
             {
                 string _fileName = Interaction.InputBox("Enter Name: ", "File", "Export", 100, 100);

@@ -50,7 +50,7 @@ namespace GreenLight
             else Selection_box.Location = new Point(User_Controls.Config.standardSubMenu["selectionBoxX"], User_Controls.Config.standardSubMenu["selectionBoxY"]);
             this.Controls.Add(Selection_box);
 
-            CurvedButtons saveButton = new CurvedButtons(new Size(80, 40), new Point(_sliderX, _start + _diff * 5), 25, "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, null, this.BackColor);
+            CurvedButtons saveButton = new CurvedButtons(new Size(80, 40), new Point(_sliderX, _start + _diff * 5), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, null, this.BackColor);
             saveButton.Click += (object o, EventArgs ea) => { AITypeConfig.SaveJson(); };
             this.Controls.Add(saveButton);
 
@@ -117,7 +117,7 @@ namespace GreenLight
             //----------------------------------------------
 
             CurvedButtons Edit_Driver_Header = new CurvedButtons(new Size(menu["headerSizeX"], menu["headerSizeY"]),
-               new Point(menu["headerX"], menu["headerY"]), "../../User Interface Recources/Edit_Driver_Header.png");
+               new Point(menu["headerX"], menu["headerY"]), "../../src/User Interface Recources/Edit_Driver_Header.png");
             this.Controls.Add(Edit_Driver_Header);
         }
 

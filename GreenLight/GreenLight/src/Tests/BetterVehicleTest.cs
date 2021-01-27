@@ -60,8 +60,8 @@ namespace GreenLight
             //dataController = new DataController(pictureboxTemp);
             //dataController.Initialize();
 
-            Editbutton = new CurvedButtons(new Size(70, 30), new Point(10, 100), 25, "../../User Interface Recources/Custom_Small_Button.png", "Edit", DrawData.Dosis_font_family, this, this.BackColor);
-            Newbutton = new CurvedButtons(new Size(70, 30), new Point(10, 200), 25, "../../User Interface Recources/Custom_Small_Button.png", "New", DrawData.Dosis_font_family, this, this.BackColor);
+            Editbutton = new CurvedButtons(new Size(70, 30), new Point(10, 100), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Edit", DrawData.Dosis_font_family, this, this.BackColor);
+            Newbutton = new CurvedButtons(new Size(70, 30), new Point(10, 200), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "New", DrawData.Dosis_font_family, this, this.BackColor);
 
             Editbutton.Click += EditClick;
             Newbutton.Click += NewClick;

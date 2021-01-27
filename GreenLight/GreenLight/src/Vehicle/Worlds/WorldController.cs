@@ -75,9 +75,9 @@ namespace GreenLight
             entityTypeLabel.Location =  new Point(10, 300);
             this.settingScreen.Controls.Add(entityTypeLabel);
 
-            this.doneButton = new CurvedButtons(new Size(80, 40), new Point(10, 550), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            this.returnButton = new CurvedButtons(new Size(100, 40), new Point(100, 550), 25, "../../User Interface Recources/Custom_Small_Button.png", "Return", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            this.deleteButton = new CurvedButtons(new Size(90, 40), new Point(210, 550), 25, "../../User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            this.doneButton = new CurvedButtons(new Size(80, 40), new Point(10, 550), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            this.returnButton = new CurvedButtons(new Size(100, 40), new Point(100, 550), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Return", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            this.deleteButton = new CurvedButtons(new Size(90, 40), new Point(210, 550), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
 
             this.doneButton.Click += DoneClick;
             this.returnButton.Click += ReturnClick;
@@ -95,7 +95,7 @@ namespace GreenLight
             errorText.BringToFront();
             errorText.Hide();
 
-            errorButton = new CurvedButtons(new Size(40, 30), new Point(400, 450), 25, "../../User Interface Recources/Custom_Small_Button.png", "Oke!", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            errorButton = new CurvedButtons(new Size(40, 30), new Point(400, 450), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Oke!", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             errorButton.Click += HideError;
             errorButton.Hide();
 

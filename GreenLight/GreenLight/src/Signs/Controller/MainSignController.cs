@@ -172,22 +172,22 @@ namespace GreenLight
             }
             Console.WriteLine("LocationSelected!!!");
 
-            Image _sign_image = Image.FromFile("../../User Interface Recources/Speed_Sign.png"); 
+            Image _sign_image = Image.FromFile("../../src/User Interface Recources/Speed_Sign.png"); 
             switch (signType)
             {
                 case "X":
                     break;
                 case "speedSign":
-                    _sign_image = Image.FromFile("../../User Interface Recources/Empty_Speed_Sign.png");
+                    _sign_image = Image.FromFile("../../src/User Interface Recources/Empty_Speed_Sign.png");
                     break;
                 case "yieldSign":
-                    _sign_image = Image.FromFile("../../User Interface Recources/Yield_Sign.png");
+                    _sign_image = Image.FromFile("../../src/User Interface Recources/Yield_Sign.png");
                     break;
                 case "prioritySign":
-                    _sign_image = Image.FromFile("../../User Interface Recources/Priority_Sign.png");
+                    _sign_image = Image.FromFile("../../src/User Interface Recources/Priority_Sign.png");
                     break;
                 case "stopSign":
-                    _sign_image = Image.FromFile("../../User Interface Recources/Stop_Sign.png");
+                    _sign_image = Image.FromFile("../../src/User Interface Recources/Stop_Sign.png");
                     break;
             }
             this.selectedRoad.Signs.Add(new PlacedSign(new Point(-100, -100), "", _temp, _sign_image, _selectedRoad, signType, new Point(0, 0), MouseClick, _flipped));
@@ -255,20 +255,20 @@ namespace GreenLight
                 case "X":
                     break;
                 case "speedSign":
-                    _sign_image = Image.FromFile("../../User Interface Recources/Speed_Sign.png");
+                    _sign_image = Image.FromFile("../../src/User Interface Recources/Speed_Sign.png");
                     _temp = new SpeedSign(speedSign);
                     _temp.speed = int.Parse(_signWords[9]);
                     break;
                 case "yieldSign":
-                    _sign_image = Image.FromFile("../../User Interface Recources/Yield_Sign.png");
+                    _sign_image = Image.FromFile("../../src/User Interface Recources/Yield_Sign.png");
                     _temp = new YieldSign(yieldSignC);
                     break;
                 case "prioritySign":
-                    _sign_image = Image.FromFile("../../User Interface Recources/Priority_Sign.png");
+                    _sign_image = Image.FromFile("../../src/User Interface Recources/Priority_Sign.png");
                     _temp = new PrioritySign(prioritySignC);
                     break;
                 case "stopSign":
-                    _sign_image = Image.FromFile("../../User Interface Recources/Stop_Sign.png");
+                    _sign_image = Image.FromFile("../../src/User Interface Recources/Stop_Sign.png");
                     _temp = new StopSign(stopSign);
                     break;
             }

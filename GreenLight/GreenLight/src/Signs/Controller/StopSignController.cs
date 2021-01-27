@@ -33,7 +33,7 @@ namespace GreenLight
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
             pb1 = new PictureBox();
-            pb1.Image = Image.FromFile("../../User Interface Recources/Stop_sign.png");
+            pb1.Image = Image.FromFile("../../src/User Interface Recources/Stop_sign.png");
             pb1.Location = new Point(190, 35);
             pb1.Size = new Size(75, 75);
             pb1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -47,7 +47,7 @@ namespace GreenLight
             FlipLabel.TextAlign = ContentAlignment.MiddleCenter;
             this.settingScreen.Controls.Add(FlipLabel);
 
-            CurvedButtons FlipButton = new CurvedButtons(new Size(100, 40), new Point(100, 170), 25, "../../User Interface Recources/Custom_Button.png", "Flip sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            CurvedButtons FlipButton = new CurvedButtons(new Size(100, 40), new Point(100, 170), 25, "../../src/User Interface Recources/Custom_Button.png", "Flip sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             FlipButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.flipSing(thisSign); };
             this.settingScreen.Controls.Add(FlipButton);
 
@@ -75,11 +75,11 @@ namespace GreenLight
             Divider1.Location = new Point(20, 220);
             this.settingScreen.Controls.Add(Divider1);
 
-            SaveButton = new CurvedButtons(new Size(80, 40), new Point(45, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "OK", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            SaveButton = new CurvedButtons(new Size(80, 40), new Point(45, 240), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "OK", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             SaveButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.stopSign.placeSign(); };
             this.settingScreen.Controls.Add(SaveButton);
 
-            CancelButton = new CurvedButtons(new Size(100, 40), new Point(155, 240), 25, "../../User Interface Recources/Custom_Small_Button.png", "Remove", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            CancelButton = new CurvedButtons(new Size(100, 40), new Point(155, 240), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Remove", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
 
             CancelButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.stopSign.deleteSign(); };
             this.settingScreen.Controls.Add(CancelButton);

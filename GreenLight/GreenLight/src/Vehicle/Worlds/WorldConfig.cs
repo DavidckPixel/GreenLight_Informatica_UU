@@ -23,7 +23,7 @@ namespace GreenLight
 
         private static void ReadJson()
         {
-            string _file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Vehicle\\Earth.json";
+            string _file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Vehicle\\Worlds\\Earth.json";
 
             try
             {
@@ -41,7 +41,7 @@ namespace GreenLight
 
         public static void WriteJson()
         {
-            string _file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Vehicle\\Earth.json";
+            string _file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Vehicle\\Worlds\\Earth.json";
 
             try
             {

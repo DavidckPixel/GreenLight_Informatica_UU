@@ -24,29 +24,29 @@ namespace GreenLight
             switch (speed)
             {
                 case 30:
-                    return Image.FromFile("../../User Interface Recources/30Speed_sign.png");
+                    return Image.FromFile("../../src/User Interface Recources/30Speed_sign.png");
                 case 40:
-                    return Image.FromFile("../../User Interface Recources/40Speed_sign.png");
+                    return Image.FromFile("../../src/User Interface Recources/40Speed_sign.png");
                 case 50:
-                    return Image.FromFile("../../User Interface Recources/50Speed_sign.png");
+                    return Image.FromFile("../../src/User Interface Recources/50Speed_sign.png");
                 case 60:
-                    return Image.FromFile("../../User Interface Recources/60Speed_sign.png");
+                    return Image.FromFile("../../src/User Interface Recources/60Speed_sign.png");
                 case 70:
-                    return Image.FromFile("../../User Interface Recources/70Speed_sign.png");
+                    return Image.FromFile("../../src/User Interface Recources/70Speed_sign.png");
                 case 80:
-                    return Image.FromFile("../../User Interface Recources/80Speed_sign.png");
+                    return Image.FromFile("../../src/User Interface Recources/80Speed_sign.png");
                 case 90:
-                    return Image.FromFile("../../User Interface Recources/90Speed_sign.png");
+                    return Image.FromFile("../../src/User Interface Recources/90Speed_sign.png");
                 case 100:
-                    return Image.FromFile("../../User Interface Recources/100Speed_sign.png");
+                    return Image.FromFile("../../src/User Interface Recources/100Speed_sign.png");
                 case 110:
-                    return Image.FromFile("../../User Interface Recources/110Speed_sign.png");
+                    return Image.FromFile("../../src/User Interface Recources/110Speed_sign.png");
                 case 120:
-                    return Image.FromFile("../../User Interface Recources/120Speed_sign.png");
+                    return Image.FromFile("../../src/User Interface Recources/120Speed_sign.png");
                 case 130:
-                    return Image.FromFile("../../User Interface Recources/130Speed_sign.png");
+                    return Image.FromFile("../../src/User Interface Recources/130Speed_sign.png");
                 case 0:
-                    return Image.FromFile("../../User Interface Recources/QMSpeed_sign.png");
+                    return Image.FromFile("../../src/User Interface Recources/QMSpeed_sign.png");
                 default:
                     return null;
                     break;

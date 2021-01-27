@@ -43,7 +43,7 @@ namespace GreenLight
             curve = 1;
             this.Size = new Size(250, 5);
             this.SizeMode = PictureBoxSizeMode.StretchImage;
-            this.Image = Image.FromFile("../../User Interface Recources/Sub_Menu_Divider.png");
+            this.Image = Image.FromFile("../../src/User Interface Recources/Sub_Menu_Divider.png");
         }
         // Header
         public CurvedButtons(Size Header_size, Point Location, string FilePath)
@@ -77,7 +77,7 @@ namespace GreenLight
             curve = Curve;
             this.Size = new Size(175, 70);
             this.SizeMode = PictureBoxSizeMode.StretchImage;
-            this.Image = Image.FromFile("../../User Interface Recources/Logo.png");
+            this.Image = Image.FromFile("../../src/User Interface Recources/Logo.png");
             this.SizeMode = PictureBoxSizeMode.Zoom;
             Size s = new Size(30, 30);
             RoundButtons Green = new RoundButtons(s, this.Location, "Green", Form);

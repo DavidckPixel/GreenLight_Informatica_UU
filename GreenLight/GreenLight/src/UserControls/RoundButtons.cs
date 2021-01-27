@@ -40,16 +40,16 @@ namespace GreenLight
             {
                 case "Green":
                     this.Location = new Point(p.X + 20, p.Y + 3);
-                    this.Image = Image.FromFile("../../User Interface Recources/Logo_Minimalize.png");
-                    this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Minimalize_Select.png"); };
-                    this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Minimalize.png"); };
+                    this.Image = Image.FromFile("../../src/User Interface Recources/Logo_Minimalize.png");
+                    this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../src/User Interface Recources/Logo_Minimalize_Select.png"); };
+                    this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../src/User Interface Recources/Logo_Minimalize.png"); };
                     this.Click += (object o, EventArgs EA) => { Form.WindowState = FormWindowState.Minimized; };
                     break;
                 case "Yellow":
                     this.Location = new Point(p.X + 72, p.Y + 3);
-                    this.Image = Image.FromFile("../../User Interface Recources/Logo_Maximize.png");
-                    this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Maximize_Select.png"); };
-                    this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Maximize.png"); };
+                    this.Image = Image.FromFile("../../src/User Interface Recources/Logo_Maximize.png");
+                    this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../src/User Interface Recources/Logo_Maximize_Select.png"); };
+                    this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../src/User Interface Recources/Logo_Maximize.png"); };
                     this.Click += (object o, EventArgs EA) =>
                     {
                         if (Form.WindowState == FormWindowState.Maximized)
@@ -68,9 +68,9 @@ namespace GreenLight
                     break;
                 case "Red":
                     this.Location = new Point(p.X + 124, p.Y + 3);
-                    this.Image = Image.FromFile("../../User Interface Recources/Logo_Exit.png");
-                    this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Exit_Select.png"); };
-                    this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../User Interface Recources/Logo_Exit.png"); };
+                    this.Image = Image.FromFile("../../src/User Interface Recources/Logo_Exit.png");
+                    this.MouseEnter += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../src/User Interface Recources/Logo_Exit_Select.png"); };
+                    this.MouseLeave += (object o, EventArgs EA) => { this.Image = Image.FromFile("../../src/User Interface Recources/Logo_Exit.png"); };
                     this.Click += (object o, EventArgs EA) => { Application.Exit(); };
                     break;
             }

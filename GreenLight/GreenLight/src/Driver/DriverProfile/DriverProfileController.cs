@@ -80,7 +80,7 @@ namespace GreenLight
             this.TargetSpeed.Size = new Size(200, 30);
             this.settingScreen.Controls.Add(this.TargetSpeed);
 
-            this.doneButton = new CurvedButtons(new Size(100, 30), new Point(10, 450), 25, "../../User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            this.doneButton = new CurvedButtons(new Size(100, 30), new Point(10, 450), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             this.doneButton.Click += HideScreen;
             this.settingScreen.Controls.Add(this.doneButton);
         }

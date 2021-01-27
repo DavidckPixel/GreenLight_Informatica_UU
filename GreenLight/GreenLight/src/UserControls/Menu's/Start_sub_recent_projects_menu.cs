@@ -44,7 +44,7 @@ namespace GreenLight
             Project_header.Size = new Size(startmenu["headerXsize"], startmenu["headerYsize"]);
             Project_header.SizeMode = PictureBoxSizeMode.StretchImage;
             Project_header.Location = new Point(startmenu["headerX"], startmenu["headerY"]);
-            Project_header.Image = Image.FromFile("../../User Interface Recources/Recent_Project_Header.png");
+            Project_header.Image = Image.FromFile("../../src/User Interface Recources/Recent_Project_Header.png");
             this.Controls.Add(Project_header);
 
 

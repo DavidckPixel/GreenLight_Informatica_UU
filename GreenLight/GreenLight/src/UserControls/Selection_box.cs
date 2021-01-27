@@ -36,7 +36,7 @@ namespace GreenLight
             Elements_selected.Add("Test 4");
             Elements_selected.Add("Test 5"); */
 
-            this.BackgroundImage = Image.FromFile("../../User Interface Recources/Selection_Box.png");
+            this.BackgroundImage = Image.FromFile("../../src/User Interface Recources/Selection_Box.png");
             this.Size = new Size(225, 117);
             this.BackgroundImageLayout = ImageLayout.Zoom;
             this.Form = _Form;
@@ -122,7 +122,7 @@ namespace GreenLight
             }
 
             CurvedButtons Remove = new CurvedButtons(new Size(17, 17), new Point(104, 52), 10,
-               "../../User Interface Recources/Selection_Box_Remove_Button.png", Color.FromArgb(255, 255, 255));
+               "../../src/User Interface Recources/Selection_Box_Remove_Button.png", Color.FromArgb(255, 255, 255));
             Remove.Click += (object o, EventArgs EA) => {
                 this.functionRemove();
             };
@@ -130,19 +130,19 @@ namespace GreenLight
             Remove.BringToFront();
 
             CurvedButtons Add = new CurvedButtons(new Size(17, 17), new Point(104, 66), 10,
-                "../../User Interface Recources/Selection_Box_Add_Button.png", Color.FromArgb(255, 255, 255));
+                "../../src/User Interface Recources/Selection_Box_Add_Button.png", Color.FromArgb(255, 255, 255));
             Add.Click += (object o, EventArgs EA) => { this.functionAdd(); };
             this.Controls.Add(Add);
             Add.BringToFront();
 
             CurvedButtons To_left = new CurvedButtons(new Size(17, 17), new Point(104, 80), 10,
-                "../../User Interface Recources/Selection_Box_To_Left_Button.png", Color.FromArgb(255, 255, 255));
+                "../../src/User Interface Recources/Selection_Box_To_Left_Button.png", Color.FromArgb(255, 255, 255));
             To_left.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool, Form, Dosis_font_family, 0); };
             this.Controls.Add(To_left);
             To_left.BringToFront();
 
             CurvedButtons To_right = new CurvedButtons(new Size(17, 17), new Point(104, 94), 10,
-                "../../User Interface Recources/Selection_Box_To_Right_Button.png", Color.FromArgb(255, 255, 255));
+                "../../src/User Interface Recources/Selection_Box_To_Right_Button.png", Color.FromArgb(255, 255, 255));
             To_right.Click += (object o, EventArgs EA) => { Elements_switch(Elements_selected, Elements_available, Selected_index, Selected_left_bool, Form, Dosis_font_family, 1); };
             this.Controls.Add(To_right);
             To_right.BringToFront();

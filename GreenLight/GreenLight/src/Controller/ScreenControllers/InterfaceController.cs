@@ -68,7 +68,7 @@ namespace GreenLight
             MainForm.Size = new Size(1200, 600);
             Refresh_region(MainForm);
             MainForm.MinimumSize = new Size(800, 400);
-            MainForm.Icon = new Icon("../../User Interface Recources/Logo.ico");
+            MainForm.Icon = new Icon("../../src/User Interface Recources/Logo.ico");
 
             PrivateFontCollection Font_collection = new PrivateFontCollection();
             Font_collection.AddFontFile("../../Fonts/Dosis-bold.ttf");

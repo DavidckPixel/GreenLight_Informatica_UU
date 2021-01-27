@@ -72,8 +72,8 @@ namespace GreenLight
             };
             this.Controls.Add(worlds);
 
-            CurvedButtons Editbutton = new CurvedButtons(new Size(70, 30), new Point(10, 50), 25, "../../User Interface Recources/Custom_Small_Button.png", "Edit", DrawData.Dosis_font_family, null, this.BackColor);
-            CurvedButtons Newbutton = new CurvedButtons(new Size(70, 30), new Point(100, 50), 25, "../../User Interface Recources/Custom_Small_Button.png", "New", DrawData.Dosis_font_family, null, this.BackColor);
+            CurvedButtons Editbutton = new CurvedButtons(new Size(70, 30), new Point(10, 50), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Edit", DrawData.Dosis_font_family, null, this.BackColor);
+            CurvedButtons Newbutton = new CurvedButtons(new Size(70, 30), new Point(100, 50), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "New", DrawData.Dosis_font_family, null, this.BackColor);
 
             Editbutton.Click += (object o, EventArgs ea) => { General_Form.Main.SimulationScreen.Simulator.worldController.EditWorld((World)worlds.SelectedItem); };
             Newbutton.Click += (object o, EventArgs ea) => { General_Form.Main.SimulationScreen.Simulator.worldController.CreateNewWorld(); };
@@ -92,7 +92,7 @@ namespace GreenLight
 
             carSpawn.ValueChanged += (object o, EventArgs EA) => { carSpawn_value.Text = carSpawn.Value.ToString() + " %"; };
 
-            CurvedButtons graphWindow = new CurvedButtons(new Size(70, 30), new Point(10, 180), 25, "../../User Interface Recources/Custom_Small_Button.png", "Graph", DrawData.Dosis_font_family, null, this.BackColor);
+            CurvedButtons graphWindow = new CurvedButtons(new Size(70, 30), new Point(10, 180), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Graph", DrawData.Dosis_font_family, null, this.BackColor);
             graphWindow.Click += (object o, EventArgs ea) => 
             {
                 General_Form.Main.SwitchControllers(General_Form.Main.DataScreen);
@@ -144,7 +144,7 @@ namespace GreenLight
             Rainfall.ValueChanged += (object o, EventArgs EA) => { Rainfall_Value.Text = (((double)(Rainfall.Value)) / 10).ToString() + " mm/h"; };
 
             CurvedButtons Weather_header = new CurvedButtons(new Size(menu["headerSizeX"], menu["headerSizeY"]),
-               new Point(menu["headerX"], menu["headerY"]), "../../User Interface Recources/Weather_Header.png");
+               new Point(menu["headerX"], menu["headerY"]), "../../src/User Interface Recources/Weather_Header.png");
             this.Controls.Add(Weather_header);
             */
         }

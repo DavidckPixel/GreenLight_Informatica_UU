@@ -61,7 +61,7 @@ namespace GreenLight
             name.Location = new Point(_sliderX, _startY + 3 * _diffY);
             this.Controls.Add(name);*/
 
-            CurvedButtons saveButton = new CurvedButtons(new Size(80, 40), new Point(_sliderX, _startY + 3 * _diffY), 25, "../../User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, null, this.BackColor);
+            CurvedButtons saveButton = new CurvedButtons(new Size(80, 40), new Point(_sliderX, _startY + 3 * _diffY), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, null, this.BackColor);
             saveButton.Click += (object o, EventArgs ea) => { VehicleTypeConfig.SaveJson(); };
             this.Controls.Add(saveButton);
 
@@ -152,7 +152,7 @@ namespace GreenLight
 
 
             CurvedButtons Vehicles_header = new CurvedButtons(new Size(menu["headerSizeX"], menu["headerSizeY"]),
-               new Point(menu["headerX"], menu["headerY"]), "../../User Interface Recources/Edit_Vehicle_Header.png");
+               new Point(menu["headerX"], menu["headerY"]), "../../src/User Interface Recources/Edit_Vehicle_Header.png");
             this.Controls.Add(Vehicles_header);
 
 
@@ -173,7 +173,7 @@ namespace GreenLight
             this.Controls.Add(temp5);
 
             CurvedButtons Vehicles_header = new CurvedButtons(new Size(menu["headerSizeX"], menu["headerSizeY"]),
-               new Point(menu["headerX"], menu["headerY"]), "../../User Interface Recources/Edit_Vehicle_Header.png");
+               new Point(menu["headerX"], menu["headerY"]), "../../src/User Interface Recources/Edit_Vehicle_Header.png");
             this.Controls.Add(Vehicles_header);*/
 
         }

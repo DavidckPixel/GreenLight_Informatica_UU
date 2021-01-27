@@ -64,7 +64,7 @@ namespace GreenLight
             this.Controls.Add(Divider1);
 
             CurvedButtons Settings_header = new CurvedButtons(new Size(menu["settingsHeaderSizeX"], menu["settingsHeaderSizeY"]),  //settingsHeaderSizeX //settingsHeaderSizeY
-               new Point(menu["settingsHeaderX"], menu["settingsHeaderY"]), "../../User Interface Recources/Settings_Header.png"); //settingsHeaderX //settingsHeaderY
+               new Point(menu["settingsHeaderX"], menu["settingsHeaderY"]), "../../src/User Interface Recources/Settings_Header.png"); //settingsHeaderX //settingsHeaderY
             this.Controls.Add(Settings_header);
 
             //ButtonSize //ButtonY
@@ -72,21 +72,21 @@ namespace GreenLight
 
             Weather = new CurvedButtons(new Size(_buttonSize, _buttonSize),
                 new Point(menu["buttonStart"] , menu["ButtonY"]), 30,                                         //weatherX 
-                "../../User Interface Recources/Weather_Setting_Button.png", this.BackColor);
+                "../../src/User Interface Recources/Weather_Setting_Button.png", this.BackColor);
             this.Controls.Add(Weather);
             SSM.Add(Weather);
             Weather.Click += (object obj, EventArgs args) => { ResetButtons(Weather, Weather.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Weather"); ; };
 
             CurvedButtons Vehicle = new CurvedButtons(new Size(_buttonSize, _buttonSize),
                 new Point(menu["buttonStart"] + menu["ButtonX"], menu["ButtonY"]), 30,                                         //vehicleX
-                "../../User Interface Recources/Vehicle_Setting_Button.png", this.BackColor);
+                "../../src/User Interface Recources/Vehicle_Setting_Button.png", this.BackColor);
             this.Controls.Add(Vehicle);
             SSM.Add(Vehicle);
             Vehicle.Click += (object obj, EventArgs args) => { ResetButtons(Vehicle, Vehicle.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Vehicle"); ; };
 
             CurvedButtons Driver = new CurvedButtons(new Size(_buttonSize, _buttonSize),
                 new Point(menu["buttonStart"] + menu["ButtonX"] * 2, menu["ButtonY"]), 30,                                        //driverX
-                "../../User Interface Recources/Driver_Setting_Button.png", this.BackColor);
+                "../../src/User Interface Recources/Driver_Setting_Button.png", this.BackColor);
             this.Controls.Add(Driver);
             SSM.Add(Driver);
             Driver.Click += (object obj, EventArgs args) => { ResetButtons(Driver, Driver.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Driver"); ; };
@@ -100,7 +100,7 @@ namespace GreenLight
             this.Controls.Add(Divider3);
 
             CurvedButtons SimulationSpeed_header = new CurvedButtons(new Size(menu["speedHeaderSizeX"], menu["speedHeaderSizeY"]), //speedHeaderSizeX //speedHeaderSizeY
-                new Point(menu["speedHeaderX"], this.Height - menu["speedHeaderY"]), "../../User Interface Recources/Simulation_Speed_Header.png"); //speedHeaderX //speedHeaderY
+                new Point(menu["speedHeaderX"], this.Height - menu["speedHeaderY"]), "../../src/User Interface Recources/Simulation_Speed_Header.png"); //speedHeaderX //speedHeaderY
             this.Controls.Add(SimulationSpeed_header);
 
             Slider SimulationSpeed = new Slider(new Point(menu["speedX"], this.Height - menu["speedY"]), 1, 10); //speedX //speedY
@@ -117,7 +117,7 @@ namespace GreenLight
 
             CurvedButtons Start = new CurvedButtons(new Size(_buttonSize, _buttonSize),           //controlsX, controlsY
                 new Point(menu["buttonStart"], Form.Height - menu["controlsY"]), 35,
-                "../../User Interface Recources/Play_Simulation_Button.png", this.BackColor);
+                "../../src/User Interface Recources/Play_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Start);
             Start.Click += (object o, EventArgs ea) => {
                 General_Form.Main.SimulationScreen.Simulator.initSimulation();
@@ -126,7 +126,7 @@ namespace GreenLight
 
             CurvedButtons Pause = new CurvedButtons(new Size(60, 60),
                new Point(20, Form.Height - 80), 35,
-               "../../User Interface Recources/Pause_Button.png", this.BackColor);
+               "../../src/User Interface Recources/Pause_Button.png", this.BackColor);
             Pause.Hide();
             this.Controls.Add(Pause);
             Pause.BringToFront();
@@ -136,7 +136,7 @@ namespace GreenLight
 
             CurvedButtons Reset = new CurvedButtons(new Size(_buttonSize, _buttonSize),
                 new Point(menu["buttonStart"] + menu["ButtonX"], Form.Height - menu["controlsY"]), 35,
-                "../../User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
+                "../../src/User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
             
             this.Controls.Add(Reset);
             Reset.Click += (object o, EventArgs ea) =>
@@ -162,7 +162,7 @@ namespace GreenLight
 
             CurvedButtons Stop = new CurvedButtons(new Size(_buttonSize, _buttonSize),
                new Point(menu["buttonStart"] + menu["ButtonX"] * 2, Form.Height - menu["controlsY"]), 35,
-               "../../User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
+               "../../src/User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Stop);
             Stop.BringToFront();
             Stop.Click += (object obj, EventArgs args) => {
