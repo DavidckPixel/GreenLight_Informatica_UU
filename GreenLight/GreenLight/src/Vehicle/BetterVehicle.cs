@@ -144,6 +144,7 @@ namespace GreenLight
 
         public void SwitchRoad(AbstractRoad _road, int _laneIndex)
         {
+            
             this.currentRoad = _road;
             this.currentLane = this.currentRoad.Drivinglanes[_laneIndex - 1];
         }
