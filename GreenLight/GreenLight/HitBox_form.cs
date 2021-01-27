@@ -75,22 +75,22 @@ namespace GreenLight
         {
             this.Size = new Size(1000, 1000);
 
-            /*
-            test1 = new RectHitbox(new Point(50, 50), new Point(150, 50), new Point(150, 200), new Point(250, 200));
-            test2 = new RectHitbox(new Point(300, 50), new Point(400, 50), new Point(300, 200), new Point(400, 200));
-            test3 = new RectHitbox(new Point(550, 50), new Point(650, 50), new Point(450, 200), new Point(550, 200));
-            test4 = new RectHitbox(new Point(50, 250), new Point(150, 250), new Point(200, 400), new Point(300, 400));
-            test5 = new RectHitbox(new Point(550, 250), new Point(650, 250), new Point(400, 400), new Point(500, 400));
-            test6 = new RectHitbox(new Point(150, 400), new Point(300, 450), new Point(150, 500), new Point(300, 550));
-            test7 = new RectHitbox(new Point(450, 450), new Point(600, 400), new Point(450, 550), new Point(600, 500));
-            test8 = new RectHitbox(new Point(750, 100), new Point(950, 100), new Point(750, 150), new Point(950, 150));
-            test9 = new RectHitbox(new Point(700, 250), new Point(850, 200), new Point(700, 350), new Point(850, 300));
-            test10 = new RectHitbox(new Point(950, 200), new Point(1100, 250), new Point(950, 300), new Point(1100, 350));
-            test11 = new RectHitbox(new Point(800, 400), new Point(900, 400), new Point(650, 550), new Point(750, 550));
-            test12 = new RectHitbox(new Point(950, 400), new Point(1050, 400), new Point(1100, 550), new Point(1200, 550));
-            test13 = new RectHitbox(new Point(800, 600), new Point(900, 600), new Point(700, 750), new Point(800, 750));
+            
+            test1 = new RectHitbox(new Point(50, 50), new Point(150, 50), new Point(150, 200), new Point(250, 200), Color.Yellow);
+            test2 = new RectHitbox(new Point(300, 50), new Point(400, 50), new Point(300, 200), new Point(400, 200), Color.Yellow);
+            test3 = new RectHitbox(new Point(550, 50), new Point(650, 50), new Point(450, 200), new Point(550, 200), Color.Yellow);
+            test4 = new RectHitbox(new Point(50, 250), new Point(150, 250), new Point(200, 400), new Point(300, 400), Color.Yellow);
+            test5 = new RectHitbox(new Point(550, 250), new Point(650, 250), new Point(400, 400), new Point(500, 400), Color.Yellow);
+            test6 = new RectHitbox(new Point(150, 400), new Point(300, 450), new Point(150, 500), new Point(300, 550), Color.Yellow);
+            test7 = new RectHitbox(new Point(450, 450), new Point(600, 400), new Point(450, 550), new Point(600, 500), Color.Yellow);
+            test8 = new RectHitbox(new Point(750, 100), new Point(950, 100), new Point(750, 150), new Point(950, 150), Color.Yellow);
+            test9 = new RectHitbox(new Point(700, 250), new Point(850, 200), new Point(700, 350), new Point(850, 300), Color.Yellow);
+            test10 = new RectHitbox(new Point(950, 200), new Point(1100, 250), new Point(950, 300), new Point(1100, 350), Color.Yellow);
+            test11 = new RectHitbox(new Point(800, 400), new Point(900, 400), new Point(650, 550), new Point(750, 550), Color.Yellow);
+            test12 = new RectHitbox(new Point(950, 400), new Point(1050, 400), new Point(1100, 550), new Point(1200, 550), Color.Yellow);
+            test13 = new RectHitbox(new Point(800, 600), new Point(900, 600), new Point(700, 750), new Point(800, 750), Color.Yellow);
             //test14 = new RectHitbox(new Point(950, 600), new Point(1050, 600), new Point(1050, 750), new Point(1150, 750));
-            test14 = new RectHitbox(new Point(350, 850), new Point(400, 900), new Point(300, 900), new Point(350, 950));
+            test14 = new RectHitbox(new Point(350, 850), new Point(400, 900), new Point(300, 900), new Point(350, 950), Color.Yellow);
 
             //test7 = new RectHitbox(new Point(,), new Point(,), new Point(,), new Point(,));
             hitboxes.Add(test1);
@@ -107,7 +107,7 @@ namespace GreenLight
             hitboxes.Add(test12);
             hitboxes.Add(test13);
             hitboxes.Add(test14);
-            */
+            
 
             /*
             
@@ -150,8 +150,8 @@ namespace GreenLight
             hitboxes.Add(Under8); 
             */
 
-            Weirdbox = new RectHitbox(new Point(32,93), new Point(32,163), new Point(496,200), new Point(496,270), Color.Red);
-            hitboxes.Add(Weirdbox);
+            //Weirdbox = new RectHitbox(new Point(32,93), new Point(32,163), new Point(496,200), new Point(496,270), Color.Red);
+            //hitboxes.Add(Weirdbox);
 
 
             Q1 = new CurvedHitbox(new Point(25 , 425 ), new Point( 75, 425), new Point(400, 75 ), new Point(400, 125), "SE", Color.Yellow);

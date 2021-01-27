@@ -8,9 +8,11 @@ namespace GreenLight
 {
     public class SpeedSign : AbstractSign
     {
-        public SpeedSign(AbstractSignController _controller)
+        public SpeedSign(AbstractSignController _controller) : base()
         {
             this.speed = 50; //BaseSPEED
+            SpeedSignController _test = (SpeedSignController)_controller;
+            Console.WriteLine("CONTROLLLER: " + _test.ToString());
             controller = _controller;
         }
 
@@ -21,7 +23,8 @@ namespace GreenLight
 
         public override void Read(BetterAI _ai)
         {
-            _ai.ChangeTargetSpeed(this.speed / 10);
+            Console.WriteLine("CHANGING THE SPEED TO: " + this.speed / 10);
+            _ai.ChangeTargetSpeed(this.speed);
         }
 
         public int getSpeed()

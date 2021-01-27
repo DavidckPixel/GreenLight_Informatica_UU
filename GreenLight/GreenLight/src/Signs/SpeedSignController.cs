@@ -156,6 +156,7 @@ namespace GreenLight
 
         public override void onSignClick(AbstractSign _sign)
         {
+            Console.WriteLine("SIGN HAS BEEN SELECTED!!!");
             selected = (SpeedSign)_sign;
             openMenu();
         }

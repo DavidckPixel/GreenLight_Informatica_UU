@@ -11,7 +11,7 @@ namespace GreenLight
     {
         int x, y;
 
-        public StopSign(AbstractSignController _controller)
+        public StopSign(AbstractSignController _controller) : base()
         {
             controller = _controller;
         }

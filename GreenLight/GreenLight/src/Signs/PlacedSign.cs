@@ -55,7 +55,6 @@ namespace GreenLight
 
             Console.WriteLine("Dir " +  _dir);
 
-
             // g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
             if (Road.Type == "Diagonal")
             {
@@ -137,6 +136,7 @@ namespace GreenLight
         }
         public void setFlipped()
         {
+            Console.WriteLine("Flipped!");
             flipped = !flipped;
             setLocation();
         }
@@ -163,7 +163,7 @@ namespace GreenLight
 
             try
             {
-                List<LanePoints> _lanepoints = this.Road.Drivinglanes[_outerLane].points;
+                List<LanePoints> _lanepoints = this.Road.Drivinglanes[this.Road.lanes / 2].points;
                 float _shortDistance = 2000;
                 Point l = new Point(-100, -100);
                 Point h = new Point(-100, -100);
@@ -198,7 +198,6 @@ namespace GreenLight
                 if (Road.Type == "Diagonal")
                 {
 
-
                     if (Road.slp == 0)
                     {
                         if (_temp1.Y == _temp2.Y)
@@ -226,6 +225,18 @@ namespace GreenLight
             {
 
             }
+
+
+            Point[] _points;
+            if (!flipped)
+            {
+                _points = RoadMath.hitBoxPointsDiagonal(this.Location, this.Hitboxoffset, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(this.Location, this.Hitboxoffset));
+            }
+            else
+            {
+                _points = RoadMath.hitBoxPointsDiagonal(this.Hitboxoffset, this.Location, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(this.Hitboxoffset, this.Location));
+            }
+            this.Hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Red);
         }
 
         public void SignFlip()
