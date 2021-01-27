@@ -10,7 +10,7 @@ namespace GreenLight
     {
         int prioritylevel; 
         
-        public YieldSign(AbstractSignController _controller)
+        public YieldSign(AbstractSignController _controller) : base()
         {
             this.prioritylevel = 1;
             controller = _controller;

@@ -9,7 +9,7 @@ namespace GreenLight
     public class PrioritySign : AbstractSign
     {
         int prioritylevel;
-        public PrioritySign(AbstractSignController _controller)
+        public PrioritySign(AbstractSignController _controller) : base()
         {
             this.prioritylevel = 3;
             controller = _controller;

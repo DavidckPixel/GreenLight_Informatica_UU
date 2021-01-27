@@ -135,13 +135,20 @@ namespace GreenLight
                     PlacedSign _sign = _selectedRoad.Signs.Find(x => x.Hitbox.Contains(mea.Location));
                     if (_sign == null)
                     {
+                        _sign = _selectedRoad.Signs.First();
+                        Console.WriteLine(_sign.Hitbox.Topcord);
+                        Console.WriteLine(mea.Location);
+                        Console.WriteLine("No sign could be found");
                         return;
                     }
-                    _sign.controller.onSignClick(_sign);
-                    AbstractSign _Sign = _sign.Sign;
+
+                    Console.WriteLine("SIGN FOUND!");
+                    _sign.Sign.controller.onSignClick(_sign.Sign);
+                    return;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Console.WriteLine(e);
                     return;
                 }
             }
@@ -212,11 +219,12 @@ namespace GreenLight
 
         public void flipSing(AbstractSign _temp)
         {
-            foreach(PlacedSign _placed in Signs )
+            PlacedSign _placed = this.placedSign.Find(x => x.Sign == _temp);
+            if(_placed == null)
             {
-                if (_placed.Sign == _temp)
-                    _placed.setFlipped();
+                return;
             }
+            _placed.SignFlip();
         }
 
 
