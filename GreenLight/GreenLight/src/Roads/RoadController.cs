@@ -559,8 +559,17 @@ namespace GreenLight
 
             foreach (DrivingLane _drivinglane in selectedRoad.Drivinglanes)
             {
-                Point _one = _drivinglane.points.First().cord;
-                Point _two = _drivinglane.points.Last().cord;
+                Point _one, _two;
+                if (_drivinglane.flipped)
+                {
+                    _one = _drivinglane.points.First().cord;
+                    _two = _drivinglane.points.Last().cord;
+                }
+                else
+                {
+                    _one = _drivinglane.points.Last().cord;
+                    _two = _drivinglane.points.First().cord;
+                }
 
                 //Console.WriteLine("DRIVING POINTS FOR THE CURVED LINE ARE: {0} -- {1}", _one, _two);
 
@@ -658,7 +667,7 @@ namespace GreenLight
                         _twooffset = new Point((int)(((_twooffset.X) * _scale) + offset), (int)((_twooffset.Y + Roads.Config.scaleOffset) * _scale));
                     }
                 }
-
+                
                 Point[] _points = new Point[4];
                 if (selectedRoad.Type == "Curved" || selectedRoad.Type == "Curved2")
                 {
