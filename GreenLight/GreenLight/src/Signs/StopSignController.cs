@@ -15,6 +15,7 @@ namespace GreenLight
         public CurvedButtons SaveButton, CancelButton;
         public PictureBox pb1;
         public StopSign selected;
+        public AbstractSign thisSign;
 
         public Point point1;
         public Point point2;
@@ -46,13 +47,8 @@ namespace GreenLight
             FlipLabel.TextAlign = ContentAlignment.MiddleCenter;
             this.settingScreen.Controls.Add(FlipLabel);
 
-<<<<<<< Updated upstream
             CurvedButtons FlipButton = new CurvedButtons(new Size(100, 40), new Point(100, 170), 25, "../../User Interface Recources/Custom_Button.png", "Flip sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            FlipButton.Click += (object o, EventArgs ea) => { };// General_Form.Main.BuildScreen.builder.signController.stopSign.flipSign(); };
-=======
-            CurvedButtons FlipButton = new CurvedButtons(new Size(250, 40), new Point(30, 170), 25, "../../User Interface Recources/Custom_Button.png", "Flip sign to the other side", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            FlipButton.Click += (object o, EventArgs ea) => { flipSign(); };
->>>>>>> Stashed changes
+            FlipButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.flipSing(thisSign); };
             this.settingScreen.Controls.Add(FlipButton);
 
             QuestionLabel = new Label();
@@ -92,11 +88,6 @@ namespace GreenLight
         public void placeSign()
         {
             this.settingScreen.Hide();
-        }
-
-        public void flipSign()
-        {
-            
         }
 
         public void errorMessage(string _error)

@@ -39,7 +39,7 @@ namespace GreenLight
 
                 setLocation();
         }
-        public override void Read(AI _ai)
+        public override void Read(BetterAI _ai)
         {
             throw new NotImplementedException();
         }
@@ -53,13 +53,9 @@ namespace GreenLight
             int Y2 = Location.Y - (_dir - 180) / 9 * 2;
             int Y3 = Location.Y - (20 - (_dir - 270) / 9 * 2);
 
-<<<<<<< Updated upstream
-            if (_dir >= 0 && _dir <= 20) 
-=======
             Console.WriteLine(_dir);
 
             if (_dir >= 0 && _dir <= 20)
->>>>>>> Stashed changes
             {
                // this.Hitbox = new RectHitbox(new Point(Location.X - 15, Location.Y + 5), new Point(Location.X + 15, Location.Y + 5), new Point(Location.X - 15, Location.Y + 35), new Point(Location.X + 5, Location.Y + 35), Color.Red);
             }
