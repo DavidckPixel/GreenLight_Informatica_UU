@@ -91,13 +91,24 @@ namespace GreenLight
 
             int _dir = (int)this.selectedRoad.Drivinglanes.First().AngleDir;
 
-            if (_dir >= 0 && _dir < 180)
+            if (selectedRoad.Type == "Diagonal")
             {
-                _flipped = true;
+                if (_dir >= 0 && _dir < 180)
+                {
+                    _flipped = false;
+                }
+                else if (_dir >= 180 && _dir < 360)
+                {
+                    _flipped = true;
+                }
             }
-            else if (_dir >= 180 && _dir < 360)
+            else if (selectedRoad.Type == "Curved")
             {
                 _flipped = false;
+            }
+            else if(selectedRoad.Type == "Curved2")
+            {
+                _flipped = true;
             }
         }
         

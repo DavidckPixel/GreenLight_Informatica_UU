@@ -49,51 +49,67 @@ namespace GreenLight
             int offset = Math.Abs((_dir - 180) - 45) / 45 * 2;
             int X1 = Location.X - ((_dir - 90) / 9) * 2;
             int X2 = Location.X - (20 - (_dir - 180) / 9 * 2 * Math.Abs((_dir - 225) / 45 * 2));
-            int Y1 = Location.Y + 3;
+            int Y1 = Location.Y - 3;
             int Y2 = Location.Y - (_dir - 180) / 9 * 2;
             int Y3 = Location.Y - (20 - (_dir - 270) / 9 * 2);
 
-            Console.WriteLine(_dir);
+            Console.WriteLine("Dir " +  _dir);
 
-            if (_dir >= 0 && _dir <= 20)
+
+            // g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
+            if (Road.Type == "Diagonal")
             {
-               // this.Hitbox = new RectHitbox(new Point(Location.X - 15, Location.Y + 5), new Point(Location.X + 15, Location.Y + 5), new Point(Location.X - 15, Location.Y + 35), new Point(Location.X + 5, Location.Y + 35), Color.Red);
-            }
-            if (_dir > 20 && _dir <= 45 || _dir >= 270)
-            {
-              //  this.Hitbox = new RectHitbox(new Point(Hitboxoffset.X - 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X - 15, Hitboxoffset.Y + 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y + 15), Color.Red);
-            }
-            if (_dir >= 0 && _dir <= 90)
-            {
-                if (signType == "speedSign")
+
+                if (_dir >= 0 && _dir <= 20)
                 {
-                    this.speedSign.Location = new Point(Location.X, Location.Y);
-                    this.speedSign.speed = Sign.speed;
-                    this.Sign_image = speedSign.speedImage();
+                    // this.Hitbox = new RectHitbox(new Point(Location.X - 15, Location.Y + 5), new Point(Location.X + 15, Location.Y + 5), new Point(Location.X - 15, Location.Y + 35), new Point(Location.X + 5, Location.Y + 35), Color.Red);
                 }
-                g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
-            }
-            else if (_dir > 90 && _dir < 180)
-            {
-                if (signType == "speedSign")
+                if (_dir > 20 && _dir <= 45 || _dir >= 270)
                 {
-                    this.speedSign.Location = new Point(X1, Y1);
-                    this.speedSign.speed = Sign.speed;
-                    this.Sign_image = speedSign.speedImage();
+                    //  this.Hitbox = new RectHitbox(new Point(Hitboxoffset.X - 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y - 15), new Point(Hitboxoffset.X - 15, Hitboxoffset.Y + 15), new Point(Hitboxoffset.X + 15, Hitboxoffset.Y + 15), Color.Red);
                 }
-                g.DrawImage(Sign_image, X1, Y1, 20, 20);
-            }
-            else if (_dir >= 180 && _dir < 270)
-            {
-                if (signType == "speedSign")
+                if (_dir >= 0 && _dir <= 90)
                 {
-                    this.speedSign.Location = new Point(X2, Y2);
-                    this.speedSign.speed = Sign.speed;
-                    this.Sign_image = speedSign.speedImage();
+                    if (signType == "speedSign")
+                    {
+                        this.speedSign.Location = new Point(Location.X, Location.Y);
+                        this.speedSign.speed = Sign.speed;
+                        this.Sign_image = speedSign.speedImage();
+                    }
+                    g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
                 }
-                g.DrawImage(Sign_image, X2, Y2, 20, 20);
+                else if (_dir > 90 && _dir < 180)
+                {
+                    if (signType == "speedSign")
+                    {
+                        this.speedSign.Location = new Point(X1, Y1);
+                        this.speedSign.speed = Sign.speed;
+                        this.Sign_image = speedSign.speedImage();
+                    }
+                    g.DrawImage(Sign_image, X1, Y1, 20, 20);
+                }
+                else if (_dir >= 180 && _dir < 270)
+                {
+                    if (signType == "speedSign")
+                    {
+                        this.speedSign.Location = new Point(X2, Y2);
+                        this.speedSign.speed = Sign.speed;
+                        this.Sign_image = speedSign.speedImage();
+                    }
+                    g.DrawImage(Sign_image, X2, Y2, 20, 20);
+                }
+                else
+                {
+                    if (signType == "speedSign")
+                    {
+                        this.speedSign.Location = new Point(Location.X, Y3);
+                        this.speedSign.speed = Sign.speed;
+                        this.Sign_image = speedSign.speedImage();
+                    }
+                    g.DrawImage(Sign_image, Location.X, Y3, 20, 20);
+                }
             }
-            else
+            else if (Road.Type == "Curved")
             {
                 if (signType == "speedSign")
                 {
@@ -101,8 +117,20 @@ namespace GreenLight
                     this.speedSign.speed = Sign.speed;
                     this.Sign_image = speedSign.speedImage();
                 }
-                g.DrawImage(Sign_image, Location.X, Y3, 20, 20);
+                g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
             }
+            else if (Road.Type == "Curved2")
+            {
+                if (signType == "speedSign")
+                {
+                    this.speedSign.Location = new Point(Location.X, Y3);
+                    this.speedSign.speed = Sign.speed;
+                    this.Sign_image = speedSign.speedImage();
+                }
+                g.DrawImage(Sign_image, Location.X - 20, Location.Y, 20, 20);
+            }
+
+            
             this.Hitbox.Draw(g);
 
             //g.FillRectangle(Notsolid, this.Hitbox);
@@ -121,13 +149,13 @@ namespace GreenLight
 
             if (this.flipped)
             {
-                _outerLane = _lanes - 1; //1
-                _direction = -1;
+                _outerLane = 0;
+                _direction = 1;
             }
             else
             {
-                _outerLane = _lanes - 2; // _lanes -1
-                _direction = 1;
+                _outerLane = _lanes - 1;
+                _direction = -1;
             }
 
             if (_lanes == 1)
