@@ -190,10 +190,15 @@ namespace GreenLight
 
                         if (x.getLanes() == _lanes)
                         {
-                            if (_lanes % 2 == 0)
+                            if (_lanes % 2 == 0 && _lanes > 2)
                             {
-                                _temp3 = x.Drivinglanes[1].points.First().cord;
-                                _temp4 = x.Drivinglanes[1].points.Last().cord;
+                                _temp3 = x.Drivinglanes[_lanes/2 + 1].points.First().cord;
+                                _temp4 = x.Drivinglanes[_lanes/2 + 1].points.Last().cord;
+                            }
+                            else if(_lanes % 2 == 0)
+                            {
+                                _temp3 = x.Drivinglanes[0].points.First().cord;
+                                _temp4 = x.Drivinglanes[0].points.Last().cord;
                             }
 
                             if ((_point1 == _temp1 || Math.Sqrt(Math.Pow(_point1.X - _temp1.X, 2) + Math.Pow(_point1.Y - _temp1.Y, 2)) <= Grid.Config.SpacingWidth + 1) && ( _point1 != _temp3 && _point1 != _temp4))
