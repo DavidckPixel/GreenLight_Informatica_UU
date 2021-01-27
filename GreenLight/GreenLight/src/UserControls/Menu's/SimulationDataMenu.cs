@@ -68,10 +68,10 @@ namespace GreenLight
             Multiplier = (int)_multiplier;
             Last_Simulation_time = Simulation_time;
 
-            General_Form.Main.SimulationScreen.Simulator.ChangeSimIntervalTimer(multiplier);
-            if (Stopwatch.IsRunning)
-                Stopwatch.Restart();
-            else Stopwatch.Reset();
+            General_Form.Main.SimulationScreen.Simulator.ChangeSimIntervalTimer(_multiplier);
+            if (stopWatch.IsRunning)
+                stopWatch.Restart();
+            else stopWatch.Reset();
         }
 
         private void SetTime(object o, EventArgs EA)

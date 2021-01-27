@@ -74,7 +74,7 @@ namespace GreenLight
                 General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "X"; 
             };
             this.Controls.Add(Hand);
-            ESRM.Add(Hand);
+            esrmButtons.Add(Hand);
 
             CurvedButtons Diagonal_Road = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Road_Button.png", this.BackColor);
             Diagonal_Road.Click += (object o, EventArgs EA) => 
@@ -84,7 +84,7 @@ namespace GreenLight
                 General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Diagonal";                 
             };
             this.Controls.Add(Diagonal_Road);
-            ESRM.Add(Diagonal_Road);
+            esrmButtons.Add(Diagonal_Road);
 
             CurvedButtons Curved_Road = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Curved_Road_Button.png", this.BackColor);
             Curved_Road.Click += (object o, EventArgs EA) => 
@@ -94,7 +94,7 @@ namespace GreenLight
                 General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Curved"; 
             };
             this.Controls.Add(Curved_Road);
-            ESRM.Add(Curved_Road);
+            esrmButtons.Add(Curved_Road);
 
             CurvedButtons Curved_Road2 = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../src/User Interface Recources/CurveHollow_Button.png", this.BackColor);
             Curved_Road2.Click += (object o, EventArgs EA) => 
@@ -104,7 +104,7 @@ namespace GreenLight
                 General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Curved2"; 
             };
             this.Controls.Add(Curved_Road2);
-            ESRM.Add(Curved_Road2);
+            esrmButtons.Add(Curved_Road2);
 
             Hand = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Hand_Button.png", this.BackColor);
             Hand.Click += (object o, EventArgs EA) => { ResetButtons(Hand, Hand.Image_path); General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "X"; };

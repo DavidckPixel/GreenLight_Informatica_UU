@@ -70,8 +70,7 @@ namespace GreenLight
         {
             this.availableVehicleStats.Clear();
 
-            List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSVM.selectionBox.elementsSelected;
-            //List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSVM.Selection_box.Elements_available;
+            List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSVM.selectionBox.elementsAvailable;
             availableVehicleStatsString.ForEach(x => this.availableVehicleStats.Add(getVehicleStat(x)));
             this.availableVehicleStats.RemoveAll(x => x == null);
 

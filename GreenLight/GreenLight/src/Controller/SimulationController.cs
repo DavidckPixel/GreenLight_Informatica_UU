@@ -95,7 +95,7 @@ namespace GreenLight
         {
             this.vehicleController.vehicleList.Clear();
             this.aiController.driverlist.Clear();
-            General_Form.Main.UserInterface.SimDataM.Stopwatch.Reset();
+            General_Form.Main.UserInterface.SimDataM.stopWatch.Reset();
 
             initSimulation();
         }
