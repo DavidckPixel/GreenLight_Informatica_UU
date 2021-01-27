@@ -66,8 +66,6 @@ namespace GreenLight
         public bool isSwitchingLanes;
         public int switchCount;
 
-        
-
         public BetterAI(DriverStats _stats)
         {
             this.reactionSpeed = _stats.ReactionTime;
@@ -89,6 +87,18 @@ namespace GreenLight
         {
             this.vehicle = _vehicle;
             profile = new DriverProfile(this.vehicle.physics);
+
+            Random ran = new Random();
+            int _mood = 1; //can be 0 / 1 / 2
+            if(this.ruleBreakingChance > 10 && this.speedRelativeToLimit > 9)
+            {
+                _mood = 2;
+            }
+            else if(this.speedRelativeToLimit < -9)
+            {
+                _mood = 0;
+            }
+            profile.mood = profile.faceType.speech[_mood][ran.Next(0, profile.faceType.speech[_mood].Count)];
 
             initGPS(_startNode);
         }
@@ -648,6 +658,7 @@ namespace GreenLight
 
             if (this.vehicle.currentRoad.roadtype == "Cross")
             {
+                Console.WriteLine("Leaving Crossroad NOW!");
                 this.LeavingCrossRoadSide();
             }
 

@@ -141,7 +141,7 @@ namespace GreenLight
             this.Controls.Add(Reset);
             Reset.Click += (object o, EventArgs ea) =>
             {
-                General_Form.Main.SimulationScreen.Simulator.initSimulation();
+                General_Form.Main.SimulationScreen.Simulator.resetSimulation();
             };
             Reset.BringToFront();
 
@@ -166,6 +166,7 @@ namespace GreenLight
             this.Controls.Add(Stop);
             Stop.BringToFront();
             Stop.Click += (object obj, EventArgs args) => {
+                General_Form.Main.SimulationScreen.Simulator.resetSimulation();
                 General_Form.Main.SwitchControllers(General_Form.Main.BuildScreen);
                 General_Form.Main.UserInterface.SimDataM.Reset_timer();
                 Pause.Hide();

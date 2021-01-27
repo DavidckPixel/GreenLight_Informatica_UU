@@ -41,6 +41,7 @@ namespace GreenLight.src.Data_Collection
 
             // Set title
             this.brakeChart.Titles.Add("Brake Ticks");
+            this.averageSpeed.Titles.Add("Average Speed per Second");
 
             this.screen.Controls.Add(this.averageSpeed);
             this.screen.Controls.Add(this.brakeChart);
@@ -48,7 +49,6 @@ namespace GreenLight.src.Data_Collection
             this.brakeChart.Hide();
             this.averageSpeed.Hide();
 
-            this.collector.AddBrakeData(100);
             this.screen.Invalidate();
         }
 
@@ -57,6 +57,8 @@ namespace GreenLight.src.Data_Collection
             this.brakeChart.Series.Clear();
             List<int> _series;
             List<int> _points;
+
+            Console.WriteLine("Updating the big chart!");
 
             collector.data.GetBrakeData(out _series,out _points);
 
@@ -69,6 +71,13 @@ namespace GreenLight.src.Data_Collection
                 series.ChartArea = "Test";
                 this.brakeChart.Series.Add(series);
             }
+        }
+
+        public void DataControllerReset()
+        {
+            this.collector = new DataCollector(this);
+            this.UpdateBrakeChart();
+            this.UpdateBrakePerTickChart();
         }
 
         public void SmallUpdateBrakeChart(int _serie) //DO NOT USE
@@ -106,6 +115,8 @@ namespace GreenLight.src.Data_Collection
         {
             this.averageSpeed.Series.Clear();
             List<Tuple<int,double>> _data = collector.data.GetAverageSpeedPerTick();
+
+            Console.WriteLine("Updating the big chart!");
 
             Series series = new Series("Average speed for all cars");
             series.ChartType = SeriesChartType.Spline;
