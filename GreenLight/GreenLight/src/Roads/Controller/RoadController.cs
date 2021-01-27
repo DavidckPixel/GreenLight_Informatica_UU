@@ -27,6 +27,7 @@ namespace GreenLight
         public PictureBox Screen;
         public OriginPointController OPC = new OriginPointController();
         public string roadType = "D";
+        public string lastType = "X";
 
         private Form settingScreen;
         private PictureBox settingScreenImage;
