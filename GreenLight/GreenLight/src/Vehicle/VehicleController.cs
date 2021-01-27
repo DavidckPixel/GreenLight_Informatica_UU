@@ -38,15 +38,29 @@ namespace GreenLight
             if (_stats == null)
             {
                 Random ran = new Random();
-                int _index = ran.Next(0, availableVehicleStats.Count() - 1);
-                _stats = availableVehicleStats[_index];
+
+                int _totalOccurance = (int)this.availableVehicleStats.Sum(x => x.Occurance);
+                int _ranNumber = ran.Next(0, _totalOccurance);
+
+                foreach (VehicleStats _stat in this.availableVehicleStats)
+                {
+                    _totalOccurance =- (int)_stat.Occurance;
+
+                    if (_totalOccurance <= 0)
+                    {
+                        _stats = _stat;
+                    }
+                }
+
+                VehicleTypeConfig.ReadJson();
+                _stats = VehicleTypeConfig.vehicles.First();
             }
 
             BetterVehicle _vehicle = new BetterVehicle(_stats, _node, this.simController.aiController.GetDriver());
 
             if (true)
             {
-                General_Form.Main.SimulationScreen.Simulator.dataController.collector.addVehicleToCollect(_vehicle);
+                General_Form.Main.DataScreen.dataController.collector.addVehicleToCollect(_vehicle);
             }
 
             vehicleList.Add(_vehicle);
@@ -57,6 +71,7 @@ namespace GreenLight
             this.availableVehicleStats.Clear();
 
             List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSVM.selectionBox.elementsSelected;
+            //List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSVM.Selection_box.Elements_available;
             availableVehicleStatsString.ForEach(x => this.availableVehicleStats.Add(getVehicleStat(x)));
             this.availableVehicleStats.RemoveAll(x => x == null);
 

@@ -21,7 +21,7 @@ namespace GreenLight
             ReadJson();
         }
 
-        private static void ReadJson()
+        public static void ReadJson()
         {
             try
             {
@@ -37,6 +37,8 @@ namespace GreenLight
             {
                 Console.WriteLine(e);
             }
+
+            Console.WriteLine("Amount of loaded vehicles = {0}", vehicles.Count());
         }
 
         static public void SaveJson()

@@ -5,3 +5,5 @@ Cross C:\Users\niels\Downloads\Cross.txt ../../Recent_projects/Images/Cross.png
 hitbox C:\Users\niels\Downloads\hitbox.txt ../../Recent_projects/Images/hitbox.png
 SingleLaneJunction C:\Users\DaanJ\Documents\GitHub\GreenLight_Informatica_UU\GreenLight\GreenLight\SingleLaneJunction.txt ../../Recent_projects/Images/SingleLaneJunction.png
 SingleLaneJunction C:\Users\DaanJ\Documents\GitHub\GreenLight_Informatica_UU\GreenLight\GreenLight\Presets\SingleLaneJunction.txt ../../Recent_projects/Images/SingleLaneJunction.png
+DefaultOutputName C:\Users\david\Documents\DefaultOutputName.txt ../../Recent_projects/Images/DefaultOutputName.png
+NiceTest2 C:\Users\david\Documents\NiceTest2.txt ../../Recent_projects/Images/NiceTest2.png
