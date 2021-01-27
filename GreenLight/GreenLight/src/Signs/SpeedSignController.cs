@@ -72,6 +72,7 @@ namespace GreenLight
             Combobox1 = new ComboBox();
             Combobox1.Items.AddRange(new object[] { "30", "40", "50", "60", "70", "80", "90", "100", "110", "120", "130" });
             Combobox1.DropDownWidth = 75;
+            Combobox1.DropDownStyle = ComboBoxStyle.DropDownList;
             Combobox1.Text = "50";
             Combobox1.Location = new Point(100, 115);
 
