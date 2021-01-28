@@ -13,40 +13,40 @@ namespace GreenLight
 {
     public partial class DataSubMenu : UserControl
     {
-        public DataSubMenu(int Menu_width, Form Form)
+        public DataSubMenu(int _menuwidth, Form _form)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(UserControls.Config.standardSubMenu["subMenuWidth"], Form.Height);
-            this.Location = new Point(Form.Width - Menu_width, Form.Height);
-            Initialize(Form, Menu_width, DrawData.Dosis_font_family);
+            this.Size = new Size(UserControls.Config.standardSubMenu["subMenuWidth"], _form.Height);
+            this.Location = new Point(_form.Width - _menuwidth, _form.Height);
+            Initialize(_form, _menuwidth, DrawData.Dosis_font_family);
         }
 
-        public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        public void AdjustSize(Form _form, int _submenuwidth, FontFamily _dosisfontfamily)
         {
-            this.Size = new Size(Sub_menu_width, Form.Height);
-            this.Location = new Point(Form.Width - Sub_menu_width, 0);
+            this.Size = new Size(_submenuwidth, _form.Height);
+            this.Location = new Point(_form.Width - _submenuwidth, 0);
             this.Controls.Clear();
-            Initialize(Form, Sub_menu_width, DrawData.Dosis_font_family);
+            Initialize(_form, _submenuwidth, DrawData.Dosis_font_family);
 
         }
 
-        private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        private void Initialize(Form _form, int _submenuwidth, FontFamily _dosisfontfamily)
         {
             Dictionary<string, int> menu = UserControls.Config.simSubMenu;
 
-            CurvedButtons Logo = new CurvedButtons(Form, 1);
+            CurvedButtons Logo = new CurvedButtons(_form, 1);
             Logo.Location = new Point(UserControls.Config.standardSubMenu["logoX"], UserControls.Config.standardSubMenu["logoY"]);
             this.Controls.Add(Logo);
 
-            MovePanel Drag_pad = new MovePanel(Form);
+            MovePanel Drag_pad = new MovePanel(_form);
             this.Controls.Add(Drag_pad);
 
             CurvedButtons Divider1 = new CurvedButtons();
             Divider1.Location = new Point(UserControls.Config.standardSubMenu["deviderX"], UserControls.Config.standardSubMenu["logoY"]);
             this.Controls.Add(Divider1);
 
-            CurvedButtons Settings_header = new CurvedButtons(new Size(menu["settingsHeaderSizeX"], menu["settingsHeaderSizeY"]),  //settingsHeaderSizeX //settingsHeaderSizeY
-               new Point(menu["settingsHeaderX"], menu["settingsHeaderY"]), "../../src/User Interface Recources/Settings_Header.png"); //settingsHeaderX //settingsHeaderY
+            CurvedButtons Settings_header = new CurvedButtons(new Size(menu["settingsHeaderSizeX"], menu["settingsHeaderSizeY"]), 
+               new Point(menu["settingsHeaderX"], menu["settingsHeaderY"]), "../../src/User Interface Recources/Settings_Header.png");
             this.Controls.Add(Settings_header);
 
             CurvedButtons ReturnButton = new CurvedButtons(new Size(200, 50), new Point(10, 500), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Return to Simulation", DrawData.Dosis_font_family, null, this.BackColor);

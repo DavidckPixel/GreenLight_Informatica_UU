@@ -19,7 +19,7 @@ namespace GreenLight
         public Tuple<int, int> imageIndex;
 
         public string mood;
-        private DriverProfileFace faceType;
+        public DriverProfileFace faceType;
         public Bitmap imgFace;
 
         public DriverProfile(World _physics)

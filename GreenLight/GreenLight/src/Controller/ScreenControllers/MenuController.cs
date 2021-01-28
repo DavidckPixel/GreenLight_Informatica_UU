@@ -48,7 +48,6 @@ namespace GreenLight
         {
             
             General_Form.Main.SwitchControllers(General_Form.Main.SimulationScreen);
-            GPS gps = new GPS(General_Form.Main.BuildScreen.builder.roadBuilder.roads);
         }
     }
 }

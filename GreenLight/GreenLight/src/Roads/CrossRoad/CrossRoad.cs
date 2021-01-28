@@ -180,6 +180,7 @@ namespace GreenLight
             DrawSides(g, "Left", new Point(point1.X - (int)(roadWidth / 2) - Extra/2, point1.Y - (int)(roadWidth / 2)), new Size(Extra/2, (int)(roadWidth)), _b);
             DrawSides(g, "Bottom", new Point(point1.X - (int)(roadWidth / 2), point1.Y + (int)(roadWidth / 2)), new Size((int)roadWidth, Extra/2), _b);
             DrawLine(g);
+
             this.hitbox.Draw(g);
 
             foreach(List<CrossArrow> _list in General_Form.Main.BuildScreen.builder.roadBuilder.AllCrossArrows)
@@ -277,6 +278,7 @@ namespace GreenLight
                 }
             }
         }
+
         public void ConsoleDump()
         {
             foreach (CrossRoadSide _side in sides)

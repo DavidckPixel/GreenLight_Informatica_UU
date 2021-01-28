@@ -10,40 +10,45 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
+    /* This is the Build main menu class. This class has a method AdjustSize to fit the size of the users window.
+     This user control is shown when the user is in the building screen.
+     Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
+
     public partial class BuildMainMenu : UserControl
     {
-        public BuildMainMenu(int Width, Form Form, FontFamily Dosis_font_family)
+        public BuildMainMenu(int _width, Form _form, FontFamily _dosisfontfamily)
         {
             this.BackColor = Color.FromArgb(196, 196, 198);
             this.Size = new Size(50,50);
-            this.Location = new Point(0, Form.Height - 50);
-            Initialize(Form, 50);
-            Form.SizeChanged += (object o, EventArgs EA) =>
+            this.Location = new Point(0, _form.Height - 50);
+            Initialize(_form, 50);
+
+            _form.SizeChanged += (object o, EventArgs EA) =>
             {
-                this.Size = new Size(Form.Width - Width, Form.Height);
+                this.Size = new Size(_form.Width - _width, _form.Height);
                 this.Controls.Clear();
-                Initialize(Form, Width);
+                Initialize(_form, _width);
             };
         }
 
-        public void Size_adjust(Form Form, int Sub_menu_width)
+        public void AdjustSize(Form _form, int _submenuwidth)
         {
             this.Size = new Size(50,50);
-            this.Location = new Point(0, Form.Height - 50);
+            this.Location = new Point(0, _form.Height - 50);
             this.Controls.Clear();
-            Initialize(Form,Sub_menu_width);
+            Initialize(_form,_submenuwidth);
         }
 
-        private void Initialize(Form Form, int Sub_menu_width) 
+        private void Initialize(Form _form, int _submenuwidth) 
         {
-            
-            this.BackColor = Color.FromArgb(196, 196, 198);
-            this.Size = new Size(Form.Width-Sub_menu_width, Form.Height);
-            int _ButtonSize = UserControls.Config.standardMainMenu["infobuttonsize"];
-            RoundButtons Info_button = new RoundButtons(new Size(_ButtonSize, _ButtonSize), new Point(10,0), "../../src/User Interface Recources/Info_Button.png");
-            Info_button.Click += (object o, EventArgs ea) => { System.Diagnostics.Process.Start("https://www.marcdejong.online/projects/green-light-district/"); };
+            int _buttonsize = UserControls.Config.standardMainMenu["infobuttonsize"];
 
-            this.Controls.Add(Info_button);
+            this.BackColor = Color.FromArgb(196, 196, 198);
+            this.Size = new Size(_form.Width-_submenuwidth, _form.Height);
+            RoundButtons _infobutton = new RoundButtons(new Size(_buttonsize, _buttonsize), new Point(10,0), "../../src/User Interface Recources/Info_Button.png");
+            _infobutton.Click += (object o, EventArgs ea) => { System.Diagnostics.Process.Start("https://www.marcdejong.online/projects/green-light-district/"); };
+
+            this.Controls.Add(_infobutton);
         }
 
         protected override CreateParams CreateParams
@@ -58,15 +63,14 @@ namespace GreenLight
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            // dont code anything here. Just leave blank
         }
 
         protected void InvalidateEx()
         {
-            if (Parent == null)
+            if (this.Parent == null)
                 return;
             Rectangle rc = new Rectangle(this.Location, this.Size);
-            Parent.Invalidate(rc, true);
+            this.Parent.Invalidate(rc, true);
         }
     }
 }

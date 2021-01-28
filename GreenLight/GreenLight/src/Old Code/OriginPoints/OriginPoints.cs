@@ -7,10 +7,12 @@ using System.Drawing;
 
 namespace GreenLight
 {
+    // This is the OriginPoints class, which we created to be the spawning point of vehicles.
+    // It was part of the simulation/GPS system before we decided to rewrite most of it.
+    // This class is now old code and not used anywhere in our project.
+
     public class OriginPoints
     {
-        //This class stores all current OriginPoints
-
         public int Weight, X, Y;
         public List<Point> lanes;
         public bool isConnection;

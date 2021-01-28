@@ -10,6 +10,11 @@ namespace GreenLight
 {
     public class WorldController : AbstractController
     {
+        //This class creates a Form on which you can change all of the world settings.
+        //It also allows you to add or delete profiles for these world settings
+        //Once changed, the settings will be updated to Earth.json using the WorldConfig class
+
+
         Form settingScreen;
         TextBox name, brakePwr, density, gravity, slip;
         Label nameLabel, brakePwrLabel, densityLabel, gravityLabel, slipLabel, entityTypeLabel;

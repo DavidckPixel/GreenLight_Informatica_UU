@@ -18,6 +18,8 @@ namespace GreenLight.src.Data_Collection
 
         public Data()
         {
+            Console.WriteLine("Initialized a new Data Collection!");
+
             seriesBrakeTicks = new List<int>();
             pointsBrakeTick = new List<int>();
             percBrakePerTick = new List<Tuple<int, int>>();

@@ -48,7 +48,7 @@ namespace GreenLight
       
         public CurvedButtons() // Divider 
         {
-            Curve = 1;
+            this.Curve = 1;
             this.Size = new Size(250, 5);
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Image = Image.FromFile("../../src/User Interface Recources/Sub_Menu_Divider.png");
@@ -56,7 +56,7 @@ namespace GreenLight
         
         public CurvedButtons(Size Header_size, Point Location, string FilePath) // Header
         {
-            Curve = 1;
+            this.Curve = 1;
             this.Size = Header_size;
             this.SizeMode = PictureBoxSizeMode.Zoom;
             this.Location = Location;
@@ -66,11 +66,10 @@ namespace GreenLight
         
         public CurvedButtons(Size _buttonsize, Point _location, int _curve, string _filepath, Color _backcolor) // Curved buttons
         {
-            Selected = false;
-            Image_path = _filepath;
-            Curve = _curve;
-            Backcolor = _backcolor;
-
+            this.Selected = false;
+            this.Image_path = _filepath;
+            this.Curve = _curve;
+            this.Backcolor = _backcolor;
             this.Cursor = Cursors.Hand;
             this.Location = _location;
             this.Size = _buttonsize;
@@ -83,7 +82,7 @@ namespace GreenLight
         
         public CurvedButtons(Form _form, int _curve) // Logo
         {
-            Curve = _curve;
+            this.Curve = _curve;
             this.Size = new Size(175, 70);
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Image = Image.FromFile("../../src/User Interface Recources/Logo.png");
@@ -101,8 +100,8 @@ namespace GreenLight
         
         public CurvedButtons(Size _buttonsize, Point _location, int _curve, string _filepath, string _text, FontFamily _dosisfontfamily, Form _form, Color _backcolor) // Curved buttons with text
         {
-            Curve = _curve;
-            Backcolor = _backcolor;
+            this.Curve = _curve;
+            this.Backcolor = _backcolor;
             this.Cursor = Cursors.Hand;
             this.Location = _location;
             this.Size = _buttonsize;
@@ -129,8 +128,8 @@ namespace GreenLight
 
         public CurvedButtons(Size _buttonsize, Point _location, int _curve, string _filepath, string _text, FontFamily _dosisfontfamily, Form _form, Color _backcolor, int _empty)
         {
-            Curve = _curve;
-            Backcolor = Color.FromArgb(142, 140, 144);
+            this.Curve = _curve;
+            this.Backcolor = Color.FromArgb(142, 140, 144);
             this.Cursor = Cursors.Hand;
             this.Location = _location;
             this.Size = _buttonsize;
@@ -148,7 +147,7 @@ namespace GreenLight
 
         public void Set_Image(string _filepath)
         {
-            Image_path = _filepath;
+            this.Image_path = _filepath;
         }
 
         private Bitmap LoadBitmap(string _filename)

@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
+    // This is the OriginPointController class, which we created to control everything that has to do with OriginPoints
+    // It was part of the simulation/GPS system before we decided to rewrite most of it.
+    // This class is now old code and not used anywhere in our project.
+
     public class OriginPointController
     {
         public List<OriginPoints> OriginPointsList = new List<OriginPoints> ();
@@ -18,55 +22,52 @@ namespace GreenLight
         Random rnd;
 
         public OriginPointController()
+        { }
+
+        //Adds an OriginPoint to the list of OriginPoints
+        public void AddOriginPoint(int weight, Point location) 
         {
-            //Console.WriteLine("new OPC");
-        }
-        public void AddOriginPoint(int weight, Point location) //Adds an OriginPoint to the list of OriginPoints
-        {
-            //Console.WriteLine("making an originpoint");
             foreach (OriginPoints _op in OriginPointsList)
             {
                 if (_op.X < location.X + 4 && _op.X > location.X - 4 && _op.Y < location.Y + 4 && _op.Y > location.Y - 4)
                 {
-                    //Console.WriteLine("returned on point" + _op);
                     return;
                 }
             }
+
             OriginPoints _temp = new OriginPoints(weight, location.X, location.Y, null, false);
             if (OriginPointsList.Find(x => x == _temp) == null)
             {
                 OriginPointsList.Add(_temp);
             }
-            //SaveJson();
         }
 
-        public void draw(Graphics g)        //Has to be called
+        //Draws all OriginPoint in the list and has to be called from another part of the project
+        public void draw(Graphics g)        
         {
             foreach (OriginPoints _op in OriginPointsList)
                 g.FillEllipse(Brushes.White, _op.X, _op.Y, 20, 20);
         }
 
-
-        public Point GetSpawnPoint //Returns a random OriginPoint based on its weight
+        //Returns a random OriginPoint based on its weight
+        public Point GetSpawnPoint 
         {
             get
             {
                 try
                 {
                     ConvertList();
-                    var probability = rnd.NextDouble() * sum;   //gets a number between 0 and the sum of all the weights
+                    var probability = rnd.NextDouble() * sum;
                     selected = converted.SkipWhile(i => i.Weight < probability).First();
                     return selected.Location;
                 }
                 catch
-                {
-                    //Console.WriteLine("No spawnpoints available.");
-                }
+                { }
                 return new Point (0,0);
             }
         }
 
-        public void ConvertList()   //list where every item gets it's own weight plus the sum of the weight of the previous items
+        public void ConvertList()   
         {
             converted = new List<VehicleOriginPoint<Point>>(OriginPointsList.Count);
             sum = 0;

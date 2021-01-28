@@ -11,7 +11,6 @@ namespace GreenLight
 {
     public class AIController : EntityController
     {
-        public List<AI> driverlist = new List<AI>();
         public DriverStats selectedAI;
         public List<DriverStats> availableDriverStats = new List<DriverStats>();
 
@@ -38,9 +37,11 @@ namespace GreenLight
         {
             this.availableDriverStats.Clear();
 
-            this.driverlist.Clear();
 
-            List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSDM.Selection_box.Elements_selected;
+
+            List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSDM.Selection_box.elementsSelected;
+
+         //   List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSDM.Selection_box.Elements_available;
             availableVehicleStatsString.ForEach(x => this.availableDriverStats.Add(getDriverStat(x)));
             this.availableDriverStats.RemoveAll(x => x == null);
 
@@ -58,9 +59,22 @@ namespace GreenLight
             if (_stats == null)
             {
                 Random ran = new Random();
-                int _index = ran.Next(0, this.availableDriverStats.Count() - 1);
-                _stats = this.availableDriverStats[_index];
-                Console.WriteLine("selected stats: " + _stats.RuleBreakingChance);
+
+                int _totalOccurance = this.availableDriverStats.Sum(x => x.Occurance);
+                int _ranNumber = ran.Next(0, _totalOccurance);
+
+                foreach(DriverStats _stat in this.availableDriverStats)
+                {
+                    _totalOccurance = -_stat.Occurance;
+
+                    if(_totalOccurance <= 0)
+                    {
+                        return _stat;
+                    }
+                }
+
+                AITypeConfig.ReadJson();
+                return AITypeConfig.aiTypes.First();
             }
 
             return _stats;
@@ -75,7 +89,7 @@ namespace GreenLight
                 AITypeConfig.aiTypes.Add(_temp);
             }
 
-            General_Form.Main.UserInterface.SimSDM.Selection_box.Add_Element(_temp.Name);
+            General_Form.Main.UserInterface.SimSDM.Selection_box.AddElement(_temp.Name);
         }
 
 

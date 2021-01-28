@@ -253,9 +253,10 @@ namespace GreenLight
 
         public override void Draw(Graphics g)
         {
+
             bool draw = General_Form.Main == null ? true : General_Form.Main.BuildScreen.Toggle;
 
-            if (draw)
+            if (draw && Visible)
             {
                 Brush Notsolid = new SolidBrush(Color.FromArgb(100, this.color));
                 Point[] _points = new Point[]

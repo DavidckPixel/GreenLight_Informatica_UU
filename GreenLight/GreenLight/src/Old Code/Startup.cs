@@ -9,19 +9,20 @@ using System.Drawing;
 
 namespace GreenLight
 {
+    // This was a quick temporary form for testing purposes, on which a few driving cars are simulated
+    // It was part of the simulation/GPS system before we decided to rewrite most of it.
+    // This class is now old code and not used anywhere in our project and cannot be used for tests anymore. 
+
     class Startup : Form
     {
-        //Quick temporary form for testing purposes, on which a few driving cars are simulated
-
         bool simulate;
         public List<AI> driverList = new List<AI> { };
         public List<bool> listchoice = new List<bool> { };
         public Startup()
         {
-            //createDriver();
             simulate = true;
             this.DoubleBuffered = true;
-            this.Paint += teken;
+            this.Paint += Draw;
 
             Thread run = new Thread(simulation);
             run.Start();
@@ -31,13 +32,9 @@ namespace GreenLight
 
         private void createDriver()
         {
-            /*Vehicle v = new Vehicle(new VehicleStats("Auto", 1353, 4.77f, 100, 4223, 2, 2.65f), 10, 10);
-            AI driver = new AI(v, new DriverStats("new driver", 250, 2, 0, 0));
-            driverList.Add(driver);*/
-
             for (int n = 0; simulate && n < 1; n++)
             {
-                Vehicle v = new Vehicle(new VehicleStats("Auto", 1353, 4.77f, 100, 4223, 0.3f, 2.65f, false, 1), 10, 10);
+                Vehicle v = new Vehicle(new VehicleStats("Car", 1353, 4.77f, 100, 4223, 0.3f, 2.65f, false, 1), 10, 10);
                 AI driver = new AI(v, new DriverStats("new driver", 250, 2, 0, 0, 50, false));
                 driverList.Add(driver);
                 listchoice.Add(true);
@@ -53,7 +50,7 @@ namespace GreenLight
             }
         }
 
-        public void teken(object o, PaintEventArgs pea)
+        public void Draw(object o, PaintEventArgs pea)
         {
             for (int t = 0; t < driverList.Count; t++)
             {
@@ -64,8 +61,6 @@ namespace GreenLight
                     {
                         listchoice[t] = false;
                         driverList[t].v.frame = 0;
-                        /*Console.WriteLine
-                         * ("Switch naar lijst 2 van vehicle " + t + ".");*/
                     }
                 }
                 else if (!listchoice[t] && driverList[t].v.frame <= 624)
@@ -75,7 +70,6 @@ namespace GreenLight
                     {
                         listchoice[t] = true;
                         driverList[t].v.frame = 0;
-                        /*Console.WriteLine("Switch naar lijst 1 van vehicle " + t + ".");*/
                     }
                 }
             }

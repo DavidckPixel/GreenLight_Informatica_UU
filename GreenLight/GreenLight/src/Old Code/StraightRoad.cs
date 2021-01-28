@@ -7,14 +7,14 @@ using System.Drawing;
 
 namespace GreenLight
 {
+    // This is the StraightRoad class, we created it in an early stage of our project to create horizontal and vertical roads
+    // This class is not used anymore since we decided the DiagonalRoad class could take care of horizontal and vertical roads without to much added complexity
+
     public class StraightRoad : AbstractRoad
     {
-
-        //This class is not used anymore
-
         private string dir;
 
-        private int roadwidth = 10; // HARDCODED WAARDE AANPASSEN
+        private int roadwidth = 10;
 
         public StraightRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "StraightRoad", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
@@ -22,7 +22,6 @@ namespace GreenLight
             this.Type = _type;
 
             Point[] _points = hitBoxPoints(_point1, _point2);
-            //Console.WriteLine("{0},{1},{2},{3}", _points[1], _points[0], _points[3], _points[2]);
             this.hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
 
             this.dir = _dir;
@@ -35,23 +34,8 @@ namespace GreenLight
 
         protected static DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thisLane, StraightRoad _road)
         {
-            Console.WriteLine("STARTPOINTS : {0} -- {1},   {2}", _point1, _point2, _road.dir);
-
             List<LanePoints> _lanePoints = new List<LanePoints>();
             Point _normpoint1 = _point1; Point _normpoint2 = _point2;
-
-            /*
-            if (this.dir == "N" || this.dir == "S")
-            {
-                _normpoint1 = new Point(_point1.X - this.roadwidth, _point1.Y);
-                _normpoint2 = new Point(_point2.X + this.roadwidth, _point2.Y);
-            }
-            else if (dir == "E" || this.dir == "W") 
-            {
-                _normpoint1 = new Point(_point1.Y - this.roadwidth, _point1.X);
-                _normpoint2 = new Point(_point2.Y + this.roadwidth, _point2.X);
-            } */
-           
 
             Tuple<int, int> _dir = _road.GetDirection(_normpoint1, _normpoint2);
             Point _prev = _normpoint1;
@@ -109,7 +93,7 @@ namespace GreenLight
         private DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
             string _Direction = this.dir;
-            int drivingLaneDistance = 20; // Hardcoded nog aanpassen!!
+            int drivingLaneDistance = 20;
 
             if (_Direction == "E" || _Direction == "W")
             {
@@ -197,22 +181,19 @@ namespace GreenLight
             _angle = (int)(Math.Atan2(yDiff, xDiff) * (180 / Math.PI));
             _angle = Math.Abs(_angle);
 
-            Console.WriteLine("Angle: {0}", _angle);
 
             if (_angle >= 45 && (_angle < 135 || _angle > 180))
             {
                 _points[0] = new Point(_one.X + _roadWidth, _one.Y);
-                _points[1] = new Point(_one.X - _roadWidth, _one.Y); //Hoogste punt Altijd
-                _points[2] = new Point(_two.X + _roadWidth, _two.Y); //Laagste Punt
+                _points[1] = new Point(_one.X - _roadWidth, _one.Y); 
+                _points[2] = new Point(_two.X + _roadWidth, _two.Y); 
                 _points[3] = new Point(_two.X - _roadWidth, _two.Y);
             }
             else
             {
 
-                Console.WriteLine("Kom je hier??");
-
-                _points[1] = new Point(_one.X, _one.Y - _roadWidth); //Hoogste punt, altijd
-                _points[2] = new Point(_two.X, _two.Y + _roadWidth); // Laagste Punt
+                _points[1] = new Point(_one.X, _one.Y - _roadWidth);
+                _points[2] = new Point(_two.X, _two.Y + _roadWidth); 
 
                 if (_one.Y + _roadWidth <= _two.Y - _roadWidth)
                 {
