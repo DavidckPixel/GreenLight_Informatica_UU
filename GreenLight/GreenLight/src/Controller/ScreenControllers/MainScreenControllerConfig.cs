@@ -8,8 +8,6 @@ namespace GreenLight
 {
     public class MainScreenControllerConfig
     {
-        //all general (adjustable) screen settings will be saved and changed here
-
         public bool HitboxesEnabled;
     }
 }

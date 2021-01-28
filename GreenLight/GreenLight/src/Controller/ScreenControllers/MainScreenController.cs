@@ -9,18 +9,18 @@ using GreenLight.src.Data_Collection;
 using System.IO;
 using System.Drawing.Imaging;
 
-//This controller is arguably the most important and base controller. This is the controller that is at the top and handles everything
-//It keeps track of which ScreenController is currently selected and draws/ updates is accordingly
-//It hold 3 different screencontrollers -> Buildscreen (for the road builder)
+// This is the MainScreenController and with that the most important controller. This is the controller that is at the top and handles all controllers.
+// It keeps track of which ScreenController is currently selected and draws/ updates is accordingly
+// It hold 3 different screencontrollers -> Buildscreen (for the road builder)
 // -> SimulationScreen (for the simulation)
 // -> Menuscreen (for the main menu) which is also the start value of active
-//It also holds a very important function that deals with switching between thse 3 screencontrollers
+// It also holds a very important function that deals with switching between thse 3 screencontrollers
+// Lastly this class takes care of Saving and Loading the users projects.
 
 namespace GreenLight
 {
     public class MainScreenController : ScreenController
     {
-        //public SettingScreenController SettingScreen;
         public BuildScreenController BuildScreen;
         public SimulationScreenController SimulationScreen;
         public MenuController MenuController;
@@ -29,8 +29,6 @@ namespace GreenLight
         public InterfaceController UserInterface;
         
         public static MainScreenControllerConfig Config;
-
-        // StreamWriter recentProjects = new StreamWriter("../../Recent_projects/Recent_projects.txt");
 
         string fileName = null;
         string pathName = null;
@@ -84,8 +82,6 @@ namespace GreenLight
         {
             Log.Write("Switched Active Controller from " + this.Active.GetType().ToString() + "to " + _controller.GetType().ToString());
 
-            Console.WriteLine(this.Active.GetType().ToString() + "----" + _controller.GetType().ToString());
-
             if (this.Active.GetType().ToString() == "GreenLight.BuildScreenController" && _controller.GetType().ToString() == "GreenLight.MenuController")
             {
                 Save();
@@ -99,8 +95,6 @@ namespace GreenLight
             this.Active = _controller;
             this.Active.Activate();
             this.form.Invalidate();
-
-            Console.WriteLine("Switched and invalidated!");
         }
 
         public override void Activate()
@@ -144,7 +138,6 @@ namespace GreenLight
                     foreach (AbstractRoad x in this.BuildScreen.builder.roadBuilder.roads)
                     {
                         save_text[_count] = x.ToString();
-                        //writer.WriteLine(x.ToString());
                         _count++;
                         foreach (PlacedSign y in x.Signs)
                         {
@@ -154,17 +147,14 @@ namespace GreenLight
                     }
                     File.WriteAllLines(pathName, save_text);
 
-
                     imagePath = "../../Recent_projects/Images/" + fileName + ".png";
                     Bitmap pic = new Bitmap(BuildScreen.Screen.ClientSize.Width, BuildScreen.Screen.ClientSize.Height);
-
 
                     if (File.Exists(imagePath))
                     {
                         UserInterface.SSRPM.Controls.Clear();
                         File.Delete(imagePath);
                     }
-
 
                     using (Graphics g = Graphics.FromImage(pic))
                     {
@@ -184,7 +174,6 @@ namespace GreenLight
                         if (text[t] == fileName + " " + pathName + " " + imagePath)
                         {
                             text[t] = text[t].Remove(0, text[t].Length);
-                            //text[t] = text[t].Replace(fileName + " " + pathName + " " + imagePath, null);
                             _remove = true;
                             Console.WriteLine(text[t].Length);
                         }
@@ -205,7 +194,7 @@ namespace GreenLight
 
         public void Save()
         {
-            if (this.BuildScreen.builder.roadBuilder.roads.Count != 0) //&& drivers.count != 0
+            if (this.BuildScreen.builder.roadBuilder.roads.Count != 0)
             {
                 if (fileName == null)
                 {
@@ -218,7 +207,6 @@ namespace GreenLight
                     foreach (AbstractRoad x in this.BuildScreen.builder.roadBuilder.roads)
                     {
                         save_text[_count] = x.ToString();
-                        //writer.WriteLine(x.ToString());
                         _count++;
                         foreach (PlacedSign y in x.Signs)
                         {
@@ -254,8 +242,6 @@ namespace GreenLight
                         if (text[t] == fileName + " " + pathName + " " + imagePath)
                         {
                             text[t] = text[t].Remove(0, text[t].Length);
-                            //text[t] = text[t].Replace(fileName + " " + pathName + " " + imagePath, null);
-                            Console.WriteLine(text[t].Length);
                         }
                     }
 
@@ -266,10 +252,6 @@ namespace GreenLight
                     UserInterface.Size_adjust_SSRPM();
                 }
             }
-            else
-            {
-                Console.WriteLine("Nothing to save");
-            }
         }
 
         public void LoadDialog()
@@ -277,7 +259,6 @@ namespace GreenLight
             OpenFileDialog _fileDialog = new OpenFileDialog();
             _fileDialog.Title = "Open Text File";
             _fileDialog.Filter = "TXT files|*.txt";
-            //theDialog.InitialDirectory = @"C:\";
             if (_fileDialog.ShowDialog() == DialogResult.OK)
             {
                 Load(_fileDialog.FileName);
@@ -289,7 +270,7 @@ namespace GreenLight
             OpenFileDialog _presetDialog = new OpenFileDialog();
             _presetDialog.Title = "Choose preset";
             _presetDialog.Filter = "TXT files|*.txt";
-            //_presetDialog.InitialDirectory = @"C:\"; 
+
             if (_presetDialog.ShowDialog() == DialogResult.OK)
             {
                 Load(_presetDialog.FileName);
@@ -303,7 +284,7 @@ namespace GreenLight
             {
                 this.pathName = file;
                 this.fileName = Path.GetFileNameWithoutExtension(file);
-                Console.WriteLine(fileName);
+
                 myStream = new StreamReader(file);
                 {
                     using (myStream)
@@ -347,10 +328,6 @@ namespace GreenLight
                 }
                 
                 if (BuildScreen.builder.roadBuilder.crossRoadController.roads != null) BuildScreen.builder.roadBuilder.crossRoadController.roads.Clear();
-
-                //if (BuildScreen.builder.roadBuilder.OPC.OriginPointsList != null) BuildScreen.builder.roadBuilder.OPC.OriginPointsList.Clear();
-                //if(BuildScreen.builder.roadBuilder.OPC.converted != null) BuildScreen.builder.roadBuilder.OPC.converted.Clear();
-
                 if (BuildScreen.builder.signController.Signs != null) BuildScreen.builder.signController.Signs.Clear();
                 if (BuildScreen.builder.roadBuilder.AllCrossArrows != null) BuildScreen.builder.roadBuilder.AllCrossArrows.Clear();
             }

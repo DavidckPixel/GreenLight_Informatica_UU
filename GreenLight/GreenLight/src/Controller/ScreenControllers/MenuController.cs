@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
-//this is the screencontroller that controls the main menu
+
 
 namespace GreenLight
 {
+    // This is the MenuController that controls the Main/Staring menu
+
     public class MenuController : ScreenController
     {
         public MenuController(PictureBox _bitmap) : base(_bitmap)

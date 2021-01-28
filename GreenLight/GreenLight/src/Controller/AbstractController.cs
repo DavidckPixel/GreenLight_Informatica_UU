@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//ABSTRACT CONTROLLER CLASS, this is the most basic of the controller class from which all controllers inherit.
-//It only has a abstract Initialize class which all other controllers are forced to have
-
 namespace GreenLight
 {
+    // This is the AbstractController, this is the most basic of the controller class from which all controllers inherit.
+    // It only has an abstract Initialize method which all other controllers are forced to have
+
     public abstract class AbstractController
     {
         abstract public void Initialize();

@@ -9,10 +9,11 @@ using System.Threading;
 using GreenLight.src.Data_Collection;
 using GreenLight.src.Driver.GPS;
 
-//This is the controller that deals with everything simulation related, and holds the vehicle and AI controller
 
 namespace GreenLight
 {
+    // This is the SimulationController that deals with everything simulation related, and holds the Vehicle- and AIcontroller.
+
     public class SimulationController : AbstractController
     {
         public bool SimulationRunning;
@@ -80,8 +81,6 @@ namespace GreenLight
 
         public void initSimulation()
         {
-            // this.dataController = new DataController(this.screenController.Screen);
-            //this.dataController.Initialize();
             General_Form.Main.DataScreen.dataController.DataControllerReset();
 
             this.worldController.SimulationWorld = this.worldController.currentSelected;

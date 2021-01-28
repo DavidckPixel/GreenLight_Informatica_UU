@@ -12,10 +12,11 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using System.IO;
 
-//This is the controller that handles all the interface related stuff, it holds all the classes which hold the buttons and user controls
 
 namespace GreenLight
 {
+    //This is the InterfaceController that handles everything interface related, it holds all the classes which hold the buttons and user controls.
+
     public class InterfaceController : AbstractController
     {
         public Form MainForm;
