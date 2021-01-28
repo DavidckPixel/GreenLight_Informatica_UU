@@ -313,6 +313,7 @@ namespace GreenLight.src.Driver.GPS
             if (this.nodePaths.Any())
             {
                 Random ran = new Random();
+                Console.WriteLine("There are {0} NODEPATHS!!", this.nodePaths.Count);
                 return this.nodePaths[ran.Next(0, this.nodePaths.Count())].begin;
             }
 

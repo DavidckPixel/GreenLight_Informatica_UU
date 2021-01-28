@@ -118,7 +118,7 @@ namespace GreenLight
                         //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakePerTickChart));
                     }
 
-                    if (x % 30 == 0 && x < 900)
+                    if (x % 90 == 0 && x < 900)
                     {
                         vehicleController.getVehicle(this.screenController.gpsData.getRandomStartNode(), true);
                         
