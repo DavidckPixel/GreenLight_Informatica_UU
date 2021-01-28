@@ -78,6 +78,13 @@ namespace GreenLight
             this.profileController.PauseSimulation(vehicleController.vehicleList);
             this.screenController.Screen.Invalidate();
         }
+        public void StopSimulation()
+        {
+            this.SimulationPaused = true;
+            this.SimulationRunning = false;
+            this.resetSimulation();
+            this.screenController.Screen.Invalidate();
+        }
 
         public void initSimulation()
         {

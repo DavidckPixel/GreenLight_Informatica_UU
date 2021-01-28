@@ -18,7 +18,7 @@ namespace GreenLight
         int speedRelativeToLimit;
         float ruleBreakingChance;
 
-        public double targetspeed = 142; //Temporarily public
+        public double targetspeed = 30;
         public int priority = 2;
 
         public bool isBraking = false;
@@ -407,10 +407,9 @@ namespace GreenLight
             {
                 this.brakeToZero = false;
             }
-            if (_distanceToRoadSwitch < _brakeDistance && navigator.currentPath.NextLaneIndex != null && !navigator.currentPath.NextLaneIndex.Contains(vehicle.currentLane.thisLane))
+            if (_distanceToRoadSwitch < _brakeDistance + 4 && navigator.currentPath.NextLaneIndex != null && !navigator.currentPath.NextLaneIndex.Contains(vehicle.currentLane.thisLane))
             {
                 this.isBraking = true;
-                Console.WriteLine("dtoroad: " + _distanceToRoadSwitch + "  brkdistance: " + _brakeDistance);
             }
             if (this.crossRoadOccupied || this.brakeToZero || closeToCars)
             {
@@ -571,7 +570,7 @@ namespace GreenLight
 
         private void CalculateAcceleration()
         {
-            if (this.vehicle.speed >= this.targetspeed)
+            if (this.vehicle.speed >= this.targetspeed || this.vehicle.speed >= this.vehicle.topspeed)
             {
                 this.isAccelerating = false;
             }

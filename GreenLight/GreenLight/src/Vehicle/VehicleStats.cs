@@ -8,6 +8,8 @@ namespace GreenLight
 {
     public class VehicleStats
     {
+        //This class allows for storage of all the variables of a vehicletype
+
         public string Name;
         public int Weight;
         public float Length;

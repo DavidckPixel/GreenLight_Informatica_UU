@@ -145,20 +145,20 @@
     },
 
     "simVehicle": {
-        "topSpeedMin": 30,
-        "topSpeedMax": 300,
+        "topSpeedMin": 8,
+        "topSpeedMax": 75,
         "occurenceMin": 0,
         "occurenceMax": 100,
-        "horsepwrMin": 40,
-        "horsepwrMax": 1500,
+        "horsepwrMin": 0,
+        "horsepwrMax": 522200,
         "lengthMin": 30,
-        "lengthMax": 120,
-        "weightMin": 1000,
-        "weightMax": 40000,
+        "lengthMax": 80,
+        "weightMin": 500,
+        "weightMax": 2000,
         "surfaceMin": 10,
-        "surfaceMax": 200,
+        "surfaceMax": 100,
         "cwMin": 0,
-        "cwMax": 10
+        "cwMax": 5
     },
 
     "simDataMenu": {

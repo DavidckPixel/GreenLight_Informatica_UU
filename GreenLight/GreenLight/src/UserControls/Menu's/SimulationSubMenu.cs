@@ -164,6 +164,7 @@ namespace GreenLight
                 General_Form.Main.SimulationScreen.Simulator.resetSimulation();
                 General_Form.Main.SwitchControllers(General_Form.Main.BuildScreen);
                 General_Form.Main.UserInterface.SimDataM.ResetTimer();
+                General_Form.Main.SimulationScreen.Simulator.StopSimulation();
                 Pause.Hide();
                 Start.Show();
             };

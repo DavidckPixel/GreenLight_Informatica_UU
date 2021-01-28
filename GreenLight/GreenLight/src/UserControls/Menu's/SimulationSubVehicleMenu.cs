@@ -68,12 +68,12 @@ namespace GreenLight
             this.Controls.Add(Cw);
             SliderText Cw_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textY + 2 * _diffY), "Drag Co:");
             this.Controls.Add(Cw_label);
-            SliderText Cw_Value = new SliderText(_dosisfontfamily, new Point(_textX, _textY + 2 * _diffY), (Cw.Value / 10 ).ToString() + " ");
+            SliderText Cw_Value = new SliderText(_dosisfontfamily, new Point(_textX, _textY + 2 * _diffY), (Cw.Value / 10).ToString() + " ");
             this.Controls.Add(Cw_Value);
             Cw.ValueChanged += (object o, EventArgs EA) => 
             {
                 General_Form.Main.SimulationScreen.Simulator.vehicleController.ChangeCw(Cw.Value, (Slider)o);
-                Cw_Value.Text = (((double)(Cw.Value)) / 10).ToString() + " ";
+                Cw_Value.Text = ((double)Cw.Value/10).ToString() + " ";
             };
 
             Surface = new Slider(new Point(_sliderX, _startY + _diffY), vehiclemenu["surfaceMin"], vehiclemenu["surfaceMax"]);
@@ -92,12 +92,12 @@ namespace GreenLight
             this.Controls.Add(maxSpeed);
             SliderText Max_speed_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textY), "Topspeed:");
             this.Controls.Add(Max_speed_label);
-            SliderText Max_speed_Value = new SliderText(_dosisfontfamily, new Point(_textX, _textY), maxSpeed.Value.ToString() + " km/h");
+            SliderText Max_speed_Value = new SliderText(_dosisfontfamily, new Point(_textX, _textY), (maxSpeed.Value*3.6).ToString() + " km/h");
             this.Controls.Add(Max_speed_Value);
             maxSpeed.ValueChanged += (object o, EventArgs EA) => 
             {
                 General_Form.Main.SimulationScreen.Simulator.vehicleController.ChangeTopspeed(maxSpeed.Value, (Slider)o);
-                Max_speed_Value.Text = maxSpeed.Value.ToString() + " km/h"; 
+                Max_speed_Value.Text = (maxSpeed.Value*3.6).ToString() + " km/h"; 
             };
 
             Length = new Slider(new Point(_sliderX, _startY - _diffY), vehiclemenu["lengthMin"], vehiclemenu["lengthMax"]);
@@ -109,19 +109,19 @@ namespace GreenLight
             Length.ValueChanged += (object o, EventArgs EA) =>
             {
                 General_Form.Main.SimulationScreen.Simulator.vehicleController.ChangeLength(Length.Value, (Slider)o);
-                Length_Value.Text = (((double)(Length.Value)) / 10).ToString() + " m";
+                Length_Value.Text = ((double) Length.Value / 10).ToString() + " m";
             };
 
             horsePower = new Slider(new Point(_sliderX, _startY - 2* _diffY), vehiclemenu["horsepwrMin"], vehiclemenu["horsepwrMax"]);
             this.Controls.Add(horsePower);
             SliderText HorsePower_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textY - 2 * _diffY), "Horsepower:");
             this.Controls.Add(HorsePower_label);
-            SliderText HorsePower_Value = new SliderText(_dosisfontfamily, new Point(_textX, _textY - 2 * _diffY), horsePower.Value.ToString() + " hp");
+            SliderText HorsePower_Value = new SliderText(_dosisfontfamily, new Point(_textX, _textY - 2 * _diffY), (horsePower.Value/746).ToString() + " hp");
             this.Controls.Add(HorsePower_Value);
             horsePower.ValueChanged += (object o, EventArgs EA) => 
             {
                 General_Form.Main.SimulationScreen.Simulator.vehicleController.ChangeMotorpwr(horsePower.Value, (Slider)o);
-                HorsePower_Value.Text = horsePower.Value.ToString() + " hp";
+                HorsePower_Value.Text = (horsePower.Value/746).ToString() + " hp";
             };
 
             Weight = new Slider(new Point(_sliderX, _startY - 3 * _diffY), vehiclemenu["weightMin"], vehiclemenu["weightMax"]);
