@@ -7,9 +7,10 @@ using System.Drawing;
 
 namespace GreenLight
 {
+
+    // This is the RoadMath class, which, as it's name suggests, deals with all math problems that come up in road classes 
     public static class RoadMath
     {
-
         public static double Distance(Point _one, Point _two)
         {
             return Math.Sqrt(Math.Pow(_one.X - _two.X, 2) + Math.Pow(_one.Y - _two.Y, 2));
@@ -20,16 +21,9 @@ namespace GreenLight
             return Math.Sqrt(Math.Pow(_oneX - _twoX, 2) + Math.Pow(_oneY - _twoY, 2));
         }
 
-        /*
-        public static float TranslateDegree(float _degree)
-        {
-            _degree = _degree - 90 < 0 ? 360 : _degree - 90;
-            return _degree % 360;
-        } */
 
-        public static float CalculateAngle(Point _point1, Point _point2) //Copied van roads
+        public static float CalculateAngle(Point _point1, Point _point2)
         {
-            //calculateAngle
             float _deltaX = _point1.X - _point2.X;
             float _deltaY = _point1.Y - _point2.Y;
 
@@ -44,9 +38,8 @@ namespace GreenLight
             return _degree;
         }
 
-        public static float CalculateAngle(float _point1X, float _point1Y, float _point2X, float _point2Y) //Copied van roads
+        public static float CalculateAngle(float _point1X, float _point1Y, float _point2X, float _point2Y)
         {
-            //calculateAngle
             float _deltaX = _point1X - _point2X;
             float _deltaY = _point1Y - _point2Y;
 
@@ -61,9 +54,8 @@ namespace GreenLight
             return _degree;
         }
 
-        public static float OldCalculateAngle(Point _point1, Point _point2) //Copied van roads
+        public static float OldCalculateAngle(Point _point1, Point _point2)
         {
-            //calculateAngle
             float _deltaX = _point1.X - _point2.X;
             float _deltaY = _point1.Y - _point2.Y;
 
@@ -81,7 +73,7 @@ namespace GreenLight
 
         public static void CalculateDistanceLanePoints(ref List<LanePoints> _points)
         {
-            LanePoints _before = _points.First(); //See bug 001 in bug report
+            LanePoints _before = _points.First();
             LanePoints _after;
             int x = 0;
 
@@ -104,7 +96,7 @@ namespace GreenLight
             }
         }
 
-        public static double AddDistanceLanePoints(int _index1, int _index2, List<LanePoints> _points) //NOT TESTED
+        public static double AddDistanceLanePoints(int _index1, int _index2, List<LanePoints> _points)
         {
             if(_index2 < _index1)
             {
@@ -232,7 +224,6 @@ namespace GreenLight
 
                 if (_dir == "SE")
                 {
-                    //
                     _points[0] = new Point(_one.X - _roadWidth, _one.Y);
                     _points[1] = new Point(_one.X + _roadWidth, _one.Y);
                     _points[2] = new Point(_two.X, _two.Y - _roadWidth);
@@ -241,7 +232,6 @@ namespace GreenLight
                 }
                 else
                 {
-                    //
                     _points[0] = new Point(_one.X, _one.Y - _roadWidth);
                     _points[1] = new Point(_one.X, _one.Y + _roadWidth);
                     _points[2] = new Point(_two.X + _roadWidth, _two.Y);
@@ -309,8 +299,8 @@ namespace GreenLight
             if (_angle >= 45 && (_angle <= 135 || _angle > 180))
             {
                 _points[0] = new Point(_one.X + _roadWidth, _one.Y);
-                _points[1] = new Point(_one.X - _roadWidth, _one.Y); //Hoogste punt Altijd
-                _points[2] = new Point(_two.X + _roadWidth, _two.Y); //Laagste Punt
+                _points[1] = new Point(_one.X - _roadWidth, _one.Y); 
+                _points[2] = new Point(_two.X + _roadWidth, _two.Y); 
                 _points[3] = new Point(_two.X - _roadWidth, _two.Y);
             }
             else if (_angle >= 0 && _angle < 45)
@@ -323,8 +313,8 @@ namespace GreenLight
             else
             {
 
-                _points[1] = new Point(_one.X, _one.Y - _roadWidth); //Hoogste punt, altijd
-                _points[2] = new Point(_two.X, _two.Y + _roadWidth); // Laagste Punt
+                _points[1] = new Point(_one.X, _one.Y - _roadWidth); 
+                _points[2] = new Point(_two.X, _two.Y + _roadWidth); 
 
                 if (_one.Y + _roadWidth <= _two.Y - _roadWidth)
                 {
@@ -358,6 +348,7 @@ namespace GreenLight
 
             return _points;
         }
+
         public static string Direction(Point _firstPoint, Point _secondPoint, string _Roadtype)
         {
             string RoadDirection = "x";
@@ -409,18 +400,6 @@ namespace GreenLight
                         RoadDirection = "D";
                     }
                     break;
-                    /*case "StraightRoad":
-                        {
-                            if (_firstPoint.X < _secondPoint.X)
-                                RoadDirection = "E";
-                            else if (_secondPoint.X < _firstPoint.X)
-                                RoadDirection = "W";
-                            else if (_firstPoint.Y < _secondPoint.Y)
-                                RoadDirection = "S";
-                            else if (_firstPoint.Y > _secondPoint.Y)
-                                RoadDirection = "N";
-                        }
-                        break;*/
             }
             return RoadDirection;
         }

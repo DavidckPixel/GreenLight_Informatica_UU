@@ -8,18 +8,13 @@ using System.Windows;
 
 namespace GreenLight
 {
+    // CurvedRoad is a road type that calculates a dynamic curve inbetween 2 points to draw a road.
+    // The corners of the road are calculated and used to contruct a Curvedhitbox for the road.
+    // There are two kinds of CurvedRoads, one has it curve at the top side, the other at the bottom.
+    // In this class we mainly use a lot of math, but the simple idea is: when the constructor is called, it will calculate a curved road between 2 points
+
     public class CurvedRoad : AbstractRoad
     {
-
-        //A roadtype for Curved roads, In here the CalculateDrivingLane function calculates a dynamic curve inbetween 2 points
-        //It gets a dir in the constructor, which stands for direction, this is to determin which way the cars should drive.
-        //The corners of the road are calculated and used to contruct a Curvedhitbox for the road
-        //In this class we mainly use a lot of math, but the simple idea is: when the constructor is called, it will calculate a curved line between 2 points
-        //For how many lanes you told the constructor to have.
-
-
-        
-
         public CurvedRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "Curved", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
             this.Dir = _dir;
@@ -49,7 +44,6 @@ namespace GreenLight
         private DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
         int drivingLaneDistance = this.laneWidth;
-        Console.WriteLine("TEST: {0} -- {1}", _firstPoint, _secondPoint);
         string _Direction = this.Dir;
 
             if (_Direction == "SE" || _Direction == "NW")
@@ -116,7 +110,6 @@ namespace GreenLight
             return CreateDrivingLane(_firstPoint, _secondPoint, t);
         }
         
-
         public override Hitbox CreateHitbox(Point[] _points)
         {
             return new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], Dir, Color.Yellow);

@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
+    // Here some base values are saved for all roads
+
     class RoadsConfig
     {
-        //Size of (cross)roads
         public int laneWidth;
         public int scaleOffset;
         public int crossroadExtra;
 
-        //OriginPoints
         public int opStandardWeight;
 
-        //settingsscreen roads
         public Dictionary<string, int> settingsScreen;
     }
 }
