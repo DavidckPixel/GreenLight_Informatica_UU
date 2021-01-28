@@ -35,15 +35,27 @@ namespace GreenLight.src.Driver.GPS
                 if (!(_road.roadtype == "Cross"))
                 {
                     Knot _TempKnot = new Knot(_road, _road.endConnectedTo, _road.point2);
-                    if (!TestDuplicateKnot(_TempKnot))
+                    Console.WriteLine("Has the first duplicates? " + TestDuplicateKnot(_TempKnot));
+                    if (_road.endConnectedTo == null)
+                    {
+                        _allKnots.Add(_TempKnot);
+                    }                    
+                    else if (!TestDuplicateKnot(_TempKnot))
                     {
                         _allKnots.Add(_TempKnot);
                     }
+                    
                     _TempKnot = new Knot(_road.beginConnectedTo, _road, _road.point1);
-                    if (!TestDuplicateKnot(_TempKnot))
+                    Console.WriteLine("Has the first duplicates? " + TestDuplicateKnot(_TempKnot));
+                    if (_road.beginConnectedTo == null)
                     {
                         _allKnots.Add(_TempKnot);
                     }
+                    else if (!TestDuplicateKnot(_TempKnot))
+                    {
+                        _allKnots.Add(_TempKnot);
+                    }
+                   
                 }
                 else
                 {
@@ -102,15 +114,17 @@ namespace GreenLight.src.Driver.GPS
             {
                 _link.ConsolePrint();
             }
-
+            Console.WriteLine("There are {0} knots", _allKnots.Count);
             foreach (Knot _knot in _allKnots)
             {
+                
                 List<Link> _knotlinks = _allLinks.FindAll(x => x.begin == _knot);
                 nodes.Add(new Node(_knot, _knotlinks));
             }
-
+            Console.WriteLine("HOW MANY NODES DO I HAVE? " + nodes.Count);
             foreach (Node _node in nodes)
             {
+                Console.WriteLine("This NODE HAD {0} LINKS", _node.links.Count);
                 List<Node> _endKnots = new List<Node>();
 
                 foreach (Link _link in _node.links)
@@ -269,7 +283,7 @@ namespace GreenLight.src.Driver.GPS
             {
                 return null;
             }
-
+            
             return this.nodePaths.Find(x => x.CheckMatch(_begin, _end)).linkPath;
         }
 
@@ -288,6 +302,7 @@ namespace GreenLight.src.Driver.GPS
             }
 
             Random ran = new Random();
+
             return _AllPossiblePaths[ran.Next(0, _AllPossiblePaths.Count())].linkPath;
         }
 
@@ -298,7 +313,8 @@ namespace GreenLight.src.Driver.GPS
             if (this.nodePaths.Any())
             {
                 Random ran = new Random();
-                return this.nodePaths[ran.Next(0, this.nodePaths.Count()-1)].begin;
+                Console.WriteLine("There are {0} NODEPATHS!!", this.nodePaths.Count);
+                return this.nodePaths[ran.Next(0, this.nodePaths.Count())].begin;
             }
 
             Console.WriteLine("NODE PATHS ARE EMPTY??? THIS SHOULD NEVER HAPPEN!");

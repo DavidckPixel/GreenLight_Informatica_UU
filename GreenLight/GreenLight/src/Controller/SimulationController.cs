@@ -129,6 +129,7 @@ namespace GreenLight
                         vehicleController.toDelete.Clear();
                     }
 
+
                     if (x % this.spawnBetweenTick == 0 && this.canSpawn)
                     {
                         vehicleController.getVehicle(this.screenController.gpsData.getRandomStartNode(), true);

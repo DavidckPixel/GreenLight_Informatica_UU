@@ -55,16 +55,21 @@ namespace GreenLight
 
             Weather = new CurvedButtons(new Size(_buttonSize, _buttonSize), new Point(menu["buttonStart"] , menu["ButtonY"]), 30, "../../src/User Interface Recources/Weather_Setting_Button.png", this.BackColor);
             this.Controls.Add(Weather);
+
             ssmButtons.Add(Weather);
             Weather.Click += (object obj, EventArgs args) => { ResetButtons(Weather, Weather.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Weather"); ; };
 
+
             Vehicle = new CurvedButtons(new Size(_buttonSize, _buttonSize), new Point(menu["buttonStart"] + menu["ButtonX"], menu["ButtonY"]), 30, "../../src/User Interface Recources/Vehicle_Setting_Button.png", this.BackColor);
             this.Controls.Add(Vehicle);
+
             ssmButtons.Add(Vehicle);
             Vehicle.Click += (object obj, EventArgs args) => { ResetButtons(Vehicle, Vehicle.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Vehicle"); ; };
 
+
             Driver = new CurvedButtons(new Size(_buttonSize, _buttonSize), new Point(menu["buttonStart"] + menu["ButtonX"] * 2, menu["ButtonY"]), 30, "../../src/User Interface Recources/Driver_Setting_Button.png", this.BackColor);
             this.Controls.Add(Driver);
+
             ssmButtons.Add(Driver);
             Driver.Click += (object obj, EventArgs args) => { ResetButtons(Driver, Driver.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Driver"); ; };
 
@@ -98,15 +103,29 @@ namespace GreenLight
             SimulationSpeed.ValueChanged += (object o, EventArgs EA) =>
             { SimulationSpeed_Text.Text = SimulationSpeed.Value.ToString() + "x"; General_Form.Main.UserInterface.SimDataM.ValueChanged(SimulationSpeed.Value); };
 
+
             /*     Simulation buttons   */
 
             Start = new CurvedButtons(new Size(_buttonSize, _buttonSize), new Point(menu["buttonStart"], Form.Height - menu["controlsY"]), 35, "../../src/User Interface Recources/Play_Simulation_Button.png", this.BackColor);
               Start.Click += (object o, EventArgs ea) => 
             {
-                General_Form.Main.SimulationScreen.Simulator.initSimulation();
-                General_Form.Main.SimulationScreen.Simulator.StartSimulation(); 
+                if (General_Form.Main.BuildScreen.builder.roadBuilder.roads.Count > 0)
+                {
+                    General_Form.Main.SimulationScreen.Simulator.initSimulation();
+                    General_Form.Main.SimulationScreen.Simulator.StartSimulation();
+                }
+                else
+                {
+                    MessageBox.Show("No spawnpoints available, you will return to the builder.");
+                    General_Form.Main.SimulationScreen.Simulator.resetSimulation();
+                    General_Form.Main.SwitchControllers(General_Form.Main.BuildScreen);
+                    General_Form.Main.UserInterface.SimDataM.ResetTimer();
+                    Start.Show();
+
+                };
             };
             this.Controls.Add(Start);
+
             Start.BringToFront();
 
             Pause = new CurvedButtons(new Size(60, 60),new Point(20, Form.Height - 80), 35, "../../src/User Interface Recources/Pause_Button.png", this.BackColor);
@@ -158,8 +177,10 @@ namespace GreenLight
                 x.Selected = false;
                 x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
             }
+
             _selected.Selected = true;
             _selected.Image = Image.FromFile(_filepath.Remove(_filepath.Length - 10) + "Select.png");
+
         }
     }
 }

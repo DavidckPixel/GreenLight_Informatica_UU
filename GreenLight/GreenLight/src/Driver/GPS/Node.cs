@@ -29,6 +29,7 @@ namespace GreenLight.src.Driver.GPS
         public void spawn()
         {
             Console.WriteLine("BACK LINKED: " + isBackLinked);
+            Console.WriteLine("How Many connections does this Node have " + this.connections.Count);
 
             if ((this.connections.Count<= 1 && !isBackLinked) || this.connections.Count < 1)
             {

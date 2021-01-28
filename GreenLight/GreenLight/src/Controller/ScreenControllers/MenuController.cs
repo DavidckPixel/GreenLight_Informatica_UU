@@ -46,6 +46,7 @@ namespace GreenLight
 
         public void SwitchToSimulation()
         {
+            
             General_Form.Main.SwitchControllers(General_Form.Main.SimulationScreen);
         }
     }

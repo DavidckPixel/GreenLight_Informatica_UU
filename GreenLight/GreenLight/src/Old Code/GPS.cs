@@ -33,7 +33,7 @@ namespace GreenLight
                 Point p = OPC.GetSpawnPoint;
                 if (graph == null || p == new Point(0, 0))
                 {
-                    MessageBox.Show("No spawnpoints available, you will return to the builder.");
+
                     return;
                 }
                 n++;

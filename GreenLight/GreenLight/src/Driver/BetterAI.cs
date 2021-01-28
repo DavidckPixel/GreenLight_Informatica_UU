@@ -188,15 +188,23 @@ namespace GreenLight
                 this.wantsToSwitch = true;
                 this.closeToCars = true;
 
-                if (this.nextRoad.roadtype == "Cross" && this.vehicle.currentLane.points.Count - this.currentLanePointIndex < 10);
+                if (this.nextRoad != null)
                 {
-                    this.wantsToSwitch = false;
+
+                    if (this.nextRoad.roadtype == "Cross" && this.vehicle.currentLane.points.Count - this.currentLanePointIndex < 10) ;
+                    {
+                        this.wantsToSwitch = false;
+                    }
                 }
             }
         }
 
         private void crossRoadRules()
         {
+            if (this.nextRoad == null)
+            {
+                return;
+            }
             if (this.nextRoad.roadtype != "Cross" || this.currentCrossRoadSide == null)
             {
                 this.crossRoadOccupied = false;
@@ -289,6 +297,10 @@ namespace GreenLight
 
         private void InCrossRoadRange()
         {
+            if (this.nextRoad == null)
+            {
+                return;
+            }
             if (this.nextRoad.roadtype != "Cross" || this.currentCrossRoadSide != null)
             {
                 return;
@@ -317,7 +329,12 @@ namespace GreenLight
 
         private void LeavingCrossRoadSide()
         {
-
+            if(currentCrossRoadSide == null)
+            {
+                Console.WriteLine("THE FUCKKKKKKK!!! WAAROM?!?!");
+                return;
+            }
+            
             this.currentCrossRoadSide.aiOnSide.Remove(this);
 
             if (!this.currentCrossRoadSide.aiOnSide.Any())
@@ -573,7 +590,8 @@ namespace GreenLight
             Random ran = new Random();
 
             AbstractRoad _currentRoad = navigator.currentPath.road;
-            this.CurrentLaneIndex = navigator.currentPath.laneIndex[ran.Next(0, navigator.currentPath.laneIndex.Count() - 1)];
+            int _random = ran.Next(0, navigator.currentPath.laneIndex.Count());
+            this.CurrentLaneIndex = navigator.currentPath.laneIndex[_random];
             this.vehicle.SwitchRoad(_currentRoad, this.CurrentLaneIndex);
             this.nextRoad = navigator.nextRoad;
 
