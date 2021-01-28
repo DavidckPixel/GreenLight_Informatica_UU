@@ -8,25 +8,26 @@ using System.Collections.Generic;
 
 namespace GreenLight
 {
-    //This is the old AI class, created to hold variables for driver behaviour and to make vehicles move.
-    // It was part of the simulation/GPS system before we decided to rewrite most of it.
-    // This class is now old code and not used anywhere in our project. 
-
     public class AI
     {
+        //This is the AI class, every AI has a vehicle that it takes care of
+        //This class holds variables for driver behaviour and will let the vehicle move accordingly.
+        //For now this class can only make vehicles accelarate or brake to a certain speed,
+        //but in the future the AI will be able to choose where and how fast to drive, depending on the cars around them.
+
         public Vehicle v;
         float reactionSpeed;
         float followInterval;
         int speedRelativeToLimit;
         float ruleBreakingChance;
-        int speedlimit = 28; 
+        int speedlimit = 28; //tijdelijk
 
-        public int prioritylevel = 2;
+        public int prioritylevel = 2; //rijdt niet op yieldweg maar ook niet op priority
         
         Thread moveVehicle;
         public int targetspeed;
-        Point destinationpoint = new Point(1900, 10); 
-        Point endpoint; 
+        Point destinationpoint = new Point(1900, 10); //Ingegeven door road?
+        Point endpoint; //Definitief eindpunt auto?
 		int framesbuffered = 625;
         public List<Point> location = new List<Point>();
         public List<Point> location2 = new List<Point>();
@@ -45,10 +46,12 @@ namespace GreenLight
             this.ruleBreakingChance = _stats.RuleBreakingChance;
             targetspeed = speedlimit + speedRelativeToLimit;
             
+            //thread used to update vehicle speed and whereabouts in the single threaded car system
             moveVehicle = new Thread(vehiclemovement);
             moveVehicle.Start();
         }
 
+        //method used to drive the vehicle in the single threaded car System;
         public void vehiclemovement()
         {
             while (true)
@@ -61,6 +64,7 @@ namespace GreenLight
                     {
                         location.Add(p);
                     }
+                    /*Console.WriteLine("Lijst 1 berekend. Xend: " + location[624].X + "  -  Listnummer: " + v.listcounter);*/
                     locationlocal.Clear();
                     framesbuffered = 625;
                     Thread.Sleep(9000);
@@ -70,6 +74,7 @@ namespace GreenLight
                     {
                         location2.Add(p);
                     }
+                    /*Console.WriteLine("Lijst 2 berekend. Xend: " + location2[624].X + "  -  Listnummer: " + v.listcounter);*/
                     locationlocal.Clear();
                     framesbuffered = 625;
                     Thread.Sleep(9000);
@@ -93,10 +98,12 @@ namespace GreenLight
                     v.accelerate(targetspeed);
                 }
                 needToBrake(destinationpoint.X, destinationpoint.Y);
+                //Console.WriteLine("braking: " + v.isBraking + "    -    accelarating:" + v.isAccelerating + "    -    speed:" + v.speed + " Frames: " + framesbuffered + "   X: " + v.x);
                 framesbuffered--;
             }
         }
 
+        //Method used to change the destination of the vehicle in the single threaded car system
         public void changeDestination(int xt, int yt)
         {            
             destinationpoint = new Point(xt, yt);
@@ -105,6 +112,7 @@ namespace GreenLight
             v.isAccelerating = true;            
         }
         
+        //Method used to calculate if the car needs to start braking in the single threaded car system
         public void needToBrake(int xt, int yt)
         {
             float distancefromend = (float) (Math.Sqrt((v.x - xt) * (v.x - xt) + (v.y - yt) * (v.y - yt))/5);

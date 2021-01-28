@@ -37,8 +37,6 @@ namespace GreenLight
             {
                 Console.WriteLine(e);
             }
-
-            Console.WriteLine("Amount of loaded vehicles = {0}", vehicles.Count());
         }
 
         static public void SaveJson()

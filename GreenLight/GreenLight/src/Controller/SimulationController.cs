@@ -28,10 +28,10 @@ namespace GreenLight
         public delegate void RemoveAI(BetterAI _ai, bool _dump);
         public delegate void RemoveVehicle(BetterVehicle _veh, bool _dump);
 
-        public int SimulationInterval = 32;
+        public int SimulationInterval = 16;
         public int SimulationIntervalDivider = 1;
 
-        public int spawnBetweenTick = 50;
+        public int spawnBetweenTick = 200;
         public bool canSpawn = true;
 
         Thread Simulation;
