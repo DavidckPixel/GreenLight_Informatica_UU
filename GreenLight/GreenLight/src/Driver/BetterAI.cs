@@ -325,6 +325,7 @@ namespace GreenLight
 
                 this.currentCrossRoadSide = _crossRoadSide;
             }
+            
         }
 
         private void LeavingCrossRoadSide()

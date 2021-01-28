@@ -20,13 +20,22 @@ namespace GreenLight.src.Driver.GPS
             this.LaneSwap = new List<Tuple<int, int>>();
             _one.links.FindAll(x => x.end == _two.knot).ForEach(x => this.laneIndex.Add(x.laneIndex));
             Console.WriteLine("Road1 is {0}, Road2 is {1}", _one.knot.Road1, _one.knot.Road2);
-            if((_one.knot.Road1 == _two.knot.Road1 || _one.knot.Road1 == _two.knot.Road2) && _one.knot.Road1 != null)
+
+            if ((_one.knot.Road1 == _two.knot.Road1 || _one.knot.Road1 == _two.knot.Road2 ) && _one.knot.Road1 != null )
             {
-                this.road = _one.knot.Road1;
+                Console.WriteLine("THE KNOT: " + _one.knot);
+
+                    this.road = _one.knot.Road1;
+                
             }
             else
             {
-                this.road = _one.knot.Road2;
+                    this.road = _one.knot.Road2;
+                
+            }
+            if (this.road == null)
+            {
+                Console.WriteLine("THE ROAD IS NULLLLLLLL");
             }
             Console.WriteLine("This road is " + this.road);
             if (this.road != null && this.road.roadtype == "Cross")

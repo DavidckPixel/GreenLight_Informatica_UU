@@ -36,10 +36,10 @@ namespace GreenLight.src.Driver.GPS
                 {
                     Knot _TempKnot = new Knot(_road, _road.endConnectedTo, _road.point2);
                     Console.WriteLine("Has the first duplicates? " + TestDuplicateKnot(_TempKnot));
-                    if (_road.endConnectedTo == null)
+                    if (_road.endConnectedTo == null && _road.beginConnectedTo == null)
                     {
                         _allKnots.Add(_TempKnot);
-                    }                    
+                    }
                     else if (!TestDuplicateKnot(_TempKnot))
                     {
                         _allKnots.Add(_TempKnot);
@@ -47,7 +47,7 @@ namespace GreenLight.src.Driver.GPS
                     
                     _TempKnot = new Knot(_road.beginConnectedTo, _road, _road.point1);
                     Console.WriteLine("Has the first duplicates? " + TestDuplicateKnot(_TempKnot));
-                    if (_road.beginConnectedTo == null)
+                    if (_road.beginConnectedTo == null && _road.beginConnectedTo == null)
                     {
                         _allKnots.Add(_TempKnot);
                     }

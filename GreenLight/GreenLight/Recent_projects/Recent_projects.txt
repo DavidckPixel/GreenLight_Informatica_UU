@@ -6,4 +6,3 @@ hitbox C:\Users\niels\Downloads\hitbox.txt ../../Recent_projects/Images/hitbox.p
 SingleLaneJunction C:\Users\DaanJ\Documents\GitHub\GreenLight_Informatica_UU\GreenLight\GreenLight\SingleLaneJunction.txt ../../Recent_projects/Images/SingleLaneJunction.png
 SingleLaneJunction C:\Users\DaanJ\Documents\GitHub\GreenLight_Informatica_UU\GreenLight\GreenLight\Presets\SingleLaneJunction.txt ../../Recent_projects/Images/SingleLaneJunction.png
 OriginPointTest C:\Users\Laura\Desktop\OriginPointTest.txt ../../Recent_projects/Images/OriginPointTest.png
-
