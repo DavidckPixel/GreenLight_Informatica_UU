@@ -81,7 +81,6 @@ namespace GreenLight
         public void StopSimulation()
         {
             this.SimulationPaused = true;
-            this.SimulationRunning = false;
             this.resetSimulation();
             this.screenController.Screen.Invalidate();
         }
@@ -101,6 +100,18 @@ namespace GreenLight
         {
             this.vehicleController.vehicleList.Clear();
             General_Form.Main.UserInterface.SimDataM.stopWatch.Reset();
+            
+            foreach(AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
+            {
+                if(_road.roadtype == "Cross")
+                {
+                    CrossRoad _cross = (CrossRoad)_road;
+                    foreach(CrossRoadSide _side in _cross.sides)
+                    {
+                        _side.reset();
+                    }
+                }
+            }
 
             initSimulation();
         }
