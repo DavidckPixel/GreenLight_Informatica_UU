@@ -58,7 +58,7 @@ namespace GreenLight.src.Data_Collection
             List<int> _series;
             List<int> _points;
 
-            Console.WriteLine("Updating the big chart!");
+            //Console.WriteLine("Updating the big chart!");
 
             collector.data.GetBrakeData(out _series,out _points);
 
@@ -93,7 +93,6 @@ namespace GreenLight.src.Data_Collection
             }
             else
             {
-                Console.WriteLine("UPDATED!");
                 UpdateBrakeChart();
             }
         }

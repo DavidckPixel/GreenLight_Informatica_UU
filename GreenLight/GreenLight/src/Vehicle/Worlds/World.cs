@@ -8,7 +8,8 @@ namespace GreenLight
 {
     public class World
     {
-        //This class stores variables that all cars/roads take into their calculations
+        //This is the World class.
+        //It stores variables that all cars/roads take into their calculations
 
         public string name;
         public int Brakepwr;
@@ -24,7 +25,7 @@ namespace GreenLight
             this.Density = _Density;
             this.Gravity = _Gravity;
             this.entityTypes = _entityTypes;
-            this.slip = _slip;//0.012f; TEMP
+            this.slip = _slip; //Temporarily 0.012f
             this.name = _name;
             this.canDelete = _canDelete;
         }
