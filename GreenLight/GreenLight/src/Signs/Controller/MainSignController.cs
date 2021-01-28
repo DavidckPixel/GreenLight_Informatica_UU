@@ -109,9 +109,9 @@ namespace GreenLight
                 {
                     _flipped = true;
                 }
-                else
+                else 
                 {
-                    _flipped = false;
+                    _flipped = true;
                 }
             }
             else if (selectedRoad.Type == "Curved")
@@ -315,7 +315,8 @@ namespace GreenLight
 
         public void StopTimer()
         {
-            trafficLightTimer.Stop();
+            if(trafficLightTimer != null)
+                trafficLightTimer.Stop();
         }
 
         public void deleteSign(AbstractSign _abstractSign = null)
