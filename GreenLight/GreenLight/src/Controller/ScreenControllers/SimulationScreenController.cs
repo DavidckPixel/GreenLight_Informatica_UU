@@ -7,10 +7,12 @@ using System.Drawing;
 using System.Windows.Forms;
 using GreenLight.src.Driver.GPS;
 
-//This is very similar to the build controller but instead is called when switching to the simulation screen.
 
 namespace GreenLight
 {
+    // This is the SimulationScreenController that deals with everything that happens in the Simulation screen, where the user can simulate traffic.
+    // It also holds a function that enables switching between submenus.
+
     public class SimulationScreenController : ScreenController
     {
         public string ActiveSubMenu;
@@ -113,14 +115,7 @@ namespace GreenLight
             Graphics g = pea.Graphics;
 
             g.DrawImage(this.background, new Point(0, 0));
-            /*
-            g.DrawImage(DriverProfileData.faces.First().backImg, 0,0, this.Screen.Width, this.Screen.Height);
-   
-            foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
-            {
-                _road.Draw(g);
-            }
-            */
+    
             Log.Write("Completed drawing the roads on the simulation screen");
 
             for(int x = 0; x < this.Simulator.vehicleController.vehicleList.Count(); x++)
@@ -134,13 +129,6 @@ namespace GreenLight
                     }
                 }
             }
-
-            foreach(Knot _knot in gpsData._allKnots)
-            {
-                //_knot.Draw(g);
-            }
-            //gpsData.Draw(g, gpsData.nodePaths[0]);
-
         }
 
         public void CreateBackgroundImage()
@@ -158,7 +146,6 @@ namespace GreenLight
 
         public void ClickPictureBox(object o, MouseEventArgs mea)
         {
-            Console.WriteLine("CLICK!");
 
             if (this.Simulator.SimulationPaused)
             {
@@ -168,7 +155,6 @@ namespace GreenLight
 
         private void ChangeSize(object o, EventArgs ea)
         {
-            Console.WriteLine("Size changed!!");
             this.Screen.Width = mainForm.Width - 250;
             this.Screen.Height = mainForm.Height;
             this.Screen.Invalidate();

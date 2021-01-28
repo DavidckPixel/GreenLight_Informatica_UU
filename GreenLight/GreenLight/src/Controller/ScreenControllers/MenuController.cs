@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
-//this is the screencontroller that controls the main menu
+
 
 namespace GreenLight
 {
+    // This is the MenuController that controls the Main/Staring menu
+
     public class MenuController : ScreenController
     {
         public MenuController(PictureBox _bitmap) : base(_bitmap)
@@ -46,8 +48,8 @@ namespace GreenLight
 
         public void SwitchToSimulation()
         {
+            
             General_Form.Main.SwitchControllers(General_Form.Main.SimulationScreen);
-            GPS gps = new GPS(General_Form.Main.BuildScreen.builder.roadBuilder.roads);
         }
     }
 }

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//The entity controller is for now still an empty controller
-//This was made for structure but for now has not been used very much.
-
 namespace GreenLight
 {
+    // The EntityController is an empty controller, used only for class structure.
+    // It is the superclass of all controllers that deal with entities (Road-, Grid-, CrossRoad-, MainSign-, AI- and VehicleController)
+
     public abstract class EntityController : AbstractController
     {
     }

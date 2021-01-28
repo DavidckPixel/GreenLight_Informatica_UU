@@ -7,46 +7,39 @@ using System.Collections.Generic;
 
 namespace GreenLight
 {
+    //This is the old Vehicle class, which used to create a car.
+    //This class also contains methods that calculate how the car moves, accelarates and brakes.
+    //All calculations are based on real-life physics
+
+    // It was part of the simulation/GPS system before we decided to rewrite most of it.
+    // This class is now old code and not used anywhere in our project and cannot be used for tests anymore. 
+
     public class Vehicle : ScreenObject     
     {
+        public float x, y; 
+        public float speed = 0; 
+        public float a, abrake;
 
-        //This is the vehicle class, which creates a car.
-        //This class also contains methods that calculate how the car moves, accelarates and brakes.
-        //All calculations are based on real-life physics
-        //The variables of which the car exists are stored in the VehicleType json file and read in with the VehicleTypeConfig class
-        //World variables like gravity are stored in the Earth json file and read in with the WorldConfig class
-        
-        public float x, y; //Location of the vehicle
-        public float speed = 0;    //Speed of vehicle
-        public float a, abrake; //acceleration and braking speed
-
-        //Properties of the vehicle
         string name; 
 
         int weight;
         float length;
         int motorpwr;
-        int topspeed; //Topspeed of vehicle
-        float cw; //Drag coefficient
-        float surface; //Surface area of the front of the vehicle
+        int topspeed;
+        float cw;
+        float surface;
         
-        //Resistances
         float airResistance;
         float rollingResistance;
         
-        //fixed values of the world
-        float crw = 0.012f; // Rolling Resistance coëfficient --> Temporary value, should be able to set this in weather settings
-        World physics = WorldConfig.physics[0]; // 
+        float crw = 0.012f;
+        World physics = WorldConfig.physics[0]; 
 
         public bool isAccelerating = true;
         public bool isBraking = false;
-
-        //deze threads zijn niet in gebruik nu, acc, brk en move worden allemaal aangestuurd vanuit 1 Thread in de AI
-        /*Thread acc, brk;
-        Thread startmove;*/
         
-        Bitmap Car; //Image of the vehicle
-        int angle; //Angle at which the image/vehicle is rotated
+        Bitmap Car;
+        int angle;
         public int frame = 0;
         public int listcounter = 0;
 
@@ -57,12 +50,11 @@ namespace GreenLight
             this.length = _stat.Length;
             this.topspeed = _stat.Topspeed;
             this.name = _stat.Name;
-            this.motorpwr = _stat.Motorpwr; //In Watt
+            this.motorpwr = _stat.Motorpwr;
             this.x = x;
             this.y = y;
             this.cw = _stat.Cw;
-            this.surface = _stat.Surface;
-            //this.Cords = new Point(x, y); //Ignore this          
+            this.surface = _stat.Surface;      
             
             a = this.motorpwr / this.weight;
             abrake = physics.Brakepwr / this.weight;
@@ -74,7 +66,6 @@ namespace GreenLight
             set { crw = value; }
         }
         
-        //Tekenmethode
         public void drawVehicle(Graphics g, List<Point> location)
         {
             int xtemp = 0;
@@ -108,7 +99,6 @@ namespace GreenLight
             return returnBitmap;
         }
 
-        //Brake for set period of time method, this method is old, and isn't updated since the beginning of vehicles.
         void brakeInTime(float braketime)
         {
             while (braketime > 0 && speed > 0)
@@ -124,12 +114,10 @@ namespace GreenLight
             }
         }
 
-        //Brake to targetspeed method for single threaded car system
         public void brakeToSpeed (float targetspeed)
         {
             airResistance = (float)(0.5f * physics.Density * cw * surface * speed * speed);
             abrake = (physics.Brakepwr + airResistance) / this.weight;
-            //abrake = (float) physics.Brakepwr / this.weight;
             speed -= (abrake * (0.016f));
             if (speed <= targetspeed)
             {
@@ -138,15 +126,12 @@ namespace GreenLight
             }
         }
         
-        //Method to calculate the distance the car would need to brake to zero
         public float brkdistance()
         {
             airResistance = (float)(0.5f * physics.Density * cw * surface * speed * speed);
             abrake = (physics.Brakepwr + airResistance) / this.weight;
-            //abrake = (physics.Brakepwr) / this.weight;
 
             float brkdistance = weight * speed * speed / (physics.Brakepwr*2);
-            //Console.WriteLine("Speed: " + speed + "  Brakepwr: " + physics.Brakepwr + "   Breakdistance: " + brkdistance);
             return brkdistance;
         }
 
@@ -159,17 +144,15 @@ namespace GreenLight
         }
 
 
-        //method used to calculate new x and y for vehicle in single threaded car system
         public Point move(int xt, int yt)
         {
             if (Math.Abs(x - xt) > 1 || Math.Abs(y - yt) > 1)
             {
-                //calculateAngle(xt, yt);
                 float xmove = Math.Abs(xt - x) / (Math.Abs(xt - x) + Math.Abs(yt - y));
                 float ymove = 1.0f - xmove;
                 if (x < xt)
                 {
-                    x = x + xmove * speed * 0.08f;       //5 pixels per meter
+                    x = x + xmove * speed * 0.08f;    
                 }
                 if (x > xt)
                 {

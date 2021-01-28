@@ -9,10 +9,11 @@ using System.Threading;
 using GreenLight.src.Data_Collection;
 using GreenLight.src.Driver.GPS;
 
-//This is the controller that deals with everything simulation related, and holds the vehicle and AI controller
 
 namespace GreenLight
 {
+    // This is the SimulationController that deals with everything simulation related, and holds the Vehicle- and AIcontroller.
+
     public class SimulationController : AbstractController
     {
         public bool SimulationRunning;
@@ -28,10 +29,10 @@ namespace GreenLight
         public delegate void RemoveAI(BetterAI _ai, bool _dump);
         public delegate void RemoveVehicle(BetterVehicle _veh, bool _dump);
 
-        public int SimulationInterval = 32;
+        public int SimulationInterval = 16;
         public int SimulationIntervalDivider = 1;
 
-        public int spawnBetweenTick = 50;
+        public int spawnBetweenTick = 200;
         public bool canSpawn = true;
 
         Thread Simulation;
@@ -80,8 +81,6 @@ namespace GreenLight
 
         public void initSimulation()
         {
-            // this.dataController = new DataController(this.screenController.Screen);
-            //this.dataController.Initialize();
             General_Form.Main.DataScreen.dataController.DataControllerReset();
 
             this.worldController.SimulationWorld = this.worldController.currentSelected;
@@ -94,8 +93,7 @@ namespace GreenLight
         public void resetSimulation()
         {
             this.vehicleController.vehicleList.Clear();
-            this.aiController.driverlist.Clear();
-            General_Form.Main.UserInterface.SimDataM.Stopwatch.Reset();
+            General_Form.Main.UserInterface.SimDataM.stopWatch.Reset();
 
             initSimulation();
         }
@@ -128,24 +126,13 @@ namespace GreenLight
 
                         this.screenController.Screen.BeginInvoke(new UpdateTextCallback(General_Form.Main.DataScreen.dataController.collector.CollectAllData));
                         vehicleController.toDelete.Clear();
-                        //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakeChart));
-                        //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakePerTickChart));
                     }
+
 
                     if (x % this.spawnBetweenTick == 0 && this.canSpawn)
                     {
                         vehicleController.getVehicle(this.screenController.gpsData.getRandomStartNode(), true);
-                        
-                        /*
-                        foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
-                        {
-                            if (_road.roadtype == "Cross")
-                            {
-                                CrossRoad _temproad = (CrossRoad)_road;
-                                _temproad.ConsoleDump();
-                            }
 
-                        } */
                     }
 
                     if (x % 600 == 0)

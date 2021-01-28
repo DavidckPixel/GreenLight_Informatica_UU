@@ -16,6 +16,7 @@ namespace GreenLight.src.Driver.GPS
         public Knot(AbstractRoad _road1 = null, AbstractRoad _road2 = null, Point _cord = new Point())
         {
             Console.WriteLine("Knot Created!");
+            Console.WriteLine("Knot cord is {0}", _cord);
             Road1 = _road1;
             Road2 = _road2;
             Cord = _cord;

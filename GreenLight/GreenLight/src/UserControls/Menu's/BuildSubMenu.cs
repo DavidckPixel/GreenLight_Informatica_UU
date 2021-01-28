@@ -11,146 +11,139 @@ using System.Timers;
 
 namespace GreenLight
 {
+    /* This is the Build sub menu class. This class has a method AdjustSize to fit the size of the users window.
+       This user control is shown when the user is in the building screen.
+       Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
     public partial class BuildSubMenu : UserControl
     {
-        public List<CurvedButtons> BSM_Buttons = new List<CurvedButtons>();
-        public CurvedButtons Road_button;
-        public CheckBox AutoSave;
-        public BuildSubMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
+        public List<CurvedButtons> bsmButtons = new List<CurvedButtons>();
+        public CurvedButtons homeButton, saveButton, roadButton, signButton, settingsButton, Logo, undoButton, toggleButton, startSimulationButton, Divider1, Divider2, Divider3, Divider4;
+        public Label autoSaveLabel;
+        public CheckBox autoSave;
+        public PictureBox elementsHeader;
+
+        public BuildSubMenu(int menu_width, Form _form, FontFamily _dosisfontfamily)
         {
             this.BackColor = Color.FromArgb(255,255,255);
-            this.Size = new Size(UserControls.Config.standardSubMenu["subMenuWidth"], Form.Height); //Size in Width
-            this.Location = new Point(Form.Width - Menu_width, 0);
+            this.Size = new Size(UserControls.Config.standardSubMenu["subMenuWidth"], _form.Height);
+            this.Location = new Point(_form.Width - menu_width, 0);
 
-            Initialize(Form, Menu_width, Dosis_font_family);
+            Initialize(_form, menu_width, _dosisfontfamily);
         }
-        public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        public void AdjustSize(Form _form, int _submenuwidth, FontFamily _dosisfontfamily)
         {
-            this.Size = new Size(Sub_menu_width, Form.Height);
-            this.Location = new Point(Form.Width - Sub_menu_width, 0);
+            this.Size = new Size(_submenuwidth, _form.Height);
+            this.Location = new Point(_form.Width - _submenuwidth, 0);
             this.Controls.Clear();
-            Initialize(Form,Sub_menu_width, Dosis_font_family);
+            Initialize(_form,_submenuwidth, _dosisfontfamily);
         }
 
-        //Cleaner maar General_form moet form zijn
-        /*
-        public Build_sub_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family)
-        {
-            this.BackColor = Color.FromArgb(255,255,255);
-            this.Size = new Size(250, General_form.Height);
-            this.Location = new Point(General_form.Width - Sub_menu_width, 0);
-            General_form.SizeChanged += (object o, EventArgs EA) => {
-                this.Size = new Size(Sub_menu_width, General_form.Height);
-                this.Location = new Point(General_form.Width - Sub_menu_width, 0);
-                this.Controls.Clear();
-                Initialize(General_form, Sub_menu_width, Dosis_font_family);
-            };
-            Initialize(General_form, Sub_menu_width, Dosis_font_family);
-        }*/
-
-        private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        private void Initialize(Form _form, int _submenuwidth, FontFamily _dosisfontfamily)
         {
             Dictionary<string, int> menu = UserControls.Config.buildSubMenu;
 
-
-            CurvedButtons Logo = new CurvedButtons(Form, 1);
+            Logo = new CurvedButtons(_form, 1);
             Logo.Location = new Point(UserControls.Config.standardSubMenu["logoX"], UserControls.Config.standardSubMenu["logoY"]);
             this.Controls.Add(Logo);
 
-            CurvedButtons Divider1 = new CurvedButtons();
-            Divider1.Location = new Point(UserControls.Config.standardSubMenu["deviderX"], UserControls.Config.standardSubMenu["deviderY"]);
-            this.Controls.Add(Divider1);
+            elementsHeader = new PictureBox();
+            elementsHeader.Size = new Size(menu["elementHeaderSizeX"], menu["elementHeaderSizeY"]);
+            elementsHeader.SizeMode = PictureBoxSizeMode.StretchImage;
+            elementsHeader.Location = new Point(menu["elementHeaderX"], menu["elementHeaderY"]);
+            elementsHeader.Image = Image.FromFile("../../src/User Interface Recources/Elements_Header.png");
+            this.Controls.Add(elementsHeader);
 
-            MovePanel Drag_pad = new MovePanel(Form);
-            this.Controls.Add(Drag_pad);
-
-            PictureBox Elements_header = new PictureBox();
-            Elements_header.Size = new Size(menu["elementHeaderSizeX"], menu["elementHeaderSizeY"]); //elementHeaderSizeX , //elementHeaderSizeY
-            Elements_header.SizeMode = PictureBoxSizeMode.StretchImage;
-            Elements_header.Location = new Point(menu["elementHeaderX"], menu["elementHeaderY"]); //elementHeaderX, //elementHeaderY
-            Elements_header.Image = Image.FromFile("../../src/User Interface Recources/Elements_Header.png");
-            this.Controls.Add(Elements_header);
-
-            //buttonSizeL //buttonSizeS //devider2 //devider4 //devider3 /simStartSizeX /simStartSizeY / simStartX / simStartY / buttonL / buttonS / buttonHome / buttonSave / buttonRoad / buttonLight / buttonSign / buttonBuilding
-
-            CurvedButtons Home_button = new CurvedButtons(new Size(menu["buttonSizeL"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 - menu["buttonHome"], menu["buttonL"]), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Home", Dosis_font_family, Form, this.BackColor);
-            Home_button.Click += (object o, EventArgs EA) => { General_Form.Main.SwitchControllers(General_Form.Main.MenuController); };
-            this.Controls.Add(Home_button);
-
-            CurvedButtons Save_button = new CurvedButtons(new Size(menu["buttonSizeL"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 + menu["buttonSave"], menu["buttonL"]), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Save", Dosis_font_family, Form, this.BackColor);
-            Save_button.Click += (object o, EventArgs EA) => { General_Form.Main.Save(); };
-            this.Controls.Add(Save_button);
+            MovePanel dragPad = new MovePanel(_form);
+            this.Controls.Add(dragPad);
 
             System.Timers.Timer t = new System.Timers.Timer(TimeSpan.FromMinutes(5).TotalMilliseconds);
             t.AutoReset = true;
-            t.Elapsed += (object to, ElapsedEventArgs EEA) => { General_Form.Main.Save();
+            t.Elapsed += (object to, ElapsedEventArgs EEA) =>
+            {
+                General_Form.Main.Save();
                 Console.WriteLine("AutoSaved");
             };
 
-            Label Auto_save_label = new Label();
-            Auto_save_label.Text = "Autosave:";
-            Auto_save_label.Font = new Font(Dosis_font_family, 11, FontStyle.Bold);
-            Auto_save_label.ForeColor = Color.FromArgb(142, 140, 144);
-            Auto_save_label.Location = new Point(menu["autosavelabelX"], menu["autosaveY"]);
-            this.Controls.Add(Auto_save_label);
+            autoSaveLabel = new Label();
+            autoSaveLabel.Text = "Autosave:";
+            autoSaveLabel.Font = new Font(_dosisfontfamily, 11, FontStyle.Bold);
+            autoSaveLabel.ForeColor = Color.FromArgb(142, 140, 144);
+            autoSaveLabel.Location = new Point(menu["autosavelabelX"], menu["autosaveY"]);
+            this.Controls.Add(autoSaveLabel);
 
-            AutoSave = new CheckBox();
-            AutoSave.Checked = false;
-            AutoSave.Location = new Point(menu["autosaveboxX"], menu["autosaveY"]+menu["autosavediff"]);
-            AutoSave.Size = new Size(25, 25);
-            AutoSave.Click += (object o, EventArgs EA) => { 
-                if (AutoSave.Checked)
+            autoSave = new CheckBox();
+            autoSave.Checked = false;
+            autoSave.Location = new Point(menu["autosaveboxX"], menu["autosaveY"] + menu["autosavediff"]);
+            autoSave.Size = new Size(25, 25);
+            autoSave.Click += (object o, EventArgs EA) =>
+            {
+                if (autoSave.Checked)
                 {
                     General_Form.Main.Save();
                     t.Start();
                 }
-                else 
+                else
                 {
                     t.Stop();
                 }
             };
-            this.Controls.Add(AutoSave);
+            this.Controls.Add(autoSave);
 
-            Road_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 - menu["buttonRoad"], menu["buttonS"]), 25, "../../src/User Interface Recources/Road_Button.png", this.BackColor);
-            Road_button.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Reset_All_Buttons(Road_button, Road_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Roads");};
-            this.Controls.Add(Road_button);
-            BSM_Buttons.Add(Road_button);
+            /*     Buttons & Dividers    */
 
-            CurvedButtons Sign_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 - menu["buttonSign"], menu["buttonS"]), 25, "../../src/User Interface Recources/Speed_Sign_Button.png", this.BackColor);
-            Sign_button.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Reset_All_Buttons(Sign_button, Sign_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Signs"); };
-            this.Controls.Add(Sign_button);
-            BSM_Buttons.Add(Sign_button);
+            homeButton = new CurvedButtons(new Size(menu["buttonSizeL"], menu["buttonSizeS"]), new Point(_submenuwidth / 2 - menu["buttonHome"], menu["buttonL"]), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Home", _dosisfontfamily, _form, this.BackColor);
+            homeButton.Click += (object o, EventArgs EA) => { General_Form.Main.SwitchControllers(General_Form.Main.MenuController); };
+            this.Controls.Add(homeButton);
 
-            CurvedButtons Settings_button = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(Sub_menu_width / 2 + menu["buttonBuilding"], menu["buttonS"]), 25, "../../src/User Interface Recources/Setting_Button.png", this.BackColor);
-            Settings_button.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.Reset_All_Buttons(Settings_button, Settings_button.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Buildings"); };
-            this.Controls.Add(Settings_button);
-            BSM_Buttons.Add(Settings_button);
+            saveButton = new CurvedButtons(new Size(menu["buttonSizeL"], menu["buttonSizeS"]), new Point(_submenuwidth / 2 + menu["buttonSave"], menu["buttonL"]), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Save", _dosisfontfamily, _form, this.BackColor);
+            saveButton.Click += (object o, EventArgs EA) => { General_Form.Main.Save(); };
+            this.Controls.Add(saveButton);
 
-            CurvedButtons Divider2 = new CurvedButtons();
-            Divider2.Location = new Point(0, menu["divider2"]); //divider2
+            roadButton = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(_submenuwidth / 2 - menu["buttonRoad"], menu["buttonS"]), 25, "../../src/User Interface Recources/Road_Button.png", this.BackColor);
+            roadButton.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.resetAllButtons(roadButton, roadButton.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Roads"); };
+            this.Controls.Add(roadButton);
+            bsmButtons.Add(roadButton);
+
+            signButton = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(_submenuwidth / 2 - menu["buttonSign"], menu["buttonS"]), 25, "../../src/User Interface Recources/Speed_Sign_Button.png", this.BackColor);
+            signButton.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.resetAllButtons(signButton, signButton.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Signs"); };
+            this.Controls.Add(signButton);
+            bsmButtons.Add(signButton);
+
+            settingsButton = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(_submenuwidth / 2 + menu["buttonBuilding"], menu["buttonS"]), 25, "../../src/User Interface Recources/Setting_Button.png", this.BackColor);
+            settingsButton.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.resetAllButtons(settingsButton, settingsButton.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Buildings"); };
+            this.Controls.Add(settingsButton);
+            bsmButtons.Add(settingsButton);
+
+            undoButton = new CurvedButtons(new Size(30, 30), new Point(10, _form.Height - menu["simStartY"] + 3), 20, "../../src/User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
+            undoButton.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadBuilder.UndoRoad(); };
+            this.Controls.Add(undoButton);
+
+            toggleButton = new CurvedButtons(new Size(30, 30), new Point(_submenuwidth - 40, _form.Height - menu["simStartY"] + 3), 20, "../../src/User Interface Recources/Toggle_Button.png", this.BackColor);
+            toggleButton.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.Toggle = General_Form.Main.BuildScreen.ToggleHitbox(); General_Form.Main.BuildScreen.Screen.Invalidate(); };
+            this.Controls.Add(toggleButton);
+            bsmButtons.Add(toggleButton);
+
+            startSimulationButton = new CurvedButtons(new Size(menu["simStartSizeX"], menu["simStartSizeY"]), new Point(_submenuwidth / 2 - menu["simStartX"], _form.Height - menu["simStartY"]), 25,
+                "../../src/User Interface Recources/Custom_Button.png", "Start simulation", _dosisfontfamily, _form, this.BackColor);
+            startSimulationButton.Click += (object o, EventArgs EA) => { General_Form.Main.MenuController.SwitchToSimulation(); };
+            this.Controls.Add(startSimulationButton);
+
+            Divider1 = new CurvedButtons();
+            Divider1.Location = new Point(UserControls.Config.standardSubMenu["deviderX"], UserControls.Config.standardSubMenu["deviderY"]);
+            this.Controls.Add(Divider1);
+
+            Divider2 = new CurvedButtons();
+            Divider2.Location = new Point(0, menu["divider2"]);
             this.Controls.Add(Divider2);
 
-            CurvedButtons Divider4 = new CurvedButtons();
-            Divider4.Location = new Point(0, Form.Height - menu["divider4"]); //divider4
-            this.Controls.Add(Divider4);     
-
-            CurvedButtons Undo_button = new CurvedButtons(new Size(30, 30), new Point(10, Form.Height - menu["simStartY"]+3), 20, "../../src/User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
-            Undo_button.Click += (object o, EventArgs EA) => { General_Form.Main.BuildScreen.builder.roadBuilder.UndoRoad(); };
-            this.Controls.Add(Undo_button);
-
-            CurvedButtons Toggle_button = new CurvedButtons(new Size(30, 30), new Point(Sub_menu_width - 40, Form.Height - menu["simStartY"]+3), 20, "../../src/User Interface Recources/Toggle_Button.png", this.BackColor);
-            Toggle_button.Click += (object o, EventArgs EA) => {General_Form.Main.BuildScreen.Toggle =  General_Form.Main.BuildScreen.ToggleHitbox(); General_Form.Main.BuildScreen.Screen.Invalidate();};
-            this.Controls.Add(Toggle_button);
-            BSM_Buttons.Add(Toggle_button);
-
-            CurvedButtons Start_sim_button = new CurvedButtons(new Size(menu["simStartSizeX"], menu["simStartSizeY"]), new Point(Sub_menu_width / 2 - menu["simStartX"], Form.Height - menu["simStartY"]), 25,
-                "../../src/User Interface Recources/Custom_Button.png", "Start simulation", Dosis_font_family, Form, this.BackColor);
-            Start_sim_button.Click += (object o, EventArgs EA) => { General_Form.Main.MenuController.SwitchToSimulation();  };
-            this.Controls.Add(Start_sim_button);
-           
-            CurvedButtons Divider3 = new CurvedButtons();
-            Divider3.Location = new Point(0, menu["divider3"]); //divider3
+            Divider3 = new CurvedButtons();
+            Divider3.Location = new Point(0, menu["divider3"]);
             this.Controls.Add(Divider3);
+
+            Divider4 = new CurvedButtons();
+            Divider4.Location = new Point(0, _form.Height - menu["divider4"]);
+            this.Controls.Add(Divider4);
+
         }
     }
 }

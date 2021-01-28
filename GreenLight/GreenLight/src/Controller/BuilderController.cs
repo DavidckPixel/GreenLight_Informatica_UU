@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 
-//The build controller is the controller that deals with all the actual building on the road builder. Its most important feature is the BuildRoad feature that can be called and will
-//then proceed to build the road
-//Its also the controller that holds 3 different very important controllers, 
-//the roadcontroller that does al the road building and drawing
-//the gridcontroller that draws the backgrid and also deals with the clicking on the points
-//the signcontroller that deals with all the sign data
+
 
 namespace GreenLight
 {
+    // The BuilderController is the controller that deals with all the actual building of the road junctions. 
+    // Its most important feature is the BuildRoad feature that can be called and will then proceed to build a road.
+    // It is also the controller that holds three different very important controllers; 
+    // the RoadController that does al the road building and drawing,
+    // the gridcontroller that draws the backgrid and also deals with the clicking on the points,
+    // the signcontroller that deals with all the sign data.
+
     public class BuilderController : AbstractController
     {
         
@@ -23,8 +25,6 @@ namespace GreenLight
         public MainSignController signController;
 
         public PictureBox Screen;
-        //public string roadType = "X";
-        //public string signType = "X";
 
         public BuilderController(PictureBox _screen, Form _main)
         {

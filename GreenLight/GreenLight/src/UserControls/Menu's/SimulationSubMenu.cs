@@ -10,10 +10,13 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
+    /* This is the Simulation sub menu class. This class has a method AdjustSize to fit the size of the users window.
+   This user control is shown when the user is in the simulation screen.
+   Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
     public partial class SimulationSubMenu : UserControl
     {
-        public List<CurvedButtons> SSM = new List<CurvedButtons>();
-        public CurvedButtons Weather;
+        public List<CurvedButtons> ssmButtons = new List<CurvedButtons>();
+        public CurvedButtons Weather, Vehicle, Driver, Start, Pause, Stop, Reset, Divider1, Divider2, Divider3;
         public SimulationSubMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
             this.BackColor = Color.FromArgb(255,255,255);
@@ -31,23 +34,6 @@ namespace GreenLight
 
         }
 
-        //Cleaner but General_form should be just form
-        /*public bool Simulation_state_playing = false;
-        public Simulation_sub_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family)
-        {
-            this.BackColor = Color.FromArgb(255,255,255);
-            this.Size = new Size(250,General_form.Height);
-            this.Location = new Point(General_form.Width-Sub_menu_width, General_form.Height);
-            this.AutoScroll = true;
-            Initialize(General_form, Sub_menu_width, Dosis_font_family);
-            General_form.SizeChanged += (object o, EventArgs EA) => {
-                this.Size = new Size(Sub_menu_width, General_form.Height);
-                this.Location = new Point(General_form.Width - Sub_menu_width, 0);
-                this.Controls.Clear();
-                Initialize(General_form, Sub_menu_width, Dosis_font_family);
-            };
-        }*/
-
         private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
             Dictionary<string, int> menu = UserControls.Config.simSubMenu;
@@ -59,51 +45,53 @@ namespace GreenLight
             MovePanel Drag_pad = new MovePanel(Form);
             this.Controls.Add(Drag_pad);
 
-            CurvedButtons Divider1 = new CurvedButtons();
+            CurvedButtons Settings_header = new CurvedButtons(new Size(menu["settingsHeaderSizeX"], menu["settingsHeaderSizeY"]), 
+               new Point(menu["settingsHeaderX"], menu["settingsHeaderY"]), "../../src/User Interface Recources/Settings_Header.png"); 
+            this.Controls.Add(Settings_header);
+
+            int _buttonSize = menu["ButtonSize"];
+
+            /*     Buttons & Dividers    */
+
+            Weather = new CurvedButtons(new Size(_buttonSize, _buttonSize), new Point(menu["buttonStart"] , menu["ButtonY"]), 30, "../../src/User Interface Recources/Weather_Setting_Button.png", this.BackColor);
+            this.Controls.Add(Weather);
+
+            ssmButtons.Add(Weather);
+            Weather.Click += (object obj, EventArgs args) => { ResetButtons(Weather, Weather.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Weather"); ; };
+
+
+            Vehicle = new CurvedButtons(new Size(_buttonSize, _buttonSize), new Point(menu["buttonStart"] + menu["ButtonX"], menu["ButtonY"]), 30, "../../src/User Interface Recources/Vehicle_Setting_Button.png", this.BackColor);
+            this.Controls.Add(Vehicle);
+
+            ssmButtons.Add(Vehicle);
+            Vehicle.Click += (object obj, EventArgs args) => { ResetButtons(Vehicle, Vehicle.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Vehicle"); ; };
+
+
+            Driver = new CurvedButtons(new Size(_buttonSize, _buttonSize), new Point(menu["buttonStart"] + menu["ButtonX"] * 2, menu["ButtonY"]), 30, "../../src/User Interface Recources/Driver_Setting_Button.png", this.BackColor);
+            this.Controls.Add(Driver);
+
+            ssmButtons.Add(Driver);
+            Driver.Click += (object obj, EventArgs args) => { ResetButtons(Driver, Driver.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Driver"); ; };
+
+            Divider1 = new CurvedButtons();
             Divider1.Location = new Point(UserControls.Config.standardSubMenu["deviderX"], UserControls.Config.standardSubMenu["deviderY"]);
             this.Controls.Add(Divider1);
 
-            CurvedButtons Settings_header = new CurvedButtons(new Size(menu["settingsHeaderSizeX"], menu["settingsHeaderSizeY"]),  //settingsHeaderSizeX //settingsHeaderSizeY
-               new Point(menu["settingsHeaderX"], menu["settingsHeaderY"]), "../../src/User Interface Recources/Settings_Header.png"); //settingsHeaderX //settingsHeaderY
-            this.Controls.Add(Settings_header);
-
-            //ButtonSize //ButtonY
-            int _buttonSize = menu["ButtonSize"];
-
-            Weather = new CurvedButtons(new Size(_buttonSize, _buttonSize),
-                new Point(menu["buttonStart"] , menu["ButtonY"]), 30,                                         //weatherX 
-                "../../src/User Interface Recources/Weather_Setting_Button.png", this.BackColor);
-            this.Controls.Add(Weather);
-            SSM.Add(Weather);
-            Weather.Click += (object obj, EventArgs args) => { ResetButtons(Weather, Weather.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Weather"); ; };
-
-            CurvedButtons Vehicle = new CurvedButtons(new Size(_buttonSize, _buttonSize),
-                new Point(menu["buttonStart"] + menu["ButtonX"], menu["ButtonY"]), 30,                                         //vehicleX
-                "../../src/User Interface Recources/Vehicle_Setting_Button.png", this.BackColor);
-            this.Controls.Add(Vehicle);
-            SSM.Add(Vehicle);
-            Vehicle.Click += (object obj, EventArgs args) => { ResetButtons(Vehicle, Vehicle.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Vehicle"); ; };
-
-            CurvedButtons Driver = new CurvedButtons(new Size(_buttonSize, _buttonSize),
-                new Point(menu["buttonStart"] + menu["ButtonX"] * 2, menu["ButtonY"]), 30,                                        //driverX
-                "../../src/User Interface Recources/Driver_Setting_Button.png", this.BackColor);
-            this.Controls.Add(Driver);
-            SSM.Add(Driver);
-            Driver.Click += (object obj, EventArgs args) => { ResetButtons(Driver, Driver.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Driver"); ; };
-
-            CurvedButtons Divider2 = new CurvedButtons();
-            Divider2.Location = new Point(0, menu["devider2"]);                              //devider2
+            Divider2 = new CurvedButtons();
+            Divider2.Location = new Point(0, menu["devider2"]);                             
             this.Controls.Add(Divider2);
 
-            CurvedButtons Divider3 = new CurvedButtons();
-            Divider3.Location = new Point(0, this.Height - menu["devider3"]);                //devider3
+            Divider3 = new CurvedButtons();
+            Divider3.Location = new Point(0, this.Height - menu["devider3"]);          
             this.Controls.Add(Divider3);
 
-            CurvedButtons SimulationSpeed_header = new CurvedButtons(new Size(menu["speedHeaderSizeX"], menu["speedHeaderSizeY"]), //speedHeaderSizeX //speedHeaderSizeY
-                new Point(menu["speedHeaderX"], this.Height - menu["speedHeaderY"]), "../../src/User Interface Recources/Simulation_Speed_Header.png"); //speedHeaderX //speedHeaderY
+            /*     Simulationspeed slider    */
+
+            CurvedButtons SimulationSpeed_header = new CurvedButtons(new Size(menu["speedHeaderSizeX"], menu["speedHeaderSizeY"]),
+                new Point(menu["speedHeaderX"], this.Height - menu["speedHeaderY"]), "../../src/User Interface Recources/Simulation_Speed_Header.png");
             this.Controls.Add(SimulationSpeed_header);
 
-            Slider SimulationSpeed = new Slider(new Point(menu["speedX"], this.Height - menu["speedY"]), 1, 10); //speedX //speedY
+            Slider SimulationSpeed = new Slider(new Point(menu["speedX"], this.Height - menu["speedY"]), 1, 10);
             SimulationSpeed.Value = 1;
             this.Controls.Add(SimulationSpeed);
 
@@ -113,75 +101,86 @@ namespace GreenLight
             SimulationSpeed_Text.BringToFront();
 
             SimulationSpeed.ValueChanged += (object o, EventArgs EA) =>
-            { SimulationSpeed_Text.Text = SimulationSpeed.Value.ToString() + "x"; General_Form.Main.UserInterface.SimDataM.Value_changed(SimulationSpeed.Value); };
+            { SimulationSpeed_Text.Text = SimulationSpeed.Value.ToString() + "x"; General_Form.Main.UserInterface.SimDataM.ValueChanged(SimulationSpeed.Value); };
 
-            CurvedButtons Start = new CurvedButtons(new Size(_buttonSize, _buttonSize),           //controlsX, controlsY
-                new Point(menu["buttonStart"], Form.Height - menu["controlsY"]), 35,
-                "../../src/User Interface Recources/Play_Simulation_Button.png", this.BackColor);
+
+            /*     Simulation buttons   */
+
+            Start = new CurvedButtons(new Size(_buttonSize, _buttonSize), new Point(menu["buttonStart"], Form.Height - menu["controlsY"]), 35, "../../src/User Interface Recources/Play_Simulation_Button.png", this.BackColor);
+              Start.Click += (object o, EventArgs ea) => 
+            {
+                if (General_Form.Main.BuildScreen.builder.roadBuilder.roads.Count > 0)
+                {
+                    General_Form.Main.SimulationScreen.Simulator.initSimulation();
+                    General_Form.Main.SimulationScreen.Simulator.StartSimulation();
+                }
+                else
+                {
+                    MessageBox.Show("No spawnpoints available, you will return to the builder.");
+                    General_Form.Main.SimulationScreen.Simulator.resetSimulation();
+                    General_Form.Main.SwitchControllers(General_Form.Main.BuildScreen);
+                    General_Form.Main.UserInterface.SimDataM.ResetTimer();
+                    Start.Show();
+
+                };
+            };
             this.Controls.Add(Start);
-            Start.Click += (object o, EventArgs ea) => {
-                General_Form.Main.SimulationScreen.Simulator.initSimulation();
-                General_Form.Main.SimulationScreen.Simulator.StartSimulation(); };
+
             Start.BringToFront();
 
-            CurvedButtons Pause = new CurvedButtons(new Size(60, 60),
-               new Point(20, Form.Height - 80), 35,
-               "../../src/User Interface Recources/Pause_Button.png", this.BackColor);
+            Pause = new CurvedButtons(new Size(60, 60),new Point(20, Form.Height - 80), 35, "../../src/User Interface Recources/Pause_Button.png", this.BackColor);
             Pause.Hide();
-            this.Controls.Add(Pause);
-            Pause.BringToFront();
             Pause.Click += (object o, EventArgs EA) => { General_Form.Main.SimulationScreen.Simulator.PauseSimulation(); };
             Pause.Click += (object o, EventArgs EA) => { Pause.Hide(); Start.Show(); General_Form.Main.UserInterface.SimDataM.Stop_timer(); };
-            Start.Click += (object o, EventArgs EA) => { Start.Hide(); Pause.Show(); General_Form.Main.UserInterface.SimDataM.Start_timer(); };
+            Start.Click += (object o, EventArgs EA) => { Start.Hide(); Pause.Show(); General_Form.Main.UserInterface.SimDataM.StartTimer(); };
+            this.Controls.Add(Pause);
+            Pause.BringToFront();
 
-            CurvedButtons Reset = new CurvedButtons(new Size(_buttonSize, _buttonSize),
-                new Point(menu["buttonStart"] + menu["ButtonX"], Form.Height - menu["controlsY"]), 35,
-                "../../src/User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
-            
-            this.Controls.Add(Reset);
+            Reset = new CurvedButtons(new Size(_buttonSize, _buttonSize), new Point(menu["buttonStart"] + menu["ButtonX"], Form.Height - menu["controlsY"]), 35, "../../src/User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
             Reset.Click += (object o, EventArgs ea) =>
             {
                 General_Form.Main.SimulationScreen.Simulator.resetSimulation();
             };
+            this.Controls.Add(Reset);
             Reset.BringToFront();
-
             {
                 if (Pause.Visible)
                 {
-                    General_Form.Main.UserInterface.SimDataM.Reset_timer();
+                    General_Form.Main.UserInterface.SimDataM.ResetTimer();
                     Pause.Hide();
                     Start.Show();
                     SimulationSpeed.Value = 1;
                 }
-                else if (Start.Visible && General_Form.Main.UserInterface.SimDataM.Stopwatch.Elapsed.ToString() != "00:00:00")
+                else if (Start.Visible && General_Form.Main.UserInterface.SimDataM.stopWatch.Elapsed.ToString() != "00:00:00")
                 {
-                    General_Form.Main.UserInterface.SimDataM.Reset_timer();
+                    General_Form.Main.UserInterface.SimDataM.ResetTimer();
                     SimulationSpeed.Value = 1;
                 }
             };
 
-            CurvedButtons Stop = new CurvedButtons(new Size(_buttonSize, _buttonSize),
-               new Point(menu["buttonStart"] + menu["ButtonX"] * 2, Form.Height - menu["controlsY"]), 35,
-               "../../src/User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
-            this.Controls.Add(Stop);
-            Stop.BringToFront();
-            Stop.Click += (object obj, EventArgs args) => {
+            Stop = new CurvedButtons(new Size(_buttonSize, _buttonSize), new Point(menu["buttonStart"] + menu["ButtonX"] * 2, Form.Height - menu["controlsY"]), 35, "../../src/User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
+            Stop.Click += (object obj, EventArgs args) => 
+            {
                 General_Form.Main.SimulationScreen.Simulator.resetSimulation();
                 General_Form.Main.SwitchControllers(General_Form.Main.BuildScreen);
-                General_Form.Main.UserInterface.SimDataM.Reset_timer();
+                General_Form.Main.UserInterface.SimDataM.ResetTimer();
                 Pause.Hide();
                 Start.Show();
             };
+            this.Controls.Add(Stop);
+            Stop.BringToFront();
         }
-        private void ResetButtons(CurvedButtons Selected, string Filepath)
+        private void ResetButtons(CurvedButtons _selected, string _filepath)
         {
-            foreach (CurvedButtons x in SSM)
+            foreach (CurvedButtons x in ssmButtons)
             {
                 x.Selected = false;
                 x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
             }
-            Selected.Selected = true;
-            Selected.Image = Image.FromFile(Filepath.Remove(Filepath.Length - 10) + "Select.png");
+
+            _selected.Selected = true;
+            _selected.Image = Image.FromFile(_filepath.Remove(_filepath.Length - 10) + "Select.png");
+
         }
     }
 }

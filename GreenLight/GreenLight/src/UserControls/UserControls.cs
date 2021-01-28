@@ -19,8 +19,7 @@ namespace GreenLight
 
             if (Config != null)
             {
-               // Console.WriteLine(Config.projectName);
-               // Console.WriteLine(Config.standardSubMenu["X"]);
+
             }
         }
 

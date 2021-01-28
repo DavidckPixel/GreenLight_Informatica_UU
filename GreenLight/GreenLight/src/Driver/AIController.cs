@@ -11,7 +11,6 @@ namespace GreenLight
 {
     public class AIController : EntityController
     {
-        public List<AI> driverlist = new List<AI>();
         public DriverStats selectedAI;
         public List<DriverStats> availableDriverStats = new List<DriverStats>();
 
@@ -38,9 +37,11 @@ namespace GreenLight
         {
             this.availableDriverStats.Clear();
 
-            this.driverlist.Clear();
 
-            List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSDM.Selection_box.Elements_available;
+
+            List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSDM.Selection_box.elementsSelected;
+
+         //   List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSDM.Selection_box.Elements_available;
             availableVehicleStatsString.ForEach(x => this.availableDriverStats.Add(getDriverStat(x)));
             this.availableDriverStats.RemoveAll(x => x == null);
 
@@ -88,7 +89,7 @@ namespace GreenLight
                 AITypeConfig.aiTypes.Add(_temp);
             }
 
-            General_Form.Main.UserInterface.SimSDM.Selection_box.Add_Element(_temp.Name);
+            General_Form.Main.UserInterface.SimSDM.Selection_box.AddElement(_temp.Name);
         }
 
 

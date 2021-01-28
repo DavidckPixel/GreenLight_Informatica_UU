@@ -10,9 +10,14 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
+    /* This is the Elements sub menu class for the signs. This class has a method AdjustSize to fit the size of the users window.
+       This user control is shown when the user is in the building screen and has selected signs to build. 
+       Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
     public partial class ElementsSubSignsMenu : UserControl
     {
-        public List<CurvedButtons> ESSM = new List<CurvedButtons>();
+        public List<CurvedButtons> essmButtons = new List<CurvedButtons>();
+        public CurvedButtons Hand, stopSign, yieldSign, prioritySign, speedSign;
+
         public ElementsSubSignsMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
 
@@ -22,7 +27,7 @@ namespace GreenLight
             this.AutoScroll = true;
             Initialize(Form, Menu_width, Dosis_font_family);
         }
-        public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        public void AdjustSize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
         {
             this.Size = new Size(Sub_menu_width, Form.Height - UserControls.Config.buildElementsMenu["elementsXbase"] - UserControls.Config.buildElementsMenu["elementsXplus"]);
             this.Location = new Point(Form.Width - Sub_menu_width, UserControls.Config.buildElementsMenu["elementsXbase"]);
@@ -40,42 +45,42 @@ namespace GreenLight
             int _ButtonYdiff = menu["buttonYdiff"];
             int _ButtonCurve = menu["buttonCurve"];
 
-            //-----------------------------------------
+            /*     Buttons & Dividers    */
 
-            CurvedButtons Hand = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Hand_Button.png", this.BackColor);
+            Hand = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Hand_Button.png", this.BackColor);
             Hand.Click += (object o, EventArgs EA) => { ResetButtons(Hand, Hand.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "X"; };
             this.Controls.Add(Hand);
-            ESSM.Add(Hand);
+            essmButtons.Add(Hand);
 
-            CurvedButtons Speed_sign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Speed_Sign_Button.png", this.BackColor);
-            Speed_sign.Click += (object o, EventArgs EA) => { ResetButtons(Speed_sign, Speed_sign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "speedSign"; };
-            this.Controls.Add(Speed_sign);
-            ESSM.Add(Speed_sign);
+            speedSign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Speed_Sign_Button.png", this.BackColor);
+            speedSign.Click += (object o, EventArgs EA) => { ResetButtons(speedSign, speedSign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "speedSign"; };
+            this.Controls.Add(speedSign);
+            essmButtons.Add(speedSign);
 
-            CurvedButtons Yield_sign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Yield_Sign_Button.png", this.BackColor);
-            Yield_sign.Click += (object o, EventArgs EA) => { ResetButtons(Yield_sign, Yield_sign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "yieldSign"; };
-            this.Controls.Add(Yield_sign);
-            ESSM.Add(Yield_sign);
+            yieldSign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff * 2, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Yield_Sign_Button.png", this.BackColor);
+            yieldSign.Click += (object o, EventArgs EA) => { ResetButtons(yieldSign, yieldSign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "yieldSign"; };
+            this.Controls.Add(yieldSign);
+            essmButtons.Add(yieldSign);
 
-            CurvedButtons Priority_road_sign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../src/User Interface Recources/Priority_Road_Sign_Button.png", this.BackColor);
-            Priority_road_sign.Click += (object o, EventArgs EA) => { ResetButtons(Priority_road_sign, Priority_road_sign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "prioritySign"; };
-            this.Controls.Add(Priority_road_sign);
-            ESSM.Add(Priority_road_sign);
+            prioritySign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../src/User Interface Recources/Priority_Road_Sign_Button.png", this.BackColor);
+            prioritySign.Click += (object o, EventArgs EA) => { ResetButtons(prioritySign, prioritySign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "prioritySign"; };
+            this.Controls.Add(prioritySign);
+            essmButtons.Add(prioritySign);
 
-            CurvedButtons Stop_sign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../src/User Interface Recources/Stop_Sign_Button.png", this.BackColor);
-            Stop_sign.Click += (object o, EventArgs EA) => { ResetButtons(Stop_sign, Stop_sign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "stopSign"; };
-            this.Controls.Add(Stop_sign);
-            ESSM.Add(Stop_sign);
+            stopSign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase + _ButtonYdiff), menu["buttonCurve"], "../../src/User Interface Recources/Stop_Sign_Button.png", this.BackColor);
+            stopSign.Click += (object o, EventArgs EA) => { ResetButtons(stopSign, stopSign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "stopSign"; };
+            this.Controls.Add(stopSign);
+            essmButtons.Add(stopSign);
         }
-        private void ResetButtons(CurvedButtons Selected, string Filepath)
+        private void ResetButtons(CurvedButtons _selected, string _filepath)
         {
-            foreach (CurvedButtons x in ESSM)
+            foreach (CurvedButtons x in essmButtons)
             {
                 x.Selected = false;
                 x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
             }
-            Selected.Selected = true;
-            Selected.Image = Image.FromFile(Filepath.Remove(Filepath.Length - 10) + "Select.png");
+            _selected.Selected = true;
+            _selected.Image = Image.FromFile(_filepath.Remove(_filepath.Length - 10) + "Select.png");
         }
     }
 }

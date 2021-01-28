@@ -8,13 +8,15 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
+    /* This is the SliderText class.
+       The SliderText is used to create labels for the sliders */
     public class SliderText : Label
     {
-        public SliderText(FontFamily Dosis_Font_Familly, Point p, string text)
+        public SliderText(FontFamily _dosisfontfamily, Point _location, string _text)
         {
-            this.Font = new Font(Dosis_Font_Familly, 10, FontStyle.Bold);
-            this.Location = p;
-            this.Text = text;
+            this.Font = new Font(_dosisfontfamily, 10, FontStyle.Bold);
+            this.Location = _location;
+            this.Text = _text;
             this.ForeColor = Color.FromArgb(142, 140, 144);
         }
     }
