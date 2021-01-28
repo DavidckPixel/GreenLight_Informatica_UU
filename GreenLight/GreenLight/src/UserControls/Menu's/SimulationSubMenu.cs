@@ -75,21 +75,33 @@ namespace GreenLight
                 "../../src/User Interface Recources/Weather_Setting_Button.png", this.BackColor);
             this.Controls.Add(Weather);
             SSM.Add(Weather);
-            Weather.Click += (object obj, EventArgs args) => { ResetButtons(Weather, Weather.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Weather"); ; };
+            Weather.Click += (object obj, EventArgs args) => 
+            { 
+                ResetButtons(Weather, Weather.Image_path); 
+                General_Form.Main.SimulationScreen.SwitchSubMenus("Weather");; 
+            };
 
             CurvedButtons Vehicle = new CurvedButtons(new Size(_buttonSize, _buttonSize),
                 new Point(menu["buttonStart"] + menu["ButtonX"], menu["ButtonY"]), 30,                                         //vehicleX
                 "../../src/User Interface Recources/Vehicle_Setting_Button.png", this.BackColor);
             this.Controls.Add(Vehicle);
             SSM.Add(Vehicle);
-            Vehicle.Click += (object obj, EventArgs args) => { ResetButtons(Vehicle, Vehicle.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Vehicle"); ; };
+            Vehicle.Click += (object obj, EventArgs args) => 
+            { 
+                ResetButtons(Vehicle, Vehicle.Image_path); 
+                General_Form.Main.SimulationScreen.SwitchSubMenus("Vehicle");; 
+            };
 
             CurvedButtons Driver = new CurvedButtons(new Size(_buttonSize, _buttonSize),
                 new Point(menu["buttonStart"] + menu["ButtonX"] * 2, menu["ButtonY"]), 30,                                        //driverX
                 "../../src/User Interface Recources/Driver_Setting_Button.png", this.BackColor);
             this.Controls.Add(Driver);
             SSM.Add(Driver);
-            Driver.Click += (object obj, EventArgs args) => { ResetButtons(Driver, Driver.Image_path); General_Form.Main.SimulationScreen.SwitchSubMenus("Driver"); ; };
+            Driver.Click += (object obj, EventArgs args) => 
+            { 
+                ResetButtons(Driver, Driver.Image_path); 
+                General_Form.Main.SimulationScreen.SwitchSubMenus("Driver");; 
+            };
 
             CurvedButtons Divider2 = new CurvedButtons();
             Divider2.Location = new Point(0, menu["devider2"]);                              //devider2
@@ -119,9 +131,22 @@ namespace GreenLight
                 new Point(menu["buttonStart"], Form.Height - menu["controlsY"]), 35,
                 "../../src/User Interface Recources/Play_Simulation_Button.png", this.BackColor);
             this.Controls.Add(Start);
-            Start.Click += (object o, EventArgs ea) => {
-                General_Form.Main.SimulationScreen.Simulator.initSimulation();
-                General_Form.Main.SimulationScreen.Simulator.StartSimulation(); };
+            Start.Click += (object o, EventArgs ea) =>
+            {
+                if (General_Form.Main.BuildScreen.builder.roadBuilder.roads.Count > 0)
+                {
+                    General_Form.Main.SimulationScreen.Simulator.initSimulation();
+                    General_Form.Main.SimulationScreen.Simulator.StartSimulation();
+                }
+                else
+                {
+                    MessageBox.Show("No spawnpoints available, you will return to the builder.");
+                    General_Form.Main.SwitchControllers(General_Form.Main.BuildScreen);
+                    General_Form.Main.UserInterface.SimDataM.Reset_timer();
+                    Start.Show();
+
+                };
+            };
             Start.BringToFront();
 
             CurvedButtons Pause = new CurvedButtons(new Size(60, 60),
@@ -179,6 +204,7 @@ namespace GreenLight
                 x.Selected = false;
                 x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
             }
+
             Selected.Selected = true;
             Selected.Image = Image.FromFile(Filepath.Remove(Filepath.Length - 10) + "Select.png");
         }

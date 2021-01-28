@@ -283,7 +283,7 @@ namespace GreenLight.src.Driver.GPS
             {
                 return null;
             }
-
+            
             return this.nodePaths.Find(x => x.CheckMatch(_begin, _end)).linkPath;
         }
 
@@ -302,6 +302,7 @@ namespace GreenLight.src.Driver.GPS
             }
 
             Random ran = new Random();
+
             return _AllPossiblePaths[ran.Next(0, _AllPossiblePaths.Count())].linkPath;
         }
 
@@ -312,7 +313,7 @@ namespace GreenLight.src.Driver.GPS
             if (this.nodePaths.Any())
             {
                 Random ran = new Random();
-                return this.nodePaths[ran.Next(0, this.nodePaths.Count()-1)].begin;
+                return this.nodePaths[ran.Next(0, this.nodePaths.Count())].begin;
             }
 
             Console.WriteLine("NODE PATHS ARE EMPTY??? THIS SHOULD NEVER HAPPEN!");

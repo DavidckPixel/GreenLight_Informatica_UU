@@ -334,7 +334,12 @@ namespace GreenLight
 
         private void LeavingCrossRoadSide()
         {
-
+            if(currentCrossRoadSide == null)
+            {
+                Console.WriteLine("THE FUCKKKKKKK!!! WAAROM?!?!");
+                return;
+            }
+            
             this.currentCrossRoadSide.aiOnSide.Remove(this);
 
             if (!this.currentCrossRoadSide.aiOnSide.Any())
@@ -612,7 +617,8 @@ namespace GreenLight
             Random ran = new Random();
 
             AbstractRoad _currentRoad = navigator.currentPath.road;
-            this.CurrentLaneIndex = navigator.currentPath.laneIndex[ran.Next(0, navigator.currentPath.laneIndex.Count() - 1)];
+            int _random = ran.Next(0, navigator.currentPath.laneIndex.Count());
+            this.CurrentLaneIndex = navigator.currentPath.laneIndex[_random];
             this.vehicle.SwitchRoad(_currentRoad, this.CurrentLaneIndex);
             this.nextRoad = navigator.nextRoad;
 
