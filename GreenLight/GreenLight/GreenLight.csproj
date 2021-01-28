@@ -295,6 +295,7 @@
     <EmbeddedResource Include="src\UserControls\Menu%27s\SimulationMainMenu.resx">
       <DependentUpon>SimulationMainMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Documentation\UserManual.pdf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

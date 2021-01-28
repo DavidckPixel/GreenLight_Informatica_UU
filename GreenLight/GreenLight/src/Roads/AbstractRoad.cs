@@ -78,7 +78,7 @@ namespace GreenLight
         //public abstract Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _RoadHitBox);
         public abstract Hitbox CreateHitbox(Point[] _array);
 
-        public virtual void Draw(Graphics g)
+        public override void Draw(Graphics g)
         {
             foreach(Lane _lane in Drivinglanes)
             {

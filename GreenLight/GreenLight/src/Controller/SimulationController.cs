@@ -28,10 +28,10 @@ namespace GreenLight
         public delegate void RemoveAI(BetterAI _ai, bool _dump);
         public delegate void RemoveVehicle(BetterVehicle _veh, bool _dump);
 
-        public int SimulationInterval = 32;
+        public int SimulationInterval = 16;
         public int SimulationIntervalDivider = 1;
 
-        public int spawnBetweenTick = 50;
+        public int spawnBetweenTick = 200;
         public bool canSpawn = true;
 
         Thread Simulation;
@@ -94,7 +94,6 @@ namespace GreenLight
         public void resetSimulation()
         {
             this.vehicleController.vehicleList.Clear();
-            this.aiController.driverlist.Clear();
             General_Form.Main.UserInterface.SimDataM.stopWatch.Reset();
 
             initSimulation();
@@ -129,6 +128,7 @@ namespace GreenLight
                         this.screenController.Screen.BeginInvoke(new UpdateTextCallback(General_Form.Main.DataScreen.dataController.collector.CollectAllData));
                         vehicleController.toDelete.Clear();
                     }
+
 
                     if (x % this.spawnBetweenTick == 0 && this.canSpawn)
                     {
