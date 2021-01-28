@@ -25,7 +25,6 @@ namespace GreenLight
 
         public List<AbstractRoad> roads = new List<AbstractRoad>();
         public PictureBox Screen;
-        public OriginPointController OPC = new OriginPointController();
         public string roadType = "D";
         public string lastType = "X";
 
@@ -106,8 +105,6 @@ namespace GreenLight
             AbstractRoad _road = new DiagonalRoad(_point1, _point2, _lanes, _dir, "Diagonal", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
 
-            OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point1);
-            OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point2);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
 
 
@@ -127,9 +124,6 @@ namespace GreenLight
 
             this.Screen.Invalidate();
             crossRoadController.ShowSettingScreen((CrossRoad)_temp);
-
-            OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point1);
-
         }
 
         public void BuildCurvedRoad(Point _point1, Point _point2, int _lanes, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo)
@@ -172,8 +166,6 @@ namespace GreenLight
 
             AbstractRoad _road = new CurvedRoad(_point1, _point2, _lanes, _dir, _type, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
             roads.Add(_road);
-            OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point1);
-            OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point2);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
             CheckLaneDirections(_road, 0);
         }
@@ -463,28 +455,6 @@ namespace GreenLight
 
         public void DeleteRoad(AbstractRoad _deletedroad) //made public so it can be used for deleting originpoints
         {
-            List<OriginPoints> OriginPointsList = General_Form.Main.BuildScreen.builder.roadBuilder.OPC.OriginPointsList;
-            for (int o = OriginPointsList.Count - 1; o >= 0; o--)
-            {
-                int Xop = OriginPointsList[o].X;
-                int Yop = OriginPointsList[o].Y;
-                Point point1 = _deletedroad.point1;
-                Point point2 = _deletedroad.point2;
-                int connectedRoads = 0;
-                for (int i = 0; i < roads.Count; i++)
-                {
-                    if ((Xop <= roads[i].point1.X + 4 && Xop >= roads[i].point1.X - 4 && Yop <= roads[i].point1.Y + 4 && Yop >= roads[i].point1.Y - 4) || (Xop <= roads[i].point2.X + 4 && Xop >= roads[i].point2.X - 4 && Yop <= roads[i].point2.Y + 4 && Yop >= roads[i].point2.Y - 4))
-                    {
-                        connectedRoads++;
-                    }
-                }
-                if ((Xop <= point1.X + 4 && Xop >= point1.X - 4 && Yop <= point1.Y + 4 && Yop >= point1.Y - 4) || (Xop <= point2.X + 4 && Xop >= point2.X - 4 && Yop <= point2.Y + 4 && Yop >= point2.Y - 4) && connectedRoads < 2)
-                {
-                    OriginPointsList.RemoveAt(o);
-                }
-            }
-
-
             if (_deletedroad == this.selectedRoad)
             {
                 this.selectedRoad = null;
