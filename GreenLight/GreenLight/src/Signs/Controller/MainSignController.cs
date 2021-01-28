@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Timers;
 
 //This is the controller that handles all the sign placement, every Sign has its own controller because every sign requires its own input
 //for example: speed needs a set speed but other signs need other things.
@@ -25,10 +26,11 @@ namespace GreenLight
         public PrioritySignController prioritySignC;
 
         public AbstractRoad selectedRoad;
-        public bool dragMode, _flipped = false;
+        public bool dragMode, _flipped = false, _setTimer = false;
         public int SignCount = 0;
         private Point MouseClick;
         public PlacedSign selectedSign;
+        public System.Timers.Timer trafficLightTimer;
 
         Form main;
         PictureBox screen;
@@ -50,6 +52,7 @@ namespace GreenLight
 
             this.trafficLight = new TrafficLightController(_main, this);
             this.trafficLight.initSettingScreen();
+
 
             this.prioritySignC = new PrioritySignController(_main, this);
             this.yieldSignC = new YieldSignController(_main, this);
@@ -219,6 +222,39 @@ namespace GreenLight
             SignCount++;
             closeDragMode();
         }
+        public void changeColor(string color, AbstractSign _temp, AbstractRoad _selectedRoad)
+        {
+            Console.WriteLine("changecolor");
+
+            if (_selectedRoad == null)
+            {
+                return;
+            }
+
+            PlacedSign _placed = _selectedRoad.Signs.Find(x => x.Sign == _temp);
+
+            if (_placed == null)
+            {
+                return;
+            }
+
+            switch (color)
+            {
+                case "Green":
+                    _placed.Sign_image = Image.FromFile("../../src/User Interface Recources/Traffic_light_Green.png");
+                    Console.WriteLine("Green");
+                    break;
+                case "Orange":
+                    _placed.Sign_image = Image.FromFile("../../src/User Interface Recources/Traffic_light_Orange.png");
+                    break;
+                case "Red":
+                    _placed.Sign_image = Image.FromFile("../../src/User Interface Recources/Traffic_light_Red.png");
+                    Console.WriteLine("Red");
+                    break;
+            }
+
+            this.screen.Invalidate();
+        }
 
         private AbstractSign CreateSign()
         {
@@ -227,17 +263,17 @@ namespace GreenLight
                 case "X":
                     break;
                 case "trafficLight":
-                    return trafficLight.newSign();
+                    return trafficLight.newSign(selectedRoad);
                 case "speedSign":
-                    return speedSign.newSign();
+                    return speedSign.newSign(selectedRoad);
                 case "yieldSign":
-                    return yieldSignC.newSign();
+                    return yieldSignC.newSign(selectedRoad);
                 case "prioritySign":
-                    return prioritySignC.newSign();
+                    return prioritySignC.newSign(selectedRoad);
                 case "stopSign":
                     Point _begin = selectedRoad.getPoint1();
                     Point _end = selectedRoad.getPoint2();
-                    return stopSign.newSign();
+                    return stopSign.newSign(selectedRoad);
             }
 
             return null;
@@ -260,6 +296,27 @@ namespace GreenLight
             this.screen.Invalidate();
         }
 
+        public void StartTimer()
+        {
+            trafficLightTimer.Interval = 15000;
+            trafficLightTimer.Start();
+            trafficLightTimer.Elapsed += new ElapsedEventHandler(SwitchTrafficLights);
+            
+        }
+
+        void SwitchTrafficLights(object source, ElapsedEventArgs e)
+        {
+            foreach (TrafficLight tl in Signs)
+            {
+                tl.SwitchLights();
+            }
+        }
+
+
+        public void StopTimer()
+        {
+            trafficLightTimer.Stop();
+        }
 
         public void deleteSign(AbstractSign _abstractSign = null)
         {

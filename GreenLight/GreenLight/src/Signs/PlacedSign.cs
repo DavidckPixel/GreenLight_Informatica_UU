@@ -39,7 +39,10 @@ namespace GreenLight
             this.Mea = _mea;
 
             dir = (int)Road.Drivinglanes[0].AngleDir;
+
             Console.WriteLine("Dir" + dir);
+
+            Console.WriteLine("SLp draw " + Road.slp);
 
             if  (this.Location == new Point(-100,  -100))
                 setLocation();

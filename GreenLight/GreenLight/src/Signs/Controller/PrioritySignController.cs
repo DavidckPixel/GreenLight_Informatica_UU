@@ -105,8 +105,6 @@ namespace GreenLight
 
             settingScreen.ShowDialog();
             settingScreen.BringToFront();
-
-
         }
         public override void onSignClick(AbstractSign _sign, AbstractRoad _selectedRoad)
         {
@@ -117,19 +115,31 @@ namespace GreenLight
             }
             openMenu();
         }
-        public override AbstractSign newSign()
+
+        public override AbstractSign newSign(AbstractRoad _selectedRoad)
         {
             PrioritySign _temp = new PrioritySign(this);
             this.signController.Signs.Add(_temp);
+            selectedRoad = _selectedRoad;
+
+            if (_selectedRoad != null)
+                selectedRoad = _selectedRoad;
+
             onSignClick(_temp, selectedRoad);
 
             return _temp;
         }
 
+
+
         public override void deleteSign()
         {
             this.signController.deleteSign(selected);
             this.settingScreen.Hide();
+        }
+        public override void changeColor(string color)
+        {
+            throw new NotImplementedException();
         }
     }
 }

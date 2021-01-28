@@ -119,10 +119,14 @@ namespace GreenLight
             openMenu();
         }
 
-        public override AbstractSign newSign()
+        public override AbstractSign newSign(AbstractRoad _selectedRoad)
         {
             YieldSign _temp = new YieldSign(this);
             this.signController.Signs.Add(_temp);
+
+            if (_selectedRoad != null)
+                selectedRoad = _selectedRoad;
+
             onSignClick(_temp, selectedRoad);
             return _temp;
         }
@@ -131,6 +135,11 @@ namespace GreenLight
         {
             this.signController.deleteSign(selected);
             this.settingScreen.Hide();
+        }
+
+        public override void changeColor(string color)
+        {
+            throw new NotImplementedException();
         }
     }
 }

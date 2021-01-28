@@ -23,10 +23,11 @@ namespace GreenLight
 
 
         public abstract void onSignClick(AbstractSign _sign, AbstractRoad _selectedRoad);
-        public abstract AbstractSign newSign();
+        public abstract AbstractSign newSign(AbstractRoad _selectedRoad);
         public abstract void openMenu();
         public abstract void initSettingScreen();
         public abstract void deleteSign();
+        public abstract void changeColor(string color);
 
     }
 }

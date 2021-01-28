@@ -46,12 +46,13 @@ namespace GreenLight
             Timer.Interval = 1;
             Timer.Tick += new EventHandler(Set_time);
             Timer.Enabled = true;
-            GPS bo = new GPS();
+            General_Form.Main.BuildScreen.builder.signController.StartTimer();
         }
 
         public void Stop_timer()
         {
             Stopwatch.Stop();
+            General_Form.Main.BuildScreen.builder.signController.StopTimer();
         }
 
         public void Reset_timer()

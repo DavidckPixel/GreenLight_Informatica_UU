@@ -125,10 +125,14 @@ namespace GreenLight
             openMenu();
         }
 
-        public override AbstractSign newSign()
+        public override AbstractSign newSign(AbstractRoad _selectedRoad)
         {
             TrafficLight _temp = new TrafficLight(this);
-            this.signController.Signs.Add(_temp);
+            this.signController.Signs.Add(_temp); 
+            
+            if (_selectedRoad != null)
+                selectedRoad = _selectedRoad;
+
             onSignClick(_temp, selectedRoad);
             return _temp;
         }
@@ -139,18 +143,9 @@ namespace GreenLight
             this.settingScreen.Hide();
         }
 
-        public void changeColor(string color)
+        public override void changeColor(string color)
         {
-            switch (color)
-            {
-                case "Green":
-                    break;
-                case "Yellow": //Orange
-                    break;
-                case "Red":
-
-                    break;
-            }
+            this.signController.changeColor(color, (AbstractSign)selected, selectedRoad);
         }
     }
 }

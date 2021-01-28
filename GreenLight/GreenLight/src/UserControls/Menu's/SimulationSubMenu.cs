@@ -170,6 +170,7 @@ namespace GreenLight
                 General_Form.Main.UserInterface.SimDataM.Reset_timer();
                 Pause.Hide();
                 Start.Show();
+                General_Form.Main.BuildScreen.builder.signController.StopTimer();
             };
         }
         private void ResetButtons(CurvedButtons Selected, string Filepath)
