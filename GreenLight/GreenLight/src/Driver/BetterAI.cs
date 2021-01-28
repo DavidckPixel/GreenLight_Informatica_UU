@@ -18,7 +18,7 @@ namespace GreenLight
         int speedRelativeToLimit;
         float ruleBreakingChance;
 
-        public double targetspeed = 30;
+        public double targetspeed = 3;
         public int priority = 2;
 
         public bool isBraking = false;
@@ -407,7 +407,7 @@ namespace GreenLight
             {
                 this.brakeToZero = false;
             }
-            if (_distanceToRoadSwitch < _brakeDistance + 4 && navigator.currentPath.NextLaneIndex != null && !navigator.currentPath.NextLaneIndex.Contains(vehicle.currentLane.thisLane))
+            if (_distanceToRoadSwitch < _brakeDistance && navigator.currentPath.NextLaneIndex != null && !navigator.currentPath.NextLaneIndex.Contains(vehicle.currentLane.thisLane))
             {
                 this.isBraking = true;
             }
@@ -713,7 +713,7 @@ namespace GreenLight
 
             if (this.startedCrossing)
             {
-                Console.WriteLine("IS ON CROSSROAD");
+               //Console.WriteLine("IS ON CROSSROAD");
                 this.crossRoadOccupied = false;
                 return; //YOU ARE ALREADY ON THE CROSSROAD
             }
