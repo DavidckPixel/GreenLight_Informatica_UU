@@ -47,6 +47,7 @@ namespace GreenLight
         public bool wantsToSwitch;
         public bool closeToCars;
         public bool crossRoadOccupied;
+        public bool startedCrossing;
         private BetterGPS navigator;
 
         public int lanePointsMovePerTick;
@@ -62,6 +63,8 @@ namespace GreenLight
 
         public bool isSwitchingLanes;
         public int switchCount;
+
+        public string Goal = "";
 
         public BetterAI(DriverStats _stats)
         {
@@ -119,7 +122,8 @@ namespace GreenLight
             }
 
             InCrossRoadRange();
-            crossRoadRules();
+            //crossRoadRules();
+            ReworkedCrossRoadCheck();
 
             NeedToBrake();
             CalculateAcceleration();
@@ -316,7 +320,14 @@ namespace GreenLight
             if(this.nextRoad.roadtype == "Cross")
             {
                 CrossRoad _temproad = (CrossRoad)nextRoad;
-                CrossRoadSide _crossRoadSide = _temproad.sides.ToList().Find(x => x.hitbox.Contains(this.vehicle.currentLane.points.Last().cord));
+                List<CrossRoadSide> _crossRoadSideL = _temproad.sides.ToList().FindAll(x => x.hitbox.Contains(this.vehicle.currentLane.points.Last().cord));
+
+                if(_crossRoadSideL.Count > 1)
+                {
+                    Console.WriteLine("WEL WE FOUND YOUR PROBLEM!!!!!!!!!!!!!!!!!!!!!!!!");
+                }
+
+                CrossRoadSide _crossRoadSide = _crossRoadSideL.First();
 
                 _crossRoadSide.status = true;
                 _crossRoadSide.aiOnSide.Add(this);
@@ -324,6 +335,7 @@ namespace GreenLight
                 this.currentCrossRoad = _temproad;
 
                 this.currentCrossRoadSide = _crossRoadSide;
+                this.startedCrossing = false;
             }
             
         }
@@ -341,14 +353,30 @@ namespace GreenLight
             if (!this.currentCrossRoadSide.aiOnSide.Any())
             {
                 this.currentCrossRoadSide.status = false;
-                this.currentCrossRoadSide.priorityLevel = 0;
+                this.currentCrossRoadSide.priorityLevel = 2;
             }
             else
             {
-                this.currentCrossRoadSide.priorityLevel = this.currentCrossRoadSide.aiOnSide.Max(x => x.priority);
+                this.currentCrossRoadSide.priorityLevel = this.currentCrossRoadSide.aiOnSide.First().priority;
+
+                if(this.currentCrossRoadSide.aiOnSide.Any() && this.currentCrossRoadSide.priorityLevel == 0)
+                {
+                    Console.WriteLine("YOU SHOULD RELALY NEVER BE HERE PLEASE DONT COME HERE THIS IS SO WEIRD");
+
+                    this.currentCrossRoadSide.priorityLevel = 2;
+                }
             }
-            this.currentCrossRoadSide.driving = false;
+
+            this.currentCrossRoadSide.aiDriving--;
+
+            if (this.currentCrossRoadSide.aiDriving <= 0)
+            {
+                Console.WriteLine("NO MORE CARS FROM THIS SIDE");
+                this.currentCrossRoadSide.driving = false;
+            }
             this.currentCrossRoadSide = null;
+            this.currentCrossRoad = null;
+            this.startedCrossing = false;
         }
         
 
@@ -637,6 +665,15 @@ namespace GreenLight
                 this.LeavingCrossRoadSide();
             }
 
+
+            if (this.navigator.nextRoad.roadtype == "Cross" && this.crossRoadOccupied)
+            {
+                this.vehicle.speed = 0;
+                this.ForceCarLocation(this.goal.cord);
+
+                return;
+            }
+
             this.CurrentLaneIndex = _laneSwap.Item2;
 
             navigator.NextPath();
@@ -665,6 +702,305 @@ namespace GreenLight
         {
             this.toDelete = true;
             this.vehicle.DeleteVehicle(false);
+        }
+
+        private void ReworkedCrossRoadCheck()
+        {
+            if (this.currentCrossRoad == null || this.vehicle.currentRoad.roadtype == "Cross") 
+            {
+                this.crossRoadOccupied = false;
+                return; // NO CURRENTCROSSROAD
+            }
+
+            if (this.startedCrossing)
+            {
+                Console.WriteLine("IS ON CROSSROAD");
+                this.crossRoadOccupied = false;
+                return; //YOU ARE ALREADY ON THE CROSSROAD
+            }
+
+            if(this.currentCrossRoadSide.driving == true && this.currentCrossRoadSide.aiOnSide.First() == this)
+            {
+                this.crossRoadOccupied = false;
+                return; //YOU ARE ALREADY ON THE CROSSROAD
+            }
+
+            int Num = RoadMath.LanePointsInDistance(vehicle.brakeDistance, this.currentLanePointIndex, this.vehicle.currentLane.points);
+
+            Num = Num <= 0 ? 1 : Num;
+
+            if (vehicle.currentLane.points.Count() - this.currentLanePointIndex >= Num + 10 && this.vehicle.speed != 0)
+            {
+                this.crossRoadOccupied = false;
+                return; //ENOUGH TIME TO BRAKE, NO NEED OT CHEKC NOW
+            }
+
+            if (this.currentCrossRoadSide == null)
+            {
+                Console.WriteLine("Warning you should never be here! ID 1");
+                return;
+            }
+
+            string _side = this.currentCrossRoadSide.side;
+
+            int _laneSwap = this.navigator.currentPath.LaneSwap.First().Item2;
+            CrossRoadSide _tempside; //= this.currentCrossRoad.sides.First(x => x.hitbox.Contains(navigator.nextRoad.Drivinglanes[_laneSwap - 1].points.Last().cord));
+
+            CrossRoad _nextRoad = (CrossRoad)this.nextRoad;
+
+            _tempside = _nextRoad.sides.ToList().Find(x => x.hitbox.Contains(navigator.nextRoad.Drivinglanes[navigator.currentPath.LaneSwap.First().Item2 - 1].points.Last().cord));
+
+            if (_tempside == null)
+            {
+                Console.WriteLine("Warning you should never be here! ID 2");
+                return; 
+            }
+
+            string _goalSide = _tempside.side;
+            this.Goal = _goalSide;
+
+            bool _allowDrive = true;
+
+            bool leftStatus = this.currentCrossRoad.sides.First(x => x.side == "Left").status;
+            bool rightStatus = this.currentCrossRoad.sides.First(x => x.side == "Right").status;
+            bool topStatus = this.currentCrossRoad.sides.First(x => x.side == "Top").status;
+            bool bottomStatus = this.currentCrossRoad.sides.First(x => x.side == "Bottom").status;
+
+            bool leftDriving = this.currentCrossRoad.sides.First(x => x.side == "Left").driving;
+            bool rightDriving = this.currentCrossRoad.sides.First(x => x.side == "Right").driving;
+            bool topDriving = this.currentCrossRoad.sides.First(x => x.side == "Top").driving;
+            bool bottomDriving = this.currentCrossRoad.sides.First(x => x.side == "Bottom").driving;
+
+            int leftPriority = this.currentCrossRoad.sides.First(x => x.side == "Left").priorityLevel;
+            int rightPriority = this.currentCrossRoad.sides.First(x => x.side == "Right").priorityLevel;
+            int topPriority = this.currentCrossRoad.sides.First(x => x.side == "Top").priorityLevel;
+            int bottomPriority = this.currentCrossRoad.sides.First(x => x.side == "Bottom").priorityLevel;
+
+            // You want to go your own right : Check if your left side has priority over u: otherwise go
+            // You want to go your UP : Check right side & if left has priority
+            // you want to go
+
+            //Console.WriteLine("LEFT =  status: {0} - Driving : {1} - Priority {2}", leftStatus, leftDriving, leftPriority);
+            //Console.WriteLine("TOP =  status: {0} - Driving : {1} - Priority {2}", topStatus, topDriving, topPriority);
+            //Console.WriteLine("RIGHT =  status: {0} - Driving : {1} - Priority {2}", rightStatus, rightDriving, rightPriority);
+            //Console.WriteLine("BOTTOM =  status: {0} - Driving : {1} - Priority {2}", bottomStatus, bottomDriving, bottomPriority);
+
+            if (_side == "Top")
+            {
+                if(leftDriving || rightDriving || bottomDriving)
+                {
+                    _allowDrive = false;
+                }
+
+                if(_goalSide == "Right")
+                {
+                    if((leftStatus && leftPriority <= this.priority) || (bottomStatus && bottomPriority <= this.priority) || (rightStatus && rightPriority > this.priority))
+                    {
+                        _allowDrive = false;
+                    }
+                }
+                else if(_goalSide == "Bottom")
+                {
+                    if((leftStatus && leftPriority <= this.priority) || (rightStatus && rightPriority > this.priority))// || (bottomStatus && bottomPriority > this.priority))
+                    {
+                        _allowDrive = false;
+                    }
+
+                    if (bottomDriving)
+                    {
+                        _allowDrive = false;
+                    }
+                }
+                else if(_goalSide == "Left")
+                {
+                    if (rightStatus && rightPriority > this.priority)
+                    {
+                        _allowDrive = false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("ERROR IN GOALSIDE, IN CROSSROAD RULES, YOU SHOULD NEVER BE HERE!!");
+                }
+
+                if (rightDriving)
+                {
+                    _allowDrive = false;
+                }
+            }
+            else if(_side == "Left")
+            {
+                if (rightDriving || topDriving || bottomDriving)
+                {
+                    _allowDrive = false;
+                }
+
+                if (_goalSide == "Right")
+                {
+                    if((bottomStatus && bottomPriority <= this.priority) || (topStatus && topPriority > this.priority)) //|| (rightStatus && rightPriority > this.priority))
+                    {
+                        _allowDrive = false;
+                    }
+
+                    if (rightDriving)
+                    {
+                        _allowDrive = false;
+                    }
+                }
+                else if (_goalSide == "Bottom")
+                {
+                    if(topStatus && topPriority > this.priority)
+                    {
+                        _allowDrive = false;
+                    }
+                }
+                else if (_goalSide == "Top")
+                {
+                    //RIGHT BOTTOM *TOP
+                    if((rightStatus && rightPriority <= this.priority) || (bottomStatus && bottomPriority <= this.priority) || (topStatus && topPriority > this.priority))
+                    {
+                        _allowDrive = false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("ERROR IN GOALSIDE, IN CROSSROAD RULES, YOU SHOULD NEVER BE HERE!!");
+                }
+
+                if (topDriving)
+                {
+                    _allowDrive = false;
+                }
+            }
+            else if(_side == "Bottom")
+            {
+                if (leftDriving || rightDriving || topDriving)
+                {
+                    _allowDrive = false;
+                }
+
+                if (_goalSide == "Right")
+                {
+                    if(leftStatus && leftPriority > this.priority)
+                    {
+                        _allowDrive = false;
+                    }
+                }
+                else if (_goalSide == "Top")
+                {
+                    if((rightStatus && rightPriority <= this.priority) || (topStatus && topPriority > this.priority)) //|| (leftStatus && leftPriority > this.priority))
+                    {
+                        _allowDrive = false;
+                    }
+
+                    if (topDriving)
+                    {
+                        _allowDrive = false;
+                    }
+                }
+                else if (_goalSide == "Left")
+                {
+                    if((rightStatus && rightPriority <= this.priority) || (topStatus && topPriority <= this.priority) || (leftStatus && leftPriority > this.priority))
+                    {
+                        _allowDrive = false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("ERROR IN GOALSIDE, IN CROSSROAD RULES, YOU SHOULD NEVER BE HERE!!");
+                }
+
+                if (leftDriving)
+                {
+                    _allowDrive = false;
+                }
+            }
+            else if(_side == "Right")
+            {
+                if (leftDriving || topDriving || bottomDriving)
+                {
+                    _allowDrive = false;
+                }
+
+                if (_goalSide == "Top")
+                {
+                    if(bottomStatus && bottomPriority < this.priority)
+                    {
+                        _allowDrive = false;
+                    }
+                }
+                else if (_goalSide == "Bottom")
+                {
+                    //left top *bottom
+                    if((topStatus && topPriority <= this.priority ) || (leftStatus && leftPriority <= this.priority) || (bottomStatus && bottomPriority > this.priority))
+                    {
+                        _allowDrive = false;
+                    }
+                }
+                else if (_goalSide == "Left")
+                {
+                    if ((topStatus && topPriority <= this.priority) || (leftStatus && leftPriority > this.priority)) //|| (bottomStatus && bottomPriority > this.priority))
+                    {
+                        _allowDrive = false;
+                    }
+
+                    if (leftDriving)
+                    {
+                        _allowDrive = false;
+                    }
+                }
+
+                if (bottomDriving)
+                {
+                    _allowDrive = false;
+                }
+            }
+
+            if (_side == "Top")
+            {
+                if (!topDriving && topStatus && !bottomDriving && bottomStatus && !rightDriving && rightStatus && !leftDriving && leftStatus)
+                {
+                    _allowDrive = true;
+                }
+            }
+            if (_side == "Right")
+            {
+                if (!topDriving && !topStatus && !bottomDriving && bottomStatus && !rightDriving && rightStatus && !leftDriving && leftStatus)
+                {
+                    _allowDrive = true;
+                }
+            }
+            if (_side == "Bottom")
+            {
+                if (!topDriving && !topStatus && !bottomDriving && bottomStatus && !rightDriving && !rightStatus && !leftDriving && leftStatus)
+                {
+                    _allowDrive = true;
+                }
+            }
+            if (_side == "Left")
+            {
+                if (!topDriving && !topStatus && !bottomDriving && !bottomStatus && !rightDriving && !rightStatus && !leftDriving && leftStatus)
+                {
+                    _allowDrive = true;
+                }
+            }
+
+            if (_allowDrive)
+            {       //THERE IS A CAR IN THE WAY; 
+                //this.crossRoadOccupied = true;
+                //this.handBreakOn = true;
+                if (this.currentCrossRoadSide.aiOnSide.First() == this && (this.vehicle.currentLane.points.Count - this.currentLanePointIndex < 1)); 
+                {
+                    this.startedCrossing = true;
+                    this.currentCrossRoadSide.driving = true;
+                    this.currentCrossRoadSide.aiDriving++;
+                }
+            }
+            else
+            {
+                this.crossRoadOccupied = true;
+                this.startedCrossing = false;
+            }
         }
     }
 }
