@@ -13,6 +13,7 @@ namespace GreenLight
         public int priorityLevel;
         public string side;
         public bool driving;
+        public int aiDriving;
 
         public List<BetterAI> aiOnSide= new List<BetterAI>();
 
