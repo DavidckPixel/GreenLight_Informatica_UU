@@ -19,7 +19,7 @@ namespace GreenLight
         public Point Cords;
         Rectangle Visual_hitbox;
         Rectangle Hitbox;
-        public bool used;
+        public bool Used;
 
         public Gridpoint(Point _Cords, int _Size, int HitSize)
         {

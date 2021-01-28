@@ -112,6 +112,8 @@ namespace GreenLight
 
 
             CheckLaneDirections(_road, 0);
+            General_Form.Main.BuildScreen.builder.gridController.FlipGridpointsTrue(_road.hitbox);
+            General_Form.Main.BuildScreen.builder.gridController.FlipConnectionGridPoint();
             //Console.WriteLine(OPC.GetSpawnPoint);
         }
 
@@ -129,6 +131,7 @@ namespace GreenLight
             crossRoadController.ShowSettingScreen((CrossRoad)_temp);
 
             OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point1);
+            General_Form.Main.BuildScreen.builder.gridController.FlipGridpointsTrue(_temp.hitbox);
 
         }
 
@@ -176,6 +179,8 @@ namespace GreenLight
             OPC.AddOriginPoint(Roads.Config.opStandardWeight, _point2);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
             CheckLaneDirections(_road, 0);
+            General_Form.Main.BuildScreen.builder.gridController.FlipGridpointsTrue(_road.hitbox);
+            General_Form.Main.BuildScreen.builder.gridController.FlipConnectionGridPoint();
         }
 
         public void Connection(Point _point1, Point _point2, int _lanes, string _dir, AbstractRoad _road, bool _beginconnection, bool _endconnection)
