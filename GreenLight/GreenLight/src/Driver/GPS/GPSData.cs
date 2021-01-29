@@ -286,12 +286,16 @@ namespace GreenLight.src.Driver.GPS
                 return this.nodePaths[ran.Next(0, this.nodePaths.Count())].begin;
             }
 
+            General_Form.Main.SimulationScreen.Simulator.StopSimulation();
+
+
             MessageBox.Show("Something has gone wrong, no possible paths were found, return to the builder!");
             Log.Write("GPSData error ID1 : No paths were found");
-            General_Form.Main.SimulationScreen.Simulator.ResetSimulation();
-            General_Form.Main.SwitchControllers(General_Form.Main.BuildScreen);
-            General_Form.Main.UserInterface.SimDataM.ResetTimer();
+
+            General_Form.Main.SimulationScreen.Screen.BeginInvoke(new SwitchMenu(General_Form.Main.SwitchControllers), new object[] { General_Form.Main.BuildScreen });
+
             return null;
         }
+        public delegate void SwitchMenu(ScreenController _screen);
     }
 }
