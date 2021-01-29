@@ -51,7 +51,6 @@ namespace GreenLight
         
         BetterGPS navigator;
         public bool startedCrossing;
-        BetterGPS navigator;
 
         public int lanePointsMovePerTick;
 

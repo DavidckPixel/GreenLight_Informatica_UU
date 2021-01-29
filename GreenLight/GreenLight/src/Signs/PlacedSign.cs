@@ -38,12 +38,9 @@ namespace GreenLight
             this.flipped = _flipped;
             this.Mea = _mea;
             dir = (int)Road.Drivinglanes[0].AngleDir;
-            setLocation();
-
-            Console.WriteLine("Dir" + dir);
-
-            Console.WriteLine("SLp draw " + Road.slp);
-
+            
+            if(this.Location.X == -100)
+                setLocation();
         }
         public override void Read(BetterAI _ai)
         {
@@ -51,15 +48,9 @@ namespace GreenLight
         }
         public void draw(Graphics g)
         {
-<<<<<<< Updated upstream
-=======
-
-
->>>>>>> Stashed changes
             if (_points != null)
                 this.Hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Red);
 
-            // g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
             if (signType == "trafficLight")
             {
                 g.DrawImage(Sign_image, Location.X, Location.Y, 25, 25);
@@ -278,13 +269,6 @@ namespace GreenLight
                     }
                     _counter++;
                 }
-
-<<<<<<< Updated upstream
-                        this._points = RoadMath.hitBoxPointsDiagonal(_hitboxlocation, _hitboxoffset, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxlocation, _hitboxoffset), false);
-                        //_points = RoadMath.hitBoxPointsDiagonal(_hitboxoffset, _hitboxlocation, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxoffset, _hitboxlocation));
-                        this.Hitbox = new RectHitbox(this._points[1], _points[0], _points[3], _points[2], Color.Red);
-                     }
-=======
                 _l = p;
                 _h = _l;
                 I = _count;
@@ -298,14 +282,10 @@ namespace GreenLight
                 if (_hitboxdistance >= 60)
                 {
                     _stop = false;
->>>>>>> Stashed changes
                 }
 
                 if (_hitboxLanepoints.Count <= I + j)
                 {
-<<<<<<< Updated upstream
-                    _points = RoadMath.hitBoxPointsDiagonal(_hitboxoffset, _hitboxlocation, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxoffset, _hitboxlocation), false);
-=======
                     _l = _hitboxLanepoints[_hitboxLanepoints.Count -1].cord;
 
                     if (0 > I - j)
@@ -316,7 +296,6 @@ namespace GreenLight
                     {
                         _h = _hitboxLanepoints[I - j].cord;
                     }
->>>>>>> Stashed changes
                 }
 
                 else if (0 > I - j)
@@ -337,12 +316,12 @@ namespace GreenLight
 
             if (Road.Type == "Diagonal")
             {
-                this._points = RoadMath.hitBoxPointsDiagonal(_hitboxlocation, _hitboxoffset, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxlocation, _hitboxoffset));
+                this._points = RoadMath.hitBoxPointsDiagonal(_hitboxlocation, _hitboxoffset, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxlocation, _hitboxoffset), false);
             }
                 //this._points = RoadMath.hitBoxPointsCurved(_hitboxoffset, this.Road.lanes + 2, 20, true, Road.Dir);
             else
             {
-                this._points = RoadMath.hitBoxPointsDiagonal(new Point(_hitboxlocation.X - 10, _hitboxlocation.Y), new Point(_hitboxoffset.X - 10, _hitboxoffset.Y), this.Road.lanes + 2, 25, true, RoadMath.calculateSlope(new Point(_hitboxlocation.X - 10, _hitboxlocation.Y), new Point(_hitboxoffset.X - 10, _hitboxoffset.Y)));
+                this._points = RoadMath.hitBoxPointsDiagonal(new Point(_hitboxlocation.X - 10, _hitboxlocation.Y), new Point(_hitboxoffset.X - 10, _hitboxoffset.Y), this.Road.lanes + 2, 25, true, RoadMath.calculateSlope(new Point(_hitboxlocation.X - 10, _hitboxlocation.Y), new Point(_hitboxoffset.X - 10, _hitboxoffset.Y)), false);
             }
             this.Hitbox = new RectHitbox(this._points[1], _points[0], _points[3], _points[2], Color.Red);
         }
