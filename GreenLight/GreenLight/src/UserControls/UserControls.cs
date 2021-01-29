@@ -9,6 +9,7 @@ using System.IO;
 
 namespace GreenLight
 {
+    //A static class that reads the UserControlsConfig.Json and applies it to it's own UserControlsConfig named Config.
     static class UserControls
     {
         public static UserControlsConfig Config;
