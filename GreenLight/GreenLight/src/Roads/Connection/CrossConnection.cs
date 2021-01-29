@@ -10,6 +10,9 @@ using System;
 
 namespace GreenLight
 {
+    // The CrossConnection class deals with creating connections between two CrossRoads or a CrossRoad and another road type
+    // Just like in the Connection class, there are a lot of thing to take into consideration while creating Connections,
+    // so this class also has a lot of if-statements
     class CrossConnection
     {
         RoadController controller = General_Form.Main.BuildScreen.builder.roadBuilder;
@@ -21,6 +24,7 @@ namespace GreenLight
         AbstractRoad roadTwo;
         Point temp1, temp2, temp3, temp4;
 
+        // The constructor method sees what kind of roads have to be connected and calls another method accordingly.
         public CrossConnection(Point _point1, Point _point2, string _dir1, string _dir2, AbstractRoad _roadOne, AbstractRoad _roadTwo)
         {
             this.point1 = _point1;
@@ -35,19 +39,13 @@ namespace GreenLight
             temp3 = _roadTwo.getPoint1();
             temp4 = _roadTwo.getPoint2();
 
-            Console.WriteLine(" ---- CrossConnection ---- ");
-
             if (_roadOne.Type == "Cross" && _roadTwo.Type == "Cross")
             {
                 CrossandCross();
             }
             else if ((_roadOne.Type == "Cross" && (_roadTwo.Type == "Diagonal" || _roadTwo.Type == "Curved" || _roadTwo.Type == "Curved2")) || ((_roadOne.Type == "Diagonal" || _roadOne.Type == "Curved" || _roadOne.Type == "Curved2") && _roadTwo.Type == "Cross"))
             {
-                CrossandDiagonal();
-            }
-            else if ((_roadOne.Type == "Cross" && (_roadTwo.Type == "Curved" || _roadTwo.Type == "Curved2")) || ((_roadOne.Type == "Curved" || _roadOne.Type == "Curved2") && _roadTwo.Type == "Cross"))
-            {
-               // CrossandCurved();
+                CrossandOther();
             }
         }
 
@@ -114,7 +112,6 @@ namespace GreenLight
                 _side2 = roadTwo.lanes * 2;
             }
 
-            Console.WriteLine(_side + " " + _side2);
             for (int t = 0; t < Math.Max(roadOne.lanes, roadTwo.lanes) && _buildroad; t++)
             {
                 for (int x = 0; x <= 1; x++)
@@ -130,7 +127,6 @@ namespace GreenLight
 
                     _place = _cp.Place + t * _dir;
                     _place2 = _cp2.Place + t * _dir;
-                    Console.WriteLine(_place + " " + _place2);
                     if (_place >= 1 && _place2 >= 1 && _place <= roadOne.lanes && _place2 <= roadTwo.lanes)
                     {
                         if (!(roadOne.connectPoints[_place - 1 + _side].Active && roadTwo.connectPoints[_place - 1 + _side2].Active))
@@ -162,7 +158,6 @@ namespace GreenLight
 
             if(_buildroad)
             {
-                Console.WriteLine("Build Crossconnection " + _cp.Side);
                 if((_connectedLanes.Count / 2) % 2 == 0)
                 {
                     _isEven = -10;
@@ -186,7 +181,6 @@ namespace GreenLight
                         }
                     }
                     _middleX = _middleX / (_connectedLanes.Count / 2) + _isEven;
-                    Console.WriteLine(_middleX + " " + _connectedLanes.Count);
 
                     controller.BuildDiagonalRoad(new Point(_middleX, _cp.Location.Y), new Point(_middleX, _cp2.Location.Y), _connectedLanes.Count / 2, true, true, roadOne, roadTwo);
                 }
@@ -204,7 +198,6 @@ namespace GreenLight
                         }
                     }
                     _middleX = _middleX / (_connectedLanes.Count / 2) + _isEven;
-                    Console.WriteLine(_middleX + " " + _connectedLanes.Count);
 
                     controller.BuildDiagonalRoad(new Point(_middleX, _cp.Location.Y), new Point(_middleX, _cp2.Location.Y), _connectedLanes.Count / 2, true, true, roadOne, roadTwo);
                 }
@@ -224,8 +217,6 @@ namespace GreenLight
                     }
                     _middleY = _middleY / (_connectedLanes.Count / 2) + _isEven;
 
-                    Console.WriteLine(_middleY + " " + _connectedLanes.Count);
-                    Console.WriteLine(_cp.Location.X + " " + _cp2.Location.X);
                     controller.BuildDiagonalRoad(new Point(_cp.Location.X, _middleY), new Point(_cp2.Location.X, _middleY), _connectedLanes.Count / 2, true, true, roadOne, roadTwo);
                 }
                 else
@@ -244,8 +235,6 @@ namespace GreenLight
                     }
                     _middleY = _middleY / (_connectedLanes.Count / 2) + _isEven;
 
-                    Console.WriteLine(_middleY + " " + _connectedLanes.Count);
-                    Console.WriteLine(_cp.Location.X + " " + _cp2.Location.X);
                     controller.BuildDiagonalRoad(new Point(_cp.Location.X, _middleY), new Point(_cp2.Location.X, _middleY), _connectedLanes.Count / 2, true, true, roadOne, roadTwo);
                 }
 
@@ -295,7 +284,6 @@ namespace GreenLight
                                     {
                                         if (Math.Sqrt(Math.Pow(_l.points.First().cord.X - _translated.Location.X, 2) + Math.Pow(_l.points.First().cord.Y - _translated.Location.Y, 2)) < Math.Sqrt(Math.Pow(_l.points.Last().cord.X - _translated.Location.X, 2) + Math.Pow(_l.points.Last().cord.Y - _translated.Location.Y, 2)))
                                         {
-                                            Console.WriteLine("Wiskunde klopt");
                                             _l.FlipPoints();
                                         }
                                     }
@@ -390,9 +378,8 @@ namespace GreenLight
             }
         }
 
-        public void CrossandDiagonal()
+        public void CrossandOther()
         {
-            Console.WriteLine("Cross and Diagonal");
             char _roadEnds;
             ConnectionPoint _cp = null;
             ConnectionPoint _cpLink = null;
@@ -495,7 +482,6 @@ namespace GreenLight
             if (((_cp.Side == "Top" || _cp.Side == "Bottom") && _roadEnds == 'v') || ((_cp.Side == "Left" || _cp.Side == "Right") && _roadEnds == 'h'))
                 return;
 
-            Console.WriteLine("CrossConnection with the same ending");
 
             int _place, _dir, _side;
 
@@ -569,7 +555,6 @@ namespace GreenLight
                                                     _connectedLanes.Add(_Crossroad.connectPoints[_place - 1 + _side]);
                                                     _connectedDrivingLanes.Add(d);
                                                     _found = true;
-                                                    Console.WriteLine("Found for " + c.Place);
                                                 }
                                             }
                                             else
@@ -592,7 +577,6 @@ namespace GreenLight
                                                     _connectedLanes.Add(_Crossroad.connectPoints[_place - 1 + _side]);
                                                     _connectedDrivingLanes.Add(d);
                                                     _found = true;
-                                                    Console.WriteLine("Found for " + c.Place);
                                                 }
                                             }
                                         }
@@ -618,7 +602,6 @@ namespace GreenLight
                                                     _connectedLanes.Add(_Crossroad.connectPoints[_place - 1 + _side]);
                                                     _connectedDrivingLanes.Add(d);
                                                     _found = true;
-                                                    Console.WriteLine("Found for " + c.Place);
                                                 }
                                             }
                                             else
@@ -641,7 +624,6 @@ namespace GreenLight
                                                     _connectedLanes.Add(_Crossroad.connectPoints[_place - 1 + _side]);
                                                     _connectedDrivingLanes.Add(d);
                                                     _found = true;
-                                                    Console.WriteLine("Found for " + c.Place);
                                                 }
                                             }
                                         }
@@ -654,7 +636,6 @@ namespace GreenLight
 
                                 if (!_found)
                                 {
-                                    Console.WriteLine("Not Found");
                                     _buildroad = false;
                                 }
                             }
@@ -671,7 +652,6 @@ namespace GreenLight
 
             if (_buildroad)
             {
-                Console.WriteLine("Build Connecting Road");
                 if (_connectedLanes.Count % 2 == 0)
                 {
                     _isEven = -10;
@@ -695,7 +675,6 @@ namespace GreenLight
                         }
                     }
                     _middleX = (_middleX / _connectedLanes.Count) + _isEven;
-                    Console.WriteLine(_middleX + " " + _connectedLanes.Count);
 
                     if (_cp.Side == "Bottom")
                         _BottomorRight = 1;
