@@ -23,7 +23,7 @@ namespace GreenLight
 
         public Gridpoint(Point _Cords, int _Size, int HitSize)
         {
-            this.Cords = _Cords;
+            this.Cords = new Point(_Cords.X + 10, _Cords.Y + 5);
             Visual_hitbox = new Rectangle(this.Cords, new Size(_Size, _Size));
             Hitbox = new Rectangle(new Point(this.Cords.X+(int)(_Size*0.5)-(int)(0.5*HitSize), this.Cords.Y+(int)(_Size*0.5)-(int)(0.5*HitSize)), new Size(HitSize, HitSize));
         }
