@@ -253,11 +253,6 @@ namespace GreenLight
         {
             Graphics g = pea.Graphics;
 
-            foreach(Knot _knot in gpsData._allKnots)
-            {
-                _knot.Draw(g);
-            }
-
             foreach(AbstractRoad z in roads)
             {
                 z.Draw(g);
