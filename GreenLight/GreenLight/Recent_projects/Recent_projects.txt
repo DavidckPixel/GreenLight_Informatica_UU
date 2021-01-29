@@ -1,2 +1,1 @@
-Simulatie D:\Elio\Documents\Studie\II\Simulatie.txt ../../Recent_projects/Images/Simulatie.png
-DefaultOutputName C:\Users\User\Desktop\DefaultOutputName.txt ../../Recent_projects/Images/DefaultOutputName.png
+

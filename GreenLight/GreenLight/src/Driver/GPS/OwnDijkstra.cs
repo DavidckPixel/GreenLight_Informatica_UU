@@ -51,12 +51,13 @@ namespace GreenLight.src.Driver.GPS
 
             for(int x = 0; x < General_Form.Main.BuildScreen.builder.roadBuilder.roads.Count * 2; x++)
             {
-                List<AbstractRoad> _visitedRoads = new List<AbstractRoad>();
+                List<AbstractRoad> _visitedRoads = new List<AbstractRoad>();                
 
                 foreach (DijkstraPaths _dijkPath in dijkstraPaths)
                 {
+                    List<AbstractRoad> _tempvisited = new List<AbstractRoad>();
                     foreach (Node _node in _dijkPath.visited.Last().connections)
-                    {
+                    {                        
                         if (_node == _goal)
                         {
                             return new DijkstraPaths(_node, _dijkPath.visited);
@@ -68,21 +69,22 @@ namespace GreenLight.src.Driver.GPS
                             {
                                 if (_dijkPath.visited.Last().knot == _connectionlink.end && !_dijkPath.visited.Contains(_node) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road2) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road1))
                                 {
-                                    _visitedRoads.Add(_dijkPath.visited.Last().knot.Road2);
-                                    _visitedRoads.Add(_dijkPath.visited.Last().knot.Road1);
+                                    _tempvisited.Add(_dijkPath.visited.Last().knot.Road2);
+                                    _tempvisited.Add(_dijkPath.visited.Last().knot.Road1);
                                     
-                                    nextSetList.Add(new DijkstraPaths(_node, _dijkPath.visited));
+                                    nextSetList.Add(new DijkstraPaths(_node, _dijkPath.visited));                                    
                                 }
                             }
                         }
                         else if (!_dijkPath.visited.Contains(_node) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road2) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road1))
                         {
-                            _visitedRoads.Add(_dijkPath.visited.Last().knot.Road2);
-                            _visitedRoads.Add(_dijkPath.visited.Last().knot.Road1);
+                            _tempvisited.Add(_dijkPath.visited.Last().knot.Road2);
+                            _tempvisited.Add(_dijkPath.visited.Last().knot.Road1);
                             
                             nextSetList.Add(new DijkstraPaths(_node, _dijkPath.visited));
-                        }                        
-                    }                        
+                        }
+                    }
+                    _visitedRoads.AddRange(_tempvisited);                    
                 }
                 dijkstraPaths.Clear();
                 dijkstraPaths.AddRange(nextSetList);
