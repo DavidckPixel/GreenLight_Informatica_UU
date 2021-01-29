@@ -167,6 +167,7 @@ namespace GreenLight
                 General_Form.Main.SimulationScreen.Simulator.StopSimulation();
                 Pause.Hide();
                 Start.Show();
+                General_Form.Main.BuildScreen.builder.signController.StopTimer();
             };
             this.Controls.Add(Stop);
             Stop.BringToFront();

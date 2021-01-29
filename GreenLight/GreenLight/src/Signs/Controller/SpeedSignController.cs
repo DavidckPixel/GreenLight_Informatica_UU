@@ -45,7 +45,7 @@ namespace GreenLight
 
             CurvedButtons FlipButton = new CurvedButtons(new Size(100, 40), new Point(100, 170), 25, "../../src/User Interface Recources/Custom_Button.png", "Flip sign", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
 
-            FlipButton.Click += (object o, EventArgs ea) => { this.signController.flipSign(); this.settingScreen.Hide(); };
+            FlipButton.Click += (object o, EventArgs ea) => { this.signController.flipSign((AbstractSign) selected, selectedRoad); this.settingScreen.Hide(); };
 
             this.settingScreen.Controls.Add(FlipButton);
 
@@ -157,18 +157,26 @@ namespace GreenLight
 
         }
 
-        public override void onSignClick(AbstractSign _sign)
+        public override void onSignClick(AbstractSign _sign, AbstractRoad _selectedRoad)
         {
             Console.WriteLine("SIGN HAS BEEN SELECTED!!!");
             selected = (SpeedSign)_sign;
+            if (_selectedRoad != null)
+            {
+                selectedRoad = _selectedRoad;
+            }
             openMenu();
         }
 
-        public override AbstractSign newSign()
+        public override AbstractSign newSign(AbstractRoad _selectedRoad)
         {
             SpeedSign _temp = new SpeedSign(this);
             this.signController.Signs.Add(_temp);
-            onSignClick(_temp);
+
+            if (_selectedRoad != null)
+                selectedRoad = _selectedRoad;
+
+            onSignClick(_temp, selectedRoad);
             return _temp;
         }
 
@@ -176,6 +184,10 @@ namespace GreenLight
         {
             this.signController.deleteSign(selected);
             this.settingScreen.Hide();
+        }
+        public override void changeColor(string color)
+        {
+            throw new NotImplementedException();
         }
     }
 }

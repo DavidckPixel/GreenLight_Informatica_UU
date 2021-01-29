@@ -47,6 +47,9 @@ namespace GreenLight
         public bool wantsToSwitch;
         public bool closeToCars;
         public bool crossRoadOccupied;
+        public bool ignoreOccupied;
+        
+        BetterGPS navigator;
         public bool startedCrossing;
         BetterGPS navigator;
 
@@ -59,6 +62,9 @@ namespace GreenLight
         public CrossRoadSide currentCrossRoadSide = null;
         int crossRoadTimer = 0;
 
+        public bool lightIsRed = false;
+        public bool lightIsGreen = false;
+      
         List<PlacedSign> signsOnRoadRead = new List<PlacedSign>();
 
         public bool isSwitchingLanes;
@@ -410,6 +416,16 @@ namespace GreenLight
             if (_distanceToRoadSwitch < _brakeDistance && navigator.currentPath.NextLaneIndex != null && !navigator.currentPath.NextLaneIndex.Contains(vehicle.currentLane.thisLane))
             {
                 this.isBraking = true;
+            }
+            if (this.lightIsRed)
+            {
+                this.isBraking = true;
+                this.ignoreOccupied = false;
+            }
+            if (this.lightIsGreen)
+            {
+                this.isBraking = false;
+                this.ignoreOccupied = true;
             }
             if (this.crossRoadOccupied || this.brakeToZero || closeToCars)
             {

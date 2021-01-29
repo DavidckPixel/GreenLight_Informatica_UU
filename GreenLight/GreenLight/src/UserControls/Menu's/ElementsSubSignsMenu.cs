@@ -16,7 +16,7 @@ namespace GreenLight
     public partial class ElementsSubSignsMenu : UserControl
     {
         public List<CurvedButtons> essmButtons = new List<CurvedButtons>();
-        public CurvedButtons Hand, stopSign, yieldSign, prioritySign, speedSign;
+        public CurvedButtons Hand, Traffic_light, stopSign, yieldSign, prioritySign, speedSign;
 
         public ElementsSubSignsMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
         {
@@ -51,6 +51,11 @@ namespace GreenLight
             Hand.Click += (object o, EventArgs EA) => { ResetButtons(Hand, Hand.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "X"; };
             this.Controls.Add(Hand);
             essmButtons.Add(Hand);
+
+            Traffic_light = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Traffic_Light_Button.png", this.BackColor);
+            Traffic_light.Click += (object o, EventArgs EA) => { ResetButtons(Traffic_light, Traffic_light.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "trafficLight"; };
+            this.Controls.Add(Traffic_light);
+            ESSM.Add(Traffic_light);
 
             speedSign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Speed_Sign_Button.png", this.BackColor);
             speedSign.Click += (object o, EventArgs EA) => { ResetButtons(speedSign, speedSign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "speedSign"; };
