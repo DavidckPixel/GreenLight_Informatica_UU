@@ -15,11 +15,11 @@ namespace GreenLight
        This user control is shown when the user is in the building screen. 
        Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
 
-    public partial class BuildMainMenu : UserControl
+    public partial class OldBuildMainMenu : UserControl
     {
-        public BuildMainMenu(int _width, Form _form, FontFamily _dosisfontfamily)
+        public OldBuildMainMenu(int _width, Form _form, FontFamily _dosisfontfamily)
         {
-            this.BackColor = Color.FromArgb(196, 196, 198);
+           this.BackColor = Color.FromArgb(196, 196, 198);
             this.Size = new Size(50,50);
             this.Location = new Point(0, _form.Height - 50);
             Initialize(_form, 50);
@@ -34,34 +34,28 @@ namespace GreenLight
 
         public void AdjustSize(Form _form, int _submenuwidth)
         {
-            this.Size = new Size(50,50);
+            /*this.Size = new Size(50,50);
             this.Location = new Point(0, _form.Height - 50);
             this.Controls.Clear();
-            Initialize(_form,_submenuwidth);
+            Initialize(_form,_submenuwidth);*/
         }
 
         private void Initialize(Form _form, int _submenuwidth) 
         {
-            int _buttonsize = UserControls.Config.standardMainMenu["infobuttonsize"];
 
-            this.BackColor = Color.FromArgb(196, 196, 198);
-            this.Size = new Size(_form.Width-_submenuwidth, _form.Height);
-            RoundButtons _infobutton = new RoundButtons(new Size(_buttonsize, _buttonsize), new Point(10,0), "../../src/User Interface Recources/Info_Button.png");
-            _infobutton.Click += (object o, EventArgs ea) => { System.Diagnostics.Process.Start("https://www.marcdejong.online/projects/green-light-district/"); };
-
-            this.Controls.Add(_infobutton);
+            //this.Controls.Add(_infobutton);
         }
 
+        
         protected override CreateParams CreateParams
-        {
+       {
             get
-            {
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x00000020;
-                return cp;
-            }
+           {
+               CreateParams cp = base.CreateParams;
+               cp.ExStyle |= 0x00000020;
+               return cp;
+           }
         }
-
         protected override void OnPaintBackground(PaintEventArgs e)
         {
         }

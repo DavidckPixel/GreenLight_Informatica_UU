@@ -228,7 +228,7 @@
     <Compile Include="src\Old Code\Startup.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\BuildMainMenu.cs">
+    <Compile Include="src\Old Code\OldBuildMainMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="General_form.cs">
