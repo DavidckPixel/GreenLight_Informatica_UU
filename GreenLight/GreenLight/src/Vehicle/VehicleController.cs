@@ -71,11 +71,6 @@ namespace GreenLight
                 }
             }
 
-            if(_node == null)
-            {
-                return;
-            }
-
             BetterVehicle _vehicle = new BetterVehicle(_stats, _node, this.simController.aiController.GetDriver());
 
             if (true)

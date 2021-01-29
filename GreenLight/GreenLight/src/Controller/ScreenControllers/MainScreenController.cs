@@ -84,33 +84,6 @@ namespace GreenLight
 
             Dictionary<string, int> startmenu = UserControls.Config.startSubMenu;
 
-            string[] _recentProjects;
-            _recentProjects = File.ReadAllLines("../../Recent_projects/Presets/PresetsDir.txt");
-
-            int _counter = 0;
-            if (_recentProjects != null)
-            {
-
-                for (int t = _recentProjects.Length - 1; t >= _recentProjects.Length -6; t--)
-                {
-                    try
-                    {
-                        string[] _temp = _recentProjects[t].Split(' ');
-                        if (File.Exists(_temp[1]))
-                        {
-                            try
-                            {
-                                CurvedButtons Project = new CurvedButtons(new Size(300,300), new Point(25+325*_counter,50 + 325*_counter), startmenu["projectButtonCurve"], _temp[2], _temp[0], DrawData.Dosis_font_family, form, Color.White, 1);
-                                Project.Click += (object o, EventArgs ea) => { General_Form.Main.MenuController.SwitchToBuild(); General_Form.Main.Load(_temp[1]); };
-                                this.ChoosePresetForm.Controls.Add(Project);
-                                _counter++;
-                            }
-                            catch (Exception e) { }
-                        }
-                    }
-                    catch { };
-                }
-            }
 
             ChoosePresetForm.Controls.Add(Presets);
             ChoosePresetForm.Controls.Add(DragPad);

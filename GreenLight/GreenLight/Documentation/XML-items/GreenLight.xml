@@ -49,49 +49,109 @@
             </summary>
         </member>
         <member name="T:GreenLight.RoadMath">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/RoadMath/*" />
+            <summary>
+        The main <c>RoadMath</c> class.
+        Contains all methods for performing basic math functions used in the Roads.
+      </summary><remarks>
+        <para>This class can add, subtract, multiply and divide.</para>
+        <para>These operations can be performed on both integers and doubles.</para>
+      </remarks>
         </member>
         <member name="M:GreenLight.RoadMath.Distance(System.Drawing.Point,System.Drawing.Point)">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/Distance/*" />
+            <summary>
+        Calculates the distance between two points <paramref name="_one" /> and <paramref name="_two" /> and returns the result.
+      </summary><returns>
+        The distance between two points
+      </returns><param name="_one">System.Drawing.Point</param><param name="_two">System.Drawing.Point</param><seealso cref="M:GreenLight.RoadMath.Distance(System.Double,System.Double,System.Double,System.Double)" />
         </member>
         <member name="M:GreenLight.RoadMath.Distance(System.Double,System.Double,System.Double,System.Double)">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/Distance2/*" />
+            <summary>
+        Calculates the distance between four doubles and returns the result.
+      </summary><returns>
+        The distance between 4 doubles
+      </returns><param name="_oneX">Double</param><param name="_oneY">Double</param><param name="_twoX">Double</param><param name="_twoY">Double</param><seealso cref="M:GreenLight.RoadMath.Distance(System.Drawing.Point,System.Drawing.Point)" />
         </member>
         <member name="M:GreenLight.RoadMath.CalculateAngle(System.Drawing.Point,System.Drawing.Point)">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/CalculateAngle/*" />
+            <summary>
+        Calculates the Angle between two points <paramref name="_point1" /> and <paramref name="_point2" /> and returns the result.
+      </summary><returns>
+        The Angle between two points
+      </returns><param name="_point1">System.Drawing.Point</param><param name="_point2">System.Drawing.Point</param>
         </member>
         <member name="M:GreenLight.RoadMath.CalculateAngle(System.Single,System.Single,System.Single,System.Single)">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/CalculateAngle2/*" />
+            <summary>
+        Calculates the Angle between 4 doubles and returns the result.
+      </summary><returns>
+        The Angle between 2 points
+      </returns><param name="_point1X">Double X point one</param><param name="_point2X">Double X point two</param><param name="_point1Y">Double y point one</param><param name="_point2Y">Double y point two</param>
         </member>
         <member name="M:GreenLight.RoadMath.CalculateDistanceLanePoints(System.Collections.Generic.List{GreenLight.LanePoints}@)">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/CalculateDistanceLanePoints/*" />
+            <summary>
+        Adds a distance valuable to every lanePoint
+      </summary><param name="_points">List of LanePoints</param><see cref="T:GreenLight.LanePoints" />
         </member>
         <member name="M:GreenLight.RoadMath.AddDistanceLanePoints(System.Int32,System.Int32,System.Collections.Generic.List{GreenLight.LanePoints})">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/AddDistanceLanePoints/*" />
+            <summary>
+        Calculates the distance between two indexes of a LanePoints list
+      </summary><returns>
+        The Distance between 2 indexes as double
+      </returns><param name="_index1">First Index</param><param name="_index2">Second Index</param><param name="_points">List of LanePoints</param><seealso cref="M:GreenLight.RoadMath.AddDistanceMultiLanes(System.Int32,System.Int32,System.Collections.Generic.List{System.Collections.Generic.List{GreenLight.LanePoints}})" />
         </member>
         <member name="M:GreenLight.RoadMath.DistanceToLastLanePoint(System.Int32,System.Collections.Generic.List{GreenLight.LanePoints})">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/DistanceToLastLanePoint/*" />
+            <summary>
+        Calculates the distance from a specified index to the end of the list of LanePoints and returns it
+      </summary><returns>
+        Distance from index to end of list in double
+      </returns><param name="_index">Begin Index, must be lower then total LanePoints in list</param><param name="_points">List of LanePoints</param>
         </member>
         <member name="M:GreenLight.RoadMath.AddDistanceMultiLanes(System.Int32,System.Int32,System.Collections.Generic.List{System.Collections.Generic.List{GreenLight.LanePoints}})">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/AddDistanceMultiLanes/*" />
+            <summary>
+        Calculates the distance between a indexes and a count for multiple LanePoints list
+      </summary><returns>
+        distance between the index and the count
+      </returns><param name="_index">Begin Index</param><param name="_count">Amount of points to add</param><param name="_lanes">a List of List of LanePoints</param>
         </member>
         <member name="M:GreenLight.RoadMath.LanePointsInDistance(System.Double,System.Int32,System.Collections.Generic.List{GreenLight.LanePoints})">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/LanePointsInDistance/*" />
+            <summary>
+        Given a certain distance it will return how many LanePoints that is from a starting Index
+      </summary><returns>
+        Amount of LanePoints within distance
+      </returns><param name="_distance">Distance in double</param><param name="_index">Start Index</param><param name="_points">List of LanePoints</param>
         </member>
         <member name="M:GreenLight.RoadMath.hitBoxPointsCurved(System.Drawing.Point,System.Drawing.Point,System.Int32,System.Int32,System.Boolean,System.String)">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/hitBoxPointsCurved/*" />
+            <summary>
+        Calculates the 4 points required to make a Curved Hitbox and returns them
+      </summary><returns>
+        4 points to createHitbox topright - topleft - bottomright - bottomleft
+      </returns><param name="one">First Point</param><param name="two">Second Point</param><param name="_lanes">Amount of lanes</param><param name="_laneWidth">Width of the lanes [base = 20]</param><param name="_Roadhitbox">Bool hitbox of road</param><param name="_dir">Direction of the hitbox string [NE,NW,SE,SW]</param>
         </member>
         <member name="M:GreenLight.RoadMath.hitBoxPointsDiagonal(System.Drawing.Point,System.Drawing.Point,System.Int32,System.Int32,System.Boolean,System.Double,System.Boolean)">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/hitBoxPointsDiagonal/*" />
+            <summary>
+        Calculates the 4 points required to make a Rectanglur Hitbox and returns them
+      </summary><returns>
+        4 points to createHitbox topright - topleft - bottomright - bottomleft
+      </returns><param name="one">First Point</param><param name="two">Second Point</param><param name="_lanes">Amount of lanes</param><param name="_laneWidth">Width of the lanes [base = 20]</param><param name="_Roadhitbox">Bool hitbox of road</param><param name="_slp">Degree of the hitbox</param><param name="_checklegal">Bool can overlap</param>
         </member>
         <member name="M:GreenLight.RoadMath.hitBoxPointsCross(System.Drawing.Point,System.Drawing.Point,System.Int32,System.Int32,System.Boolean)">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/hitBoxPointsCross/*" />
+            <summary>
+        Calculates the 4 points required to make a square Hitbox and returns them
+      </summary><returns>
+        4 points to createHitbox topright - topleft - bottomright - bottomleft
+      </returns><param name="one">First Point</param><param name="two">Second Point</param><param name="_lanes">Amount of lanes</param><param name="_laneWidth">Width of the lanes [base = 20]</param><param name="_RoadhitBox">Bool hitbox of road</param>
         </member>
         <member name="M:GreenLight.RoadMath.Direction(System.Drawing.Point,System.Drawing.Point,System.String)">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/Direction/*" />
+            <summary>
+        Calculates the direction for a curved road from two points returns it
+      </summary><returns>
+        direction of a curved roid
+      </returns><param name="_firstPoint">First Point</param><param name="_secondPoint">Second Point</param><param name="_Roadtype">Type of Road [Curved,Curved2]</param>
         </member>
         <member name="M:GreenLight.RoadMath.calculateSlope(System.Drawing.Point,System.Drawing.Point)">
-            <!-- Failed to insert some or all of included XML --><include file=".../.../Documentation/XML-items/RoadMath.xml" path="docs/members[@name=&quot;roadmath&quot;]/calculateSlope/*" />
+            <summary>
+        Calculate the slope between two points and returns it
+      </summary><returns>
+        The slope between two points as a double
+      </returns><param name="one">First Point</param><param name="two">Second Point</param>
         </member>
         <member name="F:GreenLight.RoadTestForm.components">
             <summary>

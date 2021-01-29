@@ -342,7 +342,6 @@
     <Content Include="Images\BigCar.png" />
     <Content Include="Images\Car.png" />
     <Content Include="Recent_projects\Images\Cross.png" />
-    <Content Include="Recent_projects\Presets\PresetsDir.txt" />
     <Content Include="Recent_projects\Recent_projects.txt" />
     <Content Include="src\User Interface Recources\CurveButton.png" />
     <Content Include="src\User Interface Recources\CurveButton_On_Hover.png" />

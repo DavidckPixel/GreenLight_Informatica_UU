@@ -64,6 +64,7 @@ namespace GreenLight
         {
             if (this.Screen != null)
             {
+                this.Screen.Hide();
                 Log.Write("DeActivating SimulationScreenController");
             }
         }
