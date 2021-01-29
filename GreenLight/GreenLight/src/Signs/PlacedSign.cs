@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
-//this is the object that is actually placed on the Road that has a hitbox and says which specific sign is clicked
+// this is the object that is actually placed on the Road that has a hitbox and says which specific sign is clicked
+// the method setLocation() places the sign automatically to the right side of the road, 
+// by first searching the closest lanepoint to where someone has clicked and
+// then adjusting its location a bit more to the side.
+// next it creates the hitboxes choosing 2 lanepoints with a total distance between one another of 60 
+// so the sign will always have a 30 pixel size hitbox on both of sides.
+// the user can also flip the sign, because he changed the routes direction and it will flip to the other outerside of the road.
 
 namespace GreenLight
 {
@@ -69,7 +75,6 @@ namespace GreenLight
             }
 
             this.Hitbox.Draw(g);
-            //g.FillRectangle(Notsolid, this.Hitbox);
         }
         public void setFlipped()
         {

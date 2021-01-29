@@ -68,7 +68,6 @@ namespace GreenLight
         {
             this.SimulationPaused = true;
             this.profileController.PauseSimulation(vehicleController.vehicleList);
-            General_Form.Main.BuildScreen.builder.signController.StopTimer();
             this.screenController.Screen.Invalidate();
         }
 
@@ -76,7 +75,6 @@ namespace GreenLight
         {
             this.SimulationPaused = true;
             this.ResetSimulation();
-            General_Form.Main.BuildScreen.builder.signController.StopTimer();
             this.screenController.Screen.Invalidate();
         }
 

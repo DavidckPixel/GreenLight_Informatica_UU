@@ -7,6 +7,7 @@ using System.Drawing;
 
 //The most basic sign class from which all the signs inherit
 //An important thing to note is that every sign has its unique identifier stored in ID
+//With the read method a car reads the sign and its value.
 
 namespace GreenLight
 {
