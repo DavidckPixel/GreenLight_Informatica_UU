@@ -1,0 +1,55 @@
+=o= How to Install GreenLight District =o=
+
+this is the GreenLight district Installation instruction guide. There are 2 methods of downloading
+our project and running it on your own home pc!
+
+------------------------------------------------------
+Via Github
+
+1. go to: https://github.com/DavidckPixel/GreenLight_Informatica_UU
+
+2. In the top right corner there is a big green button with Code. If you click on this you are presented with 2
+options. If you are an experienced github user, Clone the code and compile it yourself
+
+Incase you are less experienced, Click the download Zip file
+
+3. Before continuing make sure you have visual studios community downloaded on your home computer,
+you can download it here: https://visualstudio.microsoft.com/vs/community/
+
+4. Unpack the zip file into the c:/[user]/source folder
+
+5. Open the folder GreenLight_Informatica_UU/Greenlight, once here open the GreenLight.sln
+file in visualstudios.
+
+6. From this moment you can run the code through Visual studio's by pressing the Start-button. The next steps are optional and will take
+you through the process of compiling the code to turn it into an executable program.
+
+7. In visual studios click: The build-tap > Publish GreenLight
+
+8. A window pops up that asks you where you want to publish the application, here you can choice a file location or use the default location
+by pressing Next
+
+9. It then will ask how the users will install the application, choice "From a CD-ROM or DVD-ROM" and click next
+
+10 Then there will be a window asking where the program should check for updates, Select: "The application will not check for updates" and press next
+
+11. If everything went okay you should now be able to press finish, Congratulations you now have compiled the Program and will be able to run it from
+your desktop
+
+-----------------------------------------------------
+Via our website (RECOMMENDED)
+
+1. Go to https://www.marcdejong.online/download/green-light-district/
+
+2. Press the download button
+
+3. Unzip the file, and run the Executable
+
+---------------------------------------------------
+
+While playing around with our program, u experience bugs crashed or have general feedback, please contact us at
+d.c.koymans@students.uu.nl
+
+Your feedback is greatly appreciated!
+
+(*) GreenLight is an open source project under the Apache 2.0 Licence, read about it here: https://github.com/DavidckPixel/GreenLight_Informatica_UU/blob/main/LICENSE
