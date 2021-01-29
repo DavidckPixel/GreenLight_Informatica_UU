@@ -56,12 +56,12 @@ namespace GreenLight.src.Data_Collection
                 _totalspeed += _vehicle.speed;
             }
 
-            //Console.WriteLine("Collecting vehicle data!");
+            Log.Write("Collecting vehicle data!");
 
             double _averageSpeed = _totalspeed / vehicleCollection.Count;
             data.AddAverageSpeedPerTick(_averageSpeed);
 
-            //Console.WriteLine("Added to data!");
+            Log.Write("Added to data!");
 
             controller.SmallUpdateSpeedPerTickChart(data.GetAverageSpeedPerTickIndex(), _averageSpeed);
         }

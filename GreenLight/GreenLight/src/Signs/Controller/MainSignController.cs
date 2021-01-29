@@ -160,17 +160,17 @@ namespace GreenLight
 
                     if (_sign == null)
                     {
-                        Console.WriteLine("No sign could be found");
+
                         return;
                     }
 
-                    Console.WriteLine("SIGN FOUND!");
+
                     AbstractSign _Sign = _sign.Sign;
                     _sign.Sign.controller.onSignClick(_Sign, _selectedRoad);
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    Log.Write(e.ToString());
                     return;
                 }
             }
@@ -192,7 +192,7 @@ namespace GreenLight
             {
                 return;
             }
-            Console.WriteLine("LocationSelected!!!");
+
 
             Image _sign_image = Image.FromFile("../../src/User Interface Recources/Speed_Sign.png");
             switch (signType)
@@ -233,7 +233,7 @@ namespace GreenLight
             foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
             {
                 _placed = _road.Signs.Find(x => x.SignCount == _signCount);
-                Console.WriteLine("local = " + SignCount);
+
             }
 
             if (_placed == null)
@@ -245,15 +245,15 @@ namespace GreenLight
             {
                 case "Green":
                     _placed.Sign_image = Image.FromFile("../../src/User Interface Recources/Traffic_light_Green.png");
-                    Console.WriteLine("Green in changeColor in MSC");
+
                     break;
                 case "Orange":
                     _placed.Sign_image = Image.FromFile("../../src/User Interface Recources/Traffic_light_Orange.png");
-                    Console.WriteLine("Orange in changeColor in MSC");
+
                     break;
                 case "Red":
                     _placed.Sign_image = Image.FromFile("../../src/User Interface Recources/Traffic_light_Red.png");
-                    Console.WriteLine("Red in changeColor in MSC");
+
                     break;
             }
         }
@@ -283,7 +283,7 @@ namespace GreenLight
 
         public void flipSign(AbstractSign _temp, AbstractRoad _selectedRoad)
         {
-            Console.WriteLine("try to flip");
+
             if (_selectedRoad == null)
             {
                 _selectedRoad = selectedRoad;

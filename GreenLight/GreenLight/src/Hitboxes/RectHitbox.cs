@@ -143,7 +143,7 @@ namespace GreenLight
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Log.Write(e.ToString());
             }
             return false;
         }

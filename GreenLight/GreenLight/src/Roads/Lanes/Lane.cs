@@ -53,7 +53,7 @@ namespace GreenLight
 
             if (_road.Drivinglanes.TrueForAll(x => RoadMath.Distance(Xside, x.points.First().cord.Y, x.points.First().cord.X, x.points.First().cord.Y) < 5))
             {
-                Console.WriteLine("Ordering the driving Lanes: the lane is laiyng Horizontally");
+                
                 _road.Drivinglanes.Sort(delegate (Lane x, Lane y)
                 {
                     return x.points.First().cord.Y.CompareTo(y.points.First().cord.Y);
@@ -61,7 +61,7 @@ namespace GreenLight
             }
             else
             {
-                Console.WriteLine("Ordering the driving Lanes: the lane is laiyng Vertically");
+                
                 _road.Drivinglanes.Sort(delegate (Lane x, Lane y)
                 {
                     return x.points.First().cord.X.CompareTo(y.points.First().cord.X);

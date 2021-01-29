@@ -35,14 +35,14 @@ namespace GreenLight
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Log.Write(e.ToString());
             }
         }
 
         static public void SaveJson()
         {
             string json = JsonConvert.SerializeObject(vehicles);
-            Console.WriteLine(json);
+
 
             string file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Vehicle\\VehicleType.json";
 

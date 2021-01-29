@@ -140,7 +140,7 @@ namespace GreenLight
 
             controller.SelectAI(_stats);
 
-            Console.WriteLine("Je bent erdoor!!");
+
 
             reactionTime.Value = (int)(controller.selectedAI.ReactionTime);
             followInterval.Value = (int)(controller.selectedAI.FollowInterval );
@@ -158,7 +158,7 @@ namespace GreenLight
                 return;
             }
 
-            Console.WriteLine("Vehicle Created With name : {0}", _name);
+
 
             AIController.addDriverStats(_name, 2, 2, 0, 0, 50, false);
             SetValues();

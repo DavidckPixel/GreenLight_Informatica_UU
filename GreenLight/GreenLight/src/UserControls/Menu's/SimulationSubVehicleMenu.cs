@@ -162,7 +162,7 @@ namespace GreenLight
 
             controller.SelectVehicle(_stats);
 
-            Console.WriteLine("Je bent erdoor!!");
+
 
             Cw.Value = (int)(controller.selectedVehicle.Cw * 10);
             Surface.Value = (int)(controller.selectedVehicle.Surface * 10);
@@ -186,7 +186,7 @@ namespace GreenLight
                 return;
             }
 
-            Console.WriteLine("Vehicle Created With name : {0}", name);
+
 
             VehicleController.addVehicleStats(name, 5000, 5, 100, 100, 5, 1, 50); 
             SetValues();

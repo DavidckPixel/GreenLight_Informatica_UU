@@ -83,7 +83,7 @@ namespace GreenLight
                     return this.availableDriverStats.First();
                 }
 
-                Console.WriteLine("Better not");
+                Log.Write("No Driverstats Available");
                 AITypeConfig.ReadJson();
                 this.availableDriverStats = AITypeConfig.aiTypes;
                 return AITypeConfig.aiTypes.First();

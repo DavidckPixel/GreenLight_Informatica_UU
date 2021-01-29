@@ -261,13 +261,7 @@ namespace GreenLight
             }
         }
 
-        public void LogPoints()
-        {
-            foreach (LanePoints _point in this.points)
-            {
-                Console.WriteLine(_point.cord);
-            }
-        }
+        
     }
 }
     

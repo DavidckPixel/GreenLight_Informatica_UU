@@ -67,17 +67,17 @@ namespace GreenLight
                 }
                 g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
             }
-            //Console.WriteLine("Teken die sign");
+
             this.Hitbox.Draw(g);
             //g.FillRectangle(Notsolid, this.Hitbox);
         }
         public void setFlipped()
         {
             hitboxflipped = !hitboxflipped;
-            Console.WriteLine("Flipped!" + dir);
+
             flipped = !flipped;
             dir = Math.Abs(360 - dir);
-            Console.WriteLine("After Flipped!" + dir);
+
             setLocation();
         }
 
@@ -200,7 +200,7 @@ namespace GreenLight
             if (Road.Type == "Diagonal")
             {
 
-                Console.WriteLine("Hitbox slp: " + Road.slp);
+
                 if (Road.slp == 0)
                 {
                     if (Road.getPoint1().X == Road.getPoint2().X)
@@ -230,11 +230,11 @@ namespace GreenLight
                     _l.X = _temp.cord.X;
                     _l.Y = _temp.cord.Y;
                     I = _hitboxLanepoints.FindIndex(p => p == _temp);
-                    Console.WriteLine("Hitbox " + _hitboxLanepoints.Count);
+
                 }
                 else
                 {
-                    Console.WriteLine("hitbox horizontal");
+
                     int _x = this.Location.X + 10;
                     LanePoints _temp;
                     _temp = _hitboxLanepoints.Aggregate((x, y) => Math.Abs(x.cord.X - _x) < Math.Abs(y.cord.X - _x) ? x : y);
@@ -249,7 +249,7 @@ namespace GreenLight
             else
             {
                 float Degree = h.degree;
-                Console.WriteLine(Degree);
+
 
                 int Distance = (int)(Road.lanes / 2 * Road.laneWidth);
                 int X = this.Location.X + 10, Y = this.Location.Y + 10;

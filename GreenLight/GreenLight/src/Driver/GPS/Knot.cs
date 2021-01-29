@@ -24,11 +24,6 @@ namespace GreenLight.src.Driver.GPS
             Cord = _cord;
         }
 
-        public void Draw(Graphics g)
-        {
-            //Console.WriteLine("Drawing a knot!");
-            g.FillEllipse(Brushes.Blue, new Rectangle(this.Cord, new Size(5, 5)));
-        }
         //Since the existance of a road in road1 or road2 is not consistent/ important, for example:
         // road1 = "Diagonal" road2 = "Straight" is equal to road1 = "Straight" road2 = "Diagonal".
         //so additional logic is needed to see if 2 knots are equal.

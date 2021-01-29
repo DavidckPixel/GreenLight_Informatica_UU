@@ -149,8 +149,6 @@ namespace GreenLight
             this.errorMess.Text = "";
             this.Combobox1.Text = selected.getSpeed().ToString();
 
-            //Console.WriteLine(this.settingScreen.Visible.ToString());
-
             this.ss.Invalidate();
             settingScreen.ShowDialog();
             settingScreen.BringToFront();
@@ -159,7 +157,6 @@ namespace GreenLight
 
         public override void onSignClick(AbstractSign _sign, AbstractRoad _selectedRoad)
         {
-            //Console.WriteLine("SIGN HAS BEEN SELECTED!!!");
             selected = (SpeedSign)_sign;
             if (_selectedRoad != null)
             {

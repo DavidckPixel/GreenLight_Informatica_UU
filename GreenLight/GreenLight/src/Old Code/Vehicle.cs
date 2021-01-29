@@ -76,7 +76,7 @@ namespace GreenLight
                 ytemp = location[frame].Y;
             }
             catch
-            { Console.WriteLine("Not Av." + location.Count);;
+            { 
             }
             g.DrawImage(RotateImage(Car, angle), xtemp-Car.Width/2, ytemp - Car.Height / 2, Car.Width, Car.Height);
             if (frame == 300)

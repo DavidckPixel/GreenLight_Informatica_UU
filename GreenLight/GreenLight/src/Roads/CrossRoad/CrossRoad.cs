@@ -264,15 +264,7 @@ namespace GreenLight
             }
         }
 
-        public void ConsoleDump()
-        {
-            foreach (CrossRoadSide _side in sides)
-            {
-                Console.WriteLine(_side.side + " -- " + _side.status + "Amount of cars: " + _side.aiOnSide.Count());
-                Console.WriteLine("Occupied? " + _side.driving);
-            }
-            Console.WriteLine();
-        }
+        
 
     }
 }

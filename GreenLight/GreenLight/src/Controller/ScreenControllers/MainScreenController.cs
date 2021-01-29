@@ -197,7 +197,7 @@ namespace GreenLight
                         {
                             text[t] = text[t].Remove(0, text[t].Length);
                             _remove = true;
-                            Console.WriteLine(text[t].Length);
+
                         }
                     }
                     if (!_remove)

@@ -47,7 +47,7 @@ namespace GreenLight
             CrossRoad _temp = new CrossRoad(_point1, _point1, _lanes, "Cross", false, false, null, null);
             this.selectedRoad = _temp;
 
-            Console.WriteLine("New CrossRoad Made!");
+            
 
             return _temp;
         }
@@ -357,7 +357,7 @@ namespace GreenLight
             {
                 //ConnectionPoint _point;
                 
-                Console.WriteLine(_point.Side);
+                
 
                 if (_point.Active)
                 {

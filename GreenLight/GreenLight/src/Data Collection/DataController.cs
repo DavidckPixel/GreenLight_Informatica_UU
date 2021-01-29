@@ -66,8 +66,6 @@ namespace GreenLight.src.Data_Collection
             List<int> _series;
             List<int> _points;
 
-            //Console.WriteLine("Updating the big chart!");
-
             collector.data.GetBrakeData(out _series,out _points);
 
             for (int i = 0; i < _series.Count(); i++)
@@ -96,7 +94,7 @@ namespace GreenLight.src.Data_Collection
 
             if (serie != null)
             {
-                Console.WriteLine("ADDED!");
+
                 double _value = serie.Points.First().YValues.First();
                 serie.Points.Clear();
                 serie.Points.Add(_value + 1);
@@ -125,7 +123,7 @@ namespace GreenLight.src.Data_Collection
             this.averageSpeed.Series.Clear();
             List<Tuple<int,double>> _data = collector.data.GetAverageSpeedPerTick();
 
-            Console.WriteLine("Updating the big chart!");
+            Log.Write("Updating the big chart!");
 
             Series series = new Series("Average speed for all cars");
             series.ChartType = SeriesChartType.Spline;
@@ -140,7 +138,7 @@ namespace GreenLight.src.Data_Collection
                 this.averageSpeed.Series.Add(series);
             }catch(Exception e)
             {
-                Console.WriteLine(e);
+                Log.Write(e.ToString());
             }
         }
 
@@ -198,7 +196,7 @@ namespace GreenLight.src.Data_Collection
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Log.Write(e.ToString());
             }
         }
     }

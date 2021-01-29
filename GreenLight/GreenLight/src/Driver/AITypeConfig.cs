@@ -35,15 +35,13 @@ namespace GreenLight
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Log.Write(e.ToString());
             }
         }
 
         static public void SaveJson()
         {
             string json = JsonConvert.SerializeObject(aiTypes);
-            Console.WriteLine(json);
-
             string file = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\GreenLight\\src\\Driver\\DriverType.json";
 
             try
@@ -54,7 +52,7 @@ namespace GreenLight
                 }
             }catch(Exception e)
             {
-                Console.WriteLine(e);
+                Log.Write(e.ToString());
             }
         }
 
