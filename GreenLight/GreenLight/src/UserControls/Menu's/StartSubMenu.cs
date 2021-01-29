@@ -53,6 +53,10 @@ namespace GreenLight
             CurvedButtons aboutButton = new CurvedButtons(new Size(startmenu["aboutXsize"], startmenu["aboutYsize"]), new Point(_submenuwidth / 2 - startmenu["aboutX"], _form.Height - startmenu["aboutY"]), startmenu["aboutCurve"], "../../src/User Interface Recources/Custom_Button.png", "About", _dosisfontfamily, _form, this.BackColor);
             aboutButton.Click += (object o, EventArgs ea) => { System.Diagnostics.Process.Start("https://www.marcdejong.online/projects/green-light-district/"); };
             this.Controls.Add(aboutButton);
+
+            MovePanel dragPad = new MovePanel(_form);
+            this.Controls.Add(dragPad);
+
         }
     }
 }
