@@ -9,6 +9,8 @@ using System.IO;
 
 namespace GreenLight
 {
+    //This loads the different DriverProfile faces presets from the faces.json
+
     public static class DriverProfileData
     {
         public static List<DriverProfileFace> faces;

@@ -18,6 +18,7 @@ namespace GreenLight.src.Driver.GPS
 
         public Knot(AbstractRoad _road1, AbstractRoad _road2, Point _cord)
         {
+            Log.Write("Knot created at cord: "+ _cord);
             Road1 = _road1;
             Road2 = _road2;
             Cord = _cord;
@@ -28,7 +29,9 @@ namespace GreenLight.src.Driver.GPS
             //Console.WriteLine("Drawing a knot!");
             g.FillEllipse(Brushes.Blue, new Rectangle(this.Cord, new Size(5, 5)));
         }
-
+        //Since the existance of a road in road1 or road2 is not consistent/ important, for example:
+        // road1 = "Diagonal" road2 = "Straight" is equal to road1 = "Straight" road2 = "Diagonal".
+        //so additional logic is needed to see if 2 knots are equal.
 
         public override bool Equals(object obj)
         {

@@ -7,10 +7,15 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace GreenLight.src.Driver.GPS
-{   //This Class consists of methods that construct all the nodes, knots, links, etc.
-    //It connects them (sometimes using other classes).
-    //It has a list of all nodes, a list of all roads, a list of all knots, a list of all the nodes that could spawn a car, and a list of all possible paths from spawnpoints to endpoints.
-    //The better GPS gets al it's data from here.
+{
+    //this is the general controller class for the GPS, this is were all the paths nodes and links are calculated.
+    //the sequence it operates in:
+    //1) Find all the knots, a knot it the place where 2 roads meet, or incase of an endroad, only one road begins/ends, to note here is that the beginning/end of a road is ambiqious and unimportant here
+    //2) Create all the possible links inbetween the knots, it uses the drivinglanes for this
+    //3) It then creates the nodes which is a knot with a paths it can travel
+    //4) Set which nodes are start/ end nodes
+    //5) remove all the startnodes that have 0 paths
+
      public class GPSData
     {
         List<Node> nodes;
@@ -35,6 +40,7 @@ namespace GreenLight.src.Driver.GPS
         //if the road isn't a crossroad and if both the beginconnected road and the endconnected road of the road are null, the knot is added to the allknots list.
         //if the beginconnected road or the endconnected road isn't null the TestDuplicateKnot method is called, and if it returns false (there is no duplicate in the allknots list), the knot is added to the allknotslist.
         //If the road is a crossroad, the mainroad and a point on a side are given to the FindAddRoad method, for each side.
+
         private void FindAllKnots()
         {
             _allKnots = new List<Knot>();
@@ -112,6 +118,7 @@ namespace GreenLight.src.Driver.GPS
         //It then calls the spawnmethod for each node, and uses the canSpawn bool of each node to make a list of Spawnnodes.
         //It then uses these spawnodes to fill the Nodepaths list with constructed Nodepaths using OwnDijkstra.
         //All the Nodepaths that have an empty linkpath are then removed again from that list
+
         private void CreateConnections()
         {
             List<Link> _allLinks = new List<Link>();
@@ -146,7 +153,7 @@ namespace GreenLight.src.Driver.GPS
                 _node.GiveConnectioned(_endKnots);
             }
 
-            nodes.ForEach(x => x.Spawn());
+            nodes.ForEach(x => x.spawn());
             this.spawnNodes = nodes.FindAll(x => x.canSpawn == true);
 
             foreach (Node _node in this.spawnNodes)
@@ -166,6 +173,7 @@ namespace GreenLight.src.Driver.GPS
         }
 
         //This method makes a list of links for the road it has been given, taking crossroads into account.
+
         private List<Link> CreateConnectionPerRoad(AbstractRoad _road)
         {
             List<Knot> _knots = _allKnots.FindAll(x => x.Road1 == _road || x.Road2 == _road);

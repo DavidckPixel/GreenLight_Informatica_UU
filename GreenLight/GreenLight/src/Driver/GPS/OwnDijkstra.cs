@@ -8,6 +8,7 @@ namespace GreenLight.src.Driver.GPS
 {
     //OwnDijkstra is a static class that can be used to find the shortest path over a map of connected roads. It workst with Nodes from the Nodes class. 
     //To use it, you need a startNode and a goal node.  
+
     public static class OwnDijkstra
     {
         
@@ -35,7 +36,6 @@ namespace GreenLight.src.Driver.GPS
         //Then it checks if it's not trying to re-enter a road it has already been to. If not, it adds the road it moving over to the list of visited roads, and adds a Dijkstrapath to a temporary list.
         //When this is done for all connections of the last node, it clears the list of DijkstraPaths, and adds the temporary list to it. Then, the loop starts again.
         //It loops untill there is a path from start to finish to return, or twice the amount of roads there are. If no path is found, the method returns null.
-
 
         public static DijkstraPaths CalculatePath(Node _start, Node _goal)
         {

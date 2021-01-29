@@ -9,6 +9,12 @@ using GreenLight.src.Driver.GPS;
 
 namespace GreenLight
 {
+
+    //This is the AI class, one of the 2 classes that represents the vehicle driving on the road
+    //Since at points in the simulation, there may be over 100 cars on the screen, and if the simulation where to run at max speed
+    //It would be alot of calculating, so its very important that the betterAI class is as optimised as we could make it to keep
+    //the simulation running smooth. The AI-Class is the class that controls the vehicle, and tells it preciesly what to do.
+
     public class BetterAI
     {
         public DriverProfile profile;
@@ -18,7 +24,7 @@ namespace GreenLight
         int speedRelativeToLimit;
         float ruleBreakingChance;
 
-        public double targetspeed = 14;
+        public double targetspeed = 3;
         public int priority = 2;
 
         public bool isBraking = false;
@@ -71,6 +77,10 @@ namespace GreenLight
 
         public string Goal = "";
 
+        //When a AI is created, it sets its parameters accordingly to the DriverStat instance that was given to it
+        //The DriverStat instance contains its behavioural variables. The constructor also sets the Priority and target speed to
+        //the base values
+
         public BetterAI(DriverStats _stats)
         {
             this.reactionSpeed = _stats.ReactionTime;
@@ -82,11 +92,18 @@ namespace GreenLight
             ChangePriority(2);
         }
 
+        //The InitGPS class is the method that initialized the GPS, the GPS is the tool that deals with pathfinding and the AI uses to navigator the roadSystem
+        //It takes a start Node, it will then create a GPS which will find a random path from the startNode to any End nodes
+
         public void InitGPS(Node _startNode)
         {
             navigator = new BetterGPS(this, _startNode);
             this.SetPath();
         }
+
+        //a Vehicle has an AI, but the AI also controls a vehicle, so then a vehicle is created with a specific ai, it will first tell the ai, so it knows which
+        // vehicle its controlling. This is also the place where the DriverProfile is created, the driverProfile is the instance that stores most of the vehicles
+        //Data which is then inturn used by the data collector.
 
         public void SetVehicle(BetterVehicle _vehicle, Node _startNode)
         {
@@ -107,6 +124,15 @@ namespace GreenLight
 
             InitGPS(_startNode);
         }
+
+        //The update function is the function that is called every Tick, to keep the code optimised it needs to calculate as little as possible every tick, only the neccessary things
+        //When a vehicle is marked for deletion is will also instantly return here and execute no code, this is also the case when a vehicle is marked for HardStop (incase the simulation is paused)
+        //After this is will execute its code in a specific order, it will first calculate its distance to all the other cars and determin whether it should brake, continue driving or switch lanes
+        //if the AI is marked that it wants to switch lanes, it will then proceed to call the switchLane function.
+        //It then checks if there is an intersection coming up and a method that deals with the intersection rule
+        //It then calls a function that will set the Vehicle to braking incase neccessary
+        //After this it must also check if it wants to accelerate or not
+        //Finally it updates the profile(which is to say: collect certain data)
 
         public void Update()
         {
@@ -136,10 +162,18 @@ namespace GreenLight
             UpdateProfile();
         }
 
+        //When the AI passes a speed sign, its target speed is changed to whatever the sign tells it
+        //Since AI can have a variable that can tell it how much it needs to be over the speedlimit
+        //it will add this to the target speed;
+
         public void ChangeTargetSpeed(double _speed)
         {
             this.targetspeed = Math.Abs(_speed + this.speedRelativeToLimit / 10);
         }
+
+        //When the AI passes a YIELD or PRIORITY sign, it must change its internal priority to whatever
+        //the sign tells it. However since there is a change that the vehicle might brake rules and thus ignore the priority change, or increase its own
+        //priority even higher then allowed. This all depends on its rulebraking chance
 
         public void ChangePriority(int priority)
         {
@@ -154,6 +188,9 @@ namespace GreenLight
 
             this.priority = priority;
         }
+
+        //this function returns a bool whether or not the car should brake a rule, it also contains a multiplier incase you want the car to have a
+        //Additional chance of braking a rule
 
         public bool BrakeRule(double multiplier = 1)
         {
@@ -172,6 +209,8 @@ namespace GreenLight
             return false;
         }
 
+        //Calculates some data for the profile
+
         private void UpdateProfile()
         {
             if (this.isBraking)
@@ -180,6 +219,11 @@ namespace GreenLight
             }
             profile.CalculateFuel(this.vehicle.speed);
         }
+
+        //In the DistanceToCars() method, the AI first finds all the other AI currently on the same road and drivniglane as himself.
+        //for all these cars in then checks how far they are away. It also calculates how many lanepoints the car needs to brake and slow down, thus determining its follow distance
+        //If the AI finds it is getting too close to a car it set its internal closeToCars value to true, it also sets the wantsToSwitch value to true, telling the AI
+        //that it would prefer to switch lanes to pass the slower car.
 
         public void DistanceToCars()
         {
@@ -200,13 +244,18 @@ namespace GreenLight
                 if (this.nextRoad != null)
                 {
 
-                    if (this.nextRoad.roadtype == "Cross" && this.vehicle.currentLane.points.Count - this.currentLanePointIndex < 10) ;
+                    if ((this.nextRoad.roadtype == "Cross" && this.vehicle.currentLane.points.Count - this.currentLanePointIndex < 10) || this.currentCrossRoadSide != null) 
                     {
                         this.wantsToSwitch = false;
                     }
                 }
             }
         }
+
+        //This is an old CrossRoadRule function that determined whether or not the car was allowed to drive
+        //It is very complex and tries to use clever tricks to quickly forfill its purpose. this however makes
+        //it very complicated and difficult to work with, its fun to read through and try to understand
+        //but no longer used do to critical errors.
 
         private void CrossRoadRules()
         {
@@ -304,6 +353,11 @@ namespace GreenLight
             this.status = status;
         }
 
+        //This method checks to see if there is a crossRoad coming up, if a crossroad is indeed closer then 60 lanepoints
+        //it checks and sets from which CrossRoadSide the car is approaching.
+        //if a side is found (which should always happen) its parameters and internal values are set that are used later on during
+        //the crossing.
+
         private void InCrossRoadRange()
         {
             if (this.nextRoad == null)
@@ -329,7 +383,7 @@ namespace GreenLight
 
                 if(_crossRoadSideL.Count > 1)
                 {
-                    Console.WriteLine("WEL WE FOUND YOUR PROBLEM!!!!!!!!!!!!!!!!!!!!!!!!");
+                    Log.Write("Error 2001 : A vehicle cannot approach from 2 sides at the same time");
                 }
 
                 CrossRoadSide _crossRoadSide = _crossRoadSideL.First();
@@ -342,14 +396,16 @@ namespace GreenLight
                 this.currentCrossRoadSide = _crossRoadSide;
                 this.startedCrossing = false;
             }
-            
         }
+
+        //When a vehicle leaves the crossRoad, it must signal to the crossroad and the crossroad sides that it has left so other cars can pass
+        //This method also resets all the AI's internal parameters regarding crossRoads
 
         private void LeavingCrossRoadSide()
         {
             if(currentCrossRoadSide == null)
             {
-                Console.WriteLine("THE FUCKKKKKKK!!! WAAROM?!?!");
+                Log.Write("Error 2002: The Vehicle is leaving the crossroad, but never found a crossRoadSide it was approaching from");
                 return;
             }
             
@@ -366,8 +422,6 @@ namespace GreenLight
 
                 if(this.currentCrossRoadSide.aiOnSide.Any() && this.currentCrossRoadSide.priorityLevel == 0)
                 {
-                    Console.WriteLine("YOU SHOULD RELALY NEVER BE HERE PLEASE DONT COME HERE THIS IS SO WEIRD");
-
                     this.currentCrossRoadSide.priorityLevel = 2;
                 }
             }
@@ -376,7 +430,6 @@ namespace GreenLight
 
             if (this.currentCrossRoadSide.aiDriving <= 0)
             {
-                Console.WriteLine("NO MORE CARS FROM THIS SIDE");
                 this.currentCrossRoadSide.driving = false;
             }
             this.currentCrossRoadSide = null;
@@ -384,6 +437,10 @@ namespace GreenLight
             this.startedCrossing = false;
         }
         
+        //This method is used to check if the vehicle is currently inrange of a sign. It checks whether the current vehicle location is inside the hitbox of a sign that is on its road
+        //It then checks if the sign is in the same direction as he is drivnig, if this is the case, the sign is read
+        //since we want signs to only be read once, we add this sign to the read sign list, so it will not be read again.
+
 
         private void CheckForSigns()
         {
@@ -402,6 +459,9 @@ namespace GreenLight
                 }
             }
         }
+
+        //The NeedToBrake method is the method that sets the  isBraking variable
+        //it checks a bunch of internal variables and behaves accordingly
 
         public void NeedToBrake()
         {
@@ -431,6 +491,11 @@ namespace GreenLight
                 this.isBraking = true;
             }
         }
+
+        //This method is used to find a lane the car can switch too, when one is found, it then returns the lane.
+        //When switching lanes a bunch of things need to be taking into account
+        //It also needs to check whether or the lane Below (1) or above(-1) is actually available for switching and
+        //will not make vehicles collide. This method will always prefer to switch up if possible.
 
         private Lane CheckSwitchLane()
         {
@@ -479,12 +544,16 @@ namespace GreenLight
             return _selectedLane;
         }
 
+        //This method is used to check per side if the lane is available. it first needs to check whether or not these lanes actually exist and are
+        //Driving the same way as him. It also needs to check whether or not it is forced onto a lane by the navigator. And finally it checks whether
+        //or not there is a car in the way. When a car is not able to switch to this lane, it returns false.
+
         private bool LaneSideAvailable(int _side) //can be 1 or -1
         {
             int _goalLaneIndex = this.vehicle.currentLane.thisLane + _side - 1;
 
 
-            if (navigator.currentPath.NextLaneIndex.TrueForAll(x => x < (this.CurrentLaneIndex)))
+            if (navigator.currentPath.NextLaneIndex.TrueForAll(x => x <= (this.CurrentLaneIndex)))
             {
                 if (_side == 1)
                 {
@@ -492,7 +561,7 @@ namespace GreenLight
                 }
             }
 
-            if (navigator.currentPath.NextLaneIndex.TrueForAll(x => x > (this.CurrentLaneIndex)))
+            if (navigator.currentPath.NextLaneIndex.TrueForAll(x => x >= (this.CurrentLaneIndex)))
             {
                 if (_side == -1)
                 {
@@ -530,13 +599,16 @@ namespace GreenLight
             List<BetterVehicle> allVehicles = BetterVehicleTest.vehiclelist;
             List<BetterVehicle> vehiclesOnLane = allVehicles.FindAll(x => x.currentLane.thisLane == _goalLane.thisLane && x.currentRoad == this.vehicle.currentRoad);
 
-            if (vehiclesOnLane.Any(x => x.vehicleAI.currentLanePointIndex - x.vehicleAI.lanePointsMovePerTick - 5 <= this.currentLanePointIndex && x.vehicleAI.currentLanePointIndex + x.vehicleAI.lanePointsMovePerTick + 5> this.currentLanePointIndex))
+            if (vehiclesOnLane.Any(x => x.vehicleAI.currentLanePointIndex - x.vehicleAI.lanePointsMovePerTick - 20 <= this.currentLanePointIndex && x.vehicleAI.currentLanePointIndex + x.vehicleAI.lanePointsMovePerTick + 20 > this.currentLanePointIndex))
             {
                 return false; //THERE IS A CAR IN THE WAY
             }
 
             return true;
         }
+
+        //This is the method that is called when the car wants to switch lane, and then sees if this is possible using the other 2 previously described methods
+        //Incase a Lane is found that it can switch too, it sets all the parameters accordingly and switches.
 
         private void SwitchLanes()
         {
@@ -579,9 +651,13 @@ namespace GreenLight
 
             this.vehicle.currentLane = this.vehicle.currentRoad.Drivinglanes[this.CurrentLaneIndex - 1];
 
+            this.closeToCars = false;
+
             this.SteerWheel(RoadMath.CalculateAngle(new Point((int)vehicle.locationX, (int)vehicle.locationY), goal.cord)); //Lanes get switched But wrong way!!!
             DistanceToCars();
         }
+
+        //This method checks whether or not the car can accelerate
 
         private void CalculateAcceleration()
         {
@@ -594,6 +670,9 @@ namespace GreenLight
                 this.isAccelerating = true;
             }
         }
+
+        //To keep the car driving on a the road, it drives from lane point to lane point. The distance between these lane points can sometimes be smaller the one, so a car can pass multiple lanepoints
+        //in one tick. When a lanePoint is passed it will find the nextLane point it needs to drive too, when its at the end of the lanePoint list, it will switch roads to the next road
 
         public void SwitchLanePoints()
         {
@@ -623,10 +702,14 @@ namespace GreenLight
             this.CheckForSigns();
         }
 
+        //This method is called when the AI wants the car to turn into a different direction
+
         public void SteerWheel(float _angel)
         {
             this.vehicle.currentAngle = _angel;
         }
+
+        //Initial function that sets up the first path and road for the car to drive.
 
         public void SetPath()
         {
@@ -653,11 +736,18 @@ namespace GreenLight
             CheckSwitchLane();
         }
 
+        //To keep the car on the lane, sometimes we need to force its position, we prefer to use this as little as possible
+
         private void ForceCarLocation(Point _p)
         {
             this.vehicle.locationX = _p.X;
             this.vehicle.locationY = _p.Y;
         }
+
+        //When a road is switched, it will find the index of the next drivinglane its current driving lane connects to, since crossroads can have many more drivinglanes when normal roads
+        //the translatin is not always easy and calls upon the GPS to help. if the currentroad it was driving on was a Crossroad, it will call the LeaveCrossRoadmethod
+        //Incase the nextRoad is a crossroad and the crossroad was occupied, we do not want it to switchRoads, instead it should stop, so we set its speed to 0 and force its location.
+        //if all is well, the road is switched and similar to the SetPath, the next road is selected as its current road and all the internal variables are set accordingly
 
         public void SwitchRoad()
         {
@@ -712,11 +802,26 @@ namespace GreenLight
             CheckSwitchLane();
         }
 
+        //When a car is done it sets its internal values to be delete, it then tells the simulationController that it is save to delete it.
+
         public void SignalDone()
         {
             this.toDelete = true;
             this.vehicle.DeleteVehicle(false);
         }
+
+        //This is the reworked method that checks for the crossRoad rules, the staps it takes are the following: 
+        // 1) if im currently ontop of a crossroad, just keep driving, we do not want cars to stop in the middle of it
+        // 2) If i already started crossing, just continue driving
+        // 3) if Im first in the list of cars waiting for the intersection for my side, and my side it set to driving: start driving:
+        // 4) If the amount of lanepoints needed for me to brake is bigger then my distance to the crossroad, no need to check the rules yet
+        // 5) Check for possible errors that should never occur and deal with them accordingly.
+        // 6) Gather all the information on the crossRoad and other crossroad sides
+        // 7) See from which side to which side I want to drive
+        // 8) Apply the general driving rules dependend on the information gathered in step 6 and 7
+        // 9) Check if there is currently no car driving yet the crossroad is empty: there is a deadlock, the cars at the top may now drive
+        // 10) If im allowed to drive, and im the first Car inLine to drive. Set my values to driving, also tell the crossroad that there is currently someone from my side driving
+        // 11) Incase I was not allowed to drive, tell the vehicle it needs to brake.    
 
         private void ReworkedCrossRoadCheck()
         {
@@ -740,7 +845,6 @@ namespace GreenLight
             }
 
             int Num = RoadMath.LanePointsInDistance(vehicle.brakeDistance, this.currentLanePointIndex, this.vehicle.currentLane.points);
-
             Num = Num <= 0 ? 1 : Num;
 
             if (vehicle.currentLane.points.Count() - this.currentLanePointIndex >= Num + 10 && this.vehicle.speed != 0)
@@ -751,17 +855,14 @@ namespace GreenLight
 
             if (this.currentCrossRoadSide == null)
             {
-                Console.WriteLine("Warning you should never be here! ID 1");
+                Log.Write("error 2003: the car is entering a crossroad, yet never found a CrossRoadSide");
                 return;
             }
 
             string _side = this.currentCrossRoadSide.side;
-
             int _laneSwap = this.navigator.currentPath.LaneSwap.First().Item2;
-            CrossRoadSide _tempside; //= this.currentCrossRoad.sides.First(x => x.hitbox.Contains(navigator.nextRoad.Drivinglanes[_laneSwap - 1].points.Last().cord));
-
+            CrossRoadSide _tempside;
             CrossRoad _nextRoad = (CrossRoad)this.nextRoad;
-
             _tempside = _nextRoad.sides.ToList().Find(x => x.hitbox.Contains(navigator.nextRoad.Drivinglanes[navigator.currentPath.LaneSwap.First().Item2 - 1].points.Last().cord));
 
             if (_tempside == null)
@@ -790,10 +891,6 @@ namespace GreenLight
             int topPriority = this.currentCrossRoad.sides.First(x => x.side == "Top").priorityLevel;
             int bottomPriority = this.currentCrossRoad.sides.First(x => x.side == "Bottom").priorityLevel;
 
-            // You want to go your own right : Check if your left side has priority over u: otherwise go
-            // You want to go your UP : Check right side & if left has priority
-            // you want to go
-
             //Console.WriteLine("LEFT =  status: {0} - Driving : {1} - Priority {2}", leftStatus, leftDriving, leftPriority);
             //Console.WriteLine("TOP =  status: {0} - Driving : {1} - Priority {2}", topStatus, topDriving, topPriority);
             //Console.WriteLine("RIGHT =  status: {0} - Driving : {1} - Priority {2}", rightStatus, rightDriving, rightPriority);
@@ -808,14 +905,14 @@ namespace GreenLight
 
                 if(_goalSide == "Right")
                 {
-                    if((leftStatus && leftPriority <= this.priority) || (bottomStatus && bottomPriority <= this.priority) || (rightStatus && rightPriority > this.priority))
+                    if((leftStatus && leftPriority >= this.priority) || (bottomStatus && bottomPriority >= this.priority) || (rightStatus && rightPriority > this.priority))
                     {
                         _allowDrive = false;
                     }
                 }
                 else if(_goalSide == "Bottom")
                 {
-                    if((leftStatus && leftPriority <= this.priority) || (rightStatus && rightPriority > this.priority))// || (bottomStatus && bottomPriority > this.priority))
+                    if((leftStatus && leftPriority >= this.priority) || (rightStatus && rightPriority > this.priority))// || (bottomStatus && bottomPriority > this.priority))
                     {
                         _allowDrive = false;
                     }
@@ -851,7 +948,7 @@ namespace GreenLight
 
                 if (_goalSide == "Right")
                 {
-                    if((bottomStatus && bottomPriority <= this.priority) || (topStatus && topPriority > this.priority)) //|| (rightStatus && rightPriority > this.priority))
+                    if((bottomStatus && bottomPriority >= this.priority) || (topStatus && topPriority > this.priority)) //|| (rightStatus && rightPriority > this.priority))
                     {
                         _allowDrive = false;
                     }
@@ -871,7 +968,7 @@ namespace GreenLight
                 else if (_goalSide == "Top")
                 {
                     //RIGHT BOTTOM *TOP
-                    if((rightStatus && rightPriority <= this.priority) || (bottomStatus && bottomPriority <= this.priority) || (topStatus && topPriority > this.priority))
+                    if((rightStatus && rightPriority >= this.priority) || (bottomStatus && bottomPriority >= this.priority) || (topStatus && topPriority > this.priority))
                     {
                         _allowDrive = false;
                     }
@@ -902,7 +999,7 @@ namespace GreenLight
                 }
                 else if (_goalSide == "Top")
                 {
-                    if((rightStatus && rightPriority <= this.priority) || (topStatus && topPriority > this.priority)) //|| (leftStatus && leftPriority > this.priority))
+                    if((rightStatus && rightPriority >= this.priority) || (topStatus && topPriority > this.priority)) //|| (leftStatus && leftPriority > this.priority))
                     {
                         _allowDrive = false;
                     }
@@ -914,7 +1011,7 @@ namespace GreenLight
                 }
                 else if (_goalSide == "Left")
                 {
-                    if((rightStatus && rightPriority <= this.priority) || (topStatus && topPriority <= this.priority) || (leftStatus && leftPriority > this.priority))
+                    if((rightStatus && rightPriority >= this.priority) || (topStatus && topPriority >= this.priority) || (leftStatus && leftPriority > this.priority))
                     {
                         _allowDrive = false;
                     }
@@ -946,14 +1043,14 @@ namespace GreenLight
                 else if (_goalSide == "Bottom")
                 {
                     //left top *bottom
-                    if((topStatus && topPriority <= this.priority ) || (leftStatus && leftPriority <= this.priority) || (bottomStatus && bottomPriority > this.priority))
+                    if((topStatus && topPriority >= this.priority ) || (leftStatus && leftPriority >= this.priority) || (bottomStatus && bottomPriority > this.priority))
                     {
                         _allowDrive = false;
                     }
                 }
                 else if (_goalSide == "Left")
                 {
-                    if ((topStatus && topPriority <= this.priority) || (leftStatus && leftPriority > this.priority)) //|| (bottomStatus && bottomPriority > this.priority))
+                    if ((topStatus && topPriority >= this.priority) || (leftStatus && leftPriority > this.priority)) //|| (bottomStatus && bottomPriority > this.priority))
                     {
                         _allowDrive = false;
                     }

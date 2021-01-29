@@ -20,5 +20,10 @@ namespace GreenLight.src.Driver.GPS
             this.end = _end;
             this.laneIndex = _laneIndex;
         }
+
+        public void ConsolePrint()
+        {
+            Log.Write("Begin Knot: " + begin.Cord + ", End Knot: " + end.Cord + ", LaneIndex: " + laneIndex);
+        }
     }
 }

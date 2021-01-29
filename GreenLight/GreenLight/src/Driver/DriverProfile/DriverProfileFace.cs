@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
+    //this is the data Class for the DriverProfileFaces, instances of which are loaded from the faces.json
+    //it contains the faces, a name, speech and also a background image;
+
     public class DriverProfileFace
     {
         public string name {get;}

@@ -34,6 +34,7 @@ namespace GreenLight.src.Driver.GPS
         //foreach node in this.path, there will be determined if there is a next node in the list, if not, it will be null
         //If there is a previousnode for the node, a new path will be constructed with the previousnode, the node and the next node (which can be null).
         //This path would be added to the Linkpath list of Paths.
+
         private void CreateLinkPath()
         {
             Node _prevNode = null;

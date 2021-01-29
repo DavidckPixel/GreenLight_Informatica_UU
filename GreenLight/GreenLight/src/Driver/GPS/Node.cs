@@ -30,9 +30,12 @@ namespace GreenLight.src.Driver.GPS
             this.connections = _nodes;
         }
 
-        //A method called to determine if a node should be able to spawn vehicles, and set the canSpawn bool to true if it should.
-        public void Spawn()
-        {
+        //A node is a spawn node if it is connected to only one other Node, and is not backlinked, backlinked means that it is linked by something, but does not link back to it.
+
+        public void spawn()
+        { 
+            Log.Write("The Node at Location: " + this.knot.Cord + " has " + this.links.Count() + " links");
+
             if ((this.connections.Count<= 1 && !isBackLinked) || this.connections.Count < 1)
             {
                 canSpawn = true;
