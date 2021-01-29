@@ -54,10 +54,21 @@ namespace GreenLight
                     {
                         _stats = _stat;
                     }
+
                 }
 
-                VehicleTypeConfig.ReadJson();
-                _stats = VehicleTypeConfig.vehicles.First();
+                if (this.availableVehicleStats.Any() && _stats == null)
+                {
+                    _stats = this.availableVehicleStats.First();
+                }
+
+                if (_stats == null) {
+
+                    Console.WriteLine("Better not");
+                    VehicleTypeConfig.ReadJson();
+                    this.availableVehicleStats = VehicleTypeConfig.vehicles;
+                    _stats = VehicleTypeConfig.vehicles.First();
+                }
             }
 
             BetterVehicle _vehicle = new BetterVehicle(_stats, _node, this.simController.aiController.GetDriver());
