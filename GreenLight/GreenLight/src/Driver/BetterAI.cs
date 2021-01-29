@@ -48,7 +48,7 @@ namespace GreenLight
         public bool closeToCars;
         public bool crossRoadOccupied;
         public bool startedCrossing;
-        private BetterGPS navigator;
+        BetterGPS navigator;
 
         public int lanePointsMovePerTick;
 
