@@ -31,7 +31,7 @@ namespace GreenLight.src.Driver.GPS
         }
 
         //A method called to determine if a node should be able to spawn vehicles, and set the canSpawn bool to true if it should.
-        public void spawn()
+        public void Spawn()
         {
             if ((this.connections.Count<= 1 && !isBackLinked) || this.connections.Count < 1)
             {

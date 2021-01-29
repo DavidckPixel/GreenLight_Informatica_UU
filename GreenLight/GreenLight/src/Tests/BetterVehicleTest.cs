@@ -156,7 +156,7 @@ namespace GreenLight
             gpsData = new GPSData(this.roads);
 
             pictureboxTemp.Paint += Draw;
-            pictureboxTemp.MouseClick += click;
+            pictureboxTemp.MouseClick += Click;
 
             //Thread run = new Thread(simulation);
             //Thread _update = new Thread(update);
@@ -181,7 +181,7 @@ namespace GreenLight
             worldController.CreateNewWorld();
         }
 
-        private void click(object sender, MouseEventArgs e)
+        private void Click(object sender, MouseEventArgs e)
         {
             profileController.OnClick(e.Location, null);
             dataController.ExportData("Test1");
