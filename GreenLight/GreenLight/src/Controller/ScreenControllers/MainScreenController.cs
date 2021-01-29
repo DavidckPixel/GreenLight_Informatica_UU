@@ -27,9 +27,12 @@ namespace GreenLight
         public ScreenController Active;
         public DataScreen DataScreen;
         public InterfaceController UserInterface;
+
+
+        public PopUpForm ChoosePresetForm;
         
         public static MainScreenControllerConfig Config;
-
+        
         string fileName = null;
         string pathName = null;
         string imagePath = null;
@@ -64,6 +67,50 @@ namespace GreenLight
             SimulationScreen = new SimulationScreenController(this.form);
             MenuController = new MenuController(this.Screen);
             DataScreen = new DataScreen(this.form);
+
+            ChoosePresetForm = new PopUpForm(new Size(1000, 800));
+
+            MovePanel DragPad = new MovePanel(ChoosePresetForm);
+            DragPad.Location = new Point(0, 0);
+            DragPad.Size = new Size(ChoosePresetForm.Width,35);
+            DragPad.BackColor = Color.FromArgb(142, 140, 144);
+
+            Label Presets = new Label();
+            Presets.Text = "Presets";
+            Presets.Font = new Font(DrawData.Dosis_font_family, 40, FontStyle.Bold);
+            Presets.ForeColor = Color.FromArgb(142, 140, 144);
+            Presets.Size = new Size(250, 80);
+            Presets.Location = new Point((int)(ChoosePresetForm.Width/2) - 125, 35);
+
+            Dictionary<string, int> startmenu = UserControls.Config.startSubMenu;
+
+            //CurvedButtons Preset1 = new CurvedButtons();
+            //Preset1.Click += (object o, EventArgs ea) => {  };
+            //ChoosePresetForm.Controls.Add(Preset1);
+
+            //CurvedButtons Preset2 = new CurvedButtons();
+            //Preset2.Click += (object o, EventArgs ea) => {  };
+            //ChoosePresetForm.Controls.Add(Preset2);
+
+            //CurvedButtons Preset3 = new CurvedButtons();
+            //Preset3.Click += (object o, EventArgs ea) => {  };
+            //ChoosePresetForm.Controls.Add(Preset3);
+
+            //CurvedButtons Preset4 = new CurvedButtons();
+            //Preset4.Click += (object o, EventArgs ea) => {  };
+            //ChoosePresetForm.Controls.Add(Preset4);
+
+            //CurvedButtons Preset5 = new CurvedButtons();
+            //Preset5.Click += (object o, EventArgs ea) => {  };
+            //ChoosePresetForm.Controls.Add(Preset5);
+
+            //CurvedButtons Preset6 = new CurvedButtons();
+            //Preset6.Click += (object o, EventArgs ea) => {  };
+            //ChoosePresetForm.Controls.Add(Preset6);
+
+
+            ChoosePresetForm.Controls.Add(Presets);
+            ChoosePresetForm.Controls.Add(DragPad);
 
             BuildScreen.Initialize();
             SimulationScreen.Initialize();
@@ -267,14 +314,7 @@ namespace GreenLight
 
         public void LoadPresets() 
         {
-            OpenFileDialog _presetDialog = new OpenFileDialog();
-            _presetDialog.Title = "Choose preset";
-            _presetDialog.Filter = "TXT files|*.txt";
-
-            if (_presetDialog.ShowDialog() == DialogResult.OK)
-            {
-                Load(_presetDialog.FileName);
-            }
+            ChoosePresetForm.ShowDialog();
         }
 
         public void Load(string file)

@@ -129,6 +129,16 @@ namespace GreenLight
                     }
                 }
             }
+            foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
+            {
+                foreach (PlacedSign _sign in _road.Signs)
+                {
+                    if (_sign.signType == "trafficLight")
+                    {
+                        _sign.draw(g);
+                    }
+                }
+            }
         }
 
         public void CreateBackgroundImage()
@@ -136,7 +146,8 @@ namespace GreenLight
             this.background = new Bitmap(this.Screen.Width, this.Screen.Height);
 
             Graphics g = Graphics.FromImage(this.background);
-            g.DrawImage(DriverProfileData.faces.First().backImg, 0, 0, this.Screen.Width, this.Screen.Height);
+            Image img = DriverProfileData.faces.Find(x => x.name == General_Form.Main.SimulationScreen.Simulator.worldController.currentSelected.entityTypes).backImg;
+            g.DrawImage(img, 0, 0, this.Screen.Width, this.Screen.Height);
 
             foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
             {
@@ -160,5 +171,4 @@ namespace GreenLight
             this.Screen.Invalidate();
         }
     }
-
 }

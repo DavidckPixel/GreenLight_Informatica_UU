@@ -53,21 +53,43 @@ namespace GreenLight
             int _counter = 0;
             if (_recentProjects != null)
             {
-                
+
                 for (int t = _recentProjects.Length - 1; t >= _recentProjects.Length - 5; t--)
                 {
                     try
                     {
                         string[] _temp = _recentProjects[t].Split(' ');
+                        if (File.Exists(_temp[1]))
+                        {
+                            try
+                            {
+                                CurvedButtons Project = new CurvedButtons(new Size(startmenu["projectXsize"], startmenu["projectYsize"]), new Point(_submenuwidth / 2 - startmenu["projectX"], startmenu["projectYbase"] + _counter * startmenu["projectYdiff"]), startmenu["projectButtonCurve"], _temp[2], _temp[0], _dosisfontfamily, _form, Color.White, 1);
+                                Project.Location = new Point(_submenuwidth / 2 - startmenu["projectX"], startmenu["projectYbase"] + _counter * startmenu["projectYdiff"]);
+                                Project.Click += (object o, EventArgs ea) => { General_Form.Main.MenuController.SwitchToBuild(); General_Form.Main.Load(_temp[1]); };
+                                this.Controls.Add(Project);
+                                _counter++;
+                            }
+                            catch (Exception e) { }
+                        }
+                    
+                        else
+                        {
+                            for (int x = 0; x < _recentProjects.Count(); x++)
+                            {
+                                if (_recentProjects[t] == _temp[0] + " " + _temp[1] + " " + _temp[2])
+                                {
+                                    _recentProjects[t] = _recentProjects[t].Remove(0, _recentProjects[t].Length);
+                                }
+                            }
 
-                        CurvedButtons Project = new CurvedButtons(new Size(startmenu["projectXsize"], startmenu["projectYsize"]), new Point(_submenuwidth / 2 - startmenu["projectX"], startmenu["projectYbase"] + _counter * startmenu["projectYdiff"]), startmenu["projectButtonCurve"], _temp[2], _temp[0], _dosisfontfamily, _form, Color.White, 1);
-                        Project.Location = new Point(_submenuwidth / 2 - startmenu["projectX"], startmenu["projectYbase"] + _counter * startmenu["projectYdiff"]);
-                        Project.Click += (object o, EventArgs ea) => { General_Form.Main.MenuController.SwitchToBuild(); General_Form.Main.Load(_temp[1]); };
-                        this.Controls.Add(Project);
-                        _counter++;
+                            string[] test = _recentProjects.Where(s => s.Trim() != string.Empty).ToArray();
+                            File.WriteAllLines(General_Form.Main.recent_project, test);
+
+                            if (File.Exists(_temp[2]))
+                                File.Delete(_temp[2]);
+                        }
                     }
-
-                    catch (Exception e) { }
+                    catch { };
                 }
             }
         }

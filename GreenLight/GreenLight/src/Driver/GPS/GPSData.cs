@@ -4,9 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace GreenLight.src.Driver.GPS
 {
+    //this is the general controller class for the GPS, this is were all the paths nodes and links are calculated.
+    //the sequence it operates in:
+    //1) Find all the knots, a knot it the place where 2 roads meet, or incase of an endroad, only one road begins/ends, to note here is that the beginning/end of a road is ambiqious and unimportant here
+    //2) Create all the possible links inbetween the knots, it uses the drivinglanes for this
+    //3) It then creates the nodes which is a knot with a paths it can travel
+    //4) Set which nodes are start/ end nodes
+    //5) remove all the startnodes that have 0 paths
+
      public class GPSData
     {
         List<Node> nodes;
@@ -17,6 +26,7 @@ namespace GreenLight.src.Driver.GPS
 
         public List<NodePath> nodePaths = new List<NodePath>();
 
+        //The constructor method only takes all _roads. It then creates an empty list of nodes, and calls FindAllKnots() to set the _allknots list.
         public GPSData(List<AbstractRoad> _roads)
         {
             nodes = new List<Node>();
@@ -24,7 +34,14 @@ namespace GreenLight.src.Driver.GPS
 
             FindAllKnots();
             CreateConnections();
+
+            Log.Write("Calculated GPSdata");
         }
+
+        //This method loops through all roads and determines for all of them two knots, one of which has this road and the one it's begin is connected to, and one which has this road and the one it's end is connected to
+        //if the road isn't a crossroad and if both the beginconnected road and the endconnected road of the road are null, the knot is added to the allknots list.
+        //if the beginconnected road or the endconnected road isn't null the TestDuplicateKnot method is called, and if it returns false (there is no duplicate in the allknots list), the knot is added to the allknotslist.
+        //If the road is a crossroad, the mainroad and a point on a side are given to the FindAddRoad method, for each side.
 
         private void FindAllKnots()
         {
@@ -35,7 +52,7 @@ namespace GreenLight.src.Driver.GPS
                 if (!(_road.roadtype == "Cross"))
                 {
                     Knot _TempKnot = new Knot(_road, _road.endConnectedTo, _road.point2);
-                    Console.WriteLine("Has the first duplicates? " + TestDuplicateKnot(_TempKnot));
+
                     if (_road.endConnectedTo == null && _road.beginConnectedTo == null)
                     {
                         _allKnots.Add(_TempKnot);
@@ -46,7 +63,7 @@ namespace GreenLight.src.Driver.GPS
                     }
                     
                     _TempKnot = new Knot(_road.beginConnectedTo, _road, _road.point1);
-                    Console.WriteLine("Has the first duplicates? " + TestDuplicateKnot(_TempKnot));
+
                     if (_road.beginConnectedTo == null && _road.beginConnectedTo == null)
                     {
                         _allKnots.Add(_TempKnot);
@@ -54,8 +71,7 @@ namespace GreenLight.src.Driver.GPS
                     else if (!TestDuplicateKnot(_TempKnot))
                     {
                         _allKnots.Add(_TempKnot);
-                    }
-                   
+                    }                   
                 }
                 else
                 {
@@ -67,18 +83,15 @@ namespace GreenLight.src.Driver.GPS
                     Point _top = new Point(_crossRoad.point1.X, _crossRoad.point1.Y - _width);
                     Point _bottom = new Point(_crossRoad.point1.X, _crossRoad.point1.Y + _width);
 
-                    //Console.WriteLine("LEFT VALUE: " + _left);
-
                     FindAddRoad(_left, _crossRoad);
                     FindAddRoad(_right, _crossRoad);
                     FindAddRoad(_top, _crossRoad);
                     FindAddRoad(_bottom, _crossRoad);
                 }
             }
-
-            Console.WriteLine("Knot count: " + _allKnots.Count());
         }
 
+        //This method finds the road that has the given point _p in it's hitbox, and isn't a crossroad, and adds a knot with the given mainroad and this found road to the allKnots list.
         private void FindAddRoad(Point _p, AbstractRoad _mainroad)
         {
             AbstractRoad _road = this.roads.Find(x => x.hitbox.Contains(_p) && x.roadtype != "Cross");
@@ -89,6 +102,7 @@ namespace GreenLight.src.Driver.GPS
             _allKnots.Add(new Knot(_mainroad, _road, _p));
         }
 
+        //This method uses the Equals method of a knot, to test if a knot is already in Allknots
         private bool TestDuplicateKnot(Knot _knot)
         {
             foreach (Knot _testKnot in _allKnots)
@@ -101,6 +115,12 @@ namespace GreenLight.src.Driver.GPS
             return false;
         }
 
+        //This method is used to find all nodes and add them too the nodes list
+        //It's then used to set their backlinked bool, and to determine the list of nodes they are connected with, which are then given too the node by calling the node's GiveConnectioned() method.
+        //It then calls the spawnmethod for each node, and uses the canSpawn bool of each node to make a list of Spawnnodes.
+        //It then uses these spawnodes to fill the Nodepaths list with constructed Nodepaths using OwnDijkstra.
+        //All the Nodepaths that have an empty linkpath are then removed again from that list
+
         private void CreateConnections()
         {
             List<Link> _allLinks = new List<Link>();
@@ -110,21 +130,14 @@ namespace GreenLight.src.Driver.GPS
                 _allLinks.AddRange(CreateConnectionPerRoad(_road));
             }
 
-            foreach (Link _link in _allLinks)
-            {
-                _link.ConsolePrint();
-            }
-            Console.WriteLine("There are {0} knots", _allKnots.Count);
             foreach (Knot _knot in _allKnots)
-            {
-                
+            {                
                 List<Link> _knotlinks = _allLinks.FindAll(x => x.begin == _knot);
                 nodes.Add(new Node(_knot, _knotlinks));
             }
-            Console.WriteLine("HOW MANY NODES DO I HAVE? " + nodes.Count);
+
             foreach (Node _node in nodes)
             {
-                Console.WriteLine("This NODE HAD {0} LINKS", _node.links.Count);
                 List<Node> _endKnots = new List<Node>();
 
                 foreach (Link _link in _node.links)
@@ -155,15 +168,13 @@ namespace GreenLight.src.Driver.GPS
                         {
                             this.nodePaths.Add(new NodePath(_node, _endNode, OwnDijkstra.GetShortestPath(_node, _endNode)));
                         }
-
                     }
                 }
             }
-
             this.nodePaths.RemoveAll(x => x.linkPath.Count == 0);
-            Console.WriteLine("AMOUNT OF SPAWN POINTS: {0}", this.nodePaths.Count());
-
         }
+
+        //This method makes a list of links for the road it has been given, taking crossroads into account.
 
         private List<Link> CreateConnectionPerRoad(AbstractRoad _road)
         {
@@ -175,15 +186,10 @@ namespace GreenLight.src.Driver.GPS
                 Knot _firstKnot = _knots.Find(x => RoadMath.Distance(x.Cord, _road.point1) < 20);
                 Knot _secondKnot = _knots.Find(x => RoadMath.Distance(x.Cord, _road.point2) < 20);
 
-                //Console.WriteLine("DISTANCE: " + RoadMath.Distance(_knots[0].Cord, _road.point1));
-                //Console.WriteLine("DISTANCE: " + RoadMath.Distance(_knots[1].Cord, _road.point2));
-
-                //Console.WriteLine("Knot Point: {0}, Road Point {1}", _knots[0].Cord, _road.point1);
-                //Console.WriteLine("Knot Point: {0}, Road Point {1}", _knots[1].Cord, _road.point2);
-
-                if (_firstKnot == null || _secondKnot == null)
+                if (_firstKnot == null || _secondKnot == null)                
                 {
-                    Console.WriteLine("You should never come here, if this happens Please chekc out GPSDATA CreateCOnnection");
+                    MessageBox.Show("There is a problem, simulation may nog be accurate!");
+                    Log.Write("GPSData error ID2 : Linking problem, no knot cord was close enough to end or beginning of the road");
                     _firstKnot = _knots.First();
                     _secondKnot = _knots[1];
                 }
@@ -228,8 +234,6 @@ namespace GreenLight.src.Driver.GPS
                     int _stringIndex2 = _stringsides.IndexOf(_connectionLink.end.Side);
                     if (_stringIndex != -1 && _stringIndex2 != -1)
                     {
-                        //Console.WriteLine("Index Values: {0} , {1}", _stringIndex, _stringIndex2);
-
                         Knot _knot1 = _knots[_stringIndex];
                         Knot _knot2 = _knots[_stringIndex2];
                         int _index = _crossRoad.Drivinglanes.Find(x => x.link.begin == _connectionLink.begin && x.link.end == _connectionLink.end).thisLane;
@@ -240,59 +244,26 @@ namespace GreenLight.src.Driver.GPS
             }
 
             return _links;
-        }
+        }        
 
-        public List<Node> getNodes()
-        {
-            return this.nodes;
-        }
-
-        public void Draw(Graphics g, NodePath _path)
-        {
-            //Console.WriteLine("pathlink count: " + _path.linkPath.Count);
-            foreach (Path _linkPath in _path.linkPath)
-            {
-
-                //Console.WriteLine("current index: " + _path.linkPath.IndexOf(_linkPath));
-                _linkPath.laneIndex.ForEach(x => Console.WriteLine(x));
-
-                if (_linkPath.NextLaneIndex == null || !_linkPath.NextLaneIndex.Any())
-                {
-                    foreach (int x in _linkPath.laneIndex)
-                    {
-                        _linkPath.road.Drivinglanes[x - 1].DrawLine(g, Pens.Blue);
-                    }
-
-                }
-                else
-                {
-                    foreach (int _possiblelane in _linkPath.NextLaneIndex)
-                    {
-                        _linkPath.road.Drivinglanes[_possiblelane].DrawLine(g, Pens.Green);
-                    }
-                    //_linkPath.road.Drivinglanes[_linkPath.NextLaneIndex.First()].DrawLine(g, Pens.Green);
-                }
-                //Console.WriteLine(_linkPath.road.point1);
-
-            }
-        }
-
-        public List<Path> getPathListFromNode(Node _begin, Node _end)
+        //This method is uses by the betterGPS to look through the nodePaths and return the list of path's which endnode and beginnode match.
+        public List<Path> GetPathListFromNode(Node _begin, Node _end)
         {
             if (!(_begin.canSpawn || _end.canSpawn))
             {
                 return null;
-            }
-            
+            }            
             return this.nodePaths.Find(x => x.CheckMatch(_begin, _end)).linkPath;
         }
-
-        public static GPSData getGPSData()
+        
+        //This method is used by the betterGPS to get the data
+        public static GPSData GetGPSData()
         {
             return General_Form.Main.SimulationScreen.gpsData;
         }
 
-        public List<Path> getPathListFromBeginnin(Node _begin)
+        //This method is used by the betterGPS to look through the nodePaths and select and return a random list of Path's from the list of nodePaths.
+        public List<Path> GetPathListFromBeginnin(Node _begin)
         {
             List<NodePath> _AllPossiblePaths = this.nodePaths.FindAll(x => x.begin == _begin);
 
@@ -306,18 +277,22 @@ namespace GreenLight.src.Driver.GPS
             return _AllPossiblePaths[ran.Next(0, _AllPossiblePaths.Count())].linkPath;
         }
 
-        public Node getRandomStartNode()
+        //This method is used by the betterGPS to get a random node that can spawn as a startnode for the NodePath it will take.
+        public Node GetRandomStartNode()
         {
             Console.WriteLine(this.spawnNodes.Count());
 
             if (this.nodePaths.Any())
             {
                 Random ran = new Random();
-                Console.WriteLine("There are {0} NODEPATHS!!", this.nodePaths.Count);
                 return this.nodePaths[ran.Next(0, this.nodePaths.Count())].begin;
             }
 
-            Console.WriteLine("NODE PATHS ARE EMPTY??? THIS SHOULD NEVER HAPPEN!");
+            MessageBox.Show("Something has gone wrong, no possible paths were found, return to the builder!");
+            Log.Write("GPSData error ID1 : No paths were found");
+            General_Form.Main.SimulationScreen.Simulator.ResetSimulation();
+            General_Form.Main.SwitchControllers(General_Form.Main.BuildScreen);
+            General_Form.Main.UserInterface.SimDataM.ResetTimer();
             return null;
         }
     }

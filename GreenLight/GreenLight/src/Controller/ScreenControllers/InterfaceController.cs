@@ -35,7 +35,6 @@ namespace GreenLight
         StartSubMenu SSM;
         StartMainMenu SMM;
         public BuildSubMenu BSM;
-        BuildMainMenu BMM;
         SimulationSubMenu SimSM;
         SimulationMainMenu SimMM;
         SimulationCarSpawnRateSubMenu SimSWM;
@@ -82,7 +81,6 @@ namespace GreenLight
             SMM = new StartMainMenu(MainForm.Width - Sub_menu_width, MainForm, Dosis_font_family);
 
             BSM = new BuildSubMenu(Sub_menu_width, MainForm, Dosis_font_family);
-            BMM = new BuildMainMenu(Sub_menu_width, MainForm, Dosis_font_family);
 
             SimDataM = new SimulationDataMenu(Sub_menu_width, MainForm, 30, Dosis_font_family);
 
@@ -101,7 +99,6 @@ namespace GreenLight
             MainForm.Controls.Add(SMM);
             MainForm.Controls.Add(SSRPM);
             MainForm.Controls.Add(SSM);
-            MainForm.Controls.Add(BMM);
             MainForm.Controls.Add(BSM);
             MainForm.Controls.Add(SimDataM);
             MainForm.Controls.Add(SimMM);
@@ -127,7 +124,6 @@ namespace GreenLight
             SMM.Size_adjust(MainForm, Sub_menu_width);
             SSRPM.AdjustSize(MainForm, Sub_menu_width, Dosis_font_family);
             SSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
-            BMM.AdjustSize(MainForm, Sub_menu_width);
             BSM.AdjustSize(MainForm, Sub_menu_width, Dosis_font_family);
             SimDataM.AdjustSize(MainForm, Sub_menu_width, 30);
             SimMM.AdjustSize(MainForm, Sub_menu_width);
@@ -163,14 +159,13 @@ namespace GreenLight
         public void Menu_to_build() 
         {
             Hide_all_menus();
-            resetAllButtons(BSM.roadButton, BSM.roadButton.Image_path);
+            ResetAllButtons(BSM.roadButton, BSM.roadButton.Image_path);
             BSM.Show();
-            BMM.Show();
         }
         public void Menu_to_simulation() 
         {
             Hide_all_menus();
-            resetAllButtons(SimSM.Weather, SimSM.Weather.Image_path);
+            ResetAllButtons(SimSM.Weather, SimSM.Weather.Image_path);
             SimSM.Show();
             SimMM.Show();
             SimDataM.Show();
@@ -236,7 +231,6 @@ namespace GreenLight
             SSRPM.Hide();
             SMM.Hide();
             BSM.Hide();
-            BMM.Hide();
             SimDataM.Hide();
             SimSM.Hide();
             SimMM.Hide();
@@ -249,7 +243,7 @@ namespace GreenLight
             DataSM.Hide();
         }
 
-        public void resetAllButtons(CurvedButtons Selected, string Filepath)
+        public void ResetAllButtons(CurvedButtons Selected, string Filepath)
         {
             foreach (CurvedButtons x in BSM.bsmButtons)
             {

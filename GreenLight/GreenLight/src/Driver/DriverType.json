@@ -1,1 +1,29 @@
-[{"Name":"Normal driver 🔒","ReactionTime":0.2,"FollowInterval":2.0,"SpeedRelativeToLimit":0,"RuleBreakingChance":3.0,"Occurance":50,"Locked":true},{"Name":"Drunk driver 🔒","ReactionTime":0.8,"FollowInterval":2.0,"SpeedRelativeToLimit":0,"RuleBreakingChance":30.0,"Occurance":42,"Locked":true},{"Name":"Carefull driver 🔒","ReactionTime":0.4,"FollowInterval":4.0,"SpeedRelativeToLimit":-10,"RuleBreakingChance":3.0,"Occurance":50,"Locked":true}]
+[
+    {
+        "Name": "Normal driver 🔒",
+        "ReactionTime": 0.2,
+        "FollowInterval": 2.0,
+        "SpeedRelativeToLimit": 0,
+        "RuleBreakingChance": 3.0,
+        "Occurance": 50,
+        "Locked": true
+    },
+    {
+        "Name": "Drunk driver 🔒",
+        "ReactionTime": 0.8,
+        "FollowInterval": 2.0,
+        "SpeedRelativeToLimit": 0,
+        "RuleBreakingChance": 30.0,
+        "Occurance": 42,
+        "Locked": true
+    },
+    {
+        "Name": "Carefull driver 🔒",
+        "ReactionTime": 0.4,
+        "FollowInterval": 4.0,
+        "SpeedRelativeToLimit": -10,
+        "RuleBreakingChance": 3.0,
+        "Occurance": 50,
+        "Locked": true
+    }
+]

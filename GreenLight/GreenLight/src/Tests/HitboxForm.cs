@@ -12,6 +12,8 @@ namespace GreenLight
 {
     public partial class HitboxForm : Form
     {
+        //This class is used for testing the hitboxes of different types of retangles, usually coming from the grid
+
 
         Hitbox test1, test2, test3, test4, test5, test6,test7,test8,test9,test10, test11, test12, test13, test14;
         Hitbox curftest1, curftest2, curftest3, curftest4, curftest5;
@@ -57,6 +59,8 @@ namespace GreenLight
             Color.PapayaWhip
         };
 
+
+        //Used to create multiple objects of a coordinate for testing
         public class testcord
         {
 
@@ -71,6 +75,11 @@ namespace GreenLight
             public int x;
             public int y;
         }
+
+
+        /// <summary>
+        ///Initializes lots of points and hitboxes
+        /// </summary>
         public HitboxForm()
         {
             this.Size = new Size(1000, 1000);
@@ -183,8 +192,8 @@ namespace GreenLight
             //curftest5 = new CurvedHitbox(new Point (100, 600), new Point(150, 600), new Point(800, 400), new Point(800, 450), "SE");
             //hitboxes.Add(curftest5);
 
-            this.Paint += teken;
-            this.MouseClick += klik;
+            this.Paint += draw;
+            this.MouseClick += click;
 
 
             DoTest(ref Points1);
@@ -192,7 +201,9 @@ namespace GreenLight
             this.Invalidate();
         }
 
-        public void teken(object o, PaintEventArgs pea)
+        
+        //Draws the gridpoints and hitboxes
+        public void draw(object o, PaintEventArgs pea)
         {
             Graphics g = pea.Graphics;
 
@@ -219,12 +230,11 @@ namespace GreenLight
             {
                 _brush = new SolidBrush(test.color);
                 g.FillRectangle(_brush, new Rectangle(new Point(test.x, test.y), new Size(4, 4)));
-            }
-
-            
+            }            
         }
 
-        public void klik(object o, MouseEventArgs mea)
+        //Does nothing anymore...
+        public void click(object o, MouseEventArgs mea)
         {
             //RectHitbox _temp = test4;
 
@@ -238,6 +248,7 @@ namespace GreenLight
             Console.WriteLine();
         }
 
+        //Tests the hitboxes of randomly created points
         public void DoTest(ref List<testcord> Points)
         {
             Points = new List<testcord>();
@@ -271,7 +282,6 @@ namespace GreenLight
                     }
                     Points.Add(new testcord(x, y, _color));
                 }
-
             }
         }
     }

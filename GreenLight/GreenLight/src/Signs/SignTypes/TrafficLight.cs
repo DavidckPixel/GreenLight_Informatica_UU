@@ -7,8 +7,8 @@ namespace GreenLight
     public class TrafficLight : AbstractSign
     {
         public string color = "Red";
-        Stopwatch lightTimer;
-
+        public int crossRoadnr; //number from 1 to 4 depending on the connected crossroadside
+        public int trafficLightnr;
 
         public TrafficLight(AbstractSignController _controller) : base()
         {
@@ -19,26 +19,26 @@ namespace GreenLight
 
         public void SwitchLights()
         {
+            Console.WriteLine("SignCount in TL:" + trafficLightnr);
             if (color == "Red")
             {
                 color = "Green";
-                controller.changeColor(color);
+                controller.signController.changeColor(color, trafficLightnr);
             }
             else if (color == "Orange")
             {
                 color = "Red";
-                controller.changeColor(color);
+                controller.signController.changeColor(color, trafficLightnr);
             }
             else if (color == "Green")
             {
                 color = "Orange";
-                controller.changeColor(color);
+                controller.signController.changeColor(color, trafficLightnr);
                 Timer orangeTimer = new Timer();
-                orangeTimer.Interval = 1000;
+                orangeTimer.Interval = 2000;
                 orangeTimer.Enabled = true;
                 orangeTimer.AutoReset = false;
                 orangeTimer.Elapsed += (object source, ElapsedEventArgs e) => { SwitchLights(); };
-            
             }
         }
 
@@ -55,10 +55,5 @@ namespace GreenLight
                 _ai.lightIsRed = false;
             }
         }
-
-        /*public void color()
-        {
-            controller.changeColor("Red");
-        }*/
     }
 }

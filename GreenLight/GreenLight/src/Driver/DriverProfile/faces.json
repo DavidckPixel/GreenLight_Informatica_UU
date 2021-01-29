@@ -67,7 +67,7 @@
         "ZzzZzZzzZzz..."
       ]
     ],
-    "backImg": "../../src/Driver/DriverProfile/Images/BackImgOne.jpg"
+    "backImg": "../../src/Driver/DriverProfile/Images/BackImgThree.jpg"
   },
   {
     "name": "Robot",
@@ -90,7 +90,7 @@
         "Such a nice day for a relaxing cardrive"
       ]
     ],
-    "backImg": "../../src/Driver/DriverProfile/Images/BackImgOne.jpg"
+    "backImg": "../../src/Driver/DriverProfile/Images/BackImgFour.jpg"
   }
 ]
 

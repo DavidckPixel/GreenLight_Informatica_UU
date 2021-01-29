@@ -26,7 +26,7 @@ namespace GreenLight
 
         public override void initSettingScreen()
         {
-            this.settingScreen = new PopUpForm(new Size(300,300));
+            this.settingScreen = new PopUpForm(new Size(300, 300));
             this.settingScreen.BackColor = Color.FromArgb(255, 255, 255);
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
@@ -134,12 +134,15 @@ namespace GreenLight
 
         public override void deleteSign()
         {
-            this.signController.deleteSign(selected);
+            if (selected != null)
+            {
+                this.signController.deleteSign(selected);
+            }
+            else
+            {
+
+            }
             this.settingScreen.Hide();
-        }
-        public override void changeColor(string color)
-        {
-            throw new NotImplementedException();
         }
     }
 }

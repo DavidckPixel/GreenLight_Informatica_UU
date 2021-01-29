@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace GreenLight.src.Driver.GPS
 {
+    //A NodePath has two nodes, and two list of paths. It's contruction takes a beginNode and an Endnode and a list of Path's.
+    //When constructed, it calls it's own method, CreateLinkPath().
     public class NodePath
     {
         public Node begin;
@@ -29,10 +31,14 @@ namespace GreenLight.src.Driver.GPS
             CreateLinkPath();
         }
 
+        //foreach node in this.path, there will be determined if there is a next node in the list, if not, it will be null
+        //If there is a previousnode for the node, a new path will be constructed with the previousnode, the node and the next node (which can be null).
+        //This path would be added to the Linkpath list of Paths.
+
         private void CreateLinkPath()
         {
             Node _prevNode = null;
-            Node _next = null;
+            Node _next;
 
             int x = 1;
 
@@ -58,6 +64,7 @@ namespace GreenLight.src.Driver.GPS
             }
         }
 
+        //This method is used to check if a NodePath is a match for this NodePath.
         public bool CheckMatch(Node _begin, Node _end)
         {
             if(_begin == this.begin && _end == this.end)

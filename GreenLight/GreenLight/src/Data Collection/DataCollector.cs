@@ -8,6 +8,10 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace GreenLight.src.Data_Collection
 {
+    //The DataCollector is the object that knows what data to collect, and from which objects to collect it
+    //It holds a list of AI & Vehicles (something that can be expended on incase more data needs to be collected)
+    //Every Update cycle it then collects all the data from those instances in the list
+
     public class DataCollector
     {
         public Data data;
@@ -34,6 +38,9 @@ namespace GreenLight.src.Data_Collection
             _data.ForEach(x => data.AddBrakeTick(x));
         }
 
+        //This function is called every Update Cycle and works the same as the CollectAIStats(), it increments through the list
+        //Looking at every instance in there and looks/ collects its values
+        //In this case for the vehicle it only looks at the speed, which it then averages among all cars
 
         public void CollectVehicleStats()
         {
@@ -79,6 +86,7 @@ namespace GreenLight.src.Data_Collection
             data.AddPercentageOnBraking(_amoutBraking / aiCollection.Count() * 100);
         }
 
+        //This is an easier access method to update both the AIdata and the VehicleData
 
         public void CollectAllData()
         {
@@ -86,7 +94,8 @@ namespace GreenLight.src.Data_Collection
             CollectAIStats();
         }
 
-        //------Add Vehicle
+        //In the simulation, when a vehicle is created, it also needs to be added to the data collector (atleast, incase the data from that vehicle is important). 
+        //so this method can be called to add it, the AddVehicleCollection method works exactly the same, only then takes a list instead of an instance
 
         public void addVehicleToCollect(BetterVehicle _vehicle)
         {
@@ -114,11 +123,14 @@ namespace GreenLight.src.Data_Collection
             _ai.ForEach(x => aiCollection.Add(x));
         }
 
-        //------Remove Things
+        //When a vehicle has completed its journey and it removed, its also important that the data stops being collected, so when a vehicle is done the
+        //RemoveVehicle method is called, There is certain data that cna only be collected after the vehicle/ AI is done, for this the _dump parameter is important
+        //if this parameter is true (which is its standard value) it will dump its important valuables to the Data instance
 
         public void RemoveVehicle(BetterVehicle _vehicle, bool _dump = true)
         {
             vehicleCollection.Remove(_vehicle);
+            RemoveAI(_vehicle.vehicleAI, _dump);
 
             if (_dump)
             {

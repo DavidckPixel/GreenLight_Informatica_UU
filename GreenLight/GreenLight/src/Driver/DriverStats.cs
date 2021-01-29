@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
+    //Data class for DriverStats, the instances of this are saved in the DriverType.json
+
     public class DriverStats
     {
         public string Name;

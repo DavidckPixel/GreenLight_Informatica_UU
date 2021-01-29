@@ -9,6 +9,9 @@ using System.IO;
 
 namespace GreenLight
 {
+    //Static class that roads the DriverType json when required, it also stores all the aiTypes in a static list
+    //This is also the class that will save the JSON when asked for by the controllers
+
     public static class AITypeConfig
     {
         public static List<DriverStats> aiTypes = new List<DriverStats>();

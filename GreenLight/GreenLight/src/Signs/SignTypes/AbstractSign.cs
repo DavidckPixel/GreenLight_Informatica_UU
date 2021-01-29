@@ -19,7 +19,6 @@ namespace GreenLight
             ID = General_Form.Main.BuildScreen.builder.signController.SignCount;
             thisSign = this;
         }
-
         public abstract void Read(BetterAI _ai);
         private int ID { get; }
         public AbstractSignController controller;
