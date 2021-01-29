@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Threading;
-using GreenLight.src.Data_Collection;
-using GreenLight.src.Driver.GPS;
 
 
 namespace GreenLight
@@ -64,6 +56,7 @@ namespace GreenLight
 
                 SimulationRunning = true;
                 Simulation.Start();
+                //General_Form.Main.BuildScreen.builder.signController.StartTimer();
             }
             else
             {
@@ -76,12 +69,15 @@ namespace GreenLight
         {
             this.SimulationPaused = true;
             this.profileController.PauseSimulation(vehicleController.vehicleList);
+            General_Form.Main.BuildScreen.builder.signController.StopTimer();
             this.screenController.Screen.Invalidate();
         }
+
         public void StopSimulation()
         {
             this.SimulationPaused = true;
             this.ResetSimulation();
+            General_Form.Main.BuildScreen.builder.signController.StopTimer();
             this.screenController.Screen.Invalidate();
         }
 
@@ -112,7 +108,6 @@ namespace GreenLight
                     }
                 }
             }
-
             InitSimulation();
         }
 

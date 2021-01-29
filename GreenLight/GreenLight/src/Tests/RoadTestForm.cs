@@ -20,12 +20,14 @@ namespace GreenLight
 
         AbstractRoad Test; 
 
+        //Starts the draw method
         public RoadTestForm()
         {
            // Test = new DiagonalRoad(new Point(20, 20), new Point(220, 220), 2, "S"); //TEMP OM TE TESTEN
             this.Paint += Drawing;
         }
 
+        //Draws each drivinglane of the road
         public void Drawing(Object o, PaintEventArgs pea)
         {
             Graphics g = pea.Graphics;

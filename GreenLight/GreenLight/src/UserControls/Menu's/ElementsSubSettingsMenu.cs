@@ -51,7 +51,6 @@ namespace GreenLight
             Controls.Add(showLanePointsLabel);
 
             CheckBox showLanePoints = new CheckBox();
-            Console.WriteLine("BXbase  " + _ButtonXbase);
             showLanePoints.Location = new Point(160, _ButtonYbase);
             showLanePoints.Checked = true;
             showLanePoints.Size = new Size(20, 20);

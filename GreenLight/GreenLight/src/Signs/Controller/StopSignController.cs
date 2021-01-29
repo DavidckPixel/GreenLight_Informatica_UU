@@ -145,9 +145,5 @@ namespace GreenLight
             this.signController.deleteSign(selected);
             this.settingScreen.Hide();
         }
-        public override void changeColor(string color)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -23,6 +23,13 @@ namespace GreenLight.src.Driver.GPS
             Cord = _cord;
         }
 
+        public void Draw(Graphics g)
+        {
+            //Console.WriteLine("Drawing a knot!");
+            g.FillEllipse(Brushes.Blue, new Rectangle(this.Cord, new Size(5, 5)));
+        }
+
+
         public override bool Equals(object obj)
         {
             try
