@@ -101,17 +101,17 @@ namespace GreenLight
             this.Controls.Add(saveButton);
 
             roadButton = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(_submenuwidth / 2 - menu["buttonRoad"], menu["buttonS"]), 25, "../../src/User Interface Recources/Road_Button.png", this.BackColor);
-            roadButton.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.resetAllButtons(roadButton, roadButton.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Roads"); };
+            roadButton.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.ResetAllButtons(roadButton, roadButton.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Roads"); };
             this.Controls.Add(roadButton);
             bsmButtons.Add(roadButton);
 
             signButton = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(_submenuwidth / 2 - menu["buttonSign"], menu["buttonS"]), 25, "../../src/User Interface Recources/Speed_Sign_Button.png", this.BackColor);
-            signButton.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.resetAllButtons(signButton, signButton.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Signs"); };
+            signButton.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.ResetAllButtons(signButton, signButton.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Signs"); };
             this.Controls.Add(signButton);
             bsmButtons.Add(signButton);
 
             settingsButton = new CurvedButtons(new Size(menu["buttonSizeS"], menu["buttonSizeS"]), new Point(_submenuwidth / 2 + menu["buttonBuilding"], menu["buttonS"]), 25, "../../src/User Interface Recources/Setting_Button.png", this.BackColor);
-            settingsButton.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.resetAllButtons(settingsButton, settingsButton.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Buildings"); };
+            settingsButton.Click += (object o, EventArgs EA) => { General_Form.Main.UserInterface.ResetAllButtons(settingsButton, settingsButton.Image_path); General_Form.Main.BuildScreen.SwitchSubMenus("Buildings"); };
             this.Controls.Add(settingsButton);
             bsmButtons.Add(settingsButton);
 

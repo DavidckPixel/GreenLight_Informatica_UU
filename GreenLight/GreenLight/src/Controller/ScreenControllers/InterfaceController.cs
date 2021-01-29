@@ -163,14 +163,14 @@ namespace GreenLight
         public void Menu_to_build() 
         {
             Hide_all_menus();
-            resetAllButtons(BSM.roadButton, BSM.roadButton.Image_path);
+            ResetAllButtons(BSM.roadButton, BSM.roadButton.Image_path);
             BSM.Show();
             BMM.Show();
         }
         public void Menu_to_simulation() 
         {
             Hide_all_menus();
-            resetAllButtons(SimSM.Weather, SimSM.Weather.Image_path);
+            ResetAllButtons(SimSM.Weather, SimSM.Weather.Image_path);
             SimSM.Show();
             SimMM.Show();
             SimDataM.Show();
@@ -249,7 +249,7 @@ namespace GreenLight
             DataSM.Hide();
         }
 
-        public void resetAllButtons(CurvedButtons Selected, string Filepath)
+        public void ResetAllButtons(CurvedButtons Selected, string Filepath)
         {
             foreach (CurvedButtons x in BSM.bsmButtons)
             {
