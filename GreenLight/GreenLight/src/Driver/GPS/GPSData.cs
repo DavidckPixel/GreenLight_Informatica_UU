@@ -110,10 +110,6 @@ namespace GreenLight.src.Driver.GPS
                 _allLinks.AddRange(CreateConnectionPerRoad(_road));
             }
 
-            foreach (Link _link in _allLinks)
-            {
-                _link.ConsolePrint();
-            }
             Console.WriteLine("There are {0} knots", _allKnots.Count);
             foreach (Knot _knot in _allKnots)
             {

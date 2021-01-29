@@ -680,7 +680,7 @@ namespace GreenLight
             }
 
 
-            if (this.navigator.nextRoad.roadtype == "Cross" && this.crossRoadOccupied)
+            if (this.navigator.nextRoad != null && this.navigator.nextRoad.roadtype == "Cross" && this.crossRoadOccupied)
             {
                 this.vehicle.speed = 0;
                 this.ForceCarLocation(this.goal.cord);
