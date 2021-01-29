@@ -183,8 +183,13 @@ namespace GreenLight
             if (_point2.X - _point1.X == 0)
             {
                 _slp = 0;
+<<<<<<< Updated upstream
                 int _vertical = _point1.Y > _point2.Y ? -1 : 1;
                 divByZero = true;
+=======
+                int _vertical = _point1.Y > _point2.Y ? -1 : 1; //ADDED THIS INSTEAD OF IF-STATEMENT
+                //divByZero = true;
+>>>>>>> Stashed changes
 
                 for (int y = 0; y <= Math.Abs(_point1.Y - _point2.Y); y++)
                 {
@@ -195,15 +200,39 @@ namespace GreenLight
                 }
             }
 
+<<<<<<< Updated upstream
             int _dir = _point2.X >= _point1.X ? 1 : -1;
-
-            for (int x = 0; x <= Math.Abs(_point1.X - _point2.X) && !divByZero; x++)
+=======
+            else if (_slp <= -1 || _slp >= 1)
             {
-                _normpoint1 = new Point(_point1.X + x * _dir, (int)(_point1.Y + x * _slp * _dir));
-                _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle(_point1, _point2)));
+                int _dir = _point2.Y >= _point1.Y ? 1 : -1;
 
-                _prev = _normpoint1;
+                for (int y = 0; y <= Math.Abs(_point1.Y - _point2.Y) && !divByZero; y++)
+                {
+                    _normpoint1 = new Point((int)(_point1.X + y * _dir / _slp), (int)(_point1.Y + y * _dir));
+                    _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle(_point1, _point2)));
+
+                    _prev = _normpoint1;
+                }
             }
+>>>>>>> Stashed changes
+
+            else 
+            {
+                int _dir = _point2.X >= _point1.X ? 1 : -1; //Removed GetDiagonalDirection here
+
+                for (int x = 0; x <= Math.Abs(_point1.X - _point2.X) /*&& !divByZero*/; x++)
+                {
+                    _normpoint1 = new Point(_point1.X + x * _dir, (int)(_point1.Y + x * _slp * _dir));
+                    _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle(_point1, _point2)));
+
+                    _prev = _normpoint1;
+                }
+            }
+            
+            //_road.slp = _slp; Moved this to be done in Class with same code, just different place
+
+            
             RoadMath.CalculateDistanceLanePoints(ref _lanePoints);
             return _lanePoints;
         }

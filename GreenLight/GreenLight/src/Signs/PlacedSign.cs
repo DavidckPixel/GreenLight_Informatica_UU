@@ -51,6 +51,11 @@ namespace GreenLight
         }
         public void draw(Graphics g)
         {
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
             if (_points != null)
                 this.Hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Red);
 
@@ -69,7 +74,7 @@ namespace GreenLight
                 }
                 g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
             }
-            
+
             this.Hitbox.Draw(g);
             //g.FillRectangle(Notsolid, this.Hitbox);
         }
@@ -105,162 +110,241 @@ namespace GreenLight
             if (_lanes == 1)
                 _outerLane = 0;
 
-            int Xsign;
-            int Ysign;
-            int _lane;
+            int Xsign = Mea.X -10;
+            int Ysign = Mea.Y -10;
 
-            for (int t = 0; t < 2; t++)
+            List<LanePoints> _lanepoints = this.Road.Drivinglanes[_outerLane].points;
+            float _shortDistance = 2000;
+
+            Point l = new Point(-100, -100), _l = new Point(-100, -100), _h = new Point(-100, -100);
+            LanePoints h = _lanepoints.First();
+
+            for (int i = 0; i < _lanepoints.Count; i++)
             {
-                Console.WriteLine(t);
+                float _distance = (float)Math.Sqrt((Xsign - _lanepoints[i].cord.X) * (Xsign - _lanepoints[i].cord.X) + (Ysign - _lanepoints[i].cord.Y) * (Ysign - _lanepoints[i].cord.Y));
 
-                if (t == 0)
+                if (_shortDistance > _distance)
                 {
-                    _lane = _outerLane;
+                    _shortDistance = _distance;
 
-                    Xsign = Mea.X - 10;
-                    Ysign = Mea.Y - 10;
+                    l = _lanepoints[i].cord;
+                    h = _lanepoints[i];
+                }
+            }
+
+            this.Location = l;
+            this.Hitboxoffset = l;
+
+            int _dir = dir;
+
+            int offset = Math.Abs((_dir - 180) - 45) / 45 * 2;
+            int X1 = Location.X - ((_dir - 90) / 9) * 2;
+            int X2 = Location.X - (20 - (_dir - 180) / 9 * 2 * Math.Abs((_dir - 225) / 45 * 2));
+            int Y1 = Location.Y - 3;
+            int Y2 = Location.Y - (_dir - 180) / 9 * 2;
+            int Y3 = Location.Y - (20 - (_dir - 270) / 9 * 2);
+
+            if (Road.Type == "Diagonal")
+            {
+
+                if (_dir >= 0 && _dir <= 90)
+                {
+                    this.Location = l;
+                }
+                else if (_dir > 90 && _dir < 180)
+                {
+                    this.Location = new Point(X1, Y1);
+                }
+                else if (_dir >= 180 && _dir < 270)
+                {
+                    this.Location = new Point(X2, Y2);
                 }
                 else
                 {
-                    _lane = this.Road.lanes / 2;
+                    this.Location = new Point(Location.X, Y3);
+                }
+            }
+            if (Road.Type == "Curved")
+            {
+                if (!flipped)
+                {
+                    if (Road.Dir == "SW")
+                        this.Location = new Point(Location.X - 20, Location.Y - 20);
+                    else
+                        this.Location = new Point(Location.X, Location.Y);
 
-                    if (Road.Type == "Diagonal")
+                }
+                else
+                {
+                    if (Road.Dir == "SW")
+                        this.Location = new Point(Location.X, Location.Y);
+                    else
+                        this.Location = new Point(Location.X - 20, Location.Y - 20);
+                }
+            }
+            else
+            {
+                if (flipped)
+                {
+                    if (Road.Dir == "NE")
+                        this.Location = new Point(Location.X - 5, Location.Y + 5);
+                    else
+                        this.Location = new Point(Location.X - 20, Location.Y - 20);
+                }
+                else
+                {
+                    if (Road.Dir == "NE")
+                        this.Location = new Point(Location.X - 10, Location.Y - 15);
+                    else
+                        this.Location = new Point(Location.X - 5, Location.Y + 5);
+                }
+            }
+
+            List<LanePoints> _hitboxLanepoints = this.Road.Drivinglanes[Road.lanes / 2].points;
+            bool _stop = true;
+            int I = 0;
+
+            if (Road.Type == "Diagonal")
+            {
+
+                Console.WriteLine("Hitbox slp: " + Road.slp);
+                if (Road.slp == 0)
+                {
+                    if (Road.getPoint1().X == Road.getPoint2().X)
                     {
-                        if (Road.slp == 0)
-                        {
-                            if (Road.getPoint1().X == Road.getPoint2().X)
-                            {
-                                Xsign = this.Location.X;
-                                Ysign = this.Location.Y + 12;
-                            }
-                            else
-                            {
-                                Xsign = this.Location.X + 12;
-                                Ysign = this.Location.Y;
-                            }
-                        }
-                        else if (Road.slp <= -1 && Road.slp >= 1)
-                        {
-                            Xsign = this.Location.X + 20 * _direction;
-                            Ysign = this.Location.Y + 12;
-                        }
-                        else
-                        {
-                            Xsign = this.Location.X + 12;
-                            Ysign = this.Location.Y + 20 * _direction;
-                        }
-
+                        int _y = this.Location.Y + 10;
+                        LanePoints _temp;
+                        _temp = _hitboxLanepoints.Aggregate((x, y) => Math.Abs(x.cord.Y - _y) < Math.Abs(y.cord.Y - _y) ? x : y);
+                        _l.X = _temp.cord.X;
+                        _l.Y = _temp.cord.Y;
+                        I = _hitboxLanepoints.FindIndex(p => p == _temp);
                     }
                     else
                     {
-                        Xsign = this.Location.X;
-                        Ysign = this.Location.Y;
+                        int _x = this.Location.X + 10; 
+                        LanePoints _temp;
+                        _temp = _hitboxLanepoints.Aggregate((x, y) => Math.Abs(x.cord.X - _x) < Math.Abs(y.cord.X - _x) ? x : y);
+                        _l.X = _temp.cord.X;
+                        _l.Y = _temp.cord.Y;
+                        I = _hitboxLanepoints.FindIndex(p => p == _temp);
                     }
                 }
-
-                Point l = new Point(-100, -100), _l = new Point(-100, -100);
-                Point h = new Point(-100, -100), _h = new Point(-100, -100);
-                int I = 0;
-
-                try
+                else if (Road.slp <= -1 || Road.slp >= 1)
                 {
-                    List<LanePoints> _lanepoints = this.Road.Drivinglanes[_lane].points;
-                    float _shortDistance = 2000;
-                    
-                    for (int i = 0; i < _lanepoints.Count; i++)
-                    {
-                        float _distance = (float)Math.Sqrt((Xsign - _lanepoints[i].cord.X) * (Xsign - _lanepoints[i].cord.X) + (Ysign - _lanepoints[i].cord.Y) * (Ysign - _lanepoints[i].cord.Y));
+                    int _y = this.Location.Y + 10;
+                    LanePoints _temp;
+                    _temp = _hitboxLanepoints.Aggregate((x, y) => Math.Abs(x.cord.Y - _y) < Math.Abs(y.cord.Y - _y) ? x : y);
+                    _l.X = _temp.cord.X;
+                    _l.Y = _temp.cord.Y;
+                    I = _hitboxLanepoints.FindIndex(p => p == _temp);
+                    Console.WriteLine("Hitbox " + _hitboxLanepoints.Count);
+                }
+                else
+                {
+                    Console.WriteLine("hitbox horizontal");
+                    int _x = this.Location.X + 10;
+                    LanePoints _temp;
+                    _temp = _hitboxLanepoints.Aggregate((x, y) => Math.Abs(x.cord.X - _x) < Math.Abs(y.cord.X - _x) ? x : y);
+                    _l.X = _temp.cord.X;
+                    _l.Y = _temp.cord.Y;
+                    I = _hitboxLanepoints.FindIndex(p => p == _temp);
+                }
 
-                        if (_shortDistance > _distance)
-                        {
-                            _shortDistance = _distance;
-                            
-                            l = _lanepoints[i].cord;
-                            h = _lanepoints[i].cord;
-                            I = i;
-                        }
+
+                _h = _l;
+            }
+            else
+            {
+                float Degree = h.degree;
+                Console.WriteLine(Degree);
+
+                int Distance = (int)(Road.lanes / 2 * Road.laneWidth);
+                int X = this.Location.X + 10, Y = this.Location.Y + 10;
+
+                Point p = new Point(-100, -100);
+
+                int _counter = 0, _count = 0;
+                float _ShortDistance = 2000;
+                for (int i = 0; i < _hitboxLanepoints.Count; i++)
+                {
+                    float _Distance = (float)Math.Sqrt((X - _hitboxLanepoints[i].cord.X) * (X - _hitboxLanepoints[i].cord.X) + (Y - _hitboxLanepoints[i].cord.Y) * (Y - _hitboxLanepoints[i].cord.Y));
+
+                    if (_ShortDistance > _Distance)
+                    {
+                        _ShortDistance = _Distance;
+
+                        p = _hitboxLanepoints[i].cord;
+                        _count = _counter;
                     }
-                    if (t == 0)
-                    {
-                        this.Location = l;
-                        this.Hitboxoffset = h;
+                    _counter++;
+                }
 
-                        int _dir = dir;
-
-                        int offset = Math.Abs((_dir - 180) - 45) / 45 * 2;
-                        int X1 = Location.X - ((_dir - 90) / 9) * 2;
-                        int X2 = Location.X - (20 - (_dir - 180) / 9 * 2 * Math.Abs((_dir - 225) / 45 * 2));
-                        int Y1 = Location.Y - 3;
-                        int Y2 = Location.Y - (_dir - 180) / 9 * 2;
-                        int Y3 = Location.Y - (20 - (_dir - 270) / 9 * 2);
-
-                        if (Road.Type == "Diagonal")
-                        {
-
-                            if (_dir >= 0 && _dir <= 90)
-                            {
-                                this.Location = l;
-                            }
-                            else if (_dir > 90 && _dir < 180)
-                            {
-                                this.Location = new Point(X1, Y1);
-                            }
-                            else if (_dir >= 180 && _dir < 270)
-                            {
-                                this.Location = new Point(X2, Y2);
-                            }
-                            else
-                            {
-                                this.Location = new Point(Location.X, Y3);
-                            }
-                        }
-                        if (Road.Type == "Curved2")
-                        {
-                            this.Location = new Point(Location.X -20, Location.Y - 20);
-                        }
-                    }
-                    else
-                    {
-                        List<LanePoints> _hitboxLanepoints = this.Road.Drivinglanes[this.Road.lanes / 2].points;
-                        bool _stop = true;
-
-                        _l = l;
-                        _h = h;
-
-                        for (int j = 0; j < _hitboxLanepoints.Count && _stop; j++)
-                        {
-                            int _hitboxdistance = (int)Math.Sqrt(Math.Pow(_l.X - _h.X, 2) + Math.Pow(_l.Y - _h.Y, 2));
-
-                            if (_hitboxdistance >= 80)
-                            {
-                                _stop = false;
-                            }
-
-
-                            _l = _hitboxLanepoints[I + j].cord;
-                            _h = _hitboxLanepoints[I - j].cord;
-                        }
-
-                        _hitboxlocation = _l;
-                        _hitboxoffset = _h;
-
+<<<<<<< Updated upstream
                         this._points = RoadMath.hitBoxPointsDiagonal(_hitboxlocation, _hitboxoffset, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxlocation, _hitboxoffset), false);
                         //_points = RoadMath.hitBoxPointsDiagonal(_hitboxoffset, _hitboxlocation, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxoffset, _hitboxlocation));
                         this.Hitbox = new RectHitbox(this._points[1], _points[0], _points[3], _points[2], Color.Red);
                      }
-                }
-                catch (Exception e)
-                {
-                    _points = RoadMath.hitBoxPointsDiagonal(_hitboxoffset, _hitboxlocation, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxoffset, _hitboxlocation), false);
-                }
-
+=======
+                _l = p;
+                _h = _l;
+                I = _count;
             }
 
 
-           Console.WriteLine(flipped);
+            for (int j = 0; j < _hitboxLanepoints.Count && _stop; j++)
+            {
+                int _hitboxdistance = (int)Math.Sqrt(Math.Pow(_l.X - _h.X, 2) + Math.Pow(_l.Y - _h.Y, 2));
 
-            Point _temp1 = Road.getPoint1();
-            Point _temp2 = Road.getPoint2();
+                if (_hitboxdistance >= 60)
+                {
+                    _stop = false;
+>>>>>>> Stashed changes
+                }
+
+                if (_hitboxLanepoints.Count <= I + j)
+                {
+<<<<<<< Updated upstream
+                    _points = RoadMath.hitBoxPointsDiagonal(_hitboxoffset, _hitboxlocation, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxoffset, _hitboxlocation), false);
+=======
+                    _l = _hitboxLanepoints[_hitboxLanepoints.Count -1].cord;
+
+                    if (0 > I - j)
+                    {
+                        _h = _hitboxLanepoints[0].cord;
+                    }
+                    else
+                    {
+                        _h = _hitboxLanepoints[I - j].cord;
+                    }
+>>>>>>> Stashed changes
+                }
+
+                else if (0 > I - j)
+                {
+                    _l = _hitboxLanepoints[I + j].cord;
+                    _h = _hitboxLanepoints[0].cord;
+                }
+
+                else
+                {
+                    _l = _hitboxLanepoints[I + j].cord;
+                    _h = _hitboxLanepoints[I - j].cord;
+                }
+            }
+
+            _hitboxlocation = _l;
+            _hitboxoffset = _h;
+
+            if (Road.Type == "Diagonal")
+            {
+                this._points = RoadMath.hitBoxPointsDiagonal(_hitboxlocation, _hitboxoffset, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxlocation, _hitboxoffset));
+            }
+                //this._points = RoadMath.hitBoxPointsCurved(_hitboxoffset, this.Road.lanes + 2, 20, true, Road.Dir);
+            else
+            {
+                this._points = RoadMath.hitBoxPointsDiagonal(new Point(_hitboxlocation.X - 10, _hitboxlocation.Y), new Point(_hitboxoffset.X - 10, _hitboxoffset.Y), this.Road.lanes + 2, 25, true, RoadMath.calculateSlope(new Point(_hitboxlocation.X - 10, _hitboxlocation.Y), new Point(_hitboxoffset.X - 10, _hitboxoffset.Y)));
+            }
+            this.Hitbox = new RectHitbox(this._points[1], _points[0], _points[3], _points[2], Color.Red);
         }
 
         

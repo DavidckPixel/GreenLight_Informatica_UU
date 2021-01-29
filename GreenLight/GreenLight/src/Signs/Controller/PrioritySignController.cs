@@ -134,7 +134,14 @@ namespace GreenLight
 
         public override void deleteSign()
         {
-            this.signController.deleteSign(selected);
+            if (selected != null)
+            {
+                this.signController.deleteSign(selected);
+            }
+            else
+            {
+
+            }
             this.settingScreen.Hide();
         }
         public override void changeColor(string color)
