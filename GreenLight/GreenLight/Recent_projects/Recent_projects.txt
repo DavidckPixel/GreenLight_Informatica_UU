@@ -1,0 +1,6 @@
+DefaultOutputName C:\Users\niels\OneDrive\Documenten\GitHub\niuew\GreenLight_Informatica_UU\GreenLight\GreenLight\Recent_projects\Presets\Presets Files\DefaultOutputName.txt ../../Recent_projects/Images/DefaultOutputName.png
+t C:\Users\niels\OneDrive\Documenten\GitHub\niuew\GreenLight_Informatica_UU\GreenLight\GreenLight\Recent_projects\Presets\Presets Files\t.txt ../../Recent_projects/Images/t.png
+TheMatrix C:\Users\niels\OneDrive\Documenten\GitHub\niuew\GreenLight_Informatica_UU\GreenLight\GreenLight\Recent_projects\Presets\TheMatrix.txt ../../Recent_projects/Images/TheMatrix.png
+priority C:\Users\niels\Downloads\priority.txt ../../Recent_projects/Images/priority.png
+OriginPointTest C:\Users\niels\Downloads\OriginPointTest.txt ../../Recent_projects/Images/OriginPointTest.png
+NiceCrossroad C:\Users\niels\Downloads\NiceCrossroad.txt ../../Recent_projects/Images/NiceCrossroad.png
