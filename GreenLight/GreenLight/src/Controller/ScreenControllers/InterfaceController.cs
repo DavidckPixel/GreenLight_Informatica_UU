@@ -12,10 +12,11 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using System.IO;
 
-//This is the controller that handles all the interface related stuff, it holds all the classes which hold the buttons and user controls
 
 namespace GreenLight
 {
+    //This is the InterfaceController that handles everything interface related, it holds all the classes which hold the buttons and user controls.
+
     public class InterfaceController : AbstractController
     {
         public Form MainForm;
@@ -124,25 +125,25 @@ namespace GreenLight
         public void Size_adjust()
         {
             SMM.Size_adjust(MainForm, Sub_menu_width);
-            SSRPM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
+            SSRPM.AdjustSize(MainForm, Sub_menu_width, Dosis_font_family);
             SSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
-            BMM.Size_adjust(MainForm, Sub_menu_width);
-            BSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
-            SimDataM.Size_adjust(MainForm, Sub_menu_width, 30);
-            SimMM.Size_adjust(MainForm, Sub_menu_width);
+            BMM.AdjustSize(MainForm, Sub_menu_width);
+            BSM.AdjustSize(MainForm, Sub_menu_width, Dosis_font_family);
+            SimDataM.AdjustSize(MainForm, Sub_menu_width, 30);
+            SimMM.AdjustSize(MainForm, Sub_menu_width);
             SimSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
-            SimSWM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
-            SimSVM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
-            SimSDM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
-            ElemSRM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
-            ElemSBM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
-            ElemSSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
-            DataSM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
+            SimSWM.AdjustSize(MainForm, Sub_menu_width, Dosis_font_family);
+            SimSVM.AdjustSize(MainForm, Sub_menu_width, Dosis_font_family);
+            SimSDM.AdjustSize(MainForm, Sub_menu_width, Dosis_font_family);
+            ElemSRM.AdjustSize(MainForm, Sub_menu_width, Dosis_font_family);
+            ElemSBM.AdjustSize(MainForm, Sub_menu_width, Dosis_font_family);
+            ElemSSM.AdjustSize(MainForm, Sub_menu_width, Dosis_font_family);
+            DataSM.AdjustSize(MainForm, Sub_menu_width, Dosis_font_family);
         }
 
         public void Size_adjust_SSRPM()
         {
-            SSRPM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
+            SSRPM.AdjustSize(MainForm, Sub_menu_width, Dosis_font_family);
         }
 
         public void Open(string File_name)
@@ -153,7 +154,7 @@ namespace GreenLight
         public void Menu_to_start() 
         {
             Hide_all_menus();
-            SSRPM.Size_adjust(MainForm, Sub_menu_width, Dosis_font_family);
+            SSRPM.AdjustSize(MainForm, Sub_menu_width, Dosis_font_family);
             SSM.Show();
             SMM.Show();
             SSRPM.Show();
@@ -162,14 +163,14 @@ namespace GreenLight
         public void Menu_to_build() 
         {
             Hide_all_menus();
-            Reset_All_Buttons(BSM.Road_button, BSM.Road_button.Image_path);
+            resetAllButtons(BSM.roadButton, BSM.roadButton.Image_path);
             BSM.Show();
             BMM.Show();
         }
         public void Menu_to_simulation() 
         {
             Hide_all_menus();
-            Reset_All_Buttons(SimSM.Weather, SimSM.Weather.Image_path);
+            resetAllButtons(SimSM.Weather, SimSM.Weather.Image_path);
             SimSM.Show();
             SimMM.Show();
             SimDataM.Show();
@@ -248,29 +249,24 @@ namespace GreenLight
             DataSM.Hide();
         }
 
-        public void Reset_All_Buttons(CurvedButtons Selected, string Filepath)
+        public void resetAllButtons(CurvedButtons Selected, string Filepath)
         {
-            foreach (CurvedButtons x in BSM.BSM_Buttons)
+            foreach (CurvedButtons x in BSM.bsmButtons)
             {
                 x.Selected = false;
                 x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
             }
-            foreach (CurvedButtons x in ElemSSM.ESSM)
+            foreach (CurvedButtons x in ElemSSM.essmButtons)
             {
                 x.Selected = false;
                 x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
             }
-            foreach (CurvedButtons x in ElemSRM.ESRM)
+            foreach (CurvedButtons x in ElemSRM.esrmButtons)
             {
                 x.Selected = false;
                 x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
             }
-            foreach (CurvedButtons x in ElemSBM.ESBM_Buttons)
-            {
-                x.Selected = false;
-                x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");
-            }
-            foreach (CurvedButtons x in SimSM.SSM)
+            foreach (CurvedButtons x in SimSM.ssmButtons)
             {
                 x.Selected = false;
                 x.Image = Image.FromFile(x.Image_path.Remove(x.Image_path.Length - 10) + "Button.png");

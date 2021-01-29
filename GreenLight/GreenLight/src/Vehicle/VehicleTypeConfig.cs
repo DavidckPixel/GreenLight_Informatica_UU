@@ -21,7 +21,7 @@ namespace GreenLight
             ReadJson();
         }
 
-        private static void ReadJson()
+        public static void ReadJson()
         {
             try
             {
@@ -51,6 +51,5 @@ namespace GreenLight
                 sr.Write(json);
             }
         }
-
     }
 }

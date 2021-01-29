@@ -134,7 +134,7 @@ namespace GreenLight
             this.mood.Text = _profile.mood;
             this.braking.Text = _ai.isBraking.ToString();
             this.displayImage = _profile.imgFace;
-            this.wantsToSwitch.Text = _ai.wantsToSwitch.ToString();
+            this.wantsToSwitch.Text = _ai.Goal.ToString();
             this.Priority.Text = _ai.priority.ToString();
             this.TargetSpeed.Text = _ai.targetspeed.ToString();
 

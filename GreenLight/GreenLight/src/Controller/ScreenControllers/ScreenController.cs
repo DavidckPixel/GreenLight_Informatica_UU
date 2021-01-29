@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
-//This is the screen controller class, it has 2 important features that every class which inherits from this must implement:
-//The Activate() & DeActivate() function which as the name implies are called when a ScreenController switches from being used to no longer being used
-//An example of this is when the Road builder is enabled and the Menu screen is Deactivated.
+
 
 namespace GreenLight
 {
+    // This is the ScreenController class, it has two important features that every class which inherits from this must implement:
+    // The Activate() & DeActivate() function that as the name implies are called when a ScreenController switches from being used to no longer being used
+
     public abstract class ScreenController : AbstractController
     {
         public PictureBox Screen;

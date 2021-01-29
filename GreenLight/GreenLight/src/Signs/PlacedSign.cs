@@ -51,8 +51,6 @@ namespace GreenLight
         }
         public void draw(Graphics g)
         {
-            
-
             if (_points != null)
                 this.Hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Red);
 
@@ -246,16 +244,14 @@ namespace GreenLight
                         _hitboxlocation = _l;
                         _hitboxoffset = _h;
 
-                        this._points = RoadMath.hitBoxPointsDiagonal(_hitboxlocation, _hitboxoffset, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxlocation, _hitboxoffset));
+                        this._points = RoadMath.hitBoxPointsDiagonal(_hitboxlocation, _hitboxoffset, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxlocation, _hitboxoffset), false);
                         //_points = RoadMath.hitBoxPointsDiagonal(_hitboxoffset, _hitboxlocation, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxoffset, _hitboxlocation));
                         this.Hitbox = new RectHitbox(this._points[1], _points[0], _points[3], _points[2], Color.Red);
-
-
-                    }
+                     }
                 }
                 catch (Exception e)
                 {
-
+                    _points = RoadMath.hitBoxPointsDiagonal(_hitboxoffset, _hitboxlocation, this.Road.lanes + 2, 20, true, RoadMath.calculateSlope(_hitboxoffset, _hitboxlocation), false);
                 }
 
             }

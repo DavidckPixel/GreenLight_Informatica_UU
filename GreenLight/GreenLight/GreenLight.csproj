@@ -123,7 +123,7 @@
     <Compile Include="src\Driver\GPS\OwnDijkstra.cs" />
     <Compile Include="src\Driver\GPS\Path.cs" />
     <Compile Include="src\Roads\RoadMath.cs" />
-    <Compile Include="src\Vehicle\VehicleProfile.cs" />
+    <Compile Include="src\Old Code\VehicleProfile.cs" />
     <Compile Include="src\Grid\Grid.cs" />
     <Compile Include="src\Old Code\OriginPoints\OriginPointController.cs" />
     <Compile Include="src\Old Code\OriginPoints\OriginPoints.cs" />
@@ -297,6 +297,7 @@
     <EmbeddedResource Include="src\UserControls\Menu%27s\SimulationMainMenu.resx">
       <DependentUpon>SimulationMainMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Documentation\UserManual.pdf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

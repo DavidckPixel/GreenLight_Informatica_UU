@@ -10,28 +10,33 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 namespace GreenLight
 {
+    /* This is the Simulation sub driver menu class. This class has a method AdjustSize to fit the size of the users window.
+       This user control is shown when the user is in the simulation screen and has selected the driver menu.
+       The user can change variables of the driver AI.
+       Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
     public partial class SimulationSubDriverMenu : UserControl
     {
         public SelectionBox Selection_box;
-        Slider Reaction_time, Follow_interval, Speeding, Rulebreaking, Occurance;
+        public Slider reactionTime, followInterval, Speeding, Rulebreaking, Occurance;
+        public CurvedButtons editDriverHeader, saveButton;
 
-        public SimulationSubDriverMenu(int Menu_width, Form Form, FontFamily Dosis_font_family)
+        public SimulationSubDriverMenu(int _menuwidth, Form _form, FontFamily _dosisfontfamily)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
-            this.Size = new Size(Menu_width, Form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);
-            this.Location = new Point(Form.Width - Menu_width, UserControls.Config.simElementsMenu["menuY"]);
+            this.Size = new Size(_menuwidth, _form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);
+            this.Location = new Point(_form.Width - _menuwidth, UserControls.Config.simElementsMenu["menuY"]);
             this.AutoScroll = true;
-            Initialize(Form, Menu_width, Dosis_font_family);
+            Initialize(_form, _menuwidth, _dosisfontfamily);
         }
-        public void Size_adjust(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        public void AdjustSize(Form _form, int _submenuwidth, FontFamily _dosisfontfamily)
         {
-            this.Size = new Size(Sub_menu_width, Form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);
-            this.Location = new Point(Form.Width - Sub_menu_width, UserControls.Config.simElementsMenu["menuY"]);
+            this.Size = new Size(_submenuwidth, _form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);
+            this.Location = new Point(_form.Width - _submenuwidth, UserControls.Config.simElementsMenu["menuY"]);
             this.Controls.Clear();
-            Initialize(Form, Sub_menu_width, Dosis_font_family);
+            Initialize(_form, _submenuwidth, _dosisfontfamily);
         }
 
-        private void Initialize(Form Form, int Sub_menu_width, FontFamily Dosis_font_family)
+        private void Initialize(Form _form, int _submenuwidth, FontFamily _dosisfontfamily)
         {
             Dictionary<string, int> menu = UserControls.Config.simElementsMenu;
             int _sliderX = menu["sliderX"];
@@ -40,49 +45,45 @@ namespace GreenLight
             int _text = menu["textX"];
             int _textstart = menu["textStartDriver"];
 
-            
-
             List<string> _temp = AIController.getStringDriverStats();
             Dictionary<string, int> DriverMenu = UserControls.Config.simDriver;
 
-            Selection_box = new SelectionBox(Form, Dosis_font_family, _temp, new Action(this.SetValues), new Action(this.AddAI), new Action(this.DeleteAI));
-            if (Form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(UserControls.Config.standardSubMenu["selectionBoxMaxX"], UserControls.Config.standardSubMenu["selectionBoxMaxY"]);
+            Selection_box = new SelectionBox(_form, _dosisfontfamily, _temp, new Action(this.SetValues), new Action(this.AddAI), new Action(this.DeleteAI));
+            if (_form.WindowState == FormWindowState.Maximized) Selection_box.Location = new Point(UserControls.Config.standardSubMenu["selectionBoxMaxX"], UserControls.Config.standardSubMenu["selectionBoxMaxY"]);
             else Selection_box.Location = new Point(UserControls.Config.standardSubMenu["selectionBoxX"], UserControls.Config.standardSubMenu["selectionBoxY"]);
             this.Controls.Add(Selection_box);
 
-            CurvedButtons saveButton = new CurvedButtons(new Size(80, 40), new Point(_sliderX, _start + _diff * 5), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, null, this.BackColor);
-            saveButton.Click += (object o, EventArgs ea) => { AITypeConfig.SaveJson(); };
-            this.Controls.Add(saveButton);
+            /*     Sliders    */
 
-            Reaction_time = new Slider(new Point(_sliderX, _start + _diff * 4), DriverMenu["reactionTimeMin"], DriverMenu["reactionTimeMax"]);
-            this.Controls.Add(Reaction_time);
-            SliderText Reaction_time_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff * 4), "Reaction time:");
+            reactionTime = new Slider(new Point(_sliderX, _start + _diff * 4), DriverMenu["reactionTimeMin"], DriverMenu["reactionTimeMax"]);
+            this.Controls.Add(reactionTime);
+            SliderText Reaction_time_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textstart + _diff * 4), "Reaction time:");
             this.Controls.Add(Reaction_time_label);
-            SliderText Reaction_time_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart + _diff * 4), (Reaction_time.Value / 10).ToString() + " s");
+            SliderText Reaction_time_Value = new SliderText(_dosisfontfamily, new Point(_text, _textstart + _diff * 4), (reactionTime.Value / 10).ToString() + " s");
             this.Controls.Add(Reaction_time_Value);
-            Reaction_time.ValueChanged += (object o, EventArgs EA) => 
+            reactionTime.ValueChanged += (object o, EventArgs EA) => 
             {
                 General_Form.Main.SimulationScreen.Simulator.aiController.ChangeReactionTime((Slider)o);
-                Reaction_time_Value.Text = (((Reaction_time.Value)) / 10).ToString() + " s"; 
+                Reaction_time_Value.Text = (((reactionTime.Value)) / 10).ToString() + " s"; 
             };
 
-            Follow_interval = new Slider(new Point(_sliderX, _start + _diff * 3), DriverMenu["followIntervalMin"], DriverMenu["followIntervalMax"]);
-            this.Controls.Add(Follow_interval);
-            SliderText Follow_interval_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff * 3), "Follow interval:");
+            followInterval = new Slider(new Point(_sliderX, _start + _diff * 3), DriverMenu["followIntervalMin"], DriverMenu["followIntervalMax"]);
+            this.Controls.Add(followInterval);
+            SliderText Follow_interval_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textstart + _diff * 3), "Follow interval:");
             this.Controls.Add(Follow_interval_label);
-            SliderText Follow_interval_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart + _diff * 3), (Follow_interval.Value / 10).ToString() + " s");
+            SliderText Follow_interval_Value = new SliderText(_dosisfontfamily, new Point(_text, _textstart + _diff * 3), (followInterval.Value / 10).ToString() + " s");
             this.Controls.Add(Follow_interval_Value);
-            Follow_interval.ValueChanged += (object o, EventArgs EA) => 
+            followInterval.ValueChanged += (object o, EventArgs EA) => 
             {
                 General_Form.Main.SimulationScreen.Simulator.aiController.ChangeFollowInterval((Slider)o);
-                Follow_interval_Value.Text = (((double)(Follow_interval.Value)) / 10).ToString() + " s"; 
+                Follow_interval_Value.Text = (((double)(followInterval.Value)) / 10).ToString() + " s"; 
             };
 
             Speeding = new Slider(new Point(_sliderX, _start + _diff * 2), DriverMenu["speedingMin"], DriverMenu["speedingMax"]);
             this.Controls.Add(Speeding);
-            SliderText Speeding_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff * 2), "Speeding:");
+            SliderText Speeding_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textstart + _diff * 2), "Speeding:");
             this.Controls.Add(Speeding_label);
-            SliderText Speeding_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart + _diff * 2), Speeding.Value.ToString() + " km/h");
+            SliderText Speeding_Value = new SliderText(_dosisfontfamily, new Point(_text, _textstart + _diff * 2), Speeding.Value.ToString() + " km/h");
             this.Controls.Add(Speeding_Value);
             Speeding.ValueChanged += (object o, EventArgs EA) => 
             {
@@ -92,9 +93,9 @@ namespace GreenLight
 
             Rulebreaking = new Slider(new Point(_sliderX, _start + _diff), DriverMenu["ruleBreakingMin"], DriverMenu["ruleBreakingMax"]);
             this.Controls.Add(Rulebreaking);
-            SliderText Rulebreaking_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart + _diff), "Rulebreaking:");
+            SliderText Rulebreaking_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textstart + _diff), "Rulebreaking:");
             this.Controls.Add(Rulebreaking_label);
-            SliderText Rulebreaking_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart + _diff), Rulebreaking.Value.ToString() + " %");
+            SliderText Rulebreaking_Value = new SliderText(_dosisfontfamily, new Point(_text, _textstart + _diff), Rulebreaking.Value.ToString() + " %");
             this.Controls.Add(Rulebreaking_Value);
             Rulebreaking.ValueChanged += (object o, EventArgs EA) => 
             {
@@ -104,9 +105,9 @@ namespace GreenLight
 
             Occurance = new Slider(new Point(_sliderX, _start), DriverMenu["occurenceMin"], DriverMenu["occurenceMax"]);
             this.Controls.Add(Occurance);
-            SliderText Occurunce_label = new SliderText(Dosis_font_family, new Point(_sliderX, _textstart), "Occurunce:");
+            SliderText Occurunce_label = new SliderText(_dosisfontfamily, new Point(_sliderX, _textstart), "Occurunce:");
             this.Controls.Add(Occurunce_label);
-            SliderText Occurunce_Value = new SliderText(Dosis_font_family, new Point(_text, _textstart), Occurance.Value.ToString() + " %");
+            SliderText Occurunce_Value = new SliderText(_dosisfontfamily, new Point(_text, _textstart), Occurance.Value.ToString() + " %");
             this.Controls.Add(Occurunce_Value);
             Occurance.ValueChanged += (object o, EventArgs EA) => 
             {
@@ -114,11 +115,15 @@ namespace GreenLight
                 Occurunce_Value.Text = Occurance.Value.ToString() + " %"; 
             };
 
-            //----------------------------------------------
+            /*     Buttons & Dividers    */
 
-            CurvedButtons Edit_Driver_Header = new CurvedButtons(new Size(menu["headerSizeX"], menu["headerSizeY"]),
+            editDriverHeader = new CurvedButtons(new Size(menu["headerSizeX"], menu["headerSizeY"]),
                new Point(menu["headerX"], menu["headerY"]), "../../src/User Interface Recources/Edit_Driver_Header.png");
-            this.Controls.Add(Edit_Driver_Header);
+            this.Controls.Add(editDriverHeader);
+
+            saveButton = new CurvedButtons(new Size(80, 40), new Point(_sliderX, _start + _diff * 5), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, null, this.BackColor);
+            saveButton.Click += (object o, EventArgs ea) => { AITypeConfig.SaveJson(); };
+            this.Controls.Add(saveButton);
         }
 
 
@@ -136,8 +141,8 @@ namespace GreenLight
 
             Console.WriteLine("Je bent erdoor!!");
 
-            Reaction_time.Value = (int)(controller.selectedAI.ReactionTime);
-            Follow_interval.Value = (int)(controller.selectedAI.FollowInterval );
+            reactionTime.Value = (int)(controller.selectedAI.ReactionTime);
+            followInterval.Value = (int)(controller.selectedAI.FollowInterval );
             Speeding.Value = controller.selectedAI.SpeedRelativeToLimit;
             Rulebreaking.Value = (int)(controller.selectedAI.RuleBreakingChance);
             Occurance.Value = controller.selectedAI.Occurance;
@@ -145,16 +150,16 @@ namespace GreenLight
 
         private void AddAI()
         {
-            string name = Interaction.InputBox("Enter Name: ", "Driver", "no name", 100, 100);
+            string _name = Interaction.InputBox("Enter Name: ", "Driver", "no name", 100, 100);
 
-            if (name == "no name")
+            if (_name == "no name")
             {
                 return;
             }
 
-            Console.WriteLine("Vehicle Created With name : {0}", name);
+            Console.WriteLine("Vehicle Created With name : {0}", _name);
 
-            AIController.addDriverStats(name, 2, 2, 0, 0, 50, false); //NAME // Reactiontime(0,30) // followinterval (0, 100) // SpeedRelative (-50, 100) // RuleBreaking (0,100) // Occurence (0,100)
+            AIController.addDriverStats(_name, 2, 2, 0, 0, 50, false);
             SetValues();
             
         }
@@ -169,24 +174,24 @@ namespace GreenLight
                 return;
             }
 
-            if (_stats.Locked == true) //if cna edit = true it cannot be edited nor deleted, so is returned
+            if (_stats.Locked == true)
             {
                 return;
             }
 
             controller.DeleteAI(_stats);
-            Selection_box.Remove_Element(_stats.Name);
+            Selection_box.RemoveElement(_stats.Name);
         }
 
         private DriverStats FindAI()
         {
-            int index = Selection_box.Selected_index;
+            int _index = Selection_box.selectedIndex;
 
-            if (Selection_box.Selected_left_bool)
+            if (Selection_box.selectedLeftBool)
             {
-                if (index < Selection_box.Elements_selected.Count)
+                if (_index < Selection_box.elementsSelected.Count)
                 {
-                    return AIController.getDriverStat(Selection_box.Elements_selected[Selection_box.Selected_index]);
+                    return AIController.getDriverStat(Selection_box.elementsSelected[Selection_box.selectedIndex]);
                 }
                 else
                 {
@@ -195,9 +200,9 @@ namespace GreenLight
             }
             else
             {
-                if (index < Selection_box.Elements_available.Count)
+                if (_index < Selection_box.elementsAvailable.Count)
                 {
-                    return AIController.getDriverStat(Selection_box.Elements_available[Selection_box.Selected_index]);
+                    return AIController.getDriverStat(Selection_box.elementsAvailable[Selection_box.selectedIndex]);
                 }
                 else
                 {

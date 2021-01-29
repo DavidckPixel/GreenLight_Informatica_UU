@@ -215,8 +215,7 @@ namespace GreenLight
                     _sign_image = Image.FromFile("../../src/User Interface Recources/Stop_Sign.png");
                     break;
             }
-             //this.selectedSign = this.selectedRoad.Signs.Last();
-
+            this.selectedSign = this.selectedRoad.Signs.Last();
             PlacedSign _placed = new PlacedSign(new Point(-100, -100), "", _temp, _sign_image, _selectedRoad, signType, new Point(0, 0), MouseClick, _flipped);
             this.selectedRoad.Signs.Add(_placed);
             SignCount++;

@@ -17,7 +17,7 @@ namespace GreenLight
         //This class also manages clicking on crossroads.
         //It contains a method to calculate drivinglanes out of links, and crosslanes out of those. 
 
-
+        public bool TempDraw;
 
         public PictureBox Screen;
 
@@ -47,7 +47,7 @@ namespace GreenLight
             CrossRoad _temp = new CrossRoad(_point1, _point1, _lanes, "Cross", false, false, null, null);
             this.selectedRoad = _temp;
 
-            ShowSettingScreen(_temp);
+           
             //Open het menu;
             Console.WriteLine("New CrossRoad Made!");
 
@@ -99,11 +99,12 @@ namespace GreenLight
             };
 
             saveButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"] + menu["buttonHeight"] + menu["betweenButtons"]), menu["buttonCurve"], "../../src/User Interface Recources/Custom_Small_Button.png", "Save", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            saveButton.Click += (object o, EventArgs ea) => { 
-                if(selectedRoad.connectLinks.Count() != 0) CreateDrivingLanes(); else DeleteCrossroad(this.selectedRoad); this.settingScreenImage.Invalidate(); };
+            saveButton.Click += (object o, EventArgs ea) => {
+                selectedRoad.hitbox.Visible = true;
+                if (selectedRoad.connectLinks.Count() != 0) CreateDrivingLanes(); else DeleteCrossroad(this.selectedRoad); this.settingScreenImage.Invalidate(); };
 
             deleteButton = new CurvedButtons(new Size(menu["buttonWidth"]+10, menu["buttonHeight"]), new Point(menu["offset"] + menu["buttonWidth"] + menu["betweenButtons"], menu["width"] + menu["buttonHeight"] + menu["betweenButtons"]), menu["buttonCurve"], "../../src/User Interface Recources/Custom_Small_Button.png", "Delete", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            deleteButton.Click += (object o, EventArgs ea) => { DeleteCrossroad(this.selectedRoad); };
+            deleteButton.Click += (object o, EventArgs ea) => { selectedRoad.hitbox.Visible = true; DeleteCrossroad(this.selectedRoad); };
 
             error = new Label();
             error.Text = "";
@@ -139,7 +140,10 @@ namespace GreenLight
             if (General_Form.Main != null)
             {
                 General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross";
-            }
+                TempDraw = General_Form.Main.BuildScreen.Toggle;
+                General_Form.Main.BuildScreen.Toggle = true;
+                _road.hitbox.Visible = false;
+            }            
 
             this.selectedRoad = _road;
             this.settingScreen.ShowDialog();
@@ -187,7 +191,38 @@ namespace GreenLight
         {
             Graphics g = pea.Graphics;
 
+            Bitmap b = new Bitmap(Screen.Width, Screen.Height);
+            Screen.DrawToBitmap(b, new Rectangle(new Point(0, 0), Screen.Size));
+
+            Hitbox _hitbox = selectedRoad.hitbox;
+
+            int _maxSize = Math.Max(_hitbox.Size.Width, _hitbox.Size.Height) + Roads.Config.scaleOffset * 2;
+            int _diff = Math.Abs(_hitbox.Size.Width - _hitbox.Size.Height) / 2;
+
+            Rectangle _rec;
+
+            if (_hitbox.Size.Width > _hitbox.Size.Height)
+            {
+                _rec = new Rectangle(_hitbox.Topcord.X - Roads.Config.scaleOffset, _hitbox.Topcord.Y - Roads.Config.scaleOffset - _diff, _maxSize, _maxSize);
+            }
+            else if (_hitbox.Size.Width == _hitbox.Size.Height)
+            {
+                _rec = new Rectangle(_hitbox.Topcord.X - Roads.Config.scaleOffset, _hitbox.Topcord.Y - Roads.Config.scaleOffset, _maxSize, _maxSize);
+            }
+            else
+            {
+                _rec = new Rectangle(_hitbox.Topcord.X - Roads.Config.scaleOffset - _diff, _hitbox.Topcord.Y - Roads.Config.scaleOffset, _maxSize, _maxSize);
+            }
+
+
+
+            Rectangle _des = new Rectangle(0, 0, this.settingScreenImage.Width, this.settingScreenImage.Height);
+
+            g.DrawImage(b, _des, _rec, GraphicsUnit.Pixel);
+
             this.selectedRoad.connectPoints.ForEach(x => x.Draw(g));
+
+
 
             foreach(ConnectionLink _link in this.selectedRoad.connectLinks)
             {
@@ -282,7 +317,13 @@ namespace GreenLight
             if (General_Form.Main != null)
             {
                 General_Form.Main.BuildScreen.builder.roadBuilder.roadType = "Cross";
+                General_Form.Main.BuildScreen.Toggle = TempDraw;
+                if(selectedRoad !=  null)
+                {
+                    selectedRoad.hitbox.Visible = true;
+                }
             }
+
             this.settingScreen.Hide();
 
             this.Screen.Invalidate();
@@ -519,5 +560,7 @@ namespace GreenLight
             _begin = new Point((int)Math.Ceiling(_beginX), (int)Math.Ceiling(_beginY));
             _end = new Point((int)Math.Ceiling(_endX), (int)Math.Ceiling(_endY));
         }
+
+        
     }
 }

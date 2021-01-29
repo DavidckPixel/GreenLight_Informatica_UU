@@ -10,6 +10,11 @@ namespace GreenLight
 {
     public class WorldController : AbstractController
     {
+        //This class creates a Form on which you can change all of the world settings.
+        //It also allows you to add or delete profiles for these world settings
+        //Once changed, the settings will be updated to Earth.json using the WorldConfig class
+
+
         Form settingScreen;
         TextBox name, brakePwr, density, gravity, slip;
         Label nameLabel, brakePwrLabel, densityLabel, gravityLabel, slipLabel, entityTypeLabel;
@@ -30,6 +35,7 @@ namespace GreenLight
         {
         }
 
+        //Creates the menu with the world settings
         public override void Initialize()
         {
             this.settingScreen = new PopUpForm(new Size(400, 600));
@@ -103,6 +109,7 @@ namespace GreenLight
             this.settingScreen.Controls.Add(errorButton);
         }
 
+        //Allows for easy textbox creation from another method
         private void CreateTextBox(Point _location, Size _size, ref TextBox _text, ref Label _label, string _labelText, string _baseValue)
         {
             _label = new Label();
@@ -119,6 +126,7 @@ namespace GreenLight
             this.settingScreen.Controls.Add(_text);
         }
 
+        //Displays the screen and all its settings
         private void Show()
         {
             this.name.Text = this.selectedWorld.name;

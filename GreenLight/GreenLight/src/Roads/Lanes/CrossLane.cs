@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
+    // The CrossLane class is only used for CrossRoads, it is a lane based on a ConnectionLink that the user makes
+
     public class CrossLane : Lane
     {
         public CrossLane(List<LanePoints> _points, ConnectionLink _link, int _index)

@@ -8,6 +8,7 @@ using System.IO;
 
 namespace GreenLight
 {
+    // This class initializes RoadsConfig and fills it with some base values for all roads
     static class Roads
     {
         public static RoadsConfig Config;

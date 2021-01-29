@@ -8,11 +8,11 @@ using System.Drawing;
 
 namespace GreenLight
 {
+    // This is the LanePoints class, lanepoints are very simply put, just a point with a corresponding degree,
+    // so every car can drive from points to point and angle itself accordingly between the two to create a smooth illusion of driving.
+
     public class LanePoints
     {
-        //lanepoints are very simple put, just a point with a corresponding degree, so every car can drive from points to point
-        //and angle itself accordingly between the 2 to create a smooth illusion of driving.
-
         public Point cord { get; set; }
         public float degree;
         public Tuple<double, double> distance;
@@ -54,8 +54,9 @@ namespace GreenLight
             distance = new Tuple<double, double>(_item2, _item1);
         }
 
-        //The following Functions are some General purpose static functions that calculated the LanePoints based on 2 points
-        //a function for both curves and Diagonal / (straight) lines
+
+        // The following Functions are some General purpose static functions that calculated the LanePoints based on two points
+        // a function for both curves and Diagonal / (straight) lines
 
         public static List<LanePoints> CalculateCurveLane(Point _point1, Point _point2, string Dir)
         {
@@ -84,7 +85,7 @@ namespace GreenLight
             }
             else // (dir == "SE")
             {
-                _nulpoint = new Point(Math.Max(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y)); //Aangepast
+                _nulpoint = new Point(Math.Max(_point1.X, _point2.X), Math.Max(_point1.Y, _point2.Y));
             }
 
             double _deltaX = Math.Abs(_point1.X - _point2.X);
@@ -103,8 +104,6 @@ namespace GreenLight
 
                 _Xtemp = _point1.X + x * _dir.Item1;
                 _ytemp = _point1.Y + y * _dir.Item2;
-
-                
 
 
                 if ((Dir == "NE" || Dir == "NW") && x <= _deltaX)
@@ -133,7 +132,6 @@ namespace GreenLight
                 {
                     _normpoint1 = new Point((int)_xtemp, (int)_ytemp);
                 }
-                //Console.WriteLine("normpoint: " + _normpoint1 + " prev: " + _prev);
 
 
                 
@@ -144,7 +142,6 @@ namespace GreenLight
                 _prevXtemp = _Xtemp;
                 _prevYtemp = _Ytemp;
             }
-            //Console.WriteLine("test for first point: "+_lanePoints.First());
             RoadMath.CalculateDistanceLanePoints(ref _lanePoints);
 
             return _lanePoints;
@@ -186,7 +183,7 @@ namespace GreenLight
             if (_point2.X - _point1.X == 0)
             {
                 _slp = 0;
-                int _vertical = _point1.Y > _point2.Y ? -1 : 1; //ADDED THIS INSTEAD OF IF-STATEMENT
+                int _vertical = _point1.Y > _point2.Y ? -1 : 1;
                 divByZero = true;
 
                 for (int y = 0; y <= Math.Abs(_point1.Y - _point2.Y); y++)
@@ -197,10 +194,8 @@ namespace GreenLight
                     _prev = _normpoint1;
                 }
             }
-            
-            //_road.slp = _slp; Moved this to be done in Class with same code, just different place
 
-            int _dir = _point2.X >= _point1.X ? 1 : -1; //Removed GetDiagonalDirection here
+            int _dir = _point2.X >= _point1.X ? 1 : -1;
 
             for (int x = 0; x <= Math.Abs(_point1.X - _point2.X) && !divByZero; x++)
             {

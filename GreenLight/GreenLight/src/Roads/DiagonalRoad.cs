@@ -9,21 +9,18 @@ namespace GreenLight
 {
     public class DiagonalRoad : AbstractRoad
     {
-        //A roadtype for Vertical, horizontal and diagonal roads. 
-        //The CalculateLanes function calculates a straight line between 2 points, and uses this to create drivinglane objects for the road.
-        //It gets a dir in the constructor, which stands for direction, this is to deterin which way the cars should drive.
-        //The corners of the road are calculated and used to contruct a Recthitbox for the road
-        //In this class we mainly use a lot of math, but the simple idea is: when the constructor is called, it will calculate a curved line between 2 points
-        //For how many lanes you told the constructor to have.
+        // DiagonalRoad is a roadtype for Vertical, horizontal and diagonal roads. 
+        // The CalculateLanes function calculates a straight line between two points, and uses this to create drivinglane objects for the road..
+        // The corners of the road are calculated and used to contruct a Recthitbox for the road
+        // In this class we mainly use a lot of math, but the simple idea is: when the constructor is called, it will calculate a straight line between 2 points.
 
 
         public DiagonalRoad(Point _point1, Point _point2, int _lanes, string _dir, string _type, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, "DiagonalRoad", _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
-            //Console.WriteLine("Diagonal Road");
             this.Dir = _dir;
             this.Type = _type;
 
-            double _slp = (double)(_point2.Y - _point1.Y) / (double)(_point2.X - _point1.X); //This code was borrow from the CalculateLanePoints since apperantly the slp is calculated in there
+            double _slp = (double)(_point2.Y - _point1.Y) / (double)(_point2.X - _point1.X);
             if (_point2.X - _point1.X == 0)
             {
                 _slp = 0;
@@ -31,7 +28,7 @@ namespace GreenLight
 
             this.slp = _slp;
 
-            Point[] _points = RoadMath.hitBoxPointsDiagonal(_point1, _point2, lanes, this.laneWidth, true, this.slp);
+            Point[] _points = RoadMath.hitBoxPointsDiagonal(_point1, _point2, lanes, this.laneWidth, true, this.slp, false);
             this.hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
 
             for (int x = 1; x <= this.lanes; x++)
@@ -44,7 +41,7 @@ namespace GreenLight
 
         private DrivingLane CreateDrivingLane(Point _point1, Point _point2, int _thisLane)
         {
-            double _slp = (double)(_point2.Y - _point1.Y) / (double)(_point2.X - _point1.X); //This code was borrow from the CalculateLanePoints since apperantly the slp is calculated in there
+            double _slp = (double)(_point2.Y - _point1.Y) / (double)(_point2.X - _point1.X);
             if (_point2.X - _point1.X == 0)
             {
                 _slp = 0;
@@ -52,7 +49,7 @@ namespace GreenLight
 
             this.slp = _slp;
         
-            Point[] _points = RoadMath.hitBoxPointsDiagonal(_point1, _point2, 1, this.laneWidth, false, this.slp);
+            Point[] _points = RoadMath.hitBoxPointsDiagonal(_point1, _point2, 1, this.laneWidth, false, this.slp, false);
             Hitbox _temp = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Green);
             return new DrivingLane(LanePoints.CalculateDiagonalLane(_point1,_point2), this.Dir, this.lanes, _thisLane, _temp);
         }
@@ -65,10 +62,6 @@ namespace GreenLight
             if (_firstPoint.X != _secondPoint.X && _firstPoint.Y != _secondPoint.Y)
             {
                 slp = (double)(_firstPoint.Y - _secondPoint.Y) / (double)(_secondPoint.X - _firstPoint.X);
-
-                //slpPer = -1 / slp;
-                //oneX = Math.Abs(Math.Sqrt(1 + Math.Pow(slpPer, 2)));
-                //amountX = drivingLaneDistance / oneX;
 
                 if (lanes % 2 == 0)
                 {
@@ -192,9 +185,6 @@ namespace GreenLight
 
             return CreateDrivingLane(_firstPoint, _secondPoint, t);
         }
-
-
-
 
         public override Hitbox CreateHitbox(Point[] _points)
         {

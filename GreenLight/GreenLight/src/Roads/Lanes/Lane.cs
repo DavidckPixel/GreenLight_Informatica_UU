@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 
-//Base class for driving lane
 
 namespace GreenLight
 {
+    // This is the base class for DrivingLanes and CrossLanes.
+    // It consists of a few abstract functions and a few important variables for all lanes.
     public abstract class Lane
     {
         public ConnectionLink link;

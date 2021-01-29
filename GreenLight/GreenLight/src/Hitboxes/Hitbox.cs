@@ -5,17 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-//This is the main hitbox class from which the other hitboxes inherit, it holds all the basic function and has some extra features
-//used to find the topcord and the square size of the hitbox.
-//It also has 2 static functions which simply is the Math.max function but then upgraded to take 4 integers instead of the normal 2
 
 namespace GreenLight
 {
+    // This is the main Hitbox class from which the other hitboxes inherit, it holds all the basic function and has 
+    // some extra features used to find the topcord and the square size of the hitbox.
+    // It also has two static functions that take four integers and returns the smallest or biggest
+
     abstract public class Hitbox
     {
         public Point Topcord;
         public string Type;
         public Size Size;
+        public bool Visible = true;
 
         public int SizeX, SizeY;
 
@@ -32,7 +34,6 @@ namespace GreenLight
         }
 
         public abstract bool Contains(Point _p);
-        //public abstract bool Contains(RectHitbox _h);
 
         public abstract bool Collide(Hitbox _h, Graphics g);
 
@@ -55,8 +56,5 @@ namespace GreenLight
 
             return Math.Max(_firstround, _secondround);
         }
-
-
-
     }
 }

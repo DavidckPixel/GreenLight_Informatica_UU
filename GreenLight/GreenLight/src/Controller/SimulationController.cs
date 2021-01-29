@@ -9,10 +9,11 @@ using System.Threading;
 using GreenLight.src.Data_Collection;
 using GreenLight.src.Driver.GPS;
 
-//This is the controller that deals with everything simulation related, and holds the vehicle and AI controller
 
 namespace GreenLight
 {
+    // This is the SimulationController that deals with everything simulation related, and holds the Vehicle- and AIcontroller.
+
     public class SimulationController : AbstractController
     {
         public bool SimulationRunning;
@@ -23,11 +24,16 @@ namespace GreenLight
         public AIController aiController;
         public WorldController worldController;
         public DriverProfileController profileController;
-        public DataController dataController;
 
         public delegate void UpdateTextCallback();
         public delegate void RemoveAI(BetterAI _ai, bool _dump);
         public delegate void RemoveVehicle(BetterVehicle _veh, bool _dump);
+
+        public int SimulationInterval = 16;
+        public int SimulationIntervalDivider = 1;
+
+        public int spawnBetweenTick = 200;
+        public bool canSpawn = true;
 
         Thread Simulation;
 
@@ -42,9 +48,6 @@ namespace GreenLight
             this.profileController = new DriverProfileController(this.screenController.Screen);
             this.profileController.Initialize();
 
-            this.dataController = new DataController(this.screenController.Screen);
-            this.dataController.Initialize();
-
             Simulation = new Thread(this.update);
         }
 
@@ -57,6 +60,8 @@ namespace GreenLight
         {
             if (!SimulationRunning)
             {
+                this.initSimulation();
+
                 SimulationRunning = true;
                 Simulation.Start();
             }
@@ -73,11 +78,16 @@ namespace GreenLight
             this.profileController.PauseSimulation(vehicleController.vehicleList);
             this.screenController.Screen.Invalidate();
         }
+        public void StopSimulation()
+        {
+            this.SimulationPaused = true;
+            this.resetSimulation();
+            this.screenController.Screen.Invalidate();
+        }
 
         public void initSimulation()
         {
-            this.dataController = new DataController(this.screenController.Screen);
-            this.dataController.Initialize();
+            General_Form.Main.DataScreen.dataController.DataControllerReset();
 
             this.worldController.SimulationWorld = this.worldController.currentSelected;
             this.vehicleController.initvehList();
@@ -86,12 +96,32 @@ namespace GreenLight
             this.screenController.Screen.Invalidate();
         }
 
+        public void resetSimulation()
+        {
+            this.vehicleController.vehicleList.Clear();
+            General_Form.Main.UserInterface.SimDataM.stopWatch.Reset();
+            
+            foreach(AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
+            {
+                if(_road.roadtype == "Cross")
+                {
+                    CrossRoad _cross = (CrossRoad)_road;
+                    foreach(CrossRoadSide _side in _cross.sides)
+                    {
+                        _side.reset();
+                    }
+                }
+            }
+
+            initSimulation();
+        }
+
         private void update()
         {
             int x = 0;
             while (true)
             {
-                Thread.Sleep(32);
+                Thread.Sleep((int)(this.SimulationInterval / this.SimulationIntervalDivider));
 
                 if (!this.SimulationPaused)
                 {
@@ -107,31 +137,20 @@ namespace GreenLight
                         foreach (BetterVehicle car in vehicleController.toDelete)
                         {
                             vehicleController.vehicleList.Remove(car);
-                            this.screenController.Screen.BeginInvoke(new RemoveAI(dataController.collector.RemoveAI), new object[] { car.vehicleAI, true });
-                            this.screenController.Screen.BeginInvoke(new RemoveVehicle(dataController.collector.RemoveVehicle), new object[] { car, true });
+                            this.screenController.Screen.BeginInvoke(new RemoveAI(General_Form.Main.DataScreen.dataController.collector.RemoveAI), new object[] { car.vehicleAI, true });
+                            this.screenController.Screen.BeginInvoke(new RemoveVehicle(General_Form.Main.DataScreen.dataController.collector.RemoveVehicle), new object[] { car, true });
 
                         }
 
-                        this.screenController.Screen.BeginInvoke(new UpdateTextCallback(dataController.collector.CollectAllData));
+                        this.screenController.Screen.BeginInvoke(new UpdateTextCallback(General_Form.Main.DataScreen.dataController.collector.CollectAllData));
                         vehicleController.toDelete.Clear();
-                        //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakeChart));
-                        //this.BeginInvoke(new UpdateTextCallback(dataController.UpdateBrakePerTickChart));
                     }
 
-                    if (x % 30 == 0 && x < 900)
+
+                    if (x % this.spawnBetweenTick == 0 && this.canSpawn)
                     {
                         vehicleController.getVehicle(this.screenController.gpsData.getRandomStartNode(), true);
-                        
-                        /*
-                        foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
-                        {
-                            if (_road.roadtype == "Cross")
-                            {
-                                CrossRoad _temproad = (CrossRoad)_road;
-                                _temproad.ConsoleDump();
-                            }
 
-                        } */
                     }
 
                     if (x % 600 == 0)
@@ -143,6 +162,24 @@ namespace GreenLight
                     x++;
                 }
             }
+        }
+
+        public void ChangeSimIntervalTimer(int _div)
+        {
+            _div = _div <= 0 ? 1 : _div;
+            this.SimulationIntervalDivider = _div;
+        }
+
+        public void ChangeCarSpawn(int _perc)
+        {
+            if(_perc <= 0)
+            {
+                this.canSpawn = false;
+                return;
+            }
+
+            this.canSpawn = true;
+            this.spawnBetweenTick = 16 * 100 / _perc;
         }
     }
 }

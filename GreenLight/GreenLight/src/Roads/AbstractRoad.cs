@@ -10,11 +10,10 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
-    //This is the abstract road class from which each roadtype inherits some basic features.
-    //This basic features include: CalculateDrivingLane, Every road needs to have its own function of CalculateDrivingLane
-    //This class also has a static function that takes 2 points as input, and calculates the angle in degrees between them.
-    //Every Road has 4 base variables: 2 points inbetween which the road lays, the amount of lanes the road has, and a list of the drivingLanes
-    //Drivinglanes are a list of points that the car follows to drive on the road.
+    // This is the AbstractRoad class from which each roadtype inherits some basic values and functions.
+    // These basic features include: CalculateDrivingLane, every road needs to have its own function of CalculateDrivingLane.
+    // This class also has a static function that takes 2 points as input, and calculates the angle in degrees between them.
+    // Lastly it overrides the ToString function so roads can be saved into a text file.
 
     public abstract class AbstractRoad : ScreenObject
     {
@@ -40,7 +39,6 @@ namespace GreenLight
         public int laneWidth = Roads.Config.laneWidth;
         public AbstractRoad CrossRoad;
 
-        //Basic Road Constructor, every road calls this constructor during initialzation
         public AbstractRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(new Point(Math.Min(_point1.X, _point2.X),Math.Min(_point1.Y, _point2.Y)))
         {
             this.point1 = _point1;
@@ -51,34 +49,11 @@ namespace GreenLight
             this.endconnection = _endconnection;
             this.beginConnectedTo = _beginConnectedTo;
             this.endConnectedTo = _endConnectedTo;
-
-            Console.WriteLine("this road: " + _point1 + " ------- " + _point2);
-            if(beginConnectedTo != null)
-            {
-                Console.WriteLine("begin connected to: " + beginConnectedTo.point1 + " ------- " + beginConnectedTo.point2);
-            }
-            else 
-            {
-                Console.WriteLine("begin connection is null");
-            }
-
-            if (endConnectedTo != null)
-            {
-                Console.WriteLine("end connected to: " + endConnectedTo.point1 + " ------- " + endConnectedTo.point2);
-            }
-            else
-            {
-                Console.WriteLine("end connection is null");
-            }
-
         }
 
-        //protected abstract DrivingLane CalculateDrivingLane(Point _point1, Point _point2, int _thislane);
-        
-        //public abstract Point[] hitBoxPoints(Point one, Point two, int _lanes, int _laneWidth, bool _RoadHitBox);
         public abstract Hitbox CreateHitbox(Point[] _array);
 
-        public virtual void Draw(Graphics g)
+        public override void Draw(Graphics g)
         {
             foreach(Lane _lane in Drivinglanes)
             {
