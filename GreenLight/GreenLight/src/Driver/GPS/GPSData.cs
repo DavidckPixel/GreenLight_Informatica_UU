@@ -29,6 +29,8 @@ namespace GreenLight.src.Driver.GPS
 
             FindAllKnots();
             CreateConnections();
+
+            Log.Write("Calculated GPSdata");
         }
 
         //This method loops through all roads and determines for all of them two knots, one of which has this road and the one it's begin is connected to, and one which has this road and the one it's end is connected to
@@ -179,6 +181,7 @@ namespace GreenLight.src.Driver.GPS
                 if (_firstKnot == null || _secondKnot == null)                
                 {
                     MessageBox.Show("There is a problem, simulation may nog be accurate!");
+                    Log.Write("GPSData error ID2 : Linking problem, no knot cord was close enough to end or beginning of the road");
                     _firstKnot = _knots.First();
                     _secondKnot = _knots[1];
                 }
@@ -278,6 +281,7 @@ namespace GreenLight.src.Driver.GPS
             }
 
             MessageBox.Show("Something has gone wrong, no possible paths were found, return to the builder!");
+            Log.Write("GPSData error ID1 : No paths were found");
             General_Form.Main.SimulationScreen.Simulator.ResetSimulation();
             General_Form.Main.SwitchControllers(General_Form.Main.BuildScreen);
             General_Form.Main.UserInterface.SimDataM.ResetTimer();
