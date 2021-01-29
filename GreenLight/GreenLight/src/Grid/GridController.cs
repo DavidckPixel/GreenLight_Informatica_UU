@@ -210,7 +210,6 @@ namespace GreenLight
                 {
                     Legal = false;
                     temp.ShowOverlap(g);
-                    Console.WriteLine("Overlap");
                 }
 
                 Rectangle rec = new Rectangle(Math.Min(firstPoint.Cords.X, mouseCords.X), Math.Min(firstPoint.Cords.Y, mouseCords.Y), Math.Abs(firstPoint.Cords.X - mouseCords.X), Math.Abs(firstPoint.Cords.Y - mouseCords.Y));
@@ -366,7 +365,6 @@ namespace GreenLight
 
                     if (_lanes % 2 != 0 && _lanes != 1)
                     {
-                        Console.WriteLine("Begin, oneven lanes, horuiteinde");
                         _topleft = new Point(_road.point1.X + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingWidth, _road.point1.Y + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingHeight);
                         _topright = new Point(_road.point1.X + ((_lanes - 1) / 2) * Grid.Config.SpacingWidth, _road.point1.Y + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingHeight);
                         _bottomleft = new Point(_road.point1.X + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingWidth, _road.point1.Y + ((_lanes - 1) / 2) * Grid.Config.SpacingHeight);
@@ -376,7 +374,6 @@ namespace GreenLight
                     }
                     else
                     {
-                        Console.WriteLine("Begin, even lanes, horuiteinde");
                         _topleft = new Point(_road.point1.X + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingWidth, _road.point1.Y + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingHeight);
                         _topright = new Point(_road.point1.X + (_lanes / 2) * Grid.Config.SpacingWidth, _road.point1.Y + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingHeight);
                         _bottomleft = new Point(_road.point1.X + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingWidth, _road.point1.Y + (_lanes / 2) * Grid.Config.SpacingHeight);
@@ -398,7 +395,6 @@ namespace GreenLight
                     }
                     if (_lanes % 2 != 0)
                     {
-                        Console.WriteLine("Eind, oneven lanes, horuiteinde");
                         _topleft = new Point(_road.point2.X + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingWidth, _road.point2.Y + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingHeight);
                         _topright = new Point(_road.point2.X + ((_lanes - 1) / 2) * Grid.Config.SpacingWidth, _road.point2.Y + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingHeight);
                         _bottomleft = new Point(_road.point2.X + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingWidth, _road.point2.Y + ((_lanes - 1) / 2) * Grid.Config.SpacingHeight);
@@ -408,7 +404,6 @@ namespace GreenLight
                     }
                     else
                     {
-                        Console.WriteLine("Eind, even lanes, horuiteinde");
                         _topleft = new Point(_road.point2.X + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingWidth, _road.point2.Y + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingHeight);
                         _topright = new Point(_road.point2.X + (_lanes / 2) * Grid.Config.SpacingWidth, _road.point2.Y + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingHeight);
                         _bottomleft = new Point(_road.point2.X + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingWidth, _road.point2.Y + (_lanes / 2) * Grid.Config.SpacingHeight);
@@ -420,7 +415,6 @@ namespace GreenLight
 
                     if (_lanes % 2 != 0)
                     {
-                        Console.WriteLine("Eind, oneven lanes, vertuiteinde");
                         _topleft = new Point(_road.point2.X + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingWidth, _road.point2.Y + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingHeight);
                         _topright = new Point(_road.point2.X + ((_lanes - 1) / 2) * Grid.Config.SpacingWidth, _road.point2.Y + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingHeight);
                         _bottomleft = new Point(_road.point2.X + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingWidth, _road.point2.Y + ((_lanes - 1) / 2) * Grid.Config.SpacingHeight);
@@ -431,7 +425,6 @@ namespace GreenLight
                     }
                     else
                     {
-                        Console.WriteLine("Eind, even lanes, vertuiteinde");
                         _topleft = new Point(_road.point2.X + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingWidth, _road.point2.Y + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingHeight);
                         _topright = new Point(_road.point2.X + (_lanes / 2) * Grid.Config.SpacingWidth, _road.point2.Y + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingHeight);
                         _bottomleft = new Point(_road.point2.X + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingWidth, _road.point2.Y + (_lanes / 2) * Grid.Config.SpacingHeight);
