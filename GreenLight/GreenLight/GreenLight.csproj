@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Driver\GPS\DijkstraPaths.cs" />
     <Compile Include="src\Signs\Controller\TrafficLightController.cs" />
     <Compile Include="src\Signs\SignTypes\TrafficLight.cs" />
     <Compile Include="src\Signs\Speedsign.cs">
