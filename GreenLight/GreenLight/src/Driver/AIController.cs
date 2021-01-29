@@ -78,7 +78,14 @@ namespace GreenLight
                     }
                 }
 
+                if (this.availableDriverStats.Any())
+                {
+                    return this.availableDriverStats.First();
+                }
+
+                Console.WriteLine("Better not");
                 AITypeConfig.ReadJson();
+                this.availableDriverStats = AITypeConfig.aiTypes;
                 return AITypeConfig.aiTypes.First();
             }
 
