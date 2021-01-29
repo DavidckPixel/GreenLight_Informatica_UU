@@ -12,6 +12,8 @@ namespace GreenLight
 
     public class DriverProfileFace
     {
+        //Displays an image with a custom quote, the driver of the vehicle
+
         public string name {get;}
         public string fileName { get; }
         Tuple<int, int> fullSize { get; }
@@ -19,6 +21,7 @@ namespace GreenLight
         public Tuple<int,int> imgSize { get; }
         public List<string>[] speech { get; }
         public Bitmap backImg { get; }
+
 
         public DriverProfileFace(string name, string fileName, int sizeX, int sizeY,int indexX,int indexY, List<string>[] speech, string backImg)
         {
@@ -36,7 +39,6 @@ namespace GreenLight
             {
                 this.imgSize = new Tuple<int, int>(sizeX, sizeY);
             }
-
             this.backImg = new Bitmap(backImg);
         }
     }

@@ -215,7 +215,7 @@ namespace GreenLight
         {
             if (this.isBraking)
             {
-                profile.AddBreakTick();
+                profile.AddBrakeTick();
             }
             profile.CalculateFuel(this.vehicle.speed);
         }

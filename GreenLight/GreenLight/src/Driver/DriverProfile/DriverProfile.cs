@@ -56,16 +56,17 @@ namespace GreenLight
             this.imgFace = (Bitmap)_original.Clone(_src, _original.PixelFormat);
         }
 
-        public void AddBreakTick()
+        //Allows the AI to document the amount of braketicks that occurred
+        public void AddBrakeTick()
         {
             this.ticksOnBrake++;
         }
 
+        //Calculates the used fuel based on the amount of time driven and at which speed the car drove during that time
         public void CalculateFuel(double _speed)
         {
             ticksStationary = _speed <= 0 ? ticksStationary++ : ticksStationary;
             fuelUsed += _speed * 0.005;
         }
-
     }
 }

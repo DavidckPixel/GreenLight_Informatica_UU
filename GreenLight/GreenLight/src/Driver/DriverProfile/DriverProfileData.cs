@@ -13,6 +13,8 @@ namespace GreenLight
 
     public static class DriverProfileData
     {
+        //Reads the driver data from the faces.json
+
         public static List<DriverProfileFace> faces;
 
         static DriverProfileData()

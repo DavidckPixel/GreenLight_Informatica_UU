@@ -7,8 +7,7 @@ namespace GreenLight
 {
 
     //This class is the Controller for the DriverProfile popup window, when the user clicks on a car when the 
-    //Simulation is paused, this window shows it, Its mainly a bunch of labels that are set to a certain
-    //value
+    //Simulation is paused, this window shows it, its mainly a bunch of labels that are set to a certain value
 
     public class DriverProfileController : AbstractController
     {
