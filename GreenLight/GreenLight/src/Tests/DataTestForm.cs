@@ -12,8 +12,12 @@ namespace GreenLight.src.Data_Collection
 {
     public partial class DataTestForm : Form
     {
+        //This class is used for testing the data form on which the data of all the vehicles will be shown.
+        //This includes data like average speed, current speed, braking ticks, etc.
+
         DataScreen dataScreen;
 
+        //This initializes the testform and its data
         public DataTestForm()
         {
             this.Size = new Size(1000, 1000);

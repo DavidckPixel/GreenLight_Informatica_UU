@@ -1,5 +1,2 @@
-t2 C:\Users\niels\Downloads\t2.txt ../../Recent_projects/Images/t2.png
-Cross C:\Users\niels\Downloads\Cross.txt ../../Recent_projects/Images/Cross.png
-3lanes C:\Users\niels\Downloads\3lanes.txt ../../Recent_projects/Images/3lanes.png
-2lanes C:\Users\niels\Downloads\2lanes.txt ../../Recent_projects/Images/2lanes.png
-hitbox C:\Users\niels\Downloads\hitbox.txt ../../Recent_projects/Images/hitbox.png
+Simulatie D:\Elio\Documents\Studie\II\Simulatie.txt ../../Recent_projects/Images/Simulatie.png
+DefaultOutputName C:\Users\User\Desktop\DefaultOutputName.txt ../../Recent_projects/Images/DefaultOutputName.png

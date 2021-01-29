@@ -22,9 +22,10 @@ namespace GreenLight
         public Speedsign speedSign;
         public bool flipped, hitboxflipped = false;
         public Point[] _points;
+        public int SignCount;
         int dir;
 
-        public PlacedSign(Point _location, string _direction, AbstractSign _sign, Image _Sign_image, AbstractRoad _road, string _signType, Point _hitboxoffset, Point _mea, bool _flipped)
+        public PlacedSign(Point _location, string _direction, AbstractSign _sign, Image _Sign_image, AbstractRoad _road, string _signType, Point _hitboxoffset, Point _mea, bool _flipped, int _signCount)
         {
             this.speedSign = new Speedsign(new Size(20, 20), _location);
             this.Location = _location;
@@ -37,6 +38,7 @@ namespace GreenLight
             this.Hitboxoffset = _hitboxoffset;
             this.flipped = _flipped;
             this.Mea = _mea;
+            this.SignCount = _signCount;
             dir = (int)Road.Drivinglanes[0].AngleDir;
             
             if(this.Location.X == -100)
@@ -65,7 +67,7 @@ namespace GreenLight
                 }
                 g.DrawImage(Sign_image, Location.X, Location.Y, 20, 20);
             }
-
+            //Console.WriteLine("Teken die sign");
             this.Hitbox.Draw(g);
             //g.FillRectangle(Notsolid, this.Hitbox);
         }

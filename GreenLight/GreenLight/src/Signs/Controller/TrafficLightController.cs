@@ -17,6 +17,7 @@ namespace GreenLight
         public TrafficLight selected;
         public CurvedButtons SaveButton, CancelButton;
         public AbstractRoad selectedRoad;
+        int current = 0;
 
         public TrafficLightController(Form _main, MainSignController _signcontroller)
         {
@@ -113,7 +114,6 @@ namespace GreenLight
 
             settingScreen.ShowDialog();
             settingScreen.BringToFront();
-
         }
 
         public override void onSignClick(AbstractSign _sign, AbstractRoad _selectedRoad)
@@ -128,7 +128,7 @@ namespace GreenLight
         public override AbstractSign newSign(AbstractRoad _selectedRoad)
         {
             TrafficLight _temp = new TrafficLight(this);
-            this.signController.Signs.Add(_temp); 
+            this.signController.Signs.Add(_temp);
             
             if (_selectedRoad != null)
                 selectedRoad = _selectedRoad;
@@ -141,11 +141,6 @@ namespace GreenLight
         {
             this.signController.deleteSign(selected);
             this.settingScreen.Hide();
-        }
-
-        public override void changeColor(string color)
-        {
-            this.signController.changeColor(color, (AbstractSign)selected, selectedRoad);
         }
     }
 }

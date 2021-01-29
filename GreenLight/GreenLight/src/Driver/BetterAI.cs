@@ -18,7 +18,7 @@ namespace GreenLight
         int speedRelativeToLimit;
         float ruleBreakingChance;
 
-        public double targetspeed = 3;
+        public double targetspeed = 14;
         public int priority = 2;
 
         public bool isBraking = false;

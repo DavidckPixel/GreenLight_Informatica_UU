@@ -15,6 +15,9 @@ namespace GreenLight
 {
     public partial class BetterVehicleTest : Form
     {
+        //This is the test form for the BetterVehicle class
+        //In here, we can test how vehicles behave every x ticks by clicking on the form
+
         public static List<BetterVehicle> vehiclelist = new List<BetterVehicle>();
         List<AbstractRoad> roads = new List<AbstractRoad>();
         List<AbstractRoad> roads2 = new List<AbstractRoad>();
@@ -42,6 +45,8 @@ namespace GreenLight
 
         GPSData gpsData;
 
+
+        //This method initializes all variables and methods needed for the simulation
         public BetterVehicleTest()
         {
             pictureboxTemp = new PictureBox();
@@ -165,22 +170,26 @@ namespace GreenLight
            // _update.Start();
         }
 
+        //This method reads the Earth.json and assigns values to the variables of this class based on the JSON
         private void UpdateWorldsList(object o, EventArgs ea)
         {
             worlds.Items.Clear();
             WorldConfig.physics.ForEach(x => worlds.Items.Add(x));
         }
 
+        //This method switches presets of world settings
         private void EditClick(object o, EventArgs ea)
         {
             worldController.EditWorld((World)worlds.SelectedItem);
         }
 
+        //This method creates a new preset for world settings
         private void NewClick(object o, EventArgs ea)
         {
             worldController.CreateNewWorld();
         }
 
+        //This method updates the vehicles on the screen by starting or stopping the simulation
         private void Click(object sender, MouseEventArgs e)
         {
             profileController.OnClick(e.Location, null);
@@ -205,6 +214,7 @@ namespace GreenLight
             }
         }
 
+        //Here, the screen will be invalidated once called from a thread. This results in 1/0.016 = 62.5 FPS
         private void simulation()
         {
             while (simulate)
@@ -214,8 +224,10 @@ namespace GreenLight
             }
         }
 
+
         public delegate void UpdateTextCallback();
 
+        //This method updates the updates the AI and vehicle, ultimately changing the location of the vehicle
         private void update()
         {
             int x = 0;
@@ -249,6 +261,7 @@ namespace GreenLight
             }
         }
 
+        //This method draws the knots which the vehicles drive between, as well as the roads where the vehicles should drive on
         private void Draw(object o, PaintEventArgs pea)
         {
             Graphics g = pea.Graphics;
