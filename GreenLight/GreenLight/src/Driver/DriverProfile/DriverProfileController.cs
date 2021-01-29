@@ -44,6 +44,12 @@ namespace GreenLight
             this.settingScreenImage.Paint += DrawImage;
             this.settingScreen.Controls.Add(this.settingScreenImage);
 
+            MovePanel Move = new MovePanel(this.settingScreen);
+            Move.Location = new Point(0, 0);
+            Move.Size = new Size(500, 35);
+            Move.BackColor = Color.FromArgb(142, 140, 144);
+            this.settingScreen.Controls.Add(Move);
+
             this.fuelUsed = new Label();
             this.fuelUsed.Location = new Point(220, 210);
             this.fuelUsed.Size = new Size(200, 30);
