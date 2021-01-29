@@ -152,6 +152,10 @@ namespace GreenLight
             {
                 g.DrawImage(_image, new Point((int)this.locationX - 10, (int)this.locationY - 10));
             }
+            foreach(Node _spawn in General_Form.Main.SimulationScreen.gpsData.spawnNodes)
+            {
+                _spawn.knot.Draw(g);
+            }
         }
 
         //This method switches to the next road if the vehicle enters a connection between two roads

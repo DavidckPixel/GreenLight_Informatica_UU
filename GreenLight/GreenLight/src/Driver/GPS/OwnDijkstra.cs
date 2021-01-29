@@ -16,7 +16,8 @@ namespace GreenLight.src.Driver.GPS
             {
                 return null;
             }
-            else{
+            else
+            {
                 return temp.visited;
             }
         }
@@ -34,28 +35,82 @@ namespace GreenLight.src.Driver.GPS
             dijkstraPaths.Add(new DijkstraPaths(_start, new List<Node>()));
 
             List<DijkstraPaths> nextSetList = new List<DijkstraPaths>();
-
-            for(int x = 0; x < 100; x++)
+            int count = 0;
+            Console.WriteLine("Road Count: " + General_Form.Main.BuildScreen.builder.roadBuilder.roads.Count);
+            for(int x = 0; x < General_Form.Main.BuildScreen.builder.roadBuilder.roads.Count; x++)
             {
-                foreach(DijkstraPaths _dijkPath in dijkstraPaths)
+                List<Node> _notReachable = new List<Node>();
+                List<AbstractRoad> _visitedRoads = new List<AbstractRoad>();
+                foreach (DijkstraPaths _dijkPath in dijkstraPaths)
                 {
-                        foreach (Node _node in _dijkPath.visited.Last().connections)
+
+
+                    
+                    foreach (Node _node in _dijkPath.visited.Last().connections)
+                    {
+
+                        if (_node == _goal)
                         {
-                            if (_node == _goal)
+                            Console.WriteLine("COUNT UNREACHABLE : " + _notReachable.Count);
+                            return new DijkstraPaths(_node, _dijkPath.visited);
+                        }
+
+                        if (_dijkPath.visited.Last().connections.Count >= 2)
+                        {
+                            Console.WriteLine("This node has more than 2 connections");
+                            foreach (Link _connectionlink in _node.links)
                             {
-                                return new DijkstraPaths(_node, _dijkPath.visited);
+                                //Console.WriteLine("NODE 1 HAS A KNOT WITH CORD {0}, ROAD 1 {1} AND ROAD 2 {2}", _dijkPath.visited.Last().knot.Cord, _dijkPath.visited.Last().knot.Road1, _dijkPath.visited.Last().knot.Road2);
+                                //Console.WriteLine("NODE 2 HAS A KNOT WITH CORD {0}, ROAD 1 {1} AND ROAD 2 {2}", _connectionlink.begin.Cord, _connectionlink.begin.Road1, _connectionlink.begin.Road2);
+                                if (_dijkPath.visited.Last().knot == _connectionlink.end && !_dijkPath.visited.Contains(_node) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road2) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road1) && !_notReachable.Contains(_node))
+                                {
+                                    Console.WriteLine("YESSSS!!");
+
+                                    _visitedRoads.Add(_dijkPath.visited.Last().knot.Road2);
+                                    _visitedRoads.Add(_dijkPath.visited.Last().knot.Road1);
+
+                                    _notReachable.AddRange(_dijkPath.visited.Last().connections);
+                                    foreach (Node _othernode in _dijkPath.visited.Last().connections)
+                                    {
+
+                                            _notReachable.Add(_othernode);
+
+                                    }
+                                    nextSetList.Add(new DijkstraPaths(_node, _dijkPath.visited));
+                                    count++;
+                                }
+
                             }
 
-                            if (!_dijkPath.visited.Contains(_node))
-                            {
-                                nextSetList.Add(new DijkstraPaths(_node, _dijkPath.visited));
-                            }
                         }
+
+
+                        else if (!_dijkPath.visited.Contains(_node) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road2) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road1) && !_notReachable.Contains(_node))
+                        {
+
+                            Console.WriteLine("ADDED DIJKSTRAPATH");
+                            _visitedRoads.Add(_dijkPath.visited.Last().knot.Road2);
+                            _visitedRoads.Add(_dijkPath.visited.Last().knot.Road1);
+                            _notReachable.AddRange(_dijkPath.visited.Last().connections);
+                            foreach (Node _othernode in _dijkPath.visited.Last().connections)
+                            {
+
+                                    _notReachable.Add(_othernode);
+
+                            }
+                            nextSetList.Add(new DijkstraPaths(_node, _dijkPath.visited));
+                        }
+
+                        
+                    }
+
+
+                        
                 }
                 dijkstraPaths.Clear();
                 dijkstraPaths.AddRange(nextSetList);
             }
-
+            
             return null;
         }
     }
