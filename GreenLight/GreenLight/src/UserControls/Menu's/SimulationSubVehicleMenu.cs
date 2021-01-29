@@ -188,7 +188,7 @@ namespace GreenLight
 
             Console.WriteLine("Vehicle Created With name : {0}", name);
 
-            VehicleController.addVehicleStats(name, 5000, 5, 100, 100, 5, 1, 50); //WEIGHT (1000,40000) //LENGTH 3,12 // TOPSPEED 30,300 // HORSEPWR 40,1500 // SURFACE 1,20//CW = 1 //OCCU = 0-100
+            VehicleController.addVehicleStats(name, 5000, 5, 100, 100, 5, 1, 50); 
             SetValues();
         }
 
@@ -202,7 +202,7 @@ namespace GreenLight
                 return;
             }
 
-            if (_stats.canEdit == true) //if cna edit = true it cannot be edited nor deleted, so is returned
+            if (_stats.canEdit == true)
             {
                 return;
             }

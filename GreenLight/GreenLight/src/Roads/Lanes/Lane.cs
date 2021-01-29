@@ -30,6 +30,7 @@ namespace GreenLight
         public int thisLane = 0;
         public bool flipped = false;
 
+        // Draws a yellow line that represents the list of LanePoints a car drives over
         public void DrawLine(Graphics g, Pen pen)
         {
             g.DrawString(thisLane.ToString(), SystemFonts.DefaultFont, Brushes.Pink, this.points.First().cord);
@@ -43,6 +44,7 @@ namespace GreenLight
 
         }
 
+        // Orders the DrivingLanes differently
         public static void OrderDrivingLanes(AbstractRoad _road)
         {
             int Xside = _road.Drivinglanes.First().points.First().cord.X;

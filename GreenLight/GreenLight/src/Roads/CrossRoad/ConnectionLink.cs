@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
+    // A ConnectionLink saves two ConnectionPoints that are connected to create a Lane
     public struct ConnectionLink
     {
         public ConnectionLink(ConnectionPoint _begin, ConnectionPoint _end)

@@ -133,6 +133,7 @@ namespace GreenLight
             _DrawPictureBox(g);
         }
 
+        // Draws everything on the screen
         public void _DrawPictureBox(Graphics g)
         {
             foreach (AbstractRoad _road in builder.roadBuilder.roads)
@@ -148,6 +149,7 @@ namespace GreenLight
             }
         }  
     
+        // When toggled Hitboxes will be visible
         public bool ToggleHitbox()
         {
             if (j % 2 == 0)

@@ -37,6 +37,7 @@ namespace GreenLight
             this.PenWidth = Math.Abs((int)(max_radiusX - min_radiusX));
         }
 
+        // This method creates the actual CurvedHitbox
         public Rectangle Rect()
         {
             Rectangle _rect = new Rectangle(-100,-100,1,1);
@@ -131,6 +132,7 @@ namespace GreenLight
             return _rect;
         }
 
+        // This method is used to check if a point is inside the CurvedHitbox and is important for a lot of parts of our code.
         public override bool Contains(Point _p)
         {
             if ((Math.Pow(_p.X - midX, 2) / Math.Pow(max_radiusX, 2) + Math.Pow(_p.Y - midY, 2) / Math.Pow(max_radiusY, 2)) < 1
@@ -175,6 +177,7 @@ namespace GreenLight
             return false;
         }
 
+        // This method builds upon the Contains method to see if two Hitboxes overlap
         public override bool Collide(Hitbox _h, Graphics g)
         {
             bool _temp = false;

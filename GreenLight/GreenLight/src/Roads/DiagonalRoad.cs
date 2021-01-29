@@ -54,6 +54,7 @@ namespace GreenLight
             return new DrivingLane(LanePoints.CalculateDiagonalLane(_point1,_point2), this.Dir, this.lanes, _thisLane, _temp);
         }
 
+        // This method moves the begin- and/or endpoint of different lanes in a DiagonalRoad, so lanes are not overlapping
         public DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
             int drivingLaneDistance = this.laneWidth;

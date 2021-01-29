@@ -12,10 +12,10 @@ namespace GreenLight
     public class CrossRoadController : EntityController
     {
 
-        //This class contains methods to build crossroad, and immediately open a settingsscreen in which the user can determine which paths a driver can take over the crossroad.
-        //Connectionpoints are part of the crossroad, and can be enabled or disabled on the settingscreen, linked, or selected.
-        //This class also manages clicking on crossroads.
-        //It contains a method to calculate drivinglanes out of links, and crosslanes out of those. 
+        // This class contains methods to build CrossRoads, and immediately open a settingsscreen in which the user can determine which paths a driver can take over the crossroad.
+        // Connectionpoints are part of the crossroad, and can be enabled or disabled on the settingscreen, linked, or selected.
+        // This class also manages clicking on crossroads.
+        // It contains a method to calculate drivinglanes out of links, and crosslanes out of those. 
 
         public bool TempDraw;
 
@@ -47,8 +47,6 @@ namespace GreenLight
             CrossRoad _temp = new CrossRoad(_point1, _point1, _lanes, "Cross", false, false, null, null);
             this.selectedRoad = _temp;
 
-           
-            //Open het menu;
             Console.WriteLine("New CrossRoad Made!");
 
             return _temp;
@@ -76,7 +74,6 @@ namespace GreenLight
             this.settingScreenImage.Size = new Size(menu["width"] - 2 * menu["offset"], menu["width"] - 2 * menu["offset"]);
             this.settingScreenImage.Location = new Point(menu["offset"], menu["offset"]);
             this.settingScreenImage.BackColor = Color.Black;
-            //TEMP
 
             selectButton = new CurvedButtons(new Size(menu["buttonWidth"], menu["buttonHeight"]), new Point(menu["offset"], menu["width"]), menu["buttonCurve"], "../../src/User Interface Recources/Custom_Small_Button.png", "Select", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             selectButton.Click += (object o, EventArgs ea) => { this.Button = "Select";  };
@@ -135,6 +132,7 @@ namespace GreenLight
             this.settingScreen.Controls.Add(this.settingScreenImage);
         }
 
+        // Shows the pop-up menu for CrossRoads
         public void ShowSettingScreen(CrossRoad _road)
         {
             if (General_Form.Main != null)
@@ -151,6 +149,7 @@ namespace GreenLight
             this.settingScreenImage.Invalidate();
         }
           
+        // Handles mouseclicks in the pop-up menu
         private void SettingBoxClick(object o, MouseEventArgs mea)
         {
             ConnectionPoint _conpoint = this.selectedRoad.connectPoints.Find(x => x.Hitbox.Contains(mea.Location));
@@ -175,11 +174,11 @@ namespace GreenLight
                     _conpoint.Hitbox.color = Color.Green;
                 }
             }
-            else if (this.Button == "Select") // && _conpoint.Active == true)
+            else if (this.Button == "Select") 
             {
                 selectedRoad.SwitchSelectedPoint(_conpoint);
             }
-            else if (this.Button == "Link") // && _conpoint.Active == true)
+            else if (this.Button == "Link") 
             {
                 MakeLink(selectedRoad.selectedPoint, _conpoint);
             }
@@ -187,6 +186,7 @@ namespace GreenLight
             this.settingScreenImage.Invalidate();
         }
 
+        // Draws the image inside the pop-up menu
         private void SettingBoxDraw(object o, PaintEventArgs pea)
         {
             Graphics g = pea.Graphics;
@@ -240,6 +240,7 @@ namespace GreenLight
             }
         }
 
+        // Creates a ConnectionLink between two ConnectionPoints
         private void MakeLink(ConnectionPoint _begin, ConnectionPoint _end)
         {
             List<ConnectionLink> _links = selectedRoad.connectLinks;
@@ -289,6 +290,7 @@ namespace GreenLight
             this.settingScreen.Invalidate();
         }
 
+        // Deletes a CrossRoad from the screen
         public void DeleteCrossroad(AbstractRoad _deletedroad)
         {
             foreach(List<CrossArrow> _list in General_Form.Main.BuildScreen.builder.roadBuilder.AllCrossArrows)
@@ -329,6 +331,7 @@ namespace GreenLight
             this.Screen.Invalidate();
         }
 
+        // Creates the CrossLanes based on the ConnectionLinks
         public void CreateDrivingLanes()
         {
             List<LanePoints> _temp = null;
@@ -409,8 +412,6 @@ namespace GreenLight
                 
             }
 
-            Console.WriteLine("top :" + _top); Console.WriteLine("Right :" + _right); Console.WriteLine("left :" + _left); Console.WriteLine("bottom :" + _bottom);
-
             int _index = 0;
 
             foreach (ConnectionLink _link in selectedRoad.connectLinks)
@@ -421,8 +422,6 @@ namespace GreenLight
                 _index++;
                 
                 TranslatePoints(ref _begin, ref _end, selectedRoad);
-
-                //bool _change = false;
 
                 ConnectionPoint _cpoint;
                 Point _point;
@@ -451,11 +450,9 @@ namespace GreenLight
                     if (!_exists)
                     {
                         selectedRoad.translatedconnectPoints.Add(cp);
-                        Console.WriteLine("TranslatedconnectPoints");
                     }
                 }
 
-                Console.WriteLine("Crossroad: {0} - {1},", _begin, _end);
 
                 if (((_link.end.Side == "Top" || _link.end.Side == "Bottom") && (_link.begin.Side == "Top" || _link.begin.Side == "Bottom"))
                     || ((_link.end.Side == "Left" || _link.end.Side == "Right") && (_link.begin.Side == "Left" || _link.begin.Side == "Right")))
@@ -463,10 +460,9 @@ namespace GreenLight
                     _temp = LanePoints.CalculateDiagonalLane(_begin, _end);
                 }
                 else
-                {   //-----------------------------------------------------
+                {   
                     if (_link.begin.Side == "Left" && _link.end.Side == "Top")
                     {
-                        //omgedraaid
                         _temp = LanePoints.CalculateCurveLane(_end, _begin, "NW");
                         _temp.Reverse();
                         _temp.ForEach(x => x.Flip());
@@ -477,10 +473,8 @@ namespace GreenLight
                         _temp = LanePoints.CalculateCurveLane(_begin, _end, "NW");
 
                     }
-                    //------------------------------------------------
                     else if (_link.begin.Side == "Right" && _link.end.Side == "Bottom")
                     {
-                        //omgedraaid
                         _temp = LanePoints.CalculateCurveLane(_end, _begin, "SE");
                         _temp.Reverse();
                         _temp.ForEach(x => x.Flip());
@@ -491,10 +485,8 @@ namespace GreenLight
                         _temp = LanePoints.CalculateCurveLane(_begin, _end, "SE");
 
                     }
-                    //---------------------------------------------
                     else if (_link.begin.Side == "Bottom" && _link.end.Side == "Left")
                     {
-                        //omgedraaid
                         _temp = LanePoints.CalculateCurveLane(_end, _begin, "SW");
                         _temp.Reverse();
                         _temp.ForEach(x => x.Flip());
@@ -505,10 +497,8 @@ namespace GreenLight
                         _temp = LanePoints.CalculateCurveLane(_begin, _end, "SW");
 
                     }
-                    //---------------------------------------------
                     else if (_link.begin.Side == "Top" && _link.end.Side == "Right")
                     {
-                        //omgedraaid
                         _temp = LanePoints.CalculateCurveLane(_end, _begin, "NE");
                         _temp.Reverse();
                         _temp.ForEach(x => x.Flip());
@@ -547,6 +537,7 @@ namespace GreenLight
             General_Form.Main.BuildScreen.builder.roadBuilder.Connection(selectedRoad.point1, selectedRoad.point1, selectedRoad.lanes, selectedRoad.Dir, selectedRoad, selectedRoad.beginconnection, selectedRoad.endconnection);
         }
 
+        // Translates the ConnectionPoints to their actual on-screen location 
         private void TranslatePoints(ref Point _begin, ref Point _end, CrossRoad _road)
         {
             double _lanes = 0.5 * Roads.Config.crossroadExtra;

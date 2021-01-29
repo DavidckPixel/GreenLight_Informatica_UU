@@ -15,7 +15,7 @@ namespace GreenLight
         PictureBox screen;
 
         Form settingScreen;
-        PictureBox settingScreenImage;
+        PictureBox settingScreenImage, backgroundImage;
         Label fuelUsed, brakeTime, stopTime, mood, braking, wantsToSwitch, Priority, TargetSpeed;
         CurvedButtons doneButton, deleteButton;
 
@@ -35,63 +35,69 @@ namespace GreenLight
 
             this.settingScreen.Size = new Size(500, 500);
             this.settingScreen.Location = new Point(100, 100);
-            this.settingScreen.BackColor = Color.FromArgb(100, 100, 100);
+            this.settingScreen.BackColor = Color.White;
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
 
             this.settingScreenImage = new PictureBox();
-            this.settingScreenImage.Size = new Size(100, 100);
-            this.settingScreenImage.Location = new Point(10, 10);
+            this.settingScreenImage.Size = new Size(120, 120);
+            this.settingScreenImage.Location = new Point(330, 50);
             this.settingScreenImage.BackColor = Color.Black;
             this.settingScreenImage.Paint += DrawImage;
             this.settingScreen.Controls.Add(this.settingScreenImage);
 
             this.fuelUsed = new Label();
-            this.fuelUsed.Location = new Point(10, 200);
+            this.fuelUsed.Location = new Point(220, 210);
             this.fuelUsed.Size = new Size(200, 30);
             this.settingScreen.Controls.Add(this.fuelUsed);
 
+            this.braking = new Label();
+            this.braking.Location = new Point(220, 240);
+            this.braking.Size = new Size(200, 30);
+            this.settingScreen.Controls.Add(this.braking);
+
             this.brakeTime = new Label();
-            this.brakeTime.Location = new Point(10, 250);
+            this.brakeTime.Location = new Point(220, 271);
             this.brakeTime.Size = new Size(200, 30);
             this.settingScreen.Controls.Add(this.brakeTime);
 
             this.stopTime = new Label();
-            this.stopTime.Location = new Point(10, 300);
+            this.stopTime.Location = new Point(220, 301);
             this.stopTime.Size = new Size(200, 30);
             this.settingScreen.Controls.Add(this.stopTime);
 
-            this.mood = new Label();
-            this.mood.Location = new Point(10, 400);
-            this.mood.Size = new Size(200, 30);
-            this.settingScreen.Controls.Add(this.mood);
-
-            this.braking = new Label();
-            this.braking.Location = new Point(300, 200);
-            this.braking.Size = new Size(200, 30);
-            this.settingScreen.Controls.Add(this.braking);
+            this.TargetSpeed = new Label();
+            this.TargetSpeed.Location = new Point(220, 332);
+            this.TargetSpeed.Size = new Size(200, 30);
+            this.settingScreen.Controls.Add(this.TargetSpeed);
 
             this.wantsToSwitch = new Label();
-            this.wantsToSwitch.Location = new Point(300, 300);
+            this.wantsToSwitch.Location = new Point(220, 362);
             this.wantsToSwitch.Size = new Size(200, 30);
             this.settingScreen.Controls.Add(this.wantsToSwitch);
 
             this.Priority = new Label();
-            this.Priority.Location = new Point(300, 400);
+            this.Priority.Location = new Point(220, 392);
             this.Priority.Size = new Size(200, 30);
             this.settingScreen.Controls.Add(this.Priority);
 
-            this.TargetSpeed = new Label();
-            this.TargetSpeed.Location = new Point(300, 500);
-            this.TargetSpeed.Size = new Size(200, 30);
-            this.settingScreen.Controls.Add(this.TargetSpeed);
+            this.mood = new Label();
+            this.mood.Location = new Point(220, 422);
+            this.mood.Size = new Size(200, 30);
+            this.settingScreen.Controls.Add(this.mood);
 
-            this.doneButton = new CurvedButtons(new Size(100, 30), new Point(10, 450), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            this.doneButton = new CurvedButtons(new Size(100, 30), new Point(125, 450), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             this.doneButton.Click += HideScreen;
             this.settingScreen.Controls.Add(this.doneButton);
 
-            this.deleteButton = new CurvedButtons(new Size(100, 30), new Point(200, 450), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Delete Car", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            this.deleteButton = new CurvedButtons(new Size(100, 30), new Point(275, 450), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Delete Car", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             this.deleteButton.Click += deleteCar;
             this.settingScreen.Controls.Add(this.deleteButton);
+
+            this.backgroundImage = new PictureBox();
+            this.backgroundImage.Size = new Size(500, 500);
+            this.backgroundImage.Location = new Point(0, 0);
+            this.backgroundImage.Image = Image.FromFile("../../src/User Interface Recources/Driver_Profile_Card.png");
+            this.settingScreen.Controls.Add(this.backgroundImage);
         }
 
         private void deleteCar(object sender, EventArgs e)
@@ -108,7 +114,6 @@ namespace GreenLight
             }
 
             General_Form.Main.DataScreen.dataController.collector.RemoveVehicle(this.selectedVehicle, false);
-            //this.selectedVehicle.vehicleAI.SignalDone();
             General_Form.Main.SimulationScreen.Simulator.vehicleController.vehicleList.Remove(this.selectedVehicle);
             this.screen.Invalidate();
 
@@ -164,7 +169,7 @@ namespace GreenLight
             this.mood.Text = _profile.mood;
             this.braking.Text = _ai.isBraking.ToString();
             this.displayImage = _profile.imgFace;
-            this.wantsToSwitch.Text = _ai.Goal.ToString();
+            this.wantsToSwitch.Text = _ai.wantsToSwitch.ToString();
             this.Priority.Text = _ai.priority.ToString();
             this.TargetSpeed.Text = _ai.targetspeed.ToString();
 
