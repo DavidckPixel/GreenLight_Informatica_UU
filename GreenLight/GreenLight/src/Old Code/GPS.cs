@@ -55,7 +55,8 @@ namespace GreenLight
                 getPath.distancelist.Clear();
                 getPath.pathnr = 0;
             }
-            Console.WriteLine(roadPath.Count);
+            
+            .WriteLine(roadPath.Count);
             if (roadPath.Count == 0)
             {
                 MessageBox.Show("No routes available, make sure to add an endpoint. You will return to the builder.");

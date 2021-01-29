@@ -8,6 +8,10 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
+    // This class is not the actual speedsign but it chooses the correct speedsign image,
+    // corresponding to the users input. 
+    // The method speedimage is used in placed sign to get the right image for the visual of the sing.
+
     public class Speedsign : PictureBox
     {
         public int speed;

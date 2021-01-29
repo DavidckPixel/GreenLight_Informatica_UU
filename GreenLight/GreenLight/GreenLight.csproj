@@ -76,8 +76,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\Driver\GPS\DijkstraPaths.cs" />
-    <Compile Include="src\Signs\Controller\TrafficLightController.cs" />
-    <Compile Include="src\Signs\SignTypes\TrafficLight.cs" />
+    <Compile Include="src\Old Code\TrafficLightController.cs" />
+    <Compile Include="src\Old Code\TrafficLight.cs" />
     <Compile Include="src\Signs\Speedsign.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -7,30 +7,28 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Timers;
 
-//This is the controller that handles all the sign placement, every Sign has its own controller because every sign requires its own input
-//for example: speed needs a set speed but other signs need other things.
-//This controller also has the function that checks the mouse position, and finds the closest point to it
-//so there is still alot of flexibilty where on the road the sign needs to be placed.
+// This is the controller that handles all the sign placement, every Sign has its own controller because every sign requires its own input
+// for example: speed needs a set speed but other signs need other things.
+// This controller also has the function that checks the mouse position, and gives these cord to the placed sign 
+// which will automatically set the location.
+// there also is a load method, which for speed improvements skips the calculation of the sings location because this location is saved.
 
 
 namespace GreenLight
 {
     public class MainSignController : EntityController
     {
-
         public List<AbstractSign> Signs = new List<AbstractSign>();
-        public TrafficLightController trafficLight;
         public SpeedSignController speedSign;
         public StopSignController stopSign;
         public YieldSignController yieldSignC;
         public PrioritySignController prioritySignC;
 
         public AbstractRoad selectedRoad;
-        public bool dragMode, _flipped = false, _setTimer = false;
+        public bool dragMode, _flipped = false;
         public int SignCount = 0;
         private Point MouseClick;
         public PlacedSign selectedSign;
-        public System.Timers.Timer trafficLightTimer;
 
         Form main;
         PictureBox screen;
@@ -50,10 +48,6 @@ namespace GreenLight
             this.stopSign = new StopSignController(_main, this);
             this.stopSign.initSettingScreen();
 
-            this.trafficLight = new TrafficLightController(_main, this);
-            this.trafficLightTimer = new System.Timers.Timer();
-            this.trafficLight.initSettingScreen();
-
             this.prioritySignC = new PrioritySignController(_main, this);
             this.yieldSignC = new YieldSignController(_main, this);
 
@@ -63,7 +57,6 @@ namespace GreenLight
 
         public override void Initialize()
         {
-
         }
 
         public void setDragMode(AbstractRoad _road)
@@ -199,9 +192,6 @@ namespace GreenLight
             {
                 case "X":
                     break;
-                case "trafficLight":
-                    _sign_image = Image.FromFile("../../src/User Interface Recources/Traffic_light.png");
-                    break;
                 case "speedSign":
                     _sign_image = Image.FromFile("../../src/User Interface Recources/Empty_Speed_Sign.png");
                     break;
@@ -217,11 +207,6 @@ namespace GreenLight
             }
             PlacedSign _placed = new PlacedSign(new Point(-100, -100), "", _temp, _sign_image, _selectedRoad, signType, new Point(0, 0), MouseClick, _flipped, SignCount);
             this.selectedRoad.Signs.Add(_placed);
-            if (signType == "trafficLight")
-            {
-                TrafficLight _tl = (TrafficLight)_placed.Sign;
-                _tl.trafficLightnr = SignCount;
-            }
             SignCount++;
             closeDragMode();
         }
@@ -264,8 +249,6 @@ namespace GreenLight
             {
                 case "X":
                     break;
-                case "trafficLight":
-                    return trafficLight.newSign(selectedRoad);
                 case "speedSign":
                     return speedSign.newSign(selectedRoad);
                 case "yieldSign":
@@ -298,34 +281,6 @@ namespace GreenLight
             this.screen.Invalidate();
         }
 
-        public void StartTimer()
-        {
-            trafficLightTimer.Interval = 5000;
-            trafficLightTimer.Start();
-            trafficLightTimer.Elapsed += new ElapsedEventHandler(SwitchTrafficLights);
-        }
-
-        void SwitchTrafficLights(object source, ElapsedEventArgs e)
-        {
-            foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
-            {
-                foreach (PlacedSign _as in _road.Signs)
-                {
-                    if (_as.signType == "trafficLight")
-                    {
-                        TrafficLight _tl = (TrafficLight)_as.Sign;
-                        _tl.SwitchLights();
-                    }
-                }
-            }
-        }
-
-
-        public void StopTimer()
-        {
-            if(trafficLightTimer != null)
-                trafficLightTimer.Stop();
-        }
 
         public void deleteSign(AbstractSign _abstractSign = null)
         {
@@ -359,10 +314,6 @@ namespace GreenLight
             switch (_signType)
             {
                 case "X":
-                    break;
-                case "trafficLight":
-                    _sign_image = Image.FromFile("../../src/User Interface Recources/Traffic_light.png");
-                    _temp = new TrafficLight(trafficLight);
                     break;
                 case "speedSign":
                     _sign_image = Image.FromFile("../../src/User Interface Recources/Speed_Sign.png");
