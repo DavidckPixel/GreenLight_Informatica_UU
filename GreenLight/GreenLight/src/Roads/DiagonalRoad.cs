@@ -28,7 +28,7 @@ namespace GreenLight
 
             this.slp = _slp;
 
-            Point[] _points = RoadMath.hitBoxPointsDiagonal(_point1, _point2, lanes, this.laneWidth, true, this.slp);
+            Point[] _points = RoadMath.hitBoxPointsDiagonal(_point1, _point2, lanes, this.laneWidth, true, this.slp, false);
             this.hitbox = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Yellow);
 
             for (int x = 1; x <= this.lanes; x++)
@@ -49,7 +49,7 @@ namespace GreenLight
 
             this.slp = _slp;
         
-            Point[] _points = RoadMath.hitBoxPointsDiagonal(_point1, _point2, 1, this.laneWidth, false, this.slp);
+            Point[] _points = RoadMath.hitBoxPointsDiagonal(_point1, _point2, 1, this.laneWidth, false, this.slp, false);
             Hitbox _temp = new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Green);
             return new DrivingLane(LanePoints.CalculateDiagonalLane(_point1,_point2), this.Dir, this.lanes, _thisLane, _temp);
         }

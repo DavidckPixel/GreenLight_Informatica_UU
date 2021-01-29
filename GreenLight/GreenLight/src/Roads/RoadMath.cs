@@ -242,10 +242,19 @@ namespace GreenLight
             return _points;
         }
 
-        public static Point[] hitBoxPointsDiagonal(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox, double _slp)
+        public static Point[] hitBoxPointsDiagonal(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox, double _slp, bool _checklegal)
         {
             Point _one, _two;
-            int _roadWidth = (_laneWidth * _lanes) / 2;
+            int _roadWidth;
+            if (_checklegal && _lanes == 1)
+            {
+                _roadWidth = ((_laneWidth * _lanes) + 20) / 2;
+            }
+            else
+            {
+                _roadWidth = (_laneWidth * _lanes) / 2;
+            }
+          
 
             if (_lanes % 2 == 0 && _Roadhitbox)
             {

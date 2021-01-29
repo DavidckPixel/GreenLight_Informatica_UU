@@ -657,7 +657,7 @@ namespace GreenLight
                 }
                 else if (selectedRoad.Type == "Diagonal")
                 {
-                    _points = RoadMath.hitBoxPointsDiagonal(_oneoffset, _twooffset, 1, (int)(Roads.Config.laneWidth * _scale), false, RoadMath.calculateSlope(_oneoffset, _twooffset));
+                    _points = RoadMath.hitBoxPointsDiagonal(_oneoffset, _twooffset, 1, (int)(Roads.Config.laneWidth * _scale), false, RoadMath.calculateSlope(_oneoffset, _twooffset), false);
 
                 }
                 Hitbox _hitbox = selectedRoad.CreateHitbox(_points);
