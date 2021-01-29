@@ -55,7 +55,7 @@ namespace GreenLight
             Traffic_light = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Traffic_Light_Button.png", this.BackColor);
             Traffic_light.Click += (object o, EventArgs EA) => { ResetButtons(Traffic_light, Traffic_light.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "trafficLight"; };
             this.Controls.Add(Traffic_light);
-            ESSM.Add(Traffic_light);
+            essmButtons.Add(Traffic_light);
 
             speedSign = new CurvedButtons(new Size(_ButtonSize, _ButtonSize), new Point(_ButtonXbase + _ButtonXdiff, _ButtonYbase), menu["buttonCurve"], "../../src/User Interface Recources/Speed_Sign_Button.png", this.BackColor);
             speedSign.Click += (object o, EventArgs EA) => { ResetButtons(speedSign, speedSign.Image_path); General_Form.Main.BuildScreen.builder.signController.signType = "speedSign"; };
