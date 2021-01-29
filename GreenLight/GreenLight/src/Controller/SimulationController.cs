@@ -150,7 +150,7 @@ namespace GreenLight
 
                     if (x % 600 == 0)
                     {
-                        Console.WriteLine(x);
+                        //Console.WriteLine(x);
                     }
 
                     this.screenController.Screen.Invalidate();

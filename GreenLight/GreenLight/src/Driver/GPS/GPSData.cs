@@ -280,8 +280,6 @@ namespace GreenLight.src.Driver.GPS
         //This method is used by the betterGPS to get a random node that can spawn as a startnode for the NodePath it will take.
         public Node GetRandomStartNode()
         {
-            Console.WriteLine(this.spawnNodes.Count());
-
             if (this.nodePaths.Any())
             {
                 Random ran = new Random();
