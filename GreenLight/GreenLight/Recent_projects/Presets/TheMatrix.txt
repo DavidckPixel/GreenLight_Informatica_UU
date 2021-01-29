@@ -1,0 +1,10 @@
+Road Diagonal 30 5 30 585 5 False False
+Road Diagonal 130 5 130 585 5 False False
+Road Diagonal 230 5 230 585 5 False False
+Road Diagonal 330 5 330 585 5 False False
+Road Diagonal 930 5 930 585 5 False False
+Road Diagonal 830 5 830 585 5 False False
+Road Diagonal 430 5 430 585 5 False False
+Road Diagonal 530 5 530 585 5 False False
+Road Diagonal 630 5 630 585 5 False False
+Road Diagonal 730 5 730 585 5 False False

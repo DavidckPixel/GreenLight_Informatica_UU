@@ -330,6 +330,7 @@
     <Folder Include="DataDump\" />
     <Folder Include="Fonts\" />
     <Folder Include="Logs\" />
+    <Folder Include="Recent_projects\Images\" />
     <Folder Include="src\Driver\DriverProfile\Images\" />
   </ItemGroup>
   <ItemGroup>
@@ -341,7 +342,6 @@
     <Content Include="Images\BetterCar.png" />
     <Content Include="Images\BigCar.png" />
     <Content Include="Images\Car.png" />
-    <Content Include="Recent_projects\Images\Cross.png" />
     <Content Include="Recent_projects\Presets\PresetsDir.txt" />
     <Content Include="Recent_projects\Recent_projects.txt" />
     <Content Include="src\User Interface Recources\CurveButton.png" />

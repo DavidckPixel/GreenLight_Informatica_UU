@@ -239,7 +239,6 @@ namespace GreenLight
                 }
                 else
                 {
-
                     int _x = this.Location.X + 10;
                     LanePoints _temp;
                     _temp = _hitboxLanepoints.Aggregate((x, y) => Math.Abs(x.cord.X - _x) < Math.Abs(y.cord.X - _x) ? x : y);

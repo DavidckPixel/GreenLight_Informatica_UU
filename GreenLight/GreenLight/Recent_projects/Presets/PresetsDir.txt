@@ -1,1 +1,4 @@
-﻿
+﻿NiceCrossroad ../../Recent_projects/Presets\NiceCrossroad.txt ../../Recent_projects/Presets/NiceCrossroad.png
+NiceCrossroad ../../Recent_projects/Presets\priority.txt ../../Recent_projects/Presets/priority.png
+NiceCrossroad ../../Recent_projects/Presets\OriginPointTest.txt ../../Recent_projects/Presets/OriginPointTest.png
+NiceCrossroad ../../Recent_projects/Presets\TheMatrix.txt ../../Recent_projects/Presets/TheMatrix.png
