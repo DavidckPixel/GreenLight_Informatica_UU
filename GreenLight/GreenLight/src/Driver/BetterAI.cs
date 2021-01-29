@@ -24,7 +24,7 @@ namespace GreenLight
         int speedRelativeToLimit;
         float ruleBreakingChance;
 
-        public double targetspeed = 14;
+        public double targetspeed = 3;
         public int priority = 2;
 
         public bool isBraking = false;
@@ -95,7 +95,7 @@ namespace GreenLight
         //The InitGPS class is the method that initialized the GPS, the GPS is the tool that deals with pathfinding and the AI uses to navigator the roadSystem
         //It takes a start Node, it will then create a GPS which will find a random path from the startNode to any End nodes
 
-        public void initGPS(Node _startNode)
+        public void InitGPS(Node _startNode)
         {
             navigator = new BetterGPS(this, _startNode);
             this.SetPath();
@@ -105,7 +105,7 @@ namespace GreenLight
         // vehicle its controlling. This is also the place where the DriverProfile is created, the driverProfile is the instance that stores most of the vehicles
         //Data which is then inturn used by the data collector.
 
-        public void setVehicle(BetterVehicle _vehicle, Node _startNode)
+        public void SetVehicle(BetterVehicle _vehicle, Node _startNode)
         {
             this.vehicle = _vehicle;
             profile = new DriverProfile(this.vehicle.physics);
@@ -257,7 +257,7 @@ namespace GreenLight
         //it very complicated and difficult to work with, its fun to read through and try to understand
         //but no longer used do to critical errors.
 
-        private void crossRoadRules()
+        private void CrossRoadRules()
         {
             if (this.nextRoad == null)
             {
@@ -674,7 +674,7 @@ namespace GreenLight
         //To keep the car driving on a the road, it drives from lane point to lane point. The distance between these lane points can sometimes be smaller the one, so a car can pass multiple lanepoints
         //in one tick. When a lanePoint is passed it will find the nextLane point it needs to drive too, when its at the end of the lanePoint list, it will switch roads to the next road
 
-        public void switchLanePoints()
+        public void SwitchLanePoints()
         {
             List<LanePoints> _points = this.vehicle.currentLane.points;
             this.currentLanePointIndex++;

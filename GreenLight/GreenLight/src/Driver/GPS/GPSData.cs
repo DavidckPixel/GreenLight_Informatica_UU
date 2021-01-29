@@ -153,7 +153,7 @@ namespace GreenLight.src.Driver.GPS
                 _node.GiveConnectioned(_endKnots);
             }
 
-            nodes.ForEach(x => x.Spawn());
+            nodes.ForEach(x => x.spawn());
             this.spawnNodes = nodes.FindAll(x => x.canSpawn == true);
 
             foreach (Node _node in this.spawnNodes)
