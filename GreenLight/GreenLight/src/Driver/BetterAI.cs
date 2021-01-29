@@ -82,13 +82,13 @@ namespace GreenLight
             ChangePriority(2);
         }
 
-        public void initGPS(Node _startNode)
+        public void InitGPS(Node _startNode)
         {
             navigator = new BetterGPS(this, _startNode);
             this.SetPath();
         }
 
-        public void setVehicle(BetterVehicle _vehicle, Node _startNode)
+        public void SetVehicle(BetterVehicle _vehicle, Node _startNode)
         {
             this.vehicle = _vehicle;
             profile = new DriverProfile(this.vehicle.physics);
@@ -105,7 +105,7 @@ namespace GreenLight
             }
             profile.mood = profile.faceType.speech[_mood][ran.Next(0, profile.faceType.speech[_mood].Count)];
 
-            initGPS(_startNode);
+            InitGPS(_startNode);
         }
 
         public void Update()
@@ -208,7 +208,7 @@ namespace GreenLight
             }
         }
 
-        private void crossRoadRules()
+        private void CrossRoadRules()
         {
             if (this.nextRoad == null)
             {
@@ -595,7 +595,7 @@ namespace GreenLight
             }
         }
 
-        public void switchLanePoints()
+        public void SwitchLanePoints()
         {
             List<LanePoints> _points = this.vehicle.currentLane.points;
             this.currentLanePointIndex++;

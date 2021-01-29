@@ -24,15 +24,15 @@ namespace GreenLight.src.Driver.GPS
             this.ai = _ai;
             this.begin = _begin;
             this.goal = _end;
-            GPSData _data = GPSData.getGPSData();
+            GPSData _data = GPSData.GetGPSData();
 
             if (_end == null)
             {
-                this.roadlist = _data.getPathListFromBeginnin(this.begin);
+                this.roadlist = _data.GetPathListFromBeginnin(this.begin);
             }
             else
             {
-                this.roadlist = _data.getPathListFromNode(this.begin, this.goal);
+                this.roadlist = _data.GetPathListFromNode(this.begin, this.goal);
             }
 
             if(this.roadlist == null)

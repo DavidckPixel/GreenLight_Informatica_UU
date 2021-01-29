@@ -15,7 +15,7 @@ namespace GreenLight.src.Driver.GPS
         //When the DijkstraPath isn't null, it takes the list of nodes in the dijkstraPath and returns it.
         public static List<Node> GetShortestPath(Node _start, Node _goal)
         {
-            DijkstraPaths temp = calculatePath(_start, _goal);
+            DijkstraPaths temp = CalculatePath(_start, _goal);
 
             if (temp == null)
             {
@@ -37,7 +37,7 @@ namespace GreenLight.src.Driver.GPS
         //It loops untill there is a path from start to finish to return, or twice the amount of roads there are. If no path is found, the method returns null.
 
 
-        public static DijkstraPaths calculatePath(Node _start, Node _goal)
+        public static DijkstraPaths CalculatePath(Node _start, Node _goal)
         {
             List<DijkstraPaths> dijkstraPaths = new List<DijkstraPaths>();
 
@@ -51,7 +51,6 @@ namespace GreenLight.src.Driver.GPS
 
             for(int x = 0; x < General_Form.Main.BuildScreen.builder.roadBuilder.roads.Count * 2; x++)
             {
-                List<Node> _notReachable = new List<Node>();
                 List<AbstractRoad> _visitedRoads = new List<AbstractRoad>();
 
                 foreach (DijkstraPaths _dijkPath in dijkstraPaths)

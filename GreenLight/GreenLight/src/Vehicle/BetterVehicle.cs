@@ -58,7 +58,7 @@ namespace GreenLight
             this.locationY = _startPoint.knot.Cord.Y;
 
             this.vehicleAI = _ai;
-            this.vehicleAI.setVehicle(this, _startPoint);
+            this.vehicleAI.SetVehicle(this, _startPoint);
         }
 
         //Updates the speed as well as the location of the vehicle.
@@ -131,7 +131,7 @@ namespace GreenLight
             }
             while (_indexdiff > 0)
             {
-                this.vehicleAI.switchLanePoints();
+                this.vehicleAI.SwitchLanePoints();
                 _indexdiff--;
             }
             this.currentAngle = this.vehicleAI.goal.degree;

@@ -32,7 +32,7 @@ namespace GreenLight.src.Driver.GPS
         private void CreateLinkPath()
         {
             Node _prevNode = null;
-            Node _next = null;
+            Node _next;
 
             int x = 1;
 

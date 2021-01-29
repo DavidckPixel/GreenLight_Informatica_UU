@@ -111,13 +111,13 @@ namespace GreenLight
             {
                 if (General_Form.Main.BuildScreen.builder.roadBuilder.roads.Count > 0)
                 {
-                    General_Form.Main.SimulationScreen.Simulator.initSimulation();
+                    General_Form.Main.SimulationScreen.Simulator.InitSimulation();
                     General_Form.Main.SimulationScreen.Simulator.StartSimulation();
                 }
                 else
                 {
                     MessageBox.Show("No spawnpoints available, you will return to the builder.");
-                    General_Form.Main.SimulationScreen.Simulator.resetSimulation();
+                    General_Form.Main.SimulationScreen.Simulator.ResetSimulation();
                     General_Form.Main.SwitchControllers(General_Form.Main.BuildScreen);
                     General_Form.Main.UserInterface.SimDataM.ResetTimer();
                     Start.Show();
@@ -139,7 +139,7 @@ namespace GreenLight
             Reset = new CurvedButtons(new Size(_buttonSize, _buttonSize), new Point(menu["buttonStart"] + menu["ButtonX"], Form.Height - menu["controlsY"]), 35, "../../src/User Interface Recources/Reset_Simulation_Button.png", this.BackColor);
             Reset.Click += (object o, EventArgs ea) =>
             {
-                General_Form.Main.SimulationScreen.Simulator.resetSimulation();
+                General_Form.Main.SimulationScreen.Simulator.ResetSimulation();
             };
             this.Controls.Add(Reset);
             Reset.BringToFront();
@@ -161,7 +161,7 @@ namespace GreenLight
             Stop = new CurvedButtons(new Size(_buttonSize, _buttonSize), new Point(menu["buttonStart"] + menu["ButtonX"] * 2, Form.Height - menu["controlsY"]), 35, "../../src/User Interface Recources/Stop_Simulation_Button.png", this.BackColor);
             Stop.Click += (object obj, EventArgs args) => 
             {
-                General_Form.Main.SimulationScreen.Simulator.resetSimulation();
+                General_Form.Main.SimulationScreen.Simulator.ResetSimulation();
                 General_Form.Main.SwitchControllers(General_Form.Main.BuildScreen);
                 General_Form.Main.UserInterface.SimDataM.ResetTimer();
                 General_Form.Main.SimulationScreen.Simulator.StopSimulation();

@@ -242,7 +242,7 @@ namespace GreenLight.src.Driver.GPS
             return _links;
         }
 
-        public List<Node> getNodes()
+        public List<Node> GetNodes()
         {
             return this.nodes;
         }
@@ -277,7 +277,7 @@ namespace GreenLight.src.Driver.GPS
             }
         }
 
-        public List<Path> getPathListFromNode(Node _begin, Node _end)
+        public List<Path> GetPathListFromNode(Node _begin, Node _end)
         {
             if (!(_begin.canSpawn || _end.canSpawn))
             {
@@ -287,12 +287,12 @@ namespace GreenLight.src.Driver.GPS
             return this.nodePaths.Find(x => x.CheckMatch(_begin, _end)).linkPath;
         }
 
-        public static GPSData getGPSData()
+        public static GPSData GetGPSData()
         {
             return General_Form.Main.SimulationScreen.gpsData;
         }
 
-        public List<Path> getPathListFromBeginnin(Node _begin)
+        public List<Path> GetPathListFromBeginnin(Node _begin)
         {
             List<NodePath> _AllPossiblePaths = this.nodePaths.FindAll(x => x.begin == _begin);
 
@@ -306,7 +306,7 @@ namespace GreenLight.src.Driver.GPS
             return _AllPossiblePaths[ran.Next(0, _AllPossiblePaths.Count())].linkPath;
         }
 
-        public Node getRandomStartNode()
+        public Node GetRandomStartNode()
         {
             Console.WriteLine(this.spawnNodes.Count());
 
