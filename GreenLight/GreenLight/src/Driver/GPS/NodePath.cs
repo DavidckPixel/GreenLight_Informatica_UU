@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GreenLight.src.Driver.GPS
 {
+
+    //A node Path is the full Path from a begin node to the end node, consistent of a list of paths 
+
     public class NodePath
     {
         public Node begin;
@@ -28,6 +31,9 @@ namespace GreenLight.src.Driver.GPS
 
             CreateLinkPath();
         }
+
+        //During a transition from a Normal Road to a crossRoad or viseversa. The drivinglane index number nolonger properly correspond, 
+        //so to compensate for that, we create a link between the two, so here we can say that if on road one you are on laneIndex 1, the next LaneIndex u will be on is laneIndex 12
 
         private void CreateLinkPath()
         {

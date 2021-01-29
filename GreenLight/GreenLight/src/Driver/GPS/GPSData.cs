@@ -7,6 +7,14 @@ using System.Drawing;
 
 namespace GreenLight.src.Driver.GPS
 {
+    //this is the general controller class for the GPS, this is were all the paths nodes and links are calculated.
+    //the sequence it operates in:
+    //1) Find all the knots, a knot it the place where 2 roads meet, or incase of an endroad, only one road begins/ends, to note here is that the beginning/end of a road is ambiqious and unimportant here
+    //2) Create all the possible links inbetween the knots, it uses the drivinglanes for this
+    //3) It then creates the nodes which is a knot with a paths it can travel
+    //4) Set which nodes are start/ end nodes
+    //5) remove all the startnodes that have 0 paths
+
      public class GPSData
     {
         List<Node> nodes;
@@ -25,6 +33,10 @@ namespace GreenLight.src.Driver.GPS
             FindAllKnots();
             CreateConnections();
         }
+
+        //this Method iterates through the list of roads, and sees to which road they all connect, creating a knot here
+        //this method creates a bunch of duplicate knots, so after this is done we itterate through al the knots and delete
+        //the duplicates
 
         private void FindAllKnots()
         {
@@ -89,6 +101,8 @@ namespace GreenLight.src.Driver.GPS
             _allKnots.Add(new Knot(_mainroad, _road, _p));
         }
 
+        //This method tests for duplicates
+
         private bool TestDuplicateKnot(Knot _knot)
         {
             foreach (Knot _testKnot in _allKnots)
@@ -100,6 +114,12 @@ namespace GreenLight.src.Driver.GPS
             }
             return false;
         }
+
+        //this is the most important method here
+        //it first creates the links between al the knots
+        //then creates the Nodes
+        //It then calculates all the paths between all the nodes, so this is all done before the simulation start
+        //we do this so lower the amount of processing needed during the simulation.
 
         private void CreateConnections()
         {
@@ -164,6 +184,8 @@ namespace GreenLight.src.Driver.GPS
             Console.WriteLine("AMOUNT OF SPAWN POINTS: {0}", this.nodePaths.Count());
 
         }
+
+        //This method creates the connection per knot for each road to another road
 
         private List<Link> CreateConnectionPerRoad(AbstractRoad _road)
         {
@@ -277,6 +299,8 @@ namespace GreenLight.src.Driver.GPS
             }
         }
 
+        //This method can be called by the AI, it requires a begin and end node, it then returns the Path between these 2 points
+
         public List<Path> getPathListFromNode(Node _begin, Node _end)
         {
             if (!(_begin.canSpawn || _end.canSpawn))
@@ -292,6 +316,8 @@ namespace GreenLight.src.Driver.GPS
             return General_Form.Main.SimulationScreen.gpsData;
         }
 
+        //The most often used function by the AI: it gives a begin node, it then finds a random path that uses this begin node
+
         public List<Path> getPathListFromBeginnin(Node _begin)
         {
             List<NodePath> _AllPossiblePaths = this.nodePaths.FindAll(x => x.begin == _begin);
@@ -305,6 +331,10 @@ namespace GreenLight.src.Driver.GPS
 
             return _AllPossiblePaths[ran.Next(0, _AllPossiblePaths.Count())].linkPath;
         }
+
+
+
+        //This method creates a random node from which a vehicle can begin its journey
 
         public Node getRandomStartNode()
         {

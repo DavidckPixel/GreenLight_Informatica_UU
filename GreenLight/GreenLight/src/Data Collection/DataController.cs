@@ -13,6 +13,9 @@ using System.IO.Compression;
 
 namespace GreenLight.src.Data_Collection
 {
+    //The DataController class is the controller that controls the data collection System
+    //It is also the place that holds the stores the charts and that updates the charts
+
     public class DataController : AbstractController
     {
         public DataCollector collector;
@@ -52,6 +55,11 @@ namespace GreenLight.src.Data_Collection
             this.screen.Invalidate();
         }
 
+        //There are 2 types of updates for every chart type, one is the Big updatedate, this will completely recalibrate the chart
+        //removing and adding all the collected data points. This however takes more processing power. So we also added smallupdates, 
+        //these updates occur everytime new data is collected, and instead of completely recalibrating the chart, it only adds the data point to it
+        //This then allows for smooth live updating of charts without it taking to much processing power.
+
         public void UpdateBrakeChart()
         {
             this.brakeChart.Series.Clear();
@@ -72,6 +80,8 @@ namespace GreenLight.src.Data_Collection
                 this.brakeChart.Series.Add(series);
             }
         }
+
+        //when the simulation is reset, the data collector also needs to be reset, that happens here
 
         public void DataControllerReset()
         {
@@ -136,15 +146,20 @@ namespace GreenLight.src.Data_Collection
 
         public void ChangeDataSet(Data _dataSet)
         {
-            //SAVE DATA HERE
-
             collector.data = _dataSet;
         }
 
         public void DrawCharts(Graphics g)
         {
-            Console.WriteLine("Drawing Charts!");
+            //Nothing of interest happens here as of yet
         }
+
+        //This is the function that exports the data, It will take a name give the user as its name
+        //To prevent the system from crashig to do duplicate names, it will first check if there is a duplicate name
+        //and if this is the case it will add a Number behind it, it will repeat this process untill there is no longer
+        // a duplicate name.
+        //It then creates the files in a temp folder, it saves the chart images and a txt file containing the raw data
+        //thnis temp folder is then zipped and saved with the name given by the user
 
         public void ExportData(string BeginName)
         {

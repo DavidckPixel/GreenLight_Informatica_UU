@@ -7,6 +7,10 @@ using System.Drawing;
 
 namespace GreenLight.src.Driver.GPS
 {
+
+    //A Node is similar to a knot but then combined with its Links and connetions, 
+    //A node also holds the variables where or not it can be a begin/end point
+
     public class Node
     {
         public Knot knot;
@@ -26,10 +30,11 @@ namespace GreenLight.src.Driver.GPS
             this.connections = _nodes;
         }
 
+        //A node is a spawn node if it is connected to only one other Node, and is not backlinked, backlinked means that it is linked by something, but does not link back to it.
+
         public void spawn()
-        {
-            Console.WriteLine("BACK LINKED: " + isBackLinked);
-            Console.WriteLine("How Many connections does this Node have " + this.connections.Count);
+        { 
+            Log.Write("The Node at Location: " + this.knot.Cord + " has " + this.links.Count() + " links");
 
             if ((this.connections.Count<= 1 && !isBackLinked) || this.connections.Count < 1)
             {

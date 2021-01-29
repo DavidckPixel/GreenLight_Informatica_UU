@@ -6,3 +6,5 @@ hitbox C:\Users\niels\Downloads\hitbox.txt ../../Recent_projects/Images/hitbox.p
 SingleLaneJunction C:\Users\DaanJ\Documents\GitHub\GreenLight_Informatica_UU\GreenLight\GreenLight\SingleLaneJunction.txt ../../Recent_projects/Images/SingleLaneJunction.png
 SingleLaneJunction C:\Users\DaanJ\Documents\GitHub\GreenLight_Informatica_UU\GreenLight\GreenLight\Presets\SingleLaneJunction.txt ../../Recent_projects/Images/SingleLaneJunction.png
 Simulatie D:\Elio\Documents\Studie\II\Simulatie.txt ../../Recent_projects/Images/Simulatie.png
+BigCrossTest C:\Users\david\Documents\BigCrossTest.txt ../../Recent_projects/Images/BigCrossTest.png
+smallCrossTest C:\Users\david\Documents\smallCrossTest.txt ../../Recent_projects/Images/smallCrossTest.png

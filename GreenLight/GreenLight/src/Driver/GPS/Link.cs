@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GreenLight.src.Driver.GPS
 {
+
+    //A link is a connection between 2 knots, it also contains the laneindex of the road with which lane it is connected
+
     public class Link
     {
         public int laneIndex;
@@ -22,7 +25,7 @@ namespace GreenLight.src.Driver.GPS
 
         public void ConsolePrint()
         {
-            Console.WriteLine("Begin Knot: {0}, End Knot: {1}, LaneIndex {2}", begin.Cord, end.Cord, laneIndex);
+            Log.Write("Begin Knot: " + begin.Cord + ", End Knot: " + end.Cord + ", LaneIndex: " + laneIndex);
         }
     }
 }

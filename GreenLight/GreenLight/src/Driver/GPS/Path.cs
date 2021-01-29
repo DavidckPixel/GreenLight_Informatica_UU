@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace GreenLight.src.Driver.GPS
 {
+    //The Path class is the class that contains all the information for where to go on one road, Since sometimes you need to be on the correct lane
+    //before the end of the road (for example when approaching a crossRoad). this is why we have the NextLaneIndex, this is a list can be null incase it does not matter
+    //where the vehicle ends up, but if this list contains indexes, these are the lane indexes that the vehicle must end up being at before the end of the road.
+
     public class Path
     {
         public AbstractRoad road;
@@ -19,25 +23,20 @@ namespace GreenLight.src.Driver.GPS
             this.laneIndex = new List<int>();
             this.LaneSwap = new List<Tuple<int, int>>();
             _one.links.FindAll(x => x.end == _two.knot).ForEach(x => this.laneIndex.Add(x.laneIndex));
-            Console.WriteLine("Road1 is {0}, Road2 is {1}", _one.knot.Road1, _one.knot.Road2);
 
             if ((_one.knot.Road1 == _two.knot.Road1 || _one.knot.Road1 == _two.knot.Road2 ) && _one.knot.Road1 != null )
             {
-                Console.WriteLine("THE KNOT: " + _one.knot);
-
                     this.road = _one.knot.Road1;
                 
             }
             else
             {
                     this.road = _one.knot.Road2;
-                
             }
             if (this.road == null)
             {
-                Console.WriteLine("THE ROAD IS NULLLLLLLL");
+                return;
             }
-            Console.WriteLine("This road is " + this.road);
             if (this.road != null && this.road.roadtype == "Cross")
             {
                 List<Link> _links = _one.links.FindAll(x => x.end == _two.knot);
@@ -66,15 +65,11 @@ namespace GreenLight.src.Driver.GPS
                 if ((_two.knot.Road1.roadtype == "Cross" || _two.knot.Road2.roadtype == "Cross") && this.road.roadtype != "Cross")
                 {
                     List<Link> _links = _two.links.FindAll(x => x.end == _next.knot);
-                    //Console.WriteLine("HOW MANY LINKS??? " + _links.Count);
                     List<int> _allpossiblelanes = new List<int>();
                     foreach (Link _nextlink in _links)
                     {
                         if (_two.knot.Road1.roadtype == "Cross")
                         {
-                            Console.WriteLine("road 1 driving lanes: " + _two.knot.Road1.Drivinglanes.Count);
-                            Console.WriteLine("road 1 nextlink laneindex: " + (_nextlink.laneIndex - 1));
-                            Console.WriteLine("This link has " + this.laneIndex.Count + " lanes");
                             Lane _crossLane = _two.knot.Road1.Drivinglanes[_nextlink.laneIndex - 1];
                             int _forcedindex = laneIndex.First();
 
@@ -87,15 +82,6 @@ namespace GreenLight.src.Driver.GPS
 
                                 }
                             }
-                            /*if (_allpossiblelanes.Any())
-                            {
-                                Console.WriteLine("Added forcedlaneindex to NextLaneIndex");
-                                Console.WriteLine("Possible forcedlanes count: " + _allpossiblelanes.Count);
-                                //_forcedindex = this.road.Drivinglanes.IndexOf(_forcedlane);
-                                this.NextLaneIndex.Add(_allpossiblelanes);
-                            }*/
-
-
                         }
 
                         if (_two.knot.Road2.roadtype == "Cross")
@@ -103,41 +89,22 @@ namespace GreenLight.src.Driver.GPS
                             Lane _crossLane = _two.knot.Road2.Drivinglanes[_nextlink.laneIndex - 1];
                             Lane _forcedlane = null;
                             int _forcedindex = laneIndex.First();
-                            //List<int> _allpossiblelanes = new List<int>();
                             foreach (Lane _thislane in this.road.Drivinglanes)
                             {
                                 if (RoadMath.Distance(_crossLane.points.First().cord, _thislane.points.Last().cord) < 10)
                                 {
                                     this.LaneSwap.Add(new Tuple<int, int>(_thislane.thisLane, _crossLane.thisLane));
                                     _allpossiblelanes.Add(_thislane.thisLane);
-                                    //break;
                                 }
                             }
-                            /*if (_forcedlane != null)
-                            {
-                                //_forcedindex = this.road.Drivinglanes.IndexOf(_forcedlane);
-
-                                this.NextLaneIndex.Add(_allpossiblelanes);
-                            }*/
-
-
                         }
                         if (_allpossiblelanes.Any())
                         {
-                            //Console.WriteLine("Added forcedlaneindex to NextLaneIndex");
-                            //Console.WriteLine("Possible forcedlanes count: " + _allpossiblelanes.Count);
-                            //_forcedindex = this.road.Drivinglanes.IndexOf(_forcedlane);
-                            //this.NextLaneIndex.AddRange(_allpossiblelanes);
                             _allpossiblelanes.ForEach(x => this.NextLaneIndex.Add(x));
                         }
 
                         _allpossiblelanes.Clear();
                     }
-
-                    //this.NextLaneIndex.ForEach(x => Console.WriteLine("Forced index: " + x));
-
-                    /*_links.ForEach(x => this.NextLaneIndex.Add(x.laneIndex));
-                    this.NextLaneIndex.ForEach(x => Console.WriteLine("Forced index: " + x));*/
                 }
                 else
                 {
@@ -145,7 +112,6 @@ namespace GreenLight.src.Driver.GPS
                     {
                         this.LaneSwap.Add(new Tuple<int, int>(_index, _index));
                     }
-                    //this.NextLaneIndex = null;
                 }
             }
             else
@@ -154,15 +120,10 @@ namespace GreenLight.src.Driver.GPS
                 {
                     this.LaneSwap.Add(new Tuple<int, int>(_index, _index));
                 }
-                //this.NextLaneIndex = null;
             }
 
-
-            Console.WriteLine();
             foreach(int _tuple in this.NextLaneIndex)
             {
-                //Console.WriteLine("Lane : {0} is gekoppeld bij de volgende aan lane: {1}", _tuple.Item1, _tuple.Item2);
-                Console.WriteLine(_tuple);
             }
             
         }

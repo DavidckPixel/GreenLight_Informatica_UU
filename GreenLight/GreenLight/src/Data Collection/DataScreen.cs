@@ -9,6 +9,8 @@ using System.Windows.Forms;
 
 namespace GreenLight.src.Data_Collection
 {
+    //ScreenController for the dataScreen within the program, very similar to every other ScreenController
+
     public class DataScreen : ScreenController
     {
         Form main;
@@ -31,6 +33,8 @@ namespace GreenLight.src.Data_Collection
 
             this.main.Controls.Add(this.Screen);
         }
+
+        //When the dataScreen is loaded (activated), it will give the charts a big update and recalibrate them.
 
         public override void Activate()
         {

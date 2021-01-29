@@ -9,6 +9,10 @@ using System.IO;
 
 namespace GreenLight
 {
+
+    //The AIController deals with anything AI based, it also holds the list of the currently selected DriverStats
+    //This is the controller that is responsible for creating the AI with the correct stats
+
     public class AIController : EntityController
     {
         public DriverStats selectedAI;
@@ -24,28 +28,27 @@ namespace GreenLight
 
         }
 
+        //this Method creates and returns a AU
+
         public BetterAI GetDriver()
         {
-            //Hier dingen die waardes van menu halen ofzo, of bereken voor welke stats etc.
-
             DriverStats _stats = getDriverStats();
 
             return new BetterAI(_stats);
         }
 
+        //This method gets from the userInterface which AIstats are all currently selected, it then puts all of this in a list, incase none
+        //where selected, all are selected
+
         public void initDriverList()
         {
             this.availableDriverStats.Clear();
 
-
-
             List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSDM.Selection_box.elementsSelected;
-
-         //   List<string> availableVehicleStatsString = General_Form.Main.UserInterface.SimSDM.Selection_box.Elements_available;
             availableVehicleStatsString.ForEach(x => this.availableDriverStats.Add(getDriverStat(x)));
             this.availableDriverStats.RemoveAll(x => x == null);
 
-            Console.WriteLine("AMOUNT OF STATS AI LODED: {0}", this.availableDriverStats.Count());
+            Log.Write("AMOUNT OF STATS AI LODED: " + this.availableDriverStats.Count());
 
             if (!this.availableDriverStats.Any())
             {
@@ -53,6 +56,8 @@ namespace GreenLight
             }
         }
 
+        //This method will return a random driver stat from the available driver stats list
+        //when returning a random one it will also take into account the occurunce of each driverStat
 
         public DriverStats getDriverStats(DriverStats _stats = null)
         {
@@ -80,6 +85,8 @@ namespace GreenLight
             return _stats;
         }
 
+        //This function creates and adds a new driverStat
+
         static public void addDriverStats(string _name, int _reactionTime, float _followInterval, int _speedRelativeToLimit, float _ruleBreakingChance, int _occurance, bool _locked)
         {
             DriverStats _temp = new DriverStats(_name, _reactionTime, _followInterval, _speedRelativeToLimit, _ruleBreakingChance, _occurance, _locked);
@@ -92,6 +99,7 @@ namespace GreenLight
             General_Form.Main.UserInterface.SimSDM.Selection_box.AddElement(_temp.Name);
         }
 
+        //this function returns a driverStat based on its name as String
 
         static public DriverStats getDriverStat(string _name)
         {
@@ -112,12 +120,20 @@ namespace GreenLight
             return _temp;
         }
 
+        //This function converts and returns all the driverStats as strings
+
         static public List<string> getStringDriverStats()
         {
             List<string> _temp = new List<string>();
             AITypeConfig.aiTypes.ForEach(x => _temp.Add(x.Name));
             return _temp;
         }
+
+        //The following functions are all used during the creation/ editing of DriverStats in the slider menu, all follow the same prinicple:
+        // 1) see if the value can be edited or if it is locked
+        // 2) see if the value is allowed
+        // 3) Update the value
+
 
         public void DeleteAI(DriverStats _stats)
         {

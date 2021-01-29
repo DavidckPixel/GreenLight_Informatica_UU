@@ -8,6 +8,11 @@ using System.Drawing;
 
 namespace GreenLight
 {
+
+    //Data class for the DriverProfile
+    //This is a class that collects some of the data
+    //that is sent to the data collector once this car has finished its lifespan
+
     public class DriverProfile
     {
         public int ticksOnBrake = 0;
@@ -22,6 +27,10 @@ namespace GreenLight
         public DriverProfileFace faceType;
         public Bitmap imgFace;
 
+        //To add some interest to the profiles, we decided to give them all faces and personality
+        //there are 4 presets of faces that can be selected during in the World creation
+        //These are 4 grid of multiple faces, a random face is then choicen from this grid
+
         public DriverProfile(World _physics)
         {
             Random ran = new Random();
@@ -35,10 +44,10 @@ namespace GreenLight
                 faceType = DriverProfileData.faces.First();
             }
 
-            this.mood = faceType.speech[1][ran.Next(0, faceType.speech[1].Count)];
+            //this.mood = faceType.speech[1][ran.Next(0, faceType.speech[1].Count)];
 
-            int _indexX = ran.Next(1, faceType.index.Item1);
-            int _indexY = ran.Next(1, faceType.index.Item2);
+            int _indexX = ran.Next(1, faceType.index.Item1 + 1);
+            int _indexY = ran.Next(1, faceType.index.Item2 + 1);
 
             this.imageIndex = new Tuple<int, int>(_indexX, _indexY);
 

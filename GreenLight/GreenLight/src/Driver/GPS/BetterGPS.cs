@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GreenLight.src.Driver.GPS
 {
+    //this is the GPS class used by the AI, ever AI has a gps class that contains the path it is requires to follow. In additional to more variables
+    //that help it navigate the system
+
     class BetterGPS
     {
         List<Path> roadlist;
@@ -56,6 +59,8 @@ namespace GreenLight.src.Driver.GPS
                 }
             }
         }
+
+        //This method is called by the AI when it switches a road, telling the GPS it needs to set its index to the next path in the list;
 
         public void NextPath()
         {

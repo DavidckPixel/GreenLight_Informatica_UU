@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GreenLight.src.Data_Collection
 {
+    //Data class is a class stat stores all the data that is collected, it consists of multiple lists and values that are changed during the course of a simulation
+    //Incase the simulation is reset, this data  class is then thrown away and replaced by a new instance.
+
     public class Data
     {
         string dataName = "test";
@@ -18,13 +21,18 @@ namespace GreenLight.src.Data_Collection
 
         public Data()
         {
-            Console.WriteLine("Initialized a new Data Collection!");
+            Log.Write("Creating a new Data Instance");
 
             seriesBrakeTicks = new List<int>();
             pointsBrakeTick = new List<int>();
             percBrakePerTick = new List<Tuple<int, int>>();
             averageSpeedPerTick = new List<Tuple<int, double>>();
         }
+
+        //The AddBrakeTick method is called by the data collector, the function takes a certain amount of ticks
+        //these ticks correspond to how long the car was braking during the course of its lifetime. It then adds
+        //this either adds this amount to a list, or it increments a value; depending whether or not we seen this brake value
+        //before, this way it turfs how many cars brakes for how many ticks
 
         public void AddBrakeTick(int Ticks)
         {
@@ -33,16 +41,11 @@ namespace GreenLight.src.Data_Collection
 
             if (!seriesBrakeTicks.Contains(_100Ticks)) 
             {
-                //SERIES IS NOT YET IN THE LIST, SO ADD IT
                 seriesBrakeTicks.Add(_100Ticks);
                 seriesBrakeTicks.Sort();
                 _index = seriesBrakeTicks.IndexOf(_100Ticks);
                 pointsBrakeTick.Insert(_index, 0);
             }
-
-            //THE DATA IS IN THE SERIELIST
-
-            //ADD DATA POINT ON THE CORRECT PLACE;
             pointsBrakeTick[_index]++;
         }
 
@@ -53,6 +56,8 @@ namespace GreenLight.src.Data_Collection
 
             return;
         }
+
+        //Adds a Tick value of speed
 
         public void AddAverageSpeedPerTick(double speed)
         {
@@ -73,13 +78,15 @@ namespace GreenLight.src.Data_Collection
 
         public void AddPercentageOnBraking(int _perc)
         {
-
+            //not yet implemented
         }
 
         public List<Tuple<int,double>> GetAverageSpeedPerTick()
         {
             return averageSpeedPerTick;
         }
+
+        //The ToString() function is called when the data is exported, it nicely orders all the interesting collected data and adds it to a .txt file
 
         public override string ToString()
         {

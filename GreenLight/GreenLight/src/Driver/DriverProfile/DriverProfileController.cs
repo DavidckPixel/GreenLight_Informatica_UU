@@ -5,6 +5,11 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
+
+    //This class is the Controller for the DriverProfile popup window, when the user clicks on a car when the 
+    //Simulation is paused, this window shows it, Its mainly a bunch of labels that are set to a certain
+    //value
+
     public class DriverProfileController : AbstractController
     {
         PictureBox screen;
@@ -12,7 +17,7 @@ namespace GreenLight
         Form settingScreen;
         PictureBox settingScreenImage;
         Label fuelUsed, brakeTime, stopTime, mood, braking, wantsToSwitch, Priority, TargetSpeed;
-        CurvedButtons doneButton;
+        CurvedButtons doneButton, deleteButton;
 
         public bool simulationPaused;
         BetterVehicle selectedVehicle;
@@ -83,6 +88,31 @@ namespace GreenLight
             this.doneButton = new CurvedButtons(new Size(100, 30), new Point(10, 450), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             this.doneButton.Click += HideScreen;
             this.settingScreen.Controls.Add(this.doneButton);
+
+            this.deleteButton = new CurvedButtons(new Size(100, 30), new Point(200, 450), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Delete Car", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            this.deleteButton.Click += deleteCar;
+            this.settingScreen.Controls.Add(this.deleteButton);
+        }
+
+        private void deleteCar(object sender, EventArgs e)
+        {
+            if (this.selectedVehicle.vehicleAI.currentCrossRoadSide != null)
+            {
+                if (this.selectedVehicle.vehicleAI.startedCrossing)
+                {
+                    Microsoft.VisualBasic.Interaction.MsgBox("You cannot delete this vehicle now");
+                    return;
+                }
+
+                this.selectedVehicle.vehicleAI.currentCrossRoadSide.aiOnSide.Remove(this.selectedVehicle.vehicleAI);
+            }
+
+            General_Form.Main.DataScreen.dataController.collector.RemoveVehicle(this.selectedVehicle, false);
+            //this.selectedVehicle.vehicleAI.SignalDone();
+            General_Form.Main.SimulationScreen.Simulator.vehicleController.vehicleList.Remove(this.selectedVehicle);
+            this.screen.Invalidate();
+
+            HideScreen(sender, e);
         }
 
         private void DrawImage(object o, PaintEventArgs pea)
