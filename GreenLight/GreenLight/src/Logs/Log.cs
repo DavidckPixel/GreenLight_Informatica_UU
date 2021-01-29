@@ -34,7 +34,7 @@ namespace GreenLight
                 return;
             }
 
-            string _filename = DateTime.Now.ToString().Replace(" ", "_").Replace(":", "-");
+            string _filename = DateTime.Now.ToString().Replace(" ", "_").Replace(":", "-").Replace("/","-");
             file =  basefile + "/GreenLight/Logs/" + _filename;
 
             using (StreamWriter sw = new StreamWriter(file))

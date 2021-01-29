@@ -49,7 +49,7 @@ namespace GreenLight
 
             Log.Write("Created the Main Controller");
         }
-
+        
         public void Invalidate()
         {
             this.form.Invalidate();
