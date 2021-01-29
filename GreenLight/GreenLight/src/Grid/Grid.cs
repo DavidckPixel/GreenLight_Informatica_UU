@@ -8,6 +8,7 @@ using System.IO;
 
 namespace GreenLight
 {
+    //A static class that reads the GridConfig.Json and applies it to it's own GridConfig named Config. 
     static class Grid
     {
         public static GridConfig Config;
