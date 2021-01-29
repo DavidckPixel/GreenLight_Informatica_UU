@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
+    //A class that has all non-dependent values that are used for the userinterface. 
+    //It's used to apply a Json to by the static UserControls.cs, so that the Json values can be used all through the programm.
     class UserControlsConfig
     {
         public string projectName;

@@ -177,14 +177,12 @@ namespace GreenLight
             Point _normpoint1 = _point1; Point _normpoint2 = _point2;
             double _slp;
             Point _prev = _normpoint1;
-            bool divByZero = false;
 
             _slp = (double)(_point2.Y - _point1.Y) / (double)(_point2.X - _point1.X);
             if (_point2.X - _point1.X == 0)
             {
                 _slp = 0;
                 int _vertical = _point1.Y > _point2.Y ? -1 : 1;
-                divByZero = true;
 
                 for (int y = 0; y <= Math.Abs(_point1.Y - _point2.Y); y++)
                 {
@@ -194,16 +192,32 @@ namespace GreenLight
                     _prev = _normpoint1;
                 }
             }
-
-            int _dir = _point2.X >= _point1.X ? 1 : -1;
-
-            for (int x = 0; x <= Math.Abs(_point1.X - _point2.X) && !divByZero; x++)
+            else if (_slp <= -1 || _slp >= 1)
             {
-                _normpoint1 = new Point(_point1.X + x * _dir, (int)(_point1.Y + x * _slp * _dir));
-                _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle(_point1, _point2)));
+                int _dir = _point2.Y >= _point1.Y ? 1 : -1;
 
-                _prev = _normpoint1;
+                for (int y = 0; y <= Math.Abs(_point1.Y - _point2.Y); y++)
+                {
+                    _normpoint1 = new Point((int)(_point1.X + y * _dir / _slp), (int)(_point1.Y + y * _dir));
+                    _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle(_point1, _point2)));
+
+                    _prev = _normpoint1;
+                }
             }
+
+            else 
+            {
+                int _dir = _point2.X >= _point1.X ? 1 : -1; 
+
+                for (int x = 0; x <= Math.Abs(_point1.X - _point2.X); x++)
+                {
+                    _normpoint1 = new Point(_point1.X + x * _dir, (int)(_point1.Y + x * _slp * _dir));
+                    _lanePoints.Add(new LanePoints(_normpoint1, RoadMath.CalculateAngle(_point1, _point2)));
+
+                    _prev = _normpoint1;
+                }
+            }
+
             RoadMath.CalculateDistanceLanePoints(ref _lanePoints);
             return _lanePoints;
         }

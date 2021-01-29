@@ -11,8 +11,10 @@ using System.Windows.Forms;
 namespace GreenLight
 {
     /* This is the Elements sub menu class for the signs. This class has a method AdjustSize to fit the size of the users window.
+       In the initialize void the controls are added to the submenu.
        This user control is shown when the user is in the building screen and has selected signs to build. 
-       Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
+       Switching to this user control and closing the other user controls happens in the UserInterfaceController class.
+       The ResetButtons method makes a selected button appear pressed, and the previous selected button appear unpresesd. */
     public partial class ElementsSubSignsMenu : UserControl
     {
         public List<CurvedButtons> essmButtons = new List<CurvedButtons>();

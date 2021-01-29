@@ -109,8 +109,8 @@ namespace GreenLight
 
 
             CheckLaneDirections(_road, 0);
-            General_Form.Main.BuildScreen.builder.gridController.FlipGridpointsTrue(_road.hitbox);
-            General_Form.Main.BuildScreen.builder.gridController.FlipConnectionGridPoint();
+            General_Form.Main.BuildScreen.builder.gridController.FlipGridpointsToTrue(_road.hitbox);
+            General_Form.Main.BuildScreen.builder.gridController.ConnectionGridpointsToFalse();
             //Console.WriteLine(OPC.GetSpawnPoint);
         }
 
@@ -170,8 +170,8 @@ namespace GreenLight
             roads.Add(_road);
             Connection(_point1, _point2, _lanes, _dir, _road, _beginconnection, _endconnection);
             CheckLaneDirections(_road, 0);
-            General_Form.Main.BuildScreen.builder.gridController.FlipGridpointsTrue(_road.hitbox);
-            General_Form.Main.BuildScreen.builder.gridController.FlipConnectionGridPoint();
+            General_Form.Main.BuildScreen.builder.gridController.FlipGridpointsToTrue(_road.hitbox);
+            General_Form.Main.BuildScreen.builder.gridController.ConnectionGridpointsToFalse();
         }
 
 
@@ -381,11 +381,11 @@ namespace GreenLight
                 }
                 else
                 {
-                    General_Form.Main.BuildScreen.builder.gridController.undoGridpoints(roads[roads.Count - 1]);
+                    General_Form.Main.BuildScreen.builder.gridController.UndoGridpoints(roads[roads.Count - 1]);
                     DeleteRoad(roads[roads.Count - 1]);
                     if (roads.Count == 0)
                     {
-                        General_Form.Main.BuildScreen.builder.gridController.resetGridpoints();
+                        General_Form.Main.BuildScreen.builder.gridController.ResetAllGridpoints();
                     }
                     General_Form.Main.BuildScreen.Screen.Invalidate();
                 }
@@ -466,12 +466,12 @@ namespace GreenLight
                 this.selectedRoad = null;
                 DisableSettingScreen();
             }
-            General_Form.Main.BuildScreen.builder.gridController.undoGridpoints(_deletedroad);
+            General_Form.Main.BuildScreen.builder.gridController.UndoGridpoints(_deletedroad);
             roads.Remove(_deletedroad);
 
             if (roads.Count == 0)
             {
-                General_Form.Main.BuildScreen.builder.gridController.resetGridpoints();
+                General_Form.Main.BuildScreen.builder.gridController.ResetAllGridpoints();
             }
         }
 

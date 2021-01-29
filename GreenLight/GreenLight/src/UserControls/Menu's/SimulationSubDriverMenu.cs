@@ -11,8 +11,9 @@ using Microsoft.VisualBasic;
 namespace GreenLight
 {
     /* This is the Simulation sub driver menu class. This class has a method AdjustSize to fit the size of the users window.
+       In the initialize void the controls are added to the submenu.
        This user control is shown when the user is in the simulation screen and has selected the driver menu.
-       The user can change variables of the driver AI.
+       The user can change variables of the driver AI, using sliders and a selectionbox.
        Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
     public partial class SimulationSubDriverMenu : UserControl
     {

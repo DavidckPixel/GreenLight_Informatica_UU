@@ -9,6 +9,7 @@ namespace GreenLight
 {
     /*This is the Start sub menu class. This class has a method AdjustSize to fit the size of the users window.
       This user control is the first screen shown when the program starts.
+      In the initialize void the controls are added to the submenu.
       Switching from this user control to other user controls happens in the UserInterfaceController class. */
     public partial class StartSubMenu : UserControl
     {
@@ -39,6 +40,9 @@ namespace GreenLight
             Logo = new CurvedButtons(_form, 1);
             Logo.Location = new Point(menu["logoX"], menu["logoY"]);
             this.Controls.Add(Logo);
+
+            MovePanel DragPad = new MovePanel(_form);
+            this.Controls.Add(DragPad);
 
             /*     Buttons & Dividers    */
 

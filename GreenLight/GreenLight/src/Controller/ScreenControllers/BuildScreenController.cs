@@ -47,7 +47,7 @@ namespace GreenLight
             i++;
             this.Screen.Width = _tempform.Width - 250;
             this.Screen.Height = _tempform.Height;
-            builder.gridController.canvas_resize(new Size(_tempform.Width - 250, _tempform.Height));
+            builder.gridController.CanvasResize(new Size(_tempform.Width - 250, _tempform.Height));
             builder.gridController.CreateGridPoints();
         }
 
