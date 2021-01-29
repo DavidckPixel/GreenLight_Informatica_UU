@@ -14,7 +14,7 @@ namespace GreenLight
     {
         PictureBox screen;
 
-        Form settingScreen;
+        PopUpForm settingScreen;
         PictureBox settingScreenImage, backgroundImage;
         Label fuelUsed, brakeTime, stopTime, mood, braking, wantsToSwitch, Priority, TargetSpeed;
         CurvedButtons doneButton, deleteButton;
@@ -30,10 +30,9 @@ namespace GreenLight
 
         public override void Initialize()
         {
-            this.settingScreen = new Form();
+            this.settingScreen = new PopUpForm(new Size(500, 500));
             this.settingScreen.Hide();
 
-            this.settingScreen.Size = new Size(500, 500);
             this.settingScreen.Location = new Point(100, 100);
             this.settingScreen.BackColor = Color.White;
             this.settingScreen.FormBorderStyle = FormBorderStyle.None;
@@ -85,11 +84,11 @@ namespace GreenLight
             this.mood.Size = new Size(200, 30);
             this.settingScreen.Controls.Add(this.mood);
 
-            this.doneButton = new CurvedButtons(new Size(100, 30), new Point(125, 450), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            this.doneButton = new CurvedButtons(new Size(100, 35), new Point(125, 450), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Done", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             this.doneButton.Click += HideScreen;
             this.settingScreen.Controls.Add(this.doneButton);
 
-            this.deleteButton = new CurvedButtons(new Size(100, 30), new Point(275, 450), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Delete Car", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
+            this.deleteButton = new CurvedButtons(new Size(100, 35), new Point(275, 450), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Delete Car", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
             this.deleteButton.Click += deleteCar;
             this.settingScreen.Controls.Add(this.deleteButton);
 
@@ -173,7 +172,7 @@ namespace GreenLight
             this.Priority.Text = _ai.priority.ToString();
             this.TargetSpeed.Text = _ai.targetspeed.ToString();
 
-            this.settingScreen.Show();
+            this.settingScreen.ShowDialog();
             this.settingScreen.BringToFront();
             this.settingScreen.Invalidate();
         }

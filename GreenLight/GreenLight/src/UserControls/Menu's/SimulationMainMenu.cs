@@ -20,24 +20,14 @@ namespace GreenLight
             this.BackColor = Color.FromArgb(196, 196, 198);
             this.Size = new Size(50, 50);
             this.Location = new Point(0, _form.Height - 50);
-            Initialize(_form, 50);
         }
 
         public void AdjustSize(Form _form, int _submenuwidth)
         {
             this.Size = new Size(50, 50);
             this.Location = new Point(0, _form.Height - 50);
-            this.Controls.Clear();
-            Initialize(_form, _submenuwidth);
         }
        
-        private void Initialize(Form _form, int _submenuwidth)
-        {
-            int _ButtonSize = UserControls.Config.standardMainMenu["infobuttonsize"];
-            RoundButtons Info_button = new RoundButtons(new Size(_ButtonSize, _ButtonSize), new Point(10, 0), "../../src/User Interface Recources/Info_Button.png");
-            Info_button.Click += (object o, EventArgs ea) => { System.Diagnostics.Process.Start("https://www.marcdejong.online/projects/green-light-district/"); };
-            this.Controls.Add(Info_button);
-        }
 
         protected override CreateParams CreateParams
         {

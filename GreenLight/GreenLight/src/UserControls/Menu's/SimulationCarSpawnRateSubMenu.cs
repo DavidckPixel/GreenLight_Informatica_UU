@@ -47,8 +47,8 @@ namespace GreenLight
 
             ListBox worlds = new ListBox();
             WorldConfig.physics.ForEach(x => worlds.Items.Add(x));
-            worlds.Location = new Point(10, 10);
-            worlds.Size = new Size(100, 20);
+            worlds.Location = new Point(20, 10);
+            worlds.Size = new Size(120, 80);
             worlds.GotFocus += (object o, EventArgs ea) =>
             {
                 worlds.Items.Clear();
@@ -61,8 +61,8 @@ namespace GreenLight
             };
             this.Controls.Add(worlds);
 
-            CurvedButtons Editbutton = new CurvedButtons(new Size(70, 30), new Point(10, 50), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Edit", DrawData.Dosis_font_family, null, this.BackColor);
-            CurvedButtons Newbutton = new CurvedButtons(new Size(70, 30), new Point(100, 50), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "New", DrawData.Dosis_font_family, null, this.BackColor);
+            CurvedButtons Editbutton = new CurvedButtons(new Size(70, 35), new Point(160, 5), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Edit", DrawData.Dosis_font_family, null, this.BackColor);
+            CurvedButtons Newbutton = new CurvedButtons(new Size(70, 35), new Point(160, 45), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "New", DrawData.Dosis_font_family, null, this.BackColor);
 
             Editbutton.Click += (object o, EventArgs ea) => { General_Form.Main.SimulationScreen.Simulator.worldController.EditWorld((World)worlds.SelectedItem); };
             Newbutton.Click += (object o, EventArgs ea) => { General_Form.Main.SimulationScreen.Simulator.worldController.CreateNewWorld(); };
@@ -70,19 +70,19 @@ namespace GreenLight
             this.Controls.Add(Editbutton);
             this.Controls.Add(Newbutton);
 
-            Slider carSpawn = new Slider(new Point(10, 130), 0, 100);
+            Slider carSpawn = new Slider(new Point(25, 120), 0, 100);
             this.Controls.Add(carSpawn);
 
-            SliderText carSpawn_label = new SliderText(DrawData.Dosis_font_family, new Point(10, 100), "Car Spawn:");
+            SliderText carSpawn_label = new SliderText(DrawData.Dosis_font_family, new Point(30, 90), "Car Spawn:");
             this.Controls.Add(carSpawn_label);
 
-            SliderText carSpawn_value = new SliderText(DrawData.Dosis_font_family, new Point(120, 100), carSpawn.Value.ToString() + " %");
+            SliderText carSpawn_value = new SliderText(DrawData.Dosis_font_family, new Point(130, 90), carSpawn.Value.ToString() + " %");
             this.Controls.Add(carSpawn_value);
 
             carSpawn.ValueChanged += (object o, EventArgs EA) => { carSpawn_value.Text = carSpawn.Value.ToString() + " %"; General_Form.Main.SimulationScreen.Simulator.ChangeCarSpawn(carSpawn.Value); };
 
-            CurvedButtons graphWindow = new CurvedButtons(new Size(70, 30), new Point(10, 180), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Graph", DrawData.Dosis_font_family, null, this.BackColor);
-            graphWindow.Click += (object o, EventArgs ea) => 
+            CurvedButtons graphWindow = new CurvedButtons(new Size(80, 35), new Point(85, 190), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Graph", DrawData.Dosis_font_family, null, this.BackColor);
+            graphWindow.Click += (object o, EventArgs ea) =>
             {
                 General_Form.Main.SwitchControllers(General_Form.Main.DataScreen);
             };

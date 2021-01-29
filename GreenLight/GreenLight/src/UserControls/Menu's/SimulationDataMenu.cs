@@ -30,7 +30,7 @@ namespace GreenLight
             this.Location = new Point(0, 0);
             this.dosisFontFamily = _dosisfontfamily;
             this.BackColor = Color.DarkGray;
-            this.Size = new Size(_form.Width - _submenuwidth, 60);    
+            this.Size = new Size(_form.Width - _submenuwidth, 60);
             Last_Simulation_time = new TimeSpan(00, 00, 00);
             Initialize();
         }
@@ -78,7 +78,7 @@ namespace GreenLight
         {
             TimeSpan Time_elapsed = TimeSpan.FromTicks(stopWatch.ElapsedTicks * Multiplier);
             Simulation_time = Last_Simulation_time.Add(Time_elapsed);
-            Time.Text = (int)Simulation_time.Hours + ":" + (int)Simulation_time.Minutes +  ":" + (int)Simulation_time.Seconds ;
+            Time.Text = (int)Simulation_time.Hours + ":" + (int)Simulation_time.Minutes + ":" + (int)Simulation_time.Seconds;
         }
 
         private void Initialize()
