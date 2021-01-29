@@ -134,7 +134,7 @@ namespace GreenLight
             Pause.Hide();
             Pause.Click += (object o, EventArgs EA) => { General_Form.Main.SimulationScreen.Simulator.PauseSimulation(); };
             Pause.Click += (object o, EventArgs EA) => { Pause.Hide(); Start.Show(); General_Form.Main.UserInterface.SimDataM.Stop_timer(); };
-            Start.Click += (object o, EventArgs EA) => { Start.Hide(); Pause.Show(); General_Form.Main.UserInterface.SimDataM.StartTimer(); General_Form.Main.BuildScreen.builder.signController.StartTimer(); };
+            Start.Click += (object o, EventArgs EA) => { Start.Hide(); Pause.Show(); General_Form.Main.UserInterface.SimDataM.StartTimer(); };
             this.Controls.Add(Pause);
             Pause.BringToFront();
 
@@ -169,7 +169,6 @@ namespace GreenLight
                 General_Form.Main.SimulationScreen.Simulator.StopSimulation();
                 Pause.Hide();
                 Start.Show();
-                General_Form.Main.BuildScreen.builder.signController.StopTimer();
             };
             this.Controls.Add(Stop);
             Stop.BringToFront();

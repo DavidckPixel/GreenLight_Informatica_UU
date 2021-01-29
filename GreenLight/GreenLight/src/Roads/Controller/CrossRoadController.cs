@@ -355,10 +355,6 @@ namespace GreenLight
             
             foreach (ConnectionPoint _point in selectedRoad.connectPoints)
             {
-                //ConnectionPoint _point;
-                
-                
-
                 if (_point.Active)
                 {
                     switch (_point.Side)

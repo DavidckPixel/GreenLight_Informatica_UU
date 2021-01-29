@@ -76,12 +76,12 @@ namespace GreenLight
             this.settingScreen.Controls.Add(Divider1);
 
             SaveButton = new CurvedButtons(new Size(80, 40), new Point(45, 240), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "OK", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
-            SaveButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.trafficLight.placeSign(); };
+            SaveButton.Click += (object o, EventArgs ea) => { };
             this.settingScreen.Controls.Add(SaveButton);
 
             CancelButton = new CurvedButtons(new Size(100, 40), new Point(155, 240), 25, "../../src/User Interface Recources/Custom_Small_Button.png", "Remove", DrawData.Dosis_font_family, this.settingScreen, this.settingScreen.BackColor);
 
-            CancelButton.Click += (object o, EventArgs ea) => { General_Form.Main.BuildScreen.builder.signController.trafficLight.deleteSign(); };
+            CancelButton.Click += (object o, EventArgs ea) => { };
             this.settingScreen.Controls.Add(CancelButton);
         }
 
