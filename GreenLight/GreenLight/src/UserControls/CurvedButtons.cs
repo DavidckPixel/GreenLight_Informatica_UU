@@ -145,7 +145,7 @@ namespace GreenLight
             this.Controls.Add(label);
         }
 
-        public void Set_Image(string _filepath)
+        public void SetImage(string _filepath)
         {
             this.Image_path = _filepath;
         }

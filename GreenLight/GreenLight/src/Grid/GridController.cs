@@ -233,7 +233,7 @@ namespace GreenLight
             int lanes = int.Parse(General_Form.Main.UserInterface.ElemSRM.LaneAmount.Text);
             if (General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "Diagonal") //Type = Diagonal
             {
-                Point[] _points = RoadMath.hitBoxPointsDiagonal(firstpoint, mousecords, lanes, 20, true, RoadMath.calculateSlope(firstpoint, mousecords));
+                Point[] _points = RoadMath.hitBoxPointsDiagonal(firstpoint, mousecords, lanes, 20, true, RoadMath.calculateSlope(firstpoint, mousecords), true);
                 return new RectHitbox(_points[1], _points[0], _points[3], _points[2], Color.Red);
             }
 
