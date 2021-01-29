@@ -12,6 +12,7 @@ namespace GreenLight
 {
     /*This is the Start main menu class. This class has a method AdjustSize to fit the size of the users window.
       This user control is the first screen shown when the program starts.
+      In the initialize void the controls are added to the main menu.
       Switching from this user control to other user controls happens in the UserInterfaceController class. */
     public partial class StartMainMenu : UserControl
     {
@@ -30,22 +31,6 @@ namespace GreenLight
         }
 
         private void Initialize(Form Form, int Sub_menu_width) 
-
-        //Cleaner but General_form should be just form
-        /*public Start_main_menu(int Sub_menu_width, General_form General_form, FontFamily Dosis_font_family)
-        {
-            this.BackColor = Color.FromArgb(196, 196, 198);
-            this.Size = new Size(General_form.Width - Sub_menu_width, General_form.Height);
-            Initialize(General_form, Sub_menu_width);
-
-            General_form.SizeChanged += (object o, EventArgs EA) =>
-            {
-                this.Size = new Size(General_form.Width - Sub_menu_width, General_form.Height);
-                this.Controls.Clear();
-                Initialize(General_form, Sub_menu_width);
-            };
-        }
-        private void Initialize(General_form General_form, int Sub_menu_width) */
         {
             int _ButtonSize = UserControls.Config.startMainMenu["buttonSize"];
             int _ButtonXdiff = UserControls.Config.startMainMenu["buttonXdiff"];

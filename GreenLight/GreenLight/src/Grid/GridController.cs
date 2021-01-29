@@ -10,37 +10,42 @@ using System.Windows.Forms;
 
 namespace GreenLight
 {
+    /*
+     This is the GridController class, it created and draws the gridpoint.
+     The data for the GridPoints (distance width/ height) is stored within a json file, and read in in the GridConfig class.
+     Every Gridpoint object contains a rectangle Hitbox, to see if the user has clicked on a point this class returns a bool.
+     whether or not the point is in the Hitbox. This controller also keeps track of which gridpoints are used to prevent roads from overlapping.
+     This is done by creating a hitbox for a road that the user wants to build. If this hitbox does not overlap with any used gridpoints, legal will
+     turn true. When legal is true, roads can be build. This controller holds the buildercontroller to build roads when clicked on the gridpoints.   
+                                                                                                                                                     */
+
     public class GridController : EntityController
     {
-        //This controller temperaly draws and creates the GridPoints, this will be changed in later versions
-        //The data for the GridPoints (distance width/ height) is stored within a json file, and read in in the GridConfig class
-        //Every Gridpoint object contains a rectangle Hitbox, to see if the user has clicked on a point this class returns a bool
-        //whether or not the point is in the Hitbox.
-
         public List<Gridpoint> Gridpoints = new List<Gridpoint>();
         bool firstClick;
-        PictureBox canvas;
-        private bool _points_visible = true;
+        PictureBox Canvas;
 
         public Gridpoint firstPoint = null;
         public Gridpoint secondPoint = null;
 
-        private Point mousecords;
-        private bool legal;
-        BuilderController builder;
+        private Point mouseCords;
+        private bool Legal;
+        private bool _points_visible = true;
+
+        public BuilderController Builder;
 
         public GridController(PictureBox _bitmap, BuilderController _builder)
         {
-            this.canvas = _bitmap;
+            this.Canvas = _bitmap;
             CreateGridPoints();
-            this.canvas.MouseClick += OnClick;
-            this.canvas.MouseMove += moveMouse;
+            this.Canvas.MouseClick += OnClick;
+            this.Canvas.MouseMove += MoveMouse;
             this.firstClick = true;
 
-            this.builder = _builder;
+            this.Builder = _builder;
         }
 
-        public bool Set_visible
+        public bool SetVisible
         {
             get
             {
@@ -56,15 +61,15 @@ namespace GreenLight
         {
         }
 
-        public void canvas_resize(Size _size)
+        public void CanvasResize(Size _size)
         {
-            this.canvas.Size = _size;
+            this.Canvas.Size = _size;
         }
 
         public void CreateGridPoints()
         {
-            int _amountX = canvas.Width / Grid.Config.SpacingWidth;
-            int _amountY = canvas.Height / Grid.Config.SpacingHeight;
+            int _amountX = Canvas.Width / Grid.Config.SpacingWidth;
+            int _amountY = Canvas.Height / Grid.Config.SpacingHeight;
 
             for (int y = 0; y < _amountY; y++)
             {
@@ -90,9 +95,9 @@ namespace GreenLight
 
             if (_type == "Cross")
             {
-                if (legal && _point != null)
+                if (Legal && _point != null)
                 {
-                    builder.BuildRoad(_point.Cords, _point.Cords);
+                    Builder.BuildRoad(_point.Cords, _point.Cords);
                 }
                 return;
             }
@@ -103,7 +108,7 @@ namespace GreenLight
             }
             else if (firstClick)
             {
-                legal = true;
+                Legal = true;
                 if (_point != null)
                 {
                     this.firstClick = false;
@@ -113,13 +118,13 @@ namespace GreenLight
             else
             {
                 this.secondPoint = Gridpoints.Find(x => x.Collision(mea.Location));
-                if (this.secondPoint != null && this.secondPoint != this.firstPoint && legal)
+                if (this.secondPoint != null && this.secondPoint != this.firstPoint && Legal)
                 {
                     this.secondPoint = _point;
-                    builder.BuildRoad(this.firstPoint.Cords, this.secondPoint.Cords);
+                    Builder.BuildRoad(this.firstPoint.Cords, this.secondPoint.Cords);
                     this.ResetPoints();
                 }
-                else if (!legal)
+                else if (!Legal)
                 {
                     this.ResetPoints();
                 }
@@ -131,18 +136,18 @@ namespace GreenLight
             this.firstPoint = null;
             this.secondPoint = null;
             this.firstClick = true;
-            this.canvas.Invalidate();
+            this.Canvas.Invalidate();
         }
 
-        public void moveMouse(object o, MouseEventArgs mea)
+        public void MoveMouse(object o, MouseEventArgs mea)
         {
             if (firstClick == true && (General_Form.Main.BuildScreen.builder.roadBuilder.roadType != "Cross") && (General_Form.Main.BuildScreen.builder.roadBuilder.lastType != "Cross"))
             {
                 return;
             }
 
-            mousecords = mea.Location;
-            canvas.Invalidate();
+            mouseCords = mea.Location;
+            Canvas.Invalidate();
         }
 
         public void DrawGridPoints(Graphics g)
@@ -165,24 +170,24 @@ namespace GreenLight
 
                 if (General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "Cross")
                 {
-                    Rectangle _rec = new Rectangle(mousecords, new Size(1, 1));
+                    Rectangle _rec = new Rectangle(mouseCords, new Size(1, 1));
                     int _lanes = int.Parse(General_Form.Main.UserInterface.ElemSRM.LaneAmount.Text);
                     int _inflate = _lanes * 20 / 2;
                     _rec.Inflate(_inflate, _inflate);
 
-                    if (Gridpoints.Find(x => x.Collision(mousecords)) != null)
+                    if (Gridpoints.Find(x => x.Collision(mouseCords)) != null)
                     {
-                        Hitbox temp2 = calculateRect(mousecords, new Point(0, 0));
-                        if (!gridpointsLegal(temp2))
+                        Hitbox temp2 = CalculateHitbox(mouseCords, new Point(0, 0));
+                        if (!GridpointLegal(temp2))
                         {
                             temp2.ShowOverlap(g);
                             Console.WriteLine("Overlap!");
-                            legal = false;
+                            Legal = false;
                             g.FillRectangle(Notsolidred, _rec);
                         }
                         else
                         {
-                            legal = true;
+                            Legal = true;
                             g.FillRectangle(Notsolidgreen, _rec);
                         }
                     }
@@ -199,22 +204,22 @@ namespace GreenLight
                     return;
                 }
 
-                Hitbox temp = calculateRect(firstPoint.Cords, mousecords);
-                legal = true;
-                if (!gridpointsLegal(temp))
+                Hitbox temp = CalculateHitbox(firstPoint.Cords, mouseCords);
+                Legal = true;
+                if (!GridpointLegal(temp))
                 {
-                    legal = false;
+                    Legal = false;
                     temp.ShowOverlap(g);
                     Console.WriteLine("Overlap");
                 }
 
-                Rectangle rec = new Rectangle(Math.Min(firstPoint.Cords.X, mousecords.X), Math.Min(firstPoint.Cords.Y, mousecords.Y), Math.Abs(firstPoint.Cords.X - mousecords.X), Math.Abs(firstPoint.Cords.Y - mousecords.Y));
+                Rectangle rec = new Rectangle(Math.Min(firstPoint.Cords.X, mouseCords.X), Math.Min(firstPoint.Cords.Y, mouseCords.Y), Math.Abs(firstPoint.Cords.X - mouseCords.X), Math.Abs(firstPoint.Cords.Y - mouseCords.Y));
 
-                if (!legal)
+                if (!Legal)
                 {
                     g.FillRectangle(Notsolidred, rec);
                 }
-                else if (Gridpoints.Find(x => x.Collision(mousecords)) == null)
+                else if (Gridpoints.Find(x => x.Collision(mouseCords)) == null)
                 {
                     g.FillRectangle(Notsolidorange, rec);
                 }
@@ -227,9 +232,8 @@ namespace GreenLight
             }
         }
 
-        Hitbox calculateRect(Point firstpoint, Point mousecords)
+        Hitbox CalculateHitbox(Point firstpoint, Point mousecords)
         {
-            Point topleft, topright, bottomleft, bottomright;
             int lanes = int.Parse(General_Form.Main.UserInterface.ElemSRM.LaneAmount.Text);
             if (General_Form.Main.BuildScreen.builder.roadBuilder.roadType == "Diagonal") //Type = Diagonal
             {
@@ -286,7 +290,7 @@ namespace GreenLight
             return null;
         }
 
-        public bool gridpointsLegal(Hitbox h)
+        public bool GridpointLegal(Hitbox h)
         {
             foreach (Gridpoint p in Gridpoints)
             {
@@ -301,7 +305,7 @@ namespace GreenLight
             return true;
         }
 
-        public void FlipGridpointsTrue(Hitbox h)
+        public void FlipGridpointsToTrue(Hitbox h)
         {
             foreach (Gridpoint p in Gridpoints)
             {
@@ -312,7 +316,7 @@ namespace GreenLight
             }
         }
 
-        public void FlipGridpointsFalse(Hitbox h)
+        public void FlipGridpointsToFalse(Hitbox h)
         {
             foreach (Gridpoint p in Gridpoints)
             {
@@ -323,7 +327,7 @@ namespace GreenLight
             }
         }
 
-        public void undoGridpoints(AbstractRoad r)
+        public void UndoGridpoints(AbstractRoad r)
         {
             foreach (Gridpoint p in Gridpoints)
             {
@@ -334,7 +338,7 @@ namespace GreenLight
             }
         }
 
-        public void resetGridpoints()
+        public void ResetAllGridpoints()
         {
             foreach (Gridpoint p in Gridpoints)
             {
@@ -342,10 +346,10 @@ namespace GreenLight
             }
         }
 
-        public void FlipConnectionGridPoint()
+        public void ConnectionGridpointsToFalse()
         {
             Point _topleft, _topright, _bottomleft, _bottomright;
-            foreach (AbstractRoad _road in builder.roadBuilder.roads)
+            foreach (AbstractRoad _road in Builder.roadBuilder.roads)
             {
                 int _lanes = _road.lanes;
                 if (!_road.beginconnection)
@@ -357,7 +361,7 @@ namespace GreenLight
                         _bottomleft = new Point(_road.point1.X - 10, _road.point1.Y + 10);
                         _bottomright = new Point(_road.point1.X + 10, _road.point1.Y + 10);
                         RectHitbox _temp = new RectHitbox(_topleft, _topright, _bottomleft, _bottomright, Color.Red);
-                        FlipGridpointsFalse(_temp);
+                        FlipGridpointsToFalse(_temp);
                     }
 
                     if (_lanes % 2 != 0 && _lanes != 1)
@@ -368,7 +372,7 @@ namespace GreenLight
                         _bottomleft = new Point(_road.point1.X + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingWidth, _road.point1.Y + ((_lanes - 1) / 2) * Grid.Config.SpacingHeight);
                         _bottomright = new Point(_road.point1.X + ((_lanes - 1) / 2) * Grid.Config.SpacingWidth, _road.point1.Y + ((_lanes - 1) / 2) * Grid.Config.SpacingHeight);
                         RectHitbox _temp = new RectHitbox(_topleft, _topright, _bottomleft, _bottomright, Color.Red);
-                        FlipGridpointsFalse(_temp);
+                        FlipGridpointsToFalse(_temp);
                     }
                     else
                     {
@@ -378,7 +382,7 @@ namespace GreenLight
                         _bottomleft = new Point(_road.point1.X + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingWidth, _road.point1.Y + (_lanes / 2) * Grid.Config.SpacingHeight);
                         _bottomright = new Point(_road.point1.X + (_lanes / 2) * Grid.Config.SpacingWidth, _road.point1.Y + (_lanes / 2) * Grid.Config.SpacingHeight);
                         RectHitbox _temp = new RectHitbox(_topleft, _topright, _bottomleft, _bottomright, Color.Red);
-                        FlipGridpointsFalse(_temp);
+                        FlipGridpointsToFalse(_temp);
                     }
                 }
                 if (!_road.endconnection)
@@ -390,7 +394,7 @@ namespace GreenLight
                         _bottomleft = new Point(_road.point2.X - 10, _road.point2.Y + 10);
                         _bottomright = new Point(_road.point2.X + 10, _road.point2.Y + 10);
                         RectHitbox _temp = new RectHitbox(_topleft, _topright, _bottomleft, _bottomright, Color.Red);
-                        FlipGridpointsFalse(_temp);
+                        FlipGridpointsToFalse(_temp);
                     }
                     if (_lanes % 2 != 0)
                     {
@@ -400,7 +404,7 @@ namespace GreenLight
                         _bottomleft = new Point(_road.point2.X + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingWidth, _road.point2.Y + ((_lanes - 1) / 2) * Grid.Config.SpacingHeight);
                         _bottomright = new Point(_road.point2.X + ((_lanes - 1) / 2) * Grid.Config.SpacingWidth, _road.point2.Y + ((_lanes - 1) / 2) * Grid.Config.SpacingHeight);
                         RectHitbox _temp = new RectHitbox(_topleft, _topright, _bottomleft, _bottomright, Color.Red);
-                        FlipGridpointsFalse(_temp);
+                        FlipGridpointsToFalse(_temp);
                     }
                     else
                     {
@@ -410,7 +414,7 @@ namespace GreenLight
                         _bottomleft = new Point(_road.point2.X + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingWidth, _road.point2.Y + (_lanes / 2) * Grid.Config.SpacingHeight);
                         _bottomright = new Point(_road.point2.X + (_lanes / 2) * Grid.Config.SpacingWidth, _road.point2.Y + (_lanes / 2) * Grid.Config.SpacingHeight);
                         RectHitbox _temp = new RectHitbox(_topleft, _topright, _bottomleft, _bottomright, Color.Red);
-                        FlipGridpointsFalse(_temp);
+                        FlipGridpointsToFalse(_temp);
                     }
 
 
@@ -422,7 +426,7 @@ namespace GreenLight
                         _bottomleft = new Point(_road.point2.X + (-1 * ((_lanes - 1) / 2)) * Grid.Config.SpacingWidth, _road.point2.Y + ((_lanes - 1) / 2) * Grid.Config.SpacingHeight);
                         _bottomright = new Point(_road.point2.X + ((_lanes - 1) / 2) * Grid.Config.SpacingWidth, _road.point2.Y + ((_lanes - 1) / 2) * Grid.Config.SpacingHeight);
                         RectHitbox _temp = new RectHitbox(_topleft, _topright, _bottomleft, _bottomright, Color.Red);
-                        FlipGridpointsFalse(_temp);
+                        FlipGridpointsToFalse(_temp);
 
                     }
                     else
@@ -433,7 +437,7 @@ namespace GreenLight
                         _bottomleft = new Point(_road.point2.X + (-1 * ((_lanes / 2) - 1)) * Grid.Config.SpacingWidth, _road.point2.Y + (_lanes / 2) * Grid.Config.SpacingHeight);
                         _bottomright = new Point(_road.point2.X + (_lanes / 2) * Grid.Config.SpacingWidth, _road.point2.Y + (_lanes / 2) * Grid.Config.SpacingHeight);
                         RectHitbox _temp = new RectHitbox(_topleft, _topright, _bottomleft, _bottomright, Color.Red);
-                        FlipGridpointsFalse(_temp);
+                        FlipGridpointsToFalse(_temp);
                     }
 
                 }

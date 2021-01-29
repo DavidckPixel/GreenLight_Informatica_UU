@@ -11,9 +11,14 @@ using System.IO;
 
 namespace GreenLight
 {
-    public partial class SimulationSubWeatherMenu : UserControl
+    /* This is the Simulation car spawn rate class. This class has a method AdjustSize to fit the size of the users window.
+       In the initialize void the controls are added to the submenu.
+       This user control is shown when the user is in the simulation screen and has selected the settings menu.
+       The user can change the spawnrate of the vehicles using a slider.
+       Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
+    public partial class SimulationCarSpawnRateSubMenu : UserControl
     {
-        public SimulationSubWeatherMenu(int _menuwidth, Form _form, FontFamily _dosisfontfamily)
+        public SimulationCarSpawnRateSubMenu(int _menuwidth, Form _form, FontFamily _dosisfontfamily)
         {
             this.BackColor = Color.FromArgb(255, 255, 255);
             this.Size = new Size(_menuwidth, _form.Height - UserControls.Config.simElementsMenu["menuY"] - UserControls.Config.simElementsMenu["menuSizeY"]);

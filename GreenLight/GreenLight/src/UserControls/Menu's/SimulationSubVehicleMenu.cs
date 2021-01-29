@@ -12,9 +12,10 @@ using Microsoft.VisualBasic;
 namespace GreenLight
 {
     /* This is the Simulation sub vehicle menu class. This class has a method AdjustSize to fit the size of the users window.
-      This user control is shown when the user is in the simulation screen and has selected the vehicle menu.
-      The user can change properties of the vehicles.
-      Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
+       In the initialize void the controls are added to the submenu.
+       This user control is shown when the user is in the simulation screen and has selected the vehicle menu.
+       The user can change properties of the vehicles using sliders and a selectionbox.
+       Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
     public partial class SimulationSubVehicleMenu : UserControl
     {
         public SelectionBox selectionBox;

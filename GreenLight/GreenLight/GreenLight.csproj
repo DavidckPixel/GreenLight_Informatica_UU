@@ -251,7 +251,7 @@
     <Compile Include="src\UserControls\Menu%27s\StartSubMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\UserControls\Menu%27s\SimulationSubWeatherMenu.cs">
+    <Compile Include="src\UserControls\Menu%27s\SimulationCarSpawnRateSubMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="src\UserControls\Menu%27s\SimulationSubVehicleMenu.cs">

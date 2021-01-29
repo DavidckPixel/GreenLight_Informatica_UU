@@ -11,6 +11,7 @@ using System.Windows.Forms;
 namespace GreenLight
 {
     /* This is the Settings sub menu class. This class has a method AdjustSize to fit the size of the users window.
+       In the initialize void the controls are added to the submenu.
        This user control is shown when the user is in the building screen and has clicked on the settings button.
        In this control the user can toggle the gridpoints and visualization of the lanepoints.
        Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
@@ -75,14 +76,14 @@ namespace GreenLight
             toggleGridBox.Size = new Size(20, 20);
             toggleGridBox.CheckedChanged += (object o, EventArgs ea) =>
             {
-                if (General_Form.Main.BuildScreen.builder.gridController.Set_visible == true)
+                if (General_Form.Main.BuildScreen.builder.gridController.SetVisible == true)
                 {
-                    General_Form.Main.BuildScreen.builder.gridController.Set_visible = false;
+                    General_Form.Main.BuildScreen.builder.gridController.SetVisible = false;
                     General_Form.Main.Invalidate();
                 }
                 else
                 {
-                    General_Form.Main.BuildScreen.builder.gridController.Set_visible = true;
+                    General_Form.Main.BuildScreen.builder.gridController.SetVisible = true;
                     General_Form.Main.Invalidate();
                 }
             };

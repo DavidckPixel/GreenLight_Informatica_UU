@@ -11,8 +11,10 @@ using System.Windows.Forms;
 namespace GreenLight
 {
     /* This is the Elements sub menu class for roads. This class has a method AdjustSize to fit the size of the users window.
-   This user control is shown when the user is in the building screen and has selected roads to build.
-   Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
+       This user control is shown when the user is in the building screen and has selected roads to build.
+       In the initialize void the controls are added to the submenu.
+       Switching to this user control and closing the other user controls happens in the UserInterfaceController class.
+       The ResetButtons method makes a selected button appear pressed, and the previous selected button appear unpresesd.    */
     public partial class ElementsSubRoadsMenu : UserControl
     {
         public TextBox LaneAmount;

@@ -10,7 +10,7 @@ using System.Windows.Forms.VisualStyles;
 namespace GreenLight
 {
     /* This is the Slider class. This class is used to create a Trackbar
-       with on a location with a minimumvalue and maximumvalue           */
+       with on a location with a minimumvalue and maximumvalue.           */
     public class Slider : TrackBar
     {
         public Slider(Point _location, int _minvalue, int _maxvalue)

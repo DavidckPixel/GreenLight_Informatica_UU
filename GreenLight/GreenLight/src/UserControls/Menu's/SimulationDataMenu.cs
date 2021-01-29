@@ -13,6 +13,7 @@ using System.Diagnostics;
 namespace GreenLight
 {
     /* This is the SimulationDataMenu class, it is a user control that shows a timer keeping track of the time lapsed in the simulation. 
+       In the initialize void the timer is added to the mainmenu.
        This class contains methods to start, stop, reset and set the timer. */
     public partial class SimulationDataMenu : UserControl
     {

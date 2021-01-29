@@ -38,7 +38,7 @@ namespace GreenLight
         BuildMainMenu BMM;
         SimulationSubMenu SimSM;
         SimulationMainMenu SimMM;
-        SimulationSubWeatherMenu SimSWM;
+        SimulationCarSpawnRateSubMenu SimSWM;
         public SimulationSubVehicleMenu SimSVM;
         public SimulationSubDriverMenu SimSDM;
         public SimulationDataMenu SimDataM;
@@ -88,7 +88,7 @@ namespace GreenLight
 
             SimSM = new SimulationSubMenu(Sub_menu_width, MainForm, Dosis_font_family);
             SimMM = new SimulationMainMenu(MainForm.Width - Sub_menu_width, MainForm, Dosis_font_family);
-            SimSWM = new SimulationSubWeatherMenu(Sub_menu_width, MainForm, Dosis_font_family);
+            SimSWM = new SimulationCarSpawnRateSubMenu(Sub_menu_width, MainForm, Dosis_font_family);
             SimSVM = new SimulationSubVehicleMenu(Sub_menu_width, MainForm, Dosis_font_family);
             SimSDM = new SimulationSubDriverMenu(Sub_menu_width, MainForm, Dosis_font_family);
 

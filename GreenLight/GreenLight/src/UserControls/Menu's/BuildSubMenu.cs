@@ -13,6 +13,7 @@ namespace GreenLight
 {
     /* This is the Build sub menu class. This class has a method AdjustSize to fit the size of the users window.
        This user control is shown when the user is in the building screen.
+       In the initialize void the controls are added to the submenu.
        Switching to this user control and closing the other user controls happens in the UserInterfaceController class. */
     public partial class BuildSubMenu : UserControl
     {
@@ -53,8 +54,8 @@ namespace GreenLight
             elementsHeader.Image = Image.FromFile("../../src/User Interface Recources/Elements_Header.png");
             this.Controls.Add(elementsHeader);
 
-            MovePanel dragPad = new MovePanel(_form);
-            this.Controls.Add(dragPad);
+            MovePanel DragPad = new MovePanel(_form);
+            this.Controls.Add(DragPad);
 
             System.Timers.Timer t = new System.Timers.Timer(TimeSpan.FromMinutes(5).TotalMilliseconds);
             t.AutoReset = true;
