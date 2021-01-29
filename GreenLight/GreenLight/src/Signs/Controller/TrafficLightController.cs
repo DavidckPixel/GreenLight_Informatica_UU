@@ -110,7 +110,7 @@ namespace GreenLight
 
             this.errorMess.Text = "";
 
-            Console.WriteLine(this.settingScreen.Visible.ToString());
+
 
             settingScreen.ShowDialog();
             settingScreen.BringToFront();
@@ -118,7 +118,7 @@ namespace GreenLight
 
         public override void onSignClick(AbstractSign _sign, AbstractRoad _selectedRoad)
         {
-            Console.WriteLine("SIGN HAS BEEN SELECTED!!!");
+
             selected = (TrafficLight)_sign;
             if (_selectedRoad != null)
                 selectedRoad = _selectedRoad;

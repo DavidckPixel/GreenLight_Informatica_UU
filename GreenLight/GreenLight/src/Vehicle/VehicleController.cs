@@ -64,7 +64,7 @@ namespace GreenLight
 
                 if (_stats == null) {
 
-                    Console.WriteLine("Better not");
+                    Log.Write("No Vehicle stats found");
                     VehicleTypeConfig.ReadJson();
                     this.availableVehicleStats = VehicleTypeConfig.vehicles;
                     _stats = VehicleTypeConfig.vehicles.First();

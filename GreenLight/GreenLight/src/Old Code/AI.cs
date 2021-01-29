@@ -64,7 +64,7 @@ namespace GreenLight
                     {
                         location.Add(p);
                     }
-                    /*Console.WriteLine("Lijst 1 berekend. Xend: " + location[624].X + "  -  Listnummer: " + v.listcounter);*/
+
                     locationlocal.Clear();
                     framesbuffered = 625;
                     Thread.Sleep(9000);
@@ -74,7 +74,7 @@ namespace GreenLight
                     {
                         location2.Add(p);
                     }
-                    /*Console.WriteLine("Lijst 2 berekend. Xend: " + location2[624].X + "  -  Listnummer: " + v.listcounter);*/
+
                     locationlocal.Clear();
                     framesbuffered = 625;
                     Thread.Sleep(9000);
@@ -98,7 +98,7 @@ namespace GreenLight
                     v.accelerate(targetspeed);
                 }
                 needToBrake(destinationpoint.X, destinationpoint.Y);
-                //Console.WriteLine("braking: " + v.isBraking + "    -    accelarating:" + v.isAccelerating + "    -    speed:" + v.speed + " Frames: " + framesbuffered + "   X: " + v.x);
+                
                 framesbuffered--;
             }
         }

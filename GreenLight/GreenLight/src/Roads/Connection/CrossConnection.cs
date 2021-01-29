@@ -446,7 +446,7 @@ namespace GreenLight
                 }
             }
 
-            Console.WriteLine(_roadEnds);
+            
 
             if (roadOne.Type == "Cross")
             {

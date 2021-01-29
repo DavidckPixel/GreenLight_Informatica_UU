@@ -181,7 +181,6 @@ namespace GreenLight
                         if (!GridpointLegal(temp2))
                         {
                             temp2.ShowOverlap(g);
-                            Console.WriteLine("Overlap!");
                             Legal = false;
                             g.FillRectangle(Notsolidred, _rec);
                         }

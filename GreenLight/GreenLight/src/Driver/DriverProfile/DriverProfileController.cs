@@ -143,7 +143,7 @@ namespace GreenLight
         {
             if (!simulationPaused || this.settingScreen.Visible)
             {
-                Console.WriteLine("Simulation Not paused || Screen not visable");
+                Log.Write("Simulation Not paused || Screen not visable");
                 return;
             }
 
@@ -151,7 +151,7 @@ namespace GreenLight
 
             if(this.selectedVehicle == null)
             {
-                Console.WriteLine("No hitbox found");
+                Log.Write("No hitbox found");
                 return;
             }
 

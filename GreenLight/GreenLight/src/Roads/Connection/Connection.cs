@@ -945,7 +945,7 @@ namespace GreenLight
 
             else if (_roadOneEnds == 'v' && _roadTwoEnds == 'h')
             {
-                Console.WriteLine("vertical ----- horizontal");
+
                 _controller.DeleteRoad(_roadOne);
                 _controller.DeleteRoad(_roadTwo);
                 Point _curvedstart = new Point(0, 0), _curvedend = new Point(0, 0);
@@ -1455,7 +1455,7 @@ namespace GreenLight
                         }
                         else
                         {
-                            Console.WriteLine(1.4);
+                            
                             _curvedend = new Point(_temp2.X + _shift, _temp2.Y);
                             _controller.BuildCurvedRoad(_temp1, new Point(_temp2.X + (_shift - 2), _temp2.Y), _lanes, _roadOne.Type, _roadOne.beginconnection, true, _roadOne.beginConnectedTo, null);
                         }
@@ -1627,7 +1627,7 @@ namespace GreenLight
                         {
                             _curveshift = 0;
                         }
-                        Console.WriteLine(_curveshift);
+ 
                         _controller.BuildDiagonalRoad(new Point(_point2.X - _curveshift, _point2.Y + _direction), _temp2, _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                     }
                     else
@@ -1648,7 +1648,7 @@ namespace GreenLight
                         {
                             _curveshift = 0;
                         }
-                        Console.WriteLine(_curveshift);
+
                         _controller.BuildDiagonalRoad(_temp1, new Point(_point2.X - _curveshift, _point2.Y + _direction), _lanes, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo);
                     }
                 }

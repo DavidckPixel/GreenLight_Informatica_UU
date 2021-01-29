@@ -62,7 +62,7 @@ namespace GreenLight
             t.Elapsed += (object to, ElapsedEventArgs EEA) =>
             {
                 General_Form.Main.Save();
-                Console.WriteLine("AutoSaved");
+                Log.Write("AutoSaved");
             };
 
             autoSaveLabel = new Label();

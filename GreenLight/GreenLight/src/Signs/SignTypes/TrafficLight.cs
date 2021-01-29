@@ -19,7 +19,7 @@ namespace GreenLight
 
         public void SwitchLights()
         {
-            Console.WriteLine("SignCount in TL:" + trafficLightnr);
+
             if (color == "Red")
             {
                 color = "Green";

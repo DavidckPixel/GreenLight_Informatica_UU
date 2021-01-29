@@ -831,9 +831,8 @@ namespace GreenLight
                 return; // NO CURRENTCROSSROAD
             }
 
-            if (this.startedCrossing)
-            {
-               //Console.WriteLine("IS ON CROSSROAD");
+            if (this.startedCrossing)            {
+
                 this.crossRoadOccupied = false;
                 return; //YOU ARE ALREADY ON THE CROSSROAD
             }
@@ -890,11 +889,6 @@ namespace GreenLight
             int rightPriority = this.currentCrossRoad.sides.First(x => x.side == "Right").priorityLevel;
             int topPriority = this.currentCrossRoad.sides.First(x => x.side == "Top").priorityLevel;
             int bottomPriority = this.currentCrossRoad.sides.First(x => x.side == "Bottom").priorityLevel;
-
-            //Console.WriteLine("LEFT =  status: {0} - Driving : {1} - Priority {2}", leftStatus, leftDriving, leftPriority);
-            //Console.WriteLine("TOP =  status: {0} - Driving : {1} - Priority {2}", topStatus, topDriving, topPriority);
-            //Console.WriteLine("RIGHT =  status: {0} - Driving : {1} - Priority {2}", rightStatus, rightDriving, rightPriority);
-            //Console.WriteLine("BOTTOM =  status: {0} - Driving : {1} - Priority {2}", bottomStatus, bottomDriving, bottomPriority);
 
             if (_side == "Top")
             {
@@ -975,7 +969,7 @@ namespace GreenLight
                 }
                 else
                 {
-                    Console.WriteLine("ERROR IN GOALSIDE, IN CROSSROAD RULES, YOU SHOULD NEVER BE HERE!!");
+                    Log.Write("ERROR IN GOALSIDE, IN CROSSROAD RULES, YOU SHOULD NEVER BE HERE!!");
                 }
 
                 if (topDriving)
@@ -1018,7 +1012,7 @@ namespace GreenLight
                 }
                 else
                 {
-                    Console.WriteLine("ERROR IN GOALSIDE, IN CROSSROAD RULES, YOU SHOULD NEVER BE HERE!!");
+                    Log.Write("ERROR IN GOALSIDE, IN CROSSROAD RULES, YOU SHOULD NEVER BE HERE!!");
                 }
 
                 if (leftDriving)

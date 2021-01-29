@@ -114,7 +114,7 @@ namespace GreenLight
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+
             }
         }
         public List<int> getWeightOriginPoints()

@@ -163,7 +163,7 @@ namespace GreenLight
 
         public void AddElement(string _element)
         {
-            Console.WriteLine("ADDED: " + _element);
+ 
             elementsSelected.Add(_element);
             this.selectedIndex = this.elementsSelected.IndexOf(_element);
             this.selectedLeftBool = true;

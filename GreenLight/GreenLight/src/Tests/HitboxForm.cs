@@ -236,16 +236,8 @@ namespace GreenLight
         //Does nothing anymore...
         public void click(object o, MouseEventArgs mea)
         {
-            //RectHitbox _temp = test4;
 
-            /*
-            Console.WriteLine("RC's: {0} - {1} - {2} - {3}",_temp.rcTop, _temp.rcBottom, _temp.rcLeft, _temp.rcRight);
-            Console.WriteLine("B's: {0} - {1} - {2} - {3}", _temp.bTop, _temp.bBottom, _temp.bLeft, _temp.bRight);
-            Console.WriteLine(colours[hitboxes.IndexOf(_temp)]);
-            Console.WriteLine("---------------------------------"); */
 
-            //Console.WriteLine(curftest1.midX + " -- " + curftest1.midY);
-            Console.WriteLine();
         }
 
         //Tests the hitboxes of randomly created points
