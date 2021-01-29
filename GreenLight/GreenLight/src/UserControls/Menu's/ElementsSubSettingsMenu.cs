@@ -46,11 +46,12 @@ namespace GreenLight
             showLanePointsLabel.Font = new Font(_dosisfontfamily, 9, FontStyle.Bold);
             showLanePointsLabel.ForeColor = Color.FromArgb(142, 140, 144);
             showLanePointsLabel.Location = new Point(_ButtonXbase, _ButtonYbase);
-            showLanePointsLabel.Size = new Size(150, 30);
+            showLanePointsLabel.Size = new Size(130, 30);
             Controls.Add(showLanePointsLabel);
 
             CheckBox showLanePoints = new CheckBox();
-            showLanePoints.Location = new Point(_ButtonXbase + (int)(1.5 * _ButtonXdiff), _ButtonYbase + 3);
+            Console.WriteLine("BXbase  " + _ButtonXbase);
+            showLanePoints.Location = new Point(160, _ButtonYbase);
             showLanePoints.Checked = true;
             showLanePoints.Size = new Size(20, 20);
             showLanePoints.CheckedChanged += (object o, EventArgs ea) =>
@@ -64,12 +65,12 @@ namespace GreenLight
             Toggle_grid.Text = "Toggle Grid:";
             Toggle_grid.Font = new Font(_dosisfontfamily, 9, FontStyle.Bold);
             Toggle_grid.ForeColor = Color.FromArgb(142, 140, 144);
-            Toggle_grid.Location = new Point(_ButtonXbase, _ButtonYbase + 35);
+            Toggle_grid.Location = new Point(_ButtonXbase, _ButtonYbase + 30);
             Toggle_grid.Size = new Size(100, 30);
             Controls.Add(Toggle_grid);
 
             CheckBox toggleGridBox = new CheckBox();
-            toggleGridBox.Location = new Point(_ButtonXbase + (int)(1.5 * _ButtonXdiff), _ButtonYbase + 38);
+            toggleGridBox.Location = new Point(160, _ButtonYbase + 38);
             toggleGridBox.Checked = true;
             toggleGridBox.Size = new Size(20, 20);
             toggleGridBox.CheckedChanged += (object o, EventArgs ea) =>
