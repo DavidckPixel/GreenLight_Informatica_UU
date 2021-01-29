@@ -168,7 +168,7 @@ namespace GreenLight
 
         public void ChangeTargetSpeed(double _speed)
         {
-            this.targetspeed = Math.Abs(_speed + this.speedRelativeToLimit / 10);
+            this.targetspeed = Math.Abs((_speed + this.speedRelativeToLimit) / 10);
         }
 
         //When the AI passes a YIELD or PRIORITY sign, it must change its internal priority to whatever
@@ -232,7 +232,7 @@ namespace GreenLight
             List<BetterVehicle> allVehicles = General_Form.Main.SimulationScreen.Simulator.vehicleController.vehicleList;
             List<BetterVehicle> vehiclesOnLane = allVehicles.FindAll((x => x.currentLane == this.vehicle.currentLane && x.currentRoad == this.vehicle.currentRoad));
 
-            int _distance = RoadMath.LanePointsInDistance(this.vehicle.brakeDistance + 8, this.currentLanePointIndex, this.vehicle.currentLane.points);
+            int _distance = RoadMath.LanePointsInDistance(this.vehicle.brakeDistance + 20, this.currentLanePointIndex, this.vehicle.currentLane.points);
 
             _distance = _distance == 0 ? 1 : _distance;
 
@@ -255,7 +255,7 @@ namespace GreenLight
         //This is an old CrossRoadRule function that determined whether or not the car was allowed to drive
         //It is very complex and tries to use clever tricks to quickly forfill its purpose. this however makes
         //it very complicated and difficult to work with, its fun to read through and try to understand
-        //but no longer used do to critical errors.
+        //but no longer used due to critical errors.
 
         private void CrossRoadRules()
         {
@@ -867,7 +867,7 @@ namespace GreenLight
 
             if (_tempside == null)
             {
-                Console.WriteLine("Warning you should never be here! ID 2");
+                Log.Write("Warning you should never be here! ID 2");
                 return; 
             }
 
@@ -931,7 +931,7 @@ namespace GreenLight
                 }
                 else
                 {
-                    Console.WriteLine("ERROR IN GOALSIDE, IN CROSSROAD RULES, YOU SHOULD NEVER BE HERE!!");
+                    Log.Write("ERROR IN GOALSIDE, IN CROSSROAD RULES, YOU SHOULD NEVER BE HERE!!");
                 }
 
                 if (rightDriving)

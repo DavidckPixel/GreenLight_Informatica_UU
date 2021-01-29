@@ -12,18 +12,20 @@ namespace GreenLight
         {
             this.speed = 50; //BaseSPEED
             SpeedSignController _test = (SpeedSignController)_controller;
-            Console.WriteLine("CONTROLLLER: " + _test.ToString());
+            //Console.WriteLine("CONTROLLLER: " + _test.ToString());
             controller = _controller;
         }
 
         public void editSpeed(int _speed)
         {
+            
             this.speed = _speed;
+            //Console.WriteLine("Changing Sign speed to " + this.speed / 10);
         }
 
         public override void Read(BetterAI _ai)
         {
-            Console.WriteLine("CHANGING THE SPEED TO: " + this.speed / 10);
+            //Console.WriteLine("CHANGING THE SPEED TO: " + this.speed / 10);
             _ai.ChangeTargetSpeed(this.speed);
         }
 
