@@ -48,7 +48,7 @@ namespace GreenLight
             this.profileController = new DriverProfileController(this.screenController.Screen);
             this.profileController.Initialize();
 
-            Simulation = new Thread(this.update);
+            Simulation = new Thread(this.Update);
         }
 
         public override void Initialize()
@@ -60,7 +60,7 @@ namespace GreenLight
         {
             if (!SimulationRunning)
             {
-                this.initSimulation();
+                this.InitSimulation();
 
                 SimulationRunning = true;
                 Simulation.Start();
@@ -81,11 +81,11 @@ namespace GreenLight
         public void StopSimulation()
         {
             this.SimulationPaused = true;
-            this.resetSimulation();
+            this.ResetSimulation();
             this.screenController.Screen.Invalidate();
         }
 
-        public void initSimulation()
+        public void InitSimulation()
         {
             General_Form.Main.DataScreen.dataController.DataControllerReset();
 
@@ -96,7 +96,7 @@ namespace GreenLight
             this.screenController.Screen.Invalidate();
         }
 
-        public void resetSimulation()
+        public void ResetSimulation()
         {
             this.vehicleController.vehicleList.Clear();
             General_Form.Main.UserInterface.SimDataM.stopWatch.Reset();
@@ -113,10 +113,10 @@ namespace GreenLight
                 }
             }
 
-            initSimulation();
+            InitSimulation();
         }
 
-        private void update()
+        private void Update()
         {
             int x = 0;
             while (true)
@@ -149,7 +149,7 @@ namespace GreenLight
 
                     if (x % this.spawnBetweenTick == 0 && this.canSpawn)
                     {
-                        vehicleController.getVehicle(this.screenController.gpsData.getRandomStartNode(), true);
+                        vehicleController.getVehicle(this.screenController.gpsData.GetRandomStartNode(), true);
 
                     }
 

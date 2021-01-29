@@ -210,14 +210,12 @@ namespace GreenLight
 
         public override void Draw(Graphics g)
         {
-
-            Brush _brush = new SolidBrush(Color.FromArgb(100, Color.Black));
             Pen _pen = new Pen(new SolidBrush(Color.FromArgb(100, this.color)), PenWidth);
 
             if (_lanes != 0 && _lanes % 2 == 0)
                 rect = Rect();
 
-            bool draw = General_Form.Main == null ? true : General_Form.Main.BuildScreen.Toggle;
+            bool draw = General_Form.Main == null || General_Form.Main.BuildScreen.Toggle;
 
             if (draw)
             {

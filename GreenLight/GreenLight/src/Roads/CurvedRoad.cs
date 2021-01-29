@@ -23,8 +23,10 @@ namespace GreenLight
             if (Dir == "SE" || Dir == "SW" || Dir == "NE" || Dir == "NW")
             {
                 Point[] _points = RoadMath.hitBoxPointsCurved(_point1, _point2, this.lanes, this.laneWidth, true, _dir);
-                this.hitbox = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], _dir, Color.Yellow);
-                this.hitbox._lanes = _lanes;
+                this.hitbox = new CurvedHitbox(_points[0], _points[1], _points[2], _points[3], _dir, Color.Yellow)
+                {
+                    _lanes = _lanes
+                };
 
                 for (int x = 1; x <= lanes; x++)
                 {
