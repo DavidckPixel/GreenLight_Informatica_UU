@@ -53,6 +53,7 @@ namespace GreenLight
 
         public abstract Hitbox CreateHitbox(Point[] _array);
 
+        // Basic draw function for all roads, draws every lane, all signs placed on the road and the road's Hitbox
         public override void Draw(Graphics g)
         {
             foreach(Lane _lane in Drivinglanes)
@@ -91,6 +92,7 @@ namespace GreenLight
 
         public string getRoadtype() { return roadtype; }
 
+        // This method converts any road to a String, used to Save projects
         public override string ToString()
         {
             string _roadString = "Road " + Type + " " + point1.X.ToString() + " " + point1.Y.ToString() + " " + point2.X.ToString() + " " + point2.Y.ToString() + " " + lanes.ToString() + " " + beginconnection.ToString() + " " + endconnection.ToString();

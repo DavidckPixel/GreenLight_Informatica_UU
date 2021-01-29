@@ -15,7 +15,7 @@ using System.IO;
 
 namespace GreenLight
 {
-    //This is the InterfaceController that handles everything interface related, it holds all the classes which hold the buttons and user controls.
+    //This is the InterfaceController that handles everything interface related, it holds all the different menus that can be opened.
 
     public class InterfaceController : AbstractController
     {

@@ -7,6 +7,7 @@ using System.Drawing;
 
 namespace GreenLight
 {
+    // The Arrows that are drawn on each ConnectionPoint to show in which directions a car can go.
     public class CrossArrow
     {
         public Point Location;

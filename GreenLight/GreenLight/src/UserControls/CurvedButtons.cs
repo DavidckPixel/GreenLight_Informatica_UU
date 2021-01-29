@@ -46,7 +46,7 @@ namespace GreenLight
             }
         }
       
-        public CurvedButtons() // Divider 
+        public CurvedButtons() 
         {
             this.Curve = 1;
             this.Size = new Size(250, 5);
@@ -54,7 +54,7 @@ namespace GreenLight
             this.Image = Image.FromFile("../../src/User Interface Recources/Sub_Menu_Divider.png");
         }
         
-        public CurvedButtons(Size Header_size, Point Location, string FilePath) // Header
+        public CurvedButtons(Size Header_size, Point Location, string FilePath)
         {
             this.Curve = 1;
             this.Size = Header_size;
@@ -64,7 +64,7 @@ namespace GreenLight
             this.Image = Image.FromFile(FilePath);
         }
         
-        public CurvedButtons(Size _buttonsize, Point _location, int _curve, string _filepath, Color _backcolor) // Curved buttons
+        public CurvedButtons(Size _buttonsize, Point _location, int _curve, string _filepath, Color _backcolor) 
         {
             this.Selected = false;
             this.Image_path = _filepath;
@@ -80,7 +80,7 @@ namespace GreenLight
         }
 
         
-        public CurvedButtons(Form _form, int _curve) // Logo
+        public CurvedButtons(Form _form, int _curve) 
         {
             this.Curve = _curve;
             this.Size = new Size(175, 70);
@@ -98,7 +98,7 @@ namespace GreenLight
             this.Controls.Add(_red);
         }
         
-        public CurvedButtons(Size _buttonsize, Point _location, int _curve, string _filepath, string _text, FontFamily _dosisfontfamily, Form _form, Color _backcolor) // Curved buttons with text
+        public CurvedButtons(Size _buttonsize, Point _location, int _curve, string _filepath, string _text, FontFamily _dosisfontfamily, Form _form, Color _backcolor)
         {
             this.Curve = _curve;
             this.Backcolor = _backcolor;

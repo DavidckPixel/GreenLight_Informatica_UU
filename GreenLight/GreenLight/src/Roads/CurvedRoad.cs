@@ -36,6 +36,7 @@ namespace GreenLight
                 Lane.OrderDrivingLanes(this);
             }
         }
+
         private DrivingLane CreateDrivingLane(Point _point1, Point _point2, int _thisLane)
         {
             Point[] _points = RoadMath.hitBoxPointsCurved(_point1, _point2, 1, this.laneWidth, false, Dir);
@@ -43,6 +44,7 @@ namespace GreenLight
             return new DrivingLane(LanePoints.CalculateCurveLane(_point1, _point2, this.Dir), this.Dir, this.lanes, _thisLane, _temp);
         }
         
+        // This method moves the begin- and/or endpoint of different lanes in a CurvedRoad, so lanes are not overlapping
         private DrivingLane CalculateLanes(Point _firstPoint, Point _secondPoint, int t)
         {
         int drivingLaneDistance = this.laneWidth;

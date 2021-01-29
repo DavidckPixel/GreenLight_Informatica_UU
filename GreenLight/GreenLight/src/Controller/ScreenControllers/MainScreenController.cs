@@ -84,30 +84,6 @@ namespace GreenLight
 
             Dictionary<string, int> startmenu = UserControls.Config.startSubMenu;
 
-            //CurvedButtons Preset1 = new CurvedButtons();
-            //Preset1.Click += (object o, EventArgs ea) => {  };
-            //ChoosePresetForm.Controls.Add(Preset1);
-
-            //CurvedButtons Preset2 = new CurvedButtons();
-            //Preset2.Click += (object o, EventArgs ea) => {  };
-            //ChoosePresetForm.Controls.Add(Preset2);
-
-            //CurvedButtons Preset3 = new CurvedButtons();
-            //Preset3.Click += (object o, EventArgs ea) => {  };
-            //ChoosePresetForm.Controls.Add(Preset3);
-
-            //CurvedButtons Preset4 = new CurvedButtons();
-            //Preset4.Click += (object o, EventArgs ea) => {  };
-            //ChoosePresetForm.Controls.Add(Preset4);
-
-            //CurvedButtons Preset5 = new CurvedButtons();
-            //Preset5.Click += (object o, EventArgs ea) => {  };
-            //ChoosePresetForm.Controls.Add(Preset5);
-
-            //CurvedButtons Preset6 = new CurvedButtons();
-            //Preset6.Click += (object o, EventArgs ea) => {  };
-            //ChoosePresetForm.Controls.Add(Preset6);
-
 
             ChoosePresetForm.Controls.Add(Presets);
             ChoosePresetForm.Controls.Add(DragPad);
@@ -156,8 +132,6 @@ namespace GreenLight
 
         public void DrawMain(Object o, PaintEventArgs pea)
         {
-            Console.WriteLine(this.Active);
-
             if (this.Active.Screen != null)
             {
                 this.Active.Screen.Show();
@@ -165,6 +139,7 @@ namespace GreenLight
             }
         }
         
+        // Saves a textfile containing all roads and signs in the preffered fodler
         public void SaveAs()
         {
             SaveFileDialog save = new SaveFileDialog();
@@ -239,6 +214,7 @@ namespace GreenLight
             catch (Exception e) { };
         }
 
+        // Saves an existing project or redirects to SaveAs
         public void Save()
         {
             if (this.BuildScreen.builder.roadBuilder.roads.Count != 0)
@@ -317,6 +293,7 @@ namespace GreenLight
             ChoosePresetForm.ShowDialog();
         }
 
+        // Rebuilds a project from a text file
         public void Load(string file)
         {
             StreamReader myStream;
@@ -354,6 +331,7 @@ namespace GreenLight
             }
         }
 
+        // This method is called when the user goes back to the Main menu, it resets everything in the BuildScreen
         public void Clear_all_lists()
         {
             try

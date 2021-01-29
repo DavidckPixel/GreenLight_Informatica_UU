@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenLight
 {
+    // Contains information about one side of a CrossRoad
     public class CrossRoadSide
     {
         public bool status;

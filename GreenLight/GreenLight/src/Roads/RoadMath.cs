@@ -21,7 +21,7 @@ namespace GreenLight
             return Math.Sqrt(Math.Pow(_oneX - _twoX, 2) + Math.Pow(_oneY - _twoY, 2));
         }
 
-
+        // The following three methods calculate at which angle a car has to position itsself on a certain LanePoint
         public static float CalculateAngle(Point _point1, Point _point2)
         {
             float _deltaX = _point1.X - _point2.X;
@@ -161,6 +161,7 @@ namespace GreenLight
             return _addIndex;
         }
 
+        // The following three methods create an array of all locations of LanePoints that are inside a Hitbox
         public static Point[] hitBoxPointsCurved(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox, string _dir)
         {
             Point _one, _two;
@@ -358,6 +359,7 @@ namespace GreenLight
             return _points;
         }
 
+        // Decides the direction of a CurvedRoad
         public static string Direction(Point _firstPoint, Point _secondPoint, string _Roadtype)
         {
             string RoadDirection = "x";

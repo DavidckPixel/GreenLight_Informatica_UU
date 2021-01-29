@@ -56,7 +56,6 @@ namespace GreenLight
 
                 SimulationRunning = true;
                 Simulation.Start();
-                //General_Form.Main.BuildScreen.builder.signController.StartTimer();
             }
             else
             {

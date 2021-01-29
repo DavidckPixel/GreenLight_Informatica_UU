@@ -20,6 +20,7 @@ namespace GreenLight
         public double? rcTop, rcBottom, rcLeft, rcRight;
         public double? bTop, bBottom, bLeft, bRight;
 
+        // The constructor creates the actual RectHitbox
         public RectHitbox(Point _topleft, Point _topright, Point _bottomleft, Point _bottomright, Color _color) : base(_topleft, _topright, _bottomleft, _bottomright)
         {
             bottomleft = _bottomleft;
@@ -95,6 +96,7 @@ namespace GreenLight
             }
         }
 
+        // This method is used to check if a point is inside the CurvedHitbox and is important for a lot of parts of our code.
         public override bool Contains(Point _p)
         {
             try
@@ -146,6 +148,7 @@ namespace GreenLight
             return false;
         }
 
+        // This method builds upon the Contains method to see if two Hitboxes overlap
         public override bool Collide(Hitbox _h, Graphics g)
         {
             bool _temp = false;
@@ -221,9 +224,9 @@ namespace GreenLight
             g.FillPolygon(new SolidBrush(Color.FromArgb(150, Color.Red)), _points);
         }
 
+        // This method Calculates a line exactly in the middle of the Hitbox, used in the Collide method
         public List<LanePoints> CalculateLanePoints()
         {
-                        
             List<LanePoints> _lanepoints = new List<LanePoints>();
 
             if ((Math.Abs(topleft.Y - topright.Y) < 5 || Math.Abs(topleft.X - topright.X) < 5) && (Math.Abs(topleft.X - bottomleft.X) < 5 || Math.Abs(topleft.Y - bottomleft.Y) < 5))

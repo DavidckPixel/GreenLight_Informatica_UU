@@ -31,6 +31,7 @@ namespace GreenLight
             AngleDir = middle.degree;
         }
 
+        // Reverses the List of LanePoints and flips their angles to make cars drive in the opposite direction
         public override void FlipPoints()
         {
             List<LanePoints> _templist = new List<LanePoints>();
@@ -82,6 +83,7 @@ namespace GreenLight
             }
         }
 
+        // Decides if a dashed yellow line or a solid white line needs to be drawn at a side of a DrivingLane
         public Pen getPen(int _side)
         {
             Pen p = new Pen(Color.FromArgb(248, 185, 0), 3);
@@ -125,6 +127,7 @@ namespace GreenLight
             return p;
         }
 
+        // Draws the DrivingLane on the screen
         public override void Draw(Graphics g)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;

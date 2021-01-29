@@ -110,6 +110,7 @@ namespace GreenLight
             Log.Write("Switch completed");
         }
 
+        // Draws everything on the screen
         public void DrawPictureBox(object o, PaintEventArgs pea)
         {
             Graphics g = pea.Graphics;

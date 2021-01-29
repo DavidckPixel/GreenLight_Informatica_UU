@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 namespace GreenLight
 {
     
-    //A roadtype for Crossroads.
-    //The corners of the crossroad are calculated and used to contruct a Recthitbox for the crossroad
-    //A scale is calculated, and used to calculate connectionpoints for this road at the right place for when a settingsscreen is opened for the crossroad.
+    // A roadtype for CrossRoads, that can connect more than two roads to each other.
+    // Each CrossRoad has up to four active sides that can be connected to other roads.
+    // The most important part of a CrossRoad are it's ConnectionPoints, that make connections possible.
+    // The corners of the crossroad are calculated and used to contruct a Recthitbox for the crossroad
+    // A scale is calculated, and used to calculate ConnectionPoints for this road at the right place for when a settingsscreen is opened for the crossroad.
 
 
     public class CrossRoad : AbstractRoad
@@ -21,9 +23,6 @@ namespace GreenLight
 
         public List<CrossArrow> CrossRoadArrows = new List<CrossArrow>();
         public CrossRoadSide[] sides = new CrossRoadSide[4];
-
-        //public RectHitbox[] sideHitboxes = new RectHitbox[4];
-        //public bool[] sideStatus = new bool[4] { false, false, false, false };
 
         public CrossRoad(Point _point1, Point _point2, int _lanes, string _roadtype, bool _beginconnection, bool _endconnection, AbstractRoad _beginConnectedTo, AbstractRoad _endConnectedTo) : base(_point1, _point2, _lanes, _roadtype, _beginconnection, _endconnection, _beginConnectedTo, _endConnectedTo)
         {
@@ -45,10 +44,11 @@ namespace GreenLight
             this.sides[3] = new CrossRoadSide(new RectHitbox(_points[0], _points[1], new Point(_points[0].X, _points[0].Y + 20), new Point(_points[1].X, _points[1].Y + 20), Color.Green), "Top");
         }
 
+        // Creates the arrows that show in which directions a car can go on a CrossRoad
         public void CreateArrowImages()
         {
             
-            foreach (ConnectionPoint _point in this.connectPoints) //MOVE TO A MORE SENSICAL PLACE
+            foreach (ConnectionPoint _point in this.connectPoints)
             {
                 Bitmap _combined = new Bitmap(25, 25);
 
@@ -149,9 +149,6 @@ namespace GreenLight
         private void createConnectionPoints()
         {
             int Width = (int)((500 - ((this.lanes * this.laneWidth) + 2 * Extra) * this.Scale));
-            //Console.WriteLine(Width);
-            //Console.WriteLine(this.Scale);
-            //Console.WriteLine(this.laneWidth);
 
             createConnectionPointSide(new Point((int)(Width + (Extra + this.laneWidth) / 2 * this.Scale), (int)(Width)), 1, 0, "Top");
             createConnectionPointSide(new Point((int)(Width + (Extra + this.laneWidth) / 2 * this.Scale), (int)(Width+ ((lanes * this.laneWidth + Extra) * this.Scale))), 1, 0, "Bottom");
@@ -168,6 +165,7 @@ namespace GreenLight
             }
         }
 
+        // The draw functions draw the CrossRoad based on which ConnectionPoints are active (connected to other ConnectionPoints.
         public override void Draw(Graphics g)
         {
             Brush _b = new SolidBrush(Color.FromArgb(21, 21, 21));
@@ -203,22 +201,9 @@ namespace GreenLight
                 }
             }
             General_Form.Main.BuildScreen.builder.roadBuilder.AllCrossArrows.Add(CrossRoadArrows);
-
-            /*
-            for(int x = 0; x < 4; x++)
-            {
-                this.sides[x].hitbox.Draw(g);
-            }
-            */
-            foreach (ConnectionPoint x in connectPoints)
-            {
-                if (x.Active)
-                {
-                   // g.FillRectangle(Brushes.Red, x.Location.X, x.Location.Y, 10, 10);
-                }
-            }
         }
 
+        // Draw one side of a CrossRoad
         public void DrawSides(Graphics g, string _side, Point _topleft, Size _size, Brush _b)
         {
             List<ConnectionPoint> _pointOnSide = this.connectPoints.FindAll(x => x.Side == _side);

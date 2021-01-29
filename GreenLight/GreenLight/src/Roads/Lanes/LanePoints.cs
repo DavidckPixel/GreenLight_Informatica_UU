@@ -35,7 +35,7 @@ namespace GreenLight
             this.distance = new Tuple<double, double>(_first, _second);
         }
 
-        
+        // The following three methods are called upon when the direction of a Lane is reversed, they flip a LanePoint's stats
         public void Flip()
         {
             FlipDegree();

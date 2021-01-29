@@ -21,7 +21,7 @@ namespace GreenLight
             this.Region = new Region(_graphics);
             base.OnPaint(pea);
         }
-        //HelpButton
+  
         public RoundButtons(Size _buttonsize, Point _location, string _filepath)
         {
             this.Cursor = Cursors.Hand;

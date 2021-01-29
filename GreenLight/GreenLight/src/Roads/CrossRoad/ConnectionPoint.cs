@@ -7,6 +7,9 @@ using System.Drawing;
 
 namespace GreenLight
 {
+    // Each CrossRoads has an amount of ConnectionPoints, equal to 4 times the amount of lanes (one time on each side).
+    // When ConnectionPoints are active, they are connected to at least one other ConnectionPoint
+
     public class ConnectionPoint
     {
         public Point Location;
