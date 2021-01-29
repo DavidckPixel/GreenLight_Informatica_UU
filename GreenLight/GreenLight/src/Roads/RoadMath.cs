@@ -9,19 +9,23 @@ namespace GreenLight
 {
 
     // This is the RoadMath class, which, as it's name suggests, deals with all math problems that come up in road classes 
+    /// <include file='.../.../Documentation/XML-items/RoadMath.xml' path='docs/members[@name="roadmath"]/RoadMath/*'/>
     public static class RoadMath
     {
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/Distance/*'/>
         public static double Distance(Point _one, Point _two)
         {
             return Math.Sqrt(Math.Pow(_one.X - _two.X, 2) + Math.Pow(_one.Y - _two.Y, 2));
         }
 
+
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/Distance2/*'/>
         public static double Distance(double _oneX, double _oneY, double _twoX, double _twoY)
         {
             return Math.Sqrt(Math.Pow(_oneX - _twoX, 2) + Math.Pow(_oneY - _twoY, 2));
         }
 
-
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/CalculateAngle/*'/>
         public static float CalculateAngle(Point _point1, Point _point2)
         {
             float _deltaX = _point1.X - _point2.X;
@@ -38,6 +42,7 @@ namespace GreenLight
             return _degree;
         }
 
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/CalculateAngle2/*'/>
         public static float CalculateAngle(float _point1X, float _point1Y, float _point2X, float _point2Y)
         {
             float _deltaX = _point1X - _point2X;
@@ -70,7 +75,7 @@ namespace GreenLight
             return _degree % 360;
         }
 
-
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/CalculateDistanceLanePoints/*'/>
         public static void CalculateDistanceLanePoints(ref List<LanePoints> _points)
         {
             LanePoints _before = _points.First();
@@ -96,6 +101,7 @@ namespace GreenLight
             }
         }
 
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/AddDistanceLanePoints/*'/>
         public static double AddDistanceLanePoints(int _index1, int _index2, List<LanePoints> _points)
         {
             if(_index2 < _index1)
@@ -107,12 +113,14 @@ namespace GreenLight
             return _partialpoints.Sum(x => x.distance.Item1);
         }
 
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/DistanceToLastLanePoint/*'/>
         public static double DistanceToLastLanePoint(int _index, List<LanePoints> _points)
         {
             int _index2 = _points.Count() - 1;
             return AddDistanceLanePoints(_index, _index2, _points);
         }
 
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/AddDistanceMultiLanes/*'/>
         public static double AddDistanceMultiLanes(int _index, int _count, List<List<LanePoints>> _lanes) //NOT TESTED
         {
             int _added;
@@ -142,6 +150,7 @@ namespace GreenLight
             return sum;
         }
 
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/LanePointsInDistance/*'/>
         public static int LanePointsInDistance(double _distance, int _index, List<LanePoints> _points)
         {
             double _currentDistance = 0;
@@ -161,6 +170,7 @@ namespace GreenLight
             return _addIndex;
         }
 
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/hitBoxPointsCurved/*'/>
         public static Point[] hitBoxPointsCurved(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox, string _dir)
         {
             Point _one, _two;
@@ -242,6 +252,7 @@ namespace GreenLight
             return _points;
         }
 
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/hitBoxPointsDiagonal/*'/>
         public static Point[] hitBoxPointsDiagonal(Point one, Point two, int _lanes, int _laneWidth, bool _Roadhitbox, double _slp, bool _checklegal)
         {
             Point _one, _two;
@@ -340,6 +351,7 @@ namespace GreenLight
             return _points;
         }
 
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/hitBoxPointsCross/*'/>
         public static Point[] hitBoxPointsCross(Point one, Point two, int _lanes, int _laneWidth, bool _RoadhitBox)
         {
             int Extra = Roads.Config.crossroadExtra;
@@ -358,6 +370,7 @@ namespace GreenLight
             return _points;
         }
 
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/Direction/*'/>
         public static string Direction(Point _firstPoint, Point _secondPoint, string _Roadtype)
         {
             string RoadDirection = "x";
@@ -413,6 +426,7 @@ namespace GreenLight
             return RoadDirection;
         }
 
+        /// <include file=".../.../Documentation/XML-items/RoadMath.xml" path='docs/members[@name="roadmath"]/calculateSlope/*'/>
         public static double calculateSlope(Point one, Point two)
         {
             double _slp = (double)(two.Y - one.Y) / (double)(two.X - one.X); 

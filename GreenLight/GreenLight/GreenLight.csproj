@@ -19,6 +19,7 @@
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
@@ -27,6 +28,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,6 +40,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>Documentation\XML-items\GreenLight.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -332,6 +336,8 @@
     <Content Include="Documentation\BugReport Document.txt" />
     <Content Include="Documentation\CodingConvention.txt" />
     <Content Include="Documentation\Touchup Document.txt" />
+    <Content Include="Documentation\XML-items\GreenLight.xml" />
+    <Content Include="Documentation\XML-items\RoadMath.xml" />
     <Content Include="Images\BetterCar.png" />
     <Content Include="Images\BigCar.png" />
     <Content Include="Images\Car.png" />
