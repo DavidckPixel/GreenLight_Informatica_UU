@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GreenLight.src.Driver.GPS
 {
-    //The Path class is the class that contains all the information for where to go on one road, Since sometimes you need to be on the correct lane
-    //before the end of the road (for example when approaching a crossRoad). this is why we have the NextLaneIndex, this is a list can be null incase it does not matter
-    //where the vehicle ends up, but if this list contains indexes, these are the lane indexes that the vehicle must end up being at before the end of the road.
+    // A path is an object that holds a road, a list of Indexes of lanes that road has and that go in the right direction, a list of indexes the next road 
+    //The constructor takes three nodes. The links between the knot of the first node and the knot of the second node are found, and the indexes added to the list of laneindexes
+    //The road the first two nodes both have is determined and is set to this.road.
+    //If this road is a crossroad, for each link between the two knots the crosslane is found in the lanes of the road. 
+    //the other road that is part of the second node knot is determined and set as a temporary value, and each lane of that road is compared to the crosslane. 
+    //If there is a distance of less then five between the last point of one of them and the first point of the other, a tuple is made of the indexes of both lanes, and added to the laneswap list of tuples.
+    //If this road isn't a crossroad, but there is a third node, and the neither of the roads of the knot of the second node are null,
+    //if one of these roads is a crossroad, for each of the links of that road the crosslane is found and compared to every lane of this.road.
+    //If there is a distance of less then five between the last point of one of them and the first point of the other, a tuple is made of the indexes of both lanes, and added to the laneswap list of tuples.
+    //If neither one of these roads were a crossroad, a tuple is made and added to laneswap for each index in the list of laneindexes. 
+    //The same is done if one of these roads were null or there was no third knot.
 
     public class Path
     {
@@ -24,19 +30,15 @@ namespace GreenLight.src.Driver.GPS
             this.LaneSwap = new List<Tuple<int, int>>();
             _one.links.FindAll(x => x.end == _two.knot).ForEach(x => this.laneIndex.Add(x.laneIndex));
 
-            if ((_one.knot.Road1 == _two.knot.Road1 || _one.knot.Road1 == _two.knot.Road2 ) && _one.knot.Road1 != null )
+            if ((_one.knot.Road1 == _two.knot.Road1 || _one.knot.Road1 == _two.knot.Road2) && _one.knot.Road1 != null)
             {
-                    this.road = _one.knot.Road1;
-                
+                this.road = _one.knot.Road1;
             }
             else
             {
-                    this.road = _one.knot.Road2;
+                this.road = _one.knot.Road2;
             }
-            if (this.road == null)
-            {
-                return;
-            }
+
             if (this.road != null && this.road.roadtype == "Cross")
             {
                 List<Link> _links = _one.links.FindAll(x => x.end == _two.knot);
@@ -46,7 +48,7 @@ namespace GreenLight.src.Driver.GPS
                     Lane _crossLane = this.road.Drivinglanes[_nextlink.laneIndex - 1];
                     AbstractRoad _road = _two.knot.Road1;
 
-                    if(this.road == _road)
+                    if (this.road == _road)
                     {
                         _road = _two.knot.Road2;
                     }
@@ -87,7 +89,6 @@ namespace GreenLight.src.Driver.GPS
                         if (_two.knot.Road2.roadtype == "Cross")
                         {
                             Lane _crossLane = _two.knot.Road2.Drivinglanes[_nextlink.laneIndex - 1];
-                            Lane _forcedlane = null;
                             int _forcedindex = laneIndex.First();
                             foreach (Lane _thislane in this.road.Drivinglanes)
                             {
@@ -98,17 +99,17 @@ namespace GreenLight.src.Driver.GPS
                                 }
                             }
                         }
+
                         if (_allpossiblelanes.Any())
                         {
                             _allpossiblelanes.ForEach(x => this.NextLaneIndex.Add(x));
                         }
-
                         _allpossiblelanes.Clear();
                     }
                 }
                 else
                 {
-                    foreach (int _index in this.laneIndex) //KAN NETTER
+                    foreach (int _index in this.laneIndex)
                     {
                         this.LaneSwap.Add(new Tuple<int, int>(_index, _index));
                     }
@@ -121,11 +122,6 @@ namespace GreenLight.src.Driver.GPS
                     this.LaneSwap.Add(new Tuple<int, int>(_index, _index));
                 }
             }
-
-            foreach(int _tuple in this.NextLaneIndex)
-            {
-            }
-            
         }
     }
 }

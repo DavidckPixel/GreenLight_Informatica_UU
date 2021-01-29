@@ -58,7 +58,7 @@ namespace GreenLight
             this.locationY = _startPoint.knot.Cord.Y;
 
             this.vehicleAI = _ai;
-            this.vehicleAI.setVehicle(this, _startPoint);
+            this.vehicleAI.SetVehicle(this, _startPoint);
         }
 
         //Updates the speed as well as the location of the vehicle.
@@ -131,7 +131,7 @@ namespace GreenLight
             }
             while (_indexdiff > 0)
             {
-                this.vehicleAI.switchLanePoints();
+                this.vehicleAI.SwitchLanePoints();
                 _indexdiff--;
             }
             this.currentAngle = this.vehicleAI.goal.degree;
@@ -152,10 +152,7 @@ namespace GreenLight
             {
                 g.DrawImage(_image, new Point((int)this.locationX - 10, (int)this.locationY - 10));
             }
-            foreach(Node _spawn in General_Form.Main.SimulationScreen.gpsData.spawnNodes)
-            {
-                _spawn.knot.Draw(g);
-            }
+
         }
 
         //This method switches to the next road if the vehicle enters a connection between two roads

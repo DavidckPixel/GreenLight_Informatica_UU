@@ -51,8 +51,8 @@ namespace GreenLight
             this.stopSign.initSettingScreen();
 
             this.trafficLight = new TrafficLightController(_main, this);
+            this.trafficLightTimer = new System.Timers.Timer();
             this.trafficLight.initSettingScreen();
-
 
             this.prioritySignC = new PrioritySignController(_main, this);
             this.yieldSignC = new YieldSignController(_main, this);
@@ -109,7 +109,7 @@ namespace GreenLight
                 {
                     _flipped = true;
                 }
-                else 
+                else
                 {
                     _flipped = true;
                 }
@@ -118,17 +118,17 @@ namespace GreenLight
             {
                 _flipped = false;
             }
-            else if(selectedRoad.Type == "Curved2")
+            else if (selectedRoad.Type == "Curved2")
             {
                 _flipped = true;
             }
         }
-        
+
 
         public void mouseClick(object o, MouseEventArgs mea)
         {
 
-            if(signType == "D") //SIGNMENU IS DISABLED
+            if (signType == "D") //SIGNMENU IS DISABLED
             {
                 return;
             }
@@ -136,12 +136,12 @@ namespace GreenLight
             List<AbstractRoad> _roadlist = General_Form.Main.BuildScreen.builder.roadBuilder.roads;
             AbstractRoad _selectedRoad = _roadlist.Find(x => x.hitbox.Contains(mea.Location));
 
-            if(_selectedRoad == null)
+            if (_selectedRoad == null)
             {
                 return;
             }
 
-            if(_selectedRoad.roadtype == "Cross")
+            if (_selectedRoad.roadtype == "Cross")
             {
                 MessageBox.Show("You are not allowed to place a sign on a Crossroad!");
                 return;
@@ -194,7 +194,7 @@ namespace GreenLight
             }
             Console.WriteLine("LocationSelected!!!");
 
-            Image _sign_image = Image.FromFile("../../src/User Interface Recources/Speed_Sign.png"); 
+            Image _sign_image = Image.FromFile("../../src/User Interface Recources/Speed_Sign.png");
             switch (signType)
             {
                 case "X":
@@ -215,22 +215,26 @@ namespace GreenLight
                     _sign_image = Image.FromFile("../../src/User Interface Recources/Stop_Sign.png");
                     break;
             }
-            this.selectedSign = this.selectedRoad.Signs.Last();
-            PlacedSign _placed = new PlacedSign(new Point(-100, -100), "", _temp, _sign_image, _selectedRoad, signType, new Point(0, 0), MouseClick, _flipped);
+            PlacedSign _placed = new PlacedSign(new Point(-100, -100), "", _temp, _sign_image, _selectedRoad, signType, new Point(0, 0), MouseClick, _flipped, SignCount);
             this.selectedRoad.Signs.Add(_placed);
+            if (signType == "trafficLight")
+            {
+                TrafficLight _tl = (TrafficLight)_placed.Sign;
+                _tl.trafficLightnr = SignCount;
+            }
             SignCount++;
             closeDragMode();
         }
-        public void changeColor(string color, AbstractSign _temp, AbstractRoad _selectedRoad)
+
+        public void changeColor(string color, int _signCount)
         {
-            Console.WriteLine("changecolor");
+            PlacedSign _placed = null;
 
-            if (_selectedRoad == null)
+            foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
             {
-                return;
+                _placed = _road.Signs.Find(x => x.SignCount == _signCount);
+                Console.WriteLine("local = " + SignCount);
             }
-
-            PlacedSign _placed = _selectedRoad.Signs.Find(x => x.Sign == _temp);
 
             if (_placed == null)
             {
@@ -241,18 +245,17 @@ namespace GreenLight
             {
                 case "Green":
                     _placed.Sign_image = Image.FromFile("../../src/User Interface Recources/Traffic_light_Green.png");
-                    Console.WriteLine("Green");
+                    Console.WriteLine("Green in changeColor in MSC");
                     break;
                 case "Orange":
                     _placed.Sign_image = Image.FromFile("../../src/User Interface Recources/Traffic_light_Orange.png");
+                    Console.WriteLine("Orange in changeColor in MSC");
                     break;
                 case "Red":
                     _placed.Sign_image = Image.FromFile("../../src/User Interface Recources/Traffic_light_Red.png");
-                    Console.WriteLine("Red");
+                    Console.WriteLine("Red in changeColor in MSC");
                     break;
             }
-
-            this.screen.Invalidate();
         }
 
         private AbstractSign CreateSign()
@@ -297,17 +300,23 @@ namespace GreenLight
 
         public void StartTimer()
         {
-            trafficLightTimer.Interval = 15000;
+            trafficLightTimer.Interval = 5000;
             trafficLightTimer.Start();
             trafficLightTimer.Elapsed += new ElapsedEventHandler(SwitchTrafficLights);
-            
         }
 
         void SwitchTrafficLights(object source, ElapsedEventArgs e)
         {
-            foreach (TrafficLight tl in Signs)
+            foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
             {
-                tl.SwitchLights();
+                foreach (PlacedSign _as in _road.Signs)
+                {
+                    if (_as.signType == "trafficLight")
+                    {
+                        TrafficLight _tl = (TrafficLight)_as.Sign;
+                        _tl.SwitchLights();
+                    }
+                }
             }
         }
 
@@ -375,11 +384,9 @@ namespace GreenLight
             }
 
             Signs.Add(_temp);
-
-            PlacedSign _placed = new PlacedSign(_tempPoint, "", _temp, _sign_image, _selectedRoad, _signType, Hitboxoffset, Mouseclick, Flipped);
+            PlacedSign _placed = new PlacedSign(_tempPoint, "", _temp, _sign_image, _selectedRoad, _signType, Hitboxoffset, Mouseclick, Flipped, SignCount);
             _placed._points = p;
             this.selectedRoad.Signs.Add(_placed);
-            SignCount++;
         }
     }
 }

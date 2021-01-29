@@ -27,7 +27,6 @@ namespace GreenLight
         public abstract void openMenu();
         public abstract void initSettingScreen();
         public abstract void deleteSign();
-        public abstract void changeColor(string color);
 
     }
 }

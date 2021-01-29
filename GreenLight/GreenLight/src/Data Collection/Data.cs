@@ -11,7 +11,7 @@ namespace GreenLight.src.Data_Collection
 
     public class Data
     {
-        string dataName = "test";
+        //string dataName = "test";
 
         List<int> seriesBrakeTicks;
         List<int> pointsBrakeTick;

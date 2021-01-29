@@ -26,6 +26,4 @@ namespace GreenLight
             hitbox.Draw(g);
         }
     }
-
-
 }

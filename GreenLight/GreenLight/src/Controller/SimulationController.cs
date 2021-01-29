@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Threading;
-using GreenLight.src.Data_Collection;
-using GreenLight.src.Driver.GPS;
 
 
 namespace GreenLight
@@ -48,7 +40,7 @@ namespace GreenLight
             this.profileController = new DriverProfileController(this.screenController.Screen);
             this.profileController.Initialize();
 
-            Simulation = new Thread(this.update);
+            Simulation = new Thread(this.Update);
         }
 
         public override void Initialize()
@@ -60,10 +52,11 @@ namespace GreenLight
         {
             if (!SimulationRunning)
             {
-                this.initSimulation();
+                this.InitSimulation();
 
                 SimulationRunning = true;
                 Simulation.Start();
+                //General_Form.Main.BuildScreen.builder.signController.StartTimer();
             }
             else
             {
@@ -76,16 +69,19 @@ namespace GreenLight
         {
             this.SimulationPaused = true;
             this.profileController.PauseSimulation(vehicleController.vehicleList);
-            this.screenController.Screen.Invalidate();
-        }
-        public void StopSimulation()
-        {
-            this.SimulationPaused = true;
-            this.resetSimulation();
+            General_Form.Main.BuildScreen.builder.signController.StopTimer();
             this.screenController.Screen.Invalidate();
         }
 
-        public void initSimulation()
+        public void StopSimulation()
+        {
+            this.SimulationPaused = true;
+            this.ResetSimulation();
+            General_Form.Main.BuildScreen.builder.signController.StopTimer();
+            this.screenController.Screen.Invalidate();
+        }
+
+        public void InitSimulation()
         {
             General_Form.Main.DataScreen.dataController.DataControllerReset();
 
@@ -96,7 +92,7 @@ namespace GreenLight
             this.screenController.Screen.Invalidate();
         }
 
-        public void resetSimulation()
+        public void ResetSimulation()
         {
             this.vehicleController.vehicleList.Clear();
             General_Form.Main.UserInterface.SimDataM.stopWatch.Reset();
@@ -112,11 +108,10 @@ namespace GreenLight
                     }
                 }
             }
-
-            initSimulation();
+            InitSimulation();
         }
 
-        private void update()
+        private void Update()
         {
             int x = 0;
             while (true)
@@ -149,7 +144,7 @@ namespace GreenLight
 
                     if (x % this.spawnBetweenTick == 0 && this.canSpawn)
                     {
-                        vehicleController.getVehicle(this.screenController.gpsData.getRandomStartNode(), true);
+                        vehicleController.getVehicle(this.screenController.gpsData.GetRandomStartNode(), true);
 
                     }
 

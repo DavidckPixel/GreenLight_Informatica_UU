@@ -129,6 +129,16 @@ namespace GreenLight
                     }
                 }
             }
+            foreach (AbstractRoad _road in General_Form.Main.BuildScreen.builder.roadBuilder.roads)
+            {
+                foreach (PlacedSign _sign in _road.Signs)
+                {
+                    if (_sign.signType == "trafficLight")
+                    {
+                        _sign.draw(g);
+                    }
+                }
+            }
         }
 
         public void CreateBackgroundImage()
@@ -161,5 +171,4 @@ namespace GreenLight
             this.Screen.Invalidate();
         }
     }
-
 }

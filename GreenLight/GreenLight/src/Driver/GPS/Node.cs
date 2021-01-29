@@ -7,9 +7,8 @@ using System.Drawing;
 
 namespace GreenLight.src.Driver.GPS
 {
-
-    //A Node is similar to a knot but then combined with its Links and connetions, 
-    //A node also holds the variables where or not it can be a begin/end point
+    //Een node is an object that consists of a knot, a list of links, a list of nodes, and two bools
+    //A knot and a list of links that have that knot is needed to construct a node. The rest: the list of nodes it's connected to, and the bools are assigned by the GPSdata class.
 
     public class Node
     {
@@ -25,6 +24,7 @@ namespace GreenLight.src.Driver.GPS
             this.links = _links;
         }
 
+        //A method to assign a list of nodes to connections.
         public void GiveConnectioned(List<Node> _nodes)
         {
             this.connections = _nodes;

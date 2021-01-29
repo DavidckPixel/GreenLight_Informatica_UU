@@ -24,7 +24,7 @@ namespace GreenLight
         int speedRelativeToLimit;
         float ruleBreakingChance;
 
-        public double targetspeed = 3;
+        public double targetspeed = 14;
         public int priority = 2;
 
         public bool isBraking = false;
@@ -122,7 +122,7 @@ namespace GreenLight
             }
             profile.mood = profile.faceType.speech[_mood][ran.Next(0, profile.faceType.speech[_mood].Count)];
 
-            initGPS(_startNode);
+            InitGPS(_startNode);
         }
 
         //The update function is the function that is called every Tick, to keep the code optimised it needs to calculate as little as possible every tick, only the neccessary things
@@ -770,7 +770,7 @@ namespace GreenLight
             }
 
 
-            if (this.navigator.nextRoad.roadtype == "Cross" && this.crossRoadOccupied)
+            if (this.navigator.nextRoad != null && this.navigator.nextRoad.roadtype == "Cross" && this.crossRoadOccupied)
             {
                 this.vehicle.speed = 0;
                 this.ForceCarLocation(this.goal.cord);

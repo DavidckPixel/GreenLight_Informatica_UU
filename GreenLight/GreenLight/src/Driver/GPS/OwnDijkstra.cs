@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace GreenLight.src.Driver.GPS
 {
-
-    //This class is our own rendition of the Dijkstra Pathfinding algorithm, it will find paths between 2 end nodes through its links
+    //OwnDijkstra is a static class that can be used to find the shortest path over a map of connected roads. It workst with Nodes from the Nodes class. 
+    //To use it, you need a startNode and a goal node.  
 
     public static class OwnDijkstra
     {
+        
+        //The method called to actually get the shortest path. It calls to the calculatePath method to get a DijkstraPath.
+        //When the DijkstraPath isn't null, it takes the list of nodes in the dijkstraPath and returns it.
         public static List<Node> GetShortestPath(Node _start, Node _goal)
         {
-            DijkstraPaths temp = calculatePath(_start, _goal);
+            DijkstraPaths temp = CalculatePath(_start, _goal);
 
             if (temp == null)
             {
@@ -25,10 +28,16 @@ namespace GreenLight.src.Driver.GPS
             }
         }
         
-        //Here the algorithm gets 2 nodes, the start and goal, it will then begin at the start, it will look at all the possible directions
-        //the start can go to, and do this. It will then does the same for these new Nodes it found, until it reaches the goal
+        //The method called to actually calculate the shortest path. It uses a start and a goal node, and returns a Dijkstrapath.
+        //It returns null when the startnode is the same node as the end node.
+        //if not, it constructs a list of DijkstraPaths, and gives it just one to start with --> The start node and an empty list of nodes.
+        //For each dijkstrapath in the first list of dijkstrapath, the method looks at the connecting nodes of last Node in the list of nodes, if one of those is the goalNode, a dijkstraPath is returned
+        //If not, the method looks at how many connections a node has. If the node has more than two connections, it's on the edge of a crossroad, and checks if there is actually a lane between the connectionpoints (You can't always go everywhere on a crossroad).
+        //Then it checks if it's not trying to re-enter a road it has already been to. If not, it adds the road it moving over to the list of visited roads, and adds a Dijkstrapath to a temporary list.
+        //When this is done for all connections of the last node, it clears the list of DijkstraPaths, and adds the temporary list to it. Then, the loop starts again.
+        //It loops untill there is a path from start to finish to return, or twice the amount of roads there are. If no path is found, the method returns null.
 
-        public static DijkstraPaths calculatePath(Node _start, Node _goal)
+        public static DijkstraPaths CalculatePath(Node _start, Node _goal)
         {
             List<DijkstraPaths> dijkstraPaths = new List<DijkstraPaths>();
 
@@ -38,109 +47,49 @@ namespace GreenLight.src.Driver.GPS
             }
 
             dijkstraPaths.Add(new DijkstraPaths(_start, new List<Node>()));
-
             List<DijkstraPaths> nextSetList = new List<DijkstraPaths>();
-            int count = 0;
-            Console.WriteLine("Road Count: " + General_Form.Main.BuildScreen.builder.roadBuilder.roads.Count);
-            for(int x = 0; x < General_Form.Main.BuildScreen.builder.roadBuilder.roads.Count; x++)
+
+            for(int x = 0; x < General_Form.Main.BuildScreen.builder.roadBuilder.roads.Count * 2; x++)
             {
-                List<Node> _notReachable = new List<Node>();
-                List<AbstractRoad> _visitedRoads = new List<AbstractRoad>();
+                List<AbstractRoad> _visitedRoads = new List<AbstractRoad>();                
+
                 foreach (DijkstraPaths _dijkPath in dijkstraPaths)
                 {
-
-
-                    
+                    List<AbstractRoad> _tempvisited = new List<AbstractRoad>();
                     foreach (Node _node in _dijkPath.visited.Last().connections)
-                    {
-
+                    {                        
                         if (_node == _goal)
                         {
-                            Console.WriteLine("COUNT UNREACHABLE : " + _notReachable.Count);
                             return new DijkstraPaths(_node, _dijkPath.visited);
                         }
 
-                        if (_dijkPath.visited.Last().connections.Count >= 2)
+                        if (_dijkPath.visited.Last().connections.Count > 2)
                         {
                             foreach (Link _connectionlink in _node.links)
                             {
-                                //Console.WriteLine("NODE 1 HAS A KNOT WITH CORD {0}, ROAD 1 {1} AND ROAD 2 {2}", _dijkPath.visited.Last().knot.Cord, _dijkPath.visited.Last().knot.Road1, _dijkPath.visited.Last().knot.Road2);
-                                //Console.WriteLine("NODE 2 HAS A KNOT WITH CORD {0}, ROAD 1 {1} AND ROAD 2 {2}", _connectionlink.begin.Cord, _connectionlink.begin.Road1, _connectionlink.begin.Road2);
-                                if (_dijkPath.visited.Last().knot == _connectionlink.end && !_dijkPath.visited.Contains(_node) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road2) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road1) && !_notReachable.Contains(_node))
+                                if (_dijkPath.visited.Last().knot == _connectionlink.end && !_dijkPath.visited.Contains(_node) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road2) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road1))
                                 {
-                                    Console.WriteLine("YESSSS!!");
-
-                                    _visitedRoads.Add(_dijkPath.visited.Last().knot.Road2);
-                                    _visitedRoads.Add(_dijkPath.visited.Last().knot.Road1);
-
-                                    _notReachable.AddRange(_dijkPath.visited.Last().connections);
-                                    foreach (Node _othernode in _dijkPath.visited.Last().connections)
-                                    {
-
-                                            _notReachable.Add(_othernode);
-
-                                    }
-                                    nextSetList.Add(new DijkstraPaths(_node, _dijkPath.visited));
-                                    count++;
+                                    _tempvisited.Add(_dijkPath.visited.Last().knot.Road2);
+                                    _tempvisited.Add(_dijkPath.visited.Last().knot.Road1);
+                                    
+                                    nextSetList.Add(new DijkstraPaths(_node, _dijkPath.visited));                                    
                                 }
-
                             }
-
                         }
-
-
-                        else if (!_dijkPath.visited.Contains(_node) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road2) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road1) && !_notReachable.Contains(_node))
+                        else if (!_dijkPath.visited.Contains(_node) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road2) && !_visitedRoads.Contains(_dijkPath.visited.Last().knot.Road1))
                         {
-
-                            Console.WriteLine("ADDED DIJKSTRAPATH");
-                            _visitedRoads.Add(_dijkPath.visited.Last().knot.Road2);
-                            _visitedRoads.Add(_dijkPath.visited.Last().knot.Road1);
-                            _notReachable.AddRange(_dijkPath.visited.Last().connections);
-                            foreach (Node _othernode in _dijkPath.visited.Last().connections)
-                            {
-
-                                    _notReachable.Add(_othernode);
-
-                            }
+                            _tempvisited.Add(_dijkPath.visited.Last().knot.Road2);
+                            _tempvisited.Add(_dijkPath.visited.Last().knot.Road1);
+                            
                             nextSetList.Add(new DijkstraPaths(_node, _dijkPath.visited));
                         }
-
-                        
                     }
-
-
-                        
+                    _visitedRoads.AddRange(_tempvisited);                    
                 }
                 dijkstraPaths.Clear();
                 dijkstraPaths.AddRange(nextSetList);
-            }
-            
+            }            
             return null;
         }
-    }
-
-    public class DijkstraPaths
-    {
-        //Data Class used during the DijkstraPathFinding algorithm
-
-        public List<Node> visited;
-        public bool closed;
-        public Node currentNode;
-
-        public DijkstraPaths(Node _current, List<Node> _visited)
-        {
-            this.visited = new List<Node>();
-            this.visited.AddRange(_visited);
-            this.visited.Add(_current);
-        }
-
-        public void AddNode(Node _node)
-        {
-            if (!visited.Contains(_node))
-            {
-                this.visited.Add(currentNode);
-                this.currentNode = _node;
-            }
-        }
-    } 
+    }    
 }
